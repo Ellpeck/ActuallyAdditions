@@ -1,11 +1,10 @@
 buildscript {
     repositories {
-        maven { url = 'https://files.minecraftforge.net/maven' }
-        jcenter()
+        maven { url = 'https://maven.minecraftforge.net' }
         mavenCentral()
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
     }
 }
 
@@ -22,10 +21,10 @@ if (System.getenv('BUILD_NUMBER') != null) {
     version += "." + System.getenv('BUILD_NUMBER')
 }
 
-sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
+java.toolchain.languageVersion = JavaLanguageVersion.of(8)
 
 minecraft {
-    mappings channel: 'snapshot', version: "${mcp_mappings}"
+    mappings channel: 'official', version: "${game_version}"
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
@@ -57,7 +56,8 @@ minecraft {
             workingDirectory project.file('run')
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
             property 'forge.logging.console.level', 'debug'
-            args '--mod', 'actuallyadditions', '--all', '--output', file('src/generated/resources/')
+            args '--mod', 'actuallyadditions', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+
             mods {
                 actuallyadditions {
                     source sourceSets.main
@@ -67,9 +67,10 @@ minecraft {
     }
 }
 
+sourceSets.main.resources { srcDir 'src/generated/resources' }
+
 repositories {
     maven {
-        // JEI
         name = "Progwml6 maven"
         url = "https://dvs1.progwml6.com/files/maven/"
     }
@@ -102,7 +103,7 @@ processResources {
 jar {
     group = 'artifact'
     manifest {
-        attributes(["Specification-Title"     : "BuildingGadgets",
+        attributes(["Specification-Title"     : "Actually Additions",
                     "Specification-Version"   : "1",
                     "Implementation-Title"    : project.archivesBaseName,
                     "Implementation-Version"  : project.version,

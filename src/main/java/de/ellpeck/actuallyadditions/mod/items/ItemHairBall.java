@@ -43,11 +43,11 @@ public class ItemHairBall extends ItemBase {
     @SubscribeEvent
     public void livingUpdateEvent(LivingEvent.LivingUpdateEvent event) {
         //Ocelots dropping Hair Balls
-        if (ConfigBoolValues.DO_CAT_DROPS.isEnabled() && event.getEntityLiving() != null && event.getEntityLiving().world != null && !event.getEntityLiving().world.isRemote) {
-            if (event.getEntityLiving() instanceof OcelotEntity && catIsTamedReflection((OcelotEntity) event.getEntityLiving()) || event.getEntityLiving() instanceof PlayerEntity && event.getEntityLiving().getUniqueID().equals(this.KittyVanCatUUID)) {
-                if (event.getEntityLiving().world.rand.nextInt(ConfigIntValues.FUR_CHANCE.getValue()) == 0) {
-                    ItemEntity item = new ItemEntity(event.getEntityLiving().world, event.getEntityLiving().getPosX() + 0.5, event.getEntityLiving().getPosY() + 0.5, event.getEntityLiving().getPosZ() + 0.5, new ItemStack(ActuallyItems.HAIRY_BALL.get()));
-                    event.getEntityLiving().world.addEntity(item);
+        if (ConfigBoolValues.DO_CAT_DROPS.isEnabled() && event.getEntityLiving() != null && event.getEntityLiving().level != null && !event.getEntityLiving().level.isClientSide) {
+            if (event.getEntityLiving() instanceof OcelotEntity && catIsTamedReflection((OcelotEntity) event.getEntityLiving()) || event.getEntityLiving() instanceof PlayerEntity && event.getEntityLiving().getUUID().equals(this.KittyVanCatUUID)) {
+                if (event.getEntityLiving().level.random.nextInt(ConfigIntValues.FUR_CHANCE.getValue()) == 0) {
+                    ItemEntity item = new ItemEntity(event.getEntityLiving().level, event.getEntityLiving().getX() + 0.5, event.getEntityLiving().getY() + 0.5, event.getEntityLiving().getZ() + 0.5, new ItemStack(ActuallyItems.HAIRY_BALL.get()));
+                    event.getEntityLiving().level.addFreshEntity(item);
                 }
             }
         }
@@ -65,20 +65,20 @@ public class ItemHairBall extends ItemBase {
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
-        ItemStack stack = player.getHeldItem(hand);
-        if (!world.isRemote) {
-            ItemStack returnItem = this.getRandomReturnItem(world.rand);
-            if (!player.inventory.addItemStackToInventory(returnItem)) {
-                ItemEntity entityItem = new ItemEntity(player.world, player.getPosX(), player.getPosY(), player.getPosZ(), returnItem);
-                entityItem.setPickupDelay(0);
-                player.world.addEntity(entityItem);
+    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+        ItemStack stack = player.getItemInHand(hand);
+        if (!world.isClientSide) {
+            ItemStack returnItem = this.getRandomReturnItem(world.random);
+            if (!player.inventory.add(returnItem)) {
+                ItemEntity entityItem = new ItemEntity(player.level, player.getX(), player.getY(), player.getZ(), returnItem);
+                entityItem.setPickUpDelay(0);
+                player.level.addFreshEntity(entityItem);
             }
             stack.shrink(1);
 
-            world.playSound(null, player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS, 0.2F, world.rand.nextFloat() * 0.1F + 0.9F);
+            world.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ITEM_PICKUP, SoundCategory.PLAYERS, 0.2F, world.random.nextFloat() * 0.1F + 0.9F);
         }
-        return ActionResult.resultSuccess(stack);
+        return ActionResult.success(stack);
     }
 
     public ItemStack getRandomReturnItem(Random rand) {

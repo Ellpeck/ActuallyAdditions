@@ -44,7 +44,7 @@ public abstract class ItemEnergy extends ItemBase {
     private final int transfer;
 
     public ItemEnergy(int maxPower, int transfer) {
-        super(ActuallyItems.defaultProps().maxStackSize(1));
+        super(ActuallyItems.defaultProps().stacksTo(1));
         this.maxPower = maxPower;
         this.transfer = transfer;
     }
@@ -63,8 +63,8 @@ public abstract class ItemEnergy extends ItemBase {
 
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        super.addInformation(stack, worldIn, tooltip, flagIn);
+    public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+        super.appendHoverText(stack, worldIn, tooltip, flagIn);
         stack.getCapability(CapabilityEnergy.ENERGY, null).ifPresent(storage -> {
             NumberFormat format = NumberFormat.getInstance();
             tooltip.add(Lang.trans("misc", "power_long", format.format(storage.getEnergyStored()), format.format(storage.getMaxEnergyStored())));
@@ -73,14 +73,14 @@ public abstract class ItemEnergy extends ItemBase {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public boolean hasEffect(ItemStack stack) {
+    public boolean isFoil(ItemStack stack) {
         return false;
     }
 
     @Override
-    public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
-        super.fillItemGroup(group, items);
-        if (!this.isInGroup(group)) {
+    public void fillItemCategory(ItemGroup group, NonNullList<ItemStack> items) {
+        super.fillItemCategory(group, items);
+        if (!this.allowdedIn(group)) {
             return;
         }
 
@@ -108,9 +108,9 @@ public abstract class ItemEnergy extends ItemBase {
     @Override
     public int getRGBDurabilityForDisplay(ItemStack stack) {
         PlayerEntity player = ClientProxy.getCurrentPlayer();
-        if (player != null && player.world != null) {
-            float[] color = AssetUtil.getWheelColor(player.world.getGameTime() % 256);
-            return MathHelper.rgb(color[0] / 255F, color[1] / 255F, color[2] / 255F);
+        if (player != null && player.level != null) {
+            float[] color = AssetUtil.getWheelColor(player.level.getGameTime() % 256);
+            return MathHelper.color(color[0] / 255F, color[1] / 255F, color[2] / 255F);
         }
         return super.getRGBDurabilityForDisplay(stack);
     }

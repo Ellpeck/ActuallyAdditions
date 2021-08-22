@@ -33,7 +33,7 @@ public class ContainerEnergizer extends Container {
     public final TileEntityEnergizer energizer;
 
     public static ContainerEnergizer fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
-        return new ContainerEnergizer(windowId, inv, (TileEntityEnergizer) Objects.requireNonNull(inv.player.world.getTileEntity(data.readBlockPos())));
+        return new ContainerEnergizer(windowId, inv, (TileEntityEnergizer) Objects.requireNonNull(inv.player.level.getBlockEntity(data.readBlockPos())));
     }
 
     public ContainerEnergizer(int windowId, PlayerInventory inventory, TileEntityEnergizer tile) {
@@ -42,8 +42,8 @@ public class ContainerEnergizer extends Container {
 
         this.addSlot(new SlotItemHandlerUnconditioned(this.energizer.inv, 0, 76, 73) {
             @Override
-            public boolean isItemValid(ItemStack stack) {
-                return super.isItemValid(stack) && stack.getCapability(CapabilityEnergy.ENERGY, null).isPresent();
+            public boolean mayPlace(ItemStack stack) {
+                return super.mayPlace(stack) && stack.getCapability(CapabilityEnergy.ENERGY, null).isPresent();
             }
         });
         this.addSlot(new SlotOutput(this.energizer.inv, 1, 76, 42));
@@ -61,19 +61,19 @@ public class ContainerEnergizer extends Container {
             EquipmentSlotType slot = VALID_EQUIPMENT_SLOTS[k];
             this.addSlot(new Slot(inventory, 36 + 3 - k, 102, 19 + k * 18) {
                 @Override
-                public int getSlotStackLimit() {
+                public int getMaxStackSize() {
                     return 1;
                 }
 
                 @Override
-                public boolean isItemValid(ItemStack stack) {
+                public boolean mayPlace(ItemStack stack) {
                     return StackUtil.isValid(stack) && stack.getItem() instanceof ArmorItem;
                 }
 
                 @Override
-                public boolean canTakeStack(PlayerEntity player) {
-                    ItemStack itemstack = this.getStack();
-                    return (itemstack.isEmpty() || player.isCreative() || !EnchantmentHelper.hasBindingCurse(itemstack)) && super.canTakeStack(player);
+                public boolean mayPickup(PlayerEntity player) {
+                    ItemStack itemstack = this.getItem();
+                    return (itemstack.isEmpty() || player.isCreative() || !EnchantmentHelper.hasBindingCurse(itemstack)) && super.mayPickup(player);
                 }
 
                 // TODO: [port] add back
@@ -88,50 +88,50 @@ public class ContainerEnergizer extends Container {
     }
 
     @Override
-    public ItemStack transferStackInSlot(PlayerEntity player, int slot) {
+    public ItemStack quickMoveStack(PlayerEntity player, int slot) {
         int inventoryStart = 2;
         int inventoryEnd = inventoryStart + 26;
         int hotbarStart = inventoryEnd + 1;
         int hotbarEnd = hotbarStart + 8;
 
-        Slot theSlot = this.inventorySlots.get(slot);
+        Slot theSlot = this.slots.get(slot);
 
-        if (theSlot != null && theSlot.getHasStack()) {
-            ItemStack newStack = theSlot.getStack();
+        if (theSlot != null && theSlot.hasItem()) {
+            ItemStack newStack = theSlot.getItem();
             ItemStack currentStack = newStack.copy();
 
             //Slots in Inventory to shift from
             if (slot == 1) {
-                if (!this.mergeItemStack(newStack, inventoryStart, hotbarEnd + 1, true)) {
+                if (!this.moveItemStackTo(newStack, inventoryStart, hotbarEnd + 1, true)) {
                     return StackUtil.getEmpty();
                 }
-                theSlot.onSlotChange(newStack, currentStack);
+                theSlot.onQuickCraft(newStack, currentStack);
             }
             //Other Slots in Inventory excluded
             else if (slot >= inventoryStart) {
                 //Shift from Inventory
                 if (newStack.getCapability(CapabilityEnergy.ENERGY, null).isPresent()) {
-                    if (!this.mergeItemStack(newStack, 0, 1, false)) {
+                    if (!this.moveItemStackTo(newStack, 0, 1, false)) {
                         return StackUtil.getEmpty();
                     }
                 }
                 //
 
                 else if (slot >= inventoryStart && slot <= inventoryEnd) {
-                    if (!this.mergeItemStack(newStack, hotbarStart, hotbarEnd + 1, false)) {
+                    if (!this.moveItemStackTo(newStack, hotbarStart, hotbarEnd + 1, false)) {
                         return StackUtil.getEmpty();
                     }
-                } else if (slot >= inventoryEnd + 1 && slot < hotbarEnd + 1 && !this.mergeItemStack(newStack, inventoryStart, inventoryEnd + 1, false)) {
+                } else if (slot >= inventoryEnd + 1 && slot < hotbarEnd + 1 && !this.moveItemStackTo(newStack, inventoryStart, inventoryEnd + 1, false)) {
                     return StackUtil.getEmpty();
                 }
-            } else if (!this.mergeItemStack(newStack, inventoryStart, hotbarEnd + 1, false)) {
+            } else if (!this.moveItemStackTo(newStack, inventoryStart, hotbarEnd + 1, false)) {
                 return StackUtil.getEmpty();
             }
 
             if (!StackUtil.isValid(newStack)) {
-                theSlot.putStack(StackUtil.getEmpty());
+                theSlot.set(StackUtil.getEmpty());
             } else {
-                theSlot.onSlotChanged();
+                theSlot.setChanged();
             }
 
             if (newStack.getCount() == currentStack.getCount()) {
@@ -145,7 +145,7 @@ public class ContainerEnergizer extends Container {
     }
 
     @Override
-    public boolean canInteractWith(PlayerEntity player) {
+    public boolean stillValid(PlayerEntity player) {
         return this.energizer.canPlayerUse(player);
     }
 }

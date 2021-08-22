@@ -36,14 +36,14 @@ public class BlockBreaker extends FullyDirectionalBlock.Container {
 
     @Nullable
     @Override
-    public TileEntity createNewTileEntity(IBlockReader world) {
+    public TileEntity newBlockEntity(IBlockReader world) {
         return this.isPlacer
             ? new TileEntityPlacer()
             : new TileEntityBreaker();
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (this.tryToggleRedstone(world, pos, player)) {
             return ActionResultType.PASS;
         }

@@ -31,6 +31,8 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
+
 public class TileEntityRangedCollector extends TileEntityInventoryBase implements IButtonReactor, INamedContainerProvider {
 
     public static final int RANGE = 6;
@@ -61,17 +63,17 @@ public class TileEntityRangedCollector extends TileEntityInventoryBase implement
 
     @Override
     public void activateOnPulse() {
-        List<ItemEntity> items = this.world.getEntitiesWithinAABB(ItemEntity.class, new AxisAlignedBB(this.pos.getX() - RANGE, this.pos.getY() - RANGE, this.pos.getZ() - RANGE, this.pos.getX() + RANGE, this.pos.getY() + RANGE, this.pos.getZ() + RANGE));
+        List<ItemEntity> items = this.level.getEntitiesOfClass(ItemEntity.class, new AxisAlignedBB(this.worldPosition.getX() - RANGE, this.worldPosition.getY() - RANGE, this.worldPosition.getZ() - RANGE, this.worldPosition.getX() + RANGE, this.worldPosition.getY() + RANGE, this.worldPosition.getZ() + RANGE));
         if (!items.isEmpty()) {
             for (ItemEntity item : items) {
-                if (item.isAlive() && !item.cannotPickup() && StackUtil.isValid(item.getItem())) {
+                if (item.isAlive() && !item.hasPickUpDelay() && StackUtil.isValid(item.getItem())) {
                     ItemStack toAdd = item.getItem().copy();
                     if (this.filter.check(toAdd)) {
                         ArrayList<ItemStack> checkList = new ArrayList<>();
                         checkList.add(toAdd);
                         if (StackUtil.canAddAll(this.inv, checkList, false)) {
                             StackUtil.addAll(this.inv, checkList, false);
-                            ((ServerWorld) this.world).spawnParticle(ParticleTypes.CLOUD, item.getPosX(), item.getPosY() + 0.45F, item.getPosZ(), 5, 0, 0, 0, 0.03D);
+                            ((ServerWorld) this.level).sendParticles(ParticleTypes.CLOUD, item.getX(), item.getY() + 0.45F, item.getZ(), 5, 0, 0, 0, 0.03D);
                             item.remove();
                         }
                     }
@@ -83,7 +85,7 @@ public class TileEntityRangedCollector extends TileEntityInventoryBase implement
     @Override
     public void updateEntity() {
         super.updateEntity();
-        if (!this.world.isRemote) {
+        if (!this.level.isClientSide) {
             if (!this.isRedstonePowered && !this.isPulseMode) {
                 this.activateOnPulse();
             }

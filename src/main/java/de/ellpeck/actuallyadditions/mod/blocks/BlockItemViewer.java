@@ -25,7 +25,7 @@ public class BlockItemViewer extends BlockContainerBase {
     }
 
     @Override
-    public TileEntity createNewTileEntity(IBlockReader worldIn) {
+    public TileEntity newBlockEntity(IBlockReader worldIn) {
         return new TileEntityItemViewer();
     }
 

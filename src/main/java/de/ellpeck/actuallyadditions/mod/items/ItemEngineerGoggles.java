@@ -37,14 +37,14 @@ public class ItemEngineerGoggles extends ItemArmorAA implements IGoggles {
     private final boolean displayMobs;
 
     public ItemEngineerGoggles(boolean displayMobs) {
-        super(ArmorMaterials.GOGGLES, EquipmentSlotType.HEAD, ActuallyItems.defaultProps().setNoRepair().maxDamage(0));
+        super(ArmorMaterials.GOGGLES, EquipmentSlotType.HEAD, ActuallyItems.defaultProps().setNoRepair().durability(0));
         this.displayMobs = displayMobs;
 
         MinecraftForge.EVENT_BUS.register(this);
     }
 
     public static boolean isWearing(PlayerEntity player) {
-        ItemStack face = player.inventory.armorInventory.get(3);
+        ItemStack face = player.inventory.armor.get(3);
         return StackUtil.isValid(face) && face.getItem() instanceof IGoggles;
     }
 
@@ -53,18 +53,18 @@ public class ItemEngineerGoggles extends ItemArmorAA implements IGoggles {
     public void onClientTick(TickEvent.ClientTickEvent event) {
         PlayerEntity player = ClientProxy.getCurrentPlayer();
         if (player != null && isWearing(player)) {
-            ItemStack face = player.inventory.armorInventory.get(3);
+            ItemStack face = player.inventory.armor.get(3);
             if (((IGoggles) face.getItem()).displaySpectralMobs()) {
                 double range = 8;
-                AxisAlignedBB aabb = new AxisAlignedBB(player.getPosX() - range, player.getPosY() - range, player.getPosZ() - range, player.getPosX() + range, player.getPosY() + range, player.getPosZ() + range);
-                List<Entity> entities = player.world.getEntitiesWithinAABB(Entity.class, aabb);
+                AxisAlignedBB aabb = new AxisAlignedBB(player.getX() - range, player.getY() - range, player.getZ() - range, player.getX() + range, player.getY() + range, player.getZ() + range);
+                List<Entity> entities = player.level.getEntitiesOfClass(Entity.class, aabb);
                 if (entities != null && !entities.isEmpty()) {
                     this.cachedGlowingEntities.addAll(entities);
                 }
 
                 if (!this.cachedGlowingEntities.isEmpty()) {
                     for (Entity entity : this.cachedGlowingEntities) {
-                        if (!entity.isAlive() || entity.getDistanceSq(player.getPosX(), player.getPosY(), player.getPosZ()) > range * range) {
+                        if (!entity.isAlive() || entity.distanceToSqr(player.getX(), player.getY(), player.getZ()) > range * range) {
                             entity.setGlowing(false);
 
                             this.cachedGlowingEntities.remove(entity);

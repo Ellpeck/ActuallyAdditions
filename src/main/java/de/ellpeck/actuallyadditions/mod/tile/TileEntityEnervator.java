@@ -29,6 +29,8 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 import javax.annotation.Nullable;
 
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
+
 public class TileEntityEnervator extends TileEntityInventoryBase implements ISharingEnergyProvider, INamedContainerProvider {
 
     public final CustomEnergyStorage storage = new CustomEnergyStorage(50000, 0, 1000);
@@ -54,7 +56,7 @@ public class TileEntityEnervator extends TileEntityInventoryBase implements ISha
     @Override
     public void updateEntity() {
         super.updateEntity();
-        if (!this.world.isRemote) {
+        if (!this.level.isClientSide) {
             if (StackUtil.isValid(this.inv.getStackInSlot(0)) && !StackUtil.isValid(this.inv.getStackInSlot(1))) {
                 if (this.storage.getEnergyStored() < this.storage.getMaxEnergyStored()) {
                     LazyOptional<IEnergyStorage> capability = this.inv.getStackInSlot(0).getCapability(CapabilityEnergy.ENERGY, null);

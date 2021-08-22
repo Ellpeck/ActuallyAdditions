@@ -176,7 +176,7 @@ public class GuiPage extends GuiBooklet {
                 String pageStrg = "Page " + (chapter.getPageIndex(this.pages[i]) + 1) + "/" + chapter.getAllPages().length;
                 this.renderScaledAsciiString(pageStrg, this.guiLeft + 25 + i * 136, this.guiTop + this.ySize - 7, 0xFFFFFF, false, this.getLargeFontSize());
 
-                GlStateManager.color(1F, 1F, 1F);
+                GlStateManager.color1arg(1F, 1F, 1F);
                 page.drawScreenPre(this, this.guiLeft + 6 + i * 142, this.guiTop + 7, mouseX, mouseY, partialTicks);
             }
         }
@@ -192,7 +192,7 @@ public class GuiPage extends GuiBooklet {
         for (int i = 0; i < this.pages.length; i++) {
             IBookletPage page = this.pages[i];
             if (page != null) {
-                GlStateManager.color(1F, 1F, 1F);
+                GlStateManager.color1arg(1F, 1F, 1F);
                 page.drawScreenPost(this, this.guiLeft + 6 + i * 142, this.guiTop + 7, mouseX, mouseY, partialTicks);
             }
         }

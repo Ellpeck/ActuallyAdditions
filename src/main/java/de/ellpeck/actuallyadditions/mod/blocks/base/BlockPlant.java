@@ -33,13 +33,15 @@ import net.minecraftforge.items.ItemHandlerHelper;
 import java.util.List;
 
 // CROP BLOCK DEFAULTS TO 7 YEARS OF AGE.
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class BlockPlant extends CropsBlock {
     public Item seedItem;
 
     // Stolen from potato for now
     //    PotatoBlock(AbstractBlock.Properties.create(Material.PLANTS).doesNotBlockMovement().tickRandomly().zeroHardnessAndResistance().sound(SoundType.CROP)));
     public BlockPlant(Item seedItem) {
-        super(Properties.create(Material.PLANTS).doesNotBlockMovement().tickRandomly().zeroHardnessAndResistance().sound(SoundType.CROP));
+        super(Properties.of(Material.PLANT).noCollission().randomTicks().instabreak().sound(SoundType.CROP));
         this.seedItem = seedItem;
     }
 
@@ -65,12 +67,12 @@ public class BlockPlant extends CropsBlock {
 
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (this.getAge(state) < 7) {
             return ActionResultType.PASS;
         }
 
-        if (!world.isRemote) {
+        if (!world.isClientSide) {
             List<ItemStack> drops = Block.getDrops(state, (ServerWorld) world, pos, null);
             boolean deductedSeedSize = false;
             for (ItemStack drop : drops) {
@@ -85,14 +87,14 @@ public class BlockPlant extends CropsBlock {
                 }
             }
 
-            world.setBlockState(pos, this.getDefaultState().with(AGE, 0));
+            world.setBlockAndUpdate(pos, this.defaultBlockState().setValue(AGE, 0));
         }
 
-        return super.onBlockActivated(state, world, pos, player, handIn, hit);
+        return super.use(state, world, pos, player, handIn, hit);
     }
 
     @Override
-    protected IItemProvider getSeedsItem() {
+    protected IItemProvider getBaseSeedId() {
         return this.seedItem;
     }
 

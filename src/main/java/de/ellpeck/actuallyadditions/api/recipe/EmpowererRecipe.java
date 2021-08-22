@@ -32,7 +32,7 @@ public class EmpowererRecipe {
 
     @Deprecated
     public EmpowererRecipe(ItemStack input, ItemStack output, ItemStack modifier1, ItemStack modifier2, ItemStack modifier3, ItemStack modifier4, int energyPerStand, int time, float[] particleColor) {
-        this(Ingredient.fromStacks(input), output, Ingredient.fromStacks(modifier1), Ingredient.fromStacks(modifier2), Ingredient.fromStacks(modifier3), Ingredient.fromStacks(modifier4), energyPerStand, time, particleColor);
+        this(Ingredient.of(input), output, Ingredient.of(modifier1), Ingredient.of(modifier2), Ingredient.of(modifier3), Ingredient.of(modifier4), energyPerStand, time, particleColor);
     }
 
     public EmpowererRecipe(Ingredient input, ItemStack output, Ingredient modifier1, Ingredient modifier2, Ingredient modifier3, Ingredient modifier4, int energyPerStand, int time, float[] particleColor) {

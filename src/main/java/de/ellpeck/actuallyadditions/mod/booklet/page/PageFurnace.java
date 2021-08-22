@@ -43,7 +43,7 @@ public class PageFurnace extends BookletPage {
         for (Map.Entry<ItemStack, ItemStack> entry : FurnaceRecipes.instance().getSmeltingList().entrySet()) {
             ItemStack stack = entry.getValue();
             if (StackUtil.isValid(stack)) {
-                if (stack.isItemEqual(output)) {
+                if (stack.sameItem(output)) {
                     return entry.getKey();
                 }
             }
@@ -56,7 +56,7 @@ public class PageFurnace extends BookletPage {
     public void drawScreenPre(GuiBookletBase gui, int startX, int startY, int mouseX, int mouseY, float partialTicks) {
         super.drawScreenPre(gui, startX, startY, mouseX, mouseY, partialTicks);
 
-        gui.getMinecraft().getTextureManager().bindTexture(GuiBooklet.RES_LOC_GADGETS);
+        gui.getMinecraft().getTextureManager().bind(GuiBooklet.RES_LOC_GADGETS);
         GuiUtils.drawTexturedModalRect(startX + 23, startY + 10, 0, 146, 80, 26, 0);
 
         gui.renderScaledAsciiString("(" + StringUtil.localize("booklet." + ActuallyAdditions.MODID + ".furnaceRecipe") + ")", startX + 32, startY + 42, 0, false, gui.getMediumFontSize());

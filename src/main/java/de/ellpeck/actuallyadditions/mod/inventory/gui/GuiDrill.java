@@ -29,23 +29,23 @@ public class GuiDrill extends GuiWtfMojang<ContainerDrill> {
 
     public GuiDrill(ContainerDrill container, PlayerInventory inventory, ITextComponent title) {
         super(container, inventory);
-        this.xSize = 176;
-        this.ySize = 54 + 86;
+        this.imageWidth = 176;
+        this.imageHeight = 54 + 86;
     }
 
     @Override
-    public void drawGuiContainerForegroundLayer(MatrixStack matrices, int x, int y) {
-        AssetUtil.displayNameString(matrices, this.font, this.xSize, -10, StringUtil.localize("container." + ActuallyAdditions.MODID + ".drill.name"));
+    public void renderLabels(MatrixStack matrices, int x, int y) {
+        AssetUtil.displayNameString(matrices, this.font, this.imageWidth, -10, StringUtil.localize("container." + ActuallyAdditions.MODID + ".drill.name"));
     }
 
     @Override
-    public void drawGuiContainerBackgroundLayer(MatrixStack matrices, float f, int x, int y) {
+    public void renderBg(MatrixStack matrices, float f, int x, int y) {
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 
-        this.getMinecraft().getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
-        this.blit(matrices, this.guiLeft, this.guiTop + 54, 0, 0, 176, 86);
+        this.getMinecraft().getTextureManager().bind(AssetUtil.GUI_INVENTORY_LOCATION);
+        this.blit(matrices, this.leftPos, this.topPos + 54, 0, 0, 176, 86);
 
-        this.getMinecraft().getTextureManager().bindTexture(RES_LOC);
-        this.blit(matrices, this.guiLeft, this.guiTop, 0, 0, 176, 54);
+        this.getMinecraft().getTextureManager().bind(RES_LOC);
+        this.blit(matrices, this.leftPos, this.topPos, 0, 0, 176, 54);
     }
 }

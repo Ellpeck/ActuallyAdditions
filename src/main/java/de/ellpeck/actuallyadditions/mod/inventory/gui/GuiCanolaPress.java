@@ -31,15 +31,15 @@ public class GuiCanolaPress extends GuiWtfMojang<ContainerCanolaPress> {
     public GuiCanolaPress(ContainerCanolaPress container, PlayerInventory inventory, ITextComponent title) {
         super(container, inventory);
         this.press = container.press;
-        this.xSize = 176;
-        this.ySize = 93 + 86;
+        this.imageWidth = 176;
+        this.imageHeight = 93 + 86;
     }
 
     @Override
     public void init() {
         super.init();
-        this.energy = new EnergyDisplay(this.guiLeft + 42, this.guiTop + 5, this.press.storage);
-        this.fluid = new FluidDisplay(this.guiLeft + 116, this.guiTop + 5, this.press.tank);
+        this.energy = new EnergyDisplay(this.leftPos + 42, this.topPos + 5, this.press.storage);
+        this.fluid = new FluidDisplay(this.leftPos + 116, this.topPos + 5, this.press.tank);
     }
 
     @Override
@@ -51,23 +51,23 @@ public class GuiCanolaPress extends GuiWtfMojang<ContainerCanolaPress> {
     }
 
     @Override
-    public void drawGuiContainerForegroundLayer(MatrixStack matrices, int x, int y) {
-        AssetUtil.displayNameString(matrices, this.font, this.xSize, -10, this.press);
+    public void renderLabels(MatrixStack matrices, int x, int y) {
+        AssetUtil.displayNameString(matrices, this.font, this.imageWidth, -10, this.press);
     }
 
     @Override
-    public void drawGuiContainerBackgroundLayer(MatrixStack matrices, float f, int x, int y) {
+    public void renderBg(MatrixStack matrices, float f, int x, int y) {
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 
-        this.getMinecraft().getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
-        this.blit(matrices, this.guiLeft, this.guiTop + 93, 0, 0, 176, 86);
+        this.getMinecraft().getTextureManager().bind(AssetUtil.GUI_INVENTORY_LOCATION);
+        this.blit(matrices, this.leftPos, this.topPos + 93, 0, 0, 176, 86);
 
-        this.getMinecraft().getTextureManager().bindTexture(RES_LOC);
-        this.blit(matrices, this.guiLeft, this.guiTop, 0, 0, 176, 93);
+        this.getMinecraft().getTextureManager().bind(RES_LOC);
+        this.blit(matrices, this.leftPos, this.topPos, 0, 0, 176, 93);
 
         if (this.press.currentProcessTime > 0) {
             int i = this.press.getProcessScaled(29);
-            this.blit(matrices, this.guiLeft + 83, this.guiTop + 32, 176, 0, 12, i);
+            this.blit(matrices, this.leftPos + 83, this.topPos + 32, 176, 0, 12, i);
         }
 
         this.energy.draw(matrices);

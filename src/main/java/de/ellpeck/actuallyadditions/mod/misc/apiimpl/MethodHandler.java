@@ -81,7 +81,7 @@ public class MethodHandler implements IMethodHandler {
         EffectInstance[] effectsStack = this.getEffectsFromStack(stack);
         if (effectsStack != null && effectsStack.length > 0) {
             for (EffectInstance effectStack : effectsStack) {
-                if (effect.getPotion() == effectStack.getPotion()) {
+                if (effect.getEffect() == effectStack.getEffect()) {
                     return effectStack;
                 }
             }
@@ -94,8 +94,8 @@ public class MethodHandler implements IMethodHandler {
         EffectInstance[] effects = this.getEffectsFromStack(stack);
         stack.setTag(new CompoundNBT());
         for (int i = 0; i < effects.length; i++) {
-            if (effects[i].getPotion() == effect.getPotion()) {
-                effects[i] = new EffectInstance(effects[i].getPotion(), effects[i].getDuration() + (addDur
+            if (effects[i].getEffect() == effect.getEffect()) {
+                effects[i] = new EffectInstance(effects[i].getEffect(), effects[i].getDuration() + (addDur
                     ? effect.getDuration()
                     : 0), effects[i].getAmplifier() + (addAmp
                     ? effect.getAmplifier() > 0
@@ -113,7 +113,7 @@ public class MethodHandler implements IMethodHandler {
 
         int prevCounter = tag.putInt("Counter");
         CompoundNBT compound = new CompoundNBT();
-        compound.putInt("ID", Potion.getIdFromPotion(effect.getPotion()));
+        compound.putInt("ID", Potion.getIdFromPotion(effect.getEffect()));
         compound.putInt("Duration", effect.getDuration());
         compound.putInt("Amplifier", effect.getAmplifier());
 
@@ -167,7 +167,7 @@ public class MethodHandler implements IMethodHandler {
                 for (int reachZ = -rangeZ; reachZ <= rangeZ; reachZ++) {
                     for (int reachY = -rangeY; reachY <= rangeY; reachY++) {
                         BlockPos pos = new BlockPos(hitBlock.getX() + reachX, hitBlock.getY() + reachY, hitBlock.getZ() + reachZ);
-                        if (!tile.getWorldObject().isAirBlock(pos)) {
+                        if (!tile.getWorldObject().isEmptyBlock(pos)) {
                             BlockState state = tile.getWorldObject().getBlockState(pos);
                             if (state.getBlock() instanceof BlockLaserRelay) {
                                 continue;
@@ -176,16 +176,16 @@ public class MethodHandler implements IMethodHandler {
                             if (recipe != null && tile.getEnergy() >= recipe.getEnergyUsed()) {
                                 ItemStack output = recipe.getOutput();
                                 if (StackUtil.isValid(output)) {
-                                    tile.getWorldObject().playEvent(2001, pos, Block.getStateId(state));
+                                    tile.getWorldObject().levelEvent(2001, pos, Block.getId(state));
                                     recipe.transformHook(ItemStack.EMPTY, state, pos, tile);
                                     if (output.getItem() instanceof ItemBlock) {
-                                        Block toPlace = Block.getBlockFromItem(output.getItem());
+                                        Block toPlace = Block.byItem(output.getItem());
                                         BlockState state2Place = toPlace.getStateForPlacement(tile.getWorldObject(), pos, facing, 0, 0, 0, output.getMetadata(), FakePlayerFactory.getMinecraft((WorldServer) tile.getWorldObject()), Hand.MAIN_HAND);
-                                        tile.getWorldObject().setBlockState(pos, state2Place, 2);
+                                        tile.getWorldObject().setBlock(pos, state2Place, 2);
                                     } else {
                                         ItemEntity item = new ItemEntity(tile.getWorldObject(), pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, output.copy());
-                                        tile.getWorldObject().addEntity(item);
-                                        tile.getWorldObject().setBlockState(pos, Blocks.AIR.getDefaultState());
+                                        tile.getWorldObject().addFreshEntity(item);
+                                        tile.getWorldObject().setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
                                     }
 
                                     tile.extractEnergy(recipe.getEnergyUsed());
@@ -199,9 +199,9 @@ public class MethodHandler implements IMethodHandler {
 
             //Converting the Items
             AxisAlignedBB aabb = new AxisAlignedBB(tile.getPosition().getX(), tile.getPosition().getY(), tile.getPosition().getZ(), hitBlock.getX() + 1, hitBlock.getY() + 1, hitBlock.getZ() + 1);
-            Vector3i dir = tile.getOrientation().getDirectionVec();
-            aabb = aabb.grow(0.02, 0.02, 0.02).expand(dir.getX(), dir.getY(), dir.getZ());
-            List<ItemEntity> items = tile.getWorldObject().getEntitiesWithinAABB(ItemEntity.class, aabb);
+            Vector3i dir = tile.getOrientation().getNormal();
+            aabb = aabb.inflate(0.02, 0.02, 0.02).expandTowards(dir.getX(), dir.getY(), dir.getZ());
+            List<ItemEntity> items = tile.getWorldObject().getEntitiesOfClass(ItemEntity.class, aabb);
             for (ItemEntity item : items) {
                 ItemStack stack = item.getItem();
                 if (item.isAlive() && StackUtil.isValid(stack) && !item.getEntityData().getBoolean("aa_cnv")) {
@@ -210,23 +210,23 @@ public class MethodHandler implements IMethodHandler {
                         int itemsPossible = Math.min(tile.getEnergy() / recipe.getEnergyUsed(), stack.getCount());
 
                         if (itemsPossible > 0) {
-                            recipe.transformHook(item.getItem(), null, item.getPosition(), tile);
+                            recipe.transformHook(item.getItem(), null, item.blockPosition(), tile);
                             item.remove();
 
                             if (stack.getCount() - itemsPossible > 0) {
                                 ItemStack stackCopy = stack.copy();
                                 stackCopy.shrink(itemsPossible);
 
-                                ItemEntity inputLeft = new ItemEntity(tile.getWorldObject(), item.getPosX(), item.getPosY(), item.getPosZ(), stackCopy);
-                                tile.getWorldObject().addEntity(inputLeft);
+                                ItemEntity inputLeft = new ItemEntity(tile.getWorldObject(), item.getX(), item.getY(), item.getZ(), stackCopy);
+                                tile.getWorldObject().addFreshEntity(inputLeft);
                             }
 
                             ItemStack outputCopy = recipe.getOutput().copy();
                             outputCopy.setCount(itemsPossible);
 
-                            ItemEntity newItem = new ItemEntity(tile.getWorldObject(), item.getPosX(), item.getPosY(), item.getPosZ(), outputCopy);
+                            ItemEntity newItem = new ItemEntity(tile.getWorldObject(), item.getX(), item.getY(), item.getZ(), outputCopy);
                             newItem.getEntityData().putBoolean("aa_cnv", true);
-                            tile.getWorldObject().addEntity(newItem);
+                            tile.getWorldObject().addFreshEntity(newItem);
 
                             tile.extractEnergy(recipe.getEnergyUsed() * itemsPossible);
                             break;
@@ -249,7 +249,7 @@ public class MethodHandler implements IMethodHandler {
 
                 int distance = currentLens.getDistance();
                 for (int i = 0; i < distance; i++) {
-                    BlockPos hitBlock = tile.getPosition().offset(sideToManipulate, i + 1);
+                    BlockPos hitBlock = tile.getPosition().relative(sideToManipulate, i + 1);
 
                     if (currentLens.invoke(tile.getWorldObject().getBlockState(hitBlock), hitBlock, tile) || i >= distance - 1) {
                         TileEntityAtomicReconstructor.shootLaser(tile.getWorldObject(), tile.getX(), tile.getY(), tile.getZ(), hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), currentLens);

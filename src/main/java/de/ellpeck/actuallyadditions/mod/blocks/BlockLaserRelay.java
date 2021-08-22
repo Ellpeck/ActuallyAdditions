@@ -83,9 +83,9 @@ public class BlockLaserRelay extends FullyDirectionalBlock.Container implements 
     //    }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-        ItemStack stack = player.getHeldItem(hand);
-        TileEntity tile = world.getTileEntity(pos);
+    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+        ItemStack stack = player.getItemInHand(hand);
+        TileEntity tile = world.getBlockEntity(pos);
         if (tile instanceof TileEntityLaserRelay) {
             TileEntityLaserRelay relay = (TileEntityLaserRelay) tile;
 
@@ -93,7 +93,7 @@ public class BlockLaserRelay extends FullyDirectionalBlock.Container implements 
                 if (stack.getItem() instanceof ItemLaserWrench) {
                     return ActionResultType.FAIL;
                 } else if (stack.getItem() == ConfigValues.itemCompassConfigurator) {
-                    if (!world.isRemote) {
+                    if (!world.isClientSide) {
                         relay.onCompassAction(player);
 
                         Network network = relay.getNetwork();
@@ -101,7 +101,7 @@ public class BlockLaserRelay extends FullyDirectionalBlock.Container implements 
                             network.changeAmount++;
                         }
 
-                        relay.markDirty();
+                        relay.setChanged();
                         relay.sendUpdate();
                     }
 
@@ -109,9 +109,9 @@ public class BlockLaserRelay extends FullyDirectionalBlock.Container implements 
                 } else if (stack.getItem() instanceof ItemLaserRelayUpgrade) {
                     ItemStack inRelay = relay.inv.getStackInSlot(0);
                     if (!StackUtil.isValid(inRelay)) {
-                        if (!world.isRemote) {
+                        if (!world.isClientSide) {
                             if (!player.isCreative()) {
-                                player.setHeldItem(hand, StackUtil.shrink(stack, 1));
+                                player.setItemInHand(hand, StackUtil.shrink(stack, 1));
                             }
 
                             ItemStack set = stack.copy();
@@ -124,14 +124,14 @@ public class BlockLaserRelay extends FullyDirectionalBlock.Container implements 
                 }
             }
 
-            if (player.isSneaking()) {
+            if (player.isShiftKeyDown()) {
                 ItemStack inRelay = relay.inv.getStackInSlot(0).copy();
                 if (StackUtil.isValid(inRelay)) {
-                    if (!world.isRemote) {
+                    if (!world.isClientSide) {
                         relay.inv.setStackInSlot(0, StackUtil.getEmpty());
 
-                        if (!player.inventory.addItemStackToInventory(inRelay)) {
-                            player.entityDropItem(inRelay, 0);
+                        if (!player.inventory.add(inRelay)) {
+                            player.spawnAtLocation(inRelay, 0);
                         }
                     }
                     return ActionResultType.PASS;
@@ -146,7 +146,7 @@ public class BlockLaserRelay extends FullyDirectionalBlock.Container implements 
     }
 
     @Override
-    public TileEntity createNewTileEntity(IBlockReader world) {
+    public TileEntity newBlockEntity(IBlockReader world) {
         switch (this.type) {
             case ITEM:
                 return new TileEntityLaserRelayItem();
@@ -170,27 +170,27 @@ public class BlockLaserRelay extends FullyDirectionalBlock.Container implements 
             return;
         }
 
-        BlockPos pos = ((BlockRayTraceResult) rayCast).getPos();
-        if (minecraft.world != null) {
+        BlockPos pos = ((BlockRayTraceResult) rayCast).getBlockPos();
+        if (minecraft.level != null) {
             boolean wearing = ItemEngineerGoggles.isWearing(player);
             if (wearing || StackUtil.isValid(stack)) {
                 boolean compass = stack.getItem() == ConfigValues.itemCompassConfigurator;
                 if (wearing || compass || stack.getItem() instanceof ItemLaserWrench) {
-                    TileEntity tile = minecraft.world.getTileEntity(pos);
+                    TileEntity tile = minecraft.level.getBlockEntity(pos);
                     if (tile instanceof TileEntityLaserRelay) {
                         TileEntityLaserRelay relay = (TileEntityLaserRelay) tile;
 
                         String strg = relay.getExtraDisplayString();
-                        minecraft.fontRenderer.drawStringWithShadow(matrices, strg, resolution.getScaledWidth() / 2f + 5, resolution.getScaledHeight() / 2f + 5, StringUtil.DECIMAL_COLOR_WHITE);
+                        minecraft.font.drawShadow(matrices, strg, resolution.getGuiScaledWidth() / 2f + 5, resolution.getGuiScaledHeight() / 2f + 5, StringUtil.DECIMAL_COLOR_WHITE);
 
                         String expl;
                         if (compass) {
                             expl = relay.getCompassDisplayString();
                         } else {
-                            expl = TextFormatting.GRAY.toString() + TextFormatting.ITALIC + StringUtil.localizeFormatted("info." + ActuallyAdditions.MODID + ".laserRelay.mode.noCompasss", StringUtil.localize(ConfigValues.itemCompassConfigurator.getTranslationKey() + ".name"));
+                            expl = TextFormatting.GRAY.toString() + TextFormatting.ITALIC + StringUtil.localizeFormatted("info." + ActuallyAdditions.MODID + ".laserRelay.mode.noCompasss", StringUtil.localize(ConfigValues.itemCompassConfigurator.getDescriptionId() + ".name"));
                         }
 
-                        StringUtil.drawSplitString(minecraft.fontRenderer, expl, resolution.getScaledWidth() / 2 + 5, resolution.getScaledHeight() / 2 + 15, Integer.MAX_VALUE, StringUtil.DECIMAL_COLOR_WHITE, true);
+                        StringUtil.drawSplitString(minecraft.font, expl, resolution.getGuiScaledWidth() / 2 + 5, resolution.getGuiScaledHeight() / 2 + 15, Integer.MAX_VALUE, StringUtil.DECIMAL_COLOR_WHITE, true);
                     }
                 }
             }
@@ -198,8 +198,8 @@ public class BlockLaserRelay extends FullyDirectionalBlock.Container implements 
     }
 
     @Override
-    public void onReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
-        super.onReplaced(state, world, pos, newState, isMoving);
+    public void onRemove(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
+        super.onRemove(state, world, pos, newState, isMoving);
 
         if (state != newState) {
             ActuallyAdditionsAPI.connectionHandler.removeRelayFromNetwork(pos, world);

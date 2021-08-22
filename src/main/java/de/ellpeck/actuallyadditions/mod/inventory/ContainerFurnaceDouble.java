@@ -31,7 +31,7 @@ public class ContainerFurnaceDouble extends Container {
     public final TileEntityFurnaceDouble furnace;
 
     public static ContainerFurnaceDouble fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
-        return new ContainerFurnaceDouble(windowId, inv, (TileEntityFurnaceDouble) Objects.requireNonNull(inv.player.world.getTileEntity(data.readBlockPos())));
+        return new ContainerFurnaceDouble(windowId, inv, (TileEntityFurnaceDouble) Objects.requireNonNull(inv.player.level.getBlockEntity(data.readBlockPos())));
     }
 
     public ContainerFurnaceDouble(int windowId, PlayerInventory inventory, TileEntityFurnaceDouble tile) {
@@ -54,39 +54,39 @@ public class ContainerFurnaceDouble extends Container {
     }
 
     @Override
-    public ItemStack transferStackInSlot(PlayerEntity player, int slot) {
+    public ItemStack quickMoveStack(PlayerEntity player, int slot) {
         int inventoryStart = 4;
         int inventoryEnd = inventoryStart + 26;
         int hotbarStart = inventoryEnd + 1;
         int hotbarEnd = hotbarStart + 8;
 
-        Slot theSlot = this.inventorySlots.get(slot);
+        Slot theSlot = this.slots.get(slot);
 
-        if (theSlot != null && theSlot.getHasStack()) {
-            ItemStack newStack = theSlot.getStack();
+        if (theSlot != null && theSlot.hasItem()) {
+            ItemStack newStack = theSlot.getItem();
             ItemStack currentStack = newStack.copy();
 
             //Slots in Inventory to shift from
             if (slot == TileEntityFurnaceDouble.SLOT_OUTPUT_1 || slot == TileEntityFurnaceDouble.SLOT_OUTPUT_2) {
-                if (!this.mergeItemStack(newStack, inventoryStart, hotbarEnd + 1, true)) {
+                if (!this.moveItemStackTo(newStack, inventoryStart, hotbarEnd + 1, true)) {
                     return StackUtil.getEmpty();
                 }
-                theSlot.onSlotChange(newStack, currentStack);
+                theSlot.onQuickCraft(newStack, currentStack);
             }
             //Other Slots in Inventory excluded
             else if (slot >= inventoryStart) {
                 // TODO: VALIDATE
-                IRecipe<?> irecipe = this.furnace.getWorld().getRecipeManager().getRecipe(IRecipeType.SMELTING, new Inventory(newStack), this.furnace.getWorld()).orElse(null);
+                IRecipe<?> irecipe = this.furnace.getLevel().getRecipeManager().getRecipeFor(IRecipeType.SMELTING, new Inventory(newStack), this.furnace.getLevel()).orElse(null);
                 if (irecipe == null) {
                     return StackUtil.getEmpty();
                 }
                 
-                ItemStack recipeOutput = irecipe.getRecipeOutput();
+                ItemStack recipeOutput = irecipe.getResultItem();
 
                 //Shift from Inventory
                 if (StackUtil.isValid(recipeOutput)) {
-                    if (!this.mergeItemStack(newStack, TileEntityFurnaceDouble.SLOT_INPUT_1, TileEntityFurnaceDouble.SLOT_INPUT_1 + 1, false)) {
-                        if (!this.mergeItemStack(newStack, TileEntityFurnaceDouble.SLOT_INPUT_2, TileEntityFurnaceDouble.SLOT_INPUT_2 + 1, false)) {
+                    if (!this.moveItemStackTo(newStack, TileEntityFurnaceDouble.SLOT_INPUT_1, TileEntityFurnaceDouble.SLOT_INPUT_1 + 1, false)) {
+                        if (!this.moveItemStackTo(newStack, TileEntityFurnaceDouble.SLOT_INPUT_2, TileEntityFurnaceDouble.SLOT_INPUT_2 + 1, false)) {
                             return StackUtil.getEmpty();
                         }
                     }
@@ -94,20 +94,20 @@ public class ContainerFurnaceDouble extends Container {
                 //
 
                 else if (slot >= inventoryStart && slot <= inventoryEnd) {
-                    if (!this.mergeItemStack(newStack, hotbarStart, hotbarEnd + 1, false)) {
+                    if (!this.moveItemStackTo(newStack, hotbarStart, hotbarEnd + 1, false)) {
                         return StackUtil.getEmpty();
                     }
-                } else if (slot >= inventoryEnd + 1 && slot < hotbarEnd + 1 && !this.mergeItemStack(newStack, inventoryStart, inventoryEnd + 1, false)) {
+                } else if (slot >= inventoryEnd + 1 && slot < hotbarEnd + 1 && !this.moveItemStackTo(newStack, inventoryStart, inventoryEnd + 1, false)) {
                     return StackUtil.getEmpty();
                 }
-            } else if (!this.mergeItemStack(newStack, inventoryStart, hotbarEnd + 1, false)) {
+            } else if (!this.moveItemStackTo(newStack, inventoryStart, hotbarEnd + 1, false)) {
                 return StackUtil.getEmpty();
             }
 
             if (!StackUtil.isValid(newStack)) {
-                theSlot.putStack(StackUtil.getEmpty());
+                theSlot.set(StackUtil.getEmpty());
             } else {
-                theSlot.onSlotChanged();
+                theSlot.setChanged();
             }
 
             if (newStack.getCount() == currentStack.getCount()) {
@@ -121,7 +121,7 @@ public class ContainerFurnaceDouble extends Container {
     }
 
     @Override
-    public boolean canInteractWith(PlayerEntity player) {
+    public boolean stillValid(PlayerEntity player) {
         return this.furnace.canPlayerUse(player);
     }
 }

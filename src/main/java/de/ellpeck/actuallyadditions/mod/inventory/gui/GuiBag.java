@@ -40,8 +40,8 @@ public class GuiBag extends GuiWtfMojang<ContainerBag> {
 
     public GuiBag(ContainerBag container, PlayerInventory inventory, ITextComponent title) {
         super(container, inventory);
-        this.xSize = 176;
-        this.ySize = 90 + 86;
+        this.imageWidth = 176;
+        this.imageHeight = 90 + 86;
         this.isVoid = container.isVoid;
         this.container = container;
     }
@@ -50,9 +50,9 @@ public class GuiBag extends GuiWtfMojang<ContainerBag> {
     public void init() {
         super.init();
 
-        this.filter = new FilterSettingsGui(this.container.filter, this.guiLeft + 138, this.guiTop + 10, this.buttonList);
+        this.filter = new FilterSettingsGui(this.container.filter, this.leftPos + 138, this.topPos + 10, this.buttonList);
 
-        this.buttonAutoInsert = new Button(0, this.guiLeft - 21, this.guiTop + 8, 20, 20, (this.container.autoInsert
+        this.buttonAutoInsert = new Button(0, this.leftPos - 21, this.topPos + 8, 20, 20, (this.container.autoInsert
             ? TextFormatting.DARK_GREEN
             : TextFormatting.RED) + "I");
         this.addButton(this.buttonAutoInsert);
@@ -62,8 +62,8 @@ public class GuiBag extends GuiWtfMojang<ContainerBag> {
     protected void actionPerformed(Button button) throws IOException {
         CompoundNBT data = new CompoundNBT();
         data.setInteger("ButtonID", button.id);
-        data.setInteger("PlayerID", Minecraft.getInstance().player.getEntityId());
-        data.setInteger("WorldID", Minecraft.getInstance().world.provider.getDimension());
+        data.setInteger("PlayerID", Minecraft.getInstance().player.getId());
+        data.setInteger("WorldID", Minecraft.getInstance().level.provider.getDimension());
         PacketHandler.THE_NETWORK.sendToServer(new PacketClientToServer(data, PacketHandler.GUI_BUTTON_TO_CONTAINER_HANDLER));
     }
 
@@ -79,7 +79,7 @@ public class GuiBag extends GuiWtfMojang<ContainerBag> {
 
     @Override
     public void drawGuiContainerForegroundLayer(int x, int y) {
-        AssetUtil.displayNameString(this.font, this.xSize, -10, StringUtil.localize("container." + ActuallyAdditions.MODID + "." + (this.isVoid
+        AssetUtil.displayNameString(this.font, this.imageWidth, -10, StringUtil.localize("container." + ActuallyAdditions.MODID + "." + (this.isVoid
             ? "voidBag"
             : "bag") + ".name"));
     }
@@ -96,20 +96,20 @@ public class GuiBag extends GuiWtfMojang<ContainerBag> {
                 : "Off"));
             text.addAll(this.font.listFormattedStringToWidth("Turn this on to make items that get picked up automatically go into the bag.", 200));
             text.addAll(this.font.listFormattedStringToWidth(TextFormatting.GRAY + "" + TextFormatting.ITALIC + "Note that this WON'T work when you are holding the bag in your hand.", 200));
-            this.renderToolTip(stack, text, mouseX, mouseY, this.getMinecraft().fontRenderer);
+            this.renderToolTip(stack, text, mouseX, mouseY, this.getMinecraft().font);
         }
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int x, int y) {
+    protected void renderBg(MatrixStack matrixStack, float partialTicks, int x, int y) {
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 
-        this.getMinecraft().getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
-        this.blit(matrixStack, this.guiLeft, this.guiTop + 90, 0, 0, 176, 86);
+        this.getMinecraft().getTextureManager().bind(AssetUtil.GUI_INVENTORY_LOCATION);
+        this.blit(matrixStack, this.leftPos, this.topPos + 90, 0, 0, 176, 86);
 
-        this.getMinecraft().getTextureManager().bindTexture(this.isVoid
+        this.getMinecraft().getTextureManager().bind(this.isVoid
             ? RES_LOC_VOID
             : RES_LOC);
-        this.blit(matrixStack, this.guiLeft, this.guiTop, 0, 0, 176, 90);
+        this.blit(matrixStack, this.leftPos, this.topPos, 0, 0, 176, 90);
     }
 }

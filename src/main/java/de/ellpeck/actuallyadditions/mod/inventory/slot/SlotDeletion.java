@@ -20,7 +20,7 @@ public class SlotDeletion extends SlotItemHandlerUnconditioned {
     }
 
     @Override
-    public void putStack(ItemStack stack) {
-        this.onSlotChanged();
+    public void set(ItemStack stack) {
+        this.setChanged();
     }
 }

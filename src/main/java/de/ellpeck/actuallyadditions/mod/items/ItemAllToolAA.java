@@ -44,8 +44,8 @@ public class ItemAllToolAA extends ItemToolAA implements IColorProvidingItem {
         super(4.0F, -2F, toolMat, this.repairItem, unlocalizedName, this.rarity, new HashSet<>());
         this.color = this.color;
 
-        this.setMaxDamage(toolMat.getMaxUses() * 4);
-        this.setHarvestLevels(toolMat.getHarvestLevel());
+        this.setMaxDamage(toolMat.getUses() * 4);
+        this.setHarvestLevels(toolMat.getLevel());
     }
 
     private void setHarvestLevels(int amount) {
@@ -61,7 +61,7 @@ public class ItemAllToolAA extends ItemToolAA implements IColorProvidingItem {
 
     @Override
     public EnumActionResult onItemUse(PlayerEntity playerIn, World worldIn, BlockPos pos, Hand hand, Direction side, float hitX, float hitY, float hitZ) {
-        if (!playerIn.isSneaking()) {
+        if (!playerIn.isShiftKeyDown()) {
             return Items.IRON_HOE.onItemUse(playerIn, worldIn, pos, hand, side, hitX, hitY, hitZ);
         }
         return Items.IRON_SHOVEL.onItemUse(playerIn, worldIn, pos, hand, side, hitX, hitY, hitZ);
@@ -77,7 +77,7 @@ public class ItemAllToolAA extends ItemToolAA implements IColorProvidingItem {
                 ? state.getBlock() != Blocks.IRON_BLOCK && state.getBlock() != Blocks.IRON_ORE
                 ? state.getBlock() != Blocks.LAPIS_BLOCK && state.getBlock() != Blocks.LAPIS_ORE
                 ? state.getBlock() != Blocks.REDSTONE_ORE && state.getBlock() != Blocks.LIT_REDSTONE_ORE
-                ? state.getMaterial() == Material.ROCK || state.getMaterial() == Material.IRON || state.getMaterial() == Material.ANVIL
+                ? state.getMaterial() == Material.STONE || state.getMaterial() == Material.METAL || state.getMaterial() == Material.HEAVY_METAL
                 : this.toolMaterial.getHarvestLevel() >= 2
                 : this.toolMaterial.getHarvestLevel() >= 1
                 : this.toolMaterial.getHarvestLevel() >= 1
@@ -107,7 +107,7 @@ public class ItemAllToolAA extends ItemToolAA implements IColorProvidingItem {
             return 15.0F;
         } else {
             return this.hasExtraWhitelist(state.getBlock()) || state.getBlock().getHarvestTool(state) == null || state.getBlock().getHarvestTool(state).isEmpty() || this.getToolClasses(stack).contains(state.getBlock().getHarvestTool(state))
-                ? this.efficiency
+                ? this.speed
                 : 1.0F;
         }
     }
@@ -122,6 +122,6 @@ public class ItemAllToolAA extends ItemToolAA implements IColorProvidingItem {
 
     @Override
     public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-        return super.canApplyAtEnchantingTable(stack, enchantment) || enchantment.type.canEnchantItem(Items.DIAMOND_SWORD);
+        return super.canApplyAtEnchantingTable(stack, enchantment) || enchantment.category.canEnchant(Items.DIAMOND_SWORD);
     }
 }

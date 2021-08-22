@@ -40,15 +40,15 @@ public class ItemFoods extends ItemFoodBase {
 
     @Override
     public ItemStack onItemUseFinish(ItemStack stack, World world, EntityLivingBase player) {
-        ItemStack stackToReturn = super.onItemUseFinish(stack, world, player);
+        ItemStack stackToReturn = super.finishUsingItem(stack, world, player);
         ItemStack returnItem = stack.getItemDamage() >= ALL_FOODS.length
             ? null
             : ALL_FOODS[stack.getItemDamage()].returnItem;
         if (StackUtil.isValid(returnItem) && player instanceof PlayerEntity) {
-            if (!((PlayerEntity) player).inventory.addItemStackToInventory(returnItem.copy())) {
-                if (!world.isRemote) {
+            if (!((PlayerEntity) player).inventory.add(returnItem.copy())) {
+                if (!world.isClientSide) {
                     ItemEntity entityItem = new ItemEntity(player.world, player.posX, player.posY, player.posZ, returnItem.copy());
-                    entityItem.setPickupDelay(0);
+                    entityItem.setPickUpDelay(0);
                     player.world.addEntity(entityItem);
                 }
             }
@@ -92,10 +92,10 @@ public class ItemFoods extends ItemFoodBase {
     }
 
     @Override
-    public String getTranslationKey(ItemStack stack) {
+    public String getDescriptionId(ItemStack stack) {
         return stack.getItemDamage() >= ALL_FOODS.length
             ? StringUtil.BUGGED_ITEM_NAME
-            : this.getTranslationKey() + "_" + ALL_FOODS[stack.getItemDamage()].name;
+            : this.getDescriptionId() + "_" + ALL_FOODS[stack.getItemDamage()].name;
     }
 
     @Override

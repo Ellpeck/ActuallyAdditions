@@ -40,27 +40,27 @@ public class BlockBatteryBox extends BlockContainerBase {
 
     @Nullable
     @Override
-    public TileEntity createNewTileEntity(IBlockReader worldIn) {
+    public TileEntity newBlockEntity(IBlockReader worldIn) {
         return new TileEntityBatteryBox();
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-        TileEntity tile = world.getTileEntity(pos);
+    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+        TileEntity tile = world.getBlockEntity(pos);
         if (tile instanceof TileEntityBatteryBox) {
             TileEntityBatteryBox box = (TileEntityBatteryBox) tile;
-            ItemStack stack = player.getHeldItem(hand);
+            ItemStack stack = player.getItemInHand(hand);
 
             if (StackUtil.isValid(stack)) {
                 if (stack.getItem() instanceof ItemBattery && !StackUtil.isValid(box.inv.getStackInSlot(0))) {
                     box.inv.setStackInSlot(0, stack.copy());
-                    player.setHeldItem(hand, StackUtil.getEmpty());
+                    player.setItemInHand(hand, StackUtil.getEmpty());
                     return ActionResultType.SUCCESS;
                 }
             } else {
                 ItemStack inSlot = box.inv.getStackInSlot(0);
                 if (StackUtil.isValid(inSlot)) {
-                    player.setHeldItem(hand, inSlot.copy());
+                    player.setItemInHand(hand, inSlot.copy());
                     box.inv.setStackInSlot(0, StackUtil.getEmpty());
                     return ActionResultType.SUCCESS;
                 }

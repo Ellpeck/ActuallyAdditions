@@ -38,7 +38,7 @@ public class BlockShockSuppressor extends BlockContainerBase {
     @SubscribeEvent
     public void onExplosion(ExplosionEvent.Detonate event) {
         World world = event.getWorld();
-        if (!world.isRemote) {
+        if (!world.isClientSide) {
             List<BlockPos> affectedBlocks = event.getAffectedBlocks();
             List<Entity> affectedEntities = event.getAffectedEntities();
 
@@ -47,18 +47,18 @@ public class BlockShockSuppressor extends BlockContainerBase {
 
             for (TileEntityShockSuppressor suppressor : TileEntityShockSuppressor.SUPPRESSORS) {
                 if (!suppressor.isRedstonePowered) {
-                    BlockPos supPos = suppressor.getPos();
+                    BlockPos supPos = suppressor.getBlockPos();
 
                     List<Entity> entitiesToRemove = new ArrayList<>();
                     List<BlockPos> posesToRemove = new ArrayList<>();
 
                     for (BlockPos pos : affectedBlocks) {
-                        if (pos.distanceSq(supPos) <= rangeSq) {
+                        if (pos.distSqr(supPos) <= rangeSq) {
                             posesToRemove.add(pos);
                         }
                     }
                     for (Entity entity : affectedEntities) {
-                        if (entity.getPositionVec().squareDistanceTo(supPos.getX(), supPos.getY(), supPos.getZ()) <= rangeSq) {
+                        if (entity.position().distanceToSqr(supPos.getX(), supPos.getY(), supPos.getZ()) <= rangeSq) {
                             entitiesToRemove.add(entity);
                         }
                     }
@@ -88,7 +88,7 @@ public class BlockShockSuppressor extends BlockContainerBase {
     }
 
     @Override
-    public TileEntity createNewTileEntity(IBlockReader worldIn) {
+    public TileEntity newBlockEntity(IBlockReader worldIn) {
         return new TileEntityShockSuppressor();
     }
 

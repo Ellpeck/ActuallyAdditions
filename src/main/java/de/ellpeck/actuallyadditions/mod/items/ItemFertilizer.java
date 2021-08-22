@@ -28,19 +28,19 @@ public class ItemFertilizer extends ItemBase {
     public ItemFertilizer() {
         super(name);
 
-        DispenserBlock.registerDispenseBehavior(this, new DispenserHandlerFertilize());
+        DispenserBlock.registerBehavior(this, new DispenserHandlerFertilize());
     }
 
     @Override
     public EnumActionResult onItemUse(PlayerEntity player, World world, BlockPos pos, Hand hand, Direction side, float par8, float par9, float par10) {
-        ItemStack stack = player.getHeldItem(hand);
+        ItemStack stack = player.getItemInHand(hand);
         if (ItemDye.applyBonemeal(stack, world, pos, player, hand)) {
-            if (!world.isRemote) {
-                world.playEvent(2005, pos, 0);
+            if (!world.isClientSide) {
+                world.levelEvent(2005, pos, 0);
             }
             return EnumActionResult.SUCCESS;
         }
-        return super.onItemUse(player, world, pos, hand, side, par8, par9, par10);
+        return super.useOn(player, world, pos, hand, side, par8, par9, par10);
     }
 
     @Override

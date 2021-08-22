@@ -28,9 +28,9 @@ import java.util.concurrent.ConcurrentHashMap;
 public final class PlayerData {
 
     public static PlayerSave getDataFromPlayer(PlayerEntity player) {
-        WorldData worldData = WorldData.get(player.getEntityWorld());
+        WorldData worldData = WorldData.get(player.getCommandSenderWorld());
         ConcurrentHashMap<UUID, PlayerSave> data = worldData.playerSaveData;
-        UUID id = player.getUniqueID();
+        UUID id = player.getUUID();
 
         if (data.containsKey(id)) {
             PlayerSave save = data.get(id);
@@ -42,7 +42,7 @@ public final class PlayerData {
         //Add Data if none is existant
         PlayerSave save = new PlayerSave(id);
         data.put(id, save);
-        worldData.markDirty();
+        worldData.setDirty();
         return save;
     }
 

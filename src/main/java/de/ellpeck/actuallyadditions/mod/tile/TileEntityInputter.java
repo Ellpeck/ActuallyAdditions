@@ -38,6 +38,8 @@ import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
+
 public class TileEntityInputter extends TileEntityInventoryBase implements IButtonReactor, INumberReactor, INamedContainerProvider {
 
     public static final int OKAY_BUTTON_ID = 133;
@@ -88,7 +90,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
                 this.slotToPullEnd = Math.max(text, 0);
             }
         }
-        this.markDirty();
+        this.setChanged();
     }
 
     private boolean newPulling() {
@@ -132,10 +134,10 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
 
         if (this.sideToPull != -1) {
             Direction side = WorldUtil.getDirectionBySidesInOrder(this.sideToPull);
-            BlockPos offset = this.pos.offset(side);
+            BlockPos offset = this.worldPosition.relative(side);
 
-            if (this.world.isBlockLoaded(offset)) {
-                TileEntity tile = this.world.getTileEntity(offset);
+            if (this.level.hasChunkAt(offset)) {
+                TileEntity tile = this.level.getBlockEntity(offset);
 
                 if (tile != null) {
                     for (Direction facing : Direction.values()) {
@@ -168,10 +170,10 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
 
         if (this.sideToPut != -1) {
             Direction side = WorldUtil.getDirectionBySidesInOrder(this.sideToPut);
-            BlockPos offset = this.pos.offset(side);
+            BlockPos offset = this.worldPosition.relative(side);
 
-            if (this.world.isBlockLoaded(offset)) {
-                TileEntity tile = this.world.getTileEntity(offset);
+            if (this.level.hasChunkAt(offset)) {
+                TileEntity tile = this.level.getBlockEntity(offset);
 
                 if (tile != null) {
                     for (Direction facing : Direction.values()) {
@@ -236,7 +238,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
             this.sideToPull = 5;
         }
 
-        this.markDirty();
+        this.setChanged();
         this.saveDataOnChangeOrWorldStart();
     }
 
@@ -276,7 +278,7 @@ public class TileEntityInputter extends TileEntityInventoryBase implements IButt
     @Override
     public void updateEntity() {
         super.updateEntity();
-        if (!this.world.isRemote) {
+        if (!this.level.isClientSide) {
 
             //Is Block not powered by Redstone?
             if (!this.isRedstonePowered) {

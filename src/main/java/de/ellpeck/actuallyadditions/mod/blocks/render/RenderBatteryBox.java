@@ -43,26 +43,26 @@ public class RenderBatteryBox extends TileEntityRenderer<TileEntityBatteryBox> {
             return;
         }
 
-        matrices.push();
+        matrices.pushPose();
         matrices.translate(.5f, .35f, .5f);
-        matrices.rotate(Vector3f.ZP.rotationDegrees(180));
+        matrices.mulPose(Vector3f.ZP.rotationDegrees(180));
 
-        matrices.push();
+        matrices.pushPose();
         matrices.scale(0.0075F, 0.0075F, 0.0075F);
         matrices.translate(0F, 0F, -60F);
 
         stack.getCapability(CapabilityEnergy.ENERGY).ifPresent(cap -> {
-            FontRenderer font = Minecraft.getInstance().fontRenderer;
+            FontRenderer font = Minecraft.getInstance().font;
 
             String energyTotal = Lang.cleanEnergyValues(cap, false);
             String energyName = Lang.transI18n("misc", "power_name_long");
 
             for (int i = 0; i < 4; i++) {
-                font.drawString(matrices, energyTotal, -font.getStringWidth(energyTotal) / 2F, 10F, 0xFFFFFF);
-                font.drawString(matrices, energyName, -font.getStringWidth(energyName) / 2F, 20F, 0xFFFFFF);
+                font.draw(matrices, energyTotal, -font.width(energyTotal) / 2F, 10F, 0xFFFFFF);
+                font.draw(matrices, energyName, -font.width(energyName) / 2F, 20F, 0xFFFFFF);
 
                 matrices.translate(-60F, 0F, 60F);
-                matrices.rotate(Vector3f.YP.rotationDegrees(90));
+                matrices.mulPose(Vector3f.YP.rotationDegrees(90));
             }
             //            TODO: Remove if the above works
             //            NumberFormat format = NumberFormat.getInstance();
@@ -82,27 +82,27 @@ public class RenderBatteryBox extends TileEntityRenderer<TileEntityBatteryBox> {
             //            }
         });
 
-        matrices.pop(); // text rotation
-        matrices.pop(); // rotation + centering
+        matrices.popPose(); // text rotation
+        matrices.popPose(); // rotation + centering
 
-        double boop = Util.milliTime() / 800D;
+        double boop = Util.getMillis() / 800D;
         float scale = stack.getItem() instanceof BlockItem
             ? 0.85F
             : 0.65F;
 
-        matrices.push();
+        matrices.pushPose();
         matrices.translate(.5f, 1f + Math.sin(boop % (2 * Math.PI)) * 0.065, .5f);
-        matrices.rotate(Vector3f.YP.rotationDegrees((float) (boop * 40D % 360)));
+        matrices.mulPose(Vector3f.YP.rotationDegrees((float) (boop * 40D % 360)));
         matrices.scale(scale, scale, scale);
 
         try {
-            Minecraft.getInstance().getItemRenderer().renderItem(
+            Minecraft.getInstance().getItemRenderer().renderStatic(
                 stack, ItemCameraTransforms.TransformType.FIXED, combinedLight, combinedOverlay, matrices, buffer
             );
         } catch (Exception e) {
             ActuallyAdditions.LOGGER.error("Something went wrong trying to render an item in a battery box! The item is " + stack.getItem().getRegistryName() + "!", e);
         }
 
-        matrices.pop();
+        matrices.popPose();
     }
 }

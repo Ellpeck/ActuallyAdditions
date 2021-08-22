@@ -18,6 +18,8 @@ import net.minecraftforge.energy.IEnergyStorage;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
+
 public class TileEntityShockSuppressor extends TileEntityBase implements IEnergyDisplay {
 
     public static final List<TileEntityShockSuppressor> SUPPRESSORS = new ArrayList<>();
@@ -37,7 +39,7 @@ public class TileEntityShockSuppressor extends TileEntityBase implements IEnergy
     public void onChunkUnloaded() {
         super.onChunkUnloaded();
 
-        if (!this.world.isRemote) {
+        if (!this.level.isClientSide) {
             SUPPRESSORS.remove(this);
         }
     }
@@ -46,7 +48,7 @@ public class TileEntityShockSuppressor extends TileEntityBase implements IEnergy
     public void invalidateCaps() {
         super.invalidateCaps();
 
-        if (!this.world.isRemote) {
+        if (!this.level.isClientSide) {
             SUPPRESSORS.remove(this);
         }
     }
@@ -56,7 +58,7 @@ public class TileEntityShockSuppressor extends TileEntityBase implements IEnergy
     public void updateEntity() {
         super.updateEntity();
 
-        if (!this.world.isRemote) {
+        if (!this.level.isClientSide) {
             if (!this.isRemoved() && !SUPPRESSORS.contains(this)) {
                 SUPPRESSORS.add(this);
             }

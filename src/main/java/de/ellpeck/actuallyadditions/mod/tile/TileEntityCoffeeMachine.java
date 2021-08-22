@@ -43,6 +43,9 @@ import net.minecraftforge.fluids.capability.templates.FluidTank;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
+import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
+
 public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements INamedContainerProvider, IButtonReactor, ISharingFluidHandler {
 
     public static final int SLOT_COFFEE_BEANS = 0;
@@ -133,7 +136,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     @Override
     public void updateEntity() {
         super.updateEntity();
-        if (!this.world.isRemote) {
+        if (!this.level.isClientSide) {
             this.storeCoffee();
 
             if (this.brewTime > 0 || this.isRedstonePowered) {
@@ -170,7 +173,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     }
 
     public void brew() {
-        if (this.world.isRemote) {
+        if (this.level.isClientSide) {
             return;
         }
 
@@ -178,7 +181,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
         if (StackUtil.isValid(input) && input.getItem() == ActuallyItems.COFFEE_CUP.get() && !StackUtil.isValid(this.inv.getStackInSlot(SLOT_OUTPUT)) && this.coffeeCacheAmount >= CACHE_USE && this.tank.getFluid().getFluid() == Fluids.WATER && this.tank.getFluidAmount() >= WATER_USE) {
             if (this.storage.getEnergyStored() >= ENERGY_USED) {
                 if (this.brewTime % 30 == 0) {
-                    this.world.playSound(null, this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), SoundHandler.coffeeMachine, SoundCategory.BLOCKS, 0.1F, 1.0F);
+                    this.level.playSound(null, this.getBlockPos().getX(), this.getBlockPos().getY(), this.getBlockPos().getZ(), SoundHandler.coffeeMachine, SoundCategory.BLOCKS, 0.1F, 1.0F);
                 }
 
                 this.brewTime++;

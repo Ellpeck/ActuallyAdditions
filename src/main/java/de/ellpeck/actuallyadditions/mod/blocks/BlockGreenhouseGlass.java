@@ -27,7 +27,7 @@ import java.util.Random;
 
 public class BlockGreenhouseGlass extends BlockBase {
     public BlockGreenhouseGlass() {
-        super(ActuallyBlocks.defaultPickProps(0, 0.5F, 10.0F).sound(SoundType.GLASS).tickRandomly());
+        super(ActuallyBlocks.defaultPickProps(0, 0.5F, 10.0F).sound(SoundType.GLASS).randomTicks());
     }
 
 
@@ -44,16 +44,16 @@ public class BlockGreenhouseGlass extends BlockBase {
 
 
     @Override
-    public BlockRenderType getRenderType(BlockState state) {
+    public BlockRenderType getRenderShape(BlockState state) {
         return BlockRenderType.INVISIBLE;
     }
 
     @Override
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random rand) {
-        if (world.isRemote) {
+        if (world.isClientSide) {
             return;
         }
-        if (world.canBlockSeeSky(pos) && world.isDaytime()) {
+        if (world.canSeeSkyFromBelowWater(pos) && world.isDay()) {
             Triple<BlockPos, BlockState, IGrowable> trip = this.firstBlock(world, pos);
             boolean once = false;
             if (trip != null) {
@@ -61,31 +61,31 @@ public class BlockGreenhouseGlass extends BlockBase {
                     BlockState growState = i == 0
                         ? trip.getMiddle()
                         : world.getBlockState(trip.getLeft());
-                    if (growState.getBlock() == trip.getRight() && trip.getRight().canGrow(world, trip.getLeft(), growState, false)) {
-                        trip.getRight().grow(world, rand, trip.getLeft(), growState);
+                    if (growState.getBlock() == trip.getRight() && trip.getRight().isValidBonemealTarget(world, trip.getLeft(), growState, false)) {
+                        trip.getRight().performBonemeal(world, rand, trip.getLeft(), growState);
                         once = true;
                     }
                 }
             }
             if (once) {
-                world.playEvent(2005, trip.getMiddle().isOpaqueCube(world, trip.getLeft())
-                    ? trip.getLeft().up()
+                world.levelEvent(2005, trip.getMiddle().isSolidRender(world, trip.getLeft())
+                    ? trip.getLeft().above()
                     : trip.getLeft(), 0);
             }
         }
     }
 
     public Triple<BlockPos, BlockState, IGrowable> firstBlock(World world, BlockPos glassPos) {
-        BlockPos.Mutable mut = new BlockPos(glassPos).toMutable();
+        BlockPos.Mutable mut = new BlockPos(glassPos).mutable();
         while (true) {
-            mut.setPos(mut.getX(), mut.getY() - 1, mut.getZ());
+            mut.set(mut.getX(), mut.getY() - 1, mut.getZ());
             if (mut.getY() < 0) {
                 return null;
             }
             BlockState state = world.getBlockState(mut);
-            if (state.isOpaqueCube(world, mut) || state.getBlock() instanceof IGrowable || state.getBlock() == this) {
+            if (state.isSolidRender(world, mut) || state.getBlock() instanceof IGrowable || state.getBlock() == this) {
                 if (state.getBlock() instanceof IGrowable) {
-                    return Triple.of(mut.toImmutable(), state, (IGrowable) state.getBlock());
+                    return Triple.of(mut.immutable(), state, (IGrowable) state.getBlock());
                 } else {
                     return null;
                 }

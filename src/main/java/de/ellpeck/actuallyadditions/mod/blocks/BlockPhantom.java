@@ -52,14 +52,14 @@ public class BlockPhantom extends BlockContainerBase implements IHudDisplay {
     }
 
     @Override
-    public boolean canProvidePower(BlockState state) {
+    public boolean isSignalSource(BlockState state) {
         return this.type == Type.REDSTONEFACE;
     }
 
     @Override
-    public int getWeakPower(BlockState blockState, IBlockReader world, BlockPos pos, Direction side) {
+    public int getSignal(BlockState blockState, IBlockReader world, BlockPos pos, Direction side) {
         if (this.type == Type.REDSTONEFACE) {
-            TileEntity tile = world.getTileEntity(pos);
+            TileEntity tile = world.getBlockEntity(pos);
             if (tile instanceof TileEntityPhantomRedstoneface) {
                 return ((TileEntityPhantomRedstoneface) tile).providesWeak[side.ordinal()];
             }
@@ -68,9 +68,9 @@ public class BlockPhantom extends BlockContainerBase implements IHudDisplay {
     }
 
     @Override
-    public int getStrongPower(BlockState blockState, IBlockReader world, BlockPos pos, Direction side) {
+    public int getDirectSignal(BlockState blockState, IBlockReader world, BlockPos pos, Direction side) {
         if (this.type == Type.REDSTONEFACE) {
-            TileEntity tile = world.getTileEntity(pos);
+            TileEntity tile = world.getBlockEntity(pos);
             if (tile instanceof TileEntityPhantomRedstoneface) {
                 return ((TileEntityPhantomRedstoneface) tile).providesStrong[side.ordinal()];
             }
@@ -84,7 +84,7 @@ public class BlockPhantom extends BlockContainerBase implements IHudDisplay {
     }
 
     @Override
-    public TileEntity createNewTileEntity(IBlockReader worldIn) {
+    public TileEntity newBlockEntity(IBlockReader worldIn) {
         switch (this.type) {
             case PLACER:
                 return new TileEntityPhantomPlacer();
@@ -103,13 +103,13 @@ public class BlockPhantom extends BlockContainerBase implements IHudDisplay {
 
     // TODO: [port] validate this works
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (this.tryToggleRedstone(world, pos, player)) {
             return ActionResultType.PASS;
         }
 
-        if (!world.isRemote) {
-            TileEntity tile = world.getTileEntity(pos);
+        if (!world.isClientSide) {
+            TileEntity tile = world.getBlockEntity(pos);
             if (tile instanceof IPhantomTile && ((IPhantomTile) tile).getGuiID() != -1) {
                 NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) tile, pos);
             }
@@ -125,27 +125,27 @@ public class BlockPhantom extends BlockContainerBase implements IHudDisplay {
         if (!(rayCast instanceof BlockRayTraceResult)) {
             return;
         }
-        BlockPos pos = ((BlockRayTraceResult) rayCast).getPos();
-        TileEntity tile = minecraft.world.getTileEntity(pos);
+        BlockPos pos = ((BlockRayTraceResult) rayCast).getBlockPos();
+        TileEntity tile = minecraft.level.getBlockEntity(pos);
         if (tile != null) {
             if (tile instanceof IPhantomTile) {
                 IPhantomTile phantom = (IPhantomTile) tile;
-                minecraft.fontRenderer.drawStringWithShadow(matrices, TextFormatting.GOLD + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".blockPhantomRange.desc") + ": " + phantom.getRange(), resolution.getScaledWidth() / 2 + 5, resolution.getScaledHeight() / 2 - 40, StringUtil.DECIMAL_COLOR_WHITE);
+                minecraft.font.drawShadow(matrices, TextFormatting.GOLD + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".blockPhantomRange.desc") + ": " + phantom.getRange(), resolution.getGuiScaledWidth() / 2 + 5, resolution.getGuiScaledHeight() / 2 - 40, StringUtil.DECIMAL_COLOR_WHITE);
                 if (phantom.hasBoundPosition()) {
                     int distance = MathHelper.ceil(new Vector3d(pos.getX(), pos.getY(), pos.getZ()).distanceTo(new Vector3d(phantom.getBoundPosition().getX(), phantom.getBoundPosition().getY(), phantom.getBoundPosition().getZ())));
-                    BlockState state = minecraft.world.getBlockState(phantom.getBoundPosition());
+                    BlockState state = minecraft.level.getBlockState(phantom.getBoundPosition());
                     Block block = state.getBlock();
-                    Item item = Item.getItemFromBlock(block);
-                    String name = item.getDisplayName(new ItemStack(block)).getString();
-                    StringUtil.drawSplitString(minecraft.fontRenderer, StringUtil.localizeFormatted("tooltip." + ActuallyAdditions.MODID + ".phantom.blockInfo.desc", name, phantom.getBoundPosition().getX(), phantom.getBoundPosition().getY(), phantom.getBoundPosition().getZ(), distance), resolution.getScaledWidth() / 2 + 5, resolution.getScaledHeight() / 2 - 30, 200, StringUtil.DECIMAL_COLOR_WHITE, true);
+                    Item item = Item.byBlock(block);
+                    String name = item.getName(new ItemStack(block)).getString();
+                    StringUtil.drawSplitString(minecraft.font, StringUtil.localizeFormatted("tooltip." + ActuallyAdditions.MODID + ".phantom.blockInfo.desc", name, phantom.getBoundPosition().getX(), phantom.getBoundPosition().getY(), phantom.getBoundPosition().getZ(), distance), resolution.getGuiScaledWidth() / 2 + 5, resolution.getGuiScaledHeight() / 2 - 30, 200, StringUtil.DECIMAL_COLOR_WHITE, true);
 
                     if (phantom.isBoundThingInRange()) {
-                        StringUtil.drawSplitString(minecraft.fontRenderer, TextFormatting.DARK_GREEN + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".phantom.connectedRange.desc"), resolution.getScaledWidth() / 2 + 5, resolution.getScaledHeight() / 2 + 25, 200, StringUtil.DECIMAL_COLOR_WHITE, true);
+                        StringUtil.drawSplitString(minecraft.font, TextFormatting.DARK_GREEN + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".phantom.connectedRange.desc"), resolution.getGuiScaledWidth() / 2 + 5, resolution.getGuiScaledHeight() / 2 + 25, 200, StringUtil.DECIMAL_COLOR_WHITE, true);
                     } else {
-                        StringUtil.drawSplitString(minecraft.fontRenderer, TextFormatting.DARK_RED + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".phantom.connectedNoRange.desc"), resolution.getScaledWidth() / 2 + 5, resolution.getScaledHeight() / 2 + 25, 200, StringUtil.DECIMAL_COLOR_WHITE, true);
+                        StringUtil.drawSplitString(minecraft.font, TextFormatting.DARK_RED + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".phantom.connectedNoRange.desc"), resolution.getGuiScaledWidth() / 2 + 5, resolution.getGuiScaledHeight() / 2 + 25, 200, StringUtil.DECIMAL_COLOR_WHITE, true);
                     }
                 } else {
-                    minecraft.fontRenderer.drawStringWithShadow(matrices, TextFormatting.RED + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".phantom.notConnected.desc"), resolution.getScaledWidth() / 2 + 5, resolution.getScaledHeight() / 2 + 25, StringUtil.DECIMAL_COLOR_WHITE);
+                    minecraft.font.drawShadow(matrices, TextFormatting.RED + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".phantom.notConnected.desc"), resolution.getGuiScaledWidth() / 2 + 5, resolution.getGuiScaledHeight() / 2 + 25, StringUtil.DECIMAL_COLOR_WHITE);
                 }
             }
         }

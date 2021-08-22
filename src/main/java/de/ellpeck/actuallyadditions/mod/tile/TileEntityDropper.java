@@ -25,6 +25,8 @@ import net.minecraft.util.text.StringTextComponent;
 
 import javax.annotation.Nullable;
 
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
+
 public class TileEntityDropper extends TileEntityInventoryBase implements INamedContainerProvider {
 
     private int currentTime;
@@ -52,7 +54,7 @@ public class TileEntityDropper extends TileEntityInventoryBase implements INamed
     @Override
     public void updateEntity() {
         super.updateEntity();
-        if (!this.world.isRemote) {
+        if (!this.level.isClientSide) {
             if (!this.isRedstonePowered && !this.isPulseMode) {
                 if (this.currentTime > 0) {
                     this.currentTime--;
@@ -69,10 +71,10 @@ public class TileEntityDropper extends TileEntityInventoryBase implements INamed
     private void doWork() {
         ItemStack theoreticalRemove = this.removeFromInventory(false);
         if (StackUtil.isValid(theoreticalRemove)) {
-            BlockState state = this.world.getBlockState(this.pos);
+            BlockState state = this.level.getBlockState(this.worldPosition);
             ItemStack drop = theoreticalRemove.copy();
             drop.setCount(1);
-            WorldUtil.dropItemAtSide(WorldUtil.getDirectionByPistonRotation(state), this.world, this.pos, drop);
+            WorldUtil.dropItemAtSide(WorldUtil.getDirectionByPistonRotation(state), this.level, this.worldPosition, drop);
             this.removeFromInventory(true);
         }
     }
@@ -83,7 +85,7 @@ public class TileEntityDropper extends TileEntityInventoryBase implements INamed
                 ItemStack slot = this.inv.getStackInSlot(i).copy();
                 if (actuallyDo) {
                     this.inv.setStackInSlot(i, StackUtil.shrink(this.inv.getStackInSlot(i), 1));
-                    this.markDirty();
+                    this.setChanged();
                 }
                 return slot;
             }

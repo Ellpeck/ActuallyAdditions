@@ -30,8 +30,8 @@ public class ReedFarmerBehavior implements IFarmerBehavior {
         int use = 250;
         if (farmer.getEnergy() >= use) {
             if (seed.getItem() == Items.SUGAR_CANE) {
-                if (Blocks.SUGAR_CANE.getDefaultState().isValidPosition(world, pos)) {
-                    world.setBlockState(pos, Blocks.SUGAR_CANE.getDefaultState(), 2);
+                if (Blocks.SUGAR_CANE.defaultBlockState().canSurvive(world, pos)) {
+                    world.setBlock(pos, Blocks.SUGAR_CANE.defaultBlockState(), 2);
                     farmer.extractEnergy(use);
                     return FarmerResult.SUCCESS;
                 }
@@ -51,7 +51,7 @@ public class ReedFarmerBehavior implements IFarmerBehavior {
 
                 for (int i = 2; i >= 1; --i) {
                     if (farmer.getEnergy() >= use) {
-                        BlockPos up = pos.up(i);
+                        BlockPos up = pos.above(i);
                         BlockState upState = world.getBlockState(up);
                         if (upState.getBlock() instanceof SugarCaneBlock) {
                             NonNullList<ItemStack> drops = NonNullList.create();
@@ -59,8 +59,8 @@ public class ReedFarmerBehavior implements IFarmerBehavior {
 
                             if (!drops.isEmpty()) {
                                 if (farmer.canAddToOutput(drops)) {
-                                    world.playEvent(2001, up, Block.getStateId(upState));
-                                    world.setBlockState(up, Blocks.AIR.getDefaultState());
+                                    world.levelEvent(2001, up, Block.getId(upState));
+                                    world.setBlockAndUpdate(up, Blocks.AIR.defaultBlockState());
 
                                     farmer.extractEnergy(use);
                                     farmer.addToOutput(drops);

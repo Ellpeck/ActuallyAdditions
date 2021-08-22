@@ -31,16 +31,16 @@ public class TileEntityPhantomRedstoneface extends TileEntityPhantomface {
 
     @Override
     public void updateEntity() {
-        if (!this.world.isRemote) {
+        if (!this.level.isClientSide) {
             if (this.isBoundThingInRange()) {
-                BlockState boundState = this.world.getBlockState(this.boundPosition);
+                BlockState boundState = this.level.getBlockState(this.boundPosition);
                 if (boundState != null) {
                     Block boundBlock = boundState.getBlock();
                     if (boundBlock != null) {
                         for (int i = 0; i < Direction.values().length; i++) {
                             Direction facing = Direction.values()[i];
-                            this.providesWeak[i] = boundState.getWeakPower(this.world, this.boundPosition, facing);
-                            this.providesStrong[i] = boundState.getStrongPower(this.world, this.boundPosition, facing);
+                            this.providesWeak[i] = boundState.getSignal(this.level, this.boundPosition, facing);
+                            this.providesStrong[i] = boundState.getDirectSignal(this.level, this.boundPosition, facing);
                         }
                     }
                 }

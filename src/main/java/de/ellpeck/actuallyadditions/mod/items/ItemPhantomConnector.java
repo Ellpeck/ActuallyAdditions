@@ -45,7 +45,7 @@ public class ItemPhantomConnector extends ItemBase {
             return null;
         }
 
-        return RegistryKey.getOrCreateKey(Registry.WORLD_KEY, new ResourceLocation(tag.getString("WorldOfTileStored")));
+        return RegistryKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(tag.getString("WorldOfTileStored")));
     }
 
     public static BlockPos getStoredPosition(ItemStack stack) {
@@ -73,35 +73,35 @@ public class ItemPhantomConnector extends ItemBase {
         tag.putInt("XCoordOfTileStored", x);
         tag.putInt("YCoordOfTileStored", y);
         tag.putInt("ZCoordOfTileStored", z);
-        tag.putString("WorldOfTileStored", world.getDimensionKey().getLocation().toString());
+        tag.putString("WorldOfTileStored", world.dimension().location().toString());
     }
 
     @Override
-    public ActionResultType onItemUse(ItemUseContext context) {
-        ItemStack stack = context.getPlayer().getHeldItem(context.getHand());
-        if (!context.getWorld().isRemote) {
+    public ActionResultType useOn(ItemUseContext context) {
+        ItemStack stack = context.getPlayer().getItemInHand(context.getHand());
+        if (!context.getLevel().isClientSide) {
             //Passing Data to Phantoms
-            BlockPos pos = context.getPos();
-            TileEntity tile = context.getWorld().getTileEntity(pos);
+            BlockPos pos = context.getClickedPos();
+            TileEntity tile = context.getLevel().getBlockEntity(pos);
             if (tile != null) {
                 //Passing to Phantom
                 if (tile instanceof IPhantomTile) {
                     BlockPos stored = getStoredPosition(stack);
-                    if (stored != null && getStoredWorld(stack) == context.getWorld().getDimensionKey()) {
+                    if (stored != null && getStoredWorld(stack) == context.getLevel().dimension()) {
                         ((IPhantomTile) tile).setBoundPosition(stored);
                         if (tile instanceof TileEntityBase) {
                             ((TileEntityBase) tile).sendUpdate();
                         }
                         clearStorage(stack, "XCoordOfTileStored", "YCoordOfTileStored", "ZCoordOfTileStored", "WorldOfTileStored");
-                        context.getPlayer().sendStatusMessage(new TranslationTextComponent("tooltip." + ActuallyAdditions.MODID + ".phantom.connected.desc"), true);
+                        context.getPlayer().displayClientMessage(new TranslationTextComponent("tooltip." + ActuallyAdditions.MODID + ".phantom.connected.desc"), true);
                         return ActionResultType.SUCCESS;
                     }
                     return ActionResultType.FAIL;
                 }
             }
             //Storing Connections
-            storeConnection(stack, pos.getX(), pos.getY(), pos.getZ(), context.getWorld());
-            context.getPlayer().sendStatusMessage(new TranslationTextComponent("tooltip." + ActuallyAdditions.MODID + ".phantom.stored.desc"), true);
+            storeConnection(stack, pos.getX(), pos.getY(), pos.getZ(), context.getLevel());
+            context.getPlayer().displayClientMessage(new TranslationTextComponent("tooltip." + ActuallyAdditions.MODID + ".phantom.stored.desc"), true);
         }
         return ActionResultType.SUCCESS;
     }
@@ -113,14 +113,14 @@ public class ItemPhantomConnector extends ItemBase {
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World playerIn, List<ITextComponent> list, ITooltipFlag advanced) {
+    public void appendHoverText(ItemStack stack, @Nullable World playerIn, List<ITextComponent> list, ITooltipFlag advanced) {
         BlockPos coords = getStoredPosition(stack);
         if (coords != null) {
-            list.add(new TranslationTextComponent("tooltip." + ActuallyAdditions.MODID + ".boundTo.desc").appendString(":"));
+            list.add(new TranslationTextComponent("tooltip." + ActuallyAdditions.MODID + ".boundTo.desc").append(":"));
             list.add(new StringTextComponent("X: " + coords.getX()));
             list.add(new StringTextComponent("Y: " + coords.getY()));
             list.add(new StringTextComponent("Z: " + coords.getZ()));
-            list.add(new TranslationTextComponent("tooltip." + ActuallyAdditions.MODID + ".clearStorage.desc").mergeStyle(TextFormatting.ITALIC));
+            list.add(new TranslationTextComponent("tooltip." + ActuallyAdditions.MODID + ".clearStorage.desc").withStyle(TextFormatting.ITALIC));
         }
     }
 }

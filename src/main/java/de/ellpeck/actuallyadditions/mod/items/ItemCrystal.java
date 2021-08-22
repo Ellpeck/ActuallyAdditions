@@ -26,7 +26,7 @@ public class ItemCrystal extends ItemBase {
     }
 
     @Override
-    public boolean hasEffect(ItemStack stack) {
+    public boolean isFoil(ItemStack stack) {
         return this.isEmpowered;
     }
 

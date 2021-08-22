@@ -32,28 +32,28 @@ import java.util.List;
 public class ItemFilter extends ItemBase {
 
     public ItemFilter() {
-        super(ActuallyItems.defaultProps().maxStackSize(1));
+        super(ActuallyItems.defaultProps().stacksTo(1));
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
-        if (!world.isRemote && hand == Hand.MAIN_HAND) {
+    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+        if (!world.isClientSide && hand == Hand.MAIN_HAND) {
             NetworkHooks.openGui((ServerPlayerEntity) player, new SimpleNamedContainerProvider((windowId, inv, playerEnt) -> new ContainerFilter(windowId, inv), StringTextComponent.EMPTY));
             //            player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.FILTER.ordinal(), world, (int) player.posX, (int) player.posY, (int) player.posZ);
         }
-        return ActionResult.resultPass(player.getHeldItem(hand));
+        return ActionResult.pass(player.getItemInHand(hand));
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        super.addInformation(stack, worldIn, tooltip, flagIn);
+    public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+        super.appendHoverText(stack, worldIn, tooltip, flagIn);
 
         ItemStackHandlerAA inv = new ItemStackHandlerAA(ContainerFilter.SLOT_AMOUNT);
         ItemDrill.loadSlotsFromNBT(inv, stack);
         for (int i = 0; i < inv.getSlots(); i++) {
             ItemStack slot = inv.getStackInSlot(i);
             if (StackUtil.isValid(slot)) {
-                tooltip.add(slot.getItem().getDisplayName(slot));
+                tooltip.add(slot.getItem().getName(slot));
             }
         }
     }

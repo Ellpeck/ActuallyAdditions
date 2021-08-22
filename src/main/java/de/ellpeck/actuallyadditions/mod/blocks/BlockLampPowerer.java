@@ -37,15 +37,15 @@ public class BlockLampPowerer extends FullyDirectionalBlock {
     }
 
     @Override
-    public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean isMoving) {
+    public void onPlace(BlockState state, World world, BlockPos pos, BlockState oldState, boolean isMoving) {
         this.updateLamp(world, pos);
     }
 
     private void updateLamp(World world, BlockPos pos) {
-        if (!world.isRemote) {
+        if (!world.isClientSide) {
             BlockState state = world.getBlockState(pos);
-            BlockPos coords = pos.offset(WorldUtil.getDirectionByPistonRotation(state));
-            this.updateLampsAtPos(world, coords, world.getRedstonePowerFromNeighbors(pos) > 0, new ArrayList<>());
+            BlockPos coords = pos.relative(WorldUtil.getDirectionByPistonRotation(state));
+            this.updateLampsAtPos(world, coords, world.getBestNeighborSignal(pos) > 0, new ArrayList<>());
         }
     }
 
@@ -53,12 +53,12 @@ public class BlockLampPowerer extends FullyDirectionalBlock {
         BlockState state = world.getBlockState(pos);
         Block block = state.getBlock();
         if (block instanceof BlockColoredLamp) {
-            if (state.get(BlockStateProperties.LIT) && !powered) {
-                world.setBlockState(pos, state.with(BlockStateProperties.LIT, false));
+            if (state.getValue(BlockStateProperties.LIT) && !powered) {
+                world.setBlockAndUpdate(pos, state.setValue(BlockStateProperties.LIT, false));
             }
 
-            if (!state.get(BlockStateProperties.LIT) && powered) {
-                world.setBlockState(pos, state.with(BlockStateProperties.LIT, true));
+            if (!state.getValue(BlockStateProperties.LIT) && powered) {
+                world.setBlockAndUpdate(pos, state.setValue(BlockStateProperties.LIT, true));
             }
 
             this.updateSurrounding(world, pos, powered, updatedAlready);
@@ -67,7 +67,7 @@ public class BlockLampPowerer extends FullyDirectionalBlock {
 
     private void updateSurrounding(World world, BlockPos pos, boolean powered, List<BlockPos> updatedAlready) {
         for (Direction side : Direction.values()) {
-            BlockPos offset = pos.offset(side);
+            BlockPos offset = pos.relative(side);
             if (!updatedAlready.contains(offset)) {
                 updatedAlready.add(pos);
                 this.updateLampsAtPos(world, offset, powered, updatedAlready);
@@ -77,7 +77,7 @@ public class BlockLampPowerer extends FullyDirectionalBlock {
 
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        switch (state.get(FACING)) {
+        switch (state.getValue(FACING)) {
             case EAST:
                 return Shapes.LampPowererShapes.SHAPE_E;
             case SOUTH:

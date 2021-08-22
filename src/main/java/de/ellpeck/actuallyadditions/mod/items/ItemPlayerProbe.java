@@ -35,49 +35,49 @@ import java.util.UUID;
 public class ItemPlayerProbe extends ItemBase {
 
     public ItemPlayerProbe() {
-        super(ActuallyItems.defaultProps().maxStackSize(1));
+        super(ActuallyItems.defaultProps().stacksTo(1));
     }
 
     // TODO: [port] might be the wrong event
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
-        if (!world.isRemote) {
+        if (!world.isClientSide) {
             CompoundNBT compound = stack.getOrCreateTag();
             if (compound.contains("UUIDMost")) {
-                UUID id = compound.getUniqueId("UUID");
-                PlayerEntity player = world.getPlayerByUuid(id);
+                UUID id = compound.getUUID("UUID");
+                PlayerEntity player = world.getPlayerByUUID(id);
                 if (player != null) {
-                    if (player.isSneaking()) {
+                    if (player.isShiftKeyDown()) {
                         ItemPhantomConnector.clearStorage(stack, "UUIDLeast", "UUIDMost", "Name");
-                        ((PlayerEntity) entity).sendStatusMessage(new TranslationTextComponent("tooltip." + ActuallyAdditions.MODID + ".playerProbe.disconnect.1"), false);
-                        player.sendStatusMessage(new TranslationTextComponent("tooltip." + ActuallyAdditions.MODID + ".playerProbe.notice"), false);
+                        ((PlayerEntity) entity).displayClientMessage(new TranslationTextComponent("tooltip." + ActuallyAdditions.MODID + ".playerProbe.disconnect.1"), false);
+                        player.displayClientMessage(new TranslationTextComponent("tooltip." + ActuallyAdditions.MODID + ".playerProbe.notice"), false);
                         //TheAchievements.GET_UNPROBED.get(player);
                     }
                 } else {
                     ItemPhantomConnector.clearStorage(stack, "UUIDLeast", "UUIDMost", "Name");
-                    ((PlayerEntity) entity).sendStatusMessage(new TranslationTextComponent("tooltip." + ActuallyAdditions.MODID + ".playerProbe.disconnect.2"), false);
+                    ((PlayerEntity) entity).displayClientMessage(new TranslationTextComponent("tooltip." + ActuallyAdditions.MODID + ".playerProbe.disconnect.2"), false);
                 }
             }
         }
     }
 
     @Override
-    public ActionResultType onItemUse(ItemUseContext context) {
+    public ActionResultType useOn(ItemUseContext context) {
         PlayerEntity player = context.getPlayer();
         if (player == null) {
             return ActionResultType.FAIL;
         }
 
-        ItemStack stack = player.getHeldItem(context.getHand());
-        TileEntity tile = context.getWorld().getTileEntity(context.getPos());
+        ItemStack stack = player.getItemInHand(context.getHand());
+        TileEntity tile = context.getLevel().getBlockEntity(context.getClickedPos());
         if (tile instanceof TileEntityPlayerInterface) {
             CompoundNBT compound = stack.getOrCreateTag();
             if (compound.contains("UUIDMost")) {
-                if (!context.getWorld().isRemote) {
+                if (!context.getLevel().isClientSide) {
                     TileEntityPlayerInterface face = (TileEntityPlayerInterface) tile;
-                    face.connectedPlayer = compound.getUniqueId("UUID");
+                    face.connectedPlayer = compound.getUUID("UUID");
                     face.playerName = compound.getString("Name");
-                    face.markDirty();
+                    face.setChanged();
                     face.sendUpdate();
 
                     ItemPhantomConnector.clearStorage(stack, "UUIDLeast", "UUIDMost", "Name");
@@ -89,17 +89,17 @@ public class ItemPlayerProbe extends ItemBase {
     }
 
     @Override
-    public ActionResultType itemInteractionForEntity(ItemStack aStack, PlayerEntity player, LivingEntity entity, Hand hand) {
-        if (!player.world.isRemote) {
-            ItemStack stack = player.getHeldItemMainhand();
+    public ActionResultType interactLivingEntity(ItemStack aStack, PlayerEntity player, LivingEntity entity, Hand hand) {
+        if (!player.level.isClientSide) {
+            ItemStack stack = player.getMainHandItem();
             if (StackUtil.isValid(stack) && stack.getItem() == this) {
                 if (entity instanceof PlayerEntity) {
                     PlayerEntity playerHit = (PlayerEntity) entity;
 
-                    if (!playerHit.isSneaking()) {
+                    if (!playerHit.isShiftKeyDown()) {
                         CompoundNBT compound = stack.getOrCreateTag();
                         compound.putString("Name", playerHit.getName().getString());
-                        compound.putUniqueId("UUID", playerHit.getUniqueID());
+                        compound.putUUID("UUID", playerHit.getUUID());
                         return ActionResultType.SUCCESS;
                     }
                 }
@@ -109,10 +109,10 @@ public class ItemPlayerProbe extends ItemBase {
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World playerIn, List<ITextComponent> tooltip, ITooltipFlag advanced) {
+    public void appendHoverText(ItemStack stack, @Nullable World playerIn, List<ITextComponent> tooltip, ITooltipFlag advanced) {
         if (stack.getOrCreateTag().contains("Name")) {
             String name = stack.getOrCreateTag().getString("Name");
-            tooltip.add(new TranslationTextComponent("tooltip." + ActuallyAdditions.MODID + ".playerProbe.probing").appendString(": " + name));
+            tooltip.add(new TranslationTextComponent("tooltip." + ActuallyAdditions.MODID + ".playerProbe.probing").append(": " + name));
         }
     }
 }

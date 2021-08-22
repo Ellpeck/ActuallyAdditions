@@ -116,8 +116,8 @@ public abstract class GuiBooklet extends GuiBookletBase {
 
         if (this.hasSearchBar()) {
             this.searchField = new TextFieldWidget(this.font, this.guiLeft + this.xSize + 2, this.guiTop + this.ySize - 40 + 2, 64, 12, StringTextComponent.EMPTY);
-            this.searchField.setMaxStringLength(50);
-            this.searchField.setEnableBackgroundDrawing(false);
+            this.searchField.setMaxLength(50);
+            this.searchField.setBordered(false);
             this.children.add(this.searchField);
         }
 
@@ -135,13 +135,13 @@ public abstract class GuiBooklet extends GuiBookletBase {
             }
         }
 
-        this.buttonTrials = new TrialsButton(this, btn -> this.getMinecraft().displayGuiScreen(new GuiEntry(this.previousScreen, this, ActuallyAdditionsAPI.entryTrials, 0, "", false)));
+        this.buttonTrials = new TrialsButton(this, btn -> this.getMinecraft().setScreen(new GuiEntry(this.previousScreen, this, ActuallyAdditionsAPI.entryTrials, 0, "", false)));
         this.addButton(this.buttonTrials);
     }
 
     @Override
-    public void onClose() {
-        super.onClose();
+    public void removed() {
+        super.removed();
 
         //Don't cache the parent GUI, otherwise it opens again when you close the cached book!
         this.previousScreen = null;
@@ -173,19 +173,19 @@ public abstract class GuiBooklet extends GuiBookletBase {
     }
 
     public void drawScreenPre(MatrixStack matrices, int mouseX, int mouseY, float partialTicks) {
-        GlStateManager.color4f(1F, 1F, 1F, 1F);
-        this.getMinecraft().getTextureManager().bindTexture(RES_LOC_GUI);
+        GlStateManager._color4f(1F, 1F, 1F, 1F);
+        this.getMinecraft().getTextureManager().bind(RES_LOC_GUI);
         blit(matrices, this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize, 512, 512);
 
         if (this.hasSearchBar()) {
-            this.getMinecraft().getTextureManager().bindTexture(RES_LOC_GADGETS);
+            this.getMinecraft().getTextureManager().bind(RES_LOC_GADGETS);
             this.blit(matrices, this.guiLeft + this.xSize, this.guiTop + this.ySize - 40, 188, 0, 68, 14);
 
             //            boolean unicodeBefore = this.font.getUnicodeFlag();
             //            this.font.setUnicodeFlag(true);
 
-            if (!this.searchField.isFocused() && (this.searchField.getText() == null || this.searchField.getText().isEmpty())) {
-                this.font.drawString(matrices, TextFormatting.ITALIC + StringUtil.localize("info." + ActuallyAdditions.MODID + ".booklet.searchField"), this.guiLeft + this.xSize + 2, this.guiTop + this.ySize - 40 + 2, 0xFFFFFF);
+            if (!this.searchField.isFocused() && (this.searchField.getValue() == null || this.searchField.getValue().isEmpty())) {
+                this.font.draw(matrices, TextFormatting.ITALIC + StringUtil.localize("info." + ActuallyAdditions.MODID + ".booklet.searchField"), this.guiLeft + this.xSize + 2, this.guiTop + this.ySize - 40 + 2, 0xFFFFFF);
             }
 
             this.searchField.render(matrices, mouseX, mouseY, partialTicks);
@@ -279,7 +279,7 @@ public abstract class GuiBooklet extends GuiBookletBase {
     }
 
     public void onBackButtonPressed() {
-        this.getMinecraft().displayGuiScreen(new GuiMainPage(this.previousScreen));
+        this.getMinecraft().setScreen(new GuiMainPage(this.previousScreen));
     }
 
     public boolean hasSearchBar() {
@@ -310,7 +310,7 @@ public abstract class GuiBooklet extends GuiBookletBase {
         GuiBookletBase parent = !(this instanceof GuiEntry)
             ? this
             : this.parentPage;
-        this.getMinecraft().displayGuiScreen(new GuiEntry(this.previousScreen, parent, ActuallyAdditionsAPI.entryAllAndSearch, 0, searchBarText, true));
+        this.getMinecraft().setScreen(new GuiEntry(this.previousScreen, parent, ActuallyAdditionsAPI.entryAllAndSearch, 0, searchBarText, true));
     }
 
     // TODO: ensure typing still works

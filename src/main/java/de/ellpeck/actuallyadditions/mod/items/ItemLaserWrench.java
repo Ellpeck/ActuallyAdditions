@@ -36,42 +36,42 @@ public class ItemLaserWrench extends ItemBase {
     }
 
     @Override
-    public ActionResultType onItemUse(ItemUseContext context) {
-        BlockPos pos = context.getPos();
-        World world = context.getWorld();
+    public ActionResultType useOn(ItemUseContext context) {
+        BlockPos pos = context.getClickedPos();
+        World world = context.getLevel();
         PlayerEntity player = context.getPlayer();
 
-        ItemStack stack = player.getHeldItem(context.getHand());
-        TileEntity tile = world.getTileEntity(pos);
+        ItemStack stack = player.getItemInHand(context.getHand());
+        TileEntity tile = world.getBlockEntity(pos);
         if (tile instanceof TileEntityLaserRelay) {
             TileEntityLaserRelay relay = (TileEntityLaserRelay) tile;
-            if (!world.isRemote) {
+            if (!world.isClientSide) {
                 if (ItemPhantomConnector.getStoredPosition(stack) == null) {
                     ItemPhantomConnector.storeConnection(stack, pos.getX(), pos.getY(), pos.getZ(), world);
-                    player.sendStatusMessage(new TranslationTextComponent("tooltip." + ActuallyAdditions.MODID + ".laser.stored.desc"), true);
+                    player.displayClientMessage(new TranslationTextComponent("tooltip." + ActuallyAdditions.MODID + ".laser.stored.desc"), true);
                 } else {
                     BlockPos savedPos = ItemPhantomConnector.getStoredPosition(stack);
                     if (savedPos != null) {
-                        TileEntity savedTile = world.getTileEntity(savedPos);
+                        TileEntity savedTile = world.getBlockEntity(savedPos);
                         if (savedTile instanceof TileEntityLaserRelay) {
-                            int distanceSq = (int) savedPos.distanceSq(pos);
+                            int distanceSq = (int) savedPos.distSqr(pos);
                             TileEntityLaserRelay savedRelay = (TileEntityLaserRelay) savedTile;
 
                             int lowestRange = Math.min(relay.getMaxRange(), savedRelay.getMaxRange());
                             int range = lowestRange * lowestRange;
-                            if (ItemPhantomConnector.getStoredWorld(stack) == world.getDimensionKey() && savedRelay.type == relay.type && distanceSq <= range && ActuallyAdditionsAPI.connectionHandler.addConnection(savedPos, pos, relay.type, world, false, true)) {
+                            if (ItemPhantomConnector.getStoredWorld(stack) == world.dimension() && savedRelay.type == relay.type && distanceSq <= range && ActuallyAdditionsAPI.connectionHandler.addConnection(savedPos, pos, relay.type, world, false, true)) {
                                 ItemPhantomConnector.clearStorage(stack, "XCoordOfTileStored", "YCoordOfTileStored", "ZCoordOfTileStored", "WorldOfTileStored");
 
                                 ((TileEntityLaserRelay) savedTile).sendUpdate();
                                 relay.sendUpdate();
 
-                                player.sendStatusMessage(new TranslationTextComponent("tooltip." + ActuallyAdditions.MODID + ".laser.connected.desc"), true);
+                                player.displayClientMessage(new TranslationTextComponent("tooltip." + ActuallyAdditions.MODID + ".laser.connected.desc"), true);
 
                                 return ActionResultType.SUCCESS;
                             }
                         }
 
-                        player.sendStatusMessage(new TranslationTextComponent("tooltip." + ActuallyAdditions.MODID + ".laser.cantConnect.desc"), false);
+                        player.displayClientMessage(new TranslationTextComponent("tooltip." + ActuallyAdditions.MODID + ".laser.cantConnect.desc"), false);
                         ItemPhantomConnector.clearStorage(stack, "XCoordOfTileStored", "YCoordOfTileStored", "ZCoordOfTileStored", "WorldOfTileStored");
                     }
                 }
@@ -89,14 +89,14 @@ public class ItemLaserWrench extends ItemBase {
     //    }
 
     @Override
-    public void addInformation(ItemStack stack, World playerIn, List<ITextComponent> list, ITooltipFlag advanced) {
+    public void appendHoverText(ItemStack stack, World playerIn, List<ITextComponent> list, ITooltipFlag advanced) {
         BlockPos coords = ItemPhantomConnector.getStoredPosition(stack);
         if (coords != null) {
-            list.add(new TranslationTextComponent("tooltip." + ActuallyAdditions.MODID + ".boundTo.desc").appendString(":"));
+            list.add(new TranslationTextComponent("tooltip." + ActuallyAdditions.MODID + ".boundTo.desc").append(":"));
             list.add(new StringTextComponent("X: " + coords.getX()));
             list.add(new StringTextComponent("Y: " + coords.getY()));
             list.add(new StringTextComponent("Z: " + coords.getZ()));
-            list.add(new TranslationTextComponent("tooltip." + ActuallyAdditions.MODID + ".clearStorage.desc").mergeStyle(TextFormatting.ITALIC));
+            list.add(new TranslationTextComponent("tooltip." + ActuallyAdditions.MODID + ".clearStorage.desc").withStyle(TextFormatting.ITALIC));
         }
     }
 }

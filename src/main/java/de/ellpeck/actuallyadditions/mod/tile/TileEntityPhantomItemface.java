@@ -33,7 +33,7 @@ public class TileEntityPhantomItemface extends TileEntityPhantomface {
     @Override
     public boolean isBoundThingInRange() {
         if (super.isBoundThingInRange()) {
-            TileEntity tile = this.world.getTileEntity(this.getBoundPosition());
+            TileEntity tile = this.level.getBlockEntity(this.getBoundPosition());
             if (tile != null) {
                 for (Direction facing : Direction.values()) {
                     if (tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing).isPresent()) {

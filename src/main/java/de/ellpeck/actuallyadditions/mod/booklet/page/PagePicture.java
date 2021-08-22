@@ -44,7 +44,7 @@ public class PagePicture extends BookletPage {
     public void drawScreenPre(GuiBookletBase gui, int startX, int startY, int mouseX, int mouseY, float partialTicks) {
         super.drawScreenPre(gui, startX, startY, mouseX, mouseY, partialTicks);
 
-        gui.getMinecraft().getTextureManager().bindTexture(this.resLoc);
+        gui.getMinecraft().getTextureManager().bind(this.resLoc);
 
         RenderSystem.pushMatrix();
         RenderSystem.enableBlend();

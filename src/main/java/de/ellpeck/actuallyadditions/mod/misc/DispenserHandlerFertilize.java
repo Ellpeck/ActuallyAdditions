@@ -22,12 +22,12 @@ import net.minecraft.util.math.BlockPos;
 public class DispenserHandlerFertilize extends DefaultDispenseItemBehavior {
 
     @Override
-    public ItemStack dispenseStack(IBlockSource source, ItemStack stack) {
-        Direction facing = source.getBlockState().get(BlockStateProperties.FACING);
-        BlockPos pos = source.getBlockPos().offset(facing);
+    public ItemStack execute(IBlockSource source, ItemStack stack) {
+        Direction facing = source.getBlockState().getValue(BlockStateProperties.FACING);
+        BlockPos pos = source.getPos().relative(facing);
 
-        if (BoneMealItem.applyBonemeal(stack, source.getWorld(), pos)) {
-            source.getWorld().playEvent(2005, pos, 0);
+        if (BoneMealItem.growCrop(stack, source.getLevel(), pos)) {
+            source.getLevel().levelEvent(2005, pos, 0);
         }
 
         return stack;

@@ -30,32 +30,32 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 public class ActuallyAdditionsClient {
 
     public static void setup() {
-        ScreenManager.registerFactory(ActuallyContainers.BAG_CONTAINER.get(), GuiBag::new);
-        ScreenManager.registerFactory(ActuallyContainers.BIO_REACTOR_CONTAINER.get(), GuiBioReactor::new);
-        ScreenManager.registerFactory(ActuallyContainers.BREAKER_CONTAINER.get(), GuiBreaker::new);
-        ScreenManager.registerFactory(ActuallyContainers.CANOLA_PRESS_CONTAINER.get(), GuiCanolaPress::new);
-        ScreenManager.registerFactory(ActuallyContainers.COAL_GENERATOR_CONTAINER.get(), GuiCoalGenerator::new);
-        ScreenManager.registerFactory(ActuallyContainers.COFFEE_MACHINE_CONTAINER.get(), GuiCoffeeMachine::new);
-        ScreenManager.registerFactory(ActuallyContainers.DIRECTIONAL_BREAKER_CONTAINER.get(), GuiDirectionalBreaker::new);
-        ScreenManager.registerFactory(ActuallyContainers.DRILL_CONTAINER.get(), GuiDrill::new);
-        ScreenManager.registerFactory(ActuallyContainers.DROPPER_CONTAINER.get(), GuiDropper::new);
-        ScreenManager.registerFactory(ActuallyContainers.ENERVATOR_CONTAINER.get(), GuiEnervator::new);
-        ScreenManager.registerFactory(ActuallyContainers.ENERGIZER_CONTAINER.get(), GuiEnergizer::new);
-        ScreenManager.registerFactory(ActuallyContainers.FARMER_CONTAINER.get(), GuiFarmer::new);
-        ScreenManager.registerFactory(ActuallyContainers.FEEDER_CONTAINER.get(), GuiFeeder::new);
-        ScreenManager.registerFactory(ActuallyContainers.FERMENTING_BARREL_CONTAINER.get(), GuiFermentingBarrel::new);
-        ScreenManager.registerFactory(ActuallyContainers.FILTER_CONTAINER.get(), GuiFilter::new);
-        ScreenManager.registerFactory(ActuallyContainers.FIREWORK_BOX_CONTAINER.get(), GuiFireworkBox::new);
-        ScreenManager.registerFactory(ActuallyContainers.FLUID_COLLECTOR_CONTAINER.get(), GuiFluidCollector::new);
-        ScreenManager.registerFactory(ActuallyContainers.FURNACE_DOUBLE_CONTAINER.get(), GuiFurnaceDouble::new);
-        ScreenManager.registerFactory(ActuallyContainers.GRINDER_CONTAINER.get(), GuiGrinder::new);
-        ScreenManager.registerFactory(ActuallyContainers.INPUTTER_CONTAINER.get(), GuiInputter::new);
-        ScreenManager.registerFactory(ActuallyContainers.LASER_RELAY_ITEM_WHITELIST_CONTAINER.get(), GuiLaserRelayItemWhitelist::new);
-        ScreenManager.registerFactory(ActuallyContainers.MINER_CONTAINER.get(), GuiMiner::new);
-        ScreenManager.registerFactory(ActuallyContainers.OIL_GENERATOR_CONTAINER.get(), GuiOilGenerator::new);
-        ScreenManager.registerFactory(ActuallyContainers.PHANTOM_PLACER_CONTAINER.get(), GuiPhantomPlacer::new);
-        ScreenManager.registerFactory(ActuallyContainers.RANGED_COLLECTOR_CONTAINER.get(), GuiRangedCollector::new);
-        ScreenManager.registerFactory(ActuallyContainers.XPSOLIDIFIER_CONTAINER.get(), GuiXPSolidifier::new);
+        ScreenManager.register(ActuallyContainers.BAG_CONTAINER.get(), GuiBag::new);
+        ScreenManager.register(ActuallyContainers.BIO_REACTOR_CONTAINER.get(), GuiBioReactor::new);
+        ScreenManager.register(ActuallyContainers.BREAKER_CONTAINER.get(), GuiBreaker::new);
+        ScreenManager.register(ActuallyContainers.CANOLA_PRESS_CONTAINER.get(), GuiCanolaPress::new);
+        ScreenManager.register(ActuallyContainers.COAL_GENERATOR_CONTAINER.get(), GuiCoalGenerator::new);
+        ScreenManager.register(ActuallyContainers.COFFEE_MACHINE_CONTAINER.get(), GuiCoffeeMachine::new);
+        ScreenManager.register(ActuallyContainers.DIRECTIONAL_BREAKER_CONTAINER.get(), GuiDirectionalBreaker::new);
+        ScreenManager.register(ActuallyContainers.DRILL_CONTAINER.get(), GuiDrill::new);
+        ScreenManager.register(ActuallyContainers.DROPPER_CONTAINER.get(), GuiDropper::new);
+        ScreenManager.register(ActuallyContainers.ENERVATOR_CONTAINER.get(), GuiEnervator::new);
+        ScreenManager.register(ActuallyContainers.ENERGIZER_CONTAINER.get(), GuiEnergizer::new);
+        ScreenManager.register(ActuallyContainers.FARMER_CONTAINER.get(), GuiFarmer::new);
+        ScreenManager.register(ActuallyContainers.FEEDER_CONTAINER.get(), GuiFeeder::new);
+        ScreenManager.register(ActuallyContainers.FERMENTING_BARREL_CONTAINER.get(), GuiFermentingBarrel::new);
+        ScreenManager.register(ActuallyContainers.FILTER_CONTAINER.get(), GuiFilter::new);
+        ScreenManager.register(ActuallyContainers.FIREWORK_BOX_CONTAINER.get(), GuiFireworkBox::new);
+        ScreenManager.register(ActuallyContainers.FLUID_COLLECTOR_CONTAINER.get(), GuiFluidCollector::new);
+        ScreenManager.register(ActuallyContainers.FURNACE_DOUBLE_CONTAINER.get(), GuiFurnaceDouble::new);
+        ScreenManager.register(ActuallyContainers.GRINDER_CONTAINER.get(), GuiGrinder::new);
+        ScreenManager.register(ActuallyContainers.INPUTTER_CONTAINER.get(), GuiInputter::new);
+        ScreenManager.register(ActuallyContainers.LASER_RELAY_ITEM_WHITELIST_CONTAINER.get(), GuiLaserRelayItemWhitelist::new);
+        ScreenManager.register(ActuallyContainers.MINER_CONTAINER.get(), GuiMiner::new);
+        ScreenManager.register(ActuallyContainers.OIL_GENERATOR_CONTAINER.get(), GuiOilGenerator::new);
+        ScreenManager.register(ActuallyContainers.PHANTOM_PLACER_CONTAINER.get(), GuiPhantomPlacer::new);
+        ScreenManager.register(ActuallyContainers.RANGED_COLLECTOR_CONTAINER.get(), GuiRangedCollector::new);
+        ScreenManager.register(ActuallyContainers.XPSOLIDIFIER_CONTAINER.get(), GuiXPSolidifier::new);
         // From old proxy
         InitEntities.initClient();
         MinecraftForge.EVENT_BUS.register(new ClientEvents());
@@ -85,7 +85,7 @@ public class ActuallyAdditionsClient {
     public void sendBreakPacket(BlockPos pos) {
         ClientPlayNetHandler connection = Minecraft.getInstance().getConnection();
         assert connection != null;
-        assert Minecraft.getInstance().objectMouseOver != null;
-        connection.sendPacket(new CPlayerDiggingPacket(CPlayerDiggingPacket.Action.STOP_DESTROY_BLOCK, pos, ((BlockRayTraceResult) Minecraft.getInstance().objectMouseOver).getFace()));
+        assert Minecraft.getInstance().hitResult != null;
+        connection.send(new CPlayerDiggingPacket(CPlayerDiggingPacket.Action.STOP_DESTROY_BLOCK, pos, ((BlockRayTraceResult) Minecraft.getInstance().hitResult).getDirection()));
     }
 }

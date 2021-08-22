@@ -24,7 +24,7 @@ public class LensDeath extends Lens {
 
     @Override
     public boolean invoke(BlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile) {
-        List<LivingEntity> entities = tile.getWorldObject().getEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), hitBlock.getX() + 1, hitBlock.getY() + 1, hitBlock.getZ() + 1));
+        List<LivingEntity> entities = tile.getWorldObject().getEntitiesOfClass(LivingEntity.class, new AxisAlignedBB(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), hitBlock.getX() + 1, hitBlock.getY() + 1, hitBlock.getZ() + 1));
         for (LivingEntity entity : entities) {
             int use = this.getUsePerEntity();
             if (tile.getEnergy() >= use) {
@@ -38,7 +38,7 @@ public class LensDeath extends Lens {
     }
 
     protected void onAttacked(LivingEntity entity, IAtomicReconstructor tile) {
-        entity.attackEntityFrom(DamageSources.DAMAGE_ATOMIC_RECONSTRUCTOR, 20F);
+        entity.hurt(DamageSources.DAMAGE_ATOMIC_RECONSTRUCTOR, 20F);
     }
 
     protected int getUsePerEntity() {

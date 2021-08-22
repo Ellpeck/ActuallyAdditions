@@ -35,16 +35,16 @@ public class ItemBattery extends ItemEnergy {
     }
 
     @Override
-    public boolean hasEffect(ItemStack stack) {
+    public boolean isFoil(ItemStack stack) {
         return ItemUtil.isEnabled(stack);
     }
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
-        if (!world.isRemote && entity instanceof PlayerEntity && ItemUtil.isEnabled(stack) && !isSelected) {
+        if (!world.isClientSide && entity instanceof PlayerEntity && ItemUtil.isEnabled(stack) && !isSelected) {
             PlayerEntity player = (PlayerEntity) entity;
-            for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
-                ItemStack slot = player.inventory.getStackInSlot(i);
+            for (int i = 0; i < player.inventory.getContainerSize(); i++) {
+                ItemStack slot = player.inventory.getItem(i);
                 if (StackUtil.isValid(slot) && slot.getCount() == 1) {
                     int extractable = this.extractEnergy(stack, Integer.MAX_VALUE, true);
                     int received = slot.getCapability(CapabilityEnergy.ENERGY).map(e -> e.receiveEnergy(extractable, false)).orElse(0);
@@ -58,17 +58,17 @@ public class ItemBattery extends ItemEnergy {
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity player, Hand hand) {
-        if (!worldIn.isRemote && player.isSneaking()) {
+    public ActionResult<ItemStack> use(World worldIn, PlayerEntity player, Hand hand) {
+        if (!worldIn.isClientSide && player.isShiftKeyDown()) {
             ItemUtil.changeEnabled(player, hand);
-            return ActionResult.resultSuccess(player.getHeldItem(hand));
+            return ActionResult.success(player.getItemInHand(hand));
         }
-        return super.onItemRightClick(worldIn, player, hand);
+        return super.use(worldIn, player, hand);
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World playerIn, List<ITextComponent> list, ITooltipFlag advanced) {
-        super.addInformation(stack, playerIn, list, advanced);
+    public void appendHoverText(ItemStack stack, @Nullable World playerIn, List<ITextComponent> list, ITooltipFlag advanced) {
+        super.appendHoverText(stack, playerIn, list, advanced);
         list.add(new TranslationTextComponent("tooltip." + ActuallyAdditions.MODID + ".battery." + (ItemUtil.isEnabled(stack)
             ? "discharge"
             : "noDischarge")));

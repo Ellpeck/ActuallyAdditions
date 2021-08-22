@@ -34,14 +34,14 @@ public class BlockEnergizer extends BlockContainerBase {
     }
 
     @Override
-    public TileEntity createNewTileEntity(IBlockReader worldIn) {
+    public TileEntity newBlockEntity(IBlockReader worldIn) {
         return this.isEnergizer
             ? new TileEntityEnergizer()
             : new TileEntityEnervator();
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
         if (this.isEnergizer) {
             return this.openGui(world, player, pos, TileEntityEnergizer.class);
         } else {

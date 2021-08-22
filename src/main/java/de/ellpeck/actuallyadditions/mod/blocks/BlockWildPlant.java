@@ -14,13 +14,15 @@ import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBushBase;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class BlockWildPlant extends BlockBushBase {
 
     //    public static final TheWildPlants[] ALL_WILD_PLANTS = TheWildPlants.values();
     //    public static final PropertyEnum<TheWildPlants> TYPE = PropertyEnum.create("type", TheWildPlants.class);
 
     public BlockWildPlant() {
-        super(Properties.create(Material.PLANTS).sound(SoundType.PLANT).harvestLevel(0).hardnessAndResistance(0, 0));
+        super(Properties.of(Material.PLANT).sound(SoundType.GRASS).harvestLevel(0).strength(0, 0));
         //        this.setSoundType(SoundType.PLANT);
     }
 

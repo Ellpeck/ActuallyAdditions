@@ -37,7 +37,7 @@ public class MelonPumpkinFarmerBehavior implements IFarmerBehavior {
                     if (pos.getX() % 2 == 0 == (pos.getZ() % 2 == 0)) {
                         BlockState toPlant = (isPumpkin
                             ? Blocks.PUMPKIN_STEM
-                            : Blocks.MELON_STEM).getDefaultState();
+                            : Blocks.MELON_STEM).defaultBlockState();
                         if (DefaultFarmerBehavior.defaultPlant(world, pos, toPlant, farmer, use)) {
                             return FarmerResult.SUCCESS;
                         }
@@ -61,8 +61,8 @@ public class MelonPumpkinFarmerBehavior implements IFarmerBehavior {
                 block.getDrops(drops, world, pos, state, 0);
                 if (!drops.isEmpty()) {
                     if (farmer.canAddToOutput(drops)) {
-                        world.playEvent(2001, pos, Block.getStateId(state));
-                        world.setBlockState(pos, Blocks.AIR.getDefaultState());
+                        world.levelEvent(2001, pos, Block.getId(state));
+                        world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
 
                         farmer.extractEnergy(use);
                         farmer.addToOutput(drops);

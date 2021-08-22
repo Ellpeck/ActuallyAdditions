@@ -80,7 +80,7 @@ public class GuiEntry extends GuiBooklet {
         super.init();
 
         if (this.hasSearchBar() && this.searchText != null) {
-            this.searchField.setText(this.searchText);
+            this.searchField.setValue(this.searchText);
             if (this.focusSearch) {
                 this.searchField.setFocused(true);
             }

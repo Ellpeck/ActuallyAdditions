@@ -37,10 +37,10 @@ public class ItemCrystalShard extends ItemBase implements IColorProvidingItem {
     }
 
     @Override
-    public String getTranslationKey(ItemStack stack) {
+    public String getDescriptionId(ItemStack stack) {
         return stack.getItemDamage() >= BlockCrystal.ALL_CRYSTALS.length
             ? StringUtil.BUGGED_ITEM_NAME
-            : this.getTranslationKey() + "_" + BlockCrystal.ALL_CRYSTALS[stack.getItemDamage()].name;
+            : this.getDescriptionId() + "_" + BlockCrystal.ALL_CRYSTALS[stack.getItemDamage()].name;
     }
 
     @Override

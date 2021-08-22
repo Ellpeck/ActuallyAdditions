@@ -32,6 +32,8 @@ import net.minecraft.util.text.StringTextComponent;
 import javax.annotation.Nullable;
 import java.util.List;
 
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
+
 public class TileEntityXPSolidifier extends TileEntityInventoryBase implements IButtonReactor, INamedContainerProvider {
 
     private static final int[] XP_MAP = new int[256];
@@ -99,15 +101,15 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
     }
 
     public static int getPlayerXP(PlayerEntity player) {
-        return (int) (getExperienceForLevel(player.experienceLevel) + player.experience * player.xpBarCap());
+        return (int) (getExperienceForLevel(player.experienceLevel) + player.experienceProgress * player.getXpNeededForNextLevel());
     }
 
     public static void addPlayerXP(PlayerEntity player, int amount) {
         int experience = Math.max(0, getPlayerXP(player) + amount);
-        player.experienceTotal = experience;
+        player.totalExperience = experience;
         player.experienceLevel = getLevelForExperience(experience);
         int expForLevel = getExperienceForLevel(player.experienceLevel);
-        player.experience = (float) (experience - expForLevel) / (float) player.xpBarCap();
+        player.experienceProgress = (float) (experience - expForLevel) / (float) player.getXpNeededForNextLevel();
     }
 
     @Override
@@ -127,37 +129,37 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
     @Override
     public void updateEntity() {
         super.updateEntity();
-        if (!this.world.isRemote) {
+        if (!this.level.isClientSide) {
             if (this.amount > 0) {
                 ItemStack stack = this.inv.getStackInSlot(0);
                 if (stack.isEmpty()) {
                     int toSet = Math.min(this.amount, 64);
                     this.inv.setStackInSlot(0, new ItemStack(ActuallyItems.SOLIDIFIED_EXPERIENCE.get(), toSet));
                     this.amount -= toSet;
-                    this.markDirty();
+                    this.setChanged();
                 } else if (stack.getCount() < 64) {
                     int needed = 64 - stack.getCount();
                     int toAdd = Math.min(needed, this.amount);
                     stack.grow(toAdd);
                     this.amount -= toAdd;
-                    this.markDirty();
+                    this.setChanged();
                 }
             }
 
             if (!this.isRedstonePowered) {
                 int range = 5;
-                List<ExperienceOrbEntity> orbs = this.world.getEntitiesWithinAABB(ExperienceOrbEntity.class, new AxisAlignedBB(this.pos.getX() - range, this.pos.getY() - range, this.pos.getZ() - range, this.pos.getX() + 1 + range, this.pos.getY() + 1 + range, this.pos.getZ() + 1 + range));
+                List<ExperienceOrbEntity> orbs = this.level.getEntitiesOfClass(ExperienceOrbEntity.class, new AxisAlignedBB(this.worldPosition.getX() - range, this.worldPosition.getY() - range, this.worldPosition.getZ() - range, this.worldPosition.getX() + 1 + range, this.worldPosition.getY() + 1 + range, this.worldPosition.getZ() + 1 + range));
                 if (orbs != null && !orbs.isEmpty()) {
                     for (ExperienceOrbEntity orb : orbs) {
                         // TODO: [port] validate the getPersistentData is correct
                         if (orb != null && orb.isAlive() && !orb.getPersistentData().getBoolean(ActuallyAdditions.MODID + "FromSolidified")) {
-                            this.singlePointAmount += orb.getXpValue();
+                            this.singlePointAmount += orb.getValue();
                             orb.remove();
 
                             if (this.singlePointAmount >= ItemSolidifiedExperience.SOLID_XP_AMOUNT) {
                                 this.amount += this.singlePointAmount / ItemSolidifiedExperience.SOLID_XP_AMOUNT;
                                 this.singlePointAmount = 0;
-                                this.markDirty();
+                                this.setChanged();
                             }
                         }
                     }
@@ -170,7 +172,7 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
                 if (stack.getCount() >= remainingSpace && remainingSpace != 0) {
                     this.amount += remainingSpace;
                     stack.shrink(remainingSpace);
-                    this.markDirty();
+                    this.setChanged();
                 }
             }
 
@@ -186,11 +188,11 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
     }
 
     @Override
-    public void markDirty() {
+    public void setChanged() {
         if (this.amount < 0) {
             this.amount = Integer.MAX_VALUE; //don't u go negative on me weird number
         }
-        super.markDirty();
+        super.setChanged();
     }
 
     @Override
@@ -203,7 +205,7 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
                     : this.buttonAmounts[buttonID];
                 if (this.amount < Integer.MAX_VALUE - xp && playerXP >= ItemSolidifiedExperience.SOLID_XP_AMOUNT * xp) {
                     addPlayerXP(player, -(ItemSolidifiedExperience.SOLID_XP_AMOUNT * xp));
-                    if (!this.world.isRemote) {
+                    if (!this.level.isClientSide) {
                         this.amount += xp;
                     }
                 }

@@ -28,11 +28,11 @@ public class ItemPickaxeAA extends ItemToolAA {
 
     public ItemPickaxeAA(IItemTier material) {
         super(1.0F, -2.8F, material, this.repairItem, unlocalizedName, this.rarity, EFFECTIVE_ON);
-        this.setHarvestLevel("pickaxe", material.getHarvestLevel());
+        this.setHarvestLevel("pickaxe", material.getLevel());
     }
 
     @Override
-    public boolean canHarvestBlock(BlockState blockIn) {
+    public boolean isCorrectToolForDrops(BlockState blockIn) {
         Block block = blockIn.getBlock();
 
         if (block == Blocks.OBSIDIAN) {
@@ -44,7 +44,7 @@ public class ItemPickaxeAA extends ItemToolAA {
                         if (block != Blocks.LAPIS_BLOCK && block != Blocks.LAPIS_ORE) {
                             if (block != Blocks.REDSTONE_ORE && block != Blocks.LIT_REDSTONE_ORE) {
                                 Material material = blockIn.getMaterial();
-                                return material == Material.ROCK || material == Material.IRON || material == Material.ANVIL;
+                                return material == Material.STONE || material == Material.METAL || material == Material.HEAVY_METAL;
                             } else {
                                 return this.toolMaterial.getHarvestLevel() >= 2;
                             }
@@ -68,9 +68,9 @@ public class ItemPickaxeAA extends ItemToolAA {
     @Override
     public float getDestroySpeed(ItemStack stack, BlockState state) {
         Material material = state.getMaterial();
-        return material != Material.IRON && material != Material.ANVIL && material != Material.ROCK
+        return material != Material.METAL && material != Material.HEAVY_METAL && material != Material.STONE
             ? super.getDestroySpeed(stack, state)
-            : this.efficiency;
+            : this.speed;
     }
 
     @Override

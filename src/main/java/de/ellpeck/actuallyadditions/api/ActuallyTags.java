@@ -12,7 +12,7 @@ public final class ActuallyTags {
         public static final ITag.INamedTag<Item> TINY_COALS = tag("tiny_coals");
 
         private static ITag.INamedTag<Item> tag(String name) {
-            return ItemTags.makeWrapperTag(String.format("%s:%s", ActuallyAdditions.MODID, name));
+            return ItemTags.bind(String.format("%s:%s", ActuallyAdditions.MODID, name));
         }
     }
 }

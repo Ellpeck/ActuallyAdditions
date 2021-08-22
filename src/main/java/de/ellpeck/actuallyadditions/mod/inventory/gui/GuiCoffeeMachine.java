@@ -39,19 +39,19 @@ public class GuiCoffeeMachine extends GuiWtfMojang<ContainerCoffeeMachine> {
     public GuiCoffeeMachine(ContainerCoffeeMachine container, PlayerInventory inventory, ITextComponent title) {
         super(container, inventory);
         this.machine = container.machine;
-        this.xSize = 176;
-        this.ySize = 93 + 86;
+        this.imageWidth = 176;
+        this.imageHeight = 93 + 86;
     }
 
     @Override
     public void init() {
         super.init();
 
-        Button buttonOkay = new Button(this.guiLeft + 60, this.guiTop + 11, 58, 20, StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.ok"));
+        Button buttonOkay = new Button(this.leftPos + 60, this.topPos + 11, 58, 20, StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.ok"));
         this.addButton(buttonOkay);
 
-        this.energy = new EnergyDisplay(this.guiLeft + 16, this.guiTop + 5, this.machine.storage);
-        this.fluid = new FluidDisplay(this.guiLeft - 30, this.guiTop + 1, this.machine.tank, true, false);
+        this.energy = new EnergyDisplay(this.leftPos + 16, this.topPos + 5, this.machine.storage);
+        this.fluid = new FluidDisplay(this.leftPos - 30, this.topPos + 1, this.machine.tank, true, false);
     }
 
     @Override
@@ -59,7 +59,7 @@ public class GuiCoffeeMachine extends GuiWtfMojang<ContainerCoffeeMachine> {
         super.render(matrices, x, y, f);
 
         String text2 = this.machine.coffeeCacheAmount + "/" + TileEntityCoffeeMachine.COFFEE_CACHE_MAX_AMOUNT + " " + StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.coffee");
-        if (x >= this.guiLeft + 40 && y >= this.guiTop + 25 && x <= this.guiLeft + 49 && y <= this.guiTop + 56) {
+        if (x >= this.leftPos + 40 && y >= this.topPos + 25 && x <= this.leftPos + 49 && y <= this.topPos + 56) {
             this.drawHoveringText(Collections.singletonList(text2), x, y);
         }
 
@@ -68,31 +68,31 @@ public class GuiCoffeeMachine extends GuiWtfMojang<ContainerCoffeeMachine> {
     }
 
     @Override
-    public void drawGuiContainerForegroundLayer(MatrixStack matrices, int x, int y) {
-        AssetUtil.displayNameString(matrices, this.font, this.xSize, -10, this.machine);
+    public void renderLabels(MatrixStack matrices, int x, int y) {
+        AssetUtil.displayNameString(matrices, this.font, this.imageWidth, -10, this.machine);
     }
 
     @Override
-    public void drawGuiContainerBackgroundLayer(MatrixStack matrices, float f, int x, int y) {
+    public void renderBg(MatrixStack matrices, float f, int x, int y) {
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 
-        this.getMinecraft().getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
-        this.blit(matrices, this.guiLeft, this.guiTop + 93, 0, 0, 176, 86);
+        this.getMinecraft().getTextureManager().bind(AssetUtil.GUI_INVENTORY_LOCATION);
+        this.blit(matrices, this.leftPos, this.topPos + 93, 0, 0, 176, 86);
 
-        this.getMinecraft().getTextureManager().bindTexture(RES_LOC);
-        this.blit(matrices, this.guiLeft, this.guiTop, 0, 0, 176, 93);
+        this.getMinecraft().getTextureManager().bind(RES_LOC);
+        this.blit(matrices, this.leftPos, this.topPos, 0, 0, 176, 93);
 
         if (this.machine.coffeeCacheAmount > 0) {
             int i = this.machine.getCoffeeScaled(30);
-            this.blit(matrices, this.guiLeft + 41, this.guiTop + 56 - i, 192, 0, 8, i);
+            this.blit(matrices, this.leftPos + 41, this.topPos + 56 - i, 192, 0, 8, i);
         }
 
         if (this.machine.brewTime > 0) {
             int i = this.machine.getBrewScaled(23);
-            this.blit(matrices, this.guiLeft + 53, this.guiTop + 42, 192, 30, i, 16);
+            this.blit(matrices, this.leftPos + 53, this.topPos + 42, 192, 30, i, 16);
 
             int j = this.machine.getBrewScaled(26);
-            this.blit(matrices, this.guiLeft + 99 + 25 - j, this.guiTop + 44, 192 + 25 - j, 46, j, 12);
+            this.blit(matrices, this.leftPos + 99 + 25 - j, this.topPos + 44, 192 + 25 - j, 46, j, 12);
         }
 
         this.energy.draw(matrices);

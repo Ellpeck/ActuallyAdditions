@@ -20,7 +20,7 @@ public class SlotOutput extends SlotItemHandlerUnconditioned {
     }
 
     @Override
-    public boolean isItemValid(ItemStack stack) {
+    public boolean mayPlace(ItemStack stack) {
         return false;
     }
 }

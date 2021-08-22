@@ -73,12 +73,12 @@ public class GuiMainPage extends GuiBooklet {
         super.init();
 
         int flavor = 1;
-        if (this.getMinecraft().world.rand.nextFloat() <= 0.1) {
-            flavor = MathHelper.nextInt(this.getMinecraft().world.rand, 2, 7);
+        if (this.getMinecraft().level.random.nextFloat() <= 0.1) {
+            flavor = MathHelper.nextInt(this.getMinecraft().level.random, 2, 7);
         }
         this.bookletName = "info." + ActuallyAdditions.MODID + ".booklet.manualName.1." + flavor;
 
-        String usedQuote = QUOTES[this.getMinecraft().world.rand.nextInt(QUOTES.length)];
+        String usedQuote = QUOTES[this.getMinecraft().level.random.nextInt(QUOTES.length)];
         String[] quoteSplit = usedQuote.split("@");
         if (quoteSplit.length == 2) {
             this.quote = this.font.listFormattedStringToWidth(quoteSplit[0], 120);
@@ -107,7 +107,7 @@ public class GuiMainPage extends GuiBooklet {
         } else if (playerName.equalsIgnoreCase("ellpeck") || playerName.equalsIgnoreCase("profprospector")) {
             String[] colors = new String[15];
             for (int i = 0; i < colors.length; i++) {
-                colors[i] = TextFormatting.fromColorIndex(this.getMinecraft().world.rand.nextInt(15)).toString() + TextFormatting.ITALIC;
+                colors[i] = TextFormatting.getById(this.getMinecraft().level.random.nextInt(15)).toString() + TextFormatting.ITALIC;
             }
             this.bookletEdition = String.format("%sC%so%sl%so%sr%sf%su%sl %sE%sd%si%st%si%so%sn", (Object[]) colors);
         } else if (playerName.equalsIgnoreCase("oitsjustjose")) {
@@ -174,7 +174,7 @@ public class GuiMainPage extends GuiBooklet {
             if (displayed.size() > button.id) {
                 IBookletEntry entry = displayed.get(button.id);
                 if (entry != null) {
-                    this.getMinecraft().displayGuiScreen(new GuiEntry(this.previousScreen, this, entry, 0, "", false));
+                    this.getMinecraft().setScreen(new GuiEntry(this.previousScreen, this, entry, 0, "", false));
                 }
             }
         }
@@ -184,7 +184,7 @@ public class GuiMainPage extends GuiBooklet {
         }*/
         else if (button == this.configButton) {
             GuiScreen config = new GuiConfiguration(this);
-            this.getMinecraft().displayGuiScreen(config);
+            this.getMinecraft().setScreen(config);
         } else if (this.showTutorial && button == this.tutorialButton) {
             if (this.hasBookmarkButtons()) {
                 if (!isShiftKeyDown()) {
@@ -212,12 +212,12 @@ public class GuiMainPage extends GuiBooklet {
         super.drawScreenPre(mouseX, mouseY, partialTicks);
 
         String strg = TextFormatting.DARK_GREEN + StringUtil.localize(this.bookletName);
-        this.font.drawString(strg, this.guiLeft + 72 - this.font.getStringWidth(strg) / 2 - 3, this.guiTop + 19, 0);
+        this.font.draw(strg, this.guiLeft + 72 - this.font.width(strg) / 2 - 3, this.guiTop + 19, 0);
         strg = TextFormatting.DARK_GREEN + StringUtil.localize("info." + ActuallyAdditions.MODID + ".booklet.manualName.2");
-        this.font.drawString(strg, this.guiLeft + 72 - this.font.getStringWidth(strg) / 2 - 3, this.guiTop + 19 + this.font.FONT_HEIGHT, 0);
+        this.font.draw(strg, this.guiLeft + 72 - this.font.width(strg) / 2 - 3, this.guiTop + 19 + this.font.lineHeight, 0);
 
         strg = TextFormatting.GOLD + TextFormatting.ITALIC.toString() + this.bookletEdition;
-        this.font.drawString(strg, this.guiLeft + 72 - this.font.getStringWidth(strg) / 2 - 3, this.guiTop + 40, 0);
+        this.font.draw(strg, this.guiLeft + 72 - this.font.width(strg) / 2 - 3, this.guiTop + 40, 0);
 
         if (this.showTutorial) {
             String text = TextFormatting.BLUE + "It looks like this is the first time you are using this manual. \nIf you click the button below, some useful bookmarks will be stored at the bottom of the GUI. You should definitely check them out to get started with " + ActuallyAdditions.NAME + "! \nIf you don't want this, shift-click the button.";

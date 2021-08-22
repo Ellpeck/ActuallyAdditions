@@ -38,7 +38,7 @@ public class PacketServerToClient implements IMessage {
     public void fromBytes(ByteBuf buf) {
         PacketBuffer buffer = new PacketBuffer(buf);
         try {
-            this.data = buffer.readCompoundTag();
+            this.data = buffer.readNbt();
 
             int handlerId = buffer.readInt();
             if (handlerId >= 0 && handlerId < PacketHandler.DATA_HANDLERS.size()) {
@@ -53,7 +53,7 @@ public class PacketServerToClient implements IMessage {
     public void toBytes(ByteBuf buf) {
         PacketBuffer buffer = new PacketBuffer(buf);
 
-        buffer.writeCompoundTag(this.data);
+        buffer.writeNbt(this.data);
         buffer.writeInt(PacketHandler.DATA_HANDLERS.indexOf(this.handler));
     }
 

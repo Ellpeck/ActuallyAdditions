@@ -41,6 +41,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
+
 public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer, INamedContainerProvider {
 
     private static final List<IFarmerBehavior> SORTED_FARMER_BEHAVIORS = new ArrayList<>();
@@ -85,7 +87,7 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
     @Override
     public void updateEntity() {
         super.updateEntity();
-        if (!this.world.isRemote) {
+        if (!this.level.isClientSide) {
             if (!this.isRedstonePowered && this.storage.getEnergyStored() > 0) {
                 if (this.waitTime > 0) {
                     this.waitTime--;
@@ -97,10 +99,10 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
                         }
                         int radius = area / 2;
 
-                        BlockState state = this.world.getBlockState(this.pos);
-                        BlockPos center = this.pos.offset(state.get(BlockStateProperties.HORIZONTAL_FACING), radius + 1);
+                        BlockState state = this.level.getBlockState(this.worldPosition);
+                        BlockPos center = this.worldPosition.relative(state.getValue(BlockStateProperties.HORIZONTAL_FACING), radius + 1);
 
-                        BlockPos query = center.add(this.checkX, 0, this.checkY);
+                        BlockPos query = center.offset(this.checkX, 0, this.checkY);
                         this.checkBehaviors(query);
 
                         this.checkX++;
@@ -137,15 +139,15 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
         }
 
         for (IFarmerBehavior behavior : SORTED_FARMER_BEHAVIORS) {
-            FarmerResult harvestResult = behavior.tryHarvestPlant(this.world, query, this);
+            FarmerResult harvestResult = behavior.tryHarvestPlant(this.level, query, this);
             if (harvestResult == FarmerResult.STOP_PROCESSING) {
                 return;
             }
             for (int i = 0; i < 6; i++) { //Process seed slots only
                 ItemStack stack = this.inv.getStackInSlot(i);
-                BlockState state = this.world.getBlockState(query);
+                BlockState state = this.level.getBlockState(query);
                 if (StackUtil.isValid(stack) && state.getMaterial().isReplaceable()) {
-                    FarmerResult plantResult = behavior.tryPlantSeed(stack, this.world, query, this);
+                    FarmerResult plantResult = behavior.tryPlantSeed(stack, this.level, query, this);
                     if (plantResult == FarmerResult.SUCCESS) {
                         this.inv.getStackInSlot(i).shrink(1);
                         return;
@@ -175,33 +177,33 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
 
     @Override
     public Direction getOrientation() {
-        BlockState state = this.world.getBlockState(this.pos);
+        BlockState state = this.level.getBlockState(this.worldPosition);
         return WorldUtil.getDirectionByPistonRotation(state);
     }
 
     @Override
     public BlockPos getPosition() {
-        return this.pos;
+        return this.worldPosition;
     }
 
     @Override
     public int getX() {
-        return this.pos.getX();
+        return this.worldPosition.getX();
     }
 
     @Override
     public int getY() {
-        return this.pos.getY();
+        return this.worldPosition.getY();
     }
 
     @Override
     public int getZ() {
-        return this.pos.getZ();
+        return this.worldPosition.getZ();
     }
 
     @Override
     public World getWorldObject() {
-        return this.world;
+        return this.level;
     }
 
     @Override

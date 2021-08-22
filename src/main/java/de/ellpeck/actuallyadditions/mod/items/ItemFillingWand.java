@@ -49,12 +49,12 @@ public class ItemFillingWand extends ItemEnergy {
         ItemStack stack = new ItemStack(block, 1);
 
         if (StackUtil.isValid(stack)) {
-            for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
-                ItemStack slot = player.inventory.getStackInSlot(i);
-                if (StackUtil.isValid(slot) && slot.isItemEqual(stack)) {
+            for (int i = 0; i < player.inventory.getContainerSize(); i++) {
+                ItemStack slot = player.inventory.getItem(i);
+                if (StackUtil.isValid(slot) && slot.sameItem(stack)) {
                     slot.shrink(1);
                     if (!StackUtil.isValid(slot)) {
-                        player.inventory.setInventorySlotContents(i, StackUtil.getEmpty());
+                        player.inventory.setItem(i, StackUtil.getEmpty());
                     }
 
                     return true;
@@ -78,43 +78,43 @@ public class ItemFillingWand extends ItemEnergy {
     }
 
     @Override
-    public ActionResultType onItemUse(ItemUseContext context) {
+    public ActionResultType useOn(ItemUseContext context) {
         if (context.getPlayer() == null) {
             return ActionResultType.PASS;
         }
 
-        ItemStack stack = context.getPlayer().getHeldItem(context.getHand());
-        if (!context.getWorld().isRemote && context.getPlayer().getItemInUseCount() <= 0) {
-            if (context.getPlayer().isSneaking()) {
-                BlockState state = context.getWorld().getBlockState(context.getPos());
+        ItemStack stack = context.getPlayer().getItemInHand(context.getHand());
+        if (!context.getLevel().isClientSide && context.getPlayer().getUseItemRemainingTicks() <= 0) {
+            if (context.getPlayer().isShiftKeyDown()) {
+                BlockState state = context.getLevel().getBlockState(context.getClickedPos());
                 saveData(state, stack);
                 return ActionResultType.SUCCESS;
             } else if (loadData(stack).isPresent()) {
                 CompoundNBT compound = stack.getOrCreateTag();
 
                 if (compound.getInt("CurrX") == 0 && compound.getInt("CurrY") == 0 && compound.getInt("CurrZ") == 0) {
-                    compound.putInt("FirstX", context.getPos().getX());
-                    compound.putInt("FirstY", context.getPos().getY());
-                    compound.putInt("FirstZ", context.getPos().getZ());
+                    compound.putInt("FirstX", context.getClickedPos().getX());
+                    compound.putInt("FirstY", context.getClickedPos().getY());
+                    compound.putInt("FirstZ", context.getClickedPos().getZ());
 
-                    context.getPlayer().setActiveHand(context.getHand());
+                    context.getPlayer().startUsingItem(context.getHand());
                     return ActionResultType.SUCCESS;
                 }
             }
         }
-        return super.onItemUse(context);
+        return super.useOn(context);
     }
 
     @Override
-    public void onPlayerStoppedUsing(ItemStack stack, World world, LivingEntity entity, int timeLeft) {
-        if (!world.isRemote) {
+    public void releaseUsing(ItemStack stack, World world, LivingEntity entity, int timeLeft) {
+        if (!world.isClientSide) {
             boolean clear = true;
             if (entity instanceof PlayerEntity) {
                 RayTraceResult result = WorldUtil.getNearestBlockWithDefaultReachDistance(world, (PlayerEntity) entity);
                 if (result instanceof BlockRayTraceResult) {
                     CompoundNBT compound = stack.getOrCreateTag();
 
-                    BlockPos pos = ((BlockRayTraceResult) result).getPos();
+                    BlockPos pos = ((BlockRayTraceResult) result).getBlockPos();
                     compound.putInt("SecondX", pos.getX());
                     compound.putInt("SecondY", pos.getY());
                     compound.putInt("SecondZ", pos.getZ());
@@ -128,7 +128,7 @@ public class ItemFillingWand extends ItemEnergy {
             }
         }
 
-        super.onPlayerStoppedUsing(stack, world, entity, timeLeft);
+        super.releaseUsing(stack, world, entity, timeLeft);
     }
 
     @Override
@@ -136,7 +136,7 @@ public class ItemFillingWand extends ItemEnergy {
         super.inventoryTick(stack, world, entity, itemSlot, isSelected);
 
 
-        if (!world.isRemote) {
+        if (!world.isClientSide) {
             boolean shouldClear = false;
 
             if (isSelected) {
@@ -166,9 +166,9 @@ public class ItemFillingWand extends ItemEnergy {
                             BlockPos pos = new BlockPos(lowestX + currX, lowestY + currY, lowestZ + currZ);
                             BlockState state = world.getBlockState(pos);
 
-                            if (state.getMaterial().isReplaceable() && replaceState.isValidPosition(world, pos)) {
+                            if (state.getMaterial().isReplaceable() && replaceState.canSurvive(world, pos)) {
                                 if (creative || removeFittingItem(replaceState, player)) {
-                                    world.setBlockState(pos, replaceState, 2);
+                                    world.setBlock(pos, replaceState, 2);
 
                                     SoundType sound = replaceState.getBlock().getSoundType(replaceState, world, pos, player);
                                     world.playSound(null, pos, sound.getPlaceSound(), SoundCategory.BLOCKS, sound.getVolume() / 2F + .5F, sound.getPitch() * 0.8F);
@@ -219,11 +219,11 @@ public class ItemFillingWand extends ItemEnergy {
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        super.addInformation(stack, worldIn, tooltip, flagIn);
+    public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+        super.appendHoverText(stack, worldIn, tooltip, flagIn);
 
         IFormattableTextComponent display = loadData(stack)
-            .map(state -> state.getBlock().getTranslatedName())
+            .map(state -> state.getBlock().getName())
             .orElse(Lang.trans("tooltip", "item_filling_wand.selectedBlock.none"));
 
         tooltip.add(Lang.trans("tooltip", "item_filling_wand.selectedBlock", display.getString()));

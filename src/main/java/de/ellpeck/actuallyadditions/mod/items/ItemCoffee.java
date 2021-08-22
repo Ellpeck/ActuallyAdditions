@@ -55,13 +55,13 @@ public class ItemCoffee extends ItemFoodBase {
             }
         }
 
-        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(Ingredient.fromItems(Items.SUGAR), 4, new PotionEffect(MobEffects.SPEED, 30, 0)));
-        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(Ingredient.fromItems(Items.MAGMA_CREAM), 2, new PotionEffect(MobEffects.FIRE_RESISTANCE, 20, 0)));
-        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(Ingredient.fromStacks(new ItemStack(Items.FISH, 1, 3)), 2, new PotionEffect(MobEffects.WATER_BREATHING, 10, 0)));
-        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(Ingredient.fromItems(Items.GOLDEN_CARROT), 2, new PotionEffect(MobEffects.NIGHT_VISION, 30, 0)));
-        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(Ingredient.fromItems(Items.GHAST_TEAR), 3, new PotionEffect(MobEffects.REGENERATION, 5, 0)));
-        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(Ingredient.fromItems(Items.BLAZE_POWDER), 4, new PotionEffect(MobEffects.STRENGTH, 15, 0)));
-        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(Ingredient.fromItems(Items.FERMENTED_SPIDER_EYE), 2, new PotionEffect(MobEffects.INVISIBILITY, 25, 0)));
+        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(Ingredient.of(Items.SUGAR), 4, new PotionEffect(MobEffects.SPEED, 30, 0)));
+        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(Ingredient.of(Items.MAGMA_CREAM), 2, new PotionEffect(MobEffects.FIRE_RESISTANCE, 20, 0)));
+        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(Ingredient.of(new ItemStack(Items.FISH, 1, 3)), 2, new PotionEffect(MobEffects.WATER_BREATHING, 10, 0)));
+        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(Ingredient.of(Items.GOLDEN_CARROT), 2, new PotionEffect(MobEffects.NIGHT_VISION, 30, 0)));
+        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(Ingredient.of(Items.GHAST_TEAR), 3, new PotionEffect(MobEffects.REGENERATION, 5, 0)));
+        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(Ingredient.of(Items.BLAZE_POWDER), 4, new PotionEffect(MobEffects.STRENGTH, 15, 0)));
+        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(Ingredient.of(Items.FERMENTED_SPIDER_EYE), 2, new PotionEffect(MobEffects.INVISIBILITY, 25, 0)));
     }
 
     @Nullable
@@ -86,7 +86,7 @@ public class ItemCoffee extends ItemFoodBase {
     @Override
     public ItemStack onItemUseFinish(ItemStack stack, World world, EntityLivingBase player) {
         ItemStack theStack = stack.copy();
-        super.onItemUseFinish(stack, world, player);
+        super.finishUsingItem(stack, world, player);
         applyPotionEffectsFromStack(stack, player);
         theStack.setItemDamage(theStack.getItemDamage() + 1);
         if (theStack.getMaxDamage() - theStack.getItemDamage() < 0) {
@@ -112,7 +112,7 @@ public class ItemCoffee extends ItemFoodBase {
         PotionEffect[] effects = ActuallyAdditionsAPI.methodHandler.getEffectsFromStack(stack);
         if (effects != null) {
             for (PotionEffect effect : effects) {
-                tooltip.add(StringUtil.localize(effect.getEffectName()) + " " + (effect.getAmplifier() + 1) + ", " + StringUtils.ticksToElapsedTime(effect.getDuration() * 20));
+                tooltip.add(StringUtil.localize(effect.getEffectName()) + " " + (effect.getAmplifier() + 1) + ", " + StringUtils.formatTickDuration(effect.getDuration() * 20));
             }
         } else {
             tooltip.add(StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".coffeeCup.noEffect"));

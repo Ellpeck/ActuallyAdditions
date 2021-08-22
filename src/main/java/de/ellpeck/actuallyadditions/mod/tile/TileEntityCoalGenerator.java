@@ -33,6 +33,8 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 import javax.annotation.Nullable;
 
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
+
 public class TileEntityCoalGenerator extends TileEntityInventoryBase implements INamedContainerProvider, ISharingEnergyProvider {
 
     public final CustomEnergyStorage storage = new CustomEnergyStorage(60000, 0, 80);
@@ -83,7 +85,7 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
     @Override
     public void updateEntity() {
         super.updateEntity();
-        if (!this.world.isRemote) {
+        if (!this.level.isClientSide) {
             boolean flag = this.currentBurnTime > 0;
 
             if (this.currentBurnTime > 0) {
@@ -111,7 +113,7 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
 
             if (flag != this.currentBurnTime > 0 || this.lastCompare != this.getComparatorStrength()) {
                 this.lastCompare = this.getComparatorStrength();
-                this.markDirty();
+                this.setChanged();
             }
 
             if ((this.storage.getEnergyStored() != this.lastEnergy || this.currentBurnTime != this.lastCurrentBurnTime || this.lastBurnTime != this.maxBurnTime) && this.sendUpdateWithInterval()) {

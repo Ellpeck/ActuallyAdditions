@@ -28,7 +28,7 @@ public class GuiHandler {
     public Object getServerGuiElement(int id, PlayerEntity player, World world, int x, int y, int z) {
         TileEntityBase tile = null;
         if (GuiTypes.values()[id].checkTileEntity) {
-            tile = (TileEntityBase) world.getTileEntity(new BlockPos(x, y, z));
+            tile = (TileEntityBase) world.getBlockEntity(new BlockPos(x, y, z));
         }
         switch (GuiTypes.values()[id]) {
             //            case FEEDER:
@@ -110,7 +110,7 @@ public class GuiHandler {
     public Object getClientGuiElement(int id, PlayerEntity player, World world, int x, int y, int z) {
         TileEntityBase tile = null;
         if (GuiTypes.values()[id].checkTileEntity) {
-            tile = (TileEntityBase) world.getTileEntity(new BlockPos(x, y, z));
+            tile = (TileEntityBase) world.getBlockEntity(new BlockPos(x, y, z));
         }
         switch (GuiTypes.values()[id]) {
             case FEEDER:

@@ -34,6 +34,8 @@ import net.minecraftforge.common.util.Constants;
 import java.util.HashMap;
 import java.util.function.Supplier;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class BlockColoredLamp extends BlockBase {
     private static final HashMap<DyeColor, Supplier<Block>> COLOR_TO_LAMP = new HashMap<DyeColor, Supplier<Block>>() {{
         this.put(DyeColor.WHITE, ActuallyBlocks.LAMP_WHITE);
@@ -57,22 +59,22 @@ public class BlockColoredLamp extends BlockBase {
     private static final BooleanProperty LIT = BlockStateProperties.LIT;
 
     public BlockColoredLamp() {
-        super(Properties.create(Material.REDSTONE_LIGHT).hardnessAndResistance(0.5F, 3.0F).harvestTool(ToolType.PICKAXE).harvestLevel(0));
-        this.setDefaultState(this.stateContainer.getBaseState().with(LIT, false));
+        super(Properties.of(Material.BUILDABLE_GLASS).strength(0.5F, 3.0F).harvestTool(ToolType.PICKAXE).harvestLevel(0));
+        this.registerDefaultState(this.stateDefinition.any().setValue(LIT, false));
     }
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(LIT);
     }
 
     // TODO: [port][test] validate this rework works
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-        ItemStack stack = player.getHeldItem(hand);
+    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+        ItemStack stack = player.getItemInHand(hand);
         //Turning On
         if (hand == Hand.MAIN_HAND && stack.isEmpty()) {
-            world.setBlockState(pos, this.getDefaultState().with(LIT, !state.get(LIT)), Constants.BlockFlags.NO_RERENDER);
+            world.setBlock(pos, this.defaultBlockState().setValue(LIT, !state.getValue(LIT)), Constants.BlockFlags.NO_RERENDER);
             return ActionResultType.PASS;
         }
 
@@ -83,19 +85,19 @@ public class BlockColoredLamp extends BlockBase {
             }
 
             Block newColor = COLOR_TO_LAMP.get(color).get();
-            if (!world.isRemote) {
-                world.setBlockState(pos, newColor.getDefaultState().with(LIT, state.get(LIT)), 2);
+            if (!world.isClientSide) {
+                world.setBlock(pos, newColor.defaultBlockState().setValue(LIT, state.getValue(LIT)), 2);
                 if (!player.isCreative()) {
-                    player.inventory.decrStackSize(player.inventory.currentItem, 1);
+                    player.inventory.removeItem(player.inventory.selected, 1);
                 }
             }
         }
-        return super.onBlockActivated(state, world, pos, player, hand, hit);
+        return super.use(state, world, pos, player, hand, hit);
     }
 
     @Override
     public int getLightValue(BlockState state, IBlockReader world, BlockPos pos) {
-        return state.get(LIT)
+        return state.getValue(LIT)
             ? 15
             : 0;
     }

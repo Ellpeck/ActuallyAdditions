@@ -16,6 +16,8 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.IArmorMaterial;
 
+import net.minecraft.item.Item.Properties;
+
 public class ItemArmorAA extends ArmorItem implements IDisableableItem {
     private final boolean disabled;
 

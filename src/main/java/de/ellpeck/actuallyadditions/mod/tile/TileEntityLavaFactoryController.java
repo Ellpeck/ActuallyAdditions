@@ -21,6 +21,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
+
 public class TileEntityLavaFactoryController extends TileEntityBase implements IEnergyDisplay {
 
     public static final int NOT_MULTI = 0;
@@ -58,12 +60,12 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
     @Override
     public void updateEntity() {
         super.updateEntity();
-        if (!this.world.isRemote) {
+        if (!this.level.isClientSide) {
             if (this.storage.getEnergyStored() >= ENERGY_USE && this.isMultiblock() == HAS_AIR) {
                 this.currentWorkTime++;
                 if (this.currentWorkTime >= 200) {
                     this.currentWorkTime = 0;
-                    this.world.setBlockState(this.pos.up(), Blocks.LAVA.getDefaultState(), 2);
+                    this.level.setBlock(this.worldPosition.above(), Blocks.LAVA.defaultBlockState(), 2);
                     this.storage.extractEnergyInternal(ENERGY_USE, false);
                 }
             } else {
@@ -77,17 +79,17 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
     }
 
     public int isMultiblock() {
-        BlockPos thisPos = this.pos;
-        BlockPos[] positions = new BlockPos[]{thisPos.add(1, 1, 0), thisPos.add(-1, 1, 0), thisPos.add(0, 1, 1), thisPos.add(0, 1, -1)};
+        BlockPos thisPos = this.worldPosition;
+        BlockPos[] positions = new BlockPos[]{thisPos.offset(1, 1, 0), thisPos.offset(-1, 1, 0), thisPos.offset(0, 1, 1), thisPos.offset(0, 1, -1)};
 
-        if (this.world != null && WorldUtil.hasBlocksInPlacesGiven(positions, ActuallyBlocks.LAVA_CASING.get(), this.world)) {
-            BlockPos pos = thisPos.up();
-            BlockState state = this.world.getBlockState(pos);
+        if (this.level != null && WorldUtil.hasBlocksInPlacesGiven(positions, ActuallyBlocks.LAVA_CASING.get(), this.level)) {
+            BlockPos pos = thisPos.above();
+            BlockState state = this.level.getBlockState(pos);
             Block block = state.getBlock();
             if (block == Blocks.LAVA) {
                 return HAS_LAVA;
             }
-            if (this.world.isAirBlock(pos)) {
+            if (this.level.isEmptyBlock(pos)) {
                 return HAS_AIR;
             }
         }

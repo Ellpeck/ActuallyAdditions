@@ -124,7 +124,7 @@ public class FilterSettings {
         }
 
         boolean metaFine = !meta || first.getItemDamage() == second.getItemDamage();
-        boolean nbtFine = !nbt || ItemStack.areItemStackTagsEqual(first, second);
+        boolean nbtFine = !nbt || ItemStack.tagMatches(first, second);
         if (metaFine && nbtFine) {
             return true;
         }

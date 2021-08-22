@@ -28,15 +28,15 @@ public class ItemAxeAA extends ItemToolAA {
 
     public ItemAxeAA(IItemTier material) {
         super(6.0F, -3.0F, material, this.repairItem, unlocalizedName, this.rarity, EFFECTIVE_ON);
-        this.setHarvestLevel("axe", material.getHarvestLevel());
+        this.setHarvestLevel("axe", material.getLevel());
     }
 
     @Override
     public float getDestroySpeed(ItemStack stack, BlockState state) {
         Material material = state.getMaterial();
-        return material != Material.WOOD && material != Material.PLANTS && material != Material.VINE
+        return material != Material.WOOD && material != Material.PLANT && material != Material.VINE
             ? super.getDestroySpeed(stack, state)
-            : this.efficiency;
+            : this.speed;
     }
 
     @Override

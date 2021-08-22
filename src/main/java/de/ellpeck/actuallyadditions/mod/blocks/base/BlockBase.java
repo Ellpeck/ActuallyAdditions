@@ -14,13 +14,15 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class BlockBase extends Block {
     public BlockBase(Properties properties) {
         super(properties);
     }
 
     protected ItemBlockBase getItemBlock() {
-        return new ItemBlockBase(this, new Item.Properties().group(ActuallyAdditions.GROUP));
+        return new ItemBlockBase(this, new Item.Properties().tab(ActuallyAdditions.GROUP));
     }
 
     public boolean shouldAddCreative() {

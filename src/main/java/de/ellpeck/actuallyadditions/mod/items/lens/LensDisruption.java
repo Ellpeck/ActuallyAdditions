@@ -37,7 +37,7 @@ public class LensDisruption extends Lens {
     public boolean invoke(BlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile) {
         if (ConfigIntValues.ELEVEN.getValue() == 11 && tile.getEnergy() >= ENERGY_USE && hitBlock != null && !hitState.getBlock().isAir(hitState, tile.getWorldObject(), hitBlock)) {
             int range = 2;
-            ArrayList<ItemEntity> items = (ArrayList<ItemEntity>) tile.getWorldObject().getEntitiesWithinAABB(ItemEntity.class, new AxisAlignedBB(hitBlock.getX() - range, hitBlock.getY() - range, hitBlock.getZ() - range, hitBlock.getX() + range, hitBlock.getY() + range, hitBlock.getZ() + range));
+            ArrayList<ItemEntity> items = (ArrayList<ItemEntity>) tile.getWorldObject().getEntitiesOfClass(ItemEntity.class, new AxisAlignedBB(hitBlock.getX() - range, hitBlock.getY() - range, hitBlock.getZ() - range, hitBlock.getX() + range, hitBlock.getY() + range, hitBlock.getZ() + range));
             for (ItemEntity item : items) {
                 ItemStack stack = item.getItem();
                 if (item.isAlive() && StackUtil.isValid(stack)) {
@@ -45,10 +45,10 @@ public class LensDisruption extends Lens {
 
                         ItemStack newStack;
                         do {
-                            if (tile.getWorldObject().rand.nextBoolean()) {
-                                newStack = this.getRandomItemFromRegistry(tile.getWorldObject().rand);//new ItemStack(Item.REGISTRY.getRandomObject(tile.getWorldObject().rand));
+                            if (tile.getWorldObject().random.nextBoolean()) {
+                                newStack = this.getRandomItemFromRegistry(tile.getWorldObject().random);//new ItemStack(Item.REGISTRY.getRandomObject(tile.getWorldObject().rand));
                             } else {
-                                newStack = this.getRandomBlockFromRegistry(tile.getWorldObject().rand);//new ItemStack(Block.REGISTRY.getRandomObject(tile.getWorldObject().rand));
+                                newStack = this.getRandomBlockFromRegistry(tile.getWorldObject().random);//new ItemStack(Block.REGISTRY.getRandomObject(tile.getWorldObject().rand));
                             }
                         } while (!StackUtil.isValid(newStack));
 
@@ -57,8 +57,8 @@ public class LensDisruption extends Lens {
 
                         item.remove();
 
-                        ItemEntity newItem = new ItemEntity(tile.getWorldObject(), item.getPosX(), item.getPosY(), item.getPosZ(), newStack);
-                        tile.getWorldObject().addEntity(newItem);
+                        ItemEntity newItem = new ItemEntity(tile.getWorldObject(), item.getX(), item.getY(), item.getZ(), newStack);
+                        tile.getWorldObject().addFreshEntity(newItem);
 
                         tile.extractEnergy(ENERGY_USE);
                     }

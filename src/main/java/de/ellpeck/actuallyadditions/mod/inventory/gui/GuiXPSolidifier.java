@@ -36,31 +36,31 @@ public class GuiXPSolidifier extends GuiWtfMojang<ContainerXPSolidifier> {
     public GuiXPSolidifier(ContainerXPSolidifier container, PlayerInventory inventory, ITextComponent title) {
         super(container, inventory);
         this.solidifier = container.solidifier;
-        this.xSize = 176;
-        this.ySize = 93 + 86;
+        this.imageWidth = 176;
+        this.imageHeight = 93 + 86;
     }
 
     @Override
     public void init() {
         super.init();
 
-        Button buttonOne = new GuiInputter.SmallerButton(this.guiLeft + 62, this.guiTop + 44, new StringTextComponent("1"), btn -> {
+        Button buttonOne = new GuiInputter.SmallerButton(this.leftPos + 62, this.topPos + 44, new StringTextComponent("1"), btn -> {
         });
-        Button buttonFive = new GuiInputter.SmallerButton(this.guiLeft + 80, this.guiTop + 44, new StringTextComponent("5"), btn -> {
+        Button buttonFive = new GuiInputter.SmallerButton(this.leftPos + 80, this.topPos + 44, new StringTextComponent("5"), btn -> {
         });
-        Button buttonTen = new GuiInputter.SmallerButton(this.guiLeft + 99, this.guiTop + 44, new StringTextComponent("10"), btn -> {
+        Button buttonTen = new GuiInputter.SmallerButton(this.leftPos + 99, this.topPos + 44, new StringTextComponent("10"), btn -> {
         });
-        Button buttonTwenty = new GuiInputter.SmallerButton(this.guiLeft + 62, this.guiTop + 61, new StringTextComponent("20"), btn -> {
+        Button buttonTwenty = new GuiInputter.SmallerButton(this.leftPos + 62, this.topPos + 61, new StringTextComponent("20"), btn -> {
         });
-        Button buttonThirty = new GuiInputter.SmallerButton(this.guiLeft + 80, this.guiTop + 61, new StringTextComponent("30"), btn -> {
+        Button buttonThirty = new GuiInputter.SmallerButton(this.leftPos + 80, this.topPos + 61, new StringTextComponent("30"), btn -> {
         });
-        Button buttonForty = new GuiInputter.SmallerButton(this.guiLeft + 99, this.guiTop + 61, new StringTextComponent("40"), btn -> {
+        Button buttonForty = new GuiInputter.SmallerButton(this.leftPos + 99, this.topPos + 61, new StringTextComponent("40"), btn -> {
         });
-        Button buttonFifty = new GuiInputter.SmallerButton(this.guiLeft + 62, this.guiTop + 78, new StringTextComponent("50"), btn -> {
+        Button buttonFifty = new GuiInputter.SmallerButton(this.leftPos + 62, this.topPos + 78, new StringTextComponent("50"), btn -> {
         });
-        Button buttonSixtyFour = new GuiInputter.SmallerButton(this.guiLeft + 80, this.guiTop + 78, new StringTextComponent("64"), btn -> {
+        Button buttonSixtyFour = new GuiInputter.SmallerButton(this.leftPos + 80, this.topPos + 78, new StringTextComponent("64"), btn -> {
         });
-        Button buttonAll = new GuiInputter.SmallerButton(this.guiLeft + 99, this.guiTop + 78, new StringTextComponent("All"), btn -> {
+        Button buttonAll = new GuiInputter.SmallerButton(this.leftPos + 99, this.topPos + 78, new StringTextComponent("All"), btn -> {
         });
 
         this.addButton(buttonOne);
@@ -75,21 +75,21 @@ public class GuiXPSolidifier extends GuiWtfMojang<ContainerXPSolidifier> {
     }
 
     @Override
-    public void drawGuiContainerForegroundLayer(MatrixStack matrices, int x, int y) {
-        AssetUtil.displayNameString(matrices, this.font, this.xSize, -10, this.solidifier);
+    public void renderLabels(MatrixStack matrices, int x, int y) {
+        AssetUtil.displayNameString(matrices, this.font, this.imageWidth, -10, this.solidifier);
     }
 
     @Override
-    public void drawGuiContainerBackgroundLayer(MatrixStack matrices, float f, int x, int y) {
+    public void renderBg(MatrixStack matrices, float f, int x, int y) {
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 
-        this.getMinecraft().getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
-        this.blit(matrices, this.guiLeft, this.guiTop + 93, 0, 0, 176, 86);
+        this.getMinecraft().getTextureManager().bind(AssetUtil.GUI_INVENTORY_LOCATION);
+        this.blit(matrices, this.leftPos, this.topPos + 93, 0, 0, 176, 86);
 
-        this.getMinecraft().getTextureManager().bindTexture(RES_LOC);
-        this.blit(matrices, this.guiLeft, this.guiTop, 0, 0, 176, 93);
+        this.getMinecraft().getTextureManager().bind(RES_LOC);
+        this.blit(matrices, this.leftPos, this.topPos, 0, 0, 176, 93);
 
-        drawCenteredString(matrices, this.font, Integer.toString(this.solidifier.amount), this.guiLeft + 88, this.guiTop + 30, StringUtil.DECIMAL_COLOR_WHITE);
+        drawCenteredString(matrices, this.font, Integer.toString(this.solidifier.amount), this.leftPos + 88, this.topPos + 30, StringUtil.DECIMAL_COLOR_WHITE);
     }
 
     @Override

@@ -41,11 +41,11 @@ public class ItemSolidifiedExperience extends ItemBase {
     @SubscribeEvent
     public void onEntityDropEvent(LivingDropsEvent event) {
         if (ConfigBoolValues.DO_XP_DROPS.isEnabled()) {
-            if (event.getEntityLiving().world != null && !event.getEntityLiving().world.isRemote && event.getSource().getTrueSource() instanceof PlayerEntity && event.getEntityLiving().world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT)) {
+            if (event.getEntityLiving().level != null && !event.getEntityLiving().level.isClientSide && event.getSource().getEntity() instanceof PlayerEntity && event.getEntityLiving().level.getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT)) {
                 //Drop Solidified XP
                 if (event.getEntityLiving() instanceof CreatureEntity) {
-                    if (event.getEntityLiving().world.rand.nextInt(10) <= event.getLootingLevel() * 2) {
-                        event.getDrops().add(new ItemEntity(event.getEntityLiving().world, event.getEntityLiving().getPosX(), event.getEntityLiving().getPosY(), event.getEntityLiving().getPosZ(), new ItemStack(ActuallyItems.SOLIDIFIED_EXPERIENCE.get(), event.getEntityLiving().world.rand.nextInt(2 + event.getLootingLevel()) + 1)));
+                    if (event.getEntityLiving().level.random.nextInt(10) <= event.getLootingLevel() * 2) {
+                        event.getDrops().add(new ItemEntity(event.getEntityLiving().level, event.getEntityLiving().getX(), event.getEntityLiving().getY(), event.getEntityLiving().getZ(), new ItemStack(ActuallyItems.SOLIDIFIED_EXPERIENCE.get(), event.getEntityLiving().level.random.nextInt(2 + event.getLootingLevel()) + 1)));
                     }
                 }
             }
@@ -53,11 +53,11 @@ public class ItemSolidifiedExperience extends ItemBase {
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
-        ItemStack stack = player.getHeldItem(hand);
-        if (!world.isRemote) {
+    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+        ItemStack stack = player.getItemInHand(hand);
+        if (!world.isClientSide) {
             int amount;
-            if (!player.isSneaking()) {
+            if (!player.isShiftKeyDown()) {
                 amount = SOLID_XP_AMOUNT;
                 if (!player.isCreative()) {
                     stack.shrink(1);
@@ -70,13 +70,13 @@ public class ItemSolidifiedExperience extends ItemBase {
             }
 
             if (ConfigBoolValues.SOLID_XP_ALWAYS_ORBS.currentValue || player instanceof FakePlayer) {
-                ExperienceOrbEntity orb = new ExperienceOrbEntity(world, player.getPosX() + 0.5, player.getPosY() + 0.5, player.getPosZ() + 0.5, amount);
+                ExperienceOrbEntity orb = new ExperienceOrbEntity(world, player.getX() + 0.5, player.getY() + 0.5, player.getZ() + 0.5, amount);
                 orb.getPersistentData().putBoolean(ActuallyAdditions.MODID + "FromSolidified", true);
-                world.addEntity(orb);
+                world.addFreshEntity(orb);
             } else {
-                player.addExperienceLevel(amount);
+                player.giveExperienceLevels(amount);
             }
         }
-        return ActionResult.resultSuccess(stack);
+        return ActionResult.success(stack);
     }
 }

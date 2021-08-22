@@ -29,21 +29,23 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.network.NetworkHooks;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class BlockFermentingBarrel extends BlockContainerBase {
 
     public BlockFermentingBarrel() {
-        super(Properties.create(Material.WOOD).harvestTool(ToolType.AXE).harvestLevel(0).hardnessAndResistance(0.5F, 5.0F).sound(SoundType.WOOD));
+        super(Properties.of(Material.WOOD).harvestTool(ToolType.AXE).harvestLevel(0).strength(0.5F, 5.0F).sound(SoundType.WOOD));
     }
 
     @Override
-    public TileEntity createNewTileEntity(IBlockReader worldIn) {
+    public TileEntity newBlockEntity(IBlockReader worldIn) {
         return new TileEntityFermentingBarrel();
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-        if (!world.isRemote) {
-            TileEntityFermentingBarrel press = (TileEntityFermentingBarrel) world.getTileEntity(pos);
+    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+        if (!world.isClientSide) {
+            TileEntityFermentingBarrel press = (TileEntityFermentingBarrel) world.getBlockEntity(pos);
             if (press != null) {
                 if (!this.tryUseItemOnTank(player, hand, press.canolaTank) && !this.tryUseItemOnTank(player, hand, press.oilTank)) {
                     NetworkHooks.openGui((ServerPlayerEntity) player, press, pos);

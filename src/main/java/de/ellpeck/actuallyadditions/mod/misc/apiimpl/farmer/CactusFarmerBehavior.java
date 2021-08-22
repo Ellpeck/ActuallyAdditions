@@ -31,12 +31,12 @@ public class CactusFarmerBehavior implements IFarmerBehavior {
         if (farmer.getEnergy() >= use) {
             Item item = seed.getItem();
             if (item instanceof BlockItem) {
-                Block block = Block.getBlockFromItem(item);
+                Block block = Block.byItem(item);
                 if (block == Blocks.CACTUS) {
-                    if (block.getDefaultState().isValidPosition(world, pos)) {
-                        BlockState state = block.getDefaultState();
-                        world.setBlockState(pos, state, 2);
-                        world.playEvent(2001, pos, Block.getStateId(state));
+                    if (block.defaultBlockState().canSurvive(world, pos)) {
+                        BlockState state = block.defaultBlockState();
+                        world.setBlock(pos, state, 2);
+                        world.levelEvent(2001, pos, Block.getId(state));
 
                         farmer.extractEnergy(use);
                         return FarmerResult.SUCCESS;
@@ -58,7 +58,7 @@ public class CactusFarmerBehavior implements IFarmerBehavior {
 
                 for (int i = 2; i >= 1; i--) {
                     if (farmer.getEnergy() >= use) {
-                        BlockPos up = pos.up(i);
+                        BlockPos up = pos.above(i);
                         BlockState upState = world.getBlockState(up);
                         if (upState.getBlock() == Blocks.CACTUS) {
                             NonNullList<ItemStack> drops = NonNullList.create();
@@ -66,8 +66,8 @@ public class CactusFarmerBehavior implements IFarmerBehavior {
 
                             if (!drops.isEmpty()) {
                                 if (farmer.canAddToOutput(drops)) {
-                                    world.playEvent(2001, up, Block.getStateId(upState));
-                                    world.setBlockState(up, Blocks.AIR.getDefaultState());
+                                    world.levelEvent(2001, up, Block.getId(upState));
+                                    world.setBlockAndUpdate(up, Blocks.AIR.defaultBlockState());
 
                                     farmer.extractEnergy(use);
                                     farmer.addToOutput(drops);

@@ -28,8 +28,8 @@ public class GuiFireworkBox extends ContainerScreen<ContainerFireworkBox> {
     public GuiFireworkBox(ContainerFireworkBox screenContainer, PlayerInventory inv, ITextComponent titleIn) {
         super(screenContainer, inv, titleIn);
         //        this.tile = tile.;
-        this.xSize = 300;
-        this.ySize = 120;
+        this.imageWidth = 300;
+        this.imageHeight = 120;
     }
 
     @Override
@@ -53,7 +53,7 @@ public class GuiFireworkBox extends ContainerScreen<ContainerFireworkBox> {
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int x, int y) {
+    protected void renderBg(MatrixStack matrixStack, float partialTicks, int x, int y) {
 
     }
 
@@ -110,12 +110,12 @@ public class GuiFireworkBox extends ContainerScreen<ContainerFireworkBox> {
         }
 
         @Override
-        protected void func_230979_b_() {
+        protected void updateMessage() {
 
         }
 
         @Override
-        protected void func_230972_a_() {
+        protected void applyValue() {
 
         }
     }

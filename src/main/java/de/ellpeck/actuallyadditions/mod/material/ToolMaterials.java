@@ -13,13 +13,13 @@ import java.util.function.Supplier;
  * todo: review to ensure all values act as intended
  */
 public enum ToolMaterials implements IItemTier {
-    QUARTZ(2, 280, 6.5f, 2.0f, 10, () -> Ingredient.fromItems(ActuallyItems.BLACK_QUARTZ.get())),
-    RESTONIA(2, 300, 7.0f, 2.25f, 12, () -> Ingredient.fromItems(ActuallyItems.RESTONIA_CRYSTAL.get())),
-    PALIS(2, 300, 7.0f, 2.25f, 12, () -> Ingredient.fromItems(ActuallyItems.PALIS_CRYSTAL.get())),
-    DIAMATINE(3, 1600, 9.0f, 4.0f, 14, () -> Ingredient.fromItems(ActuallyItems.DIAMATINE_CRYSTAL.get())),
-    VOID(2, 280, 6.0f, 2.0f, 8, () -> Ingredient.fromItems(ActuallyItems.VOID_CRYSTAL.get())),
-    EMERADIC(4, 2200, 9.5f, 5.55f, 18, () -> Ingredient.fromItems(ActuallyItems.EMERADIC_CRYSTAL.get())),
-    ENORI(2, 280, 6.25f, 6.25f, 15, () -> Ingredient.fromItems(ActuallyItems.ENORI_CRYSTAL.get()));
+    QUARTZ(2, 280, 6.5f, 2.0f, 10, () -> Ingredient.of(ActuallyItems.BLACK_QUARTZ.get())),
+    RESTONIA(2, 300, 7.0f, 2.25f, 12, () -> Ingredient.of(ActuallyItems.RESTONIA_CRYSTAL.get())),
+    PALIS(2, 300, 7.0f, 2.25f, 12, () -> Ingredient.of(ActuallyItems.PALIS_CRYSTAL.get())),
+    DIAMATINE(3, 1600, 9.0f, 4.0f, 14, () -> Ingredient.of(ActuallyItems.DIAMATINE_CRYSTAL.get())),
+    VOID(2, 280, 6.0f, 2.0f, 8, () -> Ingredient.of(ActuallyItems.VOID_CRYSTAL.get())),
+    EMERADIC(4, 2200, 9.5f, 5.55f, 18, () -> Ingredient.of(ActuallyItems.EMERADIC_CRYSTAL.get())),
+    ENORI(2, 280, 6.25f, 6.25f, 15, () -> Ingredient.of(ActuallyItems.ENORI_CRYSTAL.get()));
 
     private final int harvestLevel;
     private final int maxUses;
@@ -38,32 +38,32 @@ public enum ToolMaterials implements IItemTier {
     }
 
     @Override
-    public int getMaxUses() {
+    public int getUses() {
         return this.maxUses;
     }
 
     @Override
-    public float getEfficiency() {
+    public float getSpeed() {
         return this.efficiency;
     }
 
     @Override
-    public float getAttackDamage() {
+    public float getAttackDamageBonus() {
         return this.attackDamage;
     }
 
     @Override
-    public int getHarvestLevel() {
+    public int getLevel() {
         return this.harvestLevel;
     }
 
     @Override
-    public int getEnchantability() {
+    public int getEnchantmentValue() {
         return this.enchantability;
     }
 
     @Override
-    public Ingredient getRepairMaterial() {
-        return this.repairMaterial.getValue();
+    public Ingredient getRepairIngredient() {
+        return this.repairMaterial.get();
     }
 }

@@ -51,7 +51,7 @@ public class NetHandlerSpaghettiServer extends NetHandlerPlayServer {
     }
 
     @Override
-    public void func_194308_a(CPacketPlaceRecipe p_194308_1_) {
+    public void handlePlaceRecipe(CPacketPlaceRecipe p_194308_1_) {
     }
 
     @Override

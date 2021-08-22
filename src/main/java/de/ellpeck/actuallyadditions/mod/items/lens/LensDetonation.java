@@ -25,7 +25,7 @@ public class LensDetonation extends Lens {
     public boolean invoke(BlockState state, BlockPos hitBlock, IAtomicReconstructor tile) {
         if (hitBlock != null && !state.getBlock().isAir(state, tile.getWorldObject(), hitBlock)) {
             if (tile.getEnergy() >= ENERGY_USE) {
-                tile.getWorldObject().createExplosion(null, hitBlock.getX() + 0.5, hitBlock.getY() + 0.5, hitBlock.getZ() + 0.5, 10F, true, Explosion.Mode.NONE); // TODO: [port][test] make sure this is the right explosion mode
+                tile.getWorldObject().explode(null, hitBlock.getX() + 0.5, hitBlock.getY() + 0.5, hitBlock.getZ() + 0.5, 10F, true, Explosion.Mode.NONE); // TODO: [port][test] make sure this is the right explosion mode
                 tile.extractEnergy(ENERGY_USE);
             }
             return true;

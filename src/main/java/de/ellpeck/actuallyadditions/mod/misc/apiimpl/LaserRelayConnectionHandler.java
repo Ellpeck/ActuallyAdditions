@@ -60,7 +60,7 @@ public final class LaserRelayConnectionHandler implements ILaserRelayConnectionH
         WorldData data = WorldData.get(world);
         secondNetwork.changeAmount++;
         data.laserRelayNetworks.remove(secondNetwork);
-        data.markDirty();
+        data.setDirty();
         //System.out.println("Merged Two Networks!");
     }
 
@@ -92,7 +92,7 @@ public final class LaserRelayConnectionHandler implements ILaserRelayConnectionH
             //Setup new network (so that splitting a network will cause it to break into two)
             WorldData data = WorldData.get(world);
             data.laserRelayNetworks.remove(network);
-            data.markDirty();
+            data.setDirty();
             for (IConnectionPair pair : network.connections) {
                 if (!pair.contains(relay)) {
                     this.addConnection(pair.getPositions()[0], pair.getPositions()[1], pair.getType(), world, pair.doesSuppressRender());
@@ -178,7 +178,7 @@ public final class LaserRelayConnectionHandler implements ILaserRelayConnectionH
         //System.out.println("Connected "+firstRelay.toString()+" to "+secondRelay.toString());
         //System.out.println(firstNetwork == null ? secondNetwork.toString() : firstNetwork.toString());
         //System.out.println(laserRelayNetworks);
-        data.markDirty();
+        data.setDirty();
         return true;
     }
 
@@ -192,7 +192,7 @@ public final class LaserRelayConnectionHandler implements ILaserRelayConnectionH
 
                 WorldData data = WorldData.get(world);
                 data.laserRelayNetworks.remove(network);
-                data.markDirty();
+                data.setDirty();
 
                 for (IConnectionPair pair : network.connections) {
                     if (!pair.contains(firstRelay) || !pair.contains(secondRelay)) {
@@ -214,7 +214,7 @@ public final class LaserRelayConnectionHandler implements ILaserRelayConnectionH
 
     @Override
     public LaserType getTypeFromLaser(BlockPos pos, World world) {
-        return this.getTypeFromLaser(world.getTileEntity(pos));
+        return this.getTypeFromLaser(world.getBlockEntity(pos));
     }
 
 }

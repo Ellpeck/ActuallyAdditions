@@ -22,7 +22,7 @@ public class CrusherRecipe {
 
     @Deprecated
     public CrusherRecipe(ItemStack input, ItemStack outputOne, ItemStack outputTwo, int outputChance) {
-        this(Ingredient.fromStacks(input), outputOne, outputTwo, outputChance);
+        this(Ingredient.of(input), outputOne, outputTwo, outputChance);
     }
 
     public CrusherRecipe(Ingredient input, ItemStack outputOne, ItemStack outputTwo, int outputChance) {

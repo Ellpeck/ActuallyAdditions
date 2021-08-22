@@ -58,31 +58,31 @@ public class RenderLaserRelay extends TileEntityRenderer<TileEntityLaserRelay> {
                 hasInvis = true;
             }
 
-            ItemStack hand = player.getHeldItemMainhand();
+            ItemStack hand = player.getMainHandItem();
             if (hasGoggles || StackUtil.isValid(hand) && (hand.getItem() == ConfigValues.itemCompassConfigurator || hand.getItem() instanceof ItemLaserWrench) || "themattabase".equals(player.getName().getString())) {
-                matrices.push();
+                matrices.pushPose();
 
                 float yTrans = 0.2f; //tile.getBlockMetadata() == 0 ? 0.2F : 0.8F; // TODO: [port][fix] no clue what this is
                 matrices.translate(0.5F, yTrans, 0.5F);
                 matrices.scale(0.2F, 0.2F, 0.2F);
 
-                double boop = Util.milliTime() / 800D;
-                matrices.rotate(new Quaternion((float) (boop * 40D % 360), 0, 1, 0)); // TODO: [port][test] this might not work
+                double boop = Util.getMillis() / 800D;
+                matrices.mulPose(new Quaternion((float) (boop * 40D % 360), 0, 1, 0)); // TODO: [port][test] this might not work
 
                 AssetUtil.renderItemInWorld(upgrade, combinedLight, combinedOverlay, matrices, buffer);
 
-                matrices.pop();
+                matrices.popPose();
             }
         }
 
-        ConcurrentSet<IConnectionPair> connections = ActuallyAdditionsAPI.connectionHandler.getConnectionsFor(tile.getPos(), tile.getWorld());
+        ConcurrentSet<IConnectionPair> connections = ActuallyAdditionsAPI.connectionHandler.getConnectionsFor(tile.getBlockPos(), tile.getLevel());
         if (connections != null && !connections.isEmpty()) {
             for (IConnectionPair pair : connections) {
-                if (!pair.doesSuppressRender() && tile.getPos().equals(pair.getPositions()[0])) {
-                    BlockPos first = tile.getPos();
+                if (!pair.doesSuppressRender() && tile.getBlockPos().equals(pair.getPositions()[0])) {
+                    BlockPos first = tile.getBlockPos();
                     BlockPos second = pair.getPositions()[1];
 
-                    TileEntity secondTile = tile.getWorld().getTileEntity(second);
+                    TileEntity secondTile = tile.getLevel().getBlockEntity(second);
                     if (secondTile instanceof TileEntityLaserRelay) {
                         ItemStack secondUpgrade = ((TileEntityLaserRelay) secondTile).inv.getStackInSlot(0);
                         boolean otherInvis = StackUtil.isValid(secondUpgrade) && secondUpgrade.getItem() == ActuallyItems.LASER_UPGRADE_INVISIBILITY.get();
@@ -107,7 +107,7 @@ public class RenderLaserRelay extends TileEntityRenderer<TileEntityLaserRelay> {
     }
 
     @Override
-    public boolean isGlobalRenderer(TileEntityLaserRelay tile) {
+    public boolean shouldRenderOffScreen(TileEntityLaserRelay tile) {
         return true;
     }
 }

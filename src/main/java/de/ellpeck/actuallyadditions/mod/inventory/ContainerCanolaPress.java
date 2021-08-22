@@ -28,7 +28,7 @@ public class ContainerCanolaPress extends Container {
     public final TileEntityCanolaPress press;
 
     public static ContainerCanolaPress fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
-        return new ContainerCanolaPress(windowId, inv, (TileEntityCanolaPress) Objects.requireNonNull(inv.player.world.getTileEntity(data.readBlockPos())));
+        return new ContainerCanolaPress(windowId, inv, (TileEntityCanolaPress) Objects.requireNonNull(inv.player.level.getBlockEntity(data.readBlockPos())));
     }
 
     public ContainerCanolaPress(int windowId, PlayerInventory inventory, TileEntityCanolaPress tile) {
@@ -48,43 +48,43 @@ public class ContainerCanolaPress extends Container {
     }
 
     @Override
-    public ItemStack transferStackInSlot(PlayerEntity player, int slot) {
+    public ItemStack quickMoveStack(PlayerEntity player, int slot) {
         int inventoryStart = 1;
         int inventoryEnd = inventoryStart + 26;
         int hotbarStart = inventoryEnd + 1;
         int hotbarEnd = hotbarStart + 8;
 
-        Slot theSlot = this.inventorySlots.get(slot);
+        Slot theSlot = this.slots.get(slot);
 
-        if (theSlot != null && theSlot.getHasStack()) {
-            ItemStack newStack = theSlot.getStack();
+        if (theSlot != null && theSlot.hasItem()) {
+            ItemStack newStack = theSlot.getItem();
             ItemStack currentStack = newStack.copy();
 
             //Other Slots in Inventory excluded
             if (slot >= inventoryStart) {
                 //Shift from Inventory
                 if (newStack.getItem() == ActuallyItems.CANOLA.get()) {
-                    if (!this.mergeItemStack(newStack, 0, 1, false)) {
+                    if (!this.moveItemStackTo(newStack, 0, 1, false)) {
                         return StackUtil.getEmpty();
                     }
                 }
                 //
 
                 else if (slot >= inventoryStart && slot <= inventoryEnd) {
-                    if (!this.mergeItemStack(newStack, hotbarStart, hotbarEnd + 1, false)) {
+                    if (!this.moveItemStackTo(newStack, hotbarStart, hotbarEnd + 1, false)) {
                         return StackUtil.getEmpty();
                     }
-                } else if (slot >= inventoryEnd + 1 && slot < hotbarEnd + 1 && !this.mergeItemStack(newStack, inventoryStart, inventoryEnd + 1, false)) {
+                } else if (slot >= inventoryEnd + 1 && slot < hotbarEnd + 1 && !this.moveItemStackTo(newStack, inventoryStart, inventoryEnd + 1, false)) {
                     return StackUtil.getEmpty();
                 }
-            } else if (!this.mergeItemStack(newStack, inventoryStart, hotbarEnd + 1, false)) {
+            } else if (!this.moveItemStackTo(newStack, inventoryStart, hotbarEnd + 1, false)) {
                 return StackUtil.getEmpty();
             }
 
             if (!StackUtil.isValid(newStack)) {
-                theSlot.putStack(StackUtil.getEmpty());
+                theSlot.set(StackUtil.getEmpty());
             } else {
-                theSlot.onSlotChanged();
+                theSlot.setChanged();
             }
 
             if (newStack.getCount() == currentStack.getCount()) {
@@ -98,7 +98,7 @@ public class ContainerCanolaPress extends Container {
     }
 
     @Override
-    public boolean canInteractWith(PlayerEntity player) {
+    public boolean stillValid(PlayerEntity player) {
         return this.press.canPlayerUse(player);
     }
 }

@@ -10,21 +10,21 @@ public final class VanillaPacketDispatcher {
 
     //Don't call from the client.
     public static void dispatchTEToNearbyPlayers(TileEntity tile) {
-        ServerWorld world = (ServerWorld) tile.getWorld();
-        PlayerChunkMapEntry entry = world.getPlayerChunkMap().getEntry(tile.getPos().getX() >> 4, tile.getPos().getZ() >> 4);
+        ServerWorld world = (ServerWorld) tile.getLevel();
+        PlayerChunkMapEntry entry = world.getPlayerChunkMap().getEntry(tile.getBlockPos().getX() >> 4, tile.getBlockPos().getZ() >> 4);
 
         if (entry == null) {
             return;
         }
 
         for (ServerPlayerEntity player : entry.getWatchingPlayers()) {
-            player.connection.sendPacket(tile.getUpdatePacket());
+            player.connection.send(tile.getUpdatePacket());
         }
 
     }
 
     public static void dispatchTEToNearbyPlayers(World world, BlockPos pos) {
-        TileEntity tile = world.getTileEntity(pos);
+        TileEntity tile = world.getBlockEntity(pos);
         if (tile != null) {
             dispatchTEToNearbyPlayers(tile);
         }

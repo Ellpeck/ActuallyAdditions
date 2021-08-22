@@ -59,7 +59,7 @@ public class FluidDisplay extends AbstractGui {
 
     public void draw(MatrixStack matrices) {
         Minecraft mc = Minecraft.getInstance();
-        mc.getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
+        mc.getTextureManager().bind(AssetUtil.GUI_INVENTORY_LOCATION);
 
         int barX = this.x;
         int barY = this.y;
@@ -86,21 +86,21 @@ public class FluidDisplay extends AbstractGui {
         }
 
         if (stack != null && fluid != null && this.resLoc != null) {
-            mc.getTextureManager().bindTexture(this.resLoc);
+            mc.getTextureManager().bind(this.resLoc);
 
-            GlStateManager.pushMatrix();
-            GlStateManager.enableBlend();
+            GlStateManager._pushMatrix();
+            GlStateManager._enableBlend();
             GlStateManager.disableAlpha();
             GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
             int i = this.fluidReference.getFluidAmount() * 83 / this.fluidReference.getCapacity();
             Gui.drawModalRectWithCustomSizedTexture(barX + 1, barY + 84 - i, 36, 172, 16, i, 16, 512);
-            GlStateManager.disableBlend();
+            GlStateManager._disableBlend();
             GlStateManager.enableAlpha();
-            GlStateManager.popMatrix();
+            GlStateManager._popMatrix();
         }
 
         if (this.drawTextNextTo) {
-            this.drawString(mc.fontRenderer, this.getOverlayText(), barX + 25, barY + 78, StringUtil.DECIMAL_COLOR_WHITE);
+            this.drawString(mc.font, this.getOverlayText(), barX + 25, barY + 78, StringUtil.DECIMAL_COLOR_WHITE);
         }
     }
 
@@ -111,7 +111,7 @@ public class FluidDisplay extends AbstractGui {
             ? 93
             : 85)) {
             Minecraft mc = Minecraft.getInstance();
-            GuiUtils.drawHoveringText(Collections.singletonList(this.getOverlayText()), mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.fontRenderer);
+            GuiUtils.drawHoveringText(Collections.singletonList(this.getOverlayText()), mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.font);
         }
     }
 

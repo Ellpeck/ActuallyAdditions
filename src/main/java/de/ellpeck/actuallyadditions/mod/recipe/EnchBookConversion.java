@@ -19,7 +19,7 @@ import java.util.Map;
 public class EnchBookConversion extends LensConversionRecipe {
 
     public EnchBookConversion() {
-        super(Ingredient.fromItems(Items.ENCHANTED_BOOK), ItemStack.EMPTY, 155000, ActuallyAdditionsAPI.lensDefaultConversion);
+        super(Ingredient.of(Items.ENCHANTED_BOOK), ItemStack.EMPTY, 155000, ActuallyAdditionsAPI.lensDefaultConversion);
     }
 
     @Override
@@ -28,7 +28,7 @@ public class EnchBookConversion extends LensConversionRecipe {
             ItemStack book = new ItemStack(Items.ENCHANTED_BOOK);
             Map<Enchantment, Integer> ench = ImmutableMap.of(e.getKey(), e.getValue());
             EnchantmentHelper.setEnchantments(ench, book);
-            Block.spawnAsEntity(tile.getWorldObject(), pos, book);
+            Block.popResource(tile.getWorldObject(), pos, book);
         }
     }
 

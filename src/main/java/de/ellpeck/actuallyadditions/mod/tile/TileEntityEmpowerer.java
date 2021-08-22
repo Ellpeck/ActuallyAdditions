@@ -27,6 +27,8 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
+
 public class TileEntityEmpowerer extends TileEntityInventoryBase {
 
     public int processTime;
@@ -75,7 +77,7 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase {
     public void updateEntity() {
         super.updateEntity();
 
-        if (!this.world.isRemote) {
+        if (!this.level.isClientSide) {
             TileEntityDisplayStand[] stands = this.getNearbyStands();
             if (stands != null) {
                 EmpowererRecipe recipe = findMatchingRecipe(this.inv.getStackInSlot(0), stands[0].getStack(), stands[1].getStack(), stands[2].getStack(), stands[3].getStack());
@@ -100,19 +102,19 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase {
 
                             if (done) {
                                 stand.inv.getStackInSlot(0).shrink(1);
-                                stand.markDirty();
+                                stand.setChanged();
                             }
                         }
 
-                        if (this.processTime % 5 == 0 && this.world instanceof ServerWorld) {
-                            ((ServerWorld) this.world).spawnParticle(ParticleTypes.FIREWORK, this.pos.getX() + 0.5, this.pos.getY() + 1.1, this.pos.getZ() + 0.5, 2, 0, 0, 0, 0.1D);
+                        if (this.processTime % 5 == 0 && this.level instanceof ServerWorld) {
+                            ((ServerWorld) this.level).sendParticles(ParticleTypes.FIREWORK, this.worldPosition.getX() + 0.5, this.worldPosition.getY() + 1.1, this.worldPosition.getZ() + 0.5, 2, 0, 0, 0, 0.1D);
                         }
 
                         if (done) {
-                            ((ServerWorld) this.world).spawnParticle(ParticleTypes.END_ROD, this.pos.getX() + 0.5, this.pos.getY() + 1.1, this.pos.getZ() + 0.5, 100, 0, 0, 0, 0.25D);
+                            ((ServerWorld) this.level).sendParticles(ParticleTypes.END_ROD, this.worldPosition.getX() + 0.5, this.worldPosition.getY() + 1.1, this.worldPosition.getZ() + 0.5, 100, 0, 0, 0, 0.25D);
 
                             this.inv.setStackInSlot(0, recipe.getOutput().copy());
-                            this.markDirty();
+                            this.setChanged();
 
                             this.processTime = 0;
                             this.recipeForRenderIndex = -1;
@@ -136,9 +138,9 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase {
 
         // TODO: [port] validate this
         for (int i = 0; i < 3; i++) {
-            Direction facing = Direction.byHorizontalIndex(i);
-            BlockPos offset = this.pos.offset(facing, 3);
-            TileEntity tile = this.world.getTileEntity(offset);
+            Direction facing = Direction.from2DDataValue(i);
+            BlockPos offset = this.worldPosition.relative(facing, 3);
+            TileEntity tile = this.level.getBlockEntity(offset);
             if (tile instanceof TileEntityDisplayStand) {
                 stands[i] = (TileEntityDisplayStand) tile;
             } else {

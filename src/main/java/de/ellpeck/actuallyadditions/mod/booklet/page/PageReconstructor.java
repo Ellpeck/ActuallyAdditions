@@ -35,7 +35,7 @@ public class PageReconstructor extends BookletPage {
         super(localizationKey);
         this.recipe = recipe;
         if (recipe != null) {
-            this.stacks = recipe.getInput().getMatchingStacks();
+            this.stacks = recipe.getInput().getItems();
         }
     }
 
@@ -44,7 +44,7 @@ public class PageReconstructor extends BookletPage {
     public void drawScreenPre(GuiBookletBase gui, int startX, int startY, int mouseX, int mouseY, float partialTicks) {
         super.drawScreenPre(gui, startX, startY, mouseX, mouseY, partialTicks);
 
-        gui.getMinecraft().getTextureManager().bindTexture(GuiBooklet.RES_LOC_GADGETS);
+        gui.getMinecraft().getTextureManager().bind(GuiBooklet.RES_LOC_GADGETS);
         GuiUtils.drawTexturedModalRect(startX + 30, startY + 10, 80, 146, 68, 48, 0);
 
         gui.renderScaledAsciiString("(" + StringUtil.localize("booklet." + ActuallyAdditions.MODID + ".reconstructorRecipe") + ")", startX + 6, startY + 63, 0, false, gui.getMediumFontSize());
@@ -75,7 +75,7 @@ public class PageReconstructor extends BookletPage {
         if (this.recipe != null) {
             ItemStack copy = this.recipe.getOutput().copy();
             if (this.isWildcard) {
-                copy.setDamage(Util.WILDCARD);
+                copy.setDamageValue(Util.WILDCARD);
             }
             list.add(copy);
         }

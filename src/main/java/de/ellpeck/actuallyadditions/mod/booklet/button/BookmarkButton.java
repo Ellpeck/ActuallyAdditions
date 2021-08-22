@@ -49,7 +49,7 @@ public class BookmarkButton extends Button {
                     button.assignedPage = null;
                 } else if (!(button.booklet instanceof GuiPage) || ((GuiPage) button.booklet).pages[0] != button.assignedPage) {
                     GuiPage gui = BookletUtils.createPageGui(button.booklet.previousScreen, button.booklet, button.assignedPage);
-                    Minecraft.getInstance().displayGuiScreen(gui);
+                    Minecraft.getInstance().setScreen(gui);
                 }
             } else {
                 if (button.booklet instanceof GuiPage) {
@@ -63,16 +63,16 @@ public class BookmarkButton extends Button {
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float partialTicks) {
         if (this.visible) {
-            Minecraft.getInstance().getTextureManager().bindTexture(GuiBooklet.RES_LOC_GADGETS);
-            GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+            Minecraft.getInstance().getTextureManager().bind(GuiBooklet.RES_LOC_GADGETS);
+            GlStateManager._color4f(1.0F, 1.0F, 1.0F, 1.0F);
             this.isHovered = mouseX >= this.x && mouseY >= this.y && this.x < this.x + this.width && this.y < this.y + this.height;
             int offset = this.isHovered
                 ? 1
                 : 0;
 
-            GlStateManager.enableBlend();
-            GlStateManager.blendFuncSeparate(770, 771, 1, 0);
-            GlStateManager.blendFunc(770, 771);
+            GlStateManager._enableBlend();
+            GlStateManager._blendFuncSeparate(770, 771, 1, 0);
+            GlStateManager._blendFunc(770, 771);
             int renderHeight = 25;
             this.blit(matrices, this.x, this.y, 224 + (this.assignedPage == null
                 ? 0
@@ -84,9 +84,9 @@ public class BookmarkButton extends Button {
             if (this.assignedPage != null) {
                 ItemStack display = this.assignedPage.getChapter().getDisplayItemStack();
                 if (StackUtil.isValid(display)) {
-                    GlStateManager.pushMatrix();
+                    GlStateManager._pushMatrix();
                     AssetUtil.renderStackToGui(display, this.x + 2, this.y + 1, 0.725F);
-                    GlStateManager.popMatrix();
+                    GlStateManager._popMatrix();
                 }
             }
         }
@@ -113,7 +113,7 @@ public class BookmarkButton extends Button {
             }
 
             Minecraft mc = Minecraft.getInstance();
-            GuiUtils.drawHoveringText(stack, list.stream().map(StringTextComponent::new).collect(Collectors.toList()), mouseX, mouseY, mc.currentScreen.width, mc.currentScreen.height, -1, mc.fontRenderer);
+            GuiUtils.drawHoveringText(stack, list.stream().map(StringTextComponent::new).collect(Collectors.toList()), mouseX, mouseY, mc.screen.width, mc.screen.height, -1, mc.font);
         }
     }
 }

@@ -61,7 +61,7 @@ public final class WorldUtil {
         ItemStack theoreticalExtract = extractItem(extractWrapper, maxExtract, true, extractSlotStart, extractSlotEnd, filter);
         if (StackUtil.isValid(theoreticalExtract)) {
             ItemStack remaining = StackUtil.insertItem(insertWrapper, theoreticalExtract, false, insertSlotStart, insertSlotEnd);
-            if (!ItemStack.areItemStacksEqual(remaining, theoreticalExtract)) {
+            if (!ItemStack.matches(remaining, theoreticalExtract)) {
                 int toExtract = theoreticalExtract.getCount() - remaining.getCount();
                 extractItem(extractWrapper, toExtract, false, extractSlotStart, extractSlotEnd, filter);
                 return true;
@@ -166,21 +166,21 @@ public final class WorldUtil {
 
     public static ItemStack useItemAtSide(Direction side, World world, BlockPos pos, ItemStack stack) {
         if (world instanceof WorldServer && StackUtil.isValid(stack) && pos != null) {
-            BlockPos offsetPos = pos.offset(side);
+            BlockPos offsetPos = pos.relative(side);
             BlockState state = world.getBlockState(offsetPos);
             Block block = state.getBlock();
-            boolean replaceable = block.isReplaceable(world, offsetPos);
+            boolean replaceable = block.canBeReplaced(world, offsetPos);
 
             //Redstone
             if (replaceable && stack.getItem() == Items.REDSTONE) {
-                world.setBlockState(offsetPos, Blocks.REDSTONE_WIRE.getDefaultState(), 2);
+                world.setBlock(offsetPos, Blocks.REDSTONE_WIRE.defaultBlockState(), 2);
                 return StackUtil.shrink(stack, 1);
             }
 
             //Plants
             if (replaceable && stack.getItem() instanceof IPlantable) {
                 if (((IPlantable) stack.getItem()).getPlant(world, offsetPos).getBlock().canPlaceBlockAt(world, offsetPos)) {
-                    if (world.setBlockState(offsetPos, ((IPlantable) stack.getItem()).getPlant(world, offsetPos), 2)) {
+                    if (world.setBlock(offsetPos, ((IPlantable) stack.getItem()).getPlant(world, offsetPos), 2)) {
                         return StackUtil.shrink(stack, 1);
                     }
                 }
@@ -192,10 +192,10 @@ public final class WorldUtil {
                 if (fake.connection == null) {
                     fake.connection = new NetHandlerSpaghettiServer(fake);
                 }
-                ItemStack heldBefore = fake.getHeldItemMainhand();
+                ItemStack heldBefore = fake.getMainHandItem();
                 setHandItemWithoutAnnoyingSound(fake, Hand.MAIN_HAND, stack.copy());
-                fake.interactionManager.processRightClickBlock(fake, world, fake.getHeldItemMainhand(), Hand.MAIN_HAND, offsetPos, side.getOpposite(), 0.5F, 0.5F, 0.5F);
-                ItemStack result = fake.getHeldItem(Hand.MAIN_HAND);
+                fake.gameMode.processRightClickBlock(fake, world, fake.getMainHandItem(), Hand.MAIN_HAND, offsetPos, side.getOpposite(), 0.5F, 0.5F, 0.5F);
+                ItemStack result = fake.getItemInHand(Hand.MAIN_HAND);
                 setHandItemWithoutAnnoyingSound(fake, Hand.MAIN_HAND, heldBefore);
                 return result;
             } catch (Exception e) {
@@ -206,8 +206,8 @@ public final class WorldUtil {
     }
 
     public static boolean dropItemAtSide(Direction side, World world, BlockPos pos, ItemStack stack) {
-        BlockPos coords = pos.offset(side);
-        if (world.isBlockLoaded(coords)) {
+        BlockPos coords = pos.relative(side);
+        if (world.hasChunkAt(coords)) {
             EntityItem item = new EntityItem(world, coords.getX() + 0.5, coords.getY() + 0.5, coords.getZ() + 0.5, stack);
             item.motionX = 0;
             item.motionY = 0;
@@ -241,10 +241,10 @@ public final class WorldUtil {
 
     public static ArrayList<Material> getMaterialsAround(World world, BlockPos pos) {
         ArrayList<Material> blocks = new ArrayList<>();
-        blocks.add(world.getBlockState(pos.offset(Direction.NORTH)).getMaterial());
-        blocks.add(world.getBlockState(pos.offset(Direction.EAST)).getMaterial());
-        blocks.add(world.getBlockState(pos.offset(Direction.SOUTH)).getMaterial());
-        blocks.add(world.getBlockState(pos.offset(Direction.WEST)).getMaterial());
+        blocks.add(world.getBlockState(pos.relative(Direction.NORTH)).getMaterial());
+        blocks.add(world.getBlockState(pos.relative(Direction.EAST)).getMaterial());
+        blocks.add(world.getBlockState(pos.relative(Direction.SOUTH)).getMaterial());
+        blocks.add(world.getBlockState(pos.relative(Direction.WEST)).getMaterial());
         return blocks;
     }
 
@@ -253,8 +253,8 @@ public final class WorldUtil {
     }
 
     private static RayTraceResult getMovingObjectPosWithReachDistance(World world, PlayerEntity player, double distance, boolean p1, boolean p2, boolean p3) {
-        float f = player.rotationPitch;
-        float f1 = player.rotationYaw;
+        float f = player.xRot;
+        float f1 = player.yRot;
         double d0 = player.posX;
         double d1 = player.posY + player.getEyeHeight();
         double d2 = player.posZ;
@@ -266,7 +266,7 @@ public final class WorldUtil {
         float f6 = f3 * f4;
         float f7 = f2 * f4;
         Vec3d vec31 = vec3.add(f6 * distance, f5 * distance, f7 * distance);
-        return world.rayTraceBlocks(vec3, vec31, p1, p2, p3);
+        return world.clipWithInteractionOverride(vec3, vec31, p1, p2, p3);
     }
 
     public static RayTraceResult getNearestBlockWithDefaultReachDistance(World world, PlayerEntity player) {
@@ -279,9 +279,9 @@ public final class WorldUtil {
 
     public static void setHandItemWithoutAnnoyingSound(PlayerEntity player, Hand hand, ItemStack stack) {
         if (hand == Hand.MAIN_HAND) {
-            player.inventory.mainInventory.set(player.inventory.currentItem, stack);
+            player.inventory.items.set(player.inventory.selected, stack);
         } else if (hand == Hand.OFF_HAND) {
-            player.inventory.offHandInventory.set(0, stack);
+            player.inventory.offhand.set(0, stack);
         }
     }
 
@@ -289,8 +289,8 @@ public final class WorldUtil {
     public static float fireFakeHarvestEventsForDropChance(TileEntity caller, List<ItemStack> drops, World world, BlockPos pos) {
         if (world instanceof ServerWorld) {
             FakePlayer fake = FakePlayerFactory.getMinecraft((ServerWorld) world);
-            BlockPos tePos = caller.getPos();
-            fake.setPosition(tePos.getX() + 0.5, tePos.getY() + 0.5, tePos.getZ() + 0.5);
+            BlockPos tePos = caller.getBlockPos();
+            fake.setPos(tePos.getX() + 0.5, tePos.getY() + 0.5, tePos.getZ() + 0.5);
             BlockState state = world.getBlockState(pos);
 
             BreakEvent event = new BreakEvent(world, pos, state, fake);
@@ -317,36 +317,36 @@ public final class WorldUtil {
 
         if (player.isCreative()) {
             if (block.removedByPlayer(state, world, pos, player, false)) {
-                block.onPlayerDestroy(world, pos, state);
+                block.destroy(world, pos, state);
             }
 
             // send update to client
-            if (!world.isRemote) {
-                ((ServerPlayerEntity) player).connection.sendPacket(new SPacketBlockChange(world, pos));
+            if (!world.isClientSide) {
+                ((ServerPlayerEntity) player).connection.send(new SPacketBlockChange(world, pos));
             }
             return true;
         }
 
         // callback to the tool the player uses. Called on both sides. This damages the tool n stuff.
-        stack.onBlockDestroyed(world, state, pos, player);
+        stack.mineBlock(world, state, pos, player);
 
         // server sided handling
-        if (!world.isRemote) {
+        if (!world.isClientSide) {
             // send the blockbreak event
-            int xp = ForgeHooks.onBlockBreakEvent(world, ((ServerPlayerEntity) player).interactionManager.getGameType(), (ServerPlayerEntity) player, pos);
+            int xp = ForgeHooks.onBlockBreakEvent(world, ((ServerPlayerEntity) player).gameMode.getGameModeForPlayer(), (ServerPlayerEntity) player, pos);
             if (xp == -1) {
                 return false;
             }
 
-            TileEntity tileEntity = world.getTileEntity(pos);
+            TileEntity tileEntity = world.getBlockEntity(pos);
             if (block.removedByPlayer(state, world, pos, player, true)) { // boolean is if block can be harvested, checked above
-                block.onPlayerDestroy(world, pos, state);
-                block.harvestBlock(world, player, pos, state, tileEntity, stack);
-                block.dropXpOnBlockBreak(world, pos, xp);
+                block.destroy(world, pos, state);
+                block.playerDestroy(world, player, pos, state, tileEntity, stack);
+                block.popExperience(world, pos, xp);
             }
 
             // always send block update to client
-            ((ServerPlayerEntity) player).connection.sendPacket(new SPacketBlockChange(world, pos));
+            ((ServerPlayerEntity) player).connection.send(new SPacketBlockChange(world, pos));
             return true;
         }
         // client sided handling
@@ -355,12 +355,12 @@ public final class WorldUtil {
             // the code above, executed on the server, sends a block-updates that give us the correct state of the block we destroy.
 
             // following code can be found in PlayerControllerMP.onPlayerDestroyBlock
-            world.playEvent(2001, pos, Block.getStateId(state));
+            world.levelEvent(2001, pos, Block.getId(state));
             if (block.removedByPlayer(state, world, pos, player, true)) {
-                block.onPlayerDestroy(world, pos, state);
+                block.destroy(world, pos, state);
             }
             // callback to the tool
-            stack.onBlockDestroyed(world, state, pos, player);
+            stack.mineBlock(world, state, pos, player);
 
             // send an update to the server, so we get an update back
 

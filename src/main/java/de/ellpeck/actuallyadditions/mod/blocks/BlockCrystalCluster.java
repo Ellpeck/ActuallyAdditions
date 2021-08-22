@@ -20,12 +20,14 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class BlockCrystalCluster extends FullyDirectionalBlock {
 
     private final TheCrystals crystal;
 
     public BlockCrystalCluster(TheCrystals crystal) {
-        super(Properties.create(Material.GLASS).hardnessAndResistance(0.25F, 1.0F).sound(SoundType.GLASS).setLightLevel(state -> 7));
+        super(Properties.of(Material.GLASS).strength(0.25F, 1.0F).sound(SoundType.GLASS).lightLevel(state -> 7));
         this.crystal = crystal;
 
         //        this.setLightOpacity(1);

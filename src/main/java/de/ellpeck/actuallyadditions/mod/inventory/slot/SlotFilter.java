@@ -30,7 +30,7 @@ public class SlotFilter extends SlotItemHandlerUnconditioned {
     }
 
     public static boolean checkFilter(Container container, int slotId, PlayerEntity player) {
-        if (slotId >= 0 && slotId < container.inventorySlots.size()) {
+        if (slotId >= 0 && slotId < container.slots.size()) {
             Slot slot = container.getSlot(slotId);
             if (slot instanceof SlotFilter) {
                 ((SlotFilter) slot).slotClick(player);
@@ -45,20 +45,20 @@ public class SlotFilter extends SlotItemHandlerUnconditioned {
     }
 
     private void slotClick(PlayerEntity player) {
-        ItemStack heldStack = player.inventory.getItemStack();
-        ItemStack stackInSlot = this.getStack();
+        ItemStack heldStack = player.inventory.getCarried();
+        ItemStack stackInSlot = this.getItem();
 
         if (StackUtil.isValid(stackInSlot) && !StackUtil.isValid(heldStack)) {
             if (isFilter(stackInSlot)) {
-                player.inventory.setItemStack(stackInSlot);
+                player.inventory.setCarried(stackInSlot);
             }
 
-            this.putStack(StackUtil.getEmpty());
+            this.set(StackUtil.getEmpty());
         } else if (StackUtil.isValid(heldStack)) {
             if (!isFilter(stackInSlot)) {
                 ItemStack s = heldStack.copy();
                 s.setCount(1);
-                this.putStack(s);
+                this.set(s);
 
                 if (isFilter(heldStack)) {
                     heldStack.shrink(1);
@@ -68,17 +68,17 @@ public class SlotFilter extends SlotItemHandlerUnconditioned {
     }
 
     @Override
-    public boolean isItemValid(ItemStack stack) {
+    public boolean mayPlace(ItemStack stack) {
         return false;
     }
 
     @Override
-    public void putStack(ItemStack stack) {
-        super.putStack(stack.copy());
+    public void set(ItemStack stack) {
+        super.set(stack.copy());
     }
 
     @Override
-    public boolean canTakeStack(PlayerEntity player) {
+    public boolean mayPickup(PlayerEntity player) {
         return false;
     }
 }

@@ -55,13 +55,13 @@ public class BlockAtomicReconstructor extends FullyDirectionalBlock.Container im
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-        ItemStack heldItem = player.getHeldItem(hand);
+    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+        ItemStack heldItem = player.getItemInHand(hand);
         if (this.tryToggleRedstone(world, pos, player)) {
             return ActionResultType.PASS;
         }
-        if (!world.isRemote) {
-            TileEntityAtomicReconstructor reconstructor = (TileEntityAtomicReconstructor) world.getTileEntity(pos);
+        if (!world.isClientSide) {
+            TileEntityAtomicReconstructor reconstructor = (TileEntityAtomicReconstructor) world.getBlockEntity(pos);
             if (reconstructor != null) {
                 if (StackUtil.isValid(heldItem)) {
                     Item item = heldItem.getItem();
@@ -69,17 +69,17 @@ public class BlockAtomicReconstructor extends FullyDirectionalBlock.Container im
                         ItemStack toPut = heldItem.copy();
                         toPut.setCount(1);
                         reconstructor.inv.setStackInSlot(0, toPut);
-                        player.inventory.decrStackSize(player.inventory.currentItem, 1);
+                        player.inventory.removeItem(player.inventory.selected, 1);
                     }
                     //Shush, don't tell anyone!
                     else if (ConfigIntValues.ELEVEN.getValue() == 11 && item == Items.MUSIC_DISC_11) {
                         reconstructor.counter++;
-                        reconstructor.markDirty();
+                        reconstructor.setChanged();
                     }
                 } else {
                     ItemStack slot = reconstructor.inv.getStackInSlot(0);
                     if (StackUtil.isValid(slot)) {
-                        player.setHeldItem(hand, slot.copy());
+                        player.setItemInHand(hand, slot.copy());
                         reconstructor.inv.setStackInSlot(0, StackUtil.getEmpty());
                     }
                 }
@@ -90,7 +90,7 @@ public class BlockAtomicReconstructor extends FullyDirectionalBlock.Container im
 
     @Nullable
     @Override
-    public TileEntity createNewTileEntity(IBlockReader worldIn) {
+    public TileEntity newBlockEntity(IBlockReader worldIn) {
         return new TileEntityAtomicReconstructor();
     }
 
@@ -101,22 +101,22 @@ public class BlockAtomicReconstructor extends FullyDirectionalBlock.Container im
     @Override
     @OnlyIn(Dist.CLIENT)
     public void displayHud(MatrixStack matrices, Minecraft minecraft, PlayerEntity player, ItemStack stack, RayTraceResult rayCast, MainWindow resolution) {
-        if (!(rayCast instanceof BlockRayTraceResult) || minecraft.world == null) {
+        if (!(rayCast instanceof BlockRayTraceResult) || minecraft.level == null) {
             return;
         }
 
-        TileEntity tile = minecraft.world.getTileEntity(((BlockRayTraceResult) rayCast).getPos());
+        TileEntity tile = minecraft.level.getBlockEntity(((BlockRayTraceResult) rayCast).getBlockPos());
         if (tile instanceof TileEntityAtomicReconstructor) {
             ItemStack slot = ((TileEntityAtomicReconstructor) tile).inv.getStackInSlot(0);
             ITextComponent strg;
             if (!StackUtil.isValid(slot)) {
                 strg = Lang.trans("info", "nolens");
             } else {
-                strg = slot.getItem().getDisplayName(slot);
+                strg = slot.getItem().getName(slot);
 
-                AssetUtil.renderStackToGui(slot, resolution.getScaledWidth() / 2 + 15, resolution.getScaledHeight() / 2 - 19, 1F);
+                AssetUtil.renderStackToGui(slot, resolution.getGuiScaledWidth() / 2 + 15, resolution.getGuiScaledHeight() / 2 - 19, 1F);
             }
-            minecraft.fontRenderer.drawStringWithShadow(matrices, strg.copyRaw().mergeStyle(TextFormatting.YELLOW).mergeStyle(TextFormatting.ITALIC).getString(), resolution.getScaledWidth() / 2 + 35, resolution.getScaledHeight() / 2f - 15, StringUtil.DECIMAL_COLOR_WHITE);
+            minecraft.font.drawShadow(matrices, strg.plainCopy().withStyle(TextFormatting.YELLOW).withStyle(TextFormatting.ITALIC).getString(), resolution.getGuiScaledWidth() / 2 + 35, resolution.getGuiScaledHeight() / 2f - 15, StringUtil.DECIMAL_COLOR_WHITE);
         }
     }
 
@@ -159,13 +159,13 @@ public class BlockAtomicReconstructor extends FullyDirectionalBlock.Container im
     //    }
 
     @Override
-    public boolean hasComparatorInputOverride(BlockState state) {
+    public boolean hasAnalogOutputSignal(BlockState state) {
         return true;
     }
 
     @Override
-    public int getComparatorInputOverride(BlockState blockState, World world, BlockPos pos) {
-        TileEntity t = world.getTileEntity(pos);
+    public int getAnalogOutputSignal(BlockState blockState, World world, BlockPos pos) {
+        TileEntity t = world.getBlockEntity(pos);
         int i = 0;
         if (t instanceof TileEntityAtomicReconstructor) {
             i = ((TileEntityAtomicReconstructor) t).getEnergy();

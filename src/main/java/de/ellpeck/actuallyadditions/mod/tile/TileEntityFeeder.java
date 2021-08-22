@@ -32,6 +32,8 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Optional;
 
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
+
 public class TileEntityFeeder extends TileEntityInventoryBase implements INamedContainerProvider {
 
     public static final int THRESHOLD = 30;
@@ -71,13 +73,13 @@ public class TileEntityFeeder extends TileEntityInventoryBase implements INamedC
     public void updateEntity() {
         super.updateEntity();
         this.currentTimer = MathHelper.clamp(++this.currentTimer, 0, 100);
-        if (this.world.isRemote) {
+        if (this.level.isClientSide) {
             return;
         }
         int range = 5;
         ItemStack stack = this.inv.getStackInSlot(0);
         if (!stack.isEmpty() && this.currentTimer >= TIME) {
-            List<AnimalEntity> animals = this.world.getEntitiesWithinAABB(AnimalEntity.class, new AxisAlignedBB(this.pos.getX() - range, this.pos.getY() - range, this.pos.getZ() - range, this.pos.getX() + range, this.pos.getY() + range, this.pos.getZ() + range));
+            List<AnimalEntity> animals = this.level.getEntitiesOfClass(AnimalEntity.class, new AxisAlignedBB(this.worldPosition.getX() - range, this.worldPosition.getY() - range, this.worldPosition.getZ() - range, this.worldPosition.getX() + range, this.worldPosition.getY() + range, this.worldPosition.getZ() + range));
             this.currentAnimalAmount = animals.size();
             if (this.currentAnimalAmount >= 2 && this.currentAnimalAmount < THRESHOLD) {
                 Optional<AnimalEntity> opt = animals.stream().filter((e) -> canBeFed(stack, e)).findAny();
@@ -85,7 +87,7 @@ public class TileEntityFeeder extends TileEntityInventoryBase implements INamedC
                     feedAnimal(opt.get());
                     stack.shrink(1);
                     this.currentTimer = 0;
-                    this.markDirty();
+                    this.setChanged();
                 }
             }
         }
@@ -103,19 +105,19 @@ public class TileEntityFeeder extends TileEntityInventoryBase implements INamedC
     private static void feedAnimal(AnimalEntity animal) {
         animal.setInLove(null);
         for (int i = 0; i < 7; i++) {
-            double d = animal.world.rand.nextGaussian() * 0.02D;
-            double d1 = animal.world.rand.nextGaussian() * 0.02D;
-            double d2 = animal.world.rand.nextGaussian() * 0.02D;
-            animal.world.addParticle(ParticleTypes.HEART, animal.getPosX() + animal.world.rand.nextFloat() * animal.getWidth() * 2.0F - animal.getWidth(), animal.getPosY() + 0.5D + animal.world.rand.nextFloat() * animal.getHeight(), animal.getPosZ() + animal.world.rand.nextFloat() * animal.getWidth() * 2.0F - animal.getWidth(), d, d1, d2);
+            double d = animal.level.random.nextGaussian() * 0.02D;
+            double d1 = animal.level.random.nextGaussian() * 0.02D;
+            double d2 = animal.level.random.nextGaussian() * 0.02D;
+            animal.level.addParticle(ParticleTypes.HEART, animal.getX() + animal.level.random.nextFloat() * animal.getBbWidth() * 2.0F - animal.getBbWidth(), animal.getY() + 0.5D + animal.level.random.nextFloat() * animal.getBbHeight(), animal.getZ() + animal.level.random.nextFloat() * animal.getBbWidth() * 2.0F - animal.getBbWidth(), d, d1, d2);
         }
     }
 
     private static boolean canBeFed(ItemStack stack, AnimalEntity animal) {
-        if (animal instanceof HorseEntity && ((HorseEntity) animal).isTame()) {
+        if (animal instanceof HorseEntity && ((HorseEntity) animal).isTamed()) {
             Item item = stack.getItem();
-            return animal.getGrowingAge() == 0 && !animal.isInLove() && (item == Items.GOLDEN_APPLE || item == Items.GOLDEN_CARROT);
+            return animal.getAge() == 0 && !animal.isInLove() && (item == Items.GOLDEN_APPLE || item == Items.GOLDEN_CARROT);
         }
-        return animal.getGrowingAge() == 0 && !animal.isInLove() && animal.isBreedingItem(stack);
+        return animal.getAge() == 0 && !animal.isInLove() && animal.isFood(stack);
     }
 
     @Override

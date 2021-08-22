@@ -21,6 +21,8 @@ import net.minecraft.util.Direction;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
+
 public class TileEntityDisplayStand extends TileEntityInventoryBase implements IEnergyDisplay {
 
     public final CustomEnergyStorage storage = new CustomEnergyStorage(80000, 1000, 0);
@@ -35,7 +37,7 @@ public class TileEntityDisplayStand extends TileEntityInventoryBase implements I
     public void updateEntity() {
         super.updateEntity();
 
-        if (!this.world.isRemote) {
+        if (!this.level.isClientSide) {
             if (StackUtil.isValid(this.inv.getStackInSlot(0)) && !this.isRedstonePowered) {
                 IDisplayStandItem item = this.convertToDisplayStandItem(this.inv.getStackInSlot(0).getItem());
                 if (item != null) {
@@ -75,7 +77,7 @@ public class TileEntityDisplayStand extends TileEntityInventoryBase implements I
         if (item instanceof IDisplayStandItem) {
             return (IDisplayStandItem) item;
         } else if (item instanceof BlockItem) {
-            Block block = Block.getBlockFromItem(item);
+            Block block = Block.byItem(item);
             if (block instanceof IDisplayStandItem) {
                 return (IDisplayStandItem) block;
             }

@@ -48,7 +48,7 @@ public final class ItemUtil {
 
     @Deprecated
     public static boolean areItemsEqual(ItemStack stack1, ItemStack stack2, boolean checkWildcard) {
-        return stack1.isItemEqual(stack2);
+        return stack1.sameItem(stack2);
         //return StackUtil.isValid(stack1) && StackUtil.isValid(stack2) && (stack1.isItemEqual(stack2) || checkWildcard && stack1.getItem() == stack2.getItem() && (stack1.getItemDamage() == Util.WILDCARD || stack2.getItemDamage() == Util.WILDCARD));
     }
 
@@ -62,7 +62,7 @@ public final class ItemUtil {
     @Deprecated
     public static void addEnchantment(ItemStack stack, Enchantment e, int level) {
         if (!EnchantmentHelper.getEnchantments(stack).containsKey(e)) {
-            stack.addEnchantment(e, level);
+            stack.enchant(e, level);
         }
     }
 
@@ -75,7 +75,7 @@ public final class ItemUtil {
     }
 
     public static boolean canBeStacked(ItemStack stack1, ItemStack stack2) {
-        return ItemStack.areItemsEqual(stack1, stack2) && ItemStack.areItemStackTagsEqual(stack1, stack2);
+        return ItemStack.isSame(stack1, stack2) && ItemStack.tagMatches(stack1, stack2);
     }
 
     public static boolean isEnabled(ItemStack stack) {
@@ -83,7 +83,7 @@ public final class ItemUtil {
     }
 
     public static void changeEnabled(PlayerEntity player, Hand hand) {
-        changeEnabled(player.getHeldItem(hand));
+        changeEnabled(player.getItemInHand(hand));
     }
 
     public static void changeEnabled(ItemStack stack) {

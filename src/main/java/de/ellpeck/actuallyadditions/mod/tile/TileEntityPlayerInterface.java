@@ -23,6 +23,8 @@ import net.minecraftforge.items.wrapper.PlayerInvWrapper;
 
 import java.util.UUID;
 
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
+
 public class TileEntityPlayerInterface extends TileEntityBase implements IEnergyDisplay {
 
     public static final int DEFAULT_RANGE = 32;
@@ -40,10 +42,10 @@ public class TileEntityPlayerInterface extends TileEntityBase implements IEnergy
     }
 
     private PlayerEntity getPlayer() {
-        if (this.connectedPlayer != null && this.world != null) {
-            PlayerEntity player = this.world.getPlayerByUuid(this.connectedPlayer);
+        if (this.connectedPlayer != null && this.level != null) {
+            PlayerEntity player = this.level.getPlayerByUUID(this.connectedPlayer);
             if (player != null) {
-                if (player.getDistanceSq(this.pos.getX(), this.pos.getY(), this.pos.getZ()) <= this.range) {
+                if (player.distanceToSqr(this.worldPosition.getX(), this.worldPosition.getY(), this.worldPosition.getZ()) <= this.range) {
                     return player;
                 }
             }
@@ -70,16 +72,16 @@ public class TileEntityPlayerInterface extends TileEntityBase implements IEnergy
     @Override
     public void updateEntity() {
         super.updateEntity();
-        if (!this.world.isRemote) {
+        if (!this.level.isClientSide) {
             boolean changed = false;
 
-            this.range = TileEntityPhantomface.upgradeRange(DEFAULT_RANGE, this.world, this.pos);
+            this.range = TileEntityPhantomface.upgradeRange(DEFAULT_RANGE, this.level, this.worldPosition);
 
             PlayerEntity player = this.getPlayer();
             if (player != null) {
-                for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
+                for (int i = 0; i < player.inventory.getContainerSize(); i++) {
                     if (this.storage.getEnergyStored() > 0) {
-                        ItemStack slot = player.inventory.getStackInSlot(i);
+                        ItemStack slot = player.inventory.getItem(i);
                         if (StackUtil.isValid(slot) && slot.getCount() == 1) {
 
                             int received = slot.getCapability(CapabilityEnergy.ENERGY).map(cap -> cap.receiveEnergy(this.storage.getEnergyStored(), false)).orElse(0);
@@ -94,7 +96,7 @@ public class TileEntityPlayerInterface extends TileEntityBase implements IEnergy
             }
 
             if (changed) {
-                this.markDirty();
+                this.setChanged();
                 this.sendUpdate();
             }
 
@@ -110,7 +112,7 @@ public class TileEntityPlayerInterface extends TileEntityBase implements IEnergy
 
         this.storage.writeToNBT(compound);
         if (this.connectedPlayer != null && type != NBTType.SAVE_BLOCK) {
-            compound.putUniqueId("Player", this.connectedPlayer);
+            compound.putUUID("Player", this.connectedPlayer);
             compound.putString("PlayerName", this.playerName);
         }
     }
@@ -121,7 +123,7 @@ public class TileEntityPlayerInterface extends TileEntityBase implements IEnergy
 
         this.storage.readFromNBT(compound);
         if (compound.contains("PlayerLeast") && type != NBTType.SAVE_BLOCK) {
-            this.connectedPlayer = compound.getUniqueId("Player");
+            this.connectedPlayer = compound.getUUID("Player");
             this.playerName = compound.getString("PlayerName");
         }
     }

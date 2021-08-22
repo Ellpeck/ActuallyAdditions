@@ -39,7 +39,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 public class ItemWaterBowl extends ItemBase {
 
     public ItemWaterBowl() {
-        super(ActuallyItems.defaultProps().maxStackSize(1));
+        super(ActuallyItems.defaultProps().stacksTo(1));
         MinecraftForge.EVENT_BUS.register(this);
     }
 
@@ -56,25 +56,25 @@ public class ItemWaterBowl extends ItemBase {
                     BlockRayTraceResult trace = (BlockRayTraceResult) rayTrace;
                     ActionResult<ItemStack> result = ForgeEventFactory.onBucketUse(event.getPlayer(), event.getWorld(), event.getItemStack(), trace);
                     if (result == null) {
-                        if (event.getPlayer().canPlayerEdit(trace.getPos().offset(trace.getFace()), trace.getFace(), event.getItemStack())) {
-                            BlockState state = event.getWorld().getBlockState(trace.getPos());
+                        if (event.getPlayer().mayUseItemAt(trace.getBlockPos().relative(trace.getDirection()), trace.getDirection(), event.getItemStack())) {
+                            BlockState state = event.getWorld().getBlockState(trace.getBlockPos());
                             Block block = state.getBlock();
 
                             // TODO: Validate fluid check
-                            if ((block == Blocks.WATER) && state.get(BlockStateProperties.LEVEL_0_15) == 0) {
-                                event.getPlayer().playSound(SoundEvents.ITEM_BUCKET_FILL, 1.0F, 1.0F);
+                            if ((block == Blocks.WATER) && state.getValue(BlockStateProperties.LEVEL) == 0) {
+                                event.getPlayer().playSound(SoundEvents.BUCKET_FILL, 1.0F, 1.0F);
 
-                                if (!event.getWorld().isRemote) {
-                                    event.getWorld().setBlockState(trace.getPos(), Blocks.AIR.getDefaultState(), 11);
+                                if (!event.getWorld().isClientSide) {
+                                    event.getWorld().setBlock(trace.getBlockPos(), Blocks.AIR.defaultBlockState(), 11);
                                     ItemStack reduced = StackUtil.shrink(event.getItemStack(), 1);
 
                                     ItemStack bowl = new ItemStack(ActuallyItems.WATER_BOWL.get());
                                     if (!StackUtil.isValid(reduced)) {
-                                        event.getPlayer().setHeldItem(event.getHand(), bowl);
-                                    } else if (!event.getPlayer().inventory.addItemStackToInventory(bowl.copy())) {
-                                        ItemEntity entityItem = new ItemEntity(event.getWorld(), event.getPlayer().getPosX(), event.getPlayer().getPosY(), event.getPlayer().getPosZ(), bowl.copy());
-                                        entityItem.setPickupDelay(0);
-                                        event.getWorld().addEntity(entityItem);
+                                        event.getPlayer().setItemInHand(event.getHand(), bowl);
+                                    } else if (!event.getPlayer().inventory.add(bowl.copy())) {
+                                        ItemEntity entityItem = new ItemEntity(event.getWorld(), event.getPlayer().getX(), event.getPlayer().getY(), event.getPlayer().getZ(), bowl.copy());
+                                        entityItem.setPickUpDelay(0);
+                                        event.getWorld().addFreshEntity(entityItem);
                                     }
                                 }
                             }
@@ -86,8 +86,8 @@ public class ItemWaterBowl extends ItemBase {
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
-        ItemStack stack = player.getHeldItem(hand);
+    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+        ItemStack stack = player.getItemInHand(hand);
 
         RayTraceResult trace = WorldUtil.getNearestBlockWithDefaultReachDistance(world, player);
         ActionResult<ItemStack> result = ForgeEventFactory.onBucketUse(player, world, stack, trace);
@@ -96,28 +96,28 @@ public class ItemWaterBowl extends ItemBase {
         }
 
         if (trace == null) {
-            return ActionResult.resultPass(stack);
+            return ActionResult.pass(stack);
         } else if (trace.getType() != RayTraceResult.Type.BLOCK) {
-            return ActionResult.resultPass(stack);
+            return ActionResult.pass(stack);
         } else {
             BlockRayTraceResult blockTrace = (BlockRayTraceResult) trace;
-            BlockPos pos = blockTrace.getPos();
+            BlockPos pos = blockTrace.getBlockPos();
 
-            if (!world.isBlockModifiable(player, pos)) {
-                return ActionResult.resultFail(stack);
+            if (!world.mayInteract(player, pos)) {
+                return ActionResult.fail(stack);
             } else {
-                BlockPos pos1 = world.getBlockState(pos).getMaterial().isReplaceable() && blockTrace.getFace() == Direction.UP
+                BlockPos pos1 = world.getBlockState(pos).getMaterial().isReplaceable() && blockTrace.getDirection() == Direction.UP
                     ? pos
-                    : pos.offset(blockTrace.getFace());
+                    : pos.relative(blockTrace.getDirection());
 
-                if (!player.canPlayerEdit(pos1, blockTrace.getFace(), stack)) {
-                    return ActionResult.resultFail(stack);
+                if (!player.mayUseItemAt(pos1, blockTrace.getDirection(), stack)) {
+                    return ActionResult.fail(stack);
                 } else if (this.tryPlaceContainedLiquid(player, world, pos1, false)) {
                     return !player.isCreative()
-                        ? ActionResult.resultSuccess(new ItemStack(Items.BOWL))
-                        : ActionResult.resultSuccess(stack);
+                        ? ActionResult.success(new ItemStack(Items.BOWL))
+                        : ActionResult.success(stack);
                 } else {
-                    return ActionResult.resultFail(stack);
+                    return ActionResult.fail(stack);
                 }
             }
         }
@@ -125,9 +125,9 @@ public class ItemWaterBowl extends ItemBase {
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
-        if (!world.isRemote) {
+        if (!world.isClientSide) {
             if (ConfigBoolValues.WATER_BOWL_LOSS.isEnabled()) {
-                if (world.getGameTime() % 10 == 0 && world.rand.nextFloat() >= 0.5F) {
+                if (world.getGameTime() % 10 == 0 && world.random.nextFloat() >= 0.5F) {
                     int lastX = 0;
                     int lastY = 0;
 
@@ -138,11 +138,11 @@ public class ItemWaterBowl extends ItemBase {
                     }
 
                     boolean change = false;
-                    if (lastX != 0 && lastX != (int) entity.getPosX() || lastY != 0 && lastY != (int) entity.getPosY()) {
-                        if (!entity.isSneaking()) {
+                    if (lastX != 0 && lastX != (int) entity.getX() || lastY != 0 && lastY != (int) entity.getY()) {
+                        if (!entity.isShiftKeyDown()) {
                             if (entity instanceof PlayerEntity) {
                                 PlayerEntity player = (PlayerEntity) entity;
-                                if (this.tryPlaceContainedLiquid(player, world, player.getPosition(), true)) {
+                                if (this.tryPlaceContainedLiquid(player, world, player.blockPosition(), true)) {
                                     this.checkReplace(player, stack, new ItemStack(Items.BOWL), itemSlot);
                                 }
                             }
@@ -152,8 +152,8 @@ public class ItemWaterBowl extends ItemBase {
 
                     if (change || lastX == 0 || lastY == 0) {
                         CompoundNBT compound = stack.getOrCreateTag();
-                        compound.putInt("lastX", (int) entity.getPosX());
-                        compound.putInt("lastY", (int) entity.getPosY());
+                        compound.putInt("lastX", (int) entity.getX());
+                        compound.putInt("lastY", (int) entity.getY());
                     }
                 }
             }
@@ -161,16 +161,16 @@ public class ItemWaterBowl extends ItemBase {
     }
 
     private void checkReplace(PlayerEntity player, ItemStack old, ItemStack stack, int slot) {
-        if (player.inventory.getStackInSlot(slot) == old) {
-            player.inventory.setInventorySlotContents(slot, stack);
-        } else if (player.inventory.offHandInventory.get(slot) == old) {
-            player.inventory.offHandInventory.set(slot, stack);
+        if (player.inventory.getItem(slot) == old) {
+            player.inventory.setItem(slot, stack);
+        } else if (player.inventory.offhand.get(slot) == old) {
+            player.inventory.offhand.set(slot, stack);
         }
     }
 
     @Override
     public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
-        return !ItemStack.areItemsEqual(oldStack, newStack);
+        return !ItemStack.isSame(oldStack, newStack);
     }
 
     public boolean tryPlaceContainedLiquid(PlayerEntity player, World world, BlockPos pos, boolean finite) {
@@ -179,24 +179,24 @@ public class ItemWaterBowl extends ItemBase {
         boolean nonSolid = !material.isSolid();
         boolean replaceable = state.getMaterial().isReplaceable();
 
-        if (!world.isAirBlock(pos) && !nonSolid && !replaceable) {
+        if (!world.isEmptyBlock(pos) && !nonSolid && !replaceable) {
             return false;
         } else {
-            if (world.getDimensionType().isUltrawarm()) {
-                world.playSound(player, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
+            if (world.dimensionType().ultraWarm()) {
+                world.playSound(player, pos, SoundEvents.FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F + (world.random.nextFloat() - world.random.nextFloat()) * 0.8F);
 
                 for (int k = 0; k < 8; k++) {
                     world.addParticle(ParticleTypes.LARGE_SMOKE, pos.getX() + Math.random(), pos.getY() + Math.random(), pos.getZ() + Math.random(), 0.0D, 0.0D, 0.0D);
                 }
             } else {
-                if (!world.isRemote && (nonSolid || replaceable) && !material.isLiquid()) {
+                if (!world.isClientSide && (nonSolid || replaceable) && !material.isLiquid()) {
                     world.destroyBlock(pos, true);
                 }
 
-                world.playSound(player, pos, SoundEvents.ITEM_BUCKET_EMPTY, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                world.playSound(player, pos, SoundEvents.BUCKET_EMPTY, SoundCategory.BLOCKS, 1.0F, 1.0F);
 
-                BlockState placeState = Blocks.WATER.getDefaultState();
-                world.setBlockState(pos, placeState, 3);
+                BlockState placeState = Blocks.WATER.defaultBlockState();
+                world.setBlock(pos, placeState, 3);
             }
 
             return true;

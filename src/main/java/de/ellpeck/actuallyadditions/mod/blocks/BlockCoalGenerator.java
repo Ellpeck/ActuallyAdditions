@@ -30,17 +30,17 @@ import java.util.Random;
 
 public class BlockCoalGenerator extends DirectionalBlock.Container {
     public BlockCoalGenerator() {
-        super(ActuallyBlocks.defaultPickProps(0).tickRandomly());
+        super(ActuallyBlocks.defaultPickProps(0).randomTicks());
     }
 
     @Override
-    public TileEntity createNewTileEntity(IBlockReader worldIn) {
+    public TileEntity newBlockEntity(IBlockReader worldIn) {
         return new TileEntityCoalGenerator();
     }
 
     @Override
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        TileEntity tile = world.getTileEntity(pos);
+        TileEntity tile = world.getBlockEntity(pos);
         if (tile instanceof TileEntityCoalGenerator) {
             if (((TileEntityCoalGenerator) tile).currentBurnTime > 0) {
                 for (int i = 0; i < 5; i++) {
@@ -51,13 +51,13 @@ public class BlockCoalGenerator extends DirectionalBlock.Container {
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
         return this.openGui(world, player, pos, TileEntityCoalGenerator.class);
     }
 
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        switch (state.get(FACING)) {
+        switch (state.getValue(FACING)) {
             case EAST:
                 return Shapes.CoalGeneratorShapes.EAST;
             case SOUTH:

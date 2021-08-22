@@ -37,6 +37,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
+import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
+
 public class TileEntityLaserRelayFluids extends TileEntityLaserRelay {
 
     public final ConcurrentHashMap<Direction, TileEntity> handlersAround = new ConcurrentHashMap<>();
@@ -96,7 +99,7 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay {
     public void updateEntity() {
         super.updateEntity();
 
-        if (!this.world.isRemote) {
+        if (!this.level.isClientSide) {
             if (this.mode == Mode.INPUT_ONLY) {
                 for (Direction side : this.handlersAround.keySet()) {
                     WorldUtil.doFluidInteraction(this.handlersAround.get(side), this, side.getOpposite(), Integer.MAX_VALUE);
@@ -117,9 +120,9 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay {
 
         this.handlersAround.clear();
         for (Direction side : Direction.values()) {
-            BlockPos pos = this.getPos().offset(side);
-            if (this.world.isBlockLoaded(pos)) {
-                TileEntity tile = this.world.getTileEntity(pos);
+            BlockPos pos = this.getBlockPos().relative(side);
+            if (this.level.hasChunkAt(pos)) {
+                TileEntity tile = this.level.getBlockEntity(pos);
                 if (tile != null && !(tile instanceof TileEntityLaserRelay)) {
                     if (tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side.getOpposite()).isPresent()) {
                         this.handlersAround.put(side, tile);
@@ -170,9 +173,9 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay {
 
         for (IConnectionPair pair : network.connections) {
             for (BlockPos relay : pair.getPositions()) {
-                if (relay != null && this.world.isBlockLoaded(relay) && !alreadyChecked.contains(relay)) {
+                if (relay != null && this.level.hasChunkAt(relay) && !alreadyChecked.contains(relay)) {
                     alreadyChecked.add(relay);
-                    TileEntity relayTile = this.world.getTileEntity(relay);
+                    TileEntity relayTile = this.level.getBlockEntity(relay);
                     if (relayTile instanceof TileEntityLaserRelayFluids) {
                         TileEntityLaserRelayFluids theRelay = (TileEntityLaserRelayFluids) relayTile;
                         if (theRelay.mode != Mode.INPUT_ONLY) {
@@ -211,8 +214,8 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay {
                         Direction side = receiver.getKey();
                         Direction opp = side.getOpposite();
                         TileEntity tile = receiver.getValue();
-                        if (!alreadyChecked.contains(tile.getPos())) {
-                            alreadyChecked.add(tile.getPos());
+                        if (!alreadyChecked.contains(tile.getBlockPos())) {
+                            alreadyChecked.add(tile.getBlockPos());
                             if (theRelay != this || side != from) {
                                 transmitted += tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, opp).map(cap -> {
                                     int trans = 0;

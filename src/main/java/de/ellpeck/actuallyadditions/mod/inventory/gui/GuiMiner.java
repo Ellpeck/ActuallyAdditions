@@ -34,42 +34,42 @@ public class GuiMiner extends GuiWtfMojang<ContainerMiner> {
     public GuiMiner(ContainerMiner container, PlayerInventory inventory, ITextComponent title) {
         super(container, inventory);
         this.miner = container.miner;
-        this.xSize = 176;
-        this.ySize = 93 + 86;
+        this.imageWidth = 176;
+        this.imageHeight = 93 + 86;
     }
 
     @Override
     public void init() {
         super.init();
 
-        Button buttonMode = new Button(this.guiLeft + this.xSize / 2 - 51, this.guiTop + 75, 50, 20, "Mode", button -> {
+        Button buttonMode = new Button(this.leftPos + this.imageWidth / 2 - 51, this.topPos + 75, 50, 20, "Mode", button -> {
         });
         this.addButton(buttonMode);
 
-        Button buttonReset = new Button(this.guiLeft + this.xSize / 2 + 1, this.guiTop + 75, 50, 20, "Reset", button -> {
+        Button buttonReset = new Button(this.leftPos + this.imageWidth / 2 + 1, this.topPos + 75, 50, 20, "Reset", button -> {
         });
         this.addButton(buttonReset);
     }
 
     @Override
-    public void drawGuiContainerForegroundLayer(MatrixStack matrices, int x, int y) {
-        AssetUtil.displayNameString(matrices, this.font, this.xSize, -10, this.miner);
+    public void renderLabels(MatrixStack matrices, int x, int y) {
+        AssetUtil.displayNameString(matrices, this.font, this.imageWidth, -10, this.miner);
     }
 
     @Override
-    public void drawGuiContainerBackgroundLayer(MatrixStack matrices, float f, int x, int y) {
+    public void renderBg(MatrixStack matrices, float f, int x, int y) {
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 
-        this.getMinecraft().getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
-        this.blit(matrices, this.guiLeft, this.guiTop + 93, 0, 0, 176, 86);
+        this.getMinecraft().getTextureManager().bind(AssetUtil.GUI_INVENTORY_LOCATION);
+        this.blit(matrices, this.leftPos, this.topPos + 93, 0, 0, 176, 86);
 
-        this.getMinecraft().getTextureManager().bindTexture(RES_LOC);
-        this.blit(matrices, this.guiLeft, this.guiTop, 0, 0, 176, 93);
+        this.getMinecraft().getTextureManager().bind(RES_LOC);
+        this.blit(matrices, this.leftPos, this.topPos, 0, 0, 176, 93);
 
         String mining = this.miner.onlyMineOres
             ? "Only Mining Ores"
             : "Mining Everything";
-        this.font.drawString(matrices, mining, this.guiLeft + this.xSize / 2 - this.font.getStringWidth(mining) / 2, this.guiTop + 8, StringUtil.DECIMAL_COLOR_GRAY_TEXT);
+        this.font.draw(matrices, mining, this.leftPos + this.imageWidth / 2 - this.font.width(mining) / 2, this.topPos + 8, StringUtil.DECIMAL_COLOR_GRAY_TEXT);
     }
 
     @Override

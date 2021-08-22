@@ -29,6 +29,8 @@ import net.minecraftforge.fluids.capability.templates.FluidTank;
 
 import javax.annotation.Nullable;
 
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
+
 public class TileEntityFermentingBarrel extends TileEntityBase implements ISharingFluidHandler, INamedContainerProvider {
 
     private static final int PROCESS_TIME = 100;
@@ -89,7 +91,7 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
     @Override
     public void updateEntity() {
         super.updateEntity();
-        if (!this.world.isRemote) {
+        if (!this.level.isClientSide) {
             int produce = 80;
             if (this.canolaTank.getFluidAmount() >= produce && produce <= this.oilTank.getCapacity() - this.oilTank.getFluidAmount()) {
                 this.currentProcessTime++;
@@ -107,7 +109,7 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
             if (compare != this.lastCompare) {
                 this.lastCompare = compare;
 
-                this.markDirty();
+                this.setChanged();
             }
 
             if ((this.canolaTank.getFluidAmount() != this.lastCanola || this.oilTank.getFluidAmount() != this.lastOil || this.currentProcessTime != this.lastProcessTime) && this.sendUpdateWithInterval()) {

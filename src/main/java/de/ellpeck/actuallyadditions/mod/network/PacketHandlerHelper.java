@@ -29,12 +29,12 @@ public final class PacketHandlerHelper {
     @OnlyIn(Dist.CLIENT)
     public static void sendButtonPacket(TileEntity tile, int buttonId) {
         CompoundNBT compound = new CompoundNBT();
-        BlockPos pos = tile.getPos();
+        BlockPos pos = tile.getBlockPos();
         compound.putInt("X", pos.getX());
         compound.putInt("Y", pos.getY());
         compound.putInt("Z", pos.getZ());
-        compound.putInt("WorldID", tile.getWorld().provider.getDimension());
-        compound.putInt("PlayerID", Minecraft.getInstance().player.getEntityId());
+        compound.putInt("WorldID", tile.getLevel().provider.getDimension());
+        compound.putInt("PlayerID", Minecraft.getInstance().player.getId());
         compound.putInt("ButtonID", buttonId);
         PacketHandler.THE_NETWORK.sendToServer(new PacketClientToServer(compound, PacketHandler.GUI_BUTTON_TO_TILE_HANDLER));
     }
@@ -60,8 +60,8 @@ public final class PacketHandlerHelper {
 
         PlayerEntity player = Minecraft.getInstance().player;
         if (player != null) {
-            compound.putInt("World", player.world.provider.getDimension());
-            compound.setUniqueId("UUID", player.getUniqueID());
+            compound.putInt("World", player.level.provider.getDimension());
+            compound.setUniqueId("UUID", player.getUUID());
 
             PlayerSave data = PlayerData.getDataFromPlayer(player);
 
@@ -91,11 +91,11 @@ public final class PacketHandlerHelper {
     @OnlyIn(Dist.CLIENT)
     public static void sendNumberPacket(TileEntity tile, double number, int id) {
         CompoundNBT compound = new CompoundNBT();
-        compound.putInt("X", tile.getPos().getX());
-        compound.putInt("Y", tile.getPos().getY());
-        compound.putInt("Z", tile.getPos().getZ());
-        compound.putInt("WorldID", tile.getWorld().provider.getDimension());
-        compound.putInt("PlayerID", Minecraft.getInstance().player.getEntityId());
+        compound.putInt("X", tile.getBlockPos().getX());
+        compound.putInt("Y", tile.getBlockPos().getY());
+        compound.putInt("Z", tile.getBlockPos().getZ());
+        compound.putInt("WorldID", tile.getLevel().provider.getDimension());
+        compound.putInt("PlayerID", Minecraft.getInstance().player.getId());
         compound.putInt("NumberID", id);
         compound.putDouble("Number", number);
         PacketHandler.THE_NETWORK.sendToServer(new PacketClientToServer(compound, PacketHandler.GUI_NUMBER_TO_TILE_HANDLER));

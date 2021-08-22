@@ -60,22 +60,22 @@ public class LensColor extends Lens {
                 //                int meta = block.getMetaFromState(state);
                 ItemStack returnStack = this.tryConvert(new ItemStack(block), hitState, hitBlock, tile);
                 if (returnStack != null && returnStack.getItem() instanceof BlockItem) {
-                    Block toPlace = Block.getBlockFromItem(returnStack.getItem());
+                    Block toPlace = Block.byItem(returnStack.getItem());
                     BlockState state2Place = toPlace.getStateForPlacement(tile.getWorldObject(), hitBlock, Direction.UP, 0, 0, 0, returnStack.getMetadata(), FakePlayerFactory.getMinecraft((ServerWorld) tile.getWorldObject()), Hand.MAIN_HAND);
-                    tile.getWorldObject().setBlockState(hitBlock, state2Place, 2);
+                    tile.getWorldObject().setBlock(hitBlock, state2Place, 2);
                     tile.extractEnergy(ENERGY_USE);
                 }
             }
 
-            List<ItemEntity> items = tile.getWorldObject().getEntitiesWithinAABB(ItemEntity.class, new AxisAlignedBB(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), hitBlock.getX() + 1, hitBlock.getY() + 1, hitBlock.getZ() + 1));
+            List<ItemEntity> items = tile.getWorldObject().getEntitiesOfClass(ItemEntity.class, new AxisAlignedBB(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), hitBlock.getX() + 1, hitBlock.getY() + 1, hitBlock.getZ() + 1));
             for (ItemEntity item : items) {
                 if (item.isAlive() && StackUtil.isValid(item.getItem()) && tile.getEnergy() >= ENERGY_USE) {
                     ItemStack newStack = this.tryConvert(item.getItem(), hitState, hitBlock, tile);
                     if (StackUtil.isValid(newStack)) {
                         item.remove();
 
-                        ItemEntity newItem = new ItemEntity(tile.getWorldObject(), item.getPosX(), item.getPosY(), item.getPosZ(), newStack);
-                        tile.getWorldObject().addEntity(newItem);
+                        ItemEntity newItem = new ItemEntity(tile.getWorldObject(), item.getX(), item.getY(), item.getZ(), newStack);
+                        tile.getWorldObject().addFreshEntity(newItem);
 
                         tile.extractEnergy(ENERGY_USE);
                     }

@@ -57,7 +57,7 @@ public class BookletEntry implements IBookletEntry {
         if (!items.isEmpty()) {
             for (ItemStack stack : items) {
                 if (StackUtil.isValid(stack)) {
-                    List<String> tooltip = stack.getTooltip(mc.player, mc.gameSettings.advancedItemTooltips
+                    List<String> tooltip = stack.getTooltipLines(mc.player, mc.options.advancedItemTooltips
                         ? ITooltipFlag.TooltipFlags.ADVANCED
                         : ITooltipFlag.TooltipFlags.NORMAL);
                     for (String strg : tooltip) {

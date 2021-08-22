@@ -16,10 +16,10 @@ public class ItemTagsGenerator extends ItemTagsProvider {
     }
 
     @Override
-    protected void registerTags() {
-        this.getOrCreateBuilder(ActuallyTags.Items.COFFEE_BEANS)
+    protected void addTags() {
+        this.tag(ActuallyTags.Items.COFFEE_BEANS)
             .add(ActuallyItems.COFFEE_BEANS.get());
-        this.getOrCreateBuilder(ActuallyTags.Items.TINY_COALS)
+        this.tag(ActuallyTags.Items.TINY_COALS)
                 .add(ActuallyItems.TINY_COAL.get())
                 .add(ActuallyItems.TINY_CHARCOAL.get());
         //        getOrCreateBuilder(ActuallyTags.Items.DRILLS).add(

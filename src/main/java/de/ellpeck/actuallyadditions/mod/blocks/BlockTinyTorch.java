@@ -17,6 +17,8 @@ import net.minecraft.util.math.AxisAlignedBB;
 
 //Copied from BlockTorch.
 //I have no idea what all of this means.
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class BlockTinyTorch extends BlockBase {
 
     //Thanks to xdjackiexd for these.
@@ -28,7 +30,7 @@ public class BlockTinyTorch extends BlockBase {
     private static final AxisAlignedBB TORCH_EAST_AABB = new AxisAlignedBB(0.0D, 0.25D, 0.4375D, 0.1875D, 0.5625D, 0.5625D);
 
     public BlockTinyTorch() {
-        super(Properties.create(Material.MISCELLANEOUS).sound(SoundType.WOOD).hardnessAndResistance(0.0F, 0.8F));
+        super(Properties.of(Material.DECORATION).sound(SoundType.WOOD).strength(0.0F, 0.8F));
         //        TorchBlock
         //        this.setDefaultState(this.blockState.getBaseState().withProperty(BlockTorch.FACING, Direction.UP));
         //        this.setTickRandomly(true);

@@ -33,8 +33,8 @@ public class NetherWartFarmerBehavior implements IFarmerBehavior {
         int use = 500;
         if (farmer.getEnergy() >= use) {
             if (seed.getItem() == Items.NETHER_WART) {
-                if (world.getBlockState(pos.down()).getBlock().canSustainPlant(world.getBlockState(pos.down()), world, pos.down(), Direction.UP, (IPlantable) Items.NETHER_WART)) {
-                    world.setBlockState(pos, Blocks.NETHER_WART.getDefaultState(), 2);
+                if (world.getBlockState(pos.below()).getBlock().canSustainPlant(world.getBlockState(pos.below()), world, pos.below(), Direction.UP, (IPlantable) Items.NETHER_WART)) {
+                    world.setBlock(pos, Blocks.NETHER_WART.defaultBlockState(), 2);
                     farmer.extractEnergy(use);
                     return FarmerResult.SUCCESS;
                 }
@@ -50,14 +50,14 @@ public class NetherWartFarmerBehavior implements IFarmerBehavior {
         if (farmer.getEnergy() >= use) {
             BlockState state = world.getBlockState(pos);
             if (state.getBlock() instanceof NetherWartBlock) {
-                if (state.get(BlockStateProperties.AGE_0_3) >= 3) {
+                if (state.getValue(BlockStateProperties.AGE_3) >= 3) {
                     NonNullList<ItemStack> drops = NonNullList.create();
                     state.getBlock().getDrops(drops, world, pos, state, 0);
                     if (!drops.isEmpty()) {
                         boolean toInput = farmer.canAddToSeeds(drops);
                         if (toInput || farmer.canAddToOutput(drops)) {
-                            world.playEvent(2001, pos, Block.getStateId(state));
-                            world.setBlockState(pos, Blocks.AIR.getDefaultState());
+                            world.levelEvent(2001, pos, Block.getId(state));
+                            world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
 
                             if (toInput) {
                                 farmer.addToSeeds(drops);

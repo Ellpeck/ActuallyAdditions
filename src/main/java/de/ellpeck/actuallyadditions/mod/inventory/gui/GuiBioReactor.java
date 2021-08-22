@@ -28,14 +28,14 @@ public class GuiBioReactor extends GuiWtfMojang<ContainerBioReactor> {
     public GuiBioReactor(ContainerBioReactor container, PlayerInventory inventory, ITextComponent title) {
         super(container, inventory);
         this.tile = container.tile;
-        this.xSize = 176;
-        this.ySize = 93 + 86;
+        this.imageWidth = 176;
+        this.imageHeight = 93 + 86;
     }
 
     @Override
     public void init() {
         super.init();
-        this.energy = new EnergyDisplay(this.guiLeft + 116, this.guiTop + 5, this.tile.storage);
+        this.energy = new EnergyDisplay(this.leftPos + 116, this.topPos + 5, this.tile.storage);
     }
 
     @Override
@@ -45,27 +45,27 @@ public class GuiBioReactor extends GuiWtfMojang<ContainerBioReactor> {
     }
 
     @Override
-    public void drawGuiContainerForegroundLayer(MatrixStack matrices, int x, int y) {
-        AssetUtil.displayNameString(matrices, this.font, this.xSize, -10, this.tile);
+    public void renderLabels(MatrixStack matrices, int x, int y) {
+        AssetUtil.displayNameString(matrices, this.font, this.imageWidth, -10, this.tile);
     }
 
     @Override
-    public void drawGuiContainerBackgroundLayer(MatrixStack matrices, float partialTicks, int x, int y) {
+    public void renderBg(MatrixStack matrices, float partialTicks, int x, int y) {
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 
-        this.getMinecraft().getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
-        this.blit(matrices, this.guiLeft, this.guiTop + 93, 0, 0, 176, 86);
+        this.getMinecraft().getTextureManager().bind(AssetUtil.GUI_INVENTORY_LOCATION);
+        this.blit(matrices, this.leftPos, this.topPos + 93, 0, 0, 176, 86);
 
-        this.getMinecraft().getTextureManager().bindTexture(RES_LOC);
-        this.blit(matrices, this.guiLeft, this.guiTop, 0, 0, 176, 93);
+        this.getMinecraft().getTextureManager().bind(RES_LOC);
+        this.blit(matrices, this.leftPos, this.topPos, 0, 0, 176, 93);
 
         if (this.tile.burnTime > 0) {
             int i = this.tile.burnTime * 13 / this.tile.maxBurnTime;
-            this.blit(matrices, this.guiLeft + 87, this.guiTop + 51 + 12 - i, 176, 96 - i, 14, i);
+            this.blit(matrices, this.leftPos + 87, this.topPos + 51 + 12 - i, 176, 96 - i, 14, i);
         }
 
         if (this.tile.producePerTick > 0) {
-            drawCenteredString(matrices, this.font, this.tile.producePerTick + " " + I18n.format("actuallyadditions.cft"), this.guiLeft + 87, this.guiTop + 86, 0xFFFFFF);
+            drawCenteredString(matrices, this.font, this.tile.producePerTick + " " + I18n.get("actuallyadditions.cft"), this.leftPos + 87, this.topPos + 86, 0xFFFFFF);
         }
 
         this.energy.draw();

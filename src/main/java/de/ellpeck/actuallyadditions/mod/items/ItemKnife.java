@@ -21,7 +21,7 @@ import net.minecraft.item.ItemStack;
 public class ItemKnife extends ItemBase {
 
     public ItemKnife() {
-        super(ActuallyItems.defaultNonStacking().defaultMaxDamage(100).setNoRepair());
+        super(ActuallyItems.defaultNonStacking().defaultDurability(100).setNoRepair());
     }
 
 
@@ -44,7 +44,7 @@ public class ItemKnife extends ItemBase {
     @Override
     public ItemStack getContainerItem(ItemStack stack) {
         ItemStack theStack = stack.copy();
-        theStack.setDamage(theStack.getDamage() + 1);
+        theStack.setDamageValue(theStack.getDamageValue() + 1);
         return theStack;
     }
 }

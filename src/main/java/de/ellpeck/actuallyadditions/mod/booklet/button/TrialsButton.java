@@ -16,6 +16,8 @@ import de.ellpeck.actuallyadditions.mod.inventory.gui.TexturedButton;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
 
+import net.minecraft.client.gui.widget.button.Button.IPressable;
+
 public class TrialsButton extends TexturedButton {
 
     private final boolean isTrials;
@@ -32,7 +34,7 @@ public class TrialsButton extends TexturedButton {
 
         if (this.visible) {
             if (this.isHovered || this.isTrials) {
-                this.drawCenteredString(minecraft.fontRenderer, StringUtil.localize("booklet." + ActuallyAdditions.MODID + ".trialsButton.name"), this.x + (this.width - 8) / 2, this.y + (this.height - 8) / 2, 14737632);
+                this.drawCenteredString(minecraft.font, StringUtil.localize("booklet." + ActuallyAdditions.MODID + ".trialsButton.name"), this.x + (this.width - 8) / 2, this.y + (this.height - 8) / 2, 14737632);
             }
         }
     }

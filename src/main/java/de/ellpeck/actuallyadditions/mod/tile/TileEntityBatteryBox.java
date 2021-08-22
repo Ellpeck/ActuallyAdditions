@@ -46,7 +46,7 @@ public class TileEntityBatteryBox extends TileEntityInventoryBase implements ISh
     public void updateEntity() {
         super.updateEntity();
 
-        if (!this.world.isRemote) {
+        if (!this.level.isClientSide) {
             LazyOptional<IEnergyStorage> cap = this.getEnergyStorage(null);
             int currStorage = cap.map(storage -> {
                 ItemStack stack = this.inv.getStackInSlot(0);
@@ -83,7 +83,7 @@ public class TileEntityBatteryBox extends TileEntityInventoryBase implements ISh
 
             if (this.lastCompare != this.getComparatorStrength()) {
                 this.lastCompare = this.getComparatorStrength();
-                this.markDirty();
+                this.setChanged();
             }
 
             if (this.lastEnergyStored != currStorage && this.sendUpdateWithInterval()) {
@@ -109,7 +109,7 @@ public class TileEntityBatteryBox extends TileEntityInventoryBase implements ISh
         ItemStack stack = this.inv.getStackInSlot(0);
         if (StackUtil.isValid(stack)) {
             ItemUtil.changeEnabled(stack);
-            this.markDirty();
+            this.setChanged();
         }
     }
 

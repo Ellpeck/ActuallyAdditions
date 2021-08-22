@@ -27,7 +27,7 @@ public class ContainerFeeder extends Container {
     public final TileEntityFeeder feeder;
 
     public static ContainerFeeder fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
-        return new ContainerFeeder(windowId, inv, (TileEntityFeeder) Objects.requireNonNull(inv.player.world.getTileEntity(data.readBlockPos())));
+        return new ContainerFeeder(windowId, inv, (TileEntityFeeder) Objects.requireNonNull(inv.player.level.getBlockEntity(data.readBlockPos())));
     }
 
     public ContainerFeeder(int windowId, PlayerInventory inventory, TileEntityFeeder tile) {
@@ -46,39 +46,39 @@ public class ContainerFeeder extends Container {
     }
 
     @Override
-    public ItemStack transferStackInSlot(PlayerEntity player, int slot) {
+    public ItemStack quickMoveStack(PlayerEntity player, int slot) {
         int inventoryStart = 1;
         int inventoryEnd = inventoryStart + 26;
         int hotbarStart = inventoryEnd + 1;
         int hotbarEnd = hotbarStart + 8;
 
-        Slot theSlot = this.inventorySlots.get(slot);
+        Slot theSlot = this.slots.get(slot);
 
-        if (theSlot != null && theSlot.getHasStack()) {
-            ItemStack newStack = theSlot.getStack();
+        if (theSlot != null && theSlot.hasItem()) {
+            ItemStack newStack = theSlot.getItem();
             ItemStack currentStack = newStack.copy();
 
             //Other Slots in Inventory excluded
             if (slot >= inventoryStart) {
                 //Shift from Inventory
-                if (!this.mergeItemStack(newStack, 0, 1, false)) {
+                if (!this.moveItemStackTo(newStack, 0, 1, false)) {
                     //
                     if (slot >= inventoryStart && slot <= inventoryEnd) {
-                        if (!this.mergeItemStack(newStack, hotbarStart, hotbarEnd + 1, false)) {
+                        if (!this.moveItemStackTo(newStack, hotbarStart, hotbarEnd + 1, false)) {
                             return StackUtil.getEmpty();
                         }
-                    } else if (slot >= inventoryEnd + 1 && slot < hotbarEnd + 1 && !this.mergeItemStack(newStack, inventoryStart, inventoryEnd + 1, false)) {
+                    } else if (slot >= inventoryEnd + 1 && slot < hotbarEnd + 1 && !this.moveItemStackTo(newStack, inventoryStart, inventoryEnd + 1, false)) {
                         return StackUtil.getEmpty();
                     }
                 }
-            } else if (!this.mergeItemStack(newStack, inventoryStart, hotbarEnd + 1, false)) {
+            } else if (!this.moveItemStackTo(newStack, inventoryStart, hotbarEnd + 1, false)) {
                 return StackUtil.getEmpty();
             }
 
             if (!StackUtil.isValid(newStack)) {
-                theSlot.putStack(StackUtil.getEmpty());
+                theSlot.set(StackUtil.getEmpty());
             } else {
-                theSlot.onSlotChanged();
+                theSlot.setChanged();
             }
 
             if (newStack.getCount() == currentStack.getCount()) {
@@ -92,7 +92,7 @@ public class ContainerFeeder extends Container {
     }
 
     @Override
-    public boolean canInteractWith(PlayerEntity player) {
+    public boolean stillValid(PlayerEntity player) {
         return this.feeder.canPlayerUse(player);
     }
 }

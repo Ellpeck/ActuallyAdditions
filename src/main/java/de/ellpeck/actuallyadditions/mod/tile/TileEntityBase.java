@@ -60,7 +60,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable {
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT compound) {
+    public CompoundNBT save(CompoundNBT compound) {
         this.writeSyncableNBT(compound, NBTType.SAVE_TILE);
         return compound;
     }
@@ -73,7 +73,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable {
     //    }
 
     @Override
-    public void read(BlockState state, CompoundNBT compound) {
+    public void load(BlockState state, CompoundNBT compound) {
         this.readSyncableNBT(compound, NBTType.SAVE_TILE);
     }
 
@@ -88,12 +88,12 @@ public abstract class TileEntityBase extends TileEntity implements ITickable {
     public SUpdateTileEntityPacket getUpdatePacket() {
         CompoundNBT compound = new CompoundNBT();
         this.writeSyncableNBT(compound, NBTType.SYNC);
-        return new SUpdateTileEntityPacket(this.pos, -1, compound);
+        return new SUpdateTileEntityPacket(this.worldPosition, -1, compound);
     }
 
     @Override
     public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-        this.readSyncableNBT(pkt.getNbtCompound(), NBTType.SYNC);
+        this.readSyncableNBT(pkt.getTag(), NBTType.SYNC);
     }
 
     @Override
@@ -109,7 +109,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable {
     }
 
     public final void sendUpdate() {
-        if (this.world != null && !this.world.isRemote) {
+        if (this.level != null && !this.level.isClientSide) {
             VanillaPacketDispatcher.dispatchTEToNearbyPlayers(this);
         }
         /*
@@ -128,7 +128,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable {
 
     public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
         if (type != NBTType.SAVE_BLOCK) {
-            super.write(compound);
+            super.save(compound);
         }
 
         if (type == NBTType.SAVE_TILE) {
@@ -146,7 +146,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable {
 
     public void readSyncableNBT(CompoundNBT compound, NBTType type) {
         if (type != NBTType.SAVE_BLOCK) {
-            super.read(null, compound); // FIXME: [port] flag as possible crash source
+            super.load(null, compound); // FIXME: [port] flag as possible crash source
         }
 
         if (type == NBTType.SAVE_TILE) {
@@ -193,7 +193,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable {
     public void updateEntity() {
         this.ticksElapsed++;
 
-        if (!this.world.isRemote) {
+        if (!this.level.isClientSide) {
             if (this.shareEnergy) {
                 ISharingEnergyProvider provider = (ISharingEnergyProvider) this;
                 if (provider.doesShareEnergy()) {
@@ -250,9 +250,9 @@ public abstract class TileEntityBase extends TileEntity implements ITickable {
 
     public void saveDataOnChangeOrWorldStart() {
         for (Direction side : Direction.values()) {
-            BlockPos pos = this.pos.offset(side);
-            if (this.world.isBlockLoaded(pos)) {
-                this.tilesAround[side.ordinal()] = this.world.getTileEntity(pos);
+            BlockPos pos = this.worldPosition.relative(side);
+            if (this.level.hasChunkAt(pos)) {
+                this.tilesAround[side.ordinal()] = this.level.getBlockEntity(pos);
             }
         }
     }
@@ -263,11 +263,11 @@ public abstract class TileEntityBase extends TileEntity implements ITickable {
 
     public void setRedstonePowered(boolean powered) {
         this.isRedstonePowered = powered;
-        this.markDirty();
+        this.setChanged();
     }
 
     public boolean canPlayerUse(PlayerEntity player) {
-        return player.getDistanceSq(this.getPos().getX() + 0.5D, this.pos.getY() + 0.5D, this.pos.getZ() + 0.5D) <= 64 && !this.isRemoved() && this.world.getTileEntity(this.pos) == this;
+        return player.distanceToSqr(this.getBlockPos().getX() + 0.5D, this.worldPosition.getY() + 0.5D, this.worldPosition.getZ() + 0.5D) <= 64 && !this.isRemoved() && this.level.getBlockEntity(this.worldPosition) == this;
     }
 
     protected boolean sendUpdateWithInterval() {

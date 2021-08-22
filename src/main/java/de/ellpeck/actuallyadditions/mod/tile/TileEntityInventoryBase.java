@@ -24,6 +24,8 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemHandlerHelper;
 
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
+
 public abstract class TileEntityInventoryBase extends TileEntityBase {
 
     public final ItemStackHandlerAA inv;
@@ -42,7 +44,7 @@ public abstract class TileEntityInventoryBase extends TileEntityBase {
                 ItemStack slot = slots.getStackInSlot(i);
                 CompoundNBT tagCompound = new CompoundNBT();
                 if (StackUtil.isValid(slot)) {
-                    slot.write(tagCompound);
+                    slot.save(tagCompound);
                 }
                 tagList.add(tagCompound);
             }
@@ -56,7 +58,7 @@ public abstract class TileEntityInventoryBase extends TileEntityBase {
             for (int i = 0; i < slots.getSlots(); i++) {
                 CompoundNBT tagCompound = tagList.getCompound(i);
                 slots.setStackInSlot(i, tagCompound.contains("id")
-                    ? ItemStack.read(tagCompound)
+                    ? ItemStack.of(tagCompound)
                     : StackUtil.getEmpty());
             }
         }
@@ -92,8 +94,8 @@ public abstract class TileEntityInventoryBase extends TileEntityBase {
     }
 
     @Override
-    public void markDirty() {
-        super.markDirty();
+    public void setChanged() {
+        super.setChanged();
 
         if (this.shouldSyncSlots()) {
             this.sendUpdate();
@@ -137,7 +139,7 @@ public abstract class TileEntityInventoryBase extends TileEntityBase {
         @Override
         protected void onContentsChanged(int slot) {
             super.onContentsChanged(slot);
-            TileEntityInventoryBase.this.markDirty();
+            TileEntityInventoryBase.this.setChanged();
         }
     }
 }

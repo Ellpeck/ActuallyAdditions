@@ -36,7 +36,7 @@ public class ItemHoeAA extends HoeItem implements IDisableableItem {
     }
     
     @Override
-    public boolean getIsRepairable(ItemStack itemToRepair, ItemStack stack) {
+    public boolean isValidRepairItem(ItemStack itemToRepair, ItemStack stack) {
         return ItemUtil.areItemsEqual(this.repairItem, stack, false);
     }
 

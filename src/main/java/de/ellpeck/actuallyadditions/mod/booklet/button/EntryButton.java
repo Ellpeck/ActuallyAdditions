@@ -38,30 +38,30 @@ public class EntryButton extends Button {
     @Override
     public void drawButton(Minecraft minecraft, int mouseX, int mouseY, float f) {
         if (this.visible) {
-            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+            GlStateManager.color3arg(1.0F, 1.0F, 1.0F, 1.0F);
             this.hovered = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height;
-            GlStateManager.enableBlend();
+            GlStateManager._enableBlend();
             GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
-            GlStateManager.blendFunc(770, 771);
+            GlStateManager._blendFunc(770, 771);
             this.mouseDragged(minecraft, mouseX, mouseY);
 
             int textOffsetX = 0;
             if (StackUtil.isValid(this.stackToRender)) {
-                GlStateManager.pushMatrix();
+                GlStateManager._pushMatrix();
                 AssetUtil.renderStackToGui(this.stackToRender, this.x - 4, this.y, 0.725F);
-                GlStateManager.popMatrix();
+                GlStateManager._popMatrix();
                 textOffsetX = 10;
             }
 
             float scale = this.gui.getMediumFontSize();
 
             if (this.hovered) {
-                GlStateManager.pushMatrix();
-                AssetUtil.drawHorizontalGradientRect(this.x + textOffsetX - 1, this.y + this.height - 1, this.x + (int) (minecraft.fontRenderer.getStringWidth(this.displayString) * scale) + textOffsetX + 1, this.y + this.height, 0x80 << 24 | 22271, 22271, this.zLevel);
-                GlStateManager.popMatrix();
+                GlStateManager._pushMatrix();
+                AssetUtil.drawHorizontalGradientRect(this.x + textOffsetX - 1, this.y + this.height - 1, this.x + (int) (minecraft.font.width(this.displayString) * scale) + textOffsetX + 1, this.y + this.height, 0x80 << 24 | 22271, 22271, this.zLevel);
+                GlStateManager._popMatrix();
             }
 
-            StringUtil.renderScaledAsciiString(minecraft.fontRenderer, this.displayString, this.x + textOffsetX, this.y + 2 + (this.height - 8) / 2, 0, false, scale);
+            StringUtil.renderScaledAsciiString(minecraft.font, this.displayString, this.x + textOffsetX, this.y + 2 + (this.height - 8) / 2, 0, false, scale);
         }
     }
 }

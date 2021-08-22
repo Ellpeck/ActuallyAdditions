@@ -34,6 +34,8 @@ import net.minecraftforge.fluids.IFluidBlock;
 import javax.annotation.Nullable;
 import java.util.List;
 
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
+
 public class TileEntityBreaker extends TileEntityInventoryBase implements INamedContainerProvider {
 
     public boolean isPlacer;
@@ -67,7 +69,7 @@ public class TileEntityBreaker extends TileEntityInventoryBase implements INamed
     @Override
     public void updateEntity() {
         super.updateEntity();
-        if (!this.world.isRemote) {
+        if (!this.level.isClientSide) {
             if (!this.isRedstonePowered && !this.isPulseMode) {
                 if (this.currentTime > 0) {
                     this.currentTime--;
@@ -87,20 +89,20 @@ public class TileEntityBreaker extends TileEntityInventoryBase implements INamed
     }
 
     private void doWork() {
-        Direction side = WorldUtil.getDirectionByPistonRotation(this.world.getBlockState(this.pos));
-        BlockPos breakCoords = this.pos.offset(side);
-        BlockState stateToBreak = this.world.getBlockState(breakCoords);
+        Direction side = WorldUtil.getDirectionByPistonRotation(this.level.getBlockState(this.worldPosition));
+        BlockPos breakCoords = this.worldPosition.relative(side);
+        BlockState stateToBreak = this.level.getBlockState(breakCoords);
         Block blockToBreak = stateToBreak.getBlock();
 
-        if (!this.isPlacer && blockToBreak != Blocks.AIR && !(blockToBreak instanceof IFluidBlock) && stateToBreak.getBlockHardness(this.world, breakCoords) >= 0.0F) {
-            List<ItemStack> drops = Block.getDrops(stateToBreak, (ServerWorld) this.world, breakCoords, this.world.getTileEntity(breakCoords));
-            float chance = WorldUtil.fireFakeHarvestEventsForDropChance(this, drops, this.world, breakCoords);
+        if (!this.isPlacer && blockToBreak != Blocks.AIR && !(blockToBreak instanceof IFluidBlock) && stateToBreak.getDestroySpeed(this.level, breakCoords) >= 0.0F) {
+            List<ItemStack> drops = Block.getDrops(stateToBreak, (ServerWorld) this.level, breakCoords, this.level.getBlockEntity(breakCoords));
+            float chance = WorldUtil.fireFakeHarvestEventsForDropChance(this, drops, this.level, breakCoords);
 
-            if (chance > 0 && this.world.rand.nextFloat() <= chance) {
+            if (chance > 0 && this.level.random.nextFloat() <= chance) {
                 if (StackUtil.canAddAll(this.inv, drops, false)) {
-                    this.world.destroyBlock(breakCoords, false);
+                    this.level.destroyBlock(breakCoords, false);
                     StackUtil.addAll(this.inv, drops, false);
-                    this.markDirty();
+                    this.setChanged();
                 }
             }
         } else if (this.isPlacer) {
@@ -108,7 +110,7 @@ public class TileEntityBreaker extends TileEntityInventoryBase implements INamed
             if (slot == -1) {
                 return;
             }
-            this.inv.setStackInSlot(slot, WorldUtil.useItemAtSide(side, this.world, this.pos, this.inv.getStackInSlot(slot)));
+            this.inv.setStackInSlot(slot, WorldUtil.useItemAtSide(side, this.level, this.worldPosition, this.inv.getStackInSlot(slot)));
         }
     }
 

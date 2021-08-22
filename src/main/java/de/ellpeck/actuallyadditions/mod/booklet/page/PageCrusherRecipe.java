@@ -33,7 +33,7 @@ public class PageCrusherRecipe extends BookletPage {
     public PageCrusherRecipe(int localizationKey, CrusherRecipe recipe) {
         super(localizationKey);
         this.recipe = recipe;
-        this.stacks = recipe.getInput().getMatchingStacks();
+        this.stacks = recipe.getInput().getItems();
     }
 
     @Override
@@ -41,7 +41,7 @@ public class PageCrusherRecipe extends BookletPage {
     public void drawScreenPre(GuiBookletBase gui, int startX, int startY, int mouseX, int mouseY, float partialTicks) {
         super.drawScreenPre(gui, startX, startY, mouseX, mouseY, partialTicks);
 
-        gui.getMinecraft().getTextureManager().bindTexture(GuiBooklet.RES_LOC_GADGETS);
+        gui.getMinecraft().getTextureManager().bind(GuiBooklet.RES_LOC_GADGETS);
         GuiUtils.drawTexturedModalRect(startX + 38, startY + 6, 136, 0, 52, 74, 0);
 
         gui.renderScaledAsciiString("(" + StringUtil.localize("booklet." + ActuallyAdditions.MODID + ".crusherRecipe") + ")", startX + 36, startY + 85, 0, false, gui.getMediumFontSize());

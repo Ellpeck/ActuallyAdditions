@@ -15,7 +15,7 @@ public class BlockTagsGenerator extends BlockTagsProvider {
     }
 
     @Override
-    public void registerTags() {
+    public void addTags() {
         //        getOrCreateBuilder(BlockTags.WALLS).add(
         //            ActuallyBlocks.WHITE_WALL.get(),
         //            ActuallyBlocks.GREEN_WALL.get(),
@@ -31,7 +31,7 @@ public class BlockTagsGenerator extends BlockTagsProvider {
      * Resolves a Path for the location to save the given tag.
      */
     @Override
-    protected Path makePath(ResourceLocation id) {
+    protected Path getPath(ResourceLocation id) {
         return this.generator.getOutputFolder().resolve("data/" + id.getNamespace() + "/tags/blocks/" + id.getPath() + ".json");
     }
 

@@ -109,7 +109,7 @@ public class PageCrafting extends BookletPage {
         if (!this.recipes.isEmpty()) {
             for (IRecipe recipe : this.recipes) {
                 if (recipe != null) {
-                    ItemStack output = recipe.getRecipeOutput();
+                    ItemStack output = recipe.getResultItem();
                     if (StackUtil.isValid(output)) {
                         ItemStack copy = output.copy();
                         if (this.isWildcard) {
@@ -129,7 +129,7 @@ public class PageCrafting extends BookletPage {
 
         if (recipe instanceof BlankRecipe) {
             this.recipeTypeLocKey = "tooltip." + ActuallyAdditions.MODID + ".disabled";
-            gui.addOrModifyItemRenderer(recipe.getRecipeOutput(), startX + 100, startY + 25, 1F, false);
+            gui.addOrModifyItemRenderer(recipe.getResultItem(), startX + 100, startY + 25, 1F, false);
             return;
         } else if (recipe instanceof ShapedRecipes) {
             ShapedRecipes shaped = (ShapedRecipes) recipe;
@@ -167,7 +167,7 @@ public class PageCrafting extends BookletPage {
             for (int y = 0; y < height; y++) {
                 Ingredient ing = ings[y * width + x];
                 if (ing != null) {
-                    ItemStack[] stacks = ing.getMatchingStacks();
+                    ItemStack[] stacks = ing.getItems();
                     if (stacks != null && stacks.length > 0) {
                         ItemStack stack = stacks[0];
                         if (StackUtil.isValid(stack)) {
@@ -184,6 +184,6 @@ public class PageCrafting extends BookletPage {
             }
         }
 
-        gui.addOrModifyItemRenderer(recipe.getRecipeOutput(), startX + 100, startY + 25, 1F, false);
+        gui.addOrModifyItemRenderer(recipe.getResultItem(), startX + 100, startY + 25, 1F, false);
     }
 }

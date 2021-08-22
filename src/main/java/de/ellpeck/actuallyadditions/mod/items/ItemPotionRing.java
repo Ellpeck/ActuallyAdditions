@@ -49,7 +49,7 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDi
     private final boolean isAdvanced;
 
     public ItemPotionRing(boolean isAdvanced) {
-        super(ActuallyItems.defaultProps().maxStackSize(1));
+        super(ActuallyItems.defaultProps().stacksTo(1));
         this.isAdvanced = isAdvanced;
     }
 
@@ -84,14 +84,14 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDi
     @Override
     public int getRGBDurabilityForDisplay(ItemStack stack) {
         int curr = getStoredBlaze(stack);
-        return MathHelper.hsvToRGB(Math.max(0.0F, (float) curr / MAX_BLAZE) / 3.0F, 1.0F, 1.0F);
+        return MathHelper.hsvToRgb(Math.max(0.0F, (float) curr / MAX_BLAZE) / 3.0F, 1.0F, 1.0F);
     }
 
     @Override
-    public String getTranslationKey(ItemStack stack) {
+    public String getDescriptionId(ItemStack stack) {
         return stack.getItemDamage() >= ALL_RINGS.length
             ? StringUtil.BUGGED_ITEM_NAME
-            : this.getTranslationKey() + ALL_RINGS[stack.getItemDamage()].name;
+            : this.getDescriptionId() + ALL_RINGS[stack.getItemDamage()].name;
     }
 
     @Override
@@ -103,14 +103,14 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDi
     public void onUpdate(ItemStack stack, World world, Entity player, int par4, boolean par5) {
         super.onUpdate(stack, world, player, par4, par5);
 
-        if (!world.isRemote && stack.getItemDamage() < ALL_RINGS.length) {
+        if (!world.isClientSide && stack.getItemDamage() < ALL_RINGS.length) {
             if (player instanceof PlayerEntity) {
                 PlayerEntity thePlayer = (PlayerEntity) player;
 
                 int storedBlaze = getStoredBlaze(stack);
                 if (storedBlaze > 0) {
-                    ItemStack equippedStack = thePlayer.getHeldItemMainhand();
-                    ItemStack offhandStack = thePlayer.getHeldItemOffhand();
+                    ItemStack equippedStack = thePlayer.getMainHandItem();
+                    ItemStack offhandStack = thePlayer.getOffhandItem();
 
                     if (this.effectEntity(thePlayer, stack, StackUtil.isValid(equippedStack) && stack == equippedStack || StackUtil.isValid(offhandStack) && stack == offhandStack)) {
                         if (world.getTotalWorldTime() % 10 == 0) {
@@ -124,20 +124,20 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDi
 
     @Override
     public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
-        return slotChanged || !ItemStack.areItemsEqual(oldStack, newStack);
+        return slotChanged || !ItemStack.isSame(oldStack, newStack);
     }
 
     @Override
     public String getItemStackDisplayName(ItemStack stack) {
         if (Util.isClient()) {
-            String standardName = StringUtil.localize(this.getTranslationKey() + ".name");
+            String standardName = StringUtil.localize(this.getDescriptionId() + ".name");
             if (stack.getItemDamage() < ALL_RINGS.length) {
                 String effect = StringUtil.localize(ALL_RINGS[stack.getItemDamage()].name);
                 return standardName + " " + effect;
             }
             return standardName;
         }
-        String standardName = StringUtil.localizeIllegallyOnTheServerDontUseMePls(this.getTranslationKey() + ".name");
+        String standardName = StringUtil.localizeIllegallyOnTheServerDontUseMePls(this.getDescriptionId() + ".name");
         if (stack.getItemDamage() < ALL_RINGS.length) {
             String effect = StringUtil.localizeIllegallyOnTheServerDontUseMePls(ALL_RINGS[stack.getItemDamage()].name);
             return standardName + " " + effect;
@@ -187,7 +187,7 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDi
         int range = advanced
             ? 48
             : 16;
-        List<EntityLivingBase> entities = tile.getWorld().getEntitiesWithinAABB(EntityLivingBase.class, new AxisAlignedBB(tile.getPos().getX() - range, tile.getPos().getY() - range, tile.getPos().getZ() - range, tile.getPos().getX() + range, tile.getPos().getY() + range, tile.getPos().getZ() + range));
+        List<EntityLivingBase> entities = tile.getLevel().getEntitiesOfClass(EntityLivingBase.class, new AxisAlignedBB(tile.getBlockPos().getX() - range, tile.getBlockPos().getY() - range, tile.getBlockPos().getZ() - range, tile.getBlockPos().getX() + range, tile.getBlockPos().getY() + range, tile.getBlockPos().getZ() + range));
         if (entities != null && !entities.isEmpty()) {
             if (advanced) {
                 //Give all entities the effect
@@ -200,7 +200,7 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDi
                 for (EntityLivingBase entity : entities) {
                     if (entity.isPotionActive(potion)) {
                         //Sometimes make the effect switch to someone else
-                        if (tile.getWorld().rand.nextInt(100) <= 0) {
+                        if (tile.getLevel().random.nextInt(100) <= 0) {
                             entity.removePotionEffect(potion);
                             break;
                         } else {
@@ -246,7 +246,7 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDi
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World playerIn, List<String> tooltip, ITooltipFlag advanced) {
-        super.addInformation(stack, playerIn, tooltip, advanced);
+        super.appendHoverText(stack, playerIn, tooltip, advanced);
         tooltip.add(String.format("%d/%d %s", getStoredBlaze(stack), MAX_BLAZE, StringUtil.localize("item." + ActuallyAdditions.MODID + ".item_misc_ring.storage")));
     }
 }

@@ -35,15 +35,15 @@ public class GuiRangedCollector extends GuiWtfMojang<ContainerRangedCollector> {
     public GuiRangedCollector(ContainerRangedCollector container, PlayerInventory inventory, ITextComponent title) {
         super(container, inventory);
         this.collector = container.collector;
-        this.xSize = 176;
-        this.ySize = 86 + 86;
+        this.imageWidth = 176;
+        this.imageHeight = 86 + 86;
     }
 
     @Override
     public void init() {
         super.init();
 
-        this.filter = new FilterSettingsGui(this.collector.filter, this.guiLeft + 3, this.guiTop + 6, this.buttonList);
+        this.filter = new FilterSettingsGui(this.collector.filter, this.leftPos + 3, this.topPos + 6, this.buttonList);
     }
 
     @Override
@@ -61,19 +61,19 @@ public class GuiRangedCollector extends GuiWtfMojang<ContainerRangedCollector> {
     }
 
     @Override
-    public void drawGuiContainerForegroundLayer(MatrixStack matrices, int x, int y) {
-        AssetUtil.displayNameString(matrices, this.font, this.xSize, -10, this.collector);
+    public void renderLabels(MatrixStack matrices, int x, int y) {
+        AssetUtil.displayNameString(matrices, this.font, this.imageWidth, -10, this.collector);
     }
 
     @Override
-    public void drawGuiContainerBackgroundLayer(MatrixStack matrices, float f, int x, int y) {
+    public void renderBg(MatrixStack matrices, float f, int x, int y) {
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 
-        this.getMinecraft().getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
-        this.blit(matrices, this.guiLeft, this.guiTop + 86, 0, 0, 176, 86);
+        this.getMinecraft().getTextureManager().bind(AssetUtil.GUI_INVENTORY_LOCATION);
+        this.blit(matrices, this.leftPos, this.topPos + 86, 0, 0, 176, 86);
 
-        this.getMinecraft().getTextureManager().bindTexture(RES_LOC);
-        this.blit(matrices, this.guiLeft, this.guiTop, 0, 0, 176, 86);
+        this.getMinecraft().getTextureManager().bind(RES_LOC);
+        this.blit(matrices, this.leftPos, this.topPos, 0, 0, 176, 86);
     }
 
     @Override

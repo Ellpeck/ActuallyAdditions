@@ -56,9 +56,9 @@ public final class PacketHandler {
         @Override
         @OnlyIn(Dist.CLIENT)
         public void handleData(CompoundNBT compound, MessageContext context) {
-            World world = Minecraft.getInstance().world;
+            World world = Minecraft.getInstance().level;
             if (world != null) {
-                TileEntity tile = world.getTileEntity(new BlockPos(compound.getInt("X"), compound.getInt("Y"), compound.getInt("Z")));
+                TileEntity tile = world.getBlockEntity(new BlockPos(compound.getInt("X"), compound.getInt("Y"), compound.getInt("Z")));
                 if (tile instanceof TileEntityBase) {
                     ((TileEntityBase) tile).readSyncableNBT(compound.getCompoundTag("Data"), TileEntityBase.NBTType.SYNC);
                 }
@@ -80,17 +80,17 @@ public final class PacketHandler {
             double outY = compound.getDouble("OutY") + 0.525;
             double outZ = compound.getDouble("OutZ") + 0.5;
 
-            Particle fx = new ParticleLaserItem(mc.world, outX, outY, outZ, stack, 0.025, inX, inY, inZ);
+            Particle fx = new ParticleLaserItem(mc.level, outX, outY, outZ, stack, 0.025, inX, inY, inZ);
             mc.effectRenderer.addEffect(fx);
         }
     };
     public static final IDataHandler GUI_BUTTON_TO_TILE_HANDLER = (compound, context) -> {
         World world = DimensionManager.getWorld(compound.getInt("WorldID"));
-        TileEntity tile = world.getTileEntity(new BlockPos(compound.getInt("X"), compound.getInt("Y"), compound.getInt("Z")));
+        TileEntity tile = world.getBlockEntity(new BlockPos(compound.getInt("X"), compound.getInt("Y"), compound.getInt("Z")));
 
         if (tile instanceof IButtonReactor) {
             IButtonReactor reactor = (IButtonReactor) tile;
-            Entity entity = world.getEntityByID(compound.getInt("PlayerID"));
+            Entity entity = world.getEntity(compound.getInt("PlayerID"));
             if (entity instanceof PlayerEntity) {
                 reactor.onButtonPressed(compound.getInt("ButtonID"), (PlayerEntity) entity);
             }
@@ -98,9 +98,9 @@ public final class PacketHandler {
     };
     public static final IDataHandler GUI_BUTTON_TO_CONTAINER_HANDLER = (compound, context) -> {
         World world = DimensionManager.getWorld(compound.getInt("WorldID"));
-        Entity entity = world.getEntityByID(compound.getInt("PlayerID"));
+        Entity entity = world.getEntity(compound.getInt("PlayerID"));
         if (entity instanceof PlayerEntity) {
-            Container container = ((PlayerEntity) entity).openContainer;
+            Container container = ((PlayerEntity) entity).containerMenu;
             if (container instanceof IButtonReactor) {
                 ((IButtonReactor) container).onButtonPressed(compound.getInt("ButtonID"), (PlayerEntity) entity);
             }
@@ -108,20 +108,20 @@ public final class PacketHandler {
     };
     public static final IDataHandler GUI_NUMBER_TO_TILE_HANDLER = (compound, context) -> {
         World world = DimensionManager.getWorld(compound.getInt("WorldID"));
-        TileEntity tile = world.getTileEntity(new BlockPos(compound.getInt("X"), compound.getInt("Y"), compound.getInt("Z")));
+        TileEntity tile = world.getBlockEntity(new BlockPos(compound.getInt("X"), compound.getInt("Y"), compound.getInt("Z")));
 
         if (tile instanceof INumberReactor) {
             INumberReactor reactor = (INumberReactor) tile;
-            reactor.onNumberReceived(compound.getDouble("Number"), compound.getInt("NumberID"), (PlayerEntity) world.getEntityByID(compound.getInt("PlayerID")));
+            reactor.onNumberReceived(compound.getDouble("Number"), compound.getInt("NumberID"), (PlayerEntity) world.getEntity(compound.getInt("PlayerID")));
         }
     };
     public static final IDataHandler GUI_STRING_TO_TILE_HANDLER = (compound, context) -> {
         World world = DimensionManager.getWorld(compound.getInt("WorldID"));
-        TileEntity tile = world.getTileEntity(new BlockPos(compound.getInt("X"), compound.getInt("Y"), compound.getInt("Z")));
+        TileEntity tile = world.getBlockEntity(new BlockPos(compound.getInt("X"), compound.getInt("Y"), compound.getInt("Z")));
 
         if (tile instanceof IStringReactor) {
             IStringReactor reactor = (IStringReactor) tile;
-            reactor.onTextReceived(compound.getString("Text"), compound.getInt("TextID"), (PlayerEntity) world.getEntityByID(compound.getInt("PlayerID")));
+            reactor.onTextReceived(compound.getString("Text"), compound.getInt("TextID"), (PlayerEntity) world.getEntity(compound.getInt("PlayerID")));
         }
     };
     public static final IDataHandler SYNC_PLAYER_DATA = new IDataHandler() {
@@ -144,7 +144,7 @@ public final class PacketHandler {
     };
     public static final IDataHandler PLAYER_DATA_TO_SERVER = (compound, context) -> {
         World world = DimensionManager.getWorld(compound.getInt("World"));
-        PlayerEntity player = world.getPlayerEntityByUUID(compound.getUniqueId("UUID"));
+        PlayerEntity player = world.getPlayerEntityByUUID(compound.getUUID("UUID"));
         if (player != null) {
             PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(player);
 
@@ -160,13 +160,13 @@ public final class PacketHandler {
                     //TheAchievements.COMPLETE_TRIALS.get(player);
                 }
             }
-            WorldData.get(world).markDirty();
+            WorldData.get(world).setDirty();
 
             if (compound.getBoolean("Log")) {
                 ActuallyAdditions.LOGGER.info("Receiving changed Player Data for player " + player.getName() + ".");
             }
         } else {
-            ActuallyAdditions.LOGGER.error("Tried to receive Player Data for UUID " + compound.getUniqueId("UUID") + ", but he doesn't seem to be present!");
+            ActuallyAdditions.LOGGER.error("Tried to receive Player Data for UUID " + compound.getUUID("UUID") + ", but he doesn't seem to be present!");
         }
     };
 
@@ -195,7 +195,7 @@ public final class PacketHandler {
 
     public static void sendTo(Object msg, ServerPlayerEntity player) {
         if (!(player instanceof FakePlayer)) {
-            THE_NETWORK.sendTo(msg, player.connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
+            THE_NETWORK.sendTo(msg, player.connection.getConnection(), NetworkDirection.PLAY_TO_CLIENT);
         }
     }
 

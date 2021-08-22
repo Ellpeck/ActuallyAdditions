@@ -42,14 +42,16 @@ import net.minecraftforge.fml.network.NetworkHooks;
 import javax.annotation.Nullable;
 import java.util.Random;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public abstract class BlockContainerBase extends ContainerBlock {
     public BlockContainerBase(Properties properties) {
         super(properties);
     }
 
     public ActionResultType openGui(World world, PlayerEntity player, BlockPos pos, Class<? extends INamedContainerProvider> expectedInstance) {
-        if (!world.isRemote) {
-            TileEntity tile = world.getTileEntity(pos);
+        if (!world.isClientSide) {
+            TileEntity tile = world.getBlockEntity(pos);
             if (tile != null && tile.getClass().isInstance(expectedInstance)) {
                 NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) tile, pos);
             }
@@ -60,8 +62,8 @@ public abstract class BlockContainerBase extends ContainerBlock {
     }
 
     private void dropInventory(World world, BlockPos position) {
-        if (!world.isRemote) {
-            TileEntity aTile = world.getTileEntity(position);
+        if (!world.isClientSide) {
+            TileEntity aTile = world.getBlockEntity(position);
             if (aTile instanceof TileEntityInventoryBase) {
                 TileEntityInventoryBase tile = (TileEntityInventoryBase) aTile;
                 if (tile.inv.getSlots() > 0) {
@@ -79,24 +81,24 @@ public abstract class BlockContainerBase extends ContainerBlock {
             return;
         }
 
-        float dX = world.rand.nextFloat() * 0.8F + 0.1F;
-        float dY = world.rand.nextFloat() * 0.8F + 0.1F;
-        float dZ = world.rand.nextFloat() * 0.8F + 0.1F;
+        float dX = world.random.nextFloat() * 0.8F + 0.1F;
+        float dY = world.random.nextFloat() * 0.8F + 0.1F;
+        float dZ = world.random.nextFloat() * 0.8F + 0.1F;
         ItemEntity entityItem = new ItemEntity(world, pos.getX() + dX, pos.getY() + dY, pos.getZ() + dZ, stack.copy());
         float factor = 0.05F;
-        entityItem.addVelocity(world.rand.nextGaussian() * factor, world.rand.nextGaussian() * factor + 0.2F, world.rand.nextGaussian() * factor);
-        world.addEntity(entityItem);
+        entityItem.push(world.random.nextGaussian() * factor, world.random.nextGaussian() * factor + 0.2F, world.random.nextGaussian() * factor);
+        world.addFreshEntity(entityItem);
     }
 
     public boolean tryToggleRedstone(World world, BlockPos pos, PlayerEntity player) {
-        ItemStack stack = player.getHeldItemMainhand();
+        ItemStack stack = player.getMainHandItem();
         if (StackUtil.isValid(stack) && stack.getItem() == ConfigValues.itemRedstoneTorchConfigurator) {
-            TileEntity tile = world.getTileEntity(pos);
+            TileEntity tile = world.getBlockEntity(pos);
             if (tile instanceof TileEntityBase) {
                 TileEntityBase base = (TileEntityBase) tile;
-                if (!world.isRemote && base.isRedstoneToggle()) {
+                if (!world.isClientSide && base.isRedstoneToggle()) {
                     base.isPulseMode = !base.isPulseMode;
-                    base.markDirty();
+                    base.setChanged();
                     base.sendUpdate();
                 }
                 return true;
@@ -107,8 +109,8 @@ public abstract class BlockContainerBase extends ContainerBlock {
 
     @Override
     public void tick(BlockState state, ServerWorld world, BlockPos pos, Random rand) {
-        if (!world.isRemote) {
-            TileEntity tile = world.getTileEntity(pos);
+        if (!world.isClientSide) {
+            TileEntity tile = world.getBlockEntity(pos);
             if (tile instanceof TileEntityBase) {
                 TileEntityBase base = (TileEntityBase) tile;
                 if (base.respondsToPulses()) {
@@ -121,7 +123,7 @@ public abstract class BlockContainerBase extends ContainerBlock {
     public void neighborsChangedCustom(World world, BlockPos pos) {
         this.updateRedstoneState(world, pos);
 
-        TileEntity tile = world.getTileEntity(pos);
+        TileEntity tile = world.getBlockEntity(pos);
         if (tile instanceof TileEntityBase) {
             TileEntityBase base = (TileEntityBase) tile;
             if (base.shouldSaveDataOnChangeOrWorldStart()) {
@@ -144,11 +146,11 @@ public abstract class BlockContainerBase extends ContainerBlock {
     }
 
     public void updateRedstoneState(World world, BlockPos pos) {
-        if (!world.isRemote) {
-            TileEntity tile = world.getTileEntity(pos);
+        if (!world.isClientSide) {
+            TileEntity tile = world.getBlockEntity(pos);
             if (tile instanceof TileEntityBase) {
                 TileEntityBase base = (TileEntityBase) tile;
-                boolean powered = world.getRedstonePowerFromNeighbors(pos) > 0;
+                boolean powered = world.getBestNeighborSignal(pos) > 0;
                 boolean wasPowered = base.isRedstonePowered;
                 if (powered && !wasPowered) {
                     if (base.respondsToPulses()) {
@@ -164,20 +166,20 @@ public abstract class BlockContainerBase extends ContainerBlock {
     }
 
     protected boolean tryUseItemOnTank(PlayerEntity player, Hand hand, FluidTank tank) {
-        ItemStack heldItem = player.getHeldItem(hand);
+        ItemStack heldItem = player.getItemInHand(hand);
         return StackUtil.isValid(heldItem) && FluidUtil.interactWithFluidHandler(player, hand, tank);
 
     }
 
     @Override
-    public void onBlockAdded(BlockState state, World worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
+    public void onPlace(BlockState state, World worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
         this.updateRedstoneState(worldIn, pos);
     }
 
     @Override
-    public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+    public void setPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
         if (stack.hasTag()) {
-            TileEntity tile = world.getTileEntity(pos);
+            TileEntity tile = world.getBlockEntity(pos);
             if (tile instanceof TileEntityBase) {
                 TileEntityBase base = (TileEntityBase) tile;
                 CompoundNBT compound = stack.getOrCreateTag().getCompound("Data");
@@ -187,23 +189,23 @@ public abstract class BlockContainerBase extends ContainerBlock {
     }
 
     @Override
-    public void onBlockHarvested(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+    public void playerWillDestroy(World world, BlockPos pos, BlockState state, PlayerEntity player) {
         if (!player.isCreative()) {
-            TileEntity tile = world.getTileEntity(pos);
+            TileEntity tile = world.getBlockEntity(pos);
             if (tile instanceof TileEntityBase && ((TileEntityBase) tile).stopFromDropping) {
-                player.sendStatusMessage(new TranslationTextComponent("info." + ActuallyAdditions.MODID + ".machineBroke").mergeStyle(TextFormatting.RED), false);
+                player.displayClientMessage(new TranslationTextComponent("info." + ActuallyAdditions.MODID + ".machineBroke").withStyle(TextFormatting.RED), false);
             }
         }
     }
 
     @Override
-    public boolean hasComparatorInputOverride(BlockState state) {
+    public boolean hasAnalogOutputSignal(BlockState state) {
         return true;
     }
 
     @Override
-    public int getComparatorInputOverride(BlockState state, World world, BlockPos pos) {
-        TileEntity tile = world.getTileEntity(pos);
+    public int getAnalogOutputSignal(BlockState state, World world, BlockPos pos) {
+        TileEntity tile = world.getBlockEntity(pos);
         if (tile instanceof TileEntityBase) {
             return ((TileEntityBase) tile).getComparatorStrength();
         }
@@ -265,13 +267,13 @@ public abstract class BlockContainerBase extends ContainerBlock {
 
 
     @Override
-    public void onReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
+    public void onRemove(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
         if (state != newState) {
             if (this.shouldDropInventory(world, pos)) {
                 this.dropInventory(world, pos);
             }
         }
-        super.onReplaced(state, world, pos, newState, isMoving);
+        super.onRemove(state, world, pos, newState, isMoving);
     }
 
     public boolean shouldDropInventory(World world, BlockPos pos) {

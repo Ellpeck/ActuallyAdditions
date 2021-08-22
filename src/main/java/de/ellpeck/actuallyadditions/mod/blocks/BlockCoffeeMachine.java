@@ -34,9 +34,9 @@ public class BlockCoffeeMachine extends DirectionalBlock.Container {
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-        if (!world.isRemote) {
-            TileEntityCoffeeMachine tile = (TileEntityCoffeeMachine) world.getTileEntity(pos);
+    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+        if (!world.isClientSide) {
+            TileEntityCoffeeMachine tile = (TileEntityCoffeeMachine) world.getBlockEntity(pos);
             if (tile != null) {
                 if (!this.tryUseItemOnTank(player, hand, tile.tank)) {
                     NetworkHooks.openGui((ServerPlayerEntity) player, tile, pos);
@@ -44,18 +44,18 @@ public class BlockCoffeeMachine extends DirectionalBlock.Container {
             }
             return ActionResultType.PASS;
         }
-        return super.onBlockActivated(state, world, pos, player, hand, hit);
+        return super.use(state, world, pos, player, hand, hit);
     }
 
     @Nullable
     @Override
-    public TileEntity createNewTileEntity(IBlockReader worldIn) {
+    public TileEntity newBlockEntity(IBlockReader worldIn) {
         return new TileEntityCoffeeMachine();
     }
 
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        switch (state.get(FACING)) {
+        switch (state.getValue(FACING)) {
             case EAST:
                 return Shapes.CoffeeMachineShapes.EAST;
             case SOUTH:

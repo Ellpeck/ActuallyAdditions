@@ -32,8 +32,8 @@ public class GuiFermentingBarrel extends GuiWtfMojang<ContainerFermentingBarrel>
     public GuiFermentingBarrel(ContainerFermentingBarrel container, PlayerInventory inventory, ITextComponent title) {
         super(container, inventory);
         this.press = container.barrel;
-        this.xSize = 176;
-        this.ySize = 93 + 86;
+        this.imageWidth = 176;
+        this.imageHeight = 93 + 86;
     }
 
     @Override
@@ -46,28 +46,28 @@ public class GuiFermentingBarrel extends GuiWtfMojang<ContainerFermentingBarrel>
     @Override
     public void init() {
         super.init();
-        this.input = new FluidDisplay(this.guiLeft + 60, this.guiTop + 5, this.press.canolaTank);
-        this.output = new FluidDisplay(this.guiLeft + 98, this.guiTop + 5, this.press.oilTank);
+        this.input = new FluidDisplay(this.leftPos + 60, this.topPos + 5, this.press.canolaTank);
+        this.output = new FluidDisplay(this.leftPos + 98, this.topPos + 5, this.press.oilTank);
     }
 
     @Override
-    public void drawGuiContainerForegroundLayer(MatrixStack matrices, int x, int y) {
-        AssetUtil.displayNameString(matrices, this.font, this.xSize, -10, this.press);
+    public void renderLabels(MatrixStack matrices, int x, int y) {
+        AssetUtil.displayNameString(matrices, this.font, this.imageWidth, -10, this.press);
     }
 
     @Override
-    public void drawGuiContainerBackgroundLayer(MatrixStack matrices, float f, int x, int y) {
+    public void renderBg(MatrixStack matrices, float f, int x, int y) {
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 
-        this.getMinecraft().getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
-        this.blit(matrices, this.guiLeft, this.guiTop + 93, 0, 0, 176, 86);
+        this.getMinecraft().getTextureManager().bind(AssetUtil.GUI_INVENTORY_LOCATION);
+        this.blit(matrices, this.leftPos, this.topPos + 93, 0, 0, 176, 86);
 
-        this.getMinecraft().getTextureManager().bindTexture(RES_LOC);
-        this.blit(matrices, this.guiLeft, this.guiTop, 0, 0, 176, 93);
+        this.getMinecraft().getTextureManager().bind(RES_LOC);
+        this.blit(matrices, this.leftPos, this.topPos, 0, 0, 176, 93);
 
         if (this.press.currentProcessTime > 0) {
             int i = this.press.getProcessScaled(29);
-            this.blit(matrices, this.guiLeft + 82, this.guiTop + 34, 176, 0, 12, i);
+            this.blit(matrices, this.leftPos + 82, this.topPos + 34, 176, 0, 12, i);
         }
 
         this.input.draw(matrices);

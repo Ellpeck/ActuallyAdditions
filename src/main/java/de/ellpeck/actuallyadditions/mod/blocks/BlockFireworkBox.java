@@ -30,7 +30,7 @@ public class BlockFireworkBox extends BlockContainerBase {
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (this.tryToggleRedstone(world, pos, player)) {
             return ActionResultType.PASS;
         }
@@ -39,7 +39,7 @@ public class BlockFireworkBox extends BlockContainerBase {
     }
 
     @Override
-    public TileEntity createNewTileEntity(IBlockReader worldIn) {
+    public TileEntity newBlockEntity(IBlockReader worldIn) {
         return new TileEntityFireworkBox();
     }
 

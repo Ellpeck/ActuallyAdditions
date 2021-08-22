@@ -22,20 +22,22 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraftforge.common.ToolType;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class BlockLeafGenerator extends DirectionalBlock.Container {
 
     public BlockLeafGenerator() {
-        super(Properties.create(Material.IRON).hardnessAndResistance(5.0F, 10.0F).harvestTool(ToolType.PICKAXE).harvestLevel(0).hardnessAndResistance(5.0F, 10.0F).sound(SoundType.METAL));
+        super(Properties.of(Material.METAL).strength(5.0F, 10.0F).harvestTool(ToolType.PICKAXE).harvestLevel(0).strength(5.0F, 10.0F).sound(SoundType.METAL));
     }
 
     @Override
-    public TileEntity createNewTileEntity(IBlockReader worldIn) {
+    public TileEntity newBlockEntity(IBlockReader worldIn) {
         return new TileEntityLeafGenerator();
     }
 
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        switch (state.get(FACING)) {
+        switch (state.getValue(FACING)) {
             case EAST:
                 return Shapes.LeafGeneratorShapes.SHAPE_E;
             case SOUTH:

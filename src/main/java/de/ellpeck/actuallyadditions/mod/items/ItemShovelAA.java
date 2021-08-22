@@ -34,11 +34,11 @@ public class ItemShovelAA extends ItemToolAA {
 
     public ItemShovelAA(IItemTier material) {
         super(1.5F, -3.0F, material, this.repairItem, unlocalizedName, this.rarity, EFFECTIVE_ON);
-        this.setHarvestLevel("shovel", material.getHarvestLevel());
+        this.setHarvestLevel("shovel", material.getLevel());
     }
 
     @Override
-    public boolean canHarvestBlock(BlockState blockIn) {
+    public boolean isCorrectToolForDrops(BlockState blockIn) {
         Block block = blockIn.getBlock();
         return block == Blocks.SNOW_LAYER || block == Blocks.SNOW;
     }

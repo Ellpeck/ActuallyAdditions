@@ -24,8 +24,8 @@ public class ColorLensChangerByDyeMeta implements IColorLensChanger {
     @Override
     public ItemStack modifyItem(ItemStack stack, BlockState hitBlockState, BlockPos hitBlock, IAtomicReconstructor tile) {
         ItemStack newStack = stack.copy();
-        int meta = newStack.getDamage();
-        newStack.setDamage((meta + 1) % 16);
+        int meta = newStack.getDamageValue();
+        newStack.setDamageValue((meta + 1) % 16);
         return newStack;
     }
 }

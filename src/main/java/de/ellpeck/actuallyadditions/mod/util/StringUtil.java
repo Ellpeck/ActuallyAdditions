@@ -34,7 +34,7 @@ public final class StringUtil {
      */
     @OnlyIn(Dist.CLIENT)
     public static String localize(String text) {
-        return I18n.format(text);
+        return I18n.get(text);
     }
 
     /**
@@ -42,7 +42,7 @@ public final class StringUtil {
      */
     @OnlyIn(Dist.CLIENT)
     public static String localizeFormatted(String text, Object... replace) {
-        return I18n.format(text, replace);
+        return I18n.get(text, replace);
     }
 
     @SuppressWarnings("deprecation")
@@ -56,28 +56,28 @@ public final class StringUtil {
         List<String> list = renderer.listFormattedStringToWidth(strg, width);
         for (int i = 0; i < list.size(); i++) {
             String s1 = list.get(i);
-            renderer.drawString(s1, x, y + i * renderer.FONT_HEIGHT, color, shadow);
+            renderer.draw(s1, x, y + i * renderer.lineHeight, color, shadow);
         }
     }
 
     @OnlyIn(Dist.CLIENT)
     public static void renderScaledAsciiString(FontRenderer font, String text, float x, float y, int color, boolean shadow, float scale) {
-        GlStateManager.pushMatrix();
+        GlStateManager._pushMatrix();
         GlStateManager.scale(scale, scale, scale);
         boolean oldUnicode = font.getUnicodeFlag();
         font.setUnicodeFlag(false);
 
-        font.drawString(text, x / scale, y / scale, color, shadow);
+        font.draw(text, x / scale, y / scale, color, shadow);
 
         font.setUnicodeFlag(oldUnicode);
-        GlStateManager.popMatrix();
+        GlStateManager._popMatrix();
     }
 
     @OnlyIn(Dist.CLIENT)
     public static void renderSplitScaledAsciiString(FontRenderer font, String text, int x, int y, int color, boolean shadow, float scale, int length) {
         List<String> lines = font.listFormattedStringToWidth(text, (int) (length / scale));
         for (int i = 0; i < lines.size(); i++) {
-            renderScaledAsciiString(font, lines.get(i), x, y + i * (int) (font.FONT_HEIGHT * scale + 3), color, shadow, scale);
+            renderScaledAsciiString(font, lines.get(i), x, y + i * (int) (font.lineHeight * scale + 3), color, shadow, scale);
         }
     }
 

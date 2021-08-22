@@ -37,7 +37,7 @@ public class LensDisenchanting extends Lens {
     @Override
     public boolean invoke(BlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile) {
         if (tile.getEnergy() >= ENERGY_USE) {
-            List<ItemEntity> items = tile.getWorldObject().getEntitiesWithinAABB(ItemEntity.class, new AxisAlignedBB(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), hitBlock.getX() + 1, hitBlock.getY() + 1, hitBlock.getZ() + 1));
+            List<ItemEntity> items = tile.getWorldObject().getEntitiesOfClass(ItemEntity.class, new AxisAlignedBB(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), hitBlock.getX() + 1, hitBlock.getY() + 1, hitBlock.getZ() + 1));
             if (items != null && !items.isEmpty()) {
                 ItemEntity book = null;
                 ItemEntity toDisenchant = null;
@@ -86,12 +86,12 @@ public class LensDisenchanting extends Lens {
                         ItemUtil.removeEnchantment(newDisenchantStack, enchant);
                         EnchantedBookItem.addEnchantment(newBookStack, new EnchantmentData(enchant, level));
 
-                        ItemEntity disenchanted = new ItemEntity(toDisenchant.getEntityWorld(), toDisenchant.getPosX(), toDisenchant.getPosY(), toDisenchant.getPosZ(), newDisenchantStack);
-                        ItemEntity newBook = new ItemEntity(book.getEntityWorld(), book.getPosX(), book.getPosY(), book.getPosZ(), newBookStack);
+                        ItemEntity disenchanted = new ItemEntity(toDisenchant.getCommandSenderWorld(), toDisenchant.getX(), toDisenchant.getY(), toDisenchant.getZ(), newDisenchantStack);
+                        ItemEntity newBook = new ItemEntity(book.getCommandSenderWorld(), book.getX(), book.getY(), book.getZ(), newBookStack);
                         toDisenchant.remove();
                         book.remove();
-                        tile.getWorldObject().addEntity(newBook);
-                        tile.getWorldObject().addEntity(disenchanted);
+                        tile.getWorldObject().addFreshEntity(newBook);
+                        tile.getWorldObject().addFreshEntity(disenchanted);
 
                         tile.extractEnergy(ENERGY_USE);
 

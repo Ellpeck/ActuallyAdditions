@@ -31,28 +31,28 @@ public class ItemTeleStaff extends ItemEnergy {
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
-        ItemStack stack = player.getHeldItem(hand);
-        if (!world.isRemote) {
+    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+        ItemStack stack = player.getItemInHand(hand);
+        if (!world.isClientSide) {
             RayTraceResult rayTraceResult = player.pick(100,0,false);
-            if (rayTraceResult != null && (rayTraceResult.getType() == RayTraceResult.Type.BLOCK || player.rotationPitch >= -5)) {
+            if (rayTraceResult != null && (rayTraceResult.getType() == RayTraceResult.Type.BLOCK || player.xRot >= -5)) {
                 BlockRayTraceResult res = (BlockRayTraceResult)rayTraceResult;
-                BlockPos pos = res.getPos().offset(res.getFace());
+                BlockPos pos = res.getBlockPos().relative(res.getDirection());
                 int baseUse = 200;
-                int use = baseUse + (int) (baseUse * rayTraceResult.getHitVec().distanceTo(new Vector3d(player.getPosX(), player.getPosY() + (player.getEyeHeight() - player.getEyeHeight()), player.getPosZ())));
+                int use = baseUse + (int) (baseUse * rayTraceResult.getLocation().distanceTo(new Vector3d(player.getX(), player.getY() + (player.getEyeHeight() - player.getEyeHeight()), player.getZ())));
                 if (this.getEnergyStored(stack) >= use) {
-                    ((ServerPlayerEntity) player).connection.setPlayerLocation(pos.getX(), pos.getY(), pos.getY(), player.rotationYaw, player.rotationPitch);
-                    player.dismount();
-                    world.playSound(null, player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0F, 1.0F);
+                    ((ServerPlayerEntity) player).connection.teleport(pos.getX(), pos.getY(), pos.getY(), player.yRot, player.xRot);
+                    player.removeVehicle();
+                    world.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0F, 1.0F);
                     if (!player.isCreative()) {
                         this.extractEnergyInternal(stack, use, false);
-                        player.getCooldownTracker().setCooldown(this, 50);
+                        player.getCooldowns().addCooldown(this, 50);
                     }
-                    return ActionResult.resultSuccess(stack);
+                    return ActionResult.success(stack);
                 }
             }
         }
-        player.swingArm(hand);
-        return ActionResult.resultFail(stack);
+        player.swing(hand);
+        return ActionResult.fail(stack);
     }
 }

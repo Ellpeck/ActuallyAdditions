@@ -35,12 +35,12 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
 
     public static boolean defaultPlant(World world, BlockPos pos, BlockState toPlant, IFarmer farmer, int use) {
         if (toPlant != null) {
-            BlockPos farmland = pos.down();
+            BlockPos farmland = pos.below();
             Block farmlandBlock = world.getBlockState(farmland).getBlock();
             if (Tags.Blocks.DIRT.contains(farmlandBlock) || farmlandBlock == Blocks.GRASS) {
-                world.setBlockState(pos, Blocks.AIR.getDefaultState());
+                world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
                 useHoeAt(world, farmland);
-                world.playSound(null, farmland, SoundEvents.ITEM_HOE_TILL, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                world.playSound(null, farmland, SoundEvents.HOE_TILL, SoundCategory.BLOCKS, 1.0F, 1.0F);
                 farmer.extractEnergy(use);
             }
 
@@ -53,8 +53,8 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
     }
 
     private static boolean tryPlant(BlockState toPlant, World world, BlockPos pos) {
-        if (toPlant.isValidPosition(world, pos)) {
-            world.setBlockState(pos, toPlant);
+        if (toPlant.canSurvive(world, pos)) {
+            world.setBlockAndUpdate(pos, toPlant);
             return true;
         }
         return false;
@@ -119,8 +119,8 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
                 farmer.addToSeeds(seeds);
             }
 
-            world.playEvent(2001, pos, Block.getStateId(state));
-            world.setBlockState(pos, Blocks.AIR.getDefaultState());
+            world.levelEvent(2001, pos, Block.getId(state));
+            world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
 
             farmer.extractEnergy(250);
             return FarmerResult.SUCCESS;
@@ -151,7 +151,7 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
         if (item instanceof IPlantable) {
             return (IPlantable) item;
         } else if (item instanceof BlockItem) {
-            Block block = Block.getBlockFromItem(item);
+            Block block = Block.byItem(item);
             if (block instanceof IPlantable) {
                 return (IPlantable) block;
             }
@@ -174,7 +174,7 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
 
         ItemStack itemstack = getHoeStack();
 
-        if (!player.canPlayerEdit(pos.offset(Direction.UP), Direction.UP, itemstack)) {
+        if (!player.mayUseItemAt(pos.relative(Direction.UP), Direction.UP, itemstack)) {
             return ActionResultType.FAIL;
         } else {
             int hook = net.minecraftforge.event.ForgeEventFactory.onHoeUse(itemstack, player, world, pos);
@@ -187,19 +187,19 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
             BlockState iblockstate = world.getBlockState(pos);
             Block block = iblockstate.getBlock();
 
-            if (world.isAirBlock(pos.up())) {
+            if (world.isEmptyBlock(pos.above())) {
                 if (block == Blocks.GRASS || block == Blocks.GRASS_PATH) {
-                    world.setBlockState(pos, Blocks.FARMLAND.getDefaultState());
+                    world.setBlockAndUpdate(pos, Blocks.FARMLAND.defaultBlockState());
                     return ActionResultType.SUCCESS;
                 }
 
                 if (block == Blocks.DIRT) {
-                    switch (iblockstate.get(BlockDirt.VARIANT)) {
+                    switch (iblockstate.getValue(BlockDirt.VARIANT)) {
                         case DIRT:
-                            world.setBlockState(pos, Blocks.FARMLAND.getDefaultState());
+                            world.setBlockAndUpdate(pos, Blocks.FARMLAND.defaultBlockState());
                             return ActionResultType.SUCCESS;
                         case COARSE_DIRT:
-                            world.setBlockState(pos, Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, BlockDirt.DirtType.DIRT));
+                            world.setBlockAndUpdate(pos, Blocks.DIRT.defaultBlockState().withProperty(BlockDirt.VARIANT, BlockDirt.DirtType.DIRT));
                             return ActionResultType.SUCCESS;
                         default:
                     }

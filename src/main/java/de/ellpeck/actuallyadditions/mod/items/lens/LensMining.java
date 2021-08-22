@@ -119,7 +119,7 @@ public class LensMining extends Lens {
 
     @Override
     public boolean invoke(BlockState hitState, BlockPos hitPos, IAtomicReconstructor tile) {
-        if (!tile.getWorldObject().isAirBlock(hitPos)) {
+        if (!tile.getWorldObject().isEmptyBlock(hitPos)) {
             if (tile.getEnergy() >= ConfigIntValues.MINING_LENS_USE.getValue()) {
                 int adaptedUse = ConfigIntValues.MINING_LENS_USE.getValue();
 
@@ -138,14 +138,14 @@ public class LensMining extends Lens {
 
                     boolean found = false;
                     while (!found) {
-                        WeightedOre ore = WeightedRandom.getRandomItem(tile.getWorldObject().rand, ores, totalWeight);
+                        WeightedOre ore = WeightedRandom.getRandomItem(tile.getWorldObject().random, ores, totalWeight);
                         if (ore != null) {
                             List<ItemStack> stacks = OreDictionary.getOres(ore.name, false);
                             if (stacks != null && !stacks.isEmpty()) {
                                 for (ItemStack aStack : stacks) {
                                     if (StackUtil.isValid(aStack) && !CrusherRecipeRegistry.hasBlacklistedOutput(aStack, ConfigStringListValues.MINING_LENS_BLACKLIST.getValue()) && aStack.getItem() instanceof ItemBlock) {
                                         if (ConfigBoolValues.MINING_LENS_ADAPTED_USE.isEnabled()) {
-                                            adaptedUse += (totalWeight - ore.itemWeight) % 40000;
+                                            adaptedUse += (totalWeight - ore.weight) % 40000;
                                         }
 
                                         stack = aStack;
@@ -158,12 +158,12 @@ public class LensMining extends Lens {
                     }
 
                     if (tile.getEnergy() >= adaptedUse) {
-                        Block block = Block.getBlockFromItem(stack.getItem());
+                        Block block = Block.byItem(stack.getItem());
                         if (block != Blocks.AIR) {
                             BlockState state = block.getStateForPlacement(tile.getWorldObject(), hitPos, Direction.UP, 0, 0, 0, stack.getMetadata(), FakePlayerFactory.getMinecraft((WorldServer) tile.getWorldObject()), Hand.MAIN_HAND);
-                            tile.getWorldObject().setBlockState(hitPos, state, 2);
+                            tile.getWorldObject().setBlock(hitPos, state, 2);
 
-                            tile.getWorldObject().playEvent(2001, hitPos, Block.getStateId(state));
+                            tile.getWorldObject().levelEvent(2001, hitPos, Block.getId(state));
 
                             tile.extractEnergy(adaptedUse);
                         }

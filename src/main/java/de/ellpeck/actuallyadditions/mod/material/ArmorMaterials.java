@@ -22,14 +22,14 @@ public enum ArmorMaterials implements IArmorMaterial {
     //    EMERALD("emerald_armor_material", 30,  new int[] { 5, 8, 9, 4 }, 15, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 2, 0f, () -> Ingredient.fromItems(Items.EMERALD)),
     //    OBSIDIAN("obsidian_armor_material", 28, new int[] { 1, 3, 4, 3 }, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 1, 0f, () -> Ingredient.fromItems(Items.OBSIDIAN)),
 
-    QUARTZ("quartz_armor_material", 15, new int[]{3, 5, 6, 3}, 8, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 1, 0f, () -> Ingredient.fromItems(ActuallyItems.BLACK_QUARTZ.get())),
-    RESTONIA("restonia_armor_material", 18, new int[]{3, 6, 7, 3}, 9, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 0, 0f, () -> Ingredient.fromItems(ActuallyItems.RESTONIA_CRYSTAL.get())),
-    PALIS("palis_armor_material", 10, new int[]{3, 6, 7, 3}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 0, 0f, () -> Ingredient.fromItems(ActuallyItems.PALIS_CRYSTAL.get())),
-    DIAMATINE("diamatine_armor_material", 36, new int[]{4, 7, 8, 4}, 12, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 3, 0f, () -> Ingredient.fromItems(ActuallyItems.DIAMATINE_CRYSTAL.get())),
-    VOID("void_armor_material", 23, new int[]{1, 3, 4, 1}, 13, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 0, 0f, () -> Ingredient.fromItems(ActuallyItems.VOID_CRYSTAL.get())),
-    EMERADIC("emeradic_armor_material", 32, new int[]{6, 9, 9, 4}, 18, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 3, 0f, () -> Ingredient.fromItems(ActuallyItems.EMERADIC_CRYSTAL.get())),
-    ENORI("enori_armor_material", 24, new int[]{3, 6, 6, 3}, 11, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 0, 0f, () -> Ingredient.fromItems(ActuallyItems.ENORI_CRYSTAL.get())),
-    GOGGLES("goggles_armor_material", 0, new int[]{0, 0, 0, 0}, 0, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 0, 0f, () -> Ingredient.EMPTY);
+    QUARTZ("quartz_armor_material", 15, new int[]{3, 5, 6, 3}, 8, SoundEvents.ARMOR_EQUIP_GENERIC, 1, 0f, () -> Ingredient.of(ActuallyItems.BLACK_QUARTZ.get())),
+    RESTONIA("restonia_armor_material", 18, new int[]{3, 6, 7, 3}, 9, SoundEvents.ARMOR_EQUIP_GENERIC, 0, 0f, () -> Ingredient.of(ActuallyItems.RESTONIA_CRYSTAL.get())),
+    PALIS("palis_armor_material", 10, new int[]{3, 6, 7, 3}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 0, 0f, () -> Ingredient.of(ActuallyItems.PALIS_CRYSTAL.get())),
+    DIAMATINE("diamatine_armor_material", 36, new int[]{4, 7, 8, 4}, 12, SoundEvents.ARMOR_EQUIP_GENERIC, 3, 0f, () -> Ingredient.of(ActuallyItems.DIAMATINE_CRYSTAL.get())),
+    VOID("void_armor_material", 23, new int[]{1, 3, 4, 1}, 13, SoundEvents.ARMOR_EQUIP_GENERIC, 0, 0f, () -> Ingredient.of(ActuallyItems.VOID_CRYSTAL.get())),
+    EMERADIC("emeradic_armor_material", 32, new int[]{6, 9, 9, 4}, 18, SoundEvents.ARMOR_EQUIP_GENERIC, 3, 0f, () -> Ingredient.of(ActuallyItems.EMERADIC_CRYSTAL.get())),
+    ENORI("enori_armor_material", 24, new int[]{3, 6, 6, 3}, 11, SoundEvents.ARMOR_EQUIP_GENERIC, 0, 0f, () -> Ingredient.of(ActuallyItems.ENORI_CRYSTAL.get())),
+    GOGGLES("goggles_armor_material", 0, new int[]{0, 0, 0, 0}, 0, SoundEvents.ARMOR_EQUIP_GENERIC, 0, 0f, () -> Ingredient.EMPTY);
 
     // HMMM Tasty stolen code from MC, how lovely.
     private static final int[] MAX_DAMAGE_ARRAY = new int[]{13, 15, 16, 11};
@@ -54,28 +54,28 @@ public enum ArmorMaterials implements IArmorMaterial {
     }
 
     @Override
-    public int getDurability(EquipmentSlotType slotIn) {
+    public int getDurabilityForSlot(EquipmentSlotType slotIn) {
         return MAX_DAMAGE_ARRAY[slotIn.getIndex()] * this.maxDamageFactor;
     }
 
     @Override
-    public int getDamageReductionAmount(EquipmentSlotType slotIn) {
+    public int getDefenseForSlot(EquipmentSlotType slotIn) {
         return this.damageReductionAmountArray[slotIn.getIndex()];
     }
 
     @Override
-    public int getEnchantability() {
+    public int getEnchantmentValue() {
         return this.enchantability;
     }
 
     @Override
-    public SoundEvent getSoundEvent() {
+    public SoundEvent getEquipSound() {
         return this.soundEvent;
     }
 
     @Override
-    public Ingredient getRepairMaterial() {
-        return this.repairMaterial.getValue();
+    public Ingredient getRepairIngredient() {
+        return this.repairMaterial.get();
     }
 
     @Override

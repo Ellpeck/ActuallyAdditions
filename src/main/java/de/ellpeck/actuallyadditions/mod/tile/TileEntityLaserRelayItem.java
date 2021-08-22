@@ -35,6 +35,8 @@ import net.minecraftforge.items.IItemHandler;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
+
 public class TileEntityLaserRelayItem extends TileEntityLaserRelay {
 
     public final Map<BlockPos, SlotlessableItemHandlerWrapper> handlersAround = new ConcurrentHashMap<>();
@@ -69,9 +71,9 @@ public class TileEntityLaserRelayItem extends TileEntityLaserRelay {
         this.handlersAround.clear();
         for (int i = 0; i <= 5; i++) {
             Direction side = WorldUtil.getDirectionBySidesInOrder(i);
-            BlockPos pos = this.getPos().offset(side);
-            if (this.world.isBlockLoaded(pos)) {
-                TileEntity tile = this.world.getTileEntity(pos);
+            BlockPos pos = this.getBlockPos().relative(side);
+            if (this.level.hasChunkAt(pos)) {
+                TileEntity tile = this.level.getBlockEntity(pos);
                 if (tile != null && !(tile instanceof TileEntityItemViewer) && !(tile instanceof TileEntityLaserRelay)) {
                     LazyOptional<IItemHandler> itemHandler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite());
 
@@ -109,9 +111,9 @@ public class TileEntityLaserRelayItem extends TileEntityLaserRelay {
 
         for (IConnectionPair pair : network.connections) {
             for (BlockPos relay : pair.getPositions()) {
-                if (relay != null && this.world.isBlockLoaded(relay) && !alreadyChecked.contains(relay)) {
+                if (relay != null && this.level.hasChunkAt(relay) && !alreadyChecked.contains(relay)) {
                     alreadyChecked.add(relay);
-                    TileEntity aRelayTile = this.world.getTileEntity(relay);
+                    TileEntity aRelayTile = this.level.getBlockEntity(relay);
                     if (aRelayTile instanceof TileEntityLaserRelayItem) {
                         TileEntityLaserRelayItem relayTile = (TileEntityLaserRelayItem) aRelayTile;
                         GenericItemHandlerInfo info = new GenericItemHandlerInfo(relayTile);
@@ -153,7 +155,7 @@ public class TileEntityLaserRelayItem extends TileEntityLaserRelay {
 
     @Override
     public void onCompassAction(PlayerEntity player) {
-        if (player.isSneaking()) {
+        if (player.isShiftKeyDown()) {
             this.priority--;
         } else {
             this.priority++;

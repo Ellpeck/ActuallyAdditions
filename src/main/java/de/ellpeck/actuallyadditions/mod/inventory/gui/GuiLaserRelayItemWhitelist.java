@@ -45,8 +45,8 @@ public class GuiLaserRelayItemWhitelist extends GuiWtfMojang<ContainerLaserRelay
     public GuiLaserRelayItemWhitelist(ContainerLaserRelayItemWhitelist container, PlayerInventory inventory, ITextComponent title) {
         super(container, inventory);
         this.tile = container.tile;
-        this.xSize = 176;
-        this.ySize = 93 + 86;
+        this.imageWidth = 176;
+        this.imageHeight = 93 + 86;
     }
 
     @Override
@@ -61,11 +61,11 @@ public class GuiLaserRelayItemWhitelist extends GuiWtfMojang<ContainerLaserRelay
     public void init() {
         super.init();
 
-        this.leftFilter = new FilterSettingsGui(this.tile.leftFilter, this.guiLeft + 3, this.guiTop + 6, this.buttonList);
-        this.rightFilter = new FilterSettingsGui(this.tile.rightFilter, this.guiLeft + 157, this.guiTop + 6, this.buttonList);
+        this.leftFilter = new FilterSettingsGui(this.tile.leftFilter, this.leftPos + 3, this.topPos + 6, this.buttonList);
+        this.rightFilter = new FilterSettingsGui(this.tile.rightFilter, this.leftPos + 157, this.topPos + 6, this.buttonList);
 
-        this.buttonSmartWhitelistLeft = new SmallerButton(2, this.guiLeft + 3, this.guiTop + 79, "S");
-        this.buttonSmartWhitelistRight = new SmallerButton(3, this.guiLeft + 157, this.guiTop + 79, "S");
+        this.buttonSmartWhitelistLeft = new SmallerButton(2, this.leftPos + 3, this.topPos + 79, "S");
+        this.buttonSmartWhitelistRight = new SmallerButton(3, this.leftPos + 157, this.topPos + 79, "S");
         this.addButton(this.buttonSmartWhitelistLeft);
         this.addButton(this.buttonSmartWhitelistRight);
     }
@@ -91,24 +91,24 @@ public class GuiLaserRelayItemWhitelist extends GuiWtfMojang<ContainerLaserRelay
     }
 
     @Override
-    public void drawGuiContainerForegroundLayer(MatrixStack matrices, int x, int y) {
-        AssetUtil.displayNameString(matrices, this.font, this.xSize, -10, this.tile);
+    public void renderLabels(MatrixStack matrices, int x, int y) {
+        AssetUtil.displayNameString(matrices, this.font, this.imageWidth, -10, this.tile);
 
         String s1 = StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.inbound");
         String s2 = StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.outbound");
-        this.font.drawString(matrices, s1, 46 - this.font.getStringWidth(s1) / 2, 80, StringUtil.DECIMAL_COLOR_GRAY_TEXT);
-        this.font.drawString(matrices, s2, 131 - this.font.getStringWidth(s2) / 2, 80, StringUtil.DECIMAL_COLOR_GRAY_TEXT);
+        this.font.draw(matrices, s1, 46 - this.font.width(s1) / 2, 80, StringUtil.DECIMAL_COLOR_GRAY_TEXT);
+        this.font.draw(matrices, s2, 131 - this.font.width(s2) / 2, 80, StringUtil.DECIMAL_COLOR_GRAY_TEXT);
     }
 
     @Override
-    public void drawGuiContainerBackgroundLayer(MatrixStack matrices, float f, int x, int y) {
+    public void renderBg(MatrixStack matrices, float f, int x, int y) {
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 
-        this.getMinecraft().getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
-        this.blit(matrices, this.guiLeft, this.guiTop + 93, 0, 0, 176, 86);
+        this.getMinecraft().getTextureManager().bind(AssetUtil.GUI_INVENTORY_LOCATION);
+        this.blit(matrices, this.leftPos, this.topPos + 93, 0, 0, 176, 86);
 
-        this.getMinecraft().getTextureManager().bindTexture(RES_LOC);
-        this.blit(matrices, this.guiLeft, this.guiTop, 0, 0, 176, 93);
+        this.getMinecraft().getTextureManager().bind(RES_LOC);
+        this.blit(matrices, this.leftPos, this.topPos, 0, 0, 176, 93);
 
     }
 }

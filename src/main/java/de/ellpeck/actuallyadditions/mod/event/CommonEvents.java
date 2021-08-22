@@ -61,10 +61,10 @@ public class CommonEvents {
         if (item != null && item.isAlive()) {
             ItemStack stack = item.getItem();
             if (StackUtil.isValid(stack)) {
-                for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
-                    if (i != player.inventory.currentItem) {
+                for (int i = 0; i < player.inventory.getContainerSize(); i++) {
+                    if (i != player.inventory.selected) {
 
-                        ItemStack invStack = player.inventory.getStackInSlot(i);
+                        ItemStack invStack = player.inventory.getItem(i);
                         if (StackUtil.isValid(invStack) && invStack.getItem() instanceof ItemBag && invStack.hasTag()) {
                             if (invStack.getOrCreateTag().getBoolean("AutoInsert")) {
                                 boolean changed = false;
@@ -139,11 +139,11 @@ public class CommonEvents {
 
     @SubscribeEvent
     public void onEntityDropEvent(LivingDropsEvent event) {
-        if (event.getEntityLiving().world != null && !event.getEntityLiving().world.isRemote && event.getSource().getTrueSource() instanceof PlayerEntity) {
+        if (event.getEntityLiving().level != null && !event.getEntityLiving().level.isClientSide && event.getSource().getEntity() instanceof PlayerEntity) {
             //Drop Cobwebs from Spiders
             if (ConfigBoolValues.DO_SPIDER_DROPS.isEnabled() && event.getEntityLiving() instanceof SpiderEntity) {
-                if (event.getEntityLiving().world.rand.nextInt(20) <= event.getLootingLevel() * 2) {
-                    event.getDrops().add(new ItemEntity(event.getEntityLiving().world, event.getEntityLiving().getPosX(), event.getEntityLiving().getPosY(), event.getEntityLiving().getPosZ(), new ItemStack(Blocks.COBWEB, event.getEntityLiving().world.rand.nextInt(2 + event.getLootingLevel()) + 1)));
+                if (event.getEntityLiving().level.random.nextInt(20) <= event.getLootingLevel() * 2) {
+                    event.getDrops().add(new ItemEntity(event.getEntityLiving().level, event.getEntityLiving().getX(), event.getEntityLiving().getY(), event.getEntityLiving().getZ(), new ItemStack(Blocks.COBWEB, event.getEntityLiving().level.random.nextInt(2 + event.getLootingLevel()) + 1)));
                 }
             }
         }
@@ -151,10 +151,10 @@ public class CommonEvents {
 
     @SubscribeEvent
     public void onLogInEvent(PlayerEvent.PlayerLoggedInEvent event) {
-        if (!event.getPlayer().world.isRemote && event.getPlayer() instanceof ServerPlayerEntity) {
+        if (!event.getPlayer().level.isClientSide && event.getPlayer() instanceof ServerPlayerEntity) {
             ServerPlayerEntity player = (ServerPlayerEntity) event.getPlayer();
             PacketHandlerHelper.syncPlayerData(player, true);
-            ActuallyAdditions.LOGGER.info("Sending Player Data to player " + player.getName() + " with UUID " + player.getUniqueID() + ".");
+            ActuallyAdditions.LOGGER.info("Sending Player Data to player " + player.getName() + " with UUID " + player.getUUID() + ".");
         }
     }
 
@@ -163,18 +163,18 @@ public class CommonEvents {
         //checkAchievements(event.crafting, event.player, InitAchievements.Type.CRAFTING);
 
         if (ConfigBoolValues.GIVE_BOOKLET_ON_FIRST_CRAFT.isEnabled()) {
-            if (!event.getPlayer().world.isRemote && StackUtil.isValid(event.getCrafting()) && event.getCrafting().getItem() != ActuallyItems.ITEM_BOOKLET.get()) {
+            if (!event.getPlayer().level.isClientSide && StackUtil.isValid(event.getCrafting()) && event.getCrafting().getItem() != ActuallyItems.ITEM_BOOKLET.get()) {
 
                 String name = event.getCrafting().getItem().getRegistryName().toString();
                 if (name != null && name.toLowerCase(Locale.ROOT).contains(ActuallyAdditions.MODID)) {
                     PlayerData.PlayerSave save = PlayerData.getDataFromPlayer(event.getPlayer());
                     if (save != null && !save.bookGottenAlready) {
                         save.bookGottenAlready = true;
-                        WorldData.get(event.getPlayer().getEntityWorld()).markDirty();
+                        WorldData.get(event.getPlayer().getCommandSenderWorld()).setDirty();
 
-                        ItemEntity entityItem = new ItemEntity(event.getPlayer().world, event.getPlayer().getPosX(), event.getPlayer().getPosY(), event.getPlayer().getPosZ(), new ItemStack(ActuallyItems.ITEM_BOOKLET.get()));
-                        entityItem.setPickupDelay(0);
-                        event.getPlayer().world.addEntity(entityItem);
+                        ItemEntity entityItem = new ItemEntity(event.getPlayer().level, event.getPlayer().getX(), event.getPlayer().getY(), event.getPlayer().getZ(), new ItemStack(ActuallyItems.ITEM_BOOKLET.get()));
+                        entityItem.setPickUpDelay(0);
+                        event.getPlayer().level.addFreshEntity(entityItem);
                     }
                 }
             }

@@ -36,19 +36,19 @@ public class RenderReconstructorLens extends TileEntityRenderer<TileEntityAtomic
             return;
         }
 
-        matrices.push();
+        matrices.pushPose();
         matrices.translate(0.5F, 0.5F, 0.5F);
-        matrices.rotate(new Quaternion(180F, 0.0F, 0.0F, 1.0F));
+        matrices.mulPose(new Quaternion(180F, 0.0F, 0.0F, 1.0F));
 
-        BlockState state = tile.getWorld().getBlockState(tile.getPos());
+        BlockState state = tile.getLevel().getBlockState(tile.getBlockPos());
         int meta = 0; //state.getBlock().getMetaFromState(state); // TODO: [port][fix] this needs to be checking direction not meta
         if (meta == 0) {
             matrices.translate(0F, -0.5F, 0F);
-            matrices.rotate(new Quaternion(90F, 1F, 0F, 0F));
+            matrices.mulPose(new Quaternion(90F, 1F, 0F, 0F));
         }
         if (meta == 1) {
             matrices.translate(0F, -1.5F - 0.5F / 16F, 0F);
-            matrices.rotate(new Quaternion(90F, 1F, 0F, 0F));
+            matrices.mulPose(new Quaternion(90F, 1F, 0F, 0F));
         }
         if (meta == 2) {
             matrices.translate(0F, -1F, 0F);
@@ -61,17 +61,17 @@ public class RenderReconstructorLens extends TileEntityRenderer<TileEntityAtomic
         if (meta == 4) {
             matrices.translate(0F, -1F, 0F);
             matrices.translate(0.5F + 0.5F / 16F, 0F, 0F);
-            matrices.rotate(new Quaternion(90F, 0F, 1F, 0F));
+            matrices.mulPose(new Quaternion(90F, 0F, 1F, 0F));
         }
         if (meta == 5) {
             matrices.translate(0F, -1F, 0F);
             matrices.translate(-0.5F, 0F, 0F);
-            matrices.rotate(new Quaternion(90F, 0F, 1F, 0F));
+            matrices.mulPose(new Quaternion(90F, 0F, 1F, 0F));
         }
 
         matrices.scale(0.5F, 0.5F, 0.5F);
         AssetUtil.renderItemInWorld(stack, combinedLight, combinedOverlay, matrices, buffer);
 
-        matrices.pop();
+        matrices.popPose();
     }
 }

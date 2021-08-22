@@ -39,24 +39,24 @@ public class BlockPlayerInterface extends BlockContainerBase implements IHudDisp
     }
 
     @Override
-    public TileEntity createNewTileEntity(IBlockReader worldIn) {
+    public TileEntity newBlockEntity(IBlockReader worldIn) {
         return new TileEntityPlayerInterface();
     }
 
     @Override
-    public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, LivingEntity player, ItemStack stack) {
-        TileEntity tile = world.getTileEntity(pos);
+    public void setPlacedBy(World world, BlockPos pos, BlockState state, LivingEntity player, ItemStack stack) {
+        TileEntity tile = world.getBlockEntity(pos);
         if (tile instanceof TileEntityPlayerInterface) {
             TileEntityPlayerInterface face = (TileEntityPlayerInterface) tile;
             if (face.connectedPlayer == null) {
-                face.connectedPlayer = player.getUniqueID();
+                face.connectedPlayer = player.getUUID();
                 face.playerName = player.getName().getString();
-                face.markDirty();
+                face.setChanged();
                 face.sendUpdate();
             }
         }
 
-        super.onBlockPlacedBy(world, pos, state, player, stack);
+        super.setPlacedBy(world, pos, state, player, stack);
     }
 
     @Override
@@ -66,15 +66,15 @@ public class BlockPlayerInterface extends BlockContainerBase implements IHudDisp
             return;
         }
 
-        TileEntity tile = minecraft.world.getTileEntity(((BlockRayTraceResult) rayCast).getPos());
+        TileEntity tile = minecraft.level.getBlockEntity(((BlockRayTraceResult) rayCast).getBlockPos());
         if (tile != null) {
             if (tile instanceof TileEntityPlayerInterface) {
                 TileEntityPlayerInterface face = (TileEntityPlayerInterface) tile;
                 String name = face.playerName == null
                     ? "Unknown"
                     : face.playerName;
-                minecraft.fontRenderer.drawStringWithShadow(matrices, "Bound to: " + TextFormatting.RED + name, resolution.getScaledWidth() / 2f + 5, resolution.getScaledHeight() / 2f + 5, StringUtil.DECIMAL_COLOR_WHITE);
-                minecraft.fontRenderer.drawStringWithShadow(matrices, "UUID: " + TextFormatting.DARK_GREEN + face.connectedPlayer, resolution.getScaledWidth() / 2f + 5, resolution.getScaledHeight() / 2f + 15, StringUtil.DECIMAL_COLOR_WHITE);
+                minecraft.font.drawShadow(matrices, "Bound to: " + TextFormatting.RED + name, resolution.getGuiScaledWidth() / 2f + 5, resolution.getGuiScaledHeight() / 2f + 5, StringUtil.DECIMAL_COLOR_WHITE);
+                minecraft.font.drawShadow(matrices, "UUID: " + TextFormatting.DARK_GREEN + face.connectedPlayer, resolution.getGuiScaledWidth() / 2f + 5, resolution.getGuiScaledHeight() / 2f + 15, StringUtil.DECIMAL_COLOR_WHITE);
             }
         }
     }

@@ -37,11 +37,11 @@ public class PageEmpowerer extends BookletPage {
         super(localizationKey);
         this.recipe = recipe;
         if (recipe != null) {
-            this.inputs = recipe.getInput().getMatchingStacks();
-            this.stand1 = recipe.getStandOne().getMatchingStacks();
-            this.stand2 = recipe.getStandTwo().getMatchingStacks();
-            this.stand3 = recipe.getStandThree().getMatchingStacks();
-            this.stand4 = recipe.getStandFour().getMatchingStacks();
+            this.inputs = recipe.getInput().getItems();
+            this.stand1 = recipe.getStandOne().getItems();
+            this.stand2 = recipe.getStandTwo().getItems();
+            this.stand3 = recipe.getStandThree().getItems();
+            this.stand4 = recipe.getStandFour().getItems();
         }
     }
 
@@ -50,7 +50,7 @@ public class PageEmpowerer extends BookletPage {
     public void drawScreenPre(GuiBookletBase gui, int startX, int startY, int mouseX, int mouseY, float partialTicks) {
         super.drawScreenPre(gui, startX, startY, mouseX, mouseY, partialTicks);
 
-        gui.getMinecraft().getTextureManager().bindTexture(GuiBooklet.RES_LOC_GADGETS);
+        gui.getMinecraft().getTextureManager().bind(GuiBooklet.RES_LOC_GADGETS);
         GuiUtils.drawTexturedModalRect(startX + 5, startY + 10, 117, 74, 116, 72, 0);
 
         gui.renderScaledAsciiString("(" + StringUtil.localize("booklet." + ActuallyAdditions.MODID + ".empowererRecipe") + ")", startX + 6, startY + 85, 0, false, gui.getMediumFontSize());

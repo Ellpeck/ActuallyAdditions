@@ -31,7 +31,7 @@ public class ContainerCoffeeMachine extends Container {
     public final TileEntityCoffeeMachine machine;
 
     public static ContainerCoffeeMachine fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
-        return new ContainerCoffeeMachine(windowId, inv, (TileEntityCoffeeMachine) Objects.requireNonNull(inv.player.world.getTileEntity(data.readBlockPos())));
+        return new ContainerCoffeeMachine(windowId, inv, (TileEntityCoffeeMachine) Objects.requireNonNull(inv.player.level.getBlockEntity(data.readBlockPos())));
     }
 
     public ContainerCoffeeMachine(int windowId, PlayerInventory inventory, TileEntityCoffeeMachine tile) {
@@ -59,58 +59,58 @@ public class ContainerCoffeeMachine extends Container {
     }
 
     @Override
-    public ItemStack transferStackInSlot(PlayerEntity player, int slot) {
+    public ItemStack quickMoveStack(PlayerEntity player, int slot) {
         int inventoryStart = 11;
         int inventoryEnd = inventoryStart + 26;
         int hotbarStart = inventoryEnd + 1;
         int hotbarEnd = hotbarStart + 8;
 
-        Slot theSlot = this.inventorySlots.get(slot);
+        Slot theSlot = this.slots.get(slot);
 
-        if (theSlot != null && theSlot.getHasStack()) {
-            ItemStack newStack = theSlot.getStack();
+        if (theSlot != null && theSlot.hasItem()) {
+            ItemStack newStack = theSlot.getItem();
             ItemStack currentStack = newStack.copy();
 
             //Slots in Inventory to shift from
             if (slot == TileEntityCoffeeMachine.SLOT_OUTPUT) {
-                if (!this.mergeItemStack(newStack, inventoryStart, hotbarEnd + 1, true)) {
+                if (!this.moveItemStackTo(newStack, inventoryStart, hotbarEnd + 1, true)) {
                     return StackUtil.getEmpty();
                 }
-                theSlot.onSlotChange(newStack, currentStack);
+                theSlot.onQuickCraft(newStack, currentStack);
             }
             //Other Slots in Inventory excluded
             else if (slot >= inventoryStart) {
                 //Shift from Inventory
                 if (newStack.getItem() == ActuallyItems.COFFEE_CUP.get()) {
-                    if (!this.mergeItemStack(newStack, TileEntityCoffeeMachine.SLOT_INPUT, TileEntityCoffeeMachine.SLOT_INPUT + 1, false)) {
+                    if (!this.moveItemStackTo(newStack, TileEntityCoffeeMachine.SLOT_INPUT, TileEntityCoffeeMachine.SLOT_INPUT + 1, false)) {
                         return StackUtil.getEmpty();
                     }
                 } else if (ItemCoffee.getIngredientFromStack(newStack) != null) {
-                    if (!this.mergeItemStack(newStack, 3, 11, false)) {
+                    if (!this.moveItemStackTo(newStack, 3, 11, false)) {
                         return StackUtil.getEmpty();
                     }
                 } else if (ActuallyTags.Items.COFFEE_BEANS.contains(newStack.getItem())) {
-                    if (!this.mergeItemStack(newStack, TileEntityCoffeeMachine.SLOT_COFFEE_BEANS, TileEntityCoffeeMachine.SLOT_COFFEE_BEANS + 1, false)) {
+                    if (!this.moveItemStackTo(newStack, TileEntityCoffeeMachine.SLOT_COFFEE_BEANS, TileEntityCoffeeMachine.SLOT_COFFEE_BEANS + 1, false)) {
                         return StackUtil.getEmpty();
                     }
                 }
                 //
 
                 else if (slot >= inventoryStart && slot <= inventoryEnd) {
-                    if (!this.mergeItemStack(newStack, hotbarStart, hotbarEnd + 1, false)) {
+                    if (!this.moveItemStackTo(newStack, hotbarStart, hotbarEnd + 1, false)) {
                         return StackUtil.getEmpty();
                     }
-                } else if (slot >= inventoryEnd + 1 && slot < hotbarEnd + 1 && !this.mergeItemStack(newStack, inventoryStart, inventoryEnd + 1, false)) {
+                } else if (slot >= inventoryEnd + 1 && slot < hotbarEnd + 1 && !this.moveItemStackTo(newStack, inventoryStart, inventoryEnd + 1, false)) {
                     return StackUtil.getEmpty();
                 }
-            } else if (!this.mergeItemStack(newStack, inventoryStart, hotbarEnd + 1, false)) {
+            } else if (!this.moveItemStackTo(newStack, inventoryStart, hotbarEnd + 1, false)) {
                 return StackUtil.getEmpty();
             }
 
             if (!StackUtil.isValid(newStack)) {
-                theSlot.putStack(StackUtil.getEmpty());
+                theSlot.set(StackUtil.getEmpty());
             } else {
-                theSlot.onSlotChanged();
+                theSlot.setChanged();
             }
 
             if (newStack.getCount() == currentStack.getCount()) {
@@ -124,7 +124,7 @@ public class ContainerCoffeeMachine extends Container {
     }
 
     @Override
-    public boolean canInteractWith(PlayerEntity player) {
+    public boolean stillValid(PlayerEntity player) {
         return this.machine.canPlayerUse(player);
     }
 }

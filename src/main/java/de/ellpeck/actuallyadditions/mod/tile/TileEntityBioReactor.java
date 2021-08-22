@@ -36,6 +36,8 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
+
 public class TileEntityBioReactor extends TileEntityInventoryBase implements INamedContainerProvider, ISharingEnergyProvider {
 
     public final CustomEnergyStorage storage = new CustomEnergyStorage(200000, 0, 800);
@@ -55,10 +57,10 @@ public class TileEntityBioReactor extends TileEntityInventoryBase implements INa
     public static boolean isValidItem(ItemStack stack) {
         if (StackUtil.isValid(stack)) {
             Item item = stack.getItem();
-            if (item.isFood()) {
+            if (item.isEdible()) {
                 return true;
             } else if (item instanceof BlockItem) {
-                return isValid(Block.getBlockFromItem(item));
+                return isValid(Block.byItem(item));
             }
         }
         return false;
@@ -91,7 +93,7 @@ public class TileEntityBioReactor extends TileEntityInventoryBase implements INa
                     }
                 }
 
-                this.markDirty();
+                this.setChanged();
             }
 
             if (types != null && !types.isEmpty()) {

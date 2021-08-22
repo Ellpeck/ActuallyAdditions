@@ -18,7 +18,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 
 public class DamageSources extends DamageSource {
 
-    public static final DamageSource DAMAGE_ATOMIC_RECONSTRUCTOR = new DamageSources("atomicReconstructor", 5).setDamageBypassesArmor();
+    public static final DamageSource DAMAGE_ATOMIC_RECONSTRUCTOR = new DamageSources("atomicReconstructor", 5).bypassArmor();
 
     private final int messageCount;
 
@@ -28,8 +28,8 @@ public class DamageSources extends DamageSource {
     }
 
     @Override
-    public ITextComponent getDeathMessage(LivingEntity entity) {
-        String locTag = "death." + ActuallyAdditions.MODID + "." + this.damageType + "." + (entity.world.rand.nextInt(this.messageCount) + 1);
+    public ITextComponent getLocalizedDeathMessage(LivingEntity entity) {
+        String locTag = "death." + ActuallyAdditions.MODID + "." + this.msgId + "." + (entity.level.random.nextInt(this.messageCount) + 1);
         return new TranslationTextComponent(locTag, entity.getName());
     }
 }

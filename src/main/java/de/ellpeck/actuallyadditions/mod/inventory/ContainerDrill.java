@@ -42,7 +42,7 @@ public class ContainerDrill extends Container {
         for (int i = 0; i < SLOT_AMOUNT; i++) {
             this.addSlot(new SlotItemHandlerUnconditioned(this.drillInventory, i, 44 + i * 18, 19) {
                 @Override
-                public boolean isItemValid(ItemStack stack) {
+                public boolean mayPlace(ItemStack stack) {
                     return stack.getItem() instanceof ItemDrillUpgrade;
                 }
             });
@@ -54,57 +54,57 @@ public class ContainerDrill extends Container {
             }
         }
         for (int i = 0; i < 9; i++) {
-            if (i == inventory.currentItem) {
+            if (i == inventory.selected) {
                 this.addSlot(new SlotImmovable(inventory, i, 8 + i * 18, 116));
             } else {
                 this.addSlot(new Slot(inventory, i, 8 + i * 18, 116));
             }
         }
 
-        ItemStack stack = inventory.getCurrentItem();
+        ItemStack stack = inventory.getSelected();
         if (StackUtil.isValid(stack) && stack.getItem() instanceof ItemDrill) {
-            ItemDrill.loadSlotsFromNBT(this.drillInventory, inventory.getCurrentItem());
+            ItemDrill.loadSlotsFromNBT(this.drillInventory, inventory.getSelected());
         }
     }
 
     @Override
-    public ItemStack transferStackInSlot(PlayerEntity player, int slot) {
+    public ItemStack quickMoveStack(PlayerEntity player, int slot) {
         int inventoryStart = 5;
         int inventoryEnd = inventoryStart + 26;
         int hotbarStart = inventoryEnd + 1;
         int hotbarEnd = hotbarStart + 8;
 
-        Slot theSlot = this.inventorySlots.get(slot);
+        Slot theSlot = this.slots.get(slot);
 
-        if (theSlot != null && theSlot.getHasStack()) {
-            ItemStack newStack = theSlot.getStack();
+        if (theSlot != null && theSlot.hasItem()) {
+            ItemStack newStack = theSlot.getItem();
             ItemStack currentStack = newStack.copy();
 
             //Other Slots in Inventory excluded
             if (slot >= inventoryStart) {
                 //Shift from Inventory
                 if (newStack.getItem() instanceof ItemDrillUpgrade) {
-                    if (!this.mergeItemStack(newStack, 0, 5, false)) {
+                    if (!this.moveItemStackTo(newStack, 0, 5, false)) {
                         return StackUtil.getEmpty();
                     }
                 }
                 //
 
                 else if (slot >= inventoryStart && slot <= inventoryEnd) {
-                    if (!this.mergeItemStack(newStack, hotbarStart, hotbarEnd + 1, false)) {
+                    if (!this.moveItemStackTo(newStack, hotbarStart, hotbarEnd + 1, false)) {
                         return StackUtil.getEmpty();
                     }
-                } else if (slot >= inventoryEnd + 1 && slot < hotbarEnd + 1 && !this.mergeItemStack(newStack, inventoryStart, inventoryEnd + 1, false)) {
+                } else if (slot >= inventoryEnd + 1 && slot < hotbarEnd + 1 && !this.moveItemStackTo(newStack, inventoryStart, inventoryEnd + 1, false)) {
                     return StackUtil.getEmpty();
                 }
-            } else if (!this.mergeItemStack(newStack, inventoryStart, hotbarEnd + 1, false)) {
+            } else if (!this.moveItemStackTo(newStack, inventoryStart, hotbarEnd + 1, false)) {
                 return StackUtil.getEmpty();
             }
 
             if (!StackUtil.isValid(newStack)) {
-                theSlot.putStack(StackUtil.getEmpty());
+                theSlot.set(StackUtil.getEmpty());
             } else {
-                theSlot.onSlotChanged();
+                theSlot.setChanged();
             }
 
             if (newStack.getCount() == currentStack.getCount()) {
@@ -118,25 +118,25 @@ public class ContainerDrill extends Container {
     }
 
     @Override
-    public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player) {
-        if (clickTypeIn == ClickType.SWAP && dragType == this.inventory.currentItem) {
+    public ItemStack clicked(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player) {
+        if (clickTypeIn == ClickType.SWAP && dragType == this.inventory.selected) {
             return ItemStack.EMPTY;
         } else {
-            return super.slotClick(slotId, dragType, clickTypeIn, player);
+            return super.clicked(slotId, dragType, clickTypeIn, player);
         }
     }
 
     @Override
-    public void onContainerClosed(PlayerEntity player) {
-        ItemStack stack = this.inventory.getCurrentItem();
+    public void removed(PlayerEntity player) {
+        ItemStack stack = this.inventory.getSelected();
         if (StackUtil.isValid(stack) && stack.getItem() instanceof ItemDrill) {
-            ItemDrill.writeSlotsToNBT(this.drillInventory, this.inventory.getCurrentItem());
+            ItemDrill.writeSlotsToNBT(this.drillInventory, this.inventory.getSelected());
         }
-        super.onContainerClosed(player);
+        super.removed(player);
     }
 
     @Override
-    public boolean canInteractWith(PlayerEntity player) {
+    public boolean stillValid(PlayerEntity player) {
         return true;
     }
 }

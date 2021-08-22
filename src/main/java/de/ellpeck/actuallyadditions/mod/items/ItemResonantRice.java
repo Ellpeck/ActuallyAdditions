@@ -25,12 +25,12 @@ public class ItemResonantRice extends ItemBase {
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
-        ItemStack stack = player.getHeldItem(hand);
-        if (!world.isRemote) {
+    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+        ItemStack stack = player.getItemInHand(hand);
+        if (!world.isClientSide) {
             stack.shrink(1);
-            world.createExplosion(null, player.getPosX(), player.getPosY(), player.getPosZ(), 0.5F, Explosion.Mode.DESTROY);
+            world.explode(null, player.getX(), player.getY(), player.getZ(), 0.5F, Explosion.Mode.DESTROY);
         }
-        return ActionResult.resultSuccess(stack);
+        return ActionResult.success(stack);
     }
 }

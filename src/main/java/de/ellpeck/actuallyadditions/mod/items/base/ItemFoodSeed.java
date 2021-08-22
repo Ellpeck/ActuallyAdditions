@@ -46,6 +46,6 @@ public class ItemFoodSeed extends ItemSeedFood {
 
     @Override
     public BlockState getPlant(IBlockAccess world, BlockPos pos) {
-        return this.plant.getDefaultState();
+        return this.plant.defaultBlockState();
     }
 }

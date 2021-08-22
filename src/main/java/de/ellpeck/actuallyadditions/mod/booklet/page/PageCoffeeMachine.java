@@ -33,7 +33,7 @@ public class PageCoffeeMachine extends BookletPage {
     public PageCoffeeMachine(int localizationKey, CoffeeIngredient ingredient) {
         super(localizationKey);
         this.ingredient = ingredient;
-        this.stacks = ingredient.getInput().getMatchingStacks();
+        this.stacks = ingredient.getInput().getItems();
 
         this.outcome = new ItemStack(ActuallyItems.COFFEE.get());
         ActuallyAdditionsAPI.methodHandler.addEffectToStack(this.outcome, this.ingredient);
@@ -44,7 +44,7 @@ public class PageCoffeeMachine extends BookletPage {
     public void drawScreenPre(GuiBookletBase gui, int startX, int startY, int mouseX, int mouseY, float partialTicks) {
         super.drawScreenPre(gui, startX, startY, mouseX, mouseY, partialTicks);
 
-        gui.getMinecraft().getTextureManager().bindTexture(GuiBooklet.RES_LOC_GADGETS);
+        gui.getMinecraft().getTextureManager().bind(GuiBooklet.RES_LOC_GADGETS);
         GuiUtils.drawTexturedModalRect(startX + 5, startY + 10, 0, 74, 117, 72, 0);
 
         gui.renderScaledAsciiString("(Coffee Maker Recipe)", startX + 6, startY + 78, 0, false, gui.getMediumFontSize());

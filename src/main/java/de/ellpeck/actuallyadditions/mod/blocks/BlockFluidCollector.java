@@ -34,14 +34,14 @@ public class BlockFluidCollector extends FullyDirectionalBlock.Container {
     }
 
     @Override
-    public TileEntity createNewTileEntity(IBlockReader worldIn) {
+    public TileEntity newBlockEntity(IBlockReader worldIn) {
         return this.isPlacer
             ? new TileEntityFluidPlacer()
             : new TileEntityFluidCollector();
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (this.tryToggleRedstone(world, pos, player)) {
             return ActionResultType.PASS;
         }
@@ -51,7 +51,7 @@ public class BlockFluidCollector extends FullyDirectionalBlock.Container {
 
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        switch (state.get(FACING)) {
+        switch (state.getValue(FACING)) {
             case UP:
                 return Shapes.FluidCollectorShapes.SHAPE_U;
             case DOWN:

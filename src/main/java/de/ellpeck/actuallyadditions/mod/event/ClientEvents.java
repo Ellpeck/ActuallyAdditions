@@ -41,8 +41,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 @OnlyIn(Dist.CLIENT)
 public class ClientEvents {
 
-    private static final ITextComponent ADVANCED_INFO_TEXT_PRE = new StringTextComponent("  -").mergeStyle(TextFormatting.DARK_GRAY);
-    private static final ITextComponent ADVANCED_INFO_HEADER_PRE = new StringTextComponent("  -").mergeStyle(TextFormatting.GRAY);
+    private static final ITextComponent ADVANCED_INFO_TEXT_PRE = new StringTextComponent("  -").withStyle(TextFormatting.DARK_GRAY);
+    private static final ITextComponent ADVANCED_INFO_HEADER_PRE = new StringTextComponent("  -").withStyle(TextFormatting.GRAY);
 
     private static EnergyDisplay energyDisplay;
 
@@ -52,7 +52,7 @@ public class ClientEvents {
         if (event.phase == TickEvent.Phase.END) {
             Minecraft mc = Minecraft.getInstance();
 
-            if (mc.world == null) {
+            if (mc.level == null) {
                 WorldData.clear();
             }
         }
@@ -162,15 +162,15 @@ public class ClientEvents {
     @SubscribeEvent
     public void onGameOverlay(RenderGameOverlayEvent.Post event) {
         Minecraft minecraft = Minecraft.getInstance();
-        if (event.getType() == RenderGameOverlayEvent.ElementType.ALL && minecraft.currentScreen == null) {
+        if (event.getType() == RenderGameOverlayEvent.ElementType.ALL && minecraft.screen == null) {
             PlayerEntity player = minecraft.player;
             if (player == null) {
                 return;
             }
 
-            RayTraceResult posHit = minecraft.objectMouseOver;
-            FontRenderer font = minecraft.fontRenderer;
-            ItemStack stack = player.getHeldItemMainhand();
+            RayTraceResult posHit = minecraft.hitResult;
+            FontRenderer font = minecraft.font;
+            ItemStack stack = player.getMainHandItem();
 
             if (StackUtil.isValid(stack)) {
                 if (stack.getItem() instanceof IHudDisplay) {
@@ -180,8 +180,8 @@ public class ClientEvents {
 
             if (posHit != null && posHit.getType() == RayTraceResult.Type.BLOCK) {
                 BlockRayTraceResult rayCast = (BlockRayTraceResult) posHit;
-                Block blockHit = minecraft.world.getBlockState(rayCast.getPos()).getBlock();
-                TileEntity tileHit = minecraft.world.getTileEntity(rayCast.getPos());
+                Block blockHit = minecraft.level.getBlockState(rayCast.getBlockPos()).getBlock();
+                TileEntity tileHit = minecraft.level.getBlockEntity(rayCast.getBlockPos());
 
                 if (blockHit instanceof IHudDisplay) {
                     ((IHudDisplay) blockHit).displayHud(event.getMatrixStack(), minecraft, player, stack, posHit, event.getWindow());
@@ -193,30 +193,30 @@ public class ClientEvents {
                         String strg = String.format("%s: %s", StringUtil.localize("info." + ActuallyAdditions.MODID + ".redstoneMode.name"), TextFormatting.DARK_RED + StringUtil.localize("info." + ActuallyAdditions.MODID + ".redstoneMode." + (base.isPulseMode
                             ? "pulse"
                             : "deactivation")) + TextFormatting.RESET);
-                        font.drawStringWithShadow(event.getMatrixStack(), strg, event.getWindow().getScaledWidth() / 2f + 5, event.getWindow().getScaledHeight() / 2f + 5, StringUtil.DECIMAL_COLOR_WHITE);
+                        font.drawShadow(event.getMatrixStack(), strg, event.getWindow().getGuiScaledWidth() / 2f + 5, event.getWindow().getGuiScaledHeight() / 2f + 5, StringUtil.DECIMAL_COLOR_WHITE);
 
                         String expl;
                         if (StackUtil.isValid(stack) && stack.getItem() == ConfigValues.itemRedstoneTorchConfigurator) {
                             expl = TextFormatting.GREEN + StringUtil.localize("info." + ActuallyAdditions.MODID + ".redstoneMode.validItem");
                         } else {
-                            expl = TextFormatting.GRAY.toString() + TextFormatting.ITALIC + StringUtil.localizeFormatted("info." + ActuallyAdditions.MODID + ".redstoneMode.invalidItem", StringUtil.localize(ConfigValues.itemRedstoneTorchConfigurator.getTranslationKey() + ".name"));
+                            expl = TextFormatting.GRAY.toString() + TextFormatting.ITALIC + StringUtil.localizeFormatted("info." + ActuallyAdditions.MODID + ".redstoneMode.invalidItem", StringUtil.localize(ConfigValues.itemRedstoneTorchConfigurator.getDescriptionId() + ".name"));
                         }
-                        font.drawStringWithShadow(event.getMatrixStack(), expl, event.getWindow().getScaledWidth() / 2f + 5, event.getWindow().getScaledHeight() / 2f + 15, StringUtil.DECIMAL_COLOR_WHITE);
+                        font.drawShadow(event.getMatrixStack(), expl, event.getWindow().getGuiScaledWidth() / 2f + 5, event.getWindow().getGuiScaledHeight() / 2f + 15, StringUtil.DECIMAL_COLOR_WHITE);
                     }
                 }
 
                 if (tileHit instanceof IEnergyDisplay) {
                     IEnergyDisplay display = (IEnergyDisplay) tileHit;
-                    if (!display.needsHoldShift() || player.isSneaking()) {
+                    if (!display.needsHoldShift() || player.isShiftKeyDown()) {
                         if (energyDisplay == null) {
                             energyDisplay = new EnergyDisplay(0, 0, null);
                         }
-                        energyDisplay.setData(2, event.getWindow().getScaledHeight() - 96, display.getEnergyStorage(), true, true);
+                        energyDisplay.setData(2, event.getWindow().getGuiScaledHeight() - 96, display.getEnergyStorage(), true, true);
 
-                        GlStateManager.pushMatrix();
-                        GlStateManager.color4f(1F, 1F, 1F, 1F);
+                        GlStateManager._pushMatrix();
+                        GlStateManager._color4f(1F, 1F, 1F, 1F);
                         energyDisplay.draw();
-                        GlStateManager.popMatrix();
+                        GlStateManager._popMatrix();
                     }
                 }
             }

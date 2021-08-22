@@ -37,54 +37,54 @@ public class ParticleLaserItem extends Particle {
     }
 
     public ParticleLaserItem(ClientWorld world, double posX, double posY, double posZ, ItemStack stack, double motionY, double otherX, double otherY, double otherZ) {
-        super(world, posX + (world.rand.nextDouble() - 0.5) / 8, posY, posZ + (world.rand.nextDouble() - 0.5) / 8);
+        super(world, posX + (world.random.nextDouble() - 0.5) / 8, posY, posZ + (world.random.nextDouble() - 0.5) / 8);
         this.stack = stack;
         this.otherX = otherX;
         this.otherY = otherY;
         this.otherZ = otherZ;
 
-        this.motionX = 0;
-        this.motionY = motionY;
-        this.motionZ = 0;
+        this.xd = 0;
+        this.yd = motionY;
+        this.zd = 0;
 
-        this.maxAge = 10;
-        this.canCollide = false;
+        this.lifetime = 10;
+        this.hasPhysics = false;
     }
 
     @Override
-    public void setExpired() {
-        super.setExpired();
+    public void remove() {
+        super.remove();
 
         if (this.otherX != 0 || this.otherY != 0 || this.otherZ != 0) {
-            Particle fx = new ParticleLaserItem(this.world, this.otherX, this.otherY, this.otherZ, this.stack, -0.025);
-            Minecraft.getInstance().particles.addEffect(fx);
+            Particle fx = new ParticleLaserItem(this.level, this.otherX, this.otherY, this.otherZ, this.stack, -0.025);
+            Minecraft.getInstance().particleEngine.add(fx);
         }
     }
 
     @Override
-    public void renderParticle(IVertexBuilder buffer, ActiveRenderInfo renderInfo, float partialTicks) {
+    public void render(IVertexBuilder buffer, ActiveRenderInfo renderInfo, float partialTicks) {
         RenderSystem.pushMatrix();
-        RenderHelper.enableStandardItemLighting();
+        RenderHelper.turnBackOn();
 
-        Vector3d cam = renderInfo.getProjectedView();
-        RenderSystem.translated(this.posX - cam.getX(), this.posY - cam.getY(), this.posZ - cam.getZ());
+        Vector3d cam = renderInfo.getPosition();
+        RenderSystem.translated(this.x - cam.x(), this.y - cam.y(), this.z - cam.z());
         RenderSystem.scalef(0.3F, 0.3F, 0.3F);
 
-        double boop = Util.milliTime() / 600D;
+        double boop = Util.getMillis() / 600D;
         RenderSystem.rotatef((float) (boop * 40D % 360), 0, 1, 0);
 
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA.param, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA.param, GlStateManager.SourceFactor.ONE.param, GlStateManager.DestFactor.ZERO.param);
+        RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA.value, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA.value, GlStateManager.SourceFactor.ONE.value, GlStateManager.DestFactor.ZERO.value);
 
-        float ageRatio = (float) this.age / (float) this.maxAge;
-        float color = this.motionY < 0
+        float ageRatio = (float) this.age / (float) this.lifetime;
+        float color = this.yd < 0
             ? 1F - ageRatio
             : ageRatio;
         GL14.glBlendColor(color, color, color, color);
 
         AssetUtil.renderItemWithoutScrewingWithColors(this.stack);
 
-        RenderHelper.disableStandardItemLighting();
+        RenderHelper.turnOff();
         RenderSystem.popMatrix();
     }
 

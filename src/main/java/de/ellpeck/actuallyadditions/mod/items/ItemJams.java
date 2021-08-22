@@ -46,10 +46,10 @@ public class ItemJams extends ItemFoodBase implements IColorProvidingItem {
     }
 
     @Override
-    public String getTranslationKey(ItemStack stack) {
+    public String getDescriptionId(ItemStack stack) {
         return stack.getItemDamage() >= ALL_JAMS.length
             ? StringUtil.BUGGED_ITEM_NAME
-            : this.getTranslationKey() + "_" + ALL_JAMS[stack.getItemDamage()].name;
+            : this.getDescriptionId() + "_" + ALL_JAMS[stack.getItemDamage()].name;
     }
 
     @Override
@@ -71,9 +71,9 @@ public class ItemJams extends ItemFoodBase implements IColorProvidingItem {
 
     @Override
     public ItemStack onItemUseFinish(ItemStack stack, World world, EntityLivingBase player) {
-        ItemStack stackToReturn = super.onItemUseFinish(stack, world, player);
+        ItemStack stackToReturn = super.finishUsingItem(stack, world, player);
 
-        if (player instanceof PlayerEntity && !world.isRemote && stack.getItemDamage() < ALL_JAMS.length) {
+        if (player instanceof PlayerEntity && !world.isClientSide && stack.getItemDamage() < ALL_JAMS.length) {
             PotionEffect firstEffectToGet = new PotionEffect(Potion.getPotionById(ALL_JAMS[stack.getItemDamage()].firstEffectToGet), 200);
             player.addPotionEffect(firstEffectToGet);
 
@@ -81,9 +81,9 @@ public class ItemJams extends ItemFoodBase implements IColorProvidingItem {
             player.addPotionEffect(secondEffectToGet);
 
             ItemStack returnItem = new ItemStack(Items.GLASS_BOTTLE);
-            if (!((PlayerEntity) player).inventory.addItemStackToInventory(returnItem.copy())) {
+            if (!((PlayerEntity) player).inventory.add(returnItem.copy())) {
                 ItemEntity entityItem = new ItemEntity(player.world, player.posX, player.posY, player.posZ, returnItem.copy());
-                entityItem.setPickupDelay(0);
+                entityItem.setPickUpDelay(0);
                 player.world.addEntity(entityItem);
             }
         }

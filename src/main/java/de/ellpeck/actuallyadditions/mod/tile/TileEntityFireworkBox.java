@@ -36,6 +36,8 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
+
 public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisplay, INumberReactor, INamedContainerProvider {
 
     public static final int USE_PER_SHOT = 500;
@@ -152,9 +154,9 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisp
         double newX = x + this.getRandomAoe();
         double newZ = z + this.getRandomAoe();
 
-        if (world.isBlockLoaded(new BlockPos(newX, y, newZ))) {
+        if (world.hasChunkAt(new BlockPos(newX, y, newZ))) {
             FireworkRocketEntity rocket = new FireworkRocketEntity(world, newX, y + 1, newZ, firework);
-            world.addEntity(rocket);
+            world.addFreshEntity(rocket);
         }
     }
 
@@ -162,7 +164,7 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisp
         if (this.areaOfEffect <= 0) {
             return 0.5;
         } else {
-            return MathHelper.nextDouble(this.world.rand, 0, this.areaOfEffect * 2) - this.areaOfEffect;
+            return MathHelper.nextDouble(this.level.random, 0, this.areaOfEffect * 2) - this.areaOfEffect;
         }
     }
 
@@ -188,8 +190,8 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisp
     private CompoundNBT makeFireworkCharge() {
         CompoundNBT compound = new CompoundNBT();
 
-        if (this.world.rand.nextFloat() <= this.trailOrFlickerChance) {
-            if (this.world.rand.nextFloat() <= this.flickerChance) {
+        if (this.level.random.nextFloat() <= this.trailOrFlickerChance) {
+            if (this.level.random.nextFloat() <= this.flickerChance) {
                 compound.putBoolean("Flicker", true);
             } else {
                 compound.putBoolean("Trail", true);
@@ -199,7 +201,7 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisp
         // TODO: [port] Validate this is the correct way to get colors
         int[] colors = new int[this.getRandomWithPlay(this.colorAmount)];
         for (int i = 0; i < colors.length; i++) {
-            colors[i] = DyeColor.values()[this.world.rand.nextInt(DyeColor.values().length)].getColorValue();
+            colors[i] = DyeColor.values()[this.level.random.nextInt(DyeColor.values().length)].getColorValue();
         }
         compound.putIntArray("Colors", colors);
 
@@ -209,7 +211,7 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisp
     }
 
     private int getRandomWithPlay(int value) {
-        return MathHelper.clamp(MathHelper.nextInt(this.world.rand, value - this.intValuePlay, value + this.intValuePlay), 1, 6);
+        return MathHelper.clamp(MathHelper.nextInt(this.level.random, value - this.intValuePlay, value + this.intValuePlay), 1, 6);
     }
 
     private int getRandomType() {
@@ -225,7 +227,7 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisp
         if (weight <= 0) {
             return 0;
         } else {
-            return WeightedRandom.getRandomItem(this.world.rand, possible, weight).type;
+            return WeightedRandom.getRandomItem(this.level.random, possible, weight).type;
         }
     }
 
@@ -233,7 +235,7 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisp
     public void updateEntity() {
         super.updateEntity();
 
-        if (!this.world.isRemote) {
+        if (!this.level.isClientSide) {
             if (!this.isRedstonePowered && !this.isPulseMode) {
                 if (this.timeUntilNextFirework > 0) {
                     this.timeUntilNextFirework--;
@@ -253,7 +255,7 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisp
 
     private void doWork() {
         if (this.storage.getEnergyStored() >= USE_PER_SHOT) {
-            this.spawnFireworks(this.world, this.pos.getX(), this.pos.getY(), this.pos.getZ());
+            this.spawnFireworks(this.level, this.worldPosition.getX(), this.worldPosition.getY(), this.worldPosition.getZ());
 
             this.storage.extractEnergyInternal(USE_PER_SHOT, false);
         }

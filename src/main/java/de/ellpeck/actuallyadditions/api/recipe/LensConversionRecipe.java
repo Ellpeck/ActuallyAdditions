@@ -26,7 +26,7 @@ public class LensConversionRecipe {
 
     @Deprecated
     public LensConversionRecipe(ItemStack input, ItemStack output, int energy, Lens type) {
-        this(Ingredient.fromStacks(input), output, energy, type);
+        this(Ingredient.of(input), output, energy, type);
     }
 
     public LensConversionRecipe(Ingredient input, ItemStack output, int energy, Lens type) {

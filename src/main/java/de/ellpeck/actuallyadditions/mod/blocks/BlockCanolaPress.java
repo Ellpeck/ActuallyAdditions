@@ -41,14 +41,14 @@ public class BlockCanolaPress extends BlockContainerBase {
 
     @Nullable
     @Override
-    public TileEntity createNewTileEntity(IBlockReader world) {
+    public TileEntity newBlockEntity(IBlockReader world) {
         return new TileEntityCanolaPress();
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-        if (!world.isRemote) {
-            TileEntityCanolaPress tile = (TileEntityCanolaPress) world.getTileEntity(pos);
+    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+        if (!world.isClientSide) {
+            TileEntityCanolaPress tile = (TileEntityCanolaPress) world.getBlockEntity(pos);
             if (tile != null) {
                 if (!this.tryUseItemOnTank(player, hand, tile.tank)) {
                     NetworkHooks.openGui((ServerPlayerEntity) player, tile, pos);
@@ -56,7 +56,7 @@ public class BlockCanolaPress extends BlockContainerBase {
             }
             return ActionResultType.PASS;
         }
-        return super.onBlockActivated(state, world, pos, player, hand, hit);
+        return super.use(state, world, pos, player, hand, hit);
     }
 
     @Override

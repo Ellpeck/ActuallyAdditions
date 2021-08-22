@@ -40,12 +40,12 @@ public class BlockVerticalDigger extends DirectionalBlock.Container implements I
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+    public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         return this.openGui(worldIn, player, pos, TileEntityMiner.class);
     }
 
     @Override
-    public TileEntity createNewTileEntity(IBlockReader world) {
+    public TileEntity newBlockEntity(IBlockReader world) {
         return new TileEntityMiner();
     }
 
@@ -55,21 +55,21 @@ public class BlockVerticalDigger extends DirectionalBlock.Container implements I
         if (!(rayCast instanceof BlockRayTraceResult)) {
             return;
         }
-        TileEntity tile = minecraft.world.getTileEntity(((BlockRayTraceResult) rayCast).getPos());
+        TileEntity tile = minecraft.level.getBlockEntity(((BlockRayTraceResult) rayCast).getBlockPos());
         if (tile instanceof TileEntityMiner) {
             TileEntityMiner miner = (TileEntityMiner) tile;
             String info = miner.checkY == 0
                 ? "Done Mining!"
                 : miner.checkY == -1
                     ? "Calculating positions..."
-                    : "Mining at " + (miner.getPos().getX() + miner.checkX) + ", " + miner.checkY + ", " + (miner.getPos().getZ() + miner.checkZ) + ".";
-            minecraft.fontRenderer.drawStringWithShadow(matrices, info, resolution.getScaledWidth() / 2f + 5, resolution.getScaledHeight() / 2f - 20, StringUtil.DECIMAL_COLOR_WHITE);
+                    : "Mining at " + (miner.getBlockPos().getX() + miner.checkX) + ", " + miner.checkY + ", " + (miner.getBlockPos().getZ() + miner.checkZ) + ".";
+            minecraft.font.drawShadow(matrices, info, resolution.getGuiScaledWidth() / 2f + 5, resolution.getGuiScaledHeight() / 2f - 20, StringUtil.DECIMAL_COLOR_WHITE);
         }
     }
 
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        switch (state.get(FACING)) {
+        switch (state.getValue(FACING)) {
             case NORTH:
                 return Shapes.MinerShapes.SHAPE_N;
             case EAST:

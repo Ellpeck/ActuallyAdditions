@@ -26,7 +26,7 @@ public class TileEntityPhantomEnergyface extends TileEntityPhantomface implement
     @Override
     public boolean isBoundThingInRange() {
         if (super.isBoundThingInRange()) {
-            TileEntity tile = this.world.getTileEntity(this.boundPosition);
+            TileEntity tile = this.level.getBlockEntity(this.boundPosition);
             if (tile != null && !(tile instanceof TileEntityLaserRelayEnergy)) {
                 for (Direction facing : Direction.values()) {
                     if (tile.getCapability(CapabilityEnergy.ENERGY, facing).isPresent()) {

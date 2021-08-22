@@ -29,11 +29,11 @@ public class ItemCrafterOnAStick extends ItemBase {
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
-        if (!world.isRemote) {
+    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+        if (!world.isClientSide) {
             player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.CRAFTER.ordinal(), world, (int) player.posX, (int) player.posY, (int) player.posZ);
         }
-        return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
+        return new ActionResult<>(EnumActionResult.SUCCESS, player.getItemInHand(hand));
     }
 
     @Override

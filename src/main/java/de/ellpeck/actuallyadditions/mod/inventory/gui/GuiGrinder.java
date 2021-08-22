@@ -45,19 +45,19 @@ public class GuiGrinder extends GuiWtfMojang<ContainerGrinder> {
         super(container, inventory);
         this.tileGrinder = container.tileGrinder;
         this.isDouble = container.isDouble;
-        this.xSize = 176;
-        this.ySize = 93 + 86;
+        this.imageWidth = 176;
+        this.imageHeight = 93 + 86;
     }
 
     @Override
     public void init() {
         super.init();
-        this.energy = new EnergyDisplay(this.guiLeft + (this.isDouble
+        this.energy = new EnergyDisplay(this.leftPos + (this.isDouble
             ? 13
-            : 42), this.guiTop + 5, this.tileGrinder.storage);
+            : 42), this.topPos + 5, this.tileGrinder.storage);
 
         if (this.isDouble) {
-            this.buttonAutoSplit = new GuiInputter.SmallerButton(0, this.guiLeft - 10, this.guiTop, "S");
+            this.buttonAutoSplit = new GuiInputter.SmallerButton(0, this.leftPos - 10, this.topPos, "S");
             this.addButton(this.buttonAutoSplit);
         }
     }
@@ -74,7 +74,7 @@ public class GuiGrinder extends GuiWtfMojang<ContainerGrinder> {
         super.tick();
 
         if (this.isDouble) {
-            this.buttonAutoSplit.setMessage(new StringTextComponent("S").mergeStyle(this.tileGrinder.isAutoSplit
+            this.buttonAutoSplit.setMessage(new StringTextComponent("S").withStyle(this.tileGrinder.isAutoSplit
                 ? TextFormatting.DARK_GREEN
                 : TextFormatting.RED));
         }
@@ -94,32 +94,32 @@ public class GuiGrinder extends GuiWtfMojang<ContainerGrinder> {
     }
 
     @Override
-    public void drawGuiContainerForegroundLayer(MatrixStack matrices, int x, int y) {
-        AssetUtil.displayNameString(matrices, this.font, this.xSize, -10, this.tileGrinder);
+    public void renderLabels(MatrixStack matrices, int x, int y) {
+        AssetUtil.displayNameString(matrices, this.font, this.imageWidth, -10, this.tileGrinder);
     }
 
     @Override
-    public void drawGuiContainerBackgroundLayer(MatrixStack matrices, float f, int x, int y) {
+    public void renderBg(MatrixStack matrices, float f, int x, int y) {
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 
-        this.getMinecraft().getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
-        this.blit(matrices, this.guiLeft, this.guiTop + 93, 0, 0, 176, 86);
+        this.getMinecraft().getTextureManager().bind(AssetUtil.GUI_INVENTORY_LOCATION);
+        this.blit(matrices, this.leftPos, this.topPos + 93, 0, 0, 176, 86);
 
-        this.getMinecraft().getTextureManager().bindTexture(this.isDouble
+        this.getMinecraft().getTextureManager().bind(this.isDouble
             ? RES_LOC_DOUBLE
             : RES_LOC);
-        this.blit(matrices, this.guiLeft, this.guiTop, 0, 0, 176, 93);
+        this.blit(matrices, this.leftPos, this.topPos, 0, 0, 176, 93);
 
         if (this.tileGrinder.firstCrushTime > 0) {
             int i = this.tileGrinder.getFirstTimeToScale(23);
-            this.blit(matrices, this.guiLeft + (this.isDouble
+            this.blit(matrices, this.leftPos + (this.isDouble
                 ? 51
-                : 80), this.guiTop + 40, 176, 0, 24, i);
+                : 80), this.topPos + 40, 176, 0, 24, i);
         }
         if (this.isDouble) {
             if (this.tileGrinder.secondCrushTime > 0) {
                 int i = this.tileGrinder.getSecondTimeToScale(23);
-                this.blit(matrices, this.guiLeft + 101, this.guiTop + 40, 176, 22, 24, i);
+                this.blit(matrices, this.leftPos + 101, this.topPos + 40, 176, 22, 24, i);
             }
         }
 

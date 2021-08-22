@@ -51,7 +51,7 @@ public class ItemToolAA extends ToolItem implements IDisableableItem {
     }
 
     @Override
-    public boolean getIsRepairable(ItemStack itemToRepair, ItemStack stack) {
+    public boolean isValidRepairItem(ItemStack itemToRepair, ItemStack stack) {
         if (StackUtil.isValid(this.repairItem)) {
             return ItemUtil.areItemsEqual(this.repairItem, stack, false);
         } else if (this.repairOredict != null) {

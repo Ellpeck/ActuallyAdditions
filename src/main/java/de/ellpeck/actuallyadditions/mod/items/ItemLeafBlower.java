@@ -35,18 +35,18 @@ public class ItemLeafBlower extends ItemBase implements IDisplayStandItem {
     private final boolean isAdvanced;
 
     public ItemLeafBlower(boolean isAdvanced) {
-        super(ActuallyItems.defaultProps().maxStackSize(1));
+        super(ActuallyItems.defaultProps().stacksTo(1));
         this.isAdvanced = isAdvanced;
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
-        player.setActiveHand(hand);
-        return ActionResult.resultSuccess(player.getHeldItem(hand));
+    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+        player.startUsingItem(hand);
+        return ActionResult.success(player.getItemInHand(hand));
     }
 
     @Override
-    public UseAction getUseAction(ItemStack stack) {
+    public UseAction getUseAnimation(ItemStack stack) {
         return UseAction.BOW;
     }
 
@@ -57,16 +57,16 @@ public class ItemLeafBlower extends ItemBase implements IDisplayStandItem {
 
     @Override
     public void onUsingTick(ItemStack stack, LivingEntity player, int count) {
-        this.doUpdate(player.world, MathHelper.floor(player.getPosX()), MathHelper.floor(player.getPosY()), MathHelper.floor(player.getPosZ()), count, stack);
+        this.doUpdate(player.level, MathHelper.floor(player.getX()), MathHelper.floor(player.getY()), MathHelper.floor(player.getZ()), count, stack);
     }
 
     private boolean doUpdate(World world, int x, int y, int z, int time, ItemStack stack) {
-        if (!world.isRemote) {
+        if (!world.isClientSide) {
             if (time <= this.getUseDuration(stack) && (this.isAdvanced || time % 3 == 0)) {
                 //Breaks the Blocks
                 boolean broke = this.breakStuff(world, x, y, z);
                 //Plays a Minecart sounds (It really sounds like a Leaf Blower!)
-                world.playSound(null, x, y, z, SoundEvents.ENTITY_MINECART_RIDING, SoundCategory.PLAYERS, 0.3F, 0.001F);
+                world.playSound(null, x, y, z, SoundEvents.MINECART_RIDING, SoundCategory.PLAYERS, 0.3F, 0.001F);
                 return broke;
             }
         }
@@ -113,10 +113,10 @@ public class ItemLeafBlower extends ItemBase implements IDisplayStandItem {
             world.destroyBlock(theCoord, true);
             //            theState.getBlock().dropBlockAsItem(world, theCoord, theState, 0);
             //Plays the Breaking Sound
-            world.playEvent(2001, theCoord, Block.getStateId(theState));
+            world.levelEvent(2001, theCoord, Block.getId(theState));
 
             //Deletes the Block
-            world.setBlockState(theCoord, Blocks.AIR.getDefaultState());
+            world.setBlockAndUpdate(theCoord, Blocks.AIR.defaultBlockState());
 
             return true;
         }
@@ -125,7 +125,7 @@ public class ItemLeafBlower extends ItemBase implements IDisplayStandItem {
 
     @Override
     public boolean update(ItemStack stack, TileEntity tile, int elapsedTicks) {
-        return this.doUpdate(tile.getWorld(), tile.getPos().getX(), tile.getPos().getY(), tile.getPos().getZ(), elapsedTicks, stack);
+        return this.doUpdate(tile.getLevel(), tile.getBlockPos().getX(), tile.getBlockPos().getY(), tile.getBlockPos().getZ(), elapsedTicks, stack);
     }
 
     @Override

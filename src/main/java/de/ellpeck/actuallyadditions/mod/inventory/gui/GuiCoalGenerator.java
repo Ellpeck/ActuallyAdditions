@@ -30,14 +30,14 @@ public class GuiCoalGenerator extends GuiWtfMojang<ContainerCoalGenerator> {
     public GuiCoalGenerator(ContainerCoalGenerator container, PlayerInventory inventory, ITextComponent title) {
         super(container, inventory);
         this.generator = container.generator;
-        this.xSize = 176;
-        this.ySize = 93 + 86;
+        this.imageWidth = 176;
+        this.imageHeight = 93 + 86;
     }
 
     @Override
     public void init() {
         super.init();
-        this.energy = new EnergyDisplay(this.guiLeft + 42, this.guiTop + 5, this.generator.storage);
+        this.energy = new EnergyDisplay(this.leftPos + 42, this.topPos + 5, this.generator.storage);
     }
 
     @Override
@@ -47,23 +47,23 @@ public class GuiCoalGenerator extends GuiWtfMojang<ContainerCoalGenerator> {
     }
 
     @Override
-    public void drawGuiContainerForegroundLayer(MatrixStack matrices, int x, int y) {
-        AssetUtil.displayNameString(matrices, this.font, this.xSize, -10, this.generator);
+    public void renderLabels(MatrixStack matrices, int x, int y) {
+        AssetUtil.displayNameString(matrices, this.font, this.imageWidth, -10, this.generator);
     }
 
     @Override
-    public void drawGuiContainerBackgroundLayer(MatrixStack matrices, float f, int x, int y) {
+    public void renderBg(MatrixStack matrices, float f, int x, int y) {
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 
-        this.getMinecraft().getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
-        this.blit(matrices, this.guiLeft, this.guiTop + 93, 0, 0, 176, 86);
+        this.getMinecraft().getTextureManager().bind(AssetUtil.GUI_INVENTORY_LOCATION);
+        this.blit(matrices, this.leftPos, this.topPos + 93, 0, 0, 176, 86);
 
-        this.getMinecraft().getTextureManager().bindTexture(RES_LOC);
-        this.blit(matrices, this.guiLeft, this.guiTop, 0, 0, 176, 93);
+        this.getMinecraft().getTextureManager().bind(RES_LOC);
+        this.blit(matrices, this.leftPos, this.topPos, 0, 0, 176, 93);
 
         if (this.generator.currentBurnTime > 0) {
             int i = this.generator.getBurningScaled(13);
-            this.blit(matrices, this.guiLeft + 87, this.guiTop + 27 + 12 - i, 176, 96 - i, 14, i);
+            this.blit(matrices, this.leftPos + 87, this.topPos + 27 + 12 - i, 176, 96 - i, 14, i);
         }
 
         this.energy.draw(matrices);

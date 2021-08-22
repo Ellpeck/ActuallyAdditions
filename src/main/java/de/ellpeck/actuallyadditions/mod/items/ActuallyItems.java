@@ -98,7 +98,7 @@ public final class ActuallyItems {
     public static final RegistryObject<Item> FILTER = ITEMS.register("filter", ItemFilter::new);
     public static final RegistryObject<Item> WATER_BOWL = ITEMS.register("water_bowl", ItemWaterBowl::new);
     public static final RegistryObject<Item> SPAWNER_CHANGER = ITEMS.register("spawner_changer", ItemSpawnerChanger::new);
-    public static final RegistryObject<Item> CRATE_KEEPER = ITEMS.register("crate_keeper", () -> new ItemGeneric(defaultProps().maxStackSize(1)));
+    public static final RegistryObject<Item> CRATE_KEEPER = ITEMS.register("crate_keeper", () -> new ItemGeneric(defaultProps().stacksTo(1)));
     public static final RegistryObject<Item> COLOR_LENS = ITEMS.register("color_lens", () -> new ItemLens(ActuallyAdditionsAPI.lensColor));
     public static final RegistryObject<Item> EXPLOSION_LENS = ITEMS.register("explosion_lens", () -> new ItemLens(ActuallyAdditionsAPI.lensDetonation));
     public static final RegistryObject<Item> DAMAGE_LENS = ITEMS.register("damage_lens", () -> new ItemLens(ActuallyAdditionsAPI.lensDeath));
@@ -240,10 +240,10 @@ public final class ActuallyItems {
     public static final RegistryObject<Item> PAXEL_CRYSTAL_ENORI = ITEMS.register("paxel_crystal_enori", () -> new ItemAllToolAA(ToolMaterials.ENORI));
 
     public static Item.Properties defaultProps() {
-        return new Item.Properties().group(ActuallyAdditions.GROUP);
+        return new Item.Properties().tab(ActuallyAdditions.GROUP);
     }
 
     public static Item.Properties defaultNonStacking() {
-        return defaultProps().maxStackSize(1);
+        return defaultProps().stacksTo(1);
     }
 }

@@ -26,6 +26,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
+
 public class TileEntityLeafGenerator extends TileEntityBase implements ISharingEnergyProvider, IEnergyDisplay {
 
     public final CustomEnergyStorage storage = new CustomEnergyStorage(35000, 0, 450);
@@ -52,7 +54,7 @@ public class TileEntityLeafGenerator extends TileEntityBase implements ISharingE
     @Override
     public void updateEntity() {
         super.updateEntity();
-        if (!this.world.isRemote) {
+        if (!this.level.isClientSide) {
             if (!this.isRedstonePowered) {
 
                 if (this.nextUseCounter >= ConfigIntValues.LEAF_GENERATOR_COOLDOWN.getValue()) {
@@ -66,8 +68,8 @@ public class TileEntityLeafGenerator extends TileEntityBase implements ISharingE
                         for (int reachX = -range; reachX < range + 1; reachX++) {
                             for (int reachZ = -range; reachZ < range + 1; reachZ++) {
                                 for (int reachY = -range; reachY < range + 1; reachY++) {
-                                    BlockPos pos = this.pos.add(reachX, reachY, reachZ);
-                                    Block block = this.world.getBlockState(pos).getBlock();
+                                    BlockPos pos = this.worldPosition.offset(reachX, reachY, reachZ);
+                                    Block block = this.level.getBlockState(pos).getBlock();
                                     if (block instanceof LeavesBlock) { // TODO: [port] validate this is a good way of checking if something is a leaf
                                         breakPositions.add(pos);
                                     }
@@ -79,13 +81,13 @@ public class TileEntityLeafGenerator extends TileEntityBase implements ISharingE
                             Collections.shuffle(breakPositions);
                             BlockPos theCoord = breakPositions.get(0);
 
-                            this.world.playEvent(2001, theCoord, Block.getStateId(this.world.getBlockState(theCoord)));
+                            this.level.levelEvent(2001, theCoord, Block.getId(this.level.getBlockState(theCoord)));
 
-                            this.world.setBlockState(theCoord, Blocks.AIR.getDefaultState());
+                            this.level.setBlockAndUpdate(theCoord, Blocks.AIR.defaultBlockState());
 
                             this.storage.receiveEnergyInternal(energyProduced, false);
 
-                            AssetUtil.spawnLaserWithTimeServer(this.world, this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), theCoord.getX(), theCoord.getY(), theCoord.getZ(), new float[]{62F / 255F, 163F / 255F, 74F / 255F}, 25, 0, 0.075F, 0.8F);
+                            AssetUtil.spawnLaserWithTimeServer(this.level, this.getBlockPos().getX(), this.getBlockPos().getY(), this.getBlockPos().getZ(), theCoord.getX(), theCoord.getY(), theCoord.getZ(), new float[]{62F / 255F, 163F / 255F, 74F / 255F}, 25, 0, 0.075F, 0.8F);
                         }
                     }
                 } else {

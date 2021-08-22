@@ -29,6 +29,8 @@ import net.minecraft.util.text.StringTextComponent;
 
 import javax.annotation.Nullable;
 
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
+
 public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem implements IButtonReactor, INamedContainerProvider {
 
     public FilterSettings leftFilter = new FilterSettings(12, true, true, false, false, 0, -1000);
@@ -131,7 +133,7 @@ public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem 
     public void updateEntity() {
         super.updateEntity();
 
-        if (!this.world.isRemote) {
+        if (!this.level.isClientSide) {
             if ((this.leftFilter.needsUpdateSend() || this.rightFilter.needsUpdateSend()) && this.sendUpdateWithInterval()) {
                 this.leftFilter.updateLasts();
                 this.rightFilter.updateLasts();

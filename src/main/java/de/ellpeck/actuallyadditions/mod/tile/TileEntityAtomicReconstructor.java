@@ -32,6 +32,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
+
 public class TileEntityAtomicReconstructor extends TileEntityInventoryBase implements IEnergyDisplay, IAtomicReconstructor {
 
     public static final int ENERGY_USE = 1000;
@@ -82,7 +84,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     @Override
     public void updateEntity() {
         super.updateEntity();
-        if (!this.world.isRemote) {
+        if (!this.level.isClientSide) {
             if (!this.isRedstonePowered && !this.isPulseMode) {
                 if (this.currentTime > 0) {
                     this.currentTime--;
@@ -96,7 +98,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
 
             if (this.oldEnergy != this.storage.getEnergyStored() && this.sendUpdateWithInterval()) {
                 this.oldEnergy = this.storage.getEnergyStored();
-                this.world.updateComparatorOutputLevel(this.pos, ActuallyBlocks.ATOMIC_RECONSTRUCTOR.get());
+                this.level.updateNeighbourForOutputSignal(this.worldPosition, ActuallyBlocks.ATOMIC_RECONSTRUCTOR.get());
             }
         }
 
@@ -115,33 +117,33 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
 
     @Override
     public Direction getOrientation() {
-        BlockState state = this.world.getBlockState(this.pos);
+        BlockState state = this.level.getBlockState(this.worldPosition);
         return WorldUtil.getDirectionByPistonRotation(state);
     }
 
     @Override
     public BlockPos getPosition() {
-        return this.pos;
+        return this.worldPosition;
     }
 
     @Override
     public int getX() {
-        return this.getPos().getX();
+        return this.getBlockPos().getX();
     }
 
     @Override
     public int getY() {
-        return this.getPos().getY();
+        return this.getBlockPos().getY();
     }
 
     @Override
     public int getZ() {
-        return this.getPos().getZ();
+        return this.getBlockPos().getZ();
     }
 
     @Override
     public World getWorldObject() {
-        return this.getWorld();
+        return this.getLevel();
     }
 
     @Override

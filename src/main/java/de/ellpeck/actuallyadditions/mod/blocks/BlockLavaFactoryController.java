@@ -38,7 +38,7 @@ public class BlockLavaFactoryController extends DirectionalBlock.Container imple
     }
 
     @Override
-    public TileEntity createNewTileEntity(IBlockReader worldIn) {
+    public TileEntity newBlockEntity(IBlockReader worldIn) {
         return new TileEntityLavaFactoryController();
     }
 
@@ -49,20 +49,20 @@ public class BlockLavaFactoryController extends DirectionalBlock.Container imple
             return;
         }
 
-        TileEntityLavaFactoryController factory = (TileEntityLavaFactoryController) minecraft.world.getTileEntity(((BlockRayTraceResult) rayCast).getPos());
+        TileEntityLavaFactoryController factory = (TileEntityLavaFactoryController) minecraft.level.getBlockEntity(((BlockRayTraceResult) rayCast).getBlockPos());
         if (factory != null) {
             int state = factory.isMultiblock();
             if (state == TileEntityLavaFactoryController.NOT_MULTI) {
-                StringUtil.drawSplitString(minecraft.fontRenderer, StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".factory.notPart.desc"), resolution.getScaledWidth() / 2 + 5, resolution.getScaledHeight() / 2 + 5, 200, StringUtil.DECIMAL_COLOR_WHITE, true);
+                StringUtil.drawSplitString(minecraft.font, StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".factory.notPart.desc"), resolution.getGuiScaledWidth() / 2 + 5, resolution.getGuiScaledHeight() / 2 + 5, 200, StringUtil.DECIMAL_COLOR_WHITE, true);
             } else if (state == TileEntityLavaFactoryController.HAS_AIR || state == TileEntityLavaFactoryController.HAS_LAVA) {
-                StringUtil.drawSplitString(minecraft.fontRenderer, StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".factory.works.desc"), resolution.getScaledWidth() / 2 + 5, resolution.getScaledHeight() / 2 + 5, 200, StringUtil.DECIMAL_COLOR_WHITE, true);
+                StringUtil.drawSplitString(minecraft.font, StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".factory.works.desc"), resolution.getGuiScaledWidth() / 2 + 5, resolution.getGuiScaledHeight() / 2 + 5, 200, StringUtil.DECIMAL_COLOR_WHITE, true);
             }
         }
     }
 
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        switch (state.get(FACING)) {
+        switch (state.getValue(FACING)) {
             case EAST:
                 return Shapes.LavaFactoryShapes.SHAPE_E;
             case SOUTH:

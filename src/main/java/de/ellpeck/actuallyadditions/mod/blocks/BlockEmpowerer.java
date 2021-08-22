@@ -36,15 +36,15 @@ public class BlockEmpowerer extends BlockContainerBase {
 
     @Nullable
     @Override
-    public TileEntity createNewTileEntity(IBlockReader worldIn) {
+    public TileEntity newBlockEntity(IBlockReader worldIn) {
         return new TileEntityEmpowerer();
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-        ItemStack heldItem = player.getHeldItem(hand);
-        if (!world.isRemote) {
-            TileEntityEmpowerer empowerer = (TileEntityEmpowerer) world.getTileEntity(pos);
+    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+        ItemStack heldItem = player.getItemInHand(hand);
+        if (!world.isClientSide) {
+            TileEntityEmpowerer empowerer = (TileEntityEmpowerer) world.getBlockEntity(pos);
             if (empowerer != null) {
                 ItemStack stackThere = empowerer.inv.getStackInSlot(0);
                 if (StackUtil.isValid(heldItem)) {
@@ -59,7 +59,7 @@ public class BlockEmpowerer extends BlockContainerBase {
                     } else if (ItemUtil.canBeStacked(heldItem, stackThere)) {
                         int maxTransfer = Math.min(stackThere.getCount(), heldItem.getMaxStackSize() - heldItem.getCount());
                         if (maxTransfer > 0) {
-                            player.setHeldItem(hand, StackUtil.grow(heldItem, maxTransfer));
+                            player.setItemInHand(hand, StackUtil.grow(heldItem, maxTransfer));
                             ItemStack newStackThere = stackThere.copy();
                             newStackThere = StackUtil.shrink(newStackThere, maxTransfer);
                             empowerer.inv.setStackInSlot(0, newStackThere);
@@ -68,7 +68,7 @@ public class BlockEmpowerer extends BlockContainerBase {
                     }
                 } else {
                     if (StackUtil.isValid(stackThere)) {
-                        player.setHeldItem(hand, stackThere.copy());
+                        player.setItemInHand(hand, stackThere.copy());
                         empowerer.inv.setStackInSlot(0, StackUtil.getEmpty());
                         return ActionResultType.PASS;
                     }

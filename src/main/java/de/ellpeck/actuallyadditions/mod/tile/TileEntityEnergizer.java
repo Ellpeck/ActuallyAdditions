@@ -29,6 +29,8 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 import javax.annotation.Nullable;
 
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
+
 public class TileEntityEnergizer extends TileEntityInventoryBase implements INamedContainerProvider {
 
     public final CustomEnergyStorage storage = new CustomEnergyStorage(50000, 1000, 0);
@@ -54,7 +56,7 @@ public class TileEntityEnergizer extends TileEntityInventoryBase implements INam
     @Override
     public void updateEntity() {
         super.updateEntity();
-        if (!this.world.isRemote) {
+        if (!this.level.isClientSide) {
             if (StackUtil.isValid(this.inv.getStackInSlot(0)) && !StackUtil.isValid(this.inv.getStackInSlot(1))) {
                 if (this.storage.getEnergyStored() > 0) {
                     int received = this.inv.getStackInSlot(0).getCapability(CapabilityEnergy.ENERGY, null).map(cap -> cap.receiveEnergy(this.storage.getEnergyStored(), false)).orElse(0);

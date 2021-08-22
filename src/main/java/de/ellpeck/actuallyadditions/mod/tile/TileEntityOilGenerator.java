@@ -36,6 +36,9 @@ import net.minecraftforge.fluids.capability.templates.FluidTank;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
+import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
+
 public class TileEntityOilGenerator extends TileEntityBase implements ISharingEnergyProvider, ISharingFluidHandler, INamedContainerProvider {
 
     int[] i = ConfigIntListValues.OIL_POWER.getValue();
@@ -132,7 +135,7 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
     @Override
     public void updateEntity() {
         super.updateEntity();
-        if (!this.world.isRemote) {
+        if (!this.level.isClientSide) {
             boolean flag = this.currentBurnTime > 0;
 
             if (this.currentBurnTime > 0 && this.currentEnergyProduce > 0) {
@@ -159,7 +162,7 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
             if (flag != this.currentBurnTime > 0 || this.lastCompare != this.getComparatorStrength()) {
                 this.lastCompare = this.getComparatorStrength();
 
-                this.markDirty();
+                this.setChanged();
             }
 
             if ((this.storage.getEnergyStored() != this.lastEnergy || this.tank.getFluidAmount() != this.lastTank || this.lastBurnTime != this.currentBurnTime || this.lastEnergyProduce != this.currentEnergyProduce || this.lastMaxBurnTime != this.maxBurnTime) && this.sendUpdateWithInterval()) {

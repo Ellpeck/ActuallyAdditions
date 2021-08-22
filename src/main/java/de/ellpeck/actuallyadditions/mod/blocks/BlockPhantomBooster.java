@@ -26,7 +26,7 @@ public class BlockPhantomBooster extends BlockContainerBase {
     }
 
     @Override
-    public TileEntity createNewTileEntity(IBlockReader world) {
+    public TileEntity newBlockEntity(IBlockReader world) {
         return new TileEntityPhantomBooster();
     }
 

@@ -23,7 +23,7 @@ public class CoffeeIngredient {
 
     @Deprecated
     public CoffeeIngredient(ItemStack input, EffectInstance[] effects, int maxAmplifier) {
-        this(Ingredient.fromStacks(input), maxAmplifier, effects);
+        this(Ingredient.of(input), maxAmplifier, effects);
     }
 
     public CoffeeIngredient(Ingredient input, int maxAmplifier, EffectInstance... effects) {

@@ -35,12 +35,12 @@ public class RenderDisplayStand extends TileEntityRenderer<TileEntityDisplayStan
             return;
         }
 
-        matrices.push();
+        matrices.pushPose();
         matrices.translate(0.5F, 1F, 0.5F);
 
-        double boop = Util.milliTime() / 800D;
+        double boop = Util.getMillis() / 800D;
         matrices.translate(0D, Math.sin(boop % (2 * Math.PI)) * 0.065, 0D);
-        matrices.rotate(new Quaternion((float) (boop * 40D % 360), 0, 1, 0));
+        matrices.mulPose(new Quaternion((float) (boop * 40D % 360), 0, 1, 0));
 
         float scale = stack.getItem() instanceof BlockItem
             ? 0.85F
@@ -52,6 +52,6 @@ public class RenderDisplayStand extends TileEntityRenderer<TileEntityDisplayStan
             ActuallyAdditions.LOGGER.error("Something went wrong trying to render an item in a display stand! The item is " + stack.getItem().getRegistryName() + "!", e);
         }
 
-        matrices.pop();
+        matrices.popPose();
     }
 }

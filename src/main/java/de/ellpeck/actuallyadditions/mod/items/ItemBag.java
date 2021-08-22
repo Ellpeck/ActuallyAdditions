@@ -35,20 +35,20 @@ public class ItemBag extends ItemBase {
     public final boolean isVoid;
 
     public ItemBag(boolean isVoid) {
-        super(ActuallyItems.defaultProps().maxStackSize(1));
+        super(ActuallyItems.defaultProps().stacksTo(1));
         this.isVoid = isVoid;
     }
 
     @Override
-    public ActionResultType onItemUse(ItemUseContext context) {
-        ItemStack stack = context.getPlayer().getHeldItem(context.getHand());
+    public ActionResultType useOn(ItemUseContext context) {
+        ItemStack stack = context.getPlayer().getItemInHand(context.getHand());
         if (!this.isVoid) {
-            TileEntity tile = context.getWorld().getTileEntity(context.getPos());
+            TileEntity tile = context.getLevel().getBlockEntity(context.getClickedPos());
             if (tile != null) {
-                if (!context.getWorld().isRemote) {
+                if (!context.getLevel().isClientSide) {
                     ItemStackHandlerAA inv = new ItemStackHandlerAA(ContainerBag.getSlotAmount(this.isVoid));
 
-                    boolean changed = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, context.getFace())
+                    boolean changed = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, context.getClickedFace())
                         .map(cap -> {
                             boolean localChanged = false;
                             ItemDrill.loadSlotsFromNBT(inv, stack);
@@ -58,7 +58,7 @@ public class ItemBag extends ItemBase {
                                 if (StackUtil.isValid(invStack)) {
                                     for (int i = 0; i < cap.getSlots(); i++) {
                                         ItemStack remain = cap.insertItem(i, invStack, false);
-                                        if (!ItemStack.areItemStacksEqual(remain, invStack)) {
+                                        if (!ItemStack.matches(remain, invStack)) {
                                             inv.setStackInSlot(j, remain.copy());
                                             localChanged = true;
                                             if (!StackUtil.isValid(remain)) {
@@ -84,14 +84,14 @@ public class ItemBag extends ItemBase {
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
-        if (!world.isRemote && hand == Hand.MAIN_HAND) {
-            NetworkHooks.openGui((ServerPlayerEntity) player, new SimpleNamedContainerProvider((windowId, playerInventory, playerEntity) -> new ContainerBag(windowId, playerInventory, playerEntity.getHeldItem(hand), this.isVoid), StringTextComponent.EMPTY));
+    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+        if (!world.isClientSide && hand == Hand.MAIN_HAND) {
+            NetworkHooks.openGui((ServerPlayerEntity) player, new SimpleNamedContainerProvider((windowId, playerInventory, playerEntity) -> new ContainerBag(windowId, playerInventory, playerEntity.getItemInHand(hand), this.isVoid), StringTextComponent.EMPTY));
             //            player.openGui(ActuallyAdditions.INSTANCE, (this.isVoid
             //                ? GuiTypes.VOID_BAG
             //                : GuiTypes.BAG).ordinal(), world, (int) player.posX, (int) player.posY, (int) player.posZ);
         }
-        return ActionResult.resultPass(player.getHeldItem(hand));
+        return ActionResult.pass(player.getItemInHand(hand));
     }
 
     // TODO: [port] confirm this is correct

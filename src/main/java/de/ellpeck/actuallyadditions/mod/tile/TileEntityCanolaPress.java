@@ -36,6 +36,8 @@ import net.minecraftforge.fluids.capability.templates.FluidTank;
 
 import javax.annotation.Nullable;
 
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
+
 public class TileEntityCanolaPress extends TileEntityInventoryBase implements INamedContainerProvider, ISharingFluidHandler {
 
     public static final int PRODUCE = 80;
@@ -100,7 +102,7 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IN
     @Override
     public void updateEntity() {
         super.updateEntity();
-        if (!this.world.isRemote) {
+        if (!this.level.isClientSide) {
             if (isCanola(this.inv.getStackInSlot(0)) && PRODUCE <= this.tank.getCapacity() - this.tank.getFluidAmount()) {
                 if (this.storage.getEnergyStored() >= ENERGY_USE) {
                     this.currentProcessTime++;
@@ -111,7 +113,7 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IN
                         this.inv.setStackInSlot(0, StackUtil.shrink(this.inv.getStackInSlot(0), 1));
 
                         this.tank.fill(new FluidStack(InitFluids.fluidCanolaOil.get(), PRODUCE), IFluidHandler.FluidAction.EXECUTE);
-                        this.markDirty();
+                        this.setChanged();
                     }
                 }
             } else {

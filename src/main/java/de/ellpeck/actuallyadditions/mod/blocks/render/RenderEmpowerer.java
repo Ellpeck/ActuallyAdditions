@@ -37,12 +37,12 @@ public class RenderEmpowerer extends TileEntityRenderer<TileEntityEmpowerer> {
         ItemStack stack = tile.inv.getStackInSlot(0);
         if (StackUtil.isValid(stack)) {
             // TODO: [port][refactor] migrate this logic into a single method, most renders use it
-            matrices.push();
+            matrices.pushPose();
             matrices.translate(0.5F, 1F, 0.5F);
 
-            double boop = Util.milliTime() / 800D;
+            double boop = Util.getMillis() / 800D;
             matrices.translate(0D, Math.sin(boop % (2 * Math.PI)) * 0.065, 0D);
-            matrices.rotate(new Quaternion((float) (boop * 40D % 360), 0, 1, 0)); // TODO: [port] might not work
+            matrices.mulPose(new Quaternion((float) (boop * 40D % 360), 0, 1, 0)); // TODO: [port] might not work
 
             float scale = stack.getItem() instanceof BlockItem
                 ? 0.85F
@@ -54,7 +54,7 @@ public class RenderEmpowerer extends TileEntityRenderer<TileEntityEmpowerer> {
                 ActuallyAdditions.LOGGER.error("Something went wrong trying to render an item in an empowerer! The item is " + stack.getItem().getRegistryName() + "!", e);
             }
 
-            matrices.pop();
+            matrices.popPose();
         }
 
         int index = tile.recipeForRenderIndex;
@@ -62,10 +62,10 @@ public class RenderEmpowerer extends TileEntityRenderer<TileEntityEmpowerer> {
             EmpowererRecipe recipe = ActuallyAdditionsAPI.EMPOWERER_RECIPES.get(index);
             if (recipe != null) {
                 for (int i = 0; i < 3; i++) {
-                    Direction facing = Direction.byHorizontalIndex(i); // TODO: [port][test] validate this works
-                    BlockPos offset = tile.getPos().offset(facing, 3);
+                    Direction facing = Direction.from2DDataValue(i); // TODO: [port][test] validate this works
+                    BlockPos offset = tile.getBlockPos().relative(facing, 3);
 
-                    AssetUtil.renderLaser(tile.getPos().getX() + 0.5, tile.getPos().getY() + 0.5, tile.getPos().getZ() + 0.5, offset.getX() + 0.5, offset.getY() + 0.95, offset.getZ() + 0.5, 80, 1F, 0.1F, recipe.getParticleColors());
+                    AssetUtil.renderLaser(tile.getBlockPos().getX() + 0.5, tile.getBlockPos().getY() + 0.5, tile.getBlockPos().getZ() + 0.5, offset.getX() + 0.5, offset.getY() + 0.95, offset.getZ() + 0.5, 80, 1F, 0.1F, recipe.getParticleColors());
                 }
             }
         }

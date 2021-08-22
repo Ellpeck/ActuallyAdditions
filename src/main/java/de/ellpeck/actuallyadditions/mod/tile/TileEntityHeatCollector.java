@@ -25,6 +25,8 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 import java.util.ArrayList;
 
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
+
 public class TileEntityHeatCollector extends TileEntityBase implements ISharingEnergyProvider, IEnergyDisplay {
 
     public static final int ENERGY_PRODUCE = 40;
@@ -61,29 +63,29 @@ public class TileEntityHeatCollector extends TileEntityBase implements ISharingE
     @Override
     public void updateEntity() {
         super.updateEntity();
-        if (!this.world.isRemote) {
+        if (!this.level.isClientSide) {
             ArrayList<Integer> blocksAround = new ArrayList<>();
             if (ENERGY_PRODUCE <= this.storage.getMaxEnergyStored() - this.storage.getEnergyStored()) {
                 for (int i = 1; i <= 5; i++) {
-                    BlockPos coords = this.pos.offset(WorldUtil.getDirectionBySidesInOrder(i));
-                    BlockState state = this.world.getBlockState(coords);
+                    BlockPos coords = this.worldPosition.relative(WorldUtil.getDirectionBySidesInOrder(i));
+                    BlockState state = this.level.getBlockState(coords);
                     Block block = state.getBlock();
-                    if (block != null && this.world.getBlockState(coords).getMaterial() == Material.LAVA || this.world.getBlockState(coords).getBlock() instanceof MagmaBlock) {
+                    if (block != null && this.level.getBlockState(coords).getMaterial() == Material.LAVA || this.level.getBlockState(coords).getBlock() instanceof MagmaBlock) {
                         blocksAround.add(i);
                     }
                 }
 
                 if (blocksAround.size() >= BLOCKS_NEEDED) {
                     this.storage.receiveEnergyInternal(ENERGY_PRODUCE, false);
-                    this.markDirty();
+                    this.setChanged();
 
                     this.disappearTime++;
                     if (this.disappearTime >= 1000) {
                         this.disappearTime = 0;
 
-                        if (this.world.rand.nextInt(200) == 0) {
-                            int randomSide = blocksAround.get(this.world.rand.nextInt(blocksAround.size()));
-                            this.world.setBlockState(this.pos.offset(WorldUtil.getDirectionBySidesInOrder(randomSide)), Blocks.AIR.getDefaultState());
+                        if (this.level.random.nextInt(200) == 0) {
+                            int randomSide = blocksAround.get(this.level.random.nextInt(blocksAround.size()));
+                            this.level.setBlockAndUpdate(this.worldPosition.relative(WorldUtil.getDirectionBySidesInOrder(randomSide)), Blocks.AIR.defaultBlockState());
                         }
                     }
                 }

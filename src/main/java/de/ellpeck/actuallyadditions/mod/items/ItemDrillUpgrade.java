@@ -24,7 +24,7 @@ public class ItemDrillUpgrade extends ItemBase {
     public final UpgradeType type;
 
     public ItemDrillUpgrade(UpgradeType type) {
-        super(ActuallyItems.defaultProps().maxStackSize(1));
+        super(ActuallyItems.defaultProps().stacksTo(1));
         this.type = type;
     }
 
@@ -37,10 +37,10 @@ public class ItemDrillUpgrade extends ItemBase {
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
-        ItemStack stack = player.getHeldItem(hand);
-        if (!world.isRemote && this.type == UpgradeType.PLACER) {
-            this.setSlotToPlaceFrom(stack, player.inventory.currentItem);
+    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+        ItemStack stack = player.getItemInHand(hand);
+        if (!world.isClientSide && this.type == UpgradeType.PLACER) {
+            this.setSlotToPlaceFrom(stack, player.inventory.selected);
             return new ActionResult<>(EnumActionResult.SUCCESS, stack);
         }
         return new ActionResult<>(EnumActionResult.FAIL, stack);

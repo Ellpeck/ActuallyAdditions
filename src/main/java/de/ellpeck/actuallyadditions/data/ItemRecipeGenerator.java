@@ -15,12 +15,12 @@ public class ItemRecipeGenerator extends RecipeProvider {
     }
 
     @Override
-    protected void registerRecipes(Consumer<IFinishedRecipe> consumer) {
-        super.registerRecipes(consumer);
+    protected void buildShapelessRecipes(Consumer<IFinishedRecipe> consumer) {
+        super.buildShapelessRecipes(consumer);
     }
 
     @Override
-    protected void saveRecipeAdvancement(DirectoryCache cache, JsonObject cache2, Path advancementJson) {
+    protected void saveAdvancement(DirectoryCache cache, JsonObject cache2, Path advancementJson) {
         //Nope...
     }
 }

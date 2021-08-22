@@ -36,26 +36,26 @@ public class ItemGrowthRing extends ItemEnergy {
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
-        if (!(entity instanceof PlayerEntity) || world.isRemote || entity.isSneaking()) {
+        if (!(entity instanceof PlayerEntity) || world.isClientSide || entity.isShiftKeyDown()) {
             return;
         }
 
         PlayerEntity player = (PlayerEntity) entity;
-        ItemStack equipped = player.getHeldItemMainhand();
+        ItemStack equipped = player.getMainHandItem();
 
         int energyUse = 300;
         if (StackUtil.isValid(equipped) && equipped == stack && this.getEnergyStored(stack) >= energyUse) {
             List<BlockPos> blocks = new ArrayList<>();
 
             //Adding all possible Blocks
-            if (player.world.getGameTime() % 30 == 0) {
+            if (player.level.getGameTime() % 30 == 0) {
                 int range = 3;
                 for (int x = -range; x < range + 1; x++) {
                     for (int z = -range; z < range + 1; z++) {
                         for (int y = -range; y < range + 1; y++) {
-                            int theX = MathHelper.floor(player.getPosX() + x);
-                            int theY = MathHelper.floor(player.getPosY() + y);
-                            int theZ = MathHelper.floor(player.getPosZ() + z);
+                            int theX = MathHelper.floor(player.getX() + x);
+                            int theY = MathHelper.floor(player.getY() + y);
+                            int theZ = MathHelper.floor(player.getZ() + z);
                             BlockPos posInQuestion = new BlockPos(theX, theY, theZ);
                             Block theBlock = world.getBlockState(posInQuestion).getBlock();
                             if ((theBlock instanceof IGrowable || theBlock instanceof IPlantable) && !(theBlock instanceof GrassBlock)) {
@@ -69,16 +69,16 @@ public class ItemGrowthRing extends ItemEnergy {
                 if (!blocks.isEmpty()) {
                     for (int i = 0; i < 45; i++) {
                         if (this.getEnergyStored(stack) >= energyUse) {
-                            BlockPos pos = blocks.get(world.rand.nextInt(blocks.size()));
+                            BlockPos pos = blocks.get(world.random.nextInt(blocks.size()));
 
                             BlockState state = world.getBlockState(pos);
                             Block block = state.getBlock();
-                            block.tick(world.getBlockState(pos), (ServerWorld) world, pos, world.rand);
+                            block.tick(world.getBlockState(pos), (ServerWorld) world, pos, world.random);
 
                             //Show Particles if Metadata changed
                             BlockState newState = world.getBlockState(pos);
                             if (newState != state) {
-                                world.playEvent(2005, pos, 0);
+                                world.levelEvent(2005, pos, 0);
                             }
 
                             if (!player.isCreative()) {

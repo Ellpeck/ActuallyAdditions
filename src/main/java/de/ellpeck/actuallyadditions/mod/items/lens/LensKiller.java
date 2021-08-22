@@ -20,8 +20,8 @@ public class LensKiller extends LensDeath {
 
     @Override
     protected void onAttacked(LivingEntity entity, IAtomicReconstructor tile) {
-        if (!tile.getWorldObject().isRemote) {
-            entity.attackEntityFrom(DamageSource.causePlayerDamage(FakePlayerFactory.getMinecraft((ServerWorld) tile.getWorldObject())), 20);
+        if (!tile.getWorldObject().isClientSide) {
+            entity.hurt(DamageSource.playerAttack(FakePlayerFactory.getMinecraft((ServerWorld) tile.getWorldObject())), 20);
         }
     }
 

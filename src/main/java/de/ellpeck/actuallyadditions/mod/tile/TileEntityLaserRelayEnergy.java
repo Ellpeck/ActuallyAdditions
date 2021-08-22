@@ -36,6 +36,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
+
 public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay {
 
     public static final int CAP = 1000;
@@ -117,9 +119,9 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay {
 
         this.receiversAround.clear();
         for (Direction side : Direction.values()) {
-            BlockPos pos = this.getPos().offset(side);
-            if (this.world.isBlockLoaded(pos)) {
-                TileEntity tile = this.world.getTileEntity(pos);
+            BlockPos pos = this.getBlockPos().relative(side);
+            if (this.level.hasChunkAt(pos)) {
+                TileEntity tile = this.level.getBlockEntity(pos);
                 if (tile != null && !(tile instanceof TileEntityLaserRelay)) {
                     if (tile.getCapability(CapabilityEnergy.ENERGY, side.getOpposite()).isPresent()) {
                         this.receiversAround.put(side, tile);
@@ -151,9 +153,9 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay {
 
         for (IConnectionPair pair : network.connections) {
             for (BlockPos relay : pair.getPositions()) {
-                if (relay != null && this.world.isBlockLoaded(relay) && !alreadyChecked.contains(relay)) {
+                if (relay != null && this.level.hasChunkAt(relay) && !alreadyChecked.contains(relay)) {
                     alreadyChecked.add(relay);
-                    TileEntity relayTile = this.world.getTileEntity(relay);
+                    TileEntity relayTile = this.level.getBlockEntity(relay);
                     if (relayTile instanceof TileEntityLaserRelayEnergy) {
                         TileEntityLaserRelayEnergy theRelay = (TileEntityLaserRelayEnergy) relayTile;
                         if (theRelay.mode != Mode.INPUT_ONLY) {
@@ -196,8 +198,8 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay {
                         Direction side = receiver.getKey();
                         Direction opp = side.getOpposite();
                         TileEntity tile = receiver.getValue();
-                        if (!alreadyChecked.contains(tile.getPos())) {
-                            alreadyChecked.add(tile.getPos());
+                        if (!alreadyChecked.contains(tile.getBlockPos())) {
+                            alreadyChecked.add(tile.getBlockPos());
                             if (theRelay != this || side != from) {
                                 transmitted += tile.getCapability(CapabilityEnergy.ENERGY, opp).map(cap -> {
                                     int trans = 0;

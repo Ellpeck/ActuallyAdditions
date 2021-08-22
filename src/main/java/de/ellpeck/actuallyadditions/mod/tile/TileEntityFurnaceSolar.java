@@ -18,6 +18,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
+
 public class TileEntityFurnaceSolar extends TileEntityBase implements ISharingEnergyProvider, IEnergyDisplay {
 
     public static final int PRODUCE = 8;
@@ -44,12 +46,12 @@ public class TileEntityFurnaceSolar extends TileEntityBase implements ISharingEn
     @Override
     public void updateEntity() {
         super.updateEntity();
-        if (!this.world.isRemote) {
+        if (!this.level.isClientSide) {
             int power = this.getPowerToGenerate(PRODUCE);
-            if (this.world.isDaytime() && power > 0) {
+            if (this.level.isDay() && power > 0) {
                 if (power <= this.storage.getMaxEnergyStored() - this.storage.getEnergyStored()) {
                     this.storage.receiveEnergyInternal(power, false);
-                    this.markDirty();
+                    this.setChanged();
                 }
             }
 
@@ -60,14 +62,14 @@ public class TileEntityFurnaceSolar extends TileEntityBase implements ISharingEn
     }
 
     public int getPowerToGenerate(int power) {
-        for (int y = 1; y <= this.world.getHeight() - this.pos.getY(); y++) {
+        for (int y = 1; y <= this.level.getMaxBuildHeight() - this.worldPosition.getY(); y++) {
             if (power > 0) {
-                BlockPos pos = this.pos.up(y);
-                BlockState state = this.world.getBlockState(pos);
+                BlockPos pos = this.worldPosition.above(y);
+                BlockState state = this.level.getBlockState(pos);
 
-                if (state.getMaterial().isOpaque()) {
+                if (state.getMaterial().isSolidBlocking()) {
                     power = 0;
-                } else if (!state.getBlock().isAir(state, this.world, pos)) {
+                } else if (!state.getBlock().isAir(state, this.level, pos)) {
                     power--;
                 }
             } else {

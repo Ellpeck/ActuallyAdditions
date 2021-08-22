@@ -38,12 +38,12 @@ public class WorldData extends WorldSavedData {
     }
 
     public static WorldData get(World world) {
-        WorldData storage = ((ServerWorld) world).getSavedData().get(WorldData::new, SAVE_NAME);
+        WorldData storage = ((ServerWorld) world).getDataStorage().get(WorldData::new, SAVE_NAME);
 
         if (storage == null) {
             storage = new WorldData();
-            storage.markDirty();
-            ((ServerWorld) world).getSavedData().set(storage);
+            storage.setDirty();
+            ((ServerWorld) world).getDataStorage().set(storage);
         }
 
         return storage;
@@ -57,7 +57,7 @@ public class WorldData extends WorldSavedData {
     }
 
     @Override
-    public void read(CompoundNBT compound) {
+    public void load(CompoundNBT compound) {
         this.laserRelayNetworks.clear();
         ListNBT networkList = compound.getList("Networks", 10);
         for (int i = 0; i < networkList.size(); i++) {
@@ -70,7 +70,7 @@ public class WorldData extends WorldSavedData {
         for (int i = 0; i < playerList.size(); i++) {
             CompoundNBT player = playerList.getCompound(i);
 
-            UUID id = player.getUniqueId("UUID");
+            UUID id = player.getUUID("UUID");
             CompoundNBT data = player.getCompound("Data");
 
             PlayerSave save = new PlayerSave(id);
@@ -80,7 +80,7 @@ public class WorldData extends WorldSavedData {
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT compound) {
+    public CompoundNBT save(CompoundNBT compound) {
         //Laser World Data
         ListNBT networkList = new ListNBT();
         for (Network network : this.laserRelayNetworks) {
@@ -92,7 +92,7 @@ public class WorldData extends WorldSavedData {
         ListNBT playerList = new ListNBT();
         for (PlayerSave save : this.playerSaveData.values()) {
             CompoundNBT player = new CompoundNBT();
-            player.putUniqueId("UUID", save.id);
+            player.putUUID("UUID", save.id);
 
             CompoundNBT data = new CompoundNBT();
             save.writeToNBT(data, true);

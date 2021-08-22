@@ -21,68 +21,68 @@ public class BlockRecipeGenerator extends RecipeProvider {
     }
 
     @Override
-    protected void registerRecipes(Consumer<IFinishedRecipe> consumer) {
+    protected void buildShapelessRecipes(Consumer<IFinishedRecipe> consumer) {
         //Battery Box
-        Recipe.shapeless(ActuallyBlocks.BATTERY_BOX.get()).ingredients(ActuallyBlocks.ENERGIZER.get(), ActuallyBlocks.ENERVATOR.get(), ActuallyItems.COIL.get()).build(consumer);
+        Recipe.shapeless(ActuallyBlocks.BATTERY_BOX.get()).ingredients(ActuallyBlocks.ENERGIZER.get(), ActuallyBlocks.ENERVATOR.get(), ActuallyItems.COIL.get()).save(consumer);
 
         //Farmer
         Recipe.shaped(ActuallyBlocks.FARMER.get())
             .pattern("ISI", "SCS", "ISI")
-            .key('I', ActuallyBlocks.CRYSTAL_ENORI.get())
-            .key('C', ActuallyBlocks.IRON_CASING.get())
-            .key('S', Tags.Items.SEEDS)
-            .build(consumer);
+            .define('I', ActuallyBlocks.CRYSTAL_ENORI.get())
+            .define('C', ActuallyBlocks.IRON_CASING.get())
+            .define('S', Tags.Items.SEEDS)
+            .save(consumer);
 
         //Empowerer
         Recipe.shaped(ActuallyBlocks.EMPOWERER.get())
             .pattern(" R ", " B ", "CDC")
-            .key('R', ActuallyItems.RESTONIA_CRYSTAL.get())
-            .key('B', ActuallyItems.BATTERY_DOUBLE.get())
-            .key('C', ActuallyBlocks.IRON_CASING.get())
-            .key('D', ActuallyBlocks.DISPLAY_STAND.get())
-            .build(consumer);
+            .define('R', ActuallyItems.RESTONIA_CRYSTAL.get())
+            .define('B', ActuallyItems.BATTERY_DOUBLE.get())
+            .define('C', ActuallyBlocks.IRON_CASING.get())
+            .define('D', ActuallyBlocks.DISPLAY_STAND.get())
+            .save(consumer);
 
         //Tiny Torch
         Recipe.shaped(ActuallyBlocks.TINY_TORCH.get(), 2)
             .pattern("C", "S")
-            .key('C', ActuallyTags.Items.TINY_COALS)
-            .key('S', Tags.Items.RODS_WOODEN)
-            .build(consumer, new ResourceLocation(ActuallyAdditions.MODID, "tiny_torch"));
+            .define('C', ActuallyTags.Items.TINY_COALS)
+            .define('S', Tags.Items.RODS_WOODEN)
+            .save(consumer, new ResourceLocation(ActuallyAdditions.MODID, "tiny_torch"));
 
         //Fireworks Box
         Recipe.shaped(ActuallyBlocks.FIREWORK_BOX.get())
             .pattern("GFG", "SAS", "CCC")
-            .key('G', Tags.Items.GUNPOWDER)
-            .key('S', Tags.Items.RODS_WOODEN)
-            .key('A', ActuallyBlocks.IRON_CASING.get())
-            .key('F', Items.FIREWORK_ROCKET)
-            .key('C', ActuallyItems.ENORI_CRYSTAL.get())
-            .build(consumer);
+            .define('G', Tags.Items.GUNPOWDER)
+            .define('S', Tags.Items.RODS_WOODEN)
+            .define('A', ActuallyBlocks.IRON_CASING.get())
+            .define('F', Items.FIREWORK_ROCKET)
+            .define('C', ActuallyItems.ENORI_CRYSTAL.get())
+            .save(consumer);
 
         //Shock Suppressor
         Recipe.shaped(ActuallyBlocks.SHOCK_SUPPRESSOR.get())
             .pattern("OAO", "ACA", "OAO")
-            .key('A', ActuallyItems.VOID_EMPOWERED_CRYSTAL.get())
-            .key('O', Tags.Items.OBSIDIAN)
-            .key('C', ActuallyItems.COIL_ADVANCED.get())
-            .build(consumer);
+            .define('A', ActuallyItems.VOID_EMPOWERED_CRYSTAL.get())
+            .define('O', Tags.Items.OBSIDIAN)
+            .define('C', ActuallyItems.COIL_ADVANCED.get())
+            .save(consumer);
 
         //Display Stand
         Recipe.shaped(ActuallyBlocks.DISPLAY_STAND.get())
             .pattern(" R ", "EEE", "GGG")
-            .key('R', ActuallyItems.COIL_ADVANCED.get())
-            .key('E', ActuallyBlocks.ETHETIC_GREEN_BLOCK.get())
-            .key('G', ActuallyBlocks.ETHETIC_WHITE_BLOCK.get())
-            .build(consumer);
+            .define('R', ActuallyItems.COIL_ADVANCED.get())
+            .define('E', ActuallyBlocks.ETHETIC_GREEN_BLOCK.get())
+            .define('G', ActuallyBlocks.ETHETIC_WHITE_BLOCK.get())
+            .save(consumer);
 
         //Vertical Digger
         Recipe.shaped(ActuallyBlocks.MINER.get())
             .pattern("IRI", "RCR", "IDI")
-            .key('R', Tags.Items.STORAGE_BLOCKS_REDSTONE)
-            .key('I', ActuallyBlocks.IRON_CASING.get())
-            .key('C', ActuallyItems.VOID_EMPOWERED_CRYSTAL.get())
-            .key('D', ActuallyItems.DRILL.get())
-            .build(consumer);
+            .define('R', Tags.Items.STORAGE_BLOCKS_REDSTONE)
+            .define('I', ActuallyBlocks.IRON_CASING.get())
+            .define('C', ActuallyItems.VOID_EMPOWERED_CRYSTAL.get())
+            .define('D', ActuallyItems.DRILL.get())
+            .save(consumer);
 
         //Black Quartz Wall
         Recipe.wall(ActuallyBlocks.BLACK_QUARTZ_WALL.get(), ActuallyBlocks.BLACK_QUARTZ_PILLAR_BLOCK.get(), consumer);
@@ -132,14 +132,14 @@ public class BlockRecipeGenerator extends RecipeProvider {
         // Atomic Reconstructor
         Recipe.shaped(ActuallyBlocks.ATOMIC_RECONSTRUCTOR.get())
             .pattern("IRI", "RCR", "IRI")
-            .key('R', Tags.Items.DUSTS_REDSTONE)
-            .key('I', Tags.Items.INGOTS_IRON)
-            .key('C', ActuallyBlocks.IRON_CASING.get())
-            .build(consumer);
+            .define('R', Tags.Items.DUSTS_REDSTONE)
+            .define('I', Tags.Items.INGOTS_IRON)
+            .define('C', ActuallyBlocks.IRON_CASING.get())
+            .save(consumer);
     }
 
     @Override
-    protected void saveRecipeAdvancement(DirectoryCache cache, JsonObject cache2, Path advancementJson) {
+    protected void saveAdvancement(DirectoryCache cache, JsonObject cache2, Path advancementJson) {
         //Nope...
     }
 
@@ -161,15 +161,15 @@ public class BlockRecipeGenerator extends RecipeProvider {
         }
 
         public static void stairs(IItemProvider result, IItemProvider resource, Consumer<IFinishedRecipe> consumer) {
-            Recipe.shaped(result).patternSingleKey('Q', resource, "Q  ", "QQ ", "QQQ").build(consumer);
+            Recipe.shaped(result).patternSingleKey('Q', resource, "Q  ", "QQ ", "QQQ").save(consumer);
         }
 
         public static void wall(IItemProvider result, IItemProvider resource, Consumer<IFinishedRecipe> consumer) {
-            Recipe.shaped(result).patternSingleKey('Q', resource, "QQQ", "QQQ").build(consumer);
+            Recipe.shaped(result).patternSingleKey('Q', resource, "QQQ", "QQQ").save(consumer);
         }
 
         public static void slab(IItemProvider result, IItemProvider resource, Consumer<IFinishedRecipe> consumer) {
-            Recipe.shaped(result).patternSingleKey('Q', resource, "QQQ").build(consumer);
+            Recipe.shaped(result).patternSingleKey('Q', resource, "QQQ").save(consumer);
         }
 
         private static class Shapeless extends ShapelessRecipeBuilder {
@@ -182,20 +182,20 @@ public class BlockRecipeGenerator extends RecipeProvider {
             }
 
             public Shapeless ingredients(IItemProvider... ingredients) {
-                Arrays.asList(ingredients).forEach(this::addIngredient);
+                Arrays.asList(ingredients).forEach(this::requires);
                 return this;
             }
 
             @Override
-            public void build(Consumer<IFinishedRecipe> consumer) {
-                this.addCriterion("has_book", hasItem(ActuallyItems.ITEM_BOOKLET.get()));
-                super.build(consumer);
+            public void save(Consumer<IFinishedRecipe> consumer) {
+                this.unlockedBy("has_book", has(ActuallyItems.ITEM_BOOKLET.get()));
+                super.save(consumer);
             }
 
             @Override
-            public void build(Consumer<IFinishedRecipe> consumer, ResourceLocation location) {
-                this.addCriterion("has_book", hasItem(ActuallyItems.ITEM_BOOKLET.get()));
-                super.build(consumer, location);
+            public void save(Consumer<IFinishedRecipe> consumer, ResourceLocation location) {
+                this.unlockedBy("has_book", has(ActuallyItems.ITEM_BOOKLET.get()));
+                super.save(consumer, location);
             }
         }
 
@@ -209,37 +209,37 @@ public class BlockRecipeGenerator extends RecipeProvider {
             }
 
             public Shaped pattern(String line1, String line2, String line3) {
-                this.patternLine(line1);
-                this.patternLine(line2);
-                this.patternLine(line3);
+                this.pattern(line1);
+                this.pattern(line2);
+                this.pattern(line3);
                 return this;
             }
 
             public Shaped pattern(String line1, String line2) {
-                this.patternLine(line1);
-                this.patternLine(line2);
+                this.pattern(line1);
+                this.pattern(line2);
                 return this;
             }
 
             public Shaped patternSingleKey(char key, IItemProvider resource, String... lines) {
-                this.key(key, resource);
+                this.define(key, resource);
                 for (String line : lines) {
-                    this.patternLine(line);
+                    this.pattern(line);
                 }
 
                 return this;
             }
 
             @Override
-            public void build(Consumer<IFinishedRecipe> consumerIn) {
-                this.addCriterion("has_book", hasItem(ActuallyItems.ITEM_BOOKLET.get()));
-                super.build(consumerIn);
+            public void save(Consumer<IFinishedRecipe> consumerIn) {
+                this.unlockedBy("has_book", has(ActuallyItems.ITEM_BOOKLET.get()));
+                super.save(consumerIn);
             }
 
             @Override
-            public void build(Consumer<IFinishedRecipe> consumerIn, ResourceLocation id) {
-                this.addCriterion("has_book", hasItem(ActuallyItems.ITEM_BOOKLET.get()));
-                super.build(consumerIn, id);
+            public void save(Consumer<IFinishedRecipe> consumerIn, ResourceLocation id) {
+                this.unlockedBy("has_book", has(ActuallyItems.ITEM_BOOKLET.get()));
+                super.save(consumerIn, id);
             }
         }
     }

@@ -13,8 +13,10 @@ package de.ellpeck.actuallyadditions.mod.blocks.base;
 import net.minecraft.block.BushBlock;
 import net.minecraft.block.SoundType;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class BlockBushBase extends BushBlock {
     public BlockBushBase(Properties properties) {
-        super(properties.sound(SoundType.PLANT));
+        super(properties.sound(SoundType.GRASS));
     }
 }

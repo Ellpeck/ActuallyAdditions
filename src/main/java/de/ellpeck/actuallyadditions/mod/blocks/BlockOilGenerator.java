@@ -33,18 +33,18 @@ import java.util.Random;
 public class BlockOilGenerator extends DirectionalBlock.Container {
 
     public BlockOilGenerator() {
-        super(ActuallyBlocks.defaultPickProps(0).tickRandomly());
+        super(ActuallyBlocks.defaultPickProps(0).randomTicks());
     }
 
     @Override
-    public TileEntity createNewTileEntity(IBlockReader worldIn) {
+    public TileEntity newBlockEntity(IBlockReader worldIn) {
         return new TileEntityOilGenerator();
     }
 
     // TODO: Move all of these over to the client version
     @Override
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        TileEntity tile = world.getTileEntity(pos);
+        TileEntity tile = world.getBlockEntity(pos);
         if (tile instanceof TileEntityOilGenerator) {
             if (((TileEntityOilGenerator) tile).currentBurnTime > 0) {
                 for (int i = 0; i < 5; i++) {
@@ -55,9 +55,9 @@ public class BlockOilGenerator extends DirectionalBlock.Container {
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-        if (!world.isRemote) {
-            TileEntityOilGenerator generator = (TileEntityOilGenerator) world.getTileEntity(pos);
+    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+        if (!world.isClientSide) {
+            TileEntityOilGenerator generator = (TileEntityOilGenerator) world.getBlockEntity(pos);
             if (generator != null) {
                 if (!this.tryUseItemOnTank(player, hand, generator.tank)) {
                     NetworkHooks.openGui((ServerPlayerEntity) player, generator, pos);
@@ -70,7 +70,7 @@ public class BlockOilGenerator extends DirectionalBlock.Container {
 
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        switch (state.get(FACING)) {
+        switch (state.getValue(FACING)) {
             case EAST:
                 return Shapes.OilGeneratorShapes.SHAPE_E;
             case SOUTH:

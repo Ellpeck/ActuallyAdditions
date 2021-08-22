@@ -53,7 +53,7 @@ public class EnergyDisplay extends AbstractGui {
 
     public void draw(MatrixStack matrices) {
         Minecraft mc = Minecraft.getInstance();
-        mc.getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
+        mc.getTextureManager().bind(AssetUtil.GUI_INVENTORY_LOCATION);
 
         int barX = this.x;
         int barY = this.y;
@@ -69,14 +69,14 @@ public class EnergyDisplay extends AbstractGui {
         if (this.rfReference.getEnergyStored() > 0) {
             int i = this.rfReference.getEnergyStored() * 83 / this.rfReference.getMaxEnergyStored();
 
-            float[] color = AssetUtil.getWheelColor(mc.world.getTotalWorldTime() % 256);
+            float[] color = AssetUtil.getWheelColor(mc.level.getTotalWorldTime() % 256);
             RenderSystem.color4f(color[0] / 255F, color[1] / 255F, color[2] / 255F);
             this.blit(matrices, barX + 1, barY + 84 - i, 36, 172, 16, i);
             RenderSystem.color4f(1F, 1F, 1F);
         }
 
         if (this.drawTextNextTo) {
-            this.drawString(mc.fontRenderer, this.getOverlayText(), barX + 25, barY + 78, StringUtil.DECIMAL_COLOR_WHITE);
+            this.drawString(mc.font, this.getOverlayText(), barX + 25, barY + 78, StringUtil.DECIMAL_COLOR_WHITE);
         }
     }
 
@@ -86,7 +86,7 @@ public class EnergyDisplay extends AbstractGui {
 
             List<String> text = new ArrayList<>();
             text.add(this.getOverlayText());
-            GuiUtils.drawHoveringText(text, mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.fontRenderer);
+            GuiUtils.drawHoveringText(text, mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.font);
         }
     }
 
@@ -100,6 +100,6 @@ public class EnergyDisplay extends AbstractGui {
 
     private String getOverlayText() {
         NumberFormat format = NumberFormat.getInstance();
-        return String.format("%s/%s %s", format.format(this.rfReference.getEnergyStored()), format.format(this.rfReference.getMaxEnergyStored()), I18n.format("actuallyadditions.cflong"));
+        return String.format("%s/%s %s", format.format(this.rfReference.getEnergyStored()), format.format(this.rfReference.getMaxEnergyStored()), I18n.get("actuallyadditions.cflong"));
     }
 }

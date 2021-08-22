@@ -37,15 +37,15 @@ public class BlockDisplayStand extends BlockContainerBase {
 
     @Nullable
     @Override
-    public TileEntity createNewTileEntity(IBlockReader worldIn) {
+    public TileEntity newBlockEntity(IBlockReader worldIn) {
         return new TileEntityDisplayStand();
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-        ItemStack heldItem = player.getHeldItem(hand);
-        if (!world.isRemote) {
-            TileEntityDisplayStand stand = (TileEntityDisplayStand) world.getTileEntity(pos);
+    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+        ItemStack heldItem = player.getItemInHand(hand);
+        if (!world.isClientSide) {
+            TileEntityDisplayStand stand = (TileEntityDisplayStand) world.getBlockEntity(pos);
             if (stand != null) {
                 ItemStack display = stand.inv.getStackInSlot(0);
                 if (StackUtil.isValid(heldItem)) {
@@ -69,7 +69,7 @@ public class BlockDisplayStand extends BlockContainerBase {
                     }
                 } else {
                     if (StackUtil.isValid(display)) {
-                        player.setHeldItem(hand, display.copy());
+                        player.setItemInHand(hand, display.copy());
                         stand.inv.setStackInSlot(0, StackUtil.getEmpty());
                         return ActionResultType.PASS;
                     }

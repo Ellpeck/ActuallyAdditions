@@ -59,7 +59,7 @@ public final class ConfigValues {
         if (itemRedstoneTorchConfigurator == null || itemCompassConfigurator == null) {
             ActuallyAdditions.LOGGER.error("Parsing the Configuration Items config failed, reverting back to the default settings!");
 
-            itemRedstoneTorchConfigurator = Item.getItemFromBlock(Blocks.REDSTONE_TORCH);
+            itemRedstoneTorchConfigurator = Item.byBlock(Blocks.REDSTONE_TORCH);
             itemCompassConfigurator = Items.COMPASS;
         }
     }

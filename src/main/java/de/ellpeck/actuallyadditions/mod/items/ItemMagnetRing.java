@@ -30,37 +30,37 @@ public class ItemMagnetRing extends ItemEnergy {
     }
 
     @Override
-    public boolean hasEffect(ItemStack stack) {
+    public boolean isFoil(ItemStack stack) {
         return !ItemUtil.isEnabled(stack);
     }
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
-        if (entity instanceof PlayerEntity && !world.isRemote && !ItemUtil.isEnabled(stack)) {
+        if (entity instanceof PlayerEntity && !world.isClientSide && !ItemUtil.isEnabled(stack)) {
             PlayerEntity player = (PlayerEntity) entity;
             if (player.isCreative() || player.isSpectator()) {
                 return;
             }
-            if (!entity.isSneaking()) {
+            if (!entity.isShiftKeyDown()) {
                 //Get all the Items in the area
                 int range = 5;
-                List<ItemEntity> items = world.getEntitiesWithinAABB(ItemEntity.class, new AxisAlignedBB(entity.getPosX() - range, entity.getPosY() - range, entity.getPosZ() - range, entity.getPosX() + range, entity.getPosY() + range, entity.getPosZ() + range));
+                List<ItemEntity> items = world.getEntitiesOfClass(ItemEntity.class, new AxisAlignedBB(entity.getX() - range, entity.getY() - range, entity.getZ() - range, entity.getX() + range, entity.getY() + range, entity.getZ() + range));
                 if (!items.isEmpty()) {
                     for (ItemEntity item : items) {
                         // TODO: [port] check this data is being saved on the time
                         if (item.getPersistentData().getBoolean("PreventRemoteMovement")) {
                             continue;
                         }
-                        if (item.isAlive() && !item.cannotPickup()) {
+                        if (item.isAlive() && !item.hasPickUpDelay()) {
                             int energyForItem = 50 * item.getItem().getCount();
 
                             if (this.getEnergyStored(stack) >= energyForItem) {
                                 ItemStack oldItem = item.getItem().copy();
 
-                                item.onCollideWithPlayer(player);
+                                item.playerTouch(player);
 
                                 if (!player.isCreative()) {
-                                    if (!item.isAlive() || !ItemStack.areItemStacksEqual(item.getItem(), oldItem)) {
+                                    if (!item.isAlive() || !ItemStack.matches(item.getItem(), oldItem)) {
                                         this.extractEnergyInternal(stack, energyForItem, false);
                                     }
                                 }
@@ -73,12 +73,12 @@ public class ItemMagnetRing extends ItemEnergy {
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity player, Hand hand) {
-        if (!worldIn.isRemote && player.isSneaking()) {
+    public ActionResult<ItemStack> use(World worldIn, PlayerEntity player, Hand hand) {
+        if (!worldIn.isClientSide && player.isShiftKeyDown()) {
             ItemUtil.changeEnabled(player, hand);
-            return ActionResult.resultSuccess(player.getHeldItem(hand));
+            return ActionResult.success(player.getItemInHand(hand));
         }
 
-        return super.onItemRightClick(worldIn, player, hand);
+        return super.use(worldIn, player, hand);
     }
 }
