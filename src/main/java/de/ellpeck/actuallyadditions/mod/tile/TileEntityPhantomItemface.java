@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.blocks.BlockPhantom;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
@@ -21,8 +22,8 @@ import net.minecraftforge.items.CapabilityItemHandler;
 public class TileEntityPhantomItemface extends TileEntityPhantomFace {
 
     public TileEntityPhantomItemface() {
-        super(ActuallyTiles.PHANTOMITEMFACE_TILE.get());
-        this.type = BlockPhantom.Type.FACE;
+        super(ActuallyBlocks.PHANTOM_ITEMFACE.getTileEntityType());
+        this.type = BlockPhantom.Type.ITEMFACE;
     }
 
     @Override

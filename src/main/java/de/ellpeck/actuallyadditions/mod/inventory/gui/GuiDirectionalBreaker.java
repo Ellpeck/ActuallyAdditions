@@ -12,7 +12,7 @@ package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerDirectionalBreaker;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityDirectionalBreaker;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityLongRangeBreaker;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
@@ -24,7 +24,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class GuiDirectionalBreaker extends GuiWtfMojang<ContainerDirectionalBreaker> {
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_directional_breaker");
-    private final TileEntityDirectionalBreaker breaker;
+    private final TileEntityLongRangeBreaker breaker;
     private EnergyDisplay energy;
 
     public GuiDirectionalBreaker(ContainerDirectionalBreaker container, PlayerInventory inventory, ITextComponent title) {

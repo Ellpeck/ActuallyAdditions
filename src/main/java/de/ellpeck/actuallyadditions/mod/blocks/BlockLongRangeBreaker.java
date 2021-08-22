@@ -11,7 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.blocks;
 
 import de.ellpeck.actuallyadditions.mod.blocks.base.FullyDirectionalBlock;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityDirectionalBreaker;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityLongRangeBreaker;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -24,15 +24,15 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
-public class BlockDirectionalBreaker extends FullyDirectionalBlock.Container {
+public class BlockLongRangeBreaker extends FullyDirectionalBlock.Container {
 
-    public BlockDirectionalBreaker() {
+    public BlockLongRangeBreaker() {
         super(ActuallyBlocks.defaultPickProps(0));
     }
 
     @Override
     public TileEntity createNewTileEntity(IBlockReader worldIn) {
-        return new TileEntityDirectionalBreaker();
+        return new TileEntityLongRangeBreaker();
     }
 
     @Override
@@ -41,7 +41,7 @@ public class BlockDirectionalBreaker extends FullyDirectionalBlock.Container {
             return ActionResultType.PASS;
         }
 
-        return this.openGui(world, player, pos, TileEntityDirectionalBreaker.class);
+        return this.openGui(world, player, pos, TileEntityLongRangeBreaker.class);
     }
 
     @Override

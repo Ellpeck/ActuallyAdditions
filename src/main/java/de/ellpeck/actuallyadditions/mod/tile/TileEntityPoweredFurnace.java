@@ -35,7 +35,7 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 import javax.annotation.Nullable;
 
-public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements IButtonReactor, INamedContainerProvider {
+public class TileEntityPoweredFurnace extends TileEntityInventoryBase implements IButtonReactor, INamedContainerProvider {
 
     public static final int SLOT_INPUT_1 = 0;
     public static final int SLOT_OUTPUT_1 = 1;
@@ -54,7 +54,7 @@ public class TileEntityFurnaceDouble extends TileEntityInventoryBase implements 
     private boolean lastAutoSplit;
     private boolean lastSmelted;
 
-    public TileEntityFurnaceDouble() {
+    public TileEntityPoweredFurnace() {
         super(ActuallyTiles.FURNACE_DOUBLE_TILE.get(), 4);
     }
 

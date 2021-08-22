@@ -76,7 +76,7 @@ public class BlockRecipeGenerator extends RecipeProvider {
             .build(consumer);
 
         //Vertical Digger
-        Recipe.shaped(ActuallyBlocks.MINER.get())
+        Recipe.shaped(ActuallyBlocks.Vertical_DIGGER.get())
             .pattern("IRI", "RCR", "IDI")
             .key('R', Tags.Items.STORAGE_BLOCKS_REDSTONE)
             .key('I', ActuallyBlocks.IRON_CASING.get())
@@ -163,7 +163,7 @@ public class BlockRecipeGenerator extends RecipeProvider {
             .build(consumer);
 
         // Whitelist Item Laser Relay
-        Recipe.shapeless(ActuallyBlocks.LASER_RELAY_ITEM_WHITELIST.get())
+        Recipe.shapeless(ActuallyBlocks.LASER_RELAY_ITEM_ADVANCED.get())
             .ingredients(ActuallyBlocks.LASER_RELAY_ITEM.get(), ActuallyItems.COIL_ADVANCED.get(), ActuallyItems.BLACK_QUARTZ.get())
             .build(consumer);
 

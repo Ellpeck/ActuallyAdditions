@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.blocks.BlockPhantom;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
@@ -19,7 +20,7 @@ import net.minecraftforge.energy.CapabilityEnergy;
 public class TileEntityPhantomEnergyface extends TileEntityPhantomFace implements ISharingEnergyProvider {
 
     public TileEntityPhantomEnergyface() {
-        super(ActuallyTiles.PHANTOMENERGYFACE_TILE.get());
+        super(ActuallyBlocks.PHANTOM_ENERGYFACE.getTileEntityType());
         this.type = BlockPhantom.Type.ENERGYFACE;
     }
 

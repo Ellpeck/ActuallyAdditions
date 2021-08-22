@@ -11,7 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.inventory;
 
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotFilter;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayItemWhitelist;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayItemAdvanced;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -25,13 +25,13 @@ import java.util.Objects;
 
 public class ContainerLaserRelayItemWhitelist extends Container {
 
-    public final TileEntityLaserRelayItemWhitelist tile;
+    public final TileEntityLaserRelayItemAdvanced tile;
 
     public static ContainerLaserRelayItemWhitelist fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
-        return new ContainerLaserRelayItemWhitelist(windowId, inv, (TileEntityLaserRelayItemWhitelist) Objects.requireNonNull(inv.player.world.getTileEntity(data.readBlockPos())));
+        return new ContainerLaserRelayItemWhitelist(windowId, inv, (TileEntityLaserRelayItemAdvanced) Objects.requireNonNull(inv.player.world.getTileEntity(data.readBlockPos())));
     }
 
-    public ContainerLaserRelayItemWhitelist(int windowId, PlayerInventory inventory, TileEntityLaserRelayItemWhitelist tile) {
+    public ContainerLaserRelayItemWhitelist(int windowId, PlayerInventory inventory, TileEntityLaserRelayItemAdvanced tile) {
         super(ActuallyContainers.LASER_RELAY_ITEM_WHITELIST_CONTAINER.get(), windowId);
         this.tile = tile;
 

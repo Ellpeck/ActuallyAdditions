@@ -11,7 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.api.recipe.CrusherRecipe;
-import de.ellpeck.actuallyadditions.mod.blocks.BlockFurnaceDouble;
+import de.ellpeck.actuallyadditions.mod.blocks.BlockPoweredFurnace;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerGrinder;
 import de.ellpeck.actuallyadditions.mod.misc.SoundHandler;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
@@ -94,7 +94,7 @@ public class TileEntityCrusher extends TileEntityInventoryBase implements IButto
         super.updateEntity();
         if (!this.world.isRemote) {
             if (this.isDouble && this.isAutoSplit) {
-                TileEntityFurnaceDouble.autoSplit(this.inv, SLOT_INPUT_1, SLOT_INPUT_2);
+                TileEntityPoweredFurnace.autoSplit(this.inv, SLOT_INPUT_1, SLOT_INPUT_2);
             }
 
             boolean crushed = false;
@@ -144,7 +144,7 @@ public class TileEntityCrusher extends TileEntityInventoryBase implements IButto
             }
 
             BlockState currState = this.world.getBlockState(this.pos);
-            boolean current = currState.get(BlockFurnaceDouble.IS_ON);
+            boolean current = currState.get(BlockPoweredFurnace.IS_ON);
             boolean changeTo = current;
             if (this.lastCrushed != crushed) {
                 changeTo = crushed;
@@ -157,7 +157,7 @@ public class TileEntityCrusher extends TileEntityInventoryBase implements IButto
             }
 
             if (changeTo != current) {
-                this.world.setBlockState(this.pos, currState.with(BlockFurnaceDouble.IS_ON, changeTo));
+                this.world.setBlockState(this.pos, currState.with(BlockPoweredFurnace.IS_ON, changeTo));
             }
 
             this.lastCrushed = crushed;

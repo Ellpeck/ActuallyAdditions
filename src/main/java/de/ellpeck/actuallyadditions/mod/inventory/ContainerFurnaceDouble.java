@@ -12,7 +12,7 @@ package de.ellpeck.actuallyadditions.mod.inventory;
 
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotOutput;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityFurnaceDouble;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityPoweredFurnace;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -28,20 +28,20 @@ import java.util.Objects;
 
 public class ContainerFurnaceDouble extends Container {
 
-    public final TileEntityFurnaceDouble furnace;
+    public final TileEntityPoweredFurnace furnace;
 
     public static ContainerFurnaceDouble fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
-        return new ContainerFurnaceDouble(windowId, inv, (TileEntityFurnaceDouble) Objects.requireNonNull(inv.player.world.getTileEntity(data.readBlockPos())));
+        return new ContainerFurnaceDouble(windowId, inv, (TileEntityPoweredFurnace) Objects.requireNonNull(inv.player.world.getTileEntity(data.readBlockPos())));
     }
 
-    public ContainerFurnaceDouble(int windowId, PlayerInventory inventory, TileEntityFurnaceDouble tile) {
+    public ContainerFurnaceDouble(int windowId, PlayerInventory inventory, TileEntityPoweredFurnace tile) {
         super(ActuallyContainers.FURNACE_DOUBLE_CONTAINER.get(), windowId);
         this.furnace = tile;
 
-        this.addSlot(new SlotItemHandlerUnconditioned(this.furnace.inv, TileEntityFurnaceDouble.SLOT_INPUT_1, 51, 21));
-        this.addSlot(new SlotOutput(this.furnace.inv, TileEntityFurnaceDouble.SLOT_OUTPUT_1, 51, 69));
-        this.addSlot(new SlotItemHandlerUnconditioned(this.furnace.inv, TileEntityFurnaceDouble.SLOT_INPUT_2, 109, 21));
-        this.addSlot(new SlotOutput(this.furnace.inv, TileEntityFurnaceDouble.SLOT_OUTPUT_2, 108, 69));
+        this.addSlot(new SlotItemHandlerUnconditioned(this.furnace.inv, TileEntityPoweredFurnace.SLOT_INPUT_1, 51, 21));
+        this.addSlot(new SlotOutput(this.furnace.inv, TileEntityPoweredFurnace.SLOT_OUTPUT_1, 51, 69));
+        this.addSlot(new SlotItemHandlerUnconditioned(this.furnace.inv, TileEntityPoweredFurnace.SLOT_INPUT_2, 109, 21));
+        this.addSlot(new SlotOutput(this.furnace.inv, TileEntityPoweredFurnace.SLOT_OUTPUT_2, 108, 69));
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 9; j++) {
@@ -67,7 +67,7 @@ public class ContainerFurnaceDouble extends Container {
             ItemStack currentStack = newStack.copy();
 
             //Slots in Inventory to shift from
-            if (slot == TileEntityFurnaceDouble.SLOT_OUTPUT_1 || slot == TileEntityFurnaceDouble.SLOT_OUTPUT_2) {
+            if (slot == TileEntityPoweredFurnace.SLOT_OUTPUT_1 || slot == TileEntityPoweredFurnace.SLOT_OUTPUT_2) {
                 if (!this.mergeItemStack(newStack, inventoryStart, hotbarEnd + 1, true)) {
                     return StackUtil.getEmpty();
                 }
@@ -85,8 +85,8 @@ public class ContainerFurnaceDouble extends Container {
 
                 //Shift from Inventory
                 if (StackUtil.isValid(recipeOutput)) {
-                    if (!this.mergeItemStack(newStack, TileEntityFurnaceDouble.SLOT_INPUT_1, TileEntityFurnaceDouble.SLOT_INPUT_1 + 1, false)) {
-                        if (!this.mergeItemStack(newStack, TileEntityFurnaceDouble.SLOT_INPUT_2, TileEntityFurnaceDouble.SLOT_INPUT_2 + 1, false)) {
+                    if (!this.mergeItemStack(newStack, TileEntityPoweredFurnace.SLOT_INPUT_1, TileEntityPoweredFurnace.SLOT_INPUT_1 + 1, false)) {
+                        if (!this.mergeItemStack(newStack, TileEntityPoweredFurnace.SLOT_INPUT_2, TileEntityPoweredFurnace.SLOT_INPUT_2 + 1, false)) {
                             return StackUtil.getEmpty();
                         }
                     }

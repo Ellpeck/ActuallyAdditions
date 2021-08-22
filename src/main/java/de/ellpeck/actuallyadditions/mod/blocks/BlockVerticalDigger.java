@@ -12,7 +12,7 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import de.ellpeck.actuallyadditions.mod.blocks.base.DirectionalBlock;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityMiner;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityVerticalDigger;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MainWindow;
@@ -41,12 +41,12 @@ public class BlockVerticalDigger extends DirectionalBlock.Container implements I
 
     @Override
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        return this.openGui(worldIn, player, pos, TileEntityMiner.class);
+        return this.openGui(worldIn, player, pos, TileEntityVerticalDigger.class);
     }
 
     @Override
     public TileEntity createNewTileEntity(IBlockReader world) {
-        return new TileEntityMiner();
+        return new TileEntityVerticalDigger();
     }
 
     @Override
@@ -56,8 +56,8 @@ public class BlockVerticalDigger extends DirectionalBlock.Container implements I
             return;
         }
         TileEntity tile = minecraft.world.getTileEntity(((BlockRayTraceResult) rayCast).getPos());
-        if (tile instanceof TileEntityMiner) {
-            TileEntityMiner miner = (TileEntityMiner) tile;
+        if (tile instanceof TileEntityVerticalDigger) {
+            TileEntityVerticalDigger miner = (TileEntityVerticalDigger) tile;
             String info = miner.checkY == 0
                 ? "Done Mining!"
                 : miner.checkY == -1

@@ -42,7 +42,7 @@ import net.minecraftforge.fluids.IFluidBlock;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class TileEntityMiner extends TileEntityInventoryBase implements IButtonReactor, IEnergyDisplay, INamedContainerProvider {
+public class TileEntityVerticalDigger extends TileEntityInventoryBase implements IButtonReactor, IEnergyDisplay, INamedContainerProvider {
 
     public static final int ENERGY_USE_PER_BLOCK = 650;
     public static final int DEFAULT_RANGE = 2;
@@ -57,7 +57,7 @@ public class TileEntityMiner extends TileEntityInventoryBase implements IButtonR
     private int oldCheckY;
     private int oldCheckZ;
 
-    public TileEntityMiner() {
+    public TileEntityVerticalDigger() {
         super(ActuallyTiles.MINER_TILE.get(), 9);
     }
 

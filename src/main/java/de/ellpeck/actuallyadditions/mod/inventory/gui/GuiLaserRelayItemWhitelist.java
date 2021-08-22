@@ -16,7 +16,7 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerLaserRelayItemWhitelist;
 import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiInputter.SmallerButton;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayItemWhitelist;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayItemAdvanced;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.gui.widget.button.Button;
@@ -34,7 +34,7 @@ import java.util.List;
 public class GuiLaserRelayItemWhitelist extends GuiWtfMojang<ContainerLaserRelayItemWhitelist> {
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_laser_relay_item_whitelist");
-    private final TileEntityLaserRelayItemWhitelist tile;
+    private final TileEntityLaserRelayItemAdvanced tile;
 
     private FilterSettingsGui leftFilter;
     private FilterSettingsGui rightFilter;

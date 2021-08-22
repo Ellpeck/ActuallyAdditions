@@ -85,7 +85,7 @@ public class ActuallyAdditions {
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         ActuallyBlocks.BLOCKS.register(eventBus);
-        ActuallyTiles.TILES.register(eventBus);
+        ActuallyBlocks.TILES.register(eventBus);
         ActuallyContainers.CONTAINERS.register(eventBus);
 
         MinecraftForge.EVENT_BUS.addListener(this::serverStarted);

@@ -14,7 +14,7 @@ import static net.minecraft.state.properties.BlockStateProperties.HORIZONTAL_FAC
 import static net.minecraft.state.properties.BlockStateProperties.LIT;
 
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityFurnaceDouble;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityPoweredFurnace;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -35,8 +35,8 @@ import net.minecraft.world.server.ServerWorld;
 
 import java.util.Random;
 
-public class BlockFurnaceDouble extends BlockContainerBase {
-    public BlockFurnaceDouble() {
+public class BlockPoweredFurnace extends BlockContainerBase {
+    public BlockPoweredFurnace() {
         // TODO: [port] confirm this is correct for light level... Might not be reactive.
         super(ActuallyBlocks.defaultPickProps(0).tickRandomly().setLightLevel(state -> state.get(LIT)
             ? 12
@@ -47,7 +47,7 @@ public class BlockFurnaceDouble extends BlockContainerBase {
 
     @Override
     public TileEntity createNewTileEntity(IBlockReader worldIn) {
-        return new TileEntityFurnaceDouble();
+        return new TileEntityPoweredFurnace();
     }
 
     @Override
@@ -61,7 +61,7 @@ public class BlockFurnaceDouble extends BlockContainerBase {
 
     @Override
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        return this.openGui(worldIn, player, pos, TileEntityFurnaceDouble.class);
+        return this.openGui(worldIn, player, pos, TileEntityPoweredFurnace.class);
     }
 
     @Override

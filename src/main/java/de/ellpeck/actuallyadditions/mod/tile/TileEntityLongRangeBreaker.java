@@ -34,7 +34,7 @@ import net.minecraftforge.energy.IEnergyStorage;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implements INamedContainerProvider {
+public class TileEntityLongRangeBreaker extends TileEntityInventoryBase implements INamedContainerProvider {
 
     public static final int RANGE = 8;
     public static final int ENERGY_USE = 5;
@@ -43,7 +43,7 @@ public class TileEntityDirectionalBreaker extends TileEntityInventoryBase implem
     private int lastEnergy;
     private int currentTime;
 
-    public TileEntityDirectionalBreaker() {
+    public TileEntityLongRangeBreaker() {
         super(ActuallyTiles.DIRECTIONALBREAKER_TILE.get(), 9);
     }
 

@@ -19,6 +19,7 @@ import de.ellpeck.actuallyadditions.registration.AABlockReg;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
@@ -26,6 +27,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public final class ActuallyBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, ActuallyAdditions.MODID);
+    public static final DeferredRegister<TileEntityType<?>> TILES = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, ActuallyAdditions.MODID);
 
     private static final Item.Properties defaultBlockItemProperties = new Item.Properties().group(ActuallyAdditions.GROUP).maxStackSize(64);
 
@@ -57,6 +59,15 @@ public final class ActuallyBlocks {
     public static final AABlockReg<BlockCanolaPress, AABlockItem, TileEntityCanolaPress> CANOLA_PRESS = new AABlockReg<>("canola_press", BlockCanolaPress::new,
         (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityCanolaPress::new);
 
+    public static final AABlockReg<BlockFermentingBarrel, AABlockItem, TileEntityFermentingBarrel> FERMENTING_BARREL = new AABlockReg<>("fermenting_barrel", BlockFermentingBarrel::new,
+        (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityFermentingBarrel::new);
+
+    public static final AABlockReg<BlockOilGenerator, AABlockItem, TileEntityOilGenerator> OIL_GENERATOR = new AABlockReg<>("oil_generator", BlockOilGenerator::new,
+        (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityOilGenerator::new);
+
+    public static final AABlockReg<BlockCoalGenerator, AABlockItem, TileEntityCoalGenerator> COAL_GENERATOR = new AABlockReg<>("coal_generator", BlockCoalGenerator::new,
+        (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityCoalGenerator::new);
+
     public static final AABlockReg<BlockLeafGenerator, AABlockItem, TileEntityLeafGenerator> LEAF_GENERATOR = new AABlockReg<>("leaf_generator", BlockLeafGenerator::new,
         (b) -> new AABlockItem(b, defaultBlockItemProperties) , TileEntityLeafGenerator::new);
 
@@ -79,6 +90,22 @@ public final class ActuallyBlocks {
 
     public static final AABlockReg<BlockBioReactor, AABlockItem, TileEntityBioReactor> BIOREACTOR = new AABlockReg<>("bio_reactor", BlockBioReactor::new,
         (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityBioReactor::new);
+
+    public static final AABlockReg<BlockVerticalDigger, AABlockItem, TileEntityVerticalDigger> Vertical_DIGGER = new AABlockReg<>("vertical_digger", BlockVerticalDigger::new,
+        (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityVerticalDigger::new);
+
+    public static final AABlockReg<BlockAtomicReconstructor, AABlockItem, TileEntityAtomicReconstructor> ATOMIC_RECONSTRUCTOR = new AABlockReg<>("atomic_reconstructor", BlockAtomicReconstructor::new,
+        (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityAtomicReconstructor::new);
+    public static final AABlockReg<BlockRangedCollector, AABlockItem, TileEntityRangedCollector> RANGED_COLLECTOR = new AABlockReg<>("ranged_collector", BlockRangedCollector::new,
+        (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityRangedCollector::new);
+    public static final AABlockReg<BlockLongRangeBreaker, AABlockItem, TileEntityLongRangeBreaker> LONG_RANGE_BREAKER = new AABlockReg<>("long_range_breaker", BlockLongRangeBreaker::new,
+        (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityLongRangeBreaker::new);
+
+    public static final AABlockReg<BlockCoffeeMachine, AABlockItem, TileEntityCoffeeMachine> COFFEE_MACHINE = new AABlockReg<>("coffee_machine", BlockCoffeeMachine::new,
+        (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityCoffeeMachine::new);
+    public static final AABlockReg<BlockPoweredFurnace, AABlockItem, TileEntityPoweredFurnace> POWERED_FURNACE = new AABlockReg<>("powered_furnace", BlockPoweredFurnace::new,
+        (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityPoweredFurnace::new);
+
 
     // Crystal Blocks
     public static final AABlockReg<BlockCrystal, AABlockItem,?> ENORI_CRYSTAL = new AABlockReg<>("enori_crystal_block", () -> new BlockCrystal(false), BlockCrystal::createBlockItem);
@@ -135,8 +162,8 @@ public final class ActuallyBlocks {
         (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityItemInterfaceHopping::new);
 
     // Phantom stuff
-    public static final AABlockReg<BlockPhantom, AABlockItem, TileEntityPhantomFace> PHANTOMFACE = new AABlockReg<>("phantomface", () -> new BlockPhantom(BlockPhantom.Type.FACE),
-        (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityPhantomFace::new);
+    public static final AABlockReg<BlockPhantom, AABlockItem, TileEntityPhantomItemface> PHANTOM_ITEMFACE = new AABlockReg<>("phantom_itemface", () -> new BlockPhantom(BlockPhantom.Type.ITEMFACE),
+        (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityPhantomItemface::new);
     public static final AABlockReg<BlockPhantom, AABlockItem, TileEntityPhantomPlacer> PHANTOM_PLACER = new AABlockReg<>("phantom_placer", () -> new BlockPhantom(BlockPhantom.Type.PLACER),
         (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityPhantomPlacer::new);
     public static final AABlockReg<BlockPhantom, AABlockItem, TileEntityPhantomLiquiface> PHANTOM_LIQUIFACE = new AABlockReg<>("phantom_liquiface", () -> new BlockPhantom(BlockPhantom.Type.LIQUIFACE),
@@ -147,28 +174,40 @@ public final class ActuallyBlocks {
         (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityPhantomRedstoneface::new);
     public static final AABlockReg<BlockPhantom, AABlockItem, TileEntityPhantomBreaker> PHANTOM_BREAKER = new AABlockReg<>("phantom_breaker", () -> new BlockPhantom(BlockPhantom.Type.BREAKER),
         (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityPhantomBreaker::new);
+    public static final AABlockReg<BlockPhantomBooster, AABlockItem, TileEntityPhantomBooster> PHANTOM_BOOSTER = new AABlockReg<>("phantom_booster", BlockPhantomBooster::new,
+        (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityPhantomBooster::new);
 
     // Misc Tiles
     public static final AABlockReg<BlockBatteryBox, AABlockItem, TileEntityBatteryBox> BATTERY_BOX = new AABlockReg<>("battery_box", BlockBatteryBox::new,
         (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityBatteryBox::new);
 
+    public static final AABlockReg<BlockFireworkBox, AABlockItem, TileEntityFireworkBox> FIREWORK_BOX = new AABlockReg<>("firework_box", BlockFireworkBox::new,
+        (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityFireworkBox::new);
+
+    public static final AABlockReg<BlockShockSuppressor, AABlockItem, TileEntityShockSuppressor> SHOCK_SUPPRESSOR = new AABlockReg<>("shock_suppressor", BlockShockSuppressor::new,
+        (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityShockSuppressor::new);
+    public static final AABlockReg<BlockHeatCollector, AABlockItem, TileEntityHeatCollector> HEAT_COLLECTOR = new AABlockReg<>("heat_collector", BlockHeatCollector::new,
+        (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityHeatCollector::new);
+
+
+
+    // Freakin-Lasers
+    public static final AABlockReg<BlockLaserRelay, AABlockItem, TileEntityLaserRelayEnergy> LASER_RELAY = new AABlockReg<>("laser_relay", () -> new BlockLaserRelay(BlockLaserRelay.Type.ENERGY_BASIC),
+        (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityLaserRelayEnergy::new);
+    public static final AABlockReg<BlockLaserRelay, AABlockItem, TileEntityLaserRelayEnergyAdvanced> LASER_RELAY_ADVANCED = new AABlockReg<>("laser_relay_advanced", () -> new BlockLaserRelay(BlockLaserRelay.Type.ENERGY_ADVANCED),
+        (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityLaserRelayEnergyAdvanced::new);
+    public static final AABlockReg<BlockLaserRelay, AABlockItem,TileEntityLaserRelayEnergyExtreme> LASER_RELAY_EXTREME = new AABlockReg<>("laser_relay_extreme", () -> new BlockLaserRelay(BlockLaserRelay.Type.ENERGY_EXTREME),
+        (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityLaserRelayEnergyExtreme::new);
+    public static final AABlockReg<BlockLaserRelay, AABlockItem,TileEntityLaserRelayFluids> LASER_RELAY_FLUIDS = new AABlockReg<>("laser_relay_fluids", () -> new BlockLaserRelay(BlockLaserRelay.Type.FLUIDS),
+        (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityLaserRelayFluids::new);
+    public static final AABlockReg<BlockLaserRelay, AABlockItem,TileEntityLaserRelayItem> LASER_RELAY_ITEM = new AABlockReg<>("laser_relay_item", () -> new BlockLaserRelay(BlockLaserRelay.Type.ITEM),
+        (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityLaserRelayItem::new);
+    public static final AABlockReg<BlockLaserRelay, AABlockItem, TileEntityLaserRelayItemAdvanced> LASER_RELAY_ITEM_ADVANCED = new AABlockReg<>("laser_relay_item_advanced", () -> new BlockLaserRelay(BlockLaserRelay.Type.ITEM_WHITELIST),
+        (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityLaserRelayItemAdvanced::new);
 
 
     //public static final RegistryObject<Block> WILD_PLANT = BLOCKS.register("wild", BlockWildPlant::new); //TODO: what is this?
     public static final RegistryObject<Block> TINY_TORCH = BLOCKS.register("tiny_torch", BlockTinyTorch::new);
-    public static final RegistryObject<Block> SHOCK_SUPPRESSOR = BLOCKS.register("shock_suppressor", BlockShockSuppressor::new);
-    public static final RegistryObject<Block> FIREWORK_BOX = BLOCKS.register("firework_box", BlockFireworkBox::new);
-    public static final RegistryObject<Block> MINER = BLOCKS.register("miner", BlockVerticalDigger::new);
-    public static final RegistryObject<Block> ATOMIC_RECONSTRUCTOR = BLOCKS.register("atomic_reconstructor", BlockAtomicReconstructor::new);
-    public static final RegistryObject<Block> LASER_RELAY = BLOCKS.register("laser_relay", () -> new BlockLaserRelay(BlockLaserRelay.Type.ENERGY_BASIC));
-    public static final RegistryObject<Block> LASER_RELAY_ADVANCED = BLOCKS.register("laser_relay_advanced", () -> new BlockLaserRelay(BlockLaserRelay.Type.ENERGY_ADVANCED));
-    public static final RegistryObject<Block> LASER_RELAY_EXTREME = BLOCKS.register("laser_relay_extreme", () -> new BlockLaserRelay(BlockLaserRelay.Type.ENERGY_EXTREME));
-    public static final RegistryObject<Block> LASER_RELAY_FLUIDS = BLOCKS.register("laser_relay_fluids", () -> new BlockLaserRelay(BlockLaserRelay.Type.FLUIDS));
-    public static final RegistryObject<Block> LASER_RELAY_ITEM = BLOCKS.register("laser_relay_item", () -> new BlockLaserRelay(BlockLaserRelay.Type.ITEM));
-    public static final RegistryObject<Block> LASER_RELAY_ITEM_WHITELIST = BLOCKS.register("laser_relay_item_whitelist", () -> new BlockLaserRelay(BlockLaserRelay.Type.ITEM_WHITELIST));
-    public static final RegistryObject<Block> RANGED_COLLECTOR = BLOCKS.register("ranged_collector", BlockRangedCollector::new);
-    public static final RegistryObject<Block> DIRECTIONAL_BREAKER = BLOCKS.register("directional_breaker", BlockDirectionalBreaker::new);
-
     public static final RegistryObject<Block> ETHETIC_GREEN_BLOCK = BLOCKS.register("ethetic_green_block", BlockGeneric::new);
     public static final RegistryObject<Block> ETHETIC_WHITE_BLOCK = BLOCKS.register("ethetic_white_block", BlockGeneric::new);
     public static final RegistryObject<Block> ETHETIC_GREEN_STAIRS = BLOCKS.register("ethetic_green_stairs", () -> new StairsBlock(() -> ETHETIC_GREEN_BLOCK.get().getDefaultState(), AbstractBlock.Properties.from(ETHETIC_GREEN_BLOCK.get())));
@@ -177,22 +216,11 @@ public final class ActuallyBlocks {
     public static final RegistryObject<Block> ETHETIC_WHITE_SLAB = BLOCKS.register("ethetic_white_slab", () -> new SlabBlock(AbstractBlock.Properties.from(ETHETIC_WHITE_BLOCK.get())));
     public static final RegistryObject<Block> ETHETIC_GREEN_WALL = BLOCKS.register("ethetic_green_wall", () -> new WallBlock(AbstractBlock.Properties.from(ETHETIC_GREEN_BLOCK.get())));
     public static final RegistryObject<Block> ETHETIC_WHITE_WALL = BLOCKS.register("ethetic_white_wall", () -> new WallBlock(AbstractBlock.Properties.from(ETHETIC_WHITE_BLOCK.get())));
-
-
-    //    public static final RegistryObject<Block> blockTreasureChest = BLOCKS.register("treasure_chest", BlockTreasureChest::new);
-    public static final RegistryObject<Block> COAL_GENERATOR = BLOCKS.register("coal_generator", BlockCoalGenerator::new);
-    public static final RegistryObject<Block> OIL_GENERATOR = BLOCKS.register("oil_generator", BlockOilGenerator::new);
-    public static final RegistryObject<Block> FERMENTING_BARREL = BLOCKS.register("fermenting_barrel", BlockFermentingBarrel::new);
     public static final RegistryObject<Block> RICE = BLOCKS.register("rice", () -> new BlockPlant(ActuallyItems.RICE_SEED.get()));// TODO: [port][replace] ensure values match these new BlockPlant(1, 2));
     public static final RegistryObject<Block> CANOLA = BLOCKS.register("canola", () -> new BlockPlant(ActuallyItems.CANOLA_SEED.get()));// TODO: [port][replace] ensure values match these new BlockPlant(2, 3));
     public static final RegistryObject<Block> FLAX = BLOCKS.register("flax", () -> new BlockPlant(ActuallyItems.FLAX_SEED.get()));// TODO: [port][replace] ensure values match these new BlockPlant(2, 4));
     public static final RegistryObject<Block> COFFEE = BLOCKS.register("coffee", () -> new BlockPlant(ActuallyItems.COFFEE_SEED.get()));// TODO: [port][replace] ensure values match these new BlockPlant(2, 2));
-    public static final RegistryObject<Block> FURNACE_DOUBLE = BLOCKS.register("furnace_double", BlockFurnaceDouble::new);
-    //    public static final RegistryObject<Block> blockFurnaceSolar = BLOCKS.register("furnace_solar", BlockFurnaceSolar::new);
-    public static final RegistryObject<Block> HEAT_COLLECTOR = BLOCKS.register("heat_collector", BlockHeatCollector::new);
     public static final RegistryObject<Block> GREENHOUSE_GLASS = BLOCKS.register("greenhouse_glass", BlockGreenhouseGlass::new);
-    public static final RegistryObject<Block> COFFEE_MACHINE = BLOCKS.register("coffee_machine", BlockCoffeeMachine::new);
-    public static final RegistryObject<Block> PHANTOM_BOOSTER = BLOCKS.register("phantom_booster", BlockPhantomBooster::new);
     public static final RegistryObject<Block> BLACK_QUARTZ_BLOCK = BLOCKS.register("black_quartz_block", BlockGeneric::new);
     public static final RegistryObject<Block> BLACK_QUARTZ_PILLAR_BLOCK = BLOCKS.register("black_quartz_pillar_block", BlockGeneric::new);
     public static final RegistryObject<Block> CHISELED_BLACK_QUARTZ_BLOCK = BLOCKS.register("chiseled_black_quartz_block", BlockGeneric::new);

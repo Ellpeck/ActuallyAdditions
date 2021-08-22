@@ -29,12 +29,12 @@ import net.minecraft.util.text.StringTextComponent;
 
 import javax.annotation.Nullable;
 
-public class TileEntityLaserRelayItemWhitelist extends TileEntityLaserRelayItem implements IButtonReactor, INamedContainerProvider {
+public class TileEntityLaserRelayItemAdvanced extends TileEntityLaserRelayItem implements IButtonReactor, INamedContainerProvider {
 
     public FilterSettings leftFilter = new FilterSettings(12, true, true, false, false, 0, -1000);
     public FilterSettings rightFilter = new FilterSettings(12, true, true, false, false, 0, -2000);
 
-    public TileEntityLaserRelayItemWhitelist() {
+    public TileEntityLaserRelayItemAdvanced() {
         super(ActuallyTiles.LASERRELAYITEMWHITELIST_TILE.get());
     }
 
