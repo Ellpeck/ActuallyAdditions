@@ -26,10 +26,6 @@ public class ContainerDirectionalBreaker extends Container {
 
     public final TileEntityLongRangeBreaker breaker;
 
-    public static ContainerDirectionalBreaker fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
-        return new ContainerDirectionalBreaker(windowId, inv, (TileEntityDirectionalBreaker) Objects.requireNonNull(inv.player.level.getBlockEntity(data.readBlockPos())));
-    }
-
     public ContainerDirectionalBreaker(int windowId, PlayerInventory inventory, TileEntityLongRangeBreaker tile) {
         super(ActuallyContainers.DIRECTIONAL_BREAKER_CONTAINER.get(), windowId);
         this.breaker = tile;
@@ -48,6 +44,10 @@ public class ContainerDirectionalBreaker extends Container {
         for (int i = 0; i < 9; i++) {
             this.addSlot(new Slot(inventory, i, 8 + i * 18, 155));
         }
+    }
+
+    public static ContainerDirectionalBreaker fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
+        return new ContainerDirectionalBreaker(windowId, inv, (TileEntityLongRangeBreaker) Objects.requireNonNull(inv.player.level.getBlockEntity(data.readBlockPos())));
     }
 
     @Override

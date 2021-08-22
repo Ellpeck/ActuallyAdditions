@@ -27,62 +27,62 @@ public class BlockRecipeGenerator extends RecipeProvider {
 
         //Farmer
         Recipe.shaped(ActuallyBlocks.FARMER.get())
-            .pattern("ISI", "SCS", "ISI")
-            .key('I', ActuallyBlocks.ENORI_CRYSTAL.getItem())
-            .key('C', ActuallyBlocks.IRON_CASING.get())
-            .key('S', Tags.Items.SEEDS)
-            .build(consumer);
+                .pattern("ISI", "SCS", "ISI")
+                .define('I', ActuallyBlocks.ENORI_CRYSTAL.getItem())
+                .define('C', ActuallyBlocks.IRON_CASING.get())
+                .define('S', Tags.Items.SEEDS)
+                .save(consumer);
 
         //Empowerer
         Recipe.shaped(ActuallyBlocks.EMPOWERER.get())
-            .pattern(" R ", " B ", "CDC")
-            .define('R', ActuallyItems.RESTONIA_CRYSTAL.get())
-            .define('B', ActuallyItems.BATTERY_DOUBLE.get())
-            .define('C', ActuallyBlocks.IRON_CASING.get())
-            .define('D', ActuallyBlocks.DISPLAY_STAND.get())
-            .save(consumer);
+                .pattern(" R ", " B ", "CDC")
+                .define('R', ActuallyItems.RESTONIA_CRYSTAL.get())
+                .define('B', ActuallyItems.BATTERY_DOUBLE.get())
+                .define('C', ActuallyBlocks.IRON_CASING.get())
+                .define('D', ActuallyBlocks.DISPLAY_STAND.get())
+                .save(consumer);
 
         //Tiny Torch
         Recipe.shaped(ActuallyBlocks.TINY_TORCH.get(), 2)
-            .pattern("C", "S")
-            .define('C', ActuallyTags.Items.TINY_COALS)
-            .define('S', Tags.Items.RODS_WOODEN)
-            .save(consumer, new ResourceLocation(ActuallyAdditions.MODID, "tiny_torch"));
+                .pattern("C", "S")
+                .define('C', ActuallyTags.Items.TINY_COALS)
+                .define('S', Tags.Items.RODS_WOODEN)
+                .save(consumer, new ResourceLocation(ActuallyAdditions.MODID, "tiny_torch"));
 
         //Fireworks Box
         Recipe.shaped(ActuallyBlocks.FIREWORK_BOX.get())
-            .pattern("GFG", "SAS", "CCC")
-            .define('G', Tags.Items.GUNPOWDER)
-            .define('S', Tags.Items.RODS_WOODEN)
-            .define('A', ActuallyBlocks.IRON_CASING.get())
-            .define('F', Items.FIREWORK_ROCKET)
-            .define('C', ActuallyItems.ENORI_CRYSTAL.get())
-            .save(consumer);
+                .pattern("GFG", "SAS", "CCC")
+                .define('G', Tags.Items.GUNPOWDER)
+                .define('S', Tags.Items.RODS_WOODEN)
+                .define('A', ActuallyBlocks.IRON_CASING.get())
+                .define('F', Items.FIREWORK_ROCKET)
+                .define('C', ActuallyItems.ENORI_CRYSTAL.get())
+                .save(consumer);
 
         //Shock Suppressor
         Recipe.shaped(ActuallyBlocks.SHOCK_SUPPRESSOR.get())
-            .pattern("OAO", "ACA", "OAO")
-            .define('A', ActuallyItems.VOID_EMPOWERED_CRYSTAL.get())
-            .define('O', Tags.Items.OBSIDIAN)
-            .define('C', ActuallyItems.COIL_ADVANCED.get())
-            .save(consumer);
+                .pattern("OAO", "ACA", "OAO")
+                .define('A', ActuallyItems.VOID_EMPOWERED_CRYSTAL.get())
+                .define('O', Tags.Items.OBSIDIAN)
+                .define('C', ActuallyItems.COIL_ADVANCED.get())
+                .save(consumer);
 
         //Display Stand
         Recipe.shaped(ActuallyBlocks.DISPLAY_STAND.get())
-            .pattern(" R ", "EEE", "GGG")
-            .define('R', ActuallyItems.COIL_ADVANCED.get())
-            .define('E', ActuallyBlocks.ETHETIC_GREEN_BLOCK.get())
-            .define('G', ActuallyBlocks.ETHETIC_WHITE_BLOCK.get())
-            .save(consumer);
+                .pattern(" R ", "EEE", "GGG")
+                .define('R', ActuallyItems.COIL_ADVANCED.get())
+                .define('E', ActuallyBlocks.ETHETIC_GREEN_BLOCK.get())
+                .define('G', ActuallyBlocks.ETHETIC_WHITE_BLOCK.get())
+                .save(consumer);
 
         //Vertical Digger
         Recipe.shaped(ActuallyBlocks.Vertical_DIGGER.get())
-            .pattern("IRI", "RCR", "IDI")
-            .define('R', Tags.Items.STORAGE_BLOCKS_REDSTONE)
-            .define('I', ActuallyBlocks.IRON_CASING.get())
-            .define('C', ActuallyItems.VOID_EMPOWERED_CRYSTAL.get())
-            .define('D', ActuallyItems.DRILL.get())
-            .save(consumer);
+                .pattern("IRI", "RCR", "IDI")
+                .define('R', Tags.Items.STORAGE_BLOCKS_REDSTONE)
+                .define('I', ActuallyBlocks.IRON_CASING.get())
+                .define('C', ActuallyItems.VOID_EMPOWERED_CRYSTAL.get())
+                .define('D', ActuallyItems.DRILL.get())
+                .save(consumer);
 
         //Black Quartz Wall
         Recipe.wall(ActuallyBlocks.BLACK_QUARTZ_WALL.get(), ActuallyBlocks.BLACK_QUARTZ_PILLAR_BLOCK.get(), consumer);
@@ -131,60 +131,61 @@ public class BlockRecipeGenerator extends RecipeProvider {
 
         // Atomic Reconstructor
         Recipe.shaped(ActuallyBlocks.ATOMIC_RECONSTRUCTOR.get())
-            .pattern("IRI", "RCR", "IRI")
-            .key('R', Tags.Items.DUSTS_REDSTONE)
-            .key('I', Tags.Items.INGOTS_IRON)
-            .key('C', ActuallyBlocks.IRON_CASING.get())
-            .build(consumer);
+                .pattern("IRI", "RCR", "IRI")
+                .define('R', Tags.Items.DUSTS_REDSTONE)
+                .define('I', Tags.Items.INGOTS_IRON)
+                .define('C', ActuallyBlocks.IRON_CASING.get())
+                .save(consumer);
 
         // Laser Relay
         Recipe.shaped(ActuallyBlocks.LASER_RELAY.get(), 4)
-            .pattern("OBO","RCR","OBO")
-            .key('B', Tags.Items.STORAGE_BLOCKS_REDSTONE)
-            .key('O', Tags.Items.OBSIDIAN)
-            .key('R', ActuallyItems.RESTONIA_CRYSTAL.get())
-            .key('C', ActuallyItems.COIL_ADVANCED.get())
-            .build(consumer);
+                .pattern("OBO", "RCR", "OBO")
+                .define('B', Tags.Items.STORAGE_BLOCKS_REDSTONE)
+                .define('O', Tags.Items.OBSIDIAN)
+                .define('R', ActuallyItems.RESTONIA_CRYSTAL.get())
+                .define('C', ActuallyItems.COIL_ADVANCED.get())
+                .save(consumer);
 
         // Advanced Laser Relay
         Recipe.shaped(ActuallyBlocks.LASER_RELAY_ADVANCED.get())
-            .pattern(" I ", "XRX", " I ")
-            .key('I', ActuallyItems.ENORI_CRYSTAL.get())
-            .key('R', ActuallyBlocks.LASER_RELAY.get())
-            .key('X', ActuallyItems.RESTONIA_CRYSTAL.get())
-            .build(consumer);
+                .pattern(" I ", "XRX", " I ")
+                .define('I', ActuallyItems.ENORI_CRYSTAL.get())
+                .define('R', ActuallyBlocks.LASER_RELAY.get())
+                .define('X', ActuallyItems.RESTONIA_CRYSTAL.get())
+                .save(consumer);
 
         // Extreme Laser Relay
         Recipe.shaped(ActuallyBlocks.LASER_RELAY_EXTREME.get())
-            .pattern(" I ", "XRX", " I ")
-            .key('I', ActuallyItems.DIAMATINE_EMPOWERED_CRYSTAL.get())
-            .key('R', ActuallyBlocks.LASER_RELAY_ADVANCED.get())
-            .key('X', ActuallyItems.RESTONIA_CRYSTAL.get())
-            .build(consumer);
+                .pattern(" I ", "XRX", " I ")
+                .define('I', ActuallyItems.DIAMATINE_EMPOWERED_CRYSTAL.get())
+                .define('R', ActuallyBlocks.LASER_RELAY_ADVANCED.get())
+                .define('X', ActuallyItems.RESTONIA_CRYSTAL.get())
+                .save(consumer);
 
         // Whitelist Item Laser Relay
         Recipe.shapeless(ActuallyBlocks.LASER_RELAY_ITEM_ADVANCED.get())
-            .ingredients(ActuallyBlocks.LASER_RELAY_ITEM.get(), ActuallyItems.COIL_ADVANCED.get(), ActuallyItems.BLACK_QUARTZ.get())
-            .build(consumer);
+                .ingredients(ActuallyBlocks.LASER_RELAY_ITEM.get(), ActuallyItems.COIL_ADVANCED.get(), ActuallyItems.BLACK_QUARTZ.get())
+                .save(consumer);
 
         // Item Interface
         Recipe.shaped(ActuallyBlocks.ITEM_VIEWER.get())
-            .pattern("OBO", "RCR", "OBO")
-            .key('B', Tags.Items.DUSTS_REDSTONE)
-            .key('O', ActuallyItems.COIL.get())
-            .key('R', ActuallyItems.RESTONIA_CRYSTAL.get())
-            .key('C', Tags.Items.CHESTS_WOODEN)
-            .build(consumer);
+                .pattern("OBO", "RCR", "OBO")
+                .define('B', Tags.Items.DUSTS_REDSTONE)
+                .define('O', ActuallyItems.COIL.get())
+                .define('R', ActuallyItems.RESTONIA_CRYSTAL.get())
+                .define('C', Tags.Items.CHESTS_WOODEN)
+                .save(consumer);
 
         // Hopping Item Interface
-        Recipe.shapeless(ActuallyBlocks.ITEM_VIEWER_HOPPING.get()).ingredients(ActuallyBlocks.ITEM_VIEWER.get()).build(consumer);
+        Recipe.shapeless(ActuallyBlocks.ITEM_VIEWER_HOPPING.get()).ingredients(ActuallyBlocks.ITEM_VIEWER.get()).save(consumer);
 
 
     }
 
     @Override
-    protected void saveRecipeAdvancement(DirectoryCache cache, JsonObject cache2, Path advancementJson) {
+    protected void saveAdvancement(DirectoryCache p_208310_1_, JsonObject p_208310_2_, Path p_208310_3_) {
         //Nope... maybe later...
+
     }
 
     public static class Recipe {

@@ -86,16 +86,16 @@ public class EnergyDisplay extends AbstractGui {
 
             List<String> text = new ArrayList<>();
             text.add(this.getOverlayText());
-            GuiUtils.drawHoveringText(text, mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.font);
+            GuiUtils.drawHoveringText(matrices, text, mouseX, mouseY, mc.getWindow().getWidth(), mc.getWindow().getHeight(), -1, mc.font);
         }
     }
 
     private boolean isMouseOver(int mouseX, int mouseY) {
         return mouseX >= this.x && mouseY >= this.y && mouseX < this.x + (this.outline
-            ? 26
-            : 18) && mouseY < this.y + (this.outline
-            ? 93
-            : 85);
+                ? 26
+                : 18) && mouseY < this.y + (this.outline
+                ? 93
+                : 85);
     }
 
     private String getOverlayText() {

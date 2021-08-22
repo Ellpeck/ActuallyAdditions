@@ -27,10 +27,6 @@ public class ContainerLaserRelayItemWhitelist extends Container {
 
     public final TileEntityLaserRelayItemAdvanced tile;
 
-    public static ContainerLaserRelayItemWhitelist fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
-        return new ContainerLaserRelayItemWhitelist(windowId, inv, (TileEntityLaserRelayItemWhitelist) Objects.requireNonNull(inv.player.level.getBlockEntity(data.readBlockPos())));
-    }
-
     public ContainerLaserRelayItemWhitelist(int windowId, PlayerInventory inventory, TileEntityLaserRelayItemAdvanced tile) {
         super(ActuallyContainers.LASER_RELAY_ITEM_WHITELIST_CONTAINER.get(), windowId);
         this.tile = tile;
@@ -39,8 +35,8 @@ public class ContainerLaserRelayItemWhitelist extends Container {
             for (int x = 0; x < 3; x++) {
                 for (int y = 0; y < 4; y++) {
                     this.addSlot(new SlotFilter(i == 0
-                        ? this.tile.leftFilter
-                        : this.tile.rightFilter, y + x * 4, 20 + i * 84 + x * 18, 6 + y * 18));
+                            ? this.tile.leftFilter
+                            : this.tile.rightFilter, y + x * 4, 20 + i * 84 + x * 18, 6 + y * 18));
                 }
             }
         }
@@ -53,6 +49,10 @@ public class ContainerLaserRelayItemWhitelist extends Container {
         for (int i = 0; i < 9; i++) {
             this.addSlot(new Slot(inventory, i, 8 + i * 18, 155));
         }
+    }
+
+    public static ContainerLaserRelayItemWhitelist fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
+        return new ContainerLaserRelayItemWhitelist(windowId, inv, (TileEntityLaserRelayItemAdvanced) Objects.requireNonNull(inv.player.level.getBlockEntity(data.readBlockPos())));
     }
 
     @Override

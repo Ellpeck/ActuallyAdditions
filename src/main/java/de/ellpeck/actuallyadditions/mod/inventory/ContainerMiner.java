@@ -26,10 +26,6 @@ public class ContainerMiner extends Container {
 
     public final TileEntityVerticalDigger miner;
 
-    public static ContainerMiner fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
-        return new ContainerMiner(windowId, inv, (TileEntityMiner) Objects.requireNonNull(inv.player.level.getBlockEntity(data.readBlockPos())));
-    }
-
     public ContainerMiner(int windowId, PlayerInventory inventory, TileEntityVerticalDigger tile) {
         super(ActuallyContainers.MINER_CONTAINER.get(), windowId);
         this.miner = tile;
@@ -48,6 +44,10 @@ public class ContainerMiner extends Container {
         for (int i = 0; i < 9; i++) {
             this.addSlot(new Slot(inventory, i, 8 + i * 18, 155));
         }
+    }
+
+    public static ContainerMiner fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
+        return new ContainerMiner(windowId, inv, (TileEntityVerticalDigger) Objects.requireNonNull(inv.player.level.getBlockEntity(data.readBlockPos())));
     }
 
     @Override

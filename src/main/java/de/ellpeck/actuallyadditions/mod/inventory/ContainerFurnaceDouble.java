@@ -30,10 +30,6 @@ public class ContainerFurnaceDouble extends Container {
 
     public final TileEntityPoweredFurnace furnace;
 
-    public static ContainerFurnaceDouble fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
-        return new ContainerFurnaceDouble(windowId, inv, (TileEntityFurnaceDouble) Objects.requireNonNull(inv.player.level.getBlockEntity(data.readBlockPos())));
-    }
-
     public ContainerFurnaceDouble(int windowId, PlayerInventory inventory, TileEntityPoweredFurnace tile) {
         super(ActuallyContainers.FURNACE_DOUBLE_CONTAINER.get(), windowId);
         this.furnace = tile;
@@ -53,6 +49,10 @@ public class ContainerFurnaceDouble extends Container {
         }
     }
 
+    public static ContainerFurnaceDouble fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
+        return new ContainerFurnaceDouble(windowId, inv, (TileEntityPoweredFurnace) Objects.requireNonNull(inv.player.level.getBlockEntity(data.readBlockPos())));
+    }
+
     @Override
     public ItemStack quickMoveStack(PlayerEntity player, int slot) {
         int inventoryStart = 4;
@@ -67,7 +67,7 @@ public class ContainerFurnaceDouble extends Container {
             ItemStack currentStack = newStack.copy();
 
             //Slots in Inventory to shift from
-            if (slot == TileEntityFurnaceDouble.SLOT_OUTPUT_1 || slot == TileEntityFurnaceDouble.SLOT_OUTPUT_2) {
+            if (slot == TileEntityPoweredFurnace.SLOT_OUTPUT_1 || slot == TileEntityPoweredFurnace.SLOT_OUTPUT_2) {
                 if (!this.moveItemStackTo(newStack, inventoryStart, hotbarEnd + 1, true)) {
                     return StackUtil.getEmpty();
                 }
@@ -80,13 +80,13 @@ public class ContainerFurnaceDouble extends Container {
                 if (irecipe == null) {
                     return StackUtil.getEmpty();
                 }
-                
+
                 ItemStack recipeOutput = irecipe.getResultItem();
 
                 //Shift from Inventory
                 if (StackUtil.isValid(recipeOutput)) {
-                    if (!this.moveItemStackTo(newStack, TileEntityFurnaceDouble.SLOT_INPUT_1, TileEntityFurnaceDouble.SLOT_INPUT_1 + 1, false)) {
-                        if (!this.moveItemStackTo(newStack, TileEntityFurnaceDouble.SLOT_INPUT_2, TileEntityFurnaceDouble.SLOT_INPUT_2 + 1, false)) {
+                    if (!this.moveItemStackTo(newStack, TileEntityPoweredFurnace.SLOT_INPUT_1, TileEntityPoweredFurnace.SLOT_INPUT_1 + 1, false)) {
+                        if (!this.moveItemStackTo(newStack, TileEntityPoweredFurnace.SLOT_INPUT_2, TileEntityPoweredFurnace.SLOT_INPUT_2 + 1, false)) {
                             return StackUtil.getEmpty();
                         }
                     }
