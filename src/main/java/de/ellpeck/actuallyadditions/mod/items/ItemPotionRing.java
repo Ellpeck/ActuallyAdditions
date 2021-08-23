@@ -26,7 +26,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
@@ -54,19 +53,16 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDi
     }
 
     public static int getStoredBlaze(ItemStack stack) {
-        if (!StackUtil.isValid(stack) || !stack.hasTagCompound()) {
+        if (!StackUtil.isValid(stack) || !stack.hasTag()) {
             return 0;
         } else {
-            return stack.getTagCompound().getInteger("Blaze");
+            return stack.getOrCreateTag().getInt("Blaze");
         }
     }
 
     public static void setStoredBlaze(ItemStack stack, int amount) {
         if (StackUtil.isValid(stack)) {
-            if (!stack.hasTagCompound()) {
-                stack.setTagCompound(new CompoundNBT());
-            }
-            stack.getTagCompound().setInteger("Blaze", amount);
+            stack.getOrCreateTag().putInt("Blaze", amount);
         }
     }
 
@@ -90,8 +86,8 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDi
     @Override
     public String getDescriptionId(ItemStack stack) {
         return stack.getItemDamage() >= ALL_RINGS.length
-            ? StringUtil.BUGGED_ITEM_NAME
-            : this.getDescriptionId() + ALL_RINGS[stack.getItemDamage()].name;
+                ? StringUtil.BUGGED_ITEM_NAME
+                : this.getDescriptionId() + ALL_RINGS[stack.getItemDamage()].name;
     }
 
     @Override
@@ -148,8 +144,8 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDi
     @Override
     public EnumRarity getRarity(ItemStack stack) {
         return stack.getItemDamage() >= ALL_RINGS.length
-            ? EnumRarity.COMMON
-            : ALL_RINGS[stack.getItemDamage()].rarity;
+                ? EnumRarity.COMMON
+                : ALL_RINGS[stack.getItemDamage()].rarity;
     }
 
     @Override
@@ -177,16 +173,16 @@ public class ItemPotionRing extends ItemBase implements IColorProvidingItem, IDi
     @OnlyIn(Dist.CLIENT)
     public IItemColor getItemColor() {
         return (stack, tintIndex) -> stack.getItemDamage() >= ALL_RINGS.length
-            ? 0xFFFFFF
-            : ALL_RINGS[stack.getItemDamage()].color;
+                ? 0xFFFFFF
+                : ALL_RINGS[stack.getItemDamage()].color;
     }
 
     @Override
     public boolean update(ItemStack stack, TileEntity tile, int elapsedTicks) {
         boolean advanced = ((ItemPotionRing) stack.getItem()).isAdvanced;
         int range = advanced
-            ? 48
-            : 16;
+                ? 48
+                : 16;
         List<EntityLivingBase> entities = tile.getLevel().getEntitiesOfClass(EntityLivingBase.class, new AxisAlignedBB(tile.getBlockPos().getX() - range, tile.getBlockPos().getY() - range, tile.getBlockPos().getZ() - range, tile.getBlockPos().getX() + range, tile.getBlockPos().getY() + range, tile.getBlockPos().getZ() + range));
         if (entities != null && !entities.isEmpty()) {
             if (advanced) {

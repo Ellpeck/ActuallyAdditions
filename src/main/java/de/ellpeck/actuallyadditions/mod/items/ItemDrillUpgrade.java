@@ -29,7 +29,7 @@ public class ItemDrillUpgrade extends ItemBase {
     }
 
     public static int getSlotToPlaceFrom(ItemStack stack) {
-        CompoundNBT compound = stack.getTagCompound();
+        CompoundNBT compound = stack.getTag();
         if (compound != null) {
             return compound.getInt("SlotToPlaceFrom") - 1;
         }
