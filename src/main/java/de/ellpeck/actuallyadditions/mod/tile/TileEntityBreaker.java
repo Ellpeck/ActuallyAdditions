@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerBreaker;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
@@ -46,7 +47,7 @@ public class TileEntityBreaker extends TileEntityInventoryBase implements INamed
     }
 
     public TileEntityBreaker() {
-        super(ActuallyTiles.BREAKER_TILE.get(), 9);
+        super(ActuallyBlocks.BREAKER.getTileEntityType(), 9);
         this.isPlacer = false;
     }
 

@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
@@ -17,7 +18,7 @@ import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 public class TileEntityPhantomBreaker extends TileEntityPhantomPlacer {
 
     public TileEntityPhantomBreaker() {
-        super(ActuallyTiles.PHANTOMBREAKER_TILE.get(), 9);
+        super(ActuallyBlocks.PHANTOM_BREAKER.getTileEntityType(), 9);
         this.isBreaker = true;
     }
 

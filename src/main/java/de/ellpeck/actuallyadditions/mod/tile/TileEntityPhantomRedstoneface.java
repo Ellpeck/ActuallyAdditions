@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.Direction;
@@ -17,7 +18,7 @@ import net.minecraftforge.common.capabilities.Capability;
 
 import java.util.Arrays;
 
-public class TileEntityPhantomRedstoneface extends TileEntityPhantomFace {
+public class TileEntityPhantomRedstoneface extends TileEntityPhantomface {
 
     public final int[] providesStrong = new int[Direction.values().length];
     public final int[] providesWeak = new int[Direction.values().length];
@@ -26,7 +27,7 @@ public class TileEntityPhantomRedstoneface extends TileEntityPhantomFace {
     private final int[] lastProvidesWeak = new int[this.providesWeak.length];
 
     public TileEntityPhantomRedstoneface() {
-        super(ActuallyTiles.PHANTOMREDSTONEFACE_TILE.get());
+        super(ActuallyBlocks.PHANTOM_REDSTONEFACE.getTileEntityType());
     }
 
     @Override

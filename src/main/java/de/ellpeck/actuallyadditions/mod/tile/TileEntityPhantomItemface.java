@@ -19,7 +19,7 @@ import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 
-public class TileEntityPhantomItemface extends TileEntityPhantomFace {
+public class TileEntityPhantomItemface extends TileEntityPhantomface {
 
     public TileEntityPhantomItemface() {
         super(ActuallyBlocks.PHANTOM_ITEMFACE.getTileEntityType());

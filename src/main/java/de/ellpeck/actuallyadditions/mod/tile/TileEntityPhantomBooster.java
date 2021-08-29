@@ -10,9 +10,11 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
+
 public class TileEntityPhantomBooster extends TileEntityBase {
 
     public TileEntityPhantomBooster() {
-        super(ActuallyTiles.PHANTOM_BOOSTER_TILE.get());
+        super(ActuallyBlocks.PHANTOM_BOOSTER.getTileEntityType());
     }
 }

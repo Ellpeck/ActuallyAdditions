@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -38,7 +39,7 @@ public class TileEntityPlayerInterface extends TileEntityBase implements IEnergy
     private int range;
 
     public TileEntityPlayerInterface() {
-        super(ActuallyTiles.PLAYERINTERFACE_TILE.get());
+        super(ActuallyBlocks.PLAYER_INTERFACE.getTileEntityType());
     }
 
     private PlayerEntity getPlayer() {

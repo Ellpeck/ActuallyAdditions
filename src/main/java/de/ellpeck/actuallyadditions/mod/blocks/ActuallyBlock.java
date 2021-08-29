@@ -27,7 +27,7 @@ public class ActuallyBlock extends Block implements IActuallyBlock {
 
     @Override
     public Item.Properties getItemProperties() {
-        return new Item.Properties().group(ActuallyAdditions.GROUP);
+        return new Item.Properties().tab(ActuallyAdditions.GROUP);
     }
 
     public static class Stairs extends StairsBlock implements IActuallyBlock {
@@ -42,7 +42,7 @@ public class ActuallyBlock extends Block implements IActuallyBlock {
 
         @Override
         public Item.Properties getItemProperties() {
-            return new Item.Properties().group(ActuallyAdditions.GROUP);
+            return new Item.Properties().tab(ActuallyAdditions.GROUP);
         }
     }
 
@@ -58,7 +58,7 @@ public class ActuallyBlock extends Block implements IActuallyBlock {
 
         @Override
         public Item.Properties getItemProperties() {
-            return new Item.Properties().group(ActuallyAdditions.GROUP);
+            return new Item.Properties().tab(ActuallyAdditions.GROUP);
         }
     }
 }

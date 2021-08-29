@@ -33,7 +33,6 @@ import javax.annotation.Nullable;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
 
 public abstract class TileEntityPhantomface extends TileEntityInventoryBase implements IPhantomTile {
-
     public static final int RANGE = 16;
     public BlockPos boundPosition;
     public BlockPhantom.Type type;
@@ -43,9 +42,10 @@ public abstract class TileEntityPhantomface extends TileEntityInventoryBase impl
     private Block boundBlockBefore;
     private int lastStrength;
 
-    public TileEntityPhantomFace(TileEntityType<?> type) {
+    public TileEntityPhantomface(TileEntityType<?> type) {
         super(type, 0);
     }
+
 
     public static int upgradeRange(int defaultRange, World world, BlockPos pos) {
         int newRange = defaultRange;
