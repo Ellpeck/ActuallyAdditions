@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.api.recipe.CrusherRecipe;
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.blocks.BlockPoweredFurnace;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerGrinder;
 import de.ellpeck.actuallyadditions.mod.misc.SoundHandler;
@@ -27,6 +28,7 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.SoundCategory;
@@ -63,7 +65,7 @@ public class TileEntityCrusher extends TileEntityInventoryBase implements IButto
     }
 
     public TileEntityCrusher() {
-        super(ActuallyTiles.GRINDER_TILE.get(), 3);
+        super(ActuallyBlocks.CRUSHER.getTileEntityType(), 3);
         this.isDouble = false;
     }
 
@@ -92,7 +94,7 @@ public class TileEntityCrusher extends TileEntityInventoryBase implements IButto
     @Override
     public void updateEntity() {
         super.updateEntity();
-        if (!this.world.isRemote) {
+        if (!this.level.isClientSide) {
             if (this.isDouble && this.isAutoSplit) {
                 TileEntityPoweredFurnace.autoSplit(this.inv, SLOT_INPUT_1, SLOT_INPUT_2);
             }
@@ -143,8 +145,8 @@ public class TileEntityCrusher extends TileEntityInventoryBase implements IButto
                 }
             }
 
-            BlockState currState = this.world.getBlockState(this.pos);
-            boolean current = currState.get(BlockPoweredFurnace.IS_ON);
+            BlockState currState = this.level.getBlockState(this.worldPosition);
+            boolean current = currState.getValue(BlockStateProperties.LIT);
             boolean changeTo = current;
             if (this.lastCrushed != crushed) {
                 changeTo = crushed;
@@ -157,7 +159,7 @@ public class TileEntityCrusher extends TileEntityInventoryBase implements IButto
             }
 
             if (changeTo != current) {
-                this.world.setBlockState(this.pos, currState.with(BlockPoweredFurnace.IS_ON, changeTo));
+                this.level.setBlockAndUpdate(this.worldPosition, currState.setValue(BlockStateProperties.LIT, changeTo));
             }
 
             this.lastCrushed = crushed;
@@ -170,7 +172,7 @@ public class TileEntityCrusher extends TileEntityInventoryBase implements IButto
             }
 
             if (shouldPlaySound) {
-                this.world.playSound(null, this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), SoundHandler.crusher, SoundCategory.BLOCKS, 0.025F, 1.0F);
+                this.level.playSound(null, this.worldPosition.getX(), this.worldPosition.getY(), this.worldPosition.getZ(), SoundHandler.crusher, SoundCategory.BLOCKS, 0.025F, 1.0F);
             }
         }
     }
@@ -194,13 +196,15 @@ public class TileEntityCrusher extends TileEntityInventoryBase implements IButto
             ItemStack outputOne = recipe.getOutputOne();
             ItemStack outputTwo = recipe.getOutputTwo();
             if (StackUtil.isValid(outputOne)) {
+                /* //TODO
                 if (outputOne.getDamage() == Util.WILDCARD) {
                     outputOne.setDamage(0);
                 }
                 if (StackUtil.isValid(outputTwo) && outputTwo.getDamage() == Util.WILDCARD) {
                     outputTwo.setDamage(0);
                 }
-                if ((!StackUtil.isValid(this.inv.getStackInSlot(theFirstOutput)) || this.inv.getStackInSlot(theFirstOutput).isItemEqual(outputOne) && this.inv.getStackInSlot(theFirstOutput).getCount() <= this.inv.getStackInSlot(theFirstOutput).getMaxStackSize() - outputOne.getCount()) && (!StackUtil.isValid(outputTwo) || !StackUtil.isValid(this.inv.getStackInSlot(theSecondOutput)) || this.inv.getStackInSlot(theSecondOutput).isItemEqual(outputTwo) && this.inv.getStackInSlot(theSecondOutput).getCount() <= this.inv.getStackInSlot(theSecondOutput).getMaxStackSize() - outputTwo.getCount())) {
+                 */
+                if ((!StackUtil.isValid(this.inv.getStackInSlot(theFirstOutput)) || this.inv.getStackInSlot(theFirstOutput).sameItem(outputOne) && this.inv.getStackInSlot(theFirstOutput).getCount() <= this.inv.getStackInSlot(theFirstOutput).getMaxStackSize() - outputOne.getCount()) && (!StackUtil.isValid(outputTwo) || !StackUtil.isValid(this.inv.getStackInSlot(theSecondOutput)) || this.inv.getStackInSlot(theSecondOutput).isItemEqual(outputTwo) && this.inv.getStackInSlot(theSecondOutput).getCount() <= this.inv.getStackInSlot(theSecondOutput).getMaxStackSize() - outputTwo.getCount())) {
                     return true;
                 }
             }
@@ -221,9 +225,11 @@ public class TileEntityCrusher extends TileEntityInventoryBase implements IButto
         }
         ItemStack outputOne = recipe.getOutputOne();
         if (StackUtil.isValid(outputOne)) {
+            /* //TODO
             if (outputOne.getDamage() == Util.WILDCARD) {
                 outputOne.setDamage(0);
             }
+            */
             if (!StackUtil.isValid(this.inv.getStackInSlot(theFirstOutput))) {
                 this.inv.setStackInSlot(theFirstOutput, outputOne.copy());
             } else if (this.inv.getStackInSlot(theFirstOutput).getItem() == outputOne.getItem()) {
@@ -233,10 +239,12 @@ public class TileEntityCrusher extends TileEntityInventoryBase implements IButto
 
         ItemStack outputTwo = recipe.getOutputTwo();
         if (StackUtil.isValid(outputTwo)) {
+            /* //TODO
             if (outputTwo.getDamage() == Util.WILDCARD) {
                 outputTwo.setDamage(0);
             }
-            int rand = this.world.rand.nextInt(100) + 1;
+             */
+            int rand = this.level.random.nextInt(100) + 1;
             if (rand <= recipe.getSecondChance()) {
                 if (!StackUtil.isValid(this.inv.getStackInSlot(theSecondOutput))) {
                     this.inv.setStackInSlot(theSecondOutput, outputTwo.copy());
@@ -265,7 +273,7 @@ public class TileEntityCrusher extends TileEntityInventoryBase implements IButto
     public void onButtonPressed(int buttonID, PlayerEntity player) {
         if (buttonID == 0) {
             this.isAutoSplit = !this.isAutoSplit;
-            this.markDirty();
+            this.setChanged();
         }
     }
 

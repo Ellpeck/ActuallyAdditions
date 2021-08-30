@@ -31,7 +31,6 @@ import de.ellpeck.actuallyadditions.mod.misc.apiimpl.MethodHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.recipe.EmpowererHandler;
 import de.ellpeck.actuallyadditions.mod.recipe.HairyBallHandler;
-import de.ellpeck.actuallyadditions.mod.tile.ActuallyTiles;
 import de.ellpeck.actuallyadditions.mod.update.UpdateChecker;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -107,7 +106,7 @@ public class ActuallyAdditions {
         new UpdateChecker();
         BannerHelper.init();
         InitEntities.init(); // todo: [port] replace
-        AAWorldGen gen = new AAWorldGen();
+        //AAWorldGen gen = new AAWorldGen();
         ItemCoffee.initIngredients();
         CrusherCrafting.init();
         HairyBallHandler.init();

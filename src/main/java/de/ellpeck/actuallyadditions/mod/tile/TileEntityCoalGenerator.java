@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerCoalGenerator;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
@@ -49,7 +50,7 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
     private int curBurn = -1;
 
     public TileEntityCoalGenerator() {
-        super(ActuallyTiles.COALGENERATOR_TILE.get(), 1);
+        super(ActuallyBlocks.COAL_GENERATOR.getTileEntityType(), 1);
     }
 
     @OnlyIn(Dist.CLIENT)

@@ -44,7 +44,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     private int oldEnergy;
 
     public TileEntityAtomicReconstructor() {
-        super(ActuallyTiles.ATOMICRECONSTRUCTOR_TILE.get(), 1);
+        super(ActuallyBlocks.ATOMIC_RECONSTRUCTOR.getTileEntityType(), 1);
         int power = ConfigIntValues.RECONSTRUCTOR_POWER.getValue();
         int recieve = MathHelper.ceil(power * 0.016666F);
         this.storage = new CustomEnergyStorage(power, recieve, 0);

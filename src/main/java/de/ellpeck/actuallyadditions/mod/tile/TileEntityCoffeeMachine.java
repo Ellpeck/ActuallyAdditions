@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.api.ActuallyTags;
 import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerCoffeeMachine;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.items.ItemCoffee;
@@ -88,7 +89,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     private int lastBrewTime;
 
     public TileEntityCoffeeMachine() {
-        super(ActuallyTiles.COFFEEMACHINE_TILE.get(), 11);
+        super(ActuallyBlocks.COFFEE_MACHINE.getTileEntityType(),  11);
     }
 
     @OnlyIn(Dist.CLIENT)

@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod;
 
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.blocks.render.*;
 import de.ellpeck.actuallyadditions.mod.entity.InitEntities;
 import de.ellpeck.actuallyadditions.mod.entity.RenderWorm;
@@ -17,7 +18,6 @@ import de.ellpeck.actuallyadditions.mod.event.ClientEvents;
 import de.ellpeck.actuallyadditions.mod.inventory.ActuallyContainers;
 import de.ellpeck.actuallyadditions.mod.inventory.gui.*;
 import de.ellpeck.actuallyadditions.mod.misc.special.SpecialRenderInit;
-import de.ellpeck.actuallyadditions.mod.tile.ActuallyTiles;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.network.play.ClientPlayNetHandler;
@@ -68,17 +68,17 @@ public class ActuallyAdditionsClient {
     }
 
     private static void setupSpecialRenders() {
-        ClientRegistry.bindTileEntityRenderer(ActuallyTiles.ATOMICRECONSTRUCTOR_TILE.get(), RenderReconstructorLens::new);
-        ClientRegistry.bindTileEntityRenderer(ActuallyTiles.DISPLAYSTAND_TILE.get(), RenderDisplayStand::new);
-        ClientRegistry.bindTileEntityRenderer(ActuallyTiles.EMPOWERER_TILE.get(), RenderEmpowerer::new);
-        ClientRegistry.bindTileEntityRenderer(ActuallyTiles.BATTERYBOX_TILE.get(), RenderBatteryBox::new);
+        ClientRegistry.bindTileEntityRenderer(ActuallyBlocks.ATOMIC_RECONSTRUCTOR.getTileEntityType(), RenderReconstructorLens::new);
+        ClientRegistry.bindTileEntityRenderer(ActuallyBlocks.DISPLAY_STAND.getTileEntityType(), RenderDisplayStand::new);
+        ClientRegistry.bindTileEntityRenderer(ActuallyBlocks.EMPOWERER.getTileEntityType(), RenderEmpowerer::new);
+        ClientRegistry.bindTileEntityRenderer(ActuallyBlocks.BATTERY_BOX.getTileEntityType(), RenderBatteryBox::new);
 
-        ClientRegistry.bindTileEntityRenderer(ActuallyTiles.LASERRELAYENERGY_TILE.get(), RenderLaserRelay::new);
-        ClientRegistry.bindTileEntityRenderer(ActuallyTiles.LASERRELAYENERGYADVANCED_TILE.get(), RenderLaserRelay::new);
-        ClientRegistry.bindTileEntityRenderer(ActuallyTiles.LASERRELAYENERGYEXTREME_TILE.get(), RenderLaserRelay::new);
-        ClientRegistry.bindTileEntityRenderer(ActuallyTiles.LASERRELAYITEM_TILE.get(), RenderLaserRelay::new);
-        ClientRegistry.bindTileEntityRenderer(ActuallyTiles.LASERRELAYITEMWHITELIST_TILE.get(), RenderLaserRelay::new);
-        ClientRegistry.bindTileEntityRenderer(ActuallyTiles.LASERRELAYFLUIDS_TILE.get(), RenderLaserRelay::new);
+        ClientRegistry.bindTileEntityRenderer(ActuallyBlocks.LASER_RELAY.getTileEntityType(), RenderLaserRelay::new);
+        ClientRegistry.bindTileEntityRenderer(ActuallyBlocks.LASER_RELAY_ADVANCED.getTileEntityType(), RenderLaserRelay::new);
+        ClientRegistry.bindTileEntityRenderer(ActuallyBlocks.LASER_RELAY_EXTREME.getTileEntityType(), RenderLaserRelay::new);
+        ClientRegistry.bindTileEntityRenderer(ActuallyBlocks.LASER_RELAY_ITEM.getTileEntityType(), RenderLaserRelay::new);
+        ClientRegistry.bindTileEntityRenderer(ActuallyBlocks.LASER_RELAY_ITEM_ADVANCED.getTileEntityType(), RenderLaserRelay::new);
+        ClientRegistry.bindTileEntityRenderer(ActuallyBlocks.LASER_RELAY_FLUIDS.getTileEntityType(), RenderLaserRelay::new);
     }
 
     // TODO: [port] validate that this works

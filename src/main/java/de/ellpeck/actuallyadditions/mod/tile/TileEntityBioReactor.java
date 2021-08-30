@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerBioReactor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
@@ -51,7 +52,7 @@ public class TileEntityBioReactor extends TileEntityInventoryBase implements INa
     private int lastProducePerTick;
 
     public TileEntityBioReactor() {
-        super(ActuallyTiles.BIOREACTOR_TILE.get(), 8);
+        super(ActuallyBlocks.BIOREACTOR.getTileEntityType(),  8);
     }
 
     public static boolean isValidItem(ItemStack stack) {

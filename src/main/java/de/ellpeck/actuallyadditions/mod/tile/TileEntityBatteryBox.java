@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.items.ItemBattery;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
@@ -30,7 +31,7 @@ public class TileEntityBatteryBox extends TileEntityInventoryBase implements ISh
     private int lastCompare;
 
     public TileEntityBatteryBox() {
-        super(ActuallyTiles.BATTERYBOX_TILE.get(), 1);
+        super(ActuallyBlocks.BATTERY_BOX.getTileEntityType(),  1);
     }
 
     @Override

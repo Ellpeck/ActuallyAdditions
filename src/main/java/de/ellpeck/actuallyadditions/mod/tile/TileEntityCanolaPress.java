@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerCanolaPress;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
@@ -61,7 +62,7 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IN
     private int lastProcessTime;
 
     public TileEntityCanolaPress() {
-        super(ActuallyTiles.CANOLAPRESS_TILE.get(), 1);
+        super(ActuallyBlocks.CANOLA_PRESS.getTileEntityType(),  1);
     }
 
     @OnlyIn(Dist.CLIENT)

@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.api.misc.IDisplayStandItem;
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
@@ -30,7 +31,7 @@ public class TileEntityDisplayStand extends TileEntityInventoryBase implements I
     private int oldEnergy;
 
     public TileEntityDisplayStand() {
-        super(ActuallyTiles.DISPLAYSTAND_TILE.get(), 1);
+        super(ActuallyBlocks.DISPLAY_STAND.getTileEntityType(),  1);
     }
 
     @Override

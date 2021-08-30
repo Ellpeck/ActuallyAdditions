@@ -10,10 +10,12 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
+
 public class TileEntityCrusherDouble extends TileEntityCrusher {
 
     public TileEntityCrusherDouble() {
-        super(ActuallyTiles.GRINDER_DOUBLE_TILE.get(), 6);
+        super(ActuallyBlocks.CRUSHER_DOUBLE.getTileEntityType(),  6);
         this.isDouble = true;
     }
 

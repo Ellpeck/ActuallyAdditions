@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerDropper;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
@@ -32,7 +33,7 @@ public class TileEntityDropper extends TileEntityInventoryBase implements INamed
     private int currentTime;
 
     public TileEntityDropper() {
-        super(ActuallyTiles.DROPPER_TILE.get(), 9);
+        super(ActuallyBlocks.DROPPER.getTileEntityType(),  9);
     }
 
     @Override
