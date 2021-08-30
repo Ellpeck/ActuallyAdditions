@@ -91,7 +91,7 @@ public final class ActuallyBlocks {
     public static final AABlockReg<BlockBioReactor, AABlockItem, TileEntityBioReactor> BIOREACTOR = new AABlockReg<>("bio_reactor", BlockBioReactor::new,
         (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityBioReactor::new);
 
-    public static final AABlockReg<BlockVerticalDigger, AABlockItem, TileEntityVerticalDigger> Vertical_DIGGER = new AABlockReg<>("vertical_digger", BlockVerticalDigger::new,
+    public static final AABlockReg<BlockVerticalDigger, AABlockItem, TileEntityVerticalDigger> VERTICAL_DIGGER = new AABlockReg<>("vertical_digger", BlockVerticalDigger::new,
         (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityVerticalDigger::new);
 
     public static final AABlockReg<BlockAtomicReconstructor, AABlockItem, TileEntityAtomicReconstructor> ATOMIC_RECONSTRUCTOR = new AABlockReg<>("atomic_reconstructor", BlockAtomicReconstructor::new,

@@ -76,7 +76,7 @@ public class BlockRecipeGenerator extends RecipeProvider {
                 .save(consumer);
 
         //Vertical Digger
-        Recipe.shaped(ActuallyBlocks.Vertical_DIGGER.get())
+        Recipe.shaped(ActuallyBlocks.VERTICAL_DIGGER.get())
                 .pattern("IRI", "RCR", "IDI")
                 .define('R', Tags.Items.STORAGE_BLOCKS_REDSTONE)
                 .define('I', ActuallyBlocks.IRON_CASING.get())

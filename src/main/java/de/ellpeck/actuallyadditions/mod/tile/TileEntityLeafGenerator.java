@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.block.Block;
@@ -36,7 +37,7 @@ public class TileEntityLeafGenerator extends TileEntityBase implements ISharingE
     private int oldEnergy;
 
     public TileEntityLeafGenerator() {
-        super(ActuallyTiles.LEAFGENERATOR_TILE.get());
+        super(ActuallyBlocks.LEAF_GENERATOR.getTileEntityType());
     }
 
     @Override

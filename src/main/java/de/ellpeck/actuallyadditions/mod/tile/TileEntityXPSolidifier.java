@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerXPSolidifier;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.items.ItemSolidifiedExperience;
@@ -50,7 +51,7 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
     private int singlePointAmount;
 
     public TileEntityXPSolidifier() {
-        super(ActuallyTiles.XPSOLIDIFIER_TILE.get(), 2);
+        super(ActuallyBlocks.XP_SOLIDIFIER.getTileEntityType(), 2);
     }
 
     /*

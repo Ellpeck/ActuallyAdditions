@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerMiner;
 import de.ellpeck.actuallyadditions.mod.items.ItemDrill;
@@ -58,7 +59,7 @@ public class TileEntityVerticalDigger extends TileEntityInventoryBase implements
     private int oldCheckZ;
 
     public TileEntityVerticalDigger() {
-        super(ActuallyTiles.MINER_TILE.get(), 9);
+        super(ActuallyBlocks.VERTICAL_DIGGER.getTileEntityType(), 9);
     }
 
     @Override
@@ -90,13 +91,13 @@ public class TileEntityVerticalDigger extends TileEntityInventoryBase implements
     @Override
     public void updateEntity() {
         super.updateEntity();
-        if (!this.world.isRemote) {
+        if (!this.level.isClientSide) {
 
             if (!this.isRedstonePowered && this.ticksElapsed % 5 == 0) {
                 if (this.checkY != 0) {
-                    int range = TileEntityPhantomFace.upgradeRange(DEFAULT_RANGE, this.world, this.pos);
+                    int range = TileEntityPhantomface.upgradeRange(DEFAULT_RANGE, this.level, this.worldPosition);
                     if (this.checkY < 0) {
-                        this.checkY = this.pos.getY() - 1;
+                        this.checkY = this.worldPosition.getY() - 1;
                         this.checkX = -range;
                         this.checkZ = -range;
                     }
@@ -131,23 +132,23 @@ public class TileEntityVerticalDigger extends TileEntityInventoryBase implements
             ? 3
             : 1);
         if (this.storage.getEnergyStored() >= actualUse) {
-            BlockPos pos = new BlockPos(this.pos.getX() + this.checkX, this.checkY, this.pos.getZ() + this.checkZ);
+            BlockPos pos = new BlockPos(this.worldPosition.getX() + this.checkX, this.checkY, this.worldPosition.getZ() + this.checkZ);
 
-            BlockState state = this.world.getBlockState(pos);
+            BlockState state = this.level.getBlockState(pos);
             Block block = state.getBlock();
-            ItemStack stack = block.getPickBlock(state, new BlockRayTraceResult(new Vector3d(0, 0, 0), Direction.DOWN, pos, false), this.world, pos, FakePlayerFactory.getMinecraft((ServerWorld) this.world));
-            if (!block.isAir(this.world.getBlockState(pos), this.world, pos)) {
-                if (block.getHarvestLevel(this.world.getBlockState(pos)) <= ItemDrill.HARVEST_LEVEL && state.getBlockHardness(this.world, pos) >= 0F && !(block instanceof IFluidBlock) && this.isMinable(block, stack)) {
-                    List<ItemStack> drops = Block.getDrops(state, (ServerWorld) this.world, pos, this.world.getTileEntity(pos));
-                    float chance = WorldUtil.fireFakeHarvestEventsForDropChance(this, drops, this.world, pos);
+            ItemStack stack = block.getPickBlock(state, new BlockRayTraceResult(new Vector3d(0, 0, 0), Direction.DOWN, pos, false), this.level, pos, FakePlayerFactory.getMinecraft((ServerWorld) this.level));
+            if (!block.isAir(this.level.getBlockState(pos), this.level, pos)) {
+                if (block.getHarvestLevel(this.level.getBlockState(pos)) <= ItemDrill.HARVEST_LEVEL && state.getDestroySpeed(this.level, pos) >= 0F && !(block instanceof IFluidBlock) && this.isMinable(block, stack)) {
+                    List<ItemStack> drops = Block.getDrops(state, (ServerWorld) this.level, pos, this.level.getBlockEntity(pos));
+                    float chance = WorldUtil.fireFakeHarvestEventsForDropChance(this, drops, this.level, pos);
 
-                    if (chance > 0 && this.world.rand.nextFloat() <= chance) {
+                    if (chance > 0 && this.level.random.nextFloat() <= chance) {
                         if (StackUtil.canAddAll(this.inv, drops, false)) {
-                            this.world.playEvent(2001, pos, Block.getStateId(this.world.getBlockState(pos)));
-                            this.world.setBlockState(pos, Blocks.AIR.getDefaultState());
+                            this.level.levelEvent(2001, pos, Block.getId(this.level.getBlockState(pos)));
+                            this.level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
 
                             StackUtil.addAll(this.inv, drops, false);
-                            this.markDirty();
+                            this.setChanged();
 
                             this.storage.extractEnergyInternal(actualUse, false);
                             this.shootParticles(pos.getX(), pos.getY(), pos.getZ());
@@ -196,7 +197,7 @@ public class TileEntityVerticalDigger extends TileEntityInventoryBase implements
     }
 
     private void shootParticles(int endX, int endY, int endZ) {
-        AssetUtil.spawnLaserWithTimeServer(this.world, this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), endX, endY, endZ, new float[]{65F / 255F, 150F / 255F, 2F / 255F}, 10, 120, 0.1F, 0.8F);
+        AssetUtil.spawnLaserWithTimeServer(this.level, this.worldPosition.getX(), this.worldPosition.getY(), this.worldPosition.getZ(), endX, endY, endZ, new float[]{65F / 255F, 150F / 255F, 2F / 255F}, 10, 120, 0.1F, 0.8F);
     }
 
     private boolean isBlacklisted(Block block) {
