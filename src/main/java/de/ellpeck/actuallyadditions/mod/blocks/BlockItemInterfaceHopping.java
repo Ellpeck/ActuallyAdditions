@@ -29,7 +29,7 @@ public class BlockItemInterfaceHopping extends BlockItemInterface {
     }
 
     @Override
-    public TileEntity createNewTileEntity(IBlockReader worldIn) {
+    public TileEntity newBlockEntity(IBlockReader worldIn) {
         return new TileEntityItemInterfaceHopping();
     }
 }

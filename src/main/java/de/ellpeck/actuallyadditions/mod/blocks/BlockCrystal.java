@@ -24,7 +24,7 @@ public class BlockCrystal extends ActuallyBlock {
     public AABlockItem createBlockItem() {
         return new AABlockItem(this, getItemProperties()) {
             @Override
-            public boolean hasEffect(ItemStack stack) {
+            public boolean isFoil(ItemStack stack) {
                 return isEmpowered;
             }
         };

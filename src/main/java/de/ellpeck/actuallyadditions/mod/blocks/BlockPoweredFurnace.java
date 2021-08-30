@@ -38,21 +38,21 @@ import java.util.Random;
 public class BlockPoweredFurnace extends BlockContainerBase {
     public BlockPoweredFurnace() {
         // TODO: [port] confirm this is correct for light level... Might not be reactive.
-        super(ActuallyBlocks.defaultPickProps(0).tickRandomly().setLightLevel(state -> state.get(LIT)
+        super(ActuallyBlocks.defaultPickProps(0).randomTicks().lightLevel(state -> state.getValue(LIT)
             ? 12
             : 0));
 
-        this.setDefaultState(this.stateContainer.getBaseState().with(HORIZONTAL_FACING, Direction.NORTH).with(LIT, false));
+        registerDefaultState(getStateDefinition().any().setValue(HORIZONTAL_FACING, Direction.NORTH).setValue(LIT, false));
     }
 
     @Override
-    public TileEntity createNewTileEntity(IBlockReader worldIn) {
+    public TileEntity newBlockEntity(IBlockReader worldIn) {
         return new TileEntityPoweredFurnace();
     }
 
     @Override
     public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
-        if (state.get(LIT)) {
+        if (state.getValue(LIT)) {
             for (int i = 0; i < 5; i++) {
                 worldIn.addParticle(ParticleTypes.SMOKE, (double) pos.getX() + 0.5F, (double) pos.getY() + 1.0F, (double) pos.getZ() + 0.5F, 0.0D, 0.0D, 0.0D);
             }
@@ -60,17 +60,17 @@ public class BlockPoweredFurnace extends BlockContainerBase {
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+    public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         return this.openGui(worldIn, player, pos, TileEntityPoweredFurnace.class);
     }
 
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
-        return this.getDefaultState().with(HORIZONTAL_FACING, context.getNearestLookingDirection().getOpposite()).with(LIT, false);
+        return defaultBlockState().setValue(HORIZONTAL_FACING, context.getNearestLookingDirection().getOpposite()).setValue(LIT, false);
     }
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(LIT).add(HORIZONTAL_FACING);
     }
 
@@ -91,7 +91,7 @@ public class BlockPoweredFurnace extends BlockContainerBase {
 
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        switch (state.get(HORIZONTAL_FACING)) {
+        switch (state.getValue(HORIZONTAL_FACING)) {
             case EAST:
                 return Shapes.FurnaceDoubleShapes.SHAPE_E;
             case SOUTH:

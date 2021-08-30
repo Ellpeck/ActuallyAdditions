@@ -19,13 +19,15 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 
+import javax.annotation.Nullable;
+
 public class BlockItemInterface extends BlockContainerBase {
     public BlockItemInterface() {
         super(ActuallyBlocks.defaultPickProps(0));
     }
 
     @Override
-    public TileEntity createNewTileEntity(IBlockReader worldIn) {
+    public TileEntity newBlockEntity(IBlockReader worldIn) {
         return new TileEntityItemInterface();
     }
 
