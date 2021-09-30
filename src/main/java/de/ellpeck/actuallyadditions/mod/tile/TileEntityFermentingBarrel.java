@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFermentingBarrel;
 import de.ellpeck.actuallyadditions.mod.util.Util;
@@ -23,10 +24,13 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
@@ -34,24 +38,9 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
 public class TileEntityFermentingBarrel extends TileEntityBase implements ISharingFluidHandler, INamedContainerProvider {
 
     private static final int PROCESS_TIME = 100;
-    public final FluidTank canolaTank = new FluidTank(2 * Util.BUCKET) {
-        @Override
-        public boolean canDrain() {
-            return false;
-        }
 
-        @Override
-        public boolean canFillFluidType(FluidStack fluid) {
-            return fluid.getFluid() == InitFluids.fluidCanolaOil;
-        }
-    };
-    public final FluidTank oilTank = new FluidTank(2 * Util.BUCKET) {
-        @Override
-        public boolean canFill() {
-            return false;
-        }
-    };
-    private final FluidHandlerFluidMap handlerMap;
+    public final FermentingBarrelMultiTank tanks = new FermentingBarrelMultiTank();
+    public final LazyOptional<IFluidHandler> fluidOptional = LazyOptional.of(()->tanks);
 
     public int currentProcessTime;
     private int lastCanola;
@@ -60,30 +49,21 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
     private int lastCompare;
 
     public TileEntityFermentingBarrel() {
-        super(ActuallyTiles.FERMENTINGBARREL_TILE.get());
-
-        this.handlerMap = new FluidHandlerFluidMap();
-        this.handlerMap.addHandler(InitFluids.fluidCanolaOil, this.canolaTank);
-        this.handlerMap.addHandler(InitFluids.fluidRefinedCanolaOil, this.oilTank);
+        super(ActuallyBlocks.FERMENTING_BARREL.getTileEntityType());
     }
 
     @Override
     public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
         compound.putInt("ProcessTime", this.currentProcessTime);
-        this.canolaTank.writeToNBT(compound);
-        CompoundNBT tag = new CompoundNBT();
-        this.oilTank.writeToNBT(tag);
-        compound.setTag("OilTank", tag);
+        compound.put("tanks", tanks.writeNBT());
         super.writeSyncableNBT(compound, type);
     }
 
     @Override
     public void readSyncableNBT(CompoundNBT compound, NBTType type) {
         this.currentProcessTime = compound.getInt("ProcessTime");
-        this.canolaTank.readFromNBT(compound);
-        CompoundNBT tag = compound.getCompoundTag("OilTank");
-        if (tag != null) {
-            this.oilTank.readFromNBT(tag);
+        if (compound.contains("tanks")) {
+            //TODO read
         }
         super.readSyncableNBT(compound, type);
     }
@@ -93,13 +73,13 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
         super.updateEntity();
         if (!this.level.isClientSide) {
             int produce = 80;
-            if (this.canolaTank.getFluidAmount() >= produce && produce <= this.oilTank.getCapacity() - this.oilTank.getFluidAmount()) {
+            if (this.tanks.getFluidInTank(0).getAmount() >= produce && produce <= this.tanks.getTankCapacity(1) - this.tanks.getFluidInTank(1).getAmount()) {
                 this.currentProcessTime++;
                 if (this.currentProcessTime >= PROCESS_TIME) {
                     this.currentProcessTime = 0;
 
-                    this.oilTank.fillInternal(new FluidStack(InitFluids.fluidRefinedCanolaOil, produce), true);
-                    this.canolaTank.drainInternal(produce, true);
+                    this.tanks.oilTank.grow(produce);
+                    this.tanks.canolaTank.shrink(produce);
                 }
             } else {
                 this.currentProcessTime = 0;
@@ -112,17 +92,17 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
                 this.setChanged();
             }
 
-            if ((this.canolaTank.getFluidAmount() != this.lastCanola || this.oilTank.getFluidAmount() != this.lastOil || this.currentProcessTime != this.lastProcessTime) && this.sendUpdateWithInterval()) {
+            if ((this.tanks.getFluidInTank(0).getAmount() != this.lastCanola || this.tanks.getFluidInTank(1).getAmount() != this.lastOil || this.currentProcessTime != this.lastProcessTime) && this.sendUpdateWithInterval()) {
                 this.lastProcessTime = this.currentProcessTime;
-                this.lastCanola = this.canolaTank.getFluidAmount();
-                this.lastOil = this.oilTank.getFluidAmount();
+                this.lastCanola = this.tanks.getFluidInTank(0).getAmount();
+                this.lastOil = this.tanks.getFluidInTank(1).getAmount();
             }
         }
     }
 
     @Override
     public int getComparatorStrength() {
-        float calc = (float) this.oilTank.getFluidAmount() / (float) this.oilTank.getCapacity() * 15F;
+        float calc = (float) this.tanks.getFluidInTank(1).getAmount() / (float) this.tanks.getTankCapacity(1) * 15F;
         return (int) calc;
     }
 
@@ -133,22 +113,22 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
 
     @OnlyIn(Dist.CLIENT)
     public int getOilTankScaled(int i) {
-        return this.oilTank.getFluidAmount() * i / this.oilTank.getCapacity();
+        return this.tanks.getFluidInTank(1).getAmount() * i / this.tanks.getTankCapacity(1);
     }
 
     @OnlyIn(Dist.CLIENT)
     public int getCanolaTankScaled(int i) {
-        return this.canolaTank.getFluidAmount() * i / this.canolaTank.getCapacity();
+        return this.tanks.getFluidInTank(0).getAmount() * i / this.tanks.getTankCapacity(0);
     }
 
     @Override
-    public IFluidHandler getFluidHandler(Direction facing) {
-        return this.handlerMap;
+    public LazyOptional<IFluidHandler> getFluidHandler(Direction facing) {
+        return fluidOptional;
     }
 
     @Override
     public int getMaxFluidAmountToSplitShare() {
-        return this.oilTank.getFluidAmount();
+        return tanks.getFluidInTank(1).getAmount();
     }
 
     @Override
@@ -170,5 +150,107 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
     @Override
     public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity p_createMenu_3_) {
         return new ContainerFermentingBarrel(windowId, playerInventory, this);
+    }
+
+
+    public class FermentingBarrelMultiTank implements IFluidHandler {
+
+        public FluidStack canolaTank = new FluidStack(InitFluids.fluidCanolaOil.get(), 0);
+        public FluidStack oilTank = new FluidStack(InitFluids.fluidRefinedCanolaOil.get(), 0);
+        private int capacity = FluidAttributes.BUCKET_VOLUME * 2;
+
+        @Override
+        public int getTanks() {
+            return 2;
+        }
+
+        @Nonnull
+        @Override
+        public FluidStack getFluidInTank(int tank) {
+            return tank == 0? canolaTank:oilTank;
+        }
+
+        @Override
+        public int getTankCapacity(int tank) {
+            return capacity;
+        }
+
+        @Override
+        public boolean isFluidValid(int tank, @Nonnull FluidStack stack) {
+            return tank == 0? stack.getFluid() == InitFluids.fluidCanolaOil.get():stack.getFluid() == InitFluids.fluidRefinedCanolaOil.get();
+        }
+
+        @Override
+        public int fill(FluidStack resource, FluidAction action) {
+            if (resource.isEmpty() || resource.getFluid() != InitFluids.fluidCanolaOil.get())
+            return 0;
+
+            if(action.simulate())
+            {
+                if (canolaTank.isEmpty())
+                    return Math.min(capacity, resource.getAmount());
+                else
+                    return Math.min(capacity - canolaTank.getAmount(), resource.getAmount());
+            }
+            else {
+                if (canolaTank.isEmpty()) {
+                    canolaTank = new FluidStack(resource, Math.min(capacity, resource.getAmount()));
+                    //TODO need to set the BE dirty.
+                    return canolaTank.getAmount();
+                }
+                else {
+                    int filledAmt = capacity - canolaTank.getAmount();
+                    if (resource.getAmount() < filledAmt) {
+                        canolaTank.grow(resource.getAmount());
+                        filledAmt = resource.getAmount();
+                    }
+                    else
+                        canolaTank.setAmount(capacity);
+
+                    if (filledAmt > 0){
+                        //TODO set BE dirty
+                    }
+                    return filledAmt;
+                }
+            }
+        }
+
+        public CompoundNBT writeNBT() {
+            CompoundNBT canolaNBT = new CompoundNBT();
+            canolaTank.writeToNBT(canolaNBT);
+            CompoundNBT oilNBT = new CompoundNBT();
+            oilTank.writeToNBT(oilNBT);
+
+            CompoundNBT nbt = new CompoundNBT();
+            nbt.put("canolaTank", canolaNBT);
+            nbt.put("oilTank", oilNBT);
+            return nbt;
+        }
+
+        @Nonnull
+        @Override
+        public FluidStack drain(FluidStack resource, FluidAction action) {
+            if (resource.isEmpty() || resource.getFluid() != InitFluids.fluidRefinedCanolaOil.get())
+                return FluidStack.EMPTY;
+
+            return drain(resource.getAmount(), action);
+        }
+
+        @Nonnull
+        @Override
+        public FluidStack drain(int maxDrain, FluidAction action) {
+            int drained = maxDrain;
+            if (oilTank.getAmount() < drained)
+            {
+                drained = oilTank.getAmount();
+            }
+            FluidStack stack = new FluidStack(oilTank, drained);
+            if (action.execute() && drained > 0)
+            {
+                oilTank.shrink(drained);
+                //TODO set BE dirty
+            }
+            return stack;
+        }
     }
 }
