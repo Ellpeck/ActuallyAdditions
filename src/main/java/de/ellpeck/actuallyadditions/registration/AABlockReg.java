@@ -25,7 +25,7 @@ public class AABlockReg<B extends Block, I extends Item, T extends TileEntity> i
         this.name = name;
         this.block = ActuallyBlocks.BLOCKS.register(name, blockSupplier);
         this.item = ActuallyItems.ITEMS.register(name, () -> itemSupplier.apply(block.get()));
-        this.tileEntityType = ActuallyBlocks.TILES.register(name, () -> TileEntityType.Builder.create(tileSupplier, block.get()).build(null));
+        this.tileEntityType = ActuallyBlocks.TILES.register(name, () -> TileEntityType.Builder.of(tileSupplier, block.get()).build(null));
     }
     public AABlockReg(String name, Supplier<B> blockSupplier, Function<B, I> itemSupplier) {
         this.name = name;
