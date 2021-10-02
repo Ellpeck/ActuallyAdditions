@@ -48,6 +48,11 @@ public abstract class ItemEnergy extends ItemBase {
         this.maxPower = maxPower;
         this.transfer = transfer;
     }
+    public ItemEnergy(Properties props, int maxPower, int transfer) {
+        super(props);
+        this.maxPower = maxPower;
+        this.transfer = transfer;
+    }
 
     // TODO: [port] make sure this is right
     @Nullable

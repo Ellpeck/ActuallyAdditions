@@ -57,8 +57,7 @@ public class ItemDrill extends ItemEnergy {
     private static final int ENERGY_USE = 100;
 
     public ItemDrill() {
-        super(250000, 1000, name);
-        this.setMaxDamage(0);
+        super(ActuallyItems.defaultProps().defaultDurability(0).stacksTo(1), 250000, 1000);
         this.setHasSubtypes(true);
         this.setHarvestLevel("shovel", HARVEST_LEVEL);
         this.setHarvestLevel("pickaxe", HARVEST_LEVEL);
@@ -240,6 +239,7 @@ public class ItemDrill extends ItemEnergy {
 
     @Override
     public boolean canHarvestBlock(ItemStack stack, BlockState state) {
+        Block block = state.getBlock();
         return this.getEnergyStored(stack) >= this.getEnergyUsePerBlock(stack) && (this.hasExtraWhitelist(block) || state.getMaterial().isToolNotRequired() || block == Blocks.SNOW_LAYER || block == Blocks.SNOW || (block == Blocks.OBSIDIAN
                 ? HARVEST_LEVEL >= 3
                 : block != Blocks.DIAMOND_BLOCK && block != Blocks.DIAMOND_ORE
@@ -247,7 +247,7 @@ public class ItemDrill extends ItemEnergy {
                 ? block != Blocks.GOLD_BLOCK && block != Blocks.GOLD_ORE
                 ? block != Blocks.IRON_BLOCK && block != Blocks.IRON_ORE
                 ? block != Blocks.LAPIS_BLOCK && block != Blocks.LAPIS_ORE
-                ? block != Blocks.REDSTONE_ORE && block != Blocks.LIT_REDSTONE_ORE
+                ? block != Blocks.REDSTONE_ORE
                 ? state.getMaterial() == Material.STONE || state.getMaterial() == Material.METAL || state.getMaterial() == Material.HEAVY_METAL
                 : HARVEST_LEVEL >= 2
                 : HARVEST_LEVEL >= 1

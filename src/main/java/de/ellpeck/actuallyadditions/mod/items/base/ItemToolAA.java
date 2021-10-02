@@ -16,10 +16,8 @@ import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.block.Block;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ToolItem;
-import net.minecraftforge.common.IRarity;
-import net.minecraftforge.oredict.OreDictionary;
+import net.minecraft.item.*;
+import net.minecraft.tags.ITag;
 
 import java.util.Set;
 
@@ -27,10 +25,10 @@ public class ItemToolAA extends ToolItem implements IDisableableItem {
 
     private final String name;
     private final ItemStack repairItem;
-    private String repairOredict;
+    private final ITag<Item> repairTag;
     private final boolean disabled;
 
-    public ItemToolAA(float attack, float speed, ToolMaterial toolMat, String repairItem, String unlocalizedName, IRarity rarity, Set<Block> effectiveStuff) {
+    public ItemToolAA(float attack, float speed, IItemTier toolMat, String repairItem, String unlocalizedName, Rarity rarity, Set<Block> effectiveStuff) {
         this(attack, speed, toolMat, ItemStack.EMPTY, unlocalizedName, rarity, effectiveStuff);
         this.repairOredict = repairItem;
     }
@@ -54,13 +52,8 @@ public class ItemToolAA extends ToolItem implements IDisableableItem {
     public boolean isValidRepairItem(ItemStack itemToRepair, ItemStack stack) {
         if (StackUtil.isValid(this.repairItem)) {
             return ItemUtil.areItemsEqual(this.repairItem, stack, false);
-        } else if (this.repairOredict != null) {
-            int[] idsStack = OreDictionary.getOreIDs(stack);
-            for (int id : idsStack) {
-                if (OreDictionary.getOreName(id).equals(this.repairOredict)) {
-                    return true;
-                }
-            }
+        } else if (this.repairTag != null) {
+            return repairTag.contains(stack.getItem());
         }
         return false;
     }

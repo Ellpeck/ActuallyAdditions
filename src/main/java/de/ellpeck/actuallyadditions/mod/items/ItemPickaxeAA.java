@@ -42,7 +42,7 @@ public class ItemPickaxeAA extends ItemToolAA {
                 if (block != Blocks.GOLD_BLOCK && block != Blocks.GOLD_ORE) {
                     if (block != Blocks.IRON_BLOCK && block != Blocks.IRON_ORE) {
                         if (block != Blocks.LAPIS_BLOCK && block != Blocks.LAPIS_ORE) {
-                            if (block != Blocks.REDSTONE_ORE && block != Blocks.LIT_REDSTONE_ORE) {
+                            if (block != Blocks.REDSTONE_ORE) {
                                 Material material = blockIn.getMaterial();
                                 return material == Material.STONE || material == Material.METAL || material == Material.HEAVY_METAL;
                             } else {

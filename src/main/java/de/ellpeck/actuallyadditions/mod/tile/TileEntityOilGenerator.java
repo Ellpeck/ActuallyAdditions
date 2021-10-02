@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.recipe.OilGenRecipe;
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntListValues;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerOilGenerator;
 import de.ellpeck.actuallyadditions.mod.util.Util;
@@ -78,7 +79,7 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
     private int lastCompare;
 
     public TileEntityOilGenerator() {
-        super(ActuallyTiles.OILGENERATOR_TILE.get());
+        super(ActuallyBlocks.OIL_GENERATOR.getTileEntityType());
     }
 
     private static OilGenRecipe getRecipeForFluid(String fluidName) {
