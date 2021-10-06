@@ -8,6 +8,7 @@ import net.minecraft.data.*;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
@@ -213,46 +214,126 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .define('R', ActuallyItems.RESTONIA_CRYSTAL.get())
             .define('I', ActuallyItems.ENORI_CRYSTAL.get()).save(consumer);
 
+        //Tele Staff
+        Recipe.shaped(ActuallyItems.TELE_STAFF.get())
+            .pattern(" FE")
+            .pattern(" S ")
+            .pattern("SB ")
+            .define('F', ActuallyItems.DIAMATINE_EMPOWERED_CRYSTAL.get())
+            .define('E', ActuallyBlocks.ENDER_PEARL_BLOCK.getItem())
+            .define('S', ActuallyBlocks.ENDER_CASING.getItem())
+            .define('B', ActuallyItems.BATTERY.get()).save(consumer);
+
+        //Drill Speed upgrade
+        Recipe.shaped(ActuallyItems.DRILL_UPGRADE_SPEED.get())
+            .pattern("ISI")
+            .pattern("SRS")
+            .pattern("ISI")
+            .define('I', ActuallyItems.ENORI_CRYSTAL.get())
+            .define('S', Items.SUGAR)
+            .define('R', ActuallyItems.RESTONIA_CRYSTAL.get()).save(consumer);
+
+        //Drill Speed upgrade II
+        Recipe.shaped(ActuallyItems.DRILL_UPGRADE_SPEED_II.get())
+            .pattern("ISI")
+            .pattern("SRS")
+            .pattern("ISI")
+            .define('I', ActuallyItems.ENORI_CRYSTAL.get())
+            .define('S', Items.SUGAR)
+            .define('R', Items.CAKE).save(consumer);
+
+        //Drill Speed upgrade III
+        Recipe.shaped(ActuallyItems.DRILL_UPGRADE_SPEED_III.get())
+            .pattern("ISI")
+            .pattern("SRS")
+            .pattern("ISI")
+            .define('I', ActuallyItems.ENORI_EMPOWERED_CRYSTAL.get())
+            .define('S', Items.SUGAR)
+            .define('R', ActuallyItems.DIAMATINE_EMPOWERED_CRYSTAL.get()).save(consumer);
+
+        //Drill Fortune upgrade
+        Recipe.shaped(ActuallyItems.DRILL_UPGRADE_FORTUNE.get())
+            .pattern("ISI")
+            .pattern("SRS")
+            .pattern("ISI")
+            .define('I', Items.GLOWSTONE)
+            .define('S', Tags.Items.DUSTS_REDSTONE)
+            .define('R', ActuallyBlocks.EMPOWERED_DIAMATINE_CRYSTAL.getItem()).save(consumer);
+
+        //Drill Fortune upgrade II
+        Recipe.shaped(ActuallyItems.DRILL_UPGRADE_FORTUNE_II.get())
+            .pattern("ISI")
+            .pattern("SRS")
+            .pattern("ISI")
+            .define('I', Items.GLOWSTONE)
+            .define('S', ActuallyItems.RESTONIA_EMPOWERED_CRYSTAL.get())
+            .define('R', ActuallyBlocks.ENDER_CASING.getItem()).save(consumer);
+
+        //3x3
+        Recipe.shaped(ActuallyItems.DRILL_UPGRADE_THREE_BY_THREE.get())
+            .pattern("DID")
+            .pattern("ICI")
+            .pattern("DID")
+            .define('I', ActuallyItems.ENORI_CRYSTAL.get())
+            .define('D', ActuallyItems.DIAMATINE_CRYSTAL.get())
+            .define('C', ActuallyItems.COIL.get()).save(consumer);
+
+        //5x5
+        Recipe.shaped(ActuallyItems.DRILL_UPGRADE_FIVE_BY_FIVE.get())
+            .pattern("DID")
+            .pattern("ICI")
+            .pattern("DID")
+            .define('I', ActuallyItems.ENORI_EMPOWERED_CRYSTAL.get())
+            .define('D', ActuallyItems.DIAMATINE_CRYSTAL.get())
+            .define('C', ActuallyItems.COIL_ADVANCED.get()).save(consumer);
+
+        //Silk Touch
+        Recipe.shaped(ActuallyItems.DRILL_UPGRADE_SILK_TOUCH.get())
+            .pattern("DSD")
+            .pattern("SCS")
+            .pattern("DSD")
+            .define('D', ActuallyItems.EMERADIC_CRYSTAL.get())
+            .define('S', ActuallyItems.DIAMATINE_CRYSTAL.get())
+            .define('C', ActuallyItems.COIL_ADVANCED.get()).save(consumer);
+
+        //Placing
+        Recipe.Shaped.shaped(ActuallyItems.DRILL_UPGRADE_BLOCK_PLACING.get())
+            .pattern("CEC")
+            .pattern("RAR")
+            .pattern("CEC")
+            .define('C', Tags.Items.COBBLESTONE)
+            .define('E', Items.PAPER)
+            .define('A', ActuallyItems.COIL.get())
+            .define('R', ActuallyItems.ENORI_CRYSTAL.get()).save(consumer);
+
+        //Bat Wings
+        Recipe.shaped(ActuallyItems.WINGS_OF_THE_BATS.get())
+            .pattern("WNW")
+            .pattern("WDW")
+            .pattern("WNW")
+            .define('W', ActuallyItems.BAT_WING.get())
+            .define('N', ActuallyBlocks.DIAMATINE_CRYSTAL.getItem())
+            .define('D', ActuallyItems.ENDER_STAR.get()).save(consumer);
+
+        //Coil
+        Recipe.shaped(ActuallyItems.COIL.get())
+            .pattern(" R ")
+            .pattern("RIR")
+            .pattern(" R ")
+            .define('I', ActuallyItems.BLACK_QUARTZ.get())
+            .define('R', ActuallyItems.RESTONIA_CRYSTAL.get()).save(consumer);
+
+        //Advanced Coil
+        Recipe.shaped(ActuallyItems.COIL_ADVANCED.get())
+            .pattern("GGG")
+            .pattern("GCG")
+            .pattern("GGG")
+            .define('C', ActuallyItems.COIL.get())
+            .define('G', Items.GOLD_NUGGET).save(consumer);
 
 
 
 
-        //        //Tele Staff
-        //        RecipeHandler.addOreDictRecipe(new ItemStack(InitItems.itemTeleStaff), " FE", " S ", "SB ", 'F', new ItemStack(InitItems.itemCrystalEmpowered, 1, TheCrystals.DIAMOND.ordinal()), 'E', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ENDERPEARL_BLOCK.ordinal()), 'S', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ENDER_CASING.ordinal()), 'B', new ItemStack(InitItems.itemBattery, 1, Util.WILDCARD));
-        //        recipeStaff = RecipeUtil.lastIRecipe();
-        //
-        //        //Drill Speed
-        //        RecipeHandler.addOreDictRecipe(new ItemStack(InitItems.itemDrillUpgradeSpeed), "ISI", "SRS", "ISI", 'I', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal()), 'S', Items.SUGAR, 'R', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.REDSTONE.ordinal()));
-        //        recipeDrillSpeedI = RecipeUtil.lastIRecipe();
-        //
-        //        RecipeHandler.addOreDictRecipe(new ItemStack(InitItems.itemDrillUpgradeSpeedII), "ISI", "SCS", "ISI", 'I', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal()), 'S', Items.SUGAR, 'C', Items.CAKE);
-        //        recipeDrillSpeedII = RecipeUtil.lastIRecipe();
-        //
-        //        RecipeHandler.addOreDictRecipe(new ItemStack(InitItems.itemDrillUpgradeSpeedIII), "ISI", "SFS", "ISI", 'I', new ItemStack(InitItems.itemCrystalEmpowered, 1, TheCrystals.IRON.ordinal()), 'S', Items.SUGAR, 'F', new ItemStack(InitItems.itemCrystalEmpowered, 1, TheCrystals.DIAMOND.ordinal()));
-        //        recipeDrillSpeedIII = RecipeUtil.lastIRecipe();
-        //
-        //        //Drill Fortune
-        //        RecipeHandler.addOreDictRecipe(new ItemStack(InitItems.itemDrillUpgradeFortune), "ISI", "SRS", "ISI", 'I', Blocks.GLOWSTONE, 'S', Items.REDSTONE, 'R', new ItemStack(InitBlocks.blockCrystalEmpowered, 1, TheCrystals.DIAMOND.ordinal()));
-        //        recipeDrillFortuneI = RecipeUtil.lastIRecipe();
-        //
-        //        RecipeHandler.addOreDictRecipe(new ItemStack(InitItems.itemDrillUpgradeFortuneII), "ISI", "SRS", "ISI", 'I', Blocks.GLOWSTONE, 'S', new ItemStack(InitItems.itemCrystalEmpowered, 1, TheCrystals.REDSTONE.ordinal()), 'R', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ENDER_CASING.ordinal()));
-        //        recipeDrillFortuneII = RecipeUtil.lastIRecipe();
-        //
-        //        //Drill Size
-        //        RecipeHandler.addOreDictRecipe(new ItemStack(InitItems.itemDrillUpgradeThreeByThree), "DID", "ICI", "DID", 'I', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal()), 'D', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.DIAMOND.ordinal()), 'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL.ordinal()));
-        //        recipeDrillThree = RecipeUtil.lastIRecipe();
-        //
-        //        RecipeHandler.addOreDictRecipe(new ItemStack(InitItems.itemDrillUpgradeFiveByFive), "DID", "ICI", "DID", 'I', new ItemStack(InitItems.itemCrystalEmpowered, 1, TheCrystals.IRON.ordinal()), 'D', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.DIAMOND.ordinal()), 'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()));
-        //        recipeDrillFive = RecipeUtil.lastIRecipe();
-        //
-        //        //Drill Silk Touch
-        //        RecipeHandler.addOreDictRecipe(new ItemStack(InitItems.itemDrillUpgradeSilkTouch), "DSD", "SCS", "DSD", 'D', new ItemStack(InitItems.itemCrystalEmpowered, 1, TheCrystals.EMERALD.ordinal()), 'S', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.DIAMOND.ordinal()), 'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()));
-        //        recipeDrillSilk = RecipeUtil.lastIRecipe();
-        //
-        //        //Drill Placing
-        //        RecipeHandler.addOreDictRecipe(new ItemStack(InitItems.itemDrillUpgradeBlockPlacing), "CEC", "RAR", "CEC", 'C', "cobblestone", 'E', Items.PAPER, 'A', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL.ordinal()), 'R', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal()));
-        //        recipeDrillPlacing = RecipeUtil.lastIRecipe();
-        //
         //        //Battery
         //        RecipeHandler.addOreDictRecipe(new ItemStack(InitItems.itemBattery), " R ", "ICI", "III", 'R', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.REDSTONE.ordinal()), 'I', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal()), 'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()));
         //        recipeBattery = RecipeUtil.lastIRecipe();
@@ -285,14 +366,6 @@ public class ItemRecipeGenerator extends RecipeProvider {
         //        new RecipeKeepDataShaped(new ResourceLocation(ActuallyAdditions.MODID, "quintuple_battery"), new ItemStack(InitItems.itemBatteryQuintuple), new ItemStack(InitItems.itemBatteryQuadruple), " R ", "ICI", "III", 'R', new ItemStack(InitItems.itemBatteryQuadruple), 'I', new ItemStack(InitItems.itemCrystalEmpowered, 1, TheCrystals.DIAMOND.ordinal()), 'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()));
         //        recipeBatteryQuintuple = RecipeUtil.lastIRecipe();
         //
-        //        //Bat Wings
-        //        RecipeHandler.addOreDictRecipe(new ItemStack(InitItems.itemWingsOfTheBats), "WNW", "WDW", "WNW", 'W', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.BAT_WING.ordinal()), 'N', new ItemStack(InitBlocks.blockCrystalEmpowered, 1, TheCrystals.DIAMOND.ordinal()), 'D', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.ENDER_STAR.ordinal()));
-        //        recipeWings = RecipeUtil.lastIRecipe();
-        //
-        //        //Coil
-        //        RecipeHandler.addOreDictRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL.ordinal()), " R ", "RIR", " R ", 'I', ConfigBoolValues.SUPER_DUPER_HARD_MODE.isEnabled() ? new ItemStack(InitItems.itemMisc, 1, TheMiscItems.ENDER_STAR.ordinal()) : "gemQuartzBlack", 'R', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.REDSTONE.ordinal()));
-        //        recipeCoil = RecipeUtil.lastIRecipe();
-        //
         //        //Cup
         //        RecipeHandler.addOreDictRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.CUP.ordinal()), "S S", "SCS", "SSS", 'S', "stone", 'C', "cropCoffee");
         //        recipeCup = RecipeUtil.lastIRecipe();
@@ -301,10 +374,6 @@ public class ItemRecipeGenerator extends RecipeProvider {
         //        if (!OreDictionary.getOres("nuggetEnderium", false).isEmpty()) {
         //            RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitItems.itemResonantRice), new ItemStack(InitItems.itemFoods, 1, TheFoods.RICE.ordinal()), "nuggetEnderium", Items.GUNPOWDER);
         //        }
-        //
-        //        //Advanced Coil
-        //        RecipeHandler.addOreDictRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()), "GGG", "GCG", "GGG", 'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL.ordinal()), 'G', "nuggetGold");
-        //        recipeCoilAdvanced = RecipeUtil.lastIRecipe();
         //
         //        //Advanced Leaf Blower
         //        RecipeHandler.addOreDictRecipe(new ItemStack(InitItems.itemLeafBlowerAdvanced), " F", "DP", "DC", 'F', new ItemStack(Items.FLINT), 'D', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.DIAMOND.ordinal()), 'P', new ItemStack(Blocks.PISTON), 'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()));

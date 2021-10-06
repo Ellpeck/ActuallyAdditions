@@ -206,6 +206,9 @@ public final class ActuallyBlocks {
 
 
     // Misc building blocks
+    public static final AABlockReg<ActuallyBlock, AABlockItem, ?> ENDER_PEARL_BLOCK = new AABlockReg<>("ender_pearl_block", () -> new ActuallyBlock(miscBlockProperties),
+        (b) -> new AABlockItem(b, defaultBlockItemProperties));
+
     public static final AABlockReg<ActuallyBlock, AABlockItem, ?> ETHETIC_GREEN_BLOCK = new AABlockReg<>("ethetic_green_block", () -> new ActuallyBlock(miscBlockProperties),
         (b) -> new AABlockItem(b, defaultBlockItemProperties));
     public static final AABlockReg<ActuallyBlock, AABlockItem, ?> ETHETIC_WHITE_BLOCK = new AABlockReg<>("ethetic_white_block", () -> new ActuallyBlock(miscBlockProperties),
