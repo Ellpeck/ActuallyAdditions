@@ -2,6 +2,7 @@ package de.ellpeck.actuallyadditions.data;
 
 import com.google.gson.JsonObject;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
+import de.ellpeck.actuallyadditions.mod.crafting.TargetNBTIngredient;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheFoods;
 import net.minecraft.data.*;
@@ -331,16 +332,56 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .define('C', ActuallyItems.COIL.get())
             .define('G', Items.GOLD_NUGGET).save(consumer);
 
+        //Battery
+        Recipe.shaped(ActuallyItems.BATTERY.get())
+            .pattern(" R ")
+            .pattern("ICI")
+            .pattern("III")
+            .define('R', ActuallyItems.RESTONIA_CRYSTAL.get())
+            .define('I', ActuallyItems.ENORI_CRYSTAL.get())
+            .define('C', ActuallyItems.COIL_ADVANCED.get())
+            .save(consumer);
 
+        //Double Battery
+        Recipe.shaped(ActuallyItems.BATTERY_DOUBLE.get())
+            .pattern(" R ")
+            .pattern("ICI")
+            .pattern("III")
+            .define('R', TargetNBTIngredient.of(ActuallyItems.BATTERY.get()))
+            .define('I', ActuallyItems.ENORI_CRYSTAL.get())
+            .define('C', ActuallyItems.COIL_ADVANCED.get())
+            .save(consumer);
 
+        //Triple Battery
+        Recipe.shaped(ActuallyItems.BATTERY_TRIPLE.get())
+            .pattern(" R ")
+            .pattern("ICI")
+            .pattern("III")
+            .define('R', TargetNBTIngredient.of(ActuallyItems.BATTERY_DOUBLE.get()))
+            .define('I', ActuallyItems.ENORI_EMPOWERED_CRYSTAL.get())
+            .define('C', ActuallyItems.COIL_ADVANCED.get())
+            .save(consumer);
 
-        //        //Battery
-        //        RecipeHandler.addOreDictRecipe(new ItemStack(InitItems.itemBattery), " R ", "ICI", "III", 'R', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.REDSTONE.ordinal()), 'I', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal()), 'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()));
-        //        recipeBattery = RecipeUtil.lastIRecipe();
-        //
-        //        //Double Battery
-        //        new RecipeKeepDataShaped(new ResourceLocation(ActuallyAdditions.MODID, "double_battery"), new ItemStack(InitItems.itemBatteryDouble), new ItemStack(InitItems.itemBattery), " R ", "ICI", "III", 'R', new ItemStack(InitItems.itemBattery), 'I', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal()), 'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()));
-        //        recipeBatteryDouble = RecipeUtil.lastIRecipe();
+        //Quad Battery
+        Recipe.shaped(ActuallyItems.BATTERY_QUADRUPLE.get())
+            .pattern(" R ")
+            .pattern("ICI")
+            .pattern("III")
+            .define('R', TargetNBTIngredient.of(ActuallyItems.BATTERY_TRIPLE.get()))
+            .define('I', ActuallyItems.ENORI_EMPOWERED_CRYSTAL.get())
+            .define('C', ActuallyItems.COIL_ADVANCED.get())
+            .save(consumer);
+
+        //Quintuple Battery
+        Recipe.shaped(ActuallyItems.BATTERY_QUINTUPLE.get())
+            .pattern(" R ")
+            .pattern("ICI")
+            .pattern("III")
+            .define('R', TargetNBTIngredient.of(ActuallyItems.BATTERY_QUADRUPLE.get()))
+            .define('I', ActuallyItems.DIAMATINE_EMPOWERED_CRYSTAL.get())
+            .define('C', ActuallyItems.COIL_ADVANCED.get())
+            .save(consumer);
+
         //
         //        //Magnet Ring
         //        RecipeHandler.addOreDictRecipe(new ItemStack(InitItems.itemMagnetRing), "RIB", "IOI", "BIR", 'R', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.REDSTONE.ordinal()), 'I', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal()), 'B', new ItemStack(Items.DYE, 1, 4), 'O', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.RING.ordinal()));
@@ -354,17 +395,6 @@ public class ItemRecipeGenerator extends RecipeProvider {
         //        RecipeHandler.addOreDictRecipe(new ItemStack(InitItems.itemWaterRemovalRing), "BIB", "IOI", "BIB", 'B', new ItemStack(Items.WATER_BUCKET), 'I', new ItemStack(InitItems.itemCrystalEmpowered, 1, TheCrystals.DIAMOND.ordinal()), 'O', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.RING.ordinal()));
         //        recipeWaterRing = RecipeUtil.lastIRecipe();
         //
-        //        //Triple Battery
-        //        new RecipeKeepDataShaped(new ResourceLocation(ActuallyAdditions.MODID, "triple_battery"), new ItemStack(InitItems.itemBatteryTriple), new ItemStack(InitItems.itemBatteryDouble), " R ", "ICI", "III", 'R', new ItemStack(InitItems.itemBatteryDouble), 'I', new ItemStack(InitItems.itemCrystalEmpowered, 1, TheCrystals.IRON.ordinal()), 'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()));
-        //        recipeBatteryTriple = RecipeUtil.lastIRecipe();
-        //
-        //        //Quadruple Battery
-        //        new RecipeKeepDataShaped(new ResourceLocation(ActuallyAdditions.MODID, "quadruple_battery"), new ItemStack(InitItems.itemBatteryQuadruple), new ItemStack(InitItems.itemBatteryTriple), " R ", "ICI", "III", 'R', new ItemStack(InitItems.itemBatteryTriple), 'I', new ItemStack(InitItems.itemCrystalEmpowered, 1, TheCrystals.IRON.ordinal()), 'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()));
-        //        recipeBatteryQuadruple = RecipeUtil.lastIRecipe();
-        //
-        //        //Quintuple Battery
-        //        new RecipeKeepDataShaped(new ResourceLocation(ActuallyAdditions.MODID, "quintuple_battery"), new ItemStack(InitItems.itemBatteryQuintuple), new ItemStack(InitItems.itemBatteryQuadruple), " R ", "ICI", "III", 'R', new ItemStack(InitItems.itemBatteryQuadruple), 'I', new ItemStack(InitItems.itemCrystalEmpowered, 1, TheCrystals.DIAMOND.ordinal()), 'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()));
-        //        recipeBatteryQuintuple = RecipeUtil.lastIRecipe();
         //
         //        //Cup
         //        RecipeHandler.addOreDictRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.CUP.ordinal()), "S S", "SCS", "SSS", 'S', "stone", 'C', "cropCoffee");
