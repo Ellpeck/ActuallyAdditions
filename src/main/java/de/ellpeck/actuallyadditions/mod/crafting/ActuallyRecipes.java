@@ -14,5 +14,5 @@ public class ActuallyRecipes {
         RECIPE_TYPES.register(bus);
     }
 
-    public static final RegistryObject<IRecipeSerializer<?>> NBT_COPY_RECIPE = RECIPE_TYPES.register(CopyNBTRecipeShaped.NAME, CopyNBTRecipeShaped.Serializer::new);
+    public static final RegistryObject<IRecipeSerializer<?>> KEEP_DATA_SHAPED_RECIPE = RECIPE_TYPES.register(RecipeKeepDataShaped.NAME, RecipeKeepDataShaped.Serializer::new);
 }
