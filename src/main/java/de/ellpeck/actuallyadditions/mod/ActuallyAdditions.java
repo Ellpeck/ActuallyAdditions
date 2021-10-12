@@ -13,7 +13,9 @@ package de.ellpeck.actuallyadditions.mod;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.booklet.InitBooklet;
+import de.ellpeck.actuallyadditions.mod.crafting.ActuallyRecipes;
 import de.ellpeck.actuallyadditions.mod.crafting.CrusherCrafting;
+import de.ellpeck.actuallyadditions.mod.crafting.TargetNBTIngredient;
 import de.ellpeck.actuallyadditions.mod.data.WorldData;
 import de.ellpeck.actuallyadditions.mod.entity.InitEntities;
 import de.ellpeck.actuallyadditions.mod.event.CommonEvents;
@@ -35,6 +37,7 @@ import de.ellpeck.actuallyadditions.mod.update.UpdateChecker;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -81,6 +84,7 @@ public class ActuallyAdditions {
 
         ActuallyBlocks.BLOCKS.register(eventBus);
         ActuallyBlocks.TILES.register(eventBus);
+        ActuallyRecipes.init(eventBus);
         ActuallyContainers.CONTAINERS.register(eventBus);
 
         MinecraftForge.EVENT_BUS.addListener(this::serverStarted);
@@ -99,6 +103,7 @@ public class ActuallyAdditions {
         ActuallyAdditionsAPI.connectionHandler = new LaserRelayConnectionHandler();
         Lenses.init();
 //        CompatUtil.registerCraftingTweaks();
+        event.enqueueWork(() -> CraftingHelper.register(TargetNBTIngredient.Serializer.NAME, TargetNBTIngredient.SERIALIZER));
 
         commonCapsLoaded = false; // Loader.isModLoaded("commoncapabilities");
 

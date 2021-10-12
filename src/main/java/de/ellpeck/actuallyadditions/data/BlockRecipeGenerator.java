@@ -185,7 +185,6 @@ public class BlockRecipeGenerator extends RecipeProvider {
     @Override
     protected void saveAdvancement(DirectoryCache p_208310_1_, JsonObject p_208310_2_, Path p_208310_3_) {
         //Nope... maybe later...
-
     }
 
     public static class Recipe {
