@@ -6,6 +6,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.*;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.util.IItemProvider;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
@@ -106,9 +107,9 @@ public class LaserRecipe implements IRecipe<IInventory> {
         private ResourceLocation id;
         private Ingredient itemIngredient;
         private int energy;
-        private ItemStack output;
+        private IItemProvider output;
 
-        public FinishedRecipe(ResourceLocation id, Ingredient itemIngredient, int energy, ItemStack output) {
+        public FinishedRecipe(ResourceLocation id, Ingredient itemIngredient, int energy, IItemProvider output) {
             this.id = id;
             this.itemIngredient = itemIngredient;
             this.energy = energy;
@@ -119,7 +120,7 @@ public class LaserRecipe implements IRecipe<IInventory> {
         public void serializeRecipeData(JsonObject pJson) {
             pJson.add("input", itemIngredient.toJson());
             pJson.addProperty("energy", energy);
-            pJson.addProperty("output", Registry.ITEM.getKey(output.getItem()).toString());
+            pJson.addProperty("output", output.asItem().getRegistryName().toString());
         }
 
         @Override

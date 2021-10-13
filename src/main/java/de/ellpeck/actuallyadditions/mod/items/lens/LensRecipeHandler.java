@@ -10,86 +10,10 @@
 
 package de.ellpeck.actuallyadditions.mod.items.lens;
 
-// TODO: [port] ADD BACK WITH DATA GENS
+// TODO: Need to figure out the enchanted stuff, and color changing still, the rest are datagen now.
 public final class LensRecipeHandler {
-    //
-    //    public static final ArrayList<LensConversionRecipe> MAIN_PAGE_RECIPES = new ArrayList<>();
-    //    public static LensConversionRecipe recipeColorLens;
-    //    public static LensConversionRecipe recipeSoulSand;
-    //    public static LensConversionRecipe recipeGreenWall;
-    //    public static LensConversionRecipe recipeWhiteWall;
-    //    public static LensConversionRecipe recipeExplosionLens;
-    //    public static LensConversionRecipe recipeDamageLens;
-    //    public static LensConversionRecipe recipeLeather;
-    //    public static LensConversionRecipe recipeNetherWart;
-    //    public static LensConversionRecipe recipePrismarine;
-    //    public static LensConversionRecipe recipeCrystallizedCanolaSeed;
-    //    public static LensConversionRecipe recipeItemLaser;
-    //    public static LensConversionRecipe recipeFluidLaser;
-    //    public static EnchBookConversion recipeEnchBook;
-    //
     public static void init() {
-        //        //Crystal Blocks
-        //        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(fromBlock(Blocks.REDSTONE_BLOCK), new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.REDSTONE.ordinal()), 400);
-        //        MAIN_PAGE_RECIPES.add(RecipeUtil.lastReconstructorRecipe());
-        //        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(fromBlock(Blocks.LAPIS_BLOCK), new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.LAPIS.ordinal()), 400);
-        //        MAIN_PAGE_RECIPES.add(RecipeUtil.lastReconstructorRecipe());
-        //        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(fromBlock(Blocks.DIAMOND_BLOCK), new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.DIAMOND.ordinal()), 600);
-        //        MAIN_PAGE_RECIPES.add(RecipeUtil.lastReconstructorRecipe());
-        //        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(fromBlock(Blocks.EMERALD_BLOCK), new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.EMERALD.ordinal()), 1000);
-        //        MAIN_PAGE_RECIPES.add(RecipeUtil.lastReconstructorRecipe());
-        //        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(fromBlock(Blocks.COAL_BLOCK), new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.COAL.ordinal()), 600);
-        //        MAIN_PAGE_RECIPES.add(RecipeUtil.lastReconstructorRecipe());
-        //        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(fromBlock(Blocks.IRON_BLOCK), new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.IRON.ordinal()), 800);
-        //        MAIN_PAGE_RECIPES.add(RecipeUtil.lastReconstructorRecipe());
-        //
-        //        //Crystal Items
-        //        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(Ingredient.fromItems(Items.REDSTONE), new ItemStack(InitItems.itemCrystal, 1, TheCrystals.REDSTONE.ordinal()), 40);
-        //        MAIN_PAGE_RECIPES.add(RecipeUtil.lastReconstructorRecipe());
-        //        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(Ingredient.fromStacks(new ItemStack(Items.DYE, 1, 4)), new ItemStack(InitItems.itemCrystal, 1, TheCrystals.LAPIS.ordinal()), 40);
-        //        MAIN_PAGE_RECIPES.add(RecipeUtil.lastReconstructorRecipe());
-        //        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(Ingredient.fromItems(Items.DIAMOND), new ItemStack(InitItems.itemCrystal, 1, TheCrystals.DIAMOND.ordinal()), 60);
-        //        MAIN_PAGE_RECIPES.add(RecipeUtil.lastReconstructorRecipe());
-        //        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(Ingredient.fromItems(Items.EMERALD), new ItemStack(InitItems.itemCrystal, 1, TheCrystals.EMERALD.ordinal()), 100);
-        //        MAIN_PAGE_RECIPES.add(RecipeUtil.lastReconstructorRecipe());
-        //        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(Ingredient.fromItems(Items.COAL), new ItemStack(InitItems.itemCrystal, 1, TheCrystals.COAL.ordinal()), 60);
-        //        MAIN_PAGE_RECIPES.add(RecipeUtil.lastReconstructorRecipe());
-        //        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(Ingredient.fromItems(Items.IRON_INGOT), new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal()), 80);
-        //        MAIN_PAGE_RECIPES.add(RecipeUtil.lastReconstructorRecipe());
-        //
-        //        //Lenses
-        //        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(Ingredient.fromStacks(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.LENS.ordinal())), new ItemStack(InitItems.itemColorLens), 5000);
-        //        recipeColorLens = RecipeUtil.lastReconstructorRecipe();
-        //        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(Ingredient.fromItems(InitItems.itemColorLens), new ItemStack(InitItems.itemExplosionLens), 5000);
-        //        recipeExplosionLens = RecipeUtil.lastReconstructorRecipe();
-        //        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(Ingredient.fromItems(InitItems.itemExplosionLens), new ItemStack(InitItems.itemDamageLens), 5000);
-        //        recipeDamageLens = RecipeUtil.lastReconstructorRecipe();
-        //        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(Ingredient.fromItems(InitItems.itemDamageLens), new ItemStack(InitItems.itemMisc, 1, TheMiscItems.LENS.ordinal()), 5000);
-        //
-        //        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(fromBlock(InitBlocks.blockLaserRelay), new ItemStack(InitBlocks.blockLaserRelayFluids), 2000);
-        //        recipeFluidLaser = RecipeUtil.lastReconstructorRecipe();
-        //        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(fromBlock(InitBlocks.blockLaserRelayFluids), new ItemStack(InitBlocks.blockLaserRelayItem), 2000);
-        //        recipeItemLaser = RecipeUtil.lastReconstructorRecipe();
-        //        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(fromBlock(InitBlocks.blockLaserRelayItem), new ItemStack(InitBlocks.blockLaserRelay), 2000);
-        //
-        //        //Misc
-        //        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(fromBlock(Blocks.SAND), new ItemStack(Blocks.SOUL_SAND), 20000);
-        //        recipeSoulSand = RecipeUtil.lastReconstructorRecipe();
-        //        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(Ingredient.fromItems(Items.ROTTEN_FLESH), new ItemStack(Items.LEATHER), 8000);
-        //        recipeLeather = RecipeUtil.lastReconstructorRecipe();
-        //
-        //        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(fromBlock(Blocks.RED_MUSHROOM), new ItemStack(Items.NETHER_WART), 150000);
-        //        recipeNetherWart = RecipeUtil.lastReconstructorRecipe();
-        //        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(Ingredient.fromItems(Items.QUARTZ), new ItemStack(Items.PRISMARINE_SHARD), 30000);
-        //        recipePrismarine = RecipeUtil.lastReconstructorRecipe();
-        //
-        //        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(Ingredient.fromItems(InitItems.itemCanolaSeed), new ItemStack(InitItems.itemMisc, 1, TheMiscItems.CRYSTALLIZED_CANOLA_SEED.ordinal()), 2000);
-        //        recipeCrystallizedCanolaSeed = RecipeUtil.lastReconstructorRecipe();
-        //
-        //        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(fromBlock(Blocks.QUARTZ_BLOCK), new ItemStack(InitBlocks.blockTestifiBucksWhiteWall), 10);
-        //        recipeWhiteWall = RecipeUtil.lastReconstructorRecipe();
-        //        ActuallyAdditionsAPI.addReconstructorLensConversionRecipe(Ingredient.fromStacks(new ItemStack(Blocks.QUARTZ_BLOCK, 1, 1)), new ItemStack(InitBlocks.blockTestifiBucksGreenWall), 10);
-        //        recipeGreenWall = RecipeUtil.lastReconstructorRecipe();
+
         //
         //        ActuallyAdditionsAPI.RECONSTRUCTOR_LENS_CONVERSION_RECIPES.add(recipeEnchBook = new EnchBookConversion());
         //

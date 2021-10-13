@@ -26,5 +26,7 @@ public class ActuallyRecipes {
         //public static final IRecipeType<CrushingRecipe> CRUSHING = IRecipeType.register(ActuallyAdditions.MODID + ":crush");
         //public static final IRecipeType<SolidFuelRecipe> SOLIDFUEL = IRecipeType.register(ActuallyAdditions.MODID + ":solid_fuel");
         //public static final IRecipeType<LiquidFuelRecipe> LIQUIDFUEL = IRecipeType.register(ActuallyAdditions.MODID + ":liquid_fuel");
+        //public static final IRecipeType<PressingRecipe> PRESSING = IRecipeType.register(ActuallyAdditions.MODID + ":pressing");
+        //public static final IRecipeType<FermentingRecipe> FERMENTING = IRecipeType.register(ActuallyAdditions.MODID + ":fermenting");
     }
 }
