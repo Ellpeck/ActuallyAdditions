@@ -2,7 +2,9 @@ package de.ellpeck.actuallyadditions.data;
 
 import com.google.gson.JsonObject;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
+import de.ellpeck.actuallyadditions.mod.crafting.ActuallyRecipes;
 import de.ellpeck.actuallyadditions.mod.crafting.TargetNBTIngredient;
+import de.ellpeck.actuallyadditions.mod.crafting.WrappedRecipe;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheFoods;
 import net.minecraft.data.*;
@@ -350,7 +352,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .define('R', TargetNBTIngredient.of(ActuallyItems.BATTERY.get()))
             .define('I', ActuallyItems.ENORI_CRYSTAL.get())
             .define('C', ActuallyItems.COIL_ADVANCED.get())
-            .save(consumer);
+            .save(WrappedRecipe.Inject(consumer, ActuallyRecipes.KEEP_DATA_SHAPED_RECIPE.get()));
 
         //Triple Battery
         Recipe.shaped(ActuallyItems.BATTERY_TRIPLE.get())
@@ -360,7 +362,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .define('R', TargetNBTIngredient.of(ActuallyItems.BATTERY_DOUBLE.get()))
             .define('I', ActuallyItems.ENORI_EMPOWERED_CRYSTAL.get())
             .define('C', ActuallyItems.COIL_ADVANCED.get())
-            .save(consumer);
+            .save(WrappedRecipe.Inject(consumer, ActuallyRecipes.KEEP_DATA_SHAPED_RECIPE.get()));
 
         //Quad Battery
         Recipe.shaped(ActuallyItems.BATTERY_QUADRUPLE.get())
@@ -370,7 +372,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .define('R', TargetNBTIngredient.of(ActuallyItems.BATTERY_TRIPLE.get()))
             .define('I', ActuallyItems.ENORI_EMPOWERED_CRYSTAL.get())
             .define('C', ActuallyItems.COIL_ADVANCED.get())
-            .save(consumer);
+            .save(WrappedRecipe.Inject(consumer, ActuallyRecipes.KEEP_DATA_SHAPED_RECIPE.get()));
 
         //Quintuple Battery
         Recipe.shaped(ActuallyItems.BATTERY_QUINTUPLE.get())
@@ -380,7 +382,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .define('R', TargetNBTIngredient.of(ActuallyItems.BATTERY_QUADRUPLE.get()))
             .define('I', ActuallyItems.DIAMATINE_EMPOWERED_CRYSTAL.get())
             .define('C', ActuallyItems.COIL_ADVANCED.get())
-            .save(consumer);
+            .save(WrappedRecipe.Inject(consumer, ActuallyRecipes.KEEP_DATA_SHAPED_RECIPE.get()));
 
         //
         //        //Magnet Ring
