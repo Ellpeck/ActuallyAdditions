@@ -19,6 +19,7 @@ import de.ellpeck.actuallyadditions.api.laser.ILaserRelayConnectionHandler;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.api.lens.LensConversion;
 import de.ellpeck.actuallyadditions.api.recipe.*;
+import de.ellpeck.actuallyadditions.mod.crafting.EmpowererRecipe;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.Item;
@@ -40,7 +41,6 @@ public final class ActuallyAdditionsAPI {
     public static final List<BallOfFurReturn> BALL_OF_FUR_RETURN_ITEMS = new ArrayList<>();
     //    public static final List<TreasureChestLoot> TREASURE_CHEST_LOOT = new ArrayList<>();
     public static final List<LensConversionRecipe> RECONSTRUCTOR_LENS_CONVERSION_RECIPES = new ArrayList<>();
-    public static final List<EmpowererRecipe> EMPOWERER_RECIPES = new ArrayList<>();
     public static final Map<Item, IColorLensChanger> RECONSTRUCTOR_LENS_COLOR_CHANGERS = new HashMap<>();
     /**
      * Farmer behaviors are sorted when first accessed, this will not be done until after loading, but do not add behaviors at runtime.

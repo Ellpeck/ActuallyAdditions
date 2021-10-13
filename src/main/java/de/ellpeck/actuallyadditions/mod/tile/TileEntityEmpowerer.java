@@ -12,6 +12,9 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.recipe.EmpowererRecipe;
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
+import de.ellpeck.actuallyadditions.mod.crafting.ActuallyRecipes;
+import de.ellpeck.actuallyadditions.mod.crafting.EmpowererRecipe;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
@@ -28,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
+import net.minecraftforge.fml.server.ServerLifecycleHooks;
 
 public class TileEntityEmpowerer extends TileEntityInventoryBase {
 
@@ -36,7 +40,7 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase {
     private int lastRecipe;
 
     public TileEntityEmpowerer() {
-        super(ActuallyTiles.EMPOWERER_TILE.get(), 1);
+        super(ActuallyBlocks.EMPOWERER.getTileEntityType(), 1);
     }
 
     @Deprecated //Use findMatchingRecipe
@@ -65,7 +69,7 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase {
 
     @Nullable
     public static EmpowererRecipe findMatchingRecipe(ItemStack base, ItemStack stand1, ItemStack stand2, ItemStack stand3, ItemStack stand4) {
-        for (EmpowererRecipe r : ActuallyAdditionsAPI.EMPOWERER_RECIPES) {
+        for (EmpowererRecipe r : ServerLifecycleHooks.getCurrentServer().getRecipeManager().getAllRecipesFor(ActuallyRecipes.Types.EMPOWERING)) {
             if (r.matches(base, stand1, stand2, stand3, stand4)) {
                 return r;
             }

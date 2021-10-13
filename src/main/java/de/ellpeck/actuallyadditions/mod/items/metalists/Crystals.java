@@ -13,12 +13,12 @@ package de.ellpeck.actuallyadditions.mod.items.metalists;
 import net.minecraft.util.IStringSerializable;
 
 public enum Crystals implements IStringSerializable {
-    REDSTONE("red", 0xFF2F21, 158F / 255F, 43F / 255F, 39F / 255F),
-    LAPIS("blue", 0x5171FF, 37F / 255F, 49F / 255F, 147F / 255F),
-    DIAMOND("light_blue", 0x35F1FF, 99F / 255F, 135F / 255F, 210F / 255F),
-    COAL("black", 0x434442, 0.2F, 0.2F, 0.2F),
-    EMERALD("green", 0x44E033, 54F / 255F, 75F / 255F, 24F / 255F),
-    IRON("white", 0xCEDDD4, 0.8F, 0.8F, 0.8F);
+    REDSTONE("red", 0xFF2F21, 0x9e2b27),
+    LAPIS("blue", 0x5171FF, 0x253293),
+    DIAMOND("light_blue", 0x35F1FF, 0x6387d2),
+    COAL("black", 0x434442, 0x333333),
+    EMERALD("green", 0x44E033, 0x354a18),
+    IRON("white", 0xCEDDD4, 0xcccccc);
 
     public final String name;
     public final float[] conversionColorParticles;

@@ -9,7 +9,6 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
@@ -47,7 +46,7 @@ public class LaserRecipe implements IRecipe<IInventory> {
 
     @Override
     public ItemStack assemble(IInventory pInv) {
-        return null;
+        return result.copy();
     }
 
     @Override

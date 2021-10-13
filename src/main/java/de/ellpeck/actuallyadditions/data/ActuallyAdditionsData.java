@@ -31,6 +31,7 @@ public class ActuallyAdditionsData {
             generator.addProvider(new ItemTagsGenerator(generator, generatorBlockTags, helper));
 
             generator.addProvider(new LaserRecipeGenerator(generator));
+            generator.addProvider(new MiscRecipeGenerator(generator));
         }
     }
 }
