@@ -22,9 +22,9 @@ public class ActuallyRecipes {
 
     public static class Types {
         public static final IRecipeType<LaserRecipe> LASER = IRecipeType.register(ActuallyAdditions.MODID + ":laser");
-        public static final IRecipeType<LaserRecipe> EMPOWERING = IRecipeType.register(ActuallyAdditions.MODID + ":empower");
-        public static final IRecipeType<LaserRecipe> CRUSHING = IRecipeType.register(ActuallyAdditions.MODID + ":crush");
-        public static final IRecipeType<LaserRecipe> COALGEN = IRecipeType.register(ActuallyAdditions.MODID + ":coal_power");
-        public static final IRecipeType<LaserRecipe> OILGEN = IRecipeType.register(ActuallyAdditions.MODID + ":oil_power");
+        //public static final IRecipeType<EmpoweringRecipe> EMPOWERING = IRecipeType.register(ActuallyAdditions.MODID + ":empower");
+        //public static final IRecipeType<CrushingRecipe> CRUSHING = IRecipeType.register(ActuallyAdditions.MODID + ":crush");
+        //public static final IRecipeType<SolidFuelRecipe> SOLIDFUEL = IRecipeType.register(ActuallyAdditions.MODID + ":solid_fuel");
+        //public static final IRecipeType<LiquidFuelRecipe> LIQUIDFUEL = IRecipeType.register(ActuallyAdditions.MODID + ":liquid_fuel");
     }
 }
