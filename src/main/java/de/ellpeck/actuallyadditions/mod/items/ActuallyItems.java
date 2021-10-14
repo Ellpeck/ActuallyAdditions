@@ -76,12 +76,12 @@ public final class ActuallyItems {
     public static final RegistryObject<Item> EMERADIC_CRYSTAL = ITEMS.register("emeradic_crystal", ItemCrystal::new);
     public static final RegistryObject<Item> ENORI_CRYSTAL = ITEMS.register("enori_crystal", ItemCrystal::new);
 
-    public static final RegistryObject<Item> RESTONIA_EMPOWERED_CRYSTAL = ITEMS.register("restonia_empowered_crystal", () -> new ItemCrystal(true));
-    public static final RegistryObject<Item> PALIS_EMPOWERED_CRYSTAL = ITEMS.register("palis_empowered_crystal", () -> new ItemCrystal(true));
-    public static final RegistryObject<Item> DIAMATINE_EMPOWERED_CRYSTAL = ITEMS.register("diamatine_empowered_crystal", () -> new ItemCrystal(true));
-    public static final RegistryObject<Item> VOID_EMPOWERED_CRYSTAL = ITEMS.register("void_empowered_crystal", () -> new ItemCrystal(true));
-    public static final RegistryObject<Item> EMERADIC_EMPOWERED_CRYSTAL = ITEMS.register("emeradic_empowered_crystal", () -> new ItemCrystal(true));
-    public static final RegistryObject<Item> ENORI_EMPOWERED_CRYSTAL = ITEMS.register("enori_empowered_crystal", () -> new ItemCrystal(true));
+    public static final RegistryObject<Item> EMPOWERED_RESTONIA_CRYSTAL = ITEMS.register("restonia_empowered_crystal", () -> new ItemCrystal(true));
+    public static final RegistryObject<Item> EMPOWERED_PALIS_CRYSTAL = ITEMS.register("palis_empowered_crystal", () -> new ItemCrystal(true));
+    public static final RegistryObject<Item> EMPOWERED_DIAMATINE_CRYSTAL = ITEMS.register("diamatine_empowered_crystal", () -> new ItemCrystal(true));
+    public static final RegistryObject<Item> EMPOWERED_VOID_CRYSTAL = ITEMS.register("void_empowered_crystal", () -> new ItemCrystal(true));
+    public static final RegistryObject<Item> EMPOWERED_EMERADIC_CRYSTAL = ITEMS.register("emeradic_empowered_crystal", () -> new ItemCrystal(true));
+    public static final RegistryObject<Item> EMPOWERED_ENORI_CRYSTAL = ITEMS.register("enori_empowered_crystal", () -> new ItemCrystal(true));
 
     // BLACK QUARTZ
     public static final RegistryObject<Item> BLACK_QUARTZ = ITEMS.register("black_quartz", ItemBase::new);

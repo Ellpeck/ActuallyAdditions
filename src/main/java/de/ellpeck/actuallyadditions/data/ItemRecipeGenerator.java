@@ -11,7 +11,6 @@ import net.minecraft.data.*;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
@@ -42,7 +41,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
         Recipe.shaped(ActuallyItems.ENGINEER_GOGGLES_ADVANCED.get())
             .pattern(" R ")
             .pattern("IGI")
-            .define('R', ActuallyItems.RESTONIA_EMPOWERED_CRYSTAL.get())
+            .define('R', ActuallyItems.EMPOWERED_RESTONIA_CRYSTAL.get())
             .define('I', Items.IRON_BARS)
             .define('G', ActuallyItems.ENGINEER_GOGGLES.get()).save(consumer);
 
@@ -70,7 +69,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .pattern("IPI")
             .pattern("DCD")
             .pattern(" B ")
-            .define('I', ActuallyItems.ENORI_EMPOWERED_CRYSTAL.get())
+            .define('I', ActuallyItems.EMPOWERED_ENORI_CRYSTAL.get())
             .define('P', ActuallyItems.PALIS_CRYSTAL.get())
             .define('C', ActuallyItems.COIL_ADVANCED.get())
             .define('D', ActuallyItems.DIAMATINE_CRYSTAL.get())
@@ -115,7 +114,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
         Recipe.shapeless(ActuallyItems.DISENCHANTING_LENS.get())
             .requires(ActuallyItems.LENS.get())
             .requires(Items.ENCHANTING_TABLE)
-            .requires(ActuallyItems.DIAMATINE_EMPOWERED_CRYSTAL.get(), 7).save(consumer);
+            .requires(ActuallyItems.EMPOWERED_DIAMATINE_CRYSTAL.get(), 7).save(consumer);
 
         //Mining Lens
         Recipe.shaped(ActuallyItems.MINING_LENS.get())
@@ -222,7 +221,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .pattern(" FE")
             .pattern(" S ")
             .pattern("SB ")
-            .define('F', ActuallyItems.DIAMATINE_EMPOWERED_CRYSTAL.get())
+            .define('F', ActuallyItems.EMPOWERED_DIAMATINE_CRYSTAL.get())
             .define('E', ActuallyBlocks.ENDER_PEARL_BLOCK.getItem())
             .define('S', ActuallyBlocks.ENDER_CASING.getItem())
             .define('B', ActuallyItems.BATTERY.get()).save(consumer);
@@ -250,9 +249,9 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .pattern("ISI")
             .pattern("SRS")
             .pattern("ISI")
-            .define('I', ActuallyItems.ENORI_EMPOWERED_CRYSTAL.get())
+            .define('I', ActuallyItems.EMPOWERED_ENORI_CRYSTAL.get())
             .define('S', Items.SUGAR)
-            .define('R', ActuallyItems.DIAMATINE_EMPOWERED_CRYSTAL.get()).save(consumer);
+            .define('R', ActuallyItems.EMPOWERED_DIAMATINE_CRYSTAL.get()).save(consumer);
 
         //Drill Fortune upgrade
         Recipe.shaped(ActuallyItems.DRILL_UPGRADE_FORTUNE.get())
@@ -269,7 +268,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .pattern("SRS")
             .pattern("ISI")
             .define('I', Items.GLOWSTONE)
-            .define('S', ActuallyItems.RESTONIA_EMPOWERED_CRYSTAL.get())
+            .define('S', ActuallyItems.EMPOWERED_RESTONIA_CRYSTAL.get())
             .define('R', ActuallyBlocks.ENDER_CASING.getItem()).save(consumer);
 
         //3x3
@@ -286,7 +285,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .pattern("DID")
             .pattern("ICI")
             .pattern("DID")
-            .define('I', ActuallyItems.ENORI_EMPOWERED_CRYSTAL.get())
+            .define('I', ActuallyItems.EMPOWERED_ENORI_CRYSTAL.get())
             .define('D', ActuallyItems.DIAMATINE_CRYSTAL.get())
             .define('C', ActuallyItems.COIL_ADVANCED.get()).save(consumer);
 
@@ -360,7 +359,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .pattern("ICI")
             .pattern("III")
             .define('R', TargetNBTIngredient.of(ActuallyItems.BATTERY_DOUBLE.get()))
-            .define('I', ActuallyItems.ENORI_EMPOWERED_CRYSTAL.get())
+            .define('I', ActuallyItems.EMPOWERED_ENORI_CRYSTAL.get())
             .define('C', ActuallyItems.COIL_ADVANCED.get())
             .save(WrappedRecipe.Inject(consumer, ActuallyRecipes.KEEP_DATA_SHAPED_RECIPE.get()));
 
@@ -370,7 +369,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .pattern("ICI")
             .pattern("III")
             .define('R', TargetNBTIngredient.of(ActuallyItems.BATTERY_TRIPLE.get()))
-            .define('I', ActuallyItems.ENORI_EMPOWERED_CRYSTAL.get())
+            .define('I', ActuallyItems.EMPOWERED_ENORI_CRYSTAL.get())
             .define('C', ActuallyItems.COIL_ADVANCED.get())
             .save(WrappedRecipe.Inject(consumer, ActuallyRecipes.KEEP_DATA_SHAPED_RECIPE.get()));
 
@@ -380,7 +379,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .pattern("ICI")
             .pattern("III")
             .define('R', TargetNBTIngredient.of(ActuallyItems.BATTERY_QUADRUPLE.get()))
-            .define('I', ActuallyItems.DIAMATINE_EMPOWERED_CRYSTAL.get())
+            .define('I', ActuallyItems.EMPOWERED_DIAMATINE_CRYSTAL.get())
             .define('C', ActuallyItems.COIL_ADVANCED.get())
             .save(WrappedRecipe.Inject(consumer, ActuallyRecipes.KEEP_DATA_SHAPED_RECIPE.get()));
 

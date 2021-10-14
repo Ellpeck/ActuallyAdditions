@@ -21,10 +21,10 @@ public enum Crystals implements IStringSerializable {
     IRON("white", 0xCEDDD4, 0xcccccc);
 
     public final String name;
-    public final float[] conversionColorParticles;
+    public final int conversionColorParticles;
     public final int clusterColor;
 
-    Crystals(String name, int clusterColor, float... conversionColorParticles) {
+    Crystals(String name, int clusterColor, int conversionColorParticles) {
         this.name = name;
         this.conversionColorParticles = conversionColorParticles;
         this.clusterColor = clusterColor;

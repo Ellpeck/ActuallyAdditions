@@ -62,7 +62,7 @@ public class BlockRecipeGenerator extends RecipeProvider {
         //Shock Suppressor
         Recipe.shaped(ActuallyBlocks.SHOCK_SUPPRESSOR.getItem())
                 .pattern("OAO", "ACA", "OAO")
-                .define('A', ActuallyItems.VOID_EMPOWERED_CRYSTAL.get())
+                .define('A', ActuallyItems.EMPOWERED_VOID_CRYSTAL.get())
                 .define('O', Tags.Items.OBSIDIAN)
                 .define('C', ActuallyItems.COIL_ADVANCED.get())
                 .save(consumer);
@@ -80,7 +80,7 @@ public class BlockRecipeGenerator extends RecipeProvider {
                 .pattern("IRI", "RCR", "IDI")
                 .define('R', Tags.Items.STORAGE_BLOCKS_REDSTONE)
                 .define('I', ActuallyBlocks.IRON_CASING.get())
-                .define('C', ActuallyItems.VOID_EMPOWERED_CRYSTAL.get())
+                .define('C', ActuallyItems.EMPOWERED_VOID_CRYSTAL.get())
                 .define('D', ActuallyItems.DRILL.get())
                 .save(consumer);
 
@@ -157,7 +157,7 @@ public class BlockRecipeGenerator extends RecipeProvider {
         // Extreme Laser Relay
         Recipe.shaped(ActuallyBlocks.LASER_RELAY_EXTREME.getItem())
                 .pattern(" I ", "XRX", " I ")
-                .define('I', ActuallyItems.DIAMATINE_EMPOWERED_CRYSTAL.get())
+                .define('I', ActuallyItems.EMPOWERED_DIAMATINE_CRYSTAL.get())
                 .define('R', ActuallyBlocks.LASER_RELAY_ADVANCED.get())
                 .define('X', ActuallyItems.RESTONIA_CRYSTAL.get())
                 .save(consumer);
