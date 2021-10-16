@@ -27,6 +27,7 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.NBTUtil;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;
@@ -73,7 +74,7 @@ public final class PacketHandler {
         @OnlyIn(Dist.CLIENT)
         public void handleData(CompoundNBT compound, NetworkEvent.Context context) {
             Minecraft mc = Minecraft.getInstance();
-            ItemStack stack = null; //new ItemStack(compound); //TODO
+            ItemStack stack = ItemStack.of(compound);
 
             double inX = compound.getDouble("InX") + 0.5;
             double inY = compound.getDouble("InY") + 0.78;
@@ -182,8 +183,16 @@ public final class PacketHandler {
     );
 
     public static void init() {
-        THE_NETWORK.registerMessage(0, PacketServerToClient.class, PacketServerToClient::toBytes, PacketServerToClient::fromBytes, PacketServerToClient::handle, NetworkDirection.PLAY_TO_CLIENT);
-        THE_NETWORK.registerMessage(1, PacketClientToServer.class, PacketClientToServer.class, NetworkDirection.PLAY_TO_SERVER);
+        THE_NETWORK.messageBuilder(PacketServerToClient.class, 0, NetworkDirection.PLAY_TO_CLIENT)
+            .decoder(PacketServerToClient::fromBytes)
+            .encoder(PacketServerToClient::toBytes)
+            .consumer(PacketServerToClient::handle).add();
+
+        THE_NETWORK.messageBuilder(PacketClientToServer.class, 1, NetworkDirection.PLAY_TO_SERVER)
+            .decoder(PacketClientToServer::fromBytes)
+            .encoder(PacketClientToServer::toBytes)
+            .consumer(PacketClientToServer::handle).add();
+
 
         DATA_HANDLERS.add(LASER_HANDLER);
         DATA_HANDLERS.add(TILE_ENTITY_HANDLER);

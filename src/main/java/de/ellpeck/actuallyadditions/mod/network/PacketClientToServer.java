@@ -16,6 +16,8 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
+import java.util.function.Supplier;
+
 public class PacketClientToServer {
 
     private CompoundNBT data;
@@ -30,39 +32,31 @@ public class PacketClientToServer {
         this.handler = handler;
     }
 
-    @Override
-    public void fromBytes(ByteBuf buf) {
-        PacketBuffer buffer = new PacketBuffer(buf);
+    public static PacketClientToServer fromBytes(PacketBuffer buffer) {
         try {
-            this.data = buffer.readNbt();
+            CompoundNBT data = buffer.readNbt();
 
             int handlerId = buffer.readInt();
             if (handlerId >= 0 && handlerId < PacketHandler.DATA_HANDLERS.size()) {
-                this.handler = PacketHandler.DATA_HANDLERS.get(handlerId);
+                return new PacketClientToServer(data, PacketHandler.DATA_HANDLERS.get(handlerId));
             }
         } catch (Exception e) {
             ActuallyAdditions.LOGGER.error("Something went wrong trying to receive a server packet!", e);
         }
+        return new PacketClientToServer();
     }
 
-    @Override
-    public void toBytes(ByteBuf buf) {
-        PacketBuffer buffer = new PacketBuffer(buf);
-
-        buffer.writeNbt(this.data);
-        buffer.writeInt(PacketHandler.DATA_HANDLERS.indexOf(this.handler));
+    public static void toBytes(PacketClientToServer message, PacketBuffer buffer) {
+        buffer.writeNbt(message.data);
+        buffer.writeInt(PacketHandler.DATA_HANDLERS.indexOf(message.handler));
     }
 
-    public static class Handler implements IMessageHandler<PacketClientToServer, IMessage> {
-
-        @Override
-        public IMessage onMessage(PacketClientToServer message, NetworkEvent.Context ctx) {
-            FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(() -> {
-                if (message.data != null && message.handler != null) {
-                    message.handler.handleData(message.data, ctx);
-                }
-            });
-            return null;
-        }
+    public static void handle(final PacketClientToServer message, final Supplier<NetworkEvent.Context> ctx) {
+        ctx.get().enqueueWork( () -> {
+            if (message.data != null && message.handler != null) {
+                message.handler.handleData(message.data, ctx.get());
+            }
+        });
+        ctx.get().setPacketHandled(true);
     }
 }

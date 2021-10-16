@@ -10,14 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.network;
 
-import com.mojang.brigadier.Message;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import io.netty.buffer.ByteBuf;
-import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.util.function.Supplier;
@@ -48,6 +43,7 @@ public class PacketServerToClient {
         } catch (Exception e) {
             ActuallyAdditions.LOGGER.error("Something went wrong trying to receive a client packet!", e);
         }
+        return new PacketServerToClient();
     }
 
     public static void toBytes(final PacketServerToClient message, PacketBuffer buffer) {
