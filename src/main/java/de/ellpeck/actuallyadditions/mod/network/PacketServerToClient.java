@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.network;
 
+import com.mojang.brigadier.Message;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
@@ -17,12 +18,12 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
-import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.fml.network.NetworkEvent;
+
+import java.util.function.Supplier;
 
 
-public class PacketServerToClient implements Message {
+public class PacketServerToClient {
 
     private CompoundNBT data;
     private IDataHandler handler;
@@ -36,40 +37,32 @@ public class PacketServerToClient implements Message {
         this.handler = handler;
     }
 
-    @Override
-    public void fromBytes(ByteBuf buf) {
-        PacketBuffer buffer = new PacketBuffer(buf);
+    public static PacketServerToClient fromBytes(final PacketBuffer buffer) {
         try {
-            this.data = buffer.readNbt();
+            CompoundNBT data = buffer.readNbt();
 
             int handlerId = buffer.readInt();
             if (handlerId >= 0 && handlerId < PacketHandler.DATA_HANDLERS.size()) {
-                this.handler = PacketHandler.DATA_HANDLERS.get(handlerId);
+                return new PacketServerToClient(data, PacketHandler.DATA_HANDLERS.get(handlerId));
             }
         } catch (Exception e) {
             ActuallyAdditions.LOGGER.error("Something went wrong trying to receive a client packet!", e);
         }
     }
 
-    @Override
-    public void toBytes(ByteBuf buf) {
-        PacketBuffer buffer = new PacketBuffer(buf);
-
-        buffer.writeNbt(this.data);
-        buffer.writeInt(PacketHandler.DATA_HANDLERS.indexOf(this.handler));
+    public static void toBytes(final PacketServerToClient message, PacketBuffer buffer) {
+        buffer.writeNbt(message.data);
+        buffer.writeInt(PacketHandler.DATA_HANDLERS.indexOf(message.handler));
     }
 
-    public static class Handler implements IMessageHandler<PacketServerToClient, IMessage> {
-
-        @Override
-        @OnlyIn(Dist.CLIENT)
-        public IMessage onMessage(PacketServerToClient message, MessageContext ctx) {
-            Minecraft.getInstance().addScheduledTask(() -> {
+    public static void handle(final PacketServerToClient message, final Supplier<NetworkEvent.Context> ctx) {
+        ctx.get().enqueueWork(
+            () -> {
                 if (message.data != null && message.handler != null) {
-                    message.handler.handleData(message.data, ctx);
+                    message.handler.handleData(message.data, ctx.get());
                 }
-            });
-            return null;
-        }
+            }
+        );
+        ctx.get().setPacketHandled(true);
     }
 }

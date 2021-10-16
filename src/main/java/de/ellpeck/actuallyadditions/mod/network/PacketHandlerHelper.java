@@ -23,6 +23,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.network.PacketDistributor;
 
 public final class PacketHandlerHelper {
 
@@ -33,7 +34,7 @@ public final class PacketHandlerHelper {
         compound.putInt("X", pos.getX());
         compound.putInt("Y", pos.getY());
         compound.putInt("Z", pos.getZ());
-        compound.putInt("WorldID", tile.getLevel().getDimension());
+        compound.putString("WorldID", tile.getLevel().dimension().getRegistryName().toString());
         compound.putInt("PlayerID", Minecraft.getInstance().player.getId());
         compound.putInt("ButtonID", buttonId);
         PacketHandler.THE_NETWORK.sendToServer(new PacketClientToServer(compound, PacketHandler.GUI_BUTTON_TO_TILE_HANDLER));
@@ -48,7 +49,7 @@ public final class PacketHandlerHelper {
         compound.put("Data", data);
 
         if (player instanceof ServerPlayerEntity) {
-            PacketHandler.THE_NETWORK.sendTo(new PacketServerToClient(compound, PacketHandler.SYNC_PLAYER_DATA), (ServerPlayerEntity) player);
+            PacketHandler.THE_NETWORK.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketServerToClient(compound, PacketHandler.SYNC_PLAYER_DATA));
         }
     }
 
@@ -60,8 +61,8 @@ public final class PacketHandlerHelper {
 
         PlayerEntity player = Minecraft.getInstance().player;
         if (player != null) {
-            compound.putInt("World", player.level.provider.getDimension());
-            compound.setUniqueId("UUID", player.getUUID());
+            compound.putString("World", player.level.dimension().getRegistryName().toString());
+            compound.putUUID("UUID", player.getUUID());
 
             PlayerSave data = PlayerData.getDataFromPlayer(player);
 
@@ -94,7 +95,7 @@ public final class PacketHandlerHelper {
         compound.putInt("X", tile.getBlockPos().getX());
         compound.putInt("Y", tile.getBlockPos().getY());
         compound.putInt("Z", tile.getBlockPos().getZ());
-        compound.putInt("WorldID", tile.getLevel().provider.getDimension());
+        compound.putString("WorldID", tile.getLevel().dimension().getRegistryName().toString());
         compound.putInt("PlayerID", Minecraft.getInstance().player.getId());
         compound.putInt("NumberID", id);
         compound.putDouble("Number", number);
