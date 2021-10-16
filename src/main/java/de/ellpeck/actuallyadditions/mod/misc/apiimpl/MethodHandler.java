@@ -35,6 +35,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
@@ -113,7 +114,7 @@ public class MethodHandler implements IMethodHandler {
 
         int prevCounter = tag.putInt("Counter");
         CompoundNBT compound = new CompoundNBT();
-        compound.putInt("ID", Potion.getIdFromPotion(effect.getEffect()));
+        //compound.putInt("ID", Potion.getIdFromPotion(effect.getEffect())); //TODO ?!
         compound.putInt("Duration", effect.getDuration());
         compound.putInt("Amplifier", effect.getAmplifier());
 
@@ -178,7 +179,7 @@ public class MethodHandler implements IMethodHandler {
                                 if (StackUtil.isValid(output)) {
                                     tile.getWorldObject().levelEvent(2001, pos, Block.getId(state));
                                     recipe.transformHook(ItemStack.EMPTY, state, pos, tile);
-                                    if (output.getItem() instanceof ItemBlock) {
+                                    if (output.getItem() instanceof BlockItem) {
                                         Block toPlace = Block.byItem(output.getItem());
                                         BlockState state2Place = toPlace.getStateForPlacement(tile.getWorldObject(), pos, facing, 0, 0, 0, output.getMetadata(), FakePlayerFactory.getMinecraft((WorldServer) tile.getWorldObject()), Hand.MAIN_HAND);
                                         tile.getWorldObject().setBlock(pos, state2Place, 2);

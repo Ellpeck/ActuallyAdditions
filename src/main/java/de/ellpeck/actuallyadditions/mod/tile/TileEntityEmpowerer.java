@@ -11,7 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
-import de.ellpeck.actuallyadditions.api.recipe.EmpowererRecipe;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.crafting.ActuallyRecipes;
 import de.ellpeck.actuallyadditions.mod.crafting.EmpowererRecipe;
@@ -30,7 +29,6 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
 
 public class TileEntityEmpowerer extends TileEntityInventoryBase {
@@ -43,23 +41,8 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase {
         super(ActuallyBlocks.EMPOWERER.getTileEntityType(), 1);
     }
 
-    @Deprecated //Use findMatchingRecipe
-    public static List<EmpowererRecipe> getRecipesForInput(ItemStack input) {
-        List<EmpowererRecipe> recipesThatWork = new ArrayList<>();
-        if (StackUtil.isValid(input)) {
-            // TODO: [port] VALIDATOR OR REMOVE
-            for (EmpowererRecipe recipe : ActuallyAdditionsAPI.EMPOWERER_RECIPES) {
-                if (recipe.getInput().test(input)) {
-                    recipesThatWork.add(recipe);
-                }
-            }
-        }
-        return recipesThatWork;
-    }
-
     public static boolean isPossibleInput(ItemStack stack) {
-        for (EmpowererRecipe r : ActuallyAdditionsAPI.EMPOWERER_RECIPES) {
-            // TODO: [port] move to proper recipe system
+        for (EmpowererRecipe r : ServerLifecycleHooks.getCurrentServer().getRecipeManager().getAllRecipesFor(ActuallyRecipes.Types.EMPOWERING)) {
             if (r.getInput().test(stack)) {
                 return true;
             }
@@ -86,7 +69,7 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase {
             if (stands != null) {
                 EmpowererRecipe recipe = findMatchingRecipe(this.inv.getStackInSlot(0), stands[0].getStack(), stands[1].getStack(), stands[2].getStack(), stands[3].getStack());
                 if (recipe != null) {
-                    this.recipeForRenderIndex = ActuallyAdditionsAPI.EMPOWERER_RECIPES.indexOf(recipe);
+                    //this.recipeForRenderIndex = ActuallyAdditionsAPI.EMPOWERER_RECIPES.indexOf(recipe); //TODO whats this?
 
                     boolean hasPower = true;
 

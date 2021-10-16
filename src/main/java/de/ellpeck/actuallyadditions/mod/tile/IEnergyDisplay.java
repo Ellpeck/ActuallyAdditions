@@ -10,6 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+
 public interface IEnergyDisplay {
 
     @OnlyIn(Dist.CLIENT)

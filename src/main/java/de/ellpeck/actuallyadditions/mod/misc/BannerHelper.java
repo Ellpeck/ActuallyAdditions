@@ -13,15 +13,11 @@ package de.ellpeck.actuallyadditions.mod.misc;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.BannerPattern;
-import net.minecraftforge.common.util.EnumHelper;
-
-import java.util.Locale;
 
 public final class BannerHelper {
 
     public static void init() {
-        addCraftingPattern("drill", new ItemStack(ActuallyItems.DRILL.get(), 1, 3));
+        addCraftingPattern("drill", new ItemStack(ActuallyItems.DRILL.get()));
         addCraftingPattern("leaf_blo", new ItemStack(ActuallyItems.LEAF_BLOWER.get()));
         addCraftingPattern("phan_con", new ItemStack(ActuallyItems.PHANTOM_CONNECTOR.get()));
         addCraftingPattern("book", new ItemStack(ActuallyItems.ITEM_BOOKLET.get()));
@@ -47,7 +43,7 @@ public final class BannerHelper {
     public static void addCraftingPattern(String name, ItemStack craftingStack) {
         Class<?>[] paramTypes = {String.class, String.class, ItemStack.class};
         Object[] paramValues = {ActuallyAdditions.MODID + "_" + name, ActuallyAdditions.MODID + "_" + name, craftingStack};
-        EnumHelper.addEnum(BannerPattern.class, (ActuallyAdditions.MODID + "_" + name).toUpperCase(Locale.ROOT), paramTypes, paramValues);
+        // EnumHelper.addEnum(BannerPattern.class, (ActuallyAdditions.MODID + "_" + name).toUpperCase(Locale.ROOT), paramTypes, paramValues); //TODO wth banners
     }
 
 }
