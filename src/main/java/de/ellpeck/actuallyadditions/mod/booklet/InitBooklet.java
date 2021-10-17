@@ -45,6 +45,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 
@@ -150,10 +151,10 @@ public final class InitBooklet {
         //Miscellaneous
         new BookletChapter("worms", ActuallyAdditionsAPI.entryMisc, new ItemStack(ActuallyItems.WORM.get()), new PageTextOnly(1).addItemsToPage(new ItemStack(ActuallyItems.WORM.get())), new PagePicture(2, "page_worms", 145)).setImportant();
         new BookletChapter("lushCaves", ActuallyAdditionsAPI.entryMisc, new ItemStack(Blocks.STONE), new PageTextOnly(1), new PagePicture(2, "page_lush_caves", 0).setNoText());
-        new BookletChapter("crystalClusters", ActuallyAdditionsAPI.entryMisc, new ItemStack(ActuallyBlocks.CRYSTAL_CLUSTER_EMERALD.get()), new PageTextOnly(1).addItemsToPage(WorldGenLushCaves.CRYSTAL_CLUSTERS), new PageCrafting(2, MiscCrafting.RECIPES_CRYSTAL_SHARDS).setNoText(), new PageCrafting(3, MiscCrafting.RECIPES_CRYSTAL_SHARDS_BACK).setNoText()).setSpecial();
+        new BookletChapter("crystalClusters", ActuallyAdditionsAPI.entryMisc, new ItemStack(ActuallyBlocks.EMERADIC_CRYSTAL_CLUSTER.get()), new PageTextOnly(1).addItemsToPage(WorldGenLushCaves.CRYSTAL_CLUSTERS), new PageCrafting(2, MiscCrafting.RECIPES_CRYSTAL_SHARDS).setNoText(), new PageCrafting(3, MiscCrafting.RECIPES_CRYSTAL_SHARDS_BACK).setNoText()).setSpecial();
         new BookletChapter("banners", ActuallyAdditionsAPI.entryMisc, new ItemStack(Items.BLUE_BANNER, 1), new PageTextOnly(1));
         new BookletChapter("miscDecorStuffsAndThings", ActuallyAdditionsAPI.entryMisc, new ItemStack(ActuallyBlocks.ETHETIC_GREEN_BLOCK.get()), new PageTextOnly(1), new PageReconstructor(2, LensRecipeHandler.recipeWhiteWall).setNoText(), new PageReconstructor(3, LensRecipeHandler.recipeGreenWall).setNoText());
-        chaptersIntroduction[3] = new BookletChapter("quartz", ActuallyAdditionsAPI.entryMisc, new ItemStack(ActuallyItems.itemBlackQuartz.get()), new PageTextOnly(1).addItemsToPage(new ItemStack(ActuallyBlocks.blockMisc, 1, TheMiscBlocks.ORE_QUARTZ.ordinal())).addTextReplacement("<lowest>", AAWorldGen.QUARTZ_MIN).addTextReplacement("<highest>", AAWorldGen.QUARTZ_MAX), new PageTextOnly(2).addItemsToPage(new ItemStack(ActuallyItems.itemBlackQuartz.get())), new PageCrafting(3, BlockCrafting.recipeQuartzBlock).setNoText(), new PageCrafting(4, BlockCrafting.recipeQuartzPillar).setNoText(), new PageCrafting(5, BlockCrafting.recipeQuartzChiseled).setNoText());
+        chaptersIntroduction[3] = new BookletChapter("quartz", ActuallyAdditionsAPI.entryMisc, new ItemStack(ActuallyItems.BLACK_QUARTZ.get()), new PageTextOnly(1).addItemsToPage(new ItemStack(ActuallyBlocks.blockMisc, 1, TheMiscBlocks.ORE_QUARTZ.ordinal())).addTextReplacement("<lowest>", AAWorldGen.QUARTZ_MIN).addTextReplacement("<highest>", AAWorldGen.QUARTZ_MAX), new PageTextOnly(2).addItemsToPage(new ItemStack(ActuallyItems.itemBlackQuartz.get())), new PageCrafting(3, BlockCrafting.recipeQuartzBlock).setNoText(), new PageCrafting(4, BlockCrafting.recipeQuartzPillar).setNoText(), new PageCrafting(5, BlockCrafting.recipeQuartzChiseled).setNoText());
         //        new BookletChapter("cloud", ActuallyAdditionsAPI.entryMisc, new ItemStack(ActuallyBlocks.blockSmileyCloud), new PageTextOnly(1), new PageCrafting(2, BlockCrafting.recipeSmileyCloud).setWildcard()).setSpecial();
         new BookletChapter("coalStuff", ActuallyAdditionsAPI.entryMisc, new ItemStack(ActuallyItems.TINY_COAL.get()), new PageTextOnly(1), new PageCrafting(2, ItemCrafting.recipeTinyCoal).setNoText(), new PageCrafting(3, ItemCrafting.recipeTinyChar).setNoText(), new PageCrafting(4, BlockCrafting.recipeBlockChar).setNoText());
         ArrayList<BookletPage> lampPages = new ArrayList<>();
@@ -203,9 +204,7 @@ public final class InitBooklet {
         new BookletChapter("esd", ActuallyAdditionsAPI.entryFunctionalNonRF, new ItemStack(ActuallyBlocks.INPUTTER_ADVANCED.get()), new PageTextOnly(1), new PageCrafting(2, BlockCrafting.recipeESD).setNoText(), new PageCrafting(3, BlockCrafting.recipeAdvancedESD).setNoText()).setSpecial();
         new BookletChapter("xpSolidifier", ActuallyAdditionsAPI.entryFunctionalNonRF, new ItemStack(ActuallyBlocks.XP_SOLIDIFIER.get()), new PageTextOnly(1).addItemsToPage(new ItemStack(ActuallyItems.SOLIDIFIED_EXPERIENCE.get())), new PageCrafting(2, BlockCrafting.recipeSolidifier).setNoText()).setImportant();
         new BookletChapter("greenhouseGlass", ActuallyAdditionsAPI.entryFunctionalNonRF, new ItemStack(ActuallyBlocks.GREENHOUSE_GLASS.get()), new PageTextOnly(1), new PageCrafting(2, BlockCrafting.recipeGlass));
-        //        new BookletChapter("fishingNet", ActuallyAdditionsAPI.entryFunctionalNonRF, new ItemStack(InitBlocks.blockFishingNet.get()), new PageTextOnly(1), new PageCrafting(2, BlockCrafting.recipeFisher).setNoText());
         new BookletChapter("feeder", ActuallyAdditionsAPI.entryFunctionalNonRF, new ItemStack(ActuallyBlocks.FEEDER.get()), new PageTextOnly(1), new PageCrafting(2, BlockCrafting.recipeFeeder).setNoText());
-        //        new BookletChapter("compost", ActuallyAdditionsAPI.entryFunctionalNonRF, new ItemStack(InitBlocks.blockCompost.get()), new PageTextOnly(1).addItemsToPage(new ItemStack(InitItems.itemFertilizer.get())), new PageCrafting(2, BlockCrafting.recipeCompost).setNoText(), new PageTextOnly(3).addItemsToPage(new ItemStack(InitItems.itemMisc.get(), 1, TheMiscItems.MASHED_FOOD.ordinal())));
         new BookletChapter("crate", ActuallyAdditionsAPI.entryFunctionalNonRF, new ItemStack(ActuallyBlocks.blockGiantChest.get()), new PageCrafting(1, BlockCrafting.recipeCrate), new PageCrafting(2, BlockCrafting.recipeCrateMedium).setNoText(), new PageCrafting(3, BlockCrafting.recipeCrateLarge).setNoText(), new PageCrafting(4, ItemCrafting.recipeCrateKeeper), new PageCrafting(5, ItemCrafting.recipeChestToCrateUpgrade), new PageCrafting(6, ItemCrafting.recipeSmallToMediumCrateUpgrade), new PageCrafting(7, ItemCrafting.recipeMediumToLargeCrateUpgrade));
         new BookletChapter("rangedCollector", ActuallyAdditionsAPI.entryFunctionalNonRF, new ItemStack(ActuallyBlocks.RANGED_COLLECTOR.get()), new PageTextOnly(1).addTextReplacement("<range>", TileEntityRangedCollector.RANGE), new PageCrafting(2, BlockCrafting.recipeRangedCollector).setNoText());
 
@@ -230,7 +229,7 @@ public final class InitBooklet {
             list.add(new PageCrusherRecipe(6, CrusherCrafting.recipeDiamondHorseArmor).setNoText());
         }
 
-        new BookletChapterCrusher("crusher", ActuallyAdditionsAPI.entryFunctionalRF, new ItemStack(ActuallyBlocks.GRINDER_DOUBLE.get()), list.toArray(new IBookletPage[0]));
+        new BookletChapterCrusher("crusher", ActuallyAdditionsAPI.entryFunctionalRF, new ItemStack(ActuallyBlocks.CRUSHER_DOUBLE.get()), list.toArray(new IBookletPage[0]));
         new BookletChapter("furnaceDouble", ActuallyAdditionsAPI.entryFunctionalRF, new ItemStack(ActuallyBlocks.POWERED_FURNACE.get()), new PageCrafting(1, BlockCrafting.recipeFurnace).setWildcard().addTextReplacement("<rf>", TileEntityPoweredFurnace.ENERGY_USE));
         new BookletChapter("lavaFactory", ActuallyAdditionsAPI.entryFunctionalRF, new ItemStack(ActuallyBlocks.LAVA_FACTORY_CONTROLLER.get()), new PageTextOnly(1).addTextReplacement("<rf>", TileEntityLavaFactoryController.ENERGY_USE), new PagePicture(2, "page_lava_factory", 0).setNoText(), new PageCrafting(3, BlockCrafting.recipeLavaFactory).setNoText(), new PageCrafting(4, BlockCrafting.recipeCasing).setNoText());
         new BookletChapter("energizer", ActuallyAdditionsAPI.entryFunctionalRF, new ItemStack(ActuallyBlocks.ENERGIZER.get()), new PageCrafting(1, BlockCrafting.recipeEnergizer), new PageCrafting(2, BlockCrafting.recipeEnervator));
@@ -269,7 +268,6 @@ public final class InitBooklet {
             potionRingPages.add(new PageCrafting(potionRingPages.size() + 1, recipe).setNoText());
         }
         new BookletChapter("potionRings", ActuallyAdditionsAPI.entryItemsNonRF, new ItemStack(ActuallyItems.POTION_RING.get()), potionRingPages.toArray(new BookletPage[potionRingPages.size()]));
-        new BookletChapter("spawnerChanger", ActuallyAdditionsAPI.entryItemsNonRF, new ItemStack(ActuallyItems.SPAWNER_CHANGER.get()), new PageTextOnly(1), new PageCrafting(2, ItemCrafting.recipeSpawnerChanger).setNoText());
         new BookletChapter("itemFilter", ActuallyAdditionsAPI.entryFunctionalNonRF, new ItemStack(ActuallyItems.FILTER.get()), new PageTextOnly(1), new PageCrafting(2, ItemCrafting.recipeFilter).setNoText()).setImportant();
 
         //RF Using Items
@@ -291,9 +289,9 @@ public final class InitBooklet {
         chaptersIntroduction[10] = new BookletChapter("trialsIntro", ActuallyAdditionsAPI.entryTrials, new ItemStack(Items.GOLD_INGOT), new PageTextOnly(1), new PageTextOnly(2)).setSpecial();
         new BookletChapterTrials("crystalProduction", new ItemStack(ActuallyItems.EMERADIC_CRYSTAL.get()), false);
         new BookletChapterTrials("leatherProduction", new ItemStack(Items.LEATHER), false);
-        new BookletChapterTrials("crystalOil", FluidUtil.getFilledBucket(new FluidStack(InitFluids.fluidCrystalOil, Fluid.BUCKET_VOLUME)), false);
+        new BookletChapterTrials("crystalOil", FluidUtil.getFilledBucket(new FluidStack(InitFluids.fluidCrystalOil, FluidAttributes.BUCKET_VOLUME)), false);
         new BookletChapterTrials("autoDisenchanter", new ItemStack(ActuallyItems.DISENCHANTING_LENS.get()), false);
-        new BookletChapterTrials("empoweredOil", FluidUtil.getFilledBucket(new FluidStack(InitFluids.fluidEmpoweredOil, Fluid.BUCKET_VOLUME)), false);
+        new BookletChapterTrials("empoweredOil", FluidUtil.getFilledBucket(new FluidStack(InitFluids.fluidEmpoweredOil, FluidAttributes.BUCKET_VOLUME)), false);
         new BookletChapterTrials("mobFarm", new ItemStack(Items.ROTTEN_FLESH), false);
         new BookletChapterTrials("empowererAutomation", new ItemStack(ActuallyBlocks.EMPOWERER.get()), false);
     }
