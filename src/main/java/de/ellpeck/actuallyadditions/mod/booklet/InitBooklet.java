@@ -30,8 +30,6 @@ import de.ellpeck.actuallyadditions.mod.booklet.page.*;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.crafting.*;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
-import de.ellpeck.actuallyadditions.mod.gen.AAWorldGen;
-import de.ellpeck.actuallyadditions.mod.gen.WorldGenLushCaves;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.items.ItemWingsOfTheBats;
 import de.ellpeck.actuallyadditions.mod.items.lens.LensDisenchanting;

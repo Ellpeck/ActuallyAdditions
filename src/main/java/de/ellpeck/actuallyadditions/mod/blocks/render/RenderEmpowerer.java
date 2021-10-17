@@ -12,8 +12,8 @@ package de.ellpeck.actuallyadditions.mod.blocks.render;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
-import de.ellpeck.actuallyadditions.api.recipe.EmpowererRecipe;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.crafting.EmpowererRecipe;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityEmpowerer;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
@@ -56,7 +56,7 @@ public class RenderEmpowerer extends TileEntityRenderer<TileEntityEmpowerer> {
 
             matrices.popPose();
         }
-
+/*
         int index = tile.recipeForRenderIndex;
         if (index >= 0 && ActuallyAdditionsAPI.EMPOWERER_RECIPES.size() > index) {
             EmpowererRecipe recipe = ActuallyAdditionsAPI.EMPOWERER_RECIPES.get(index);
@@ -69,5 +69,7 @@ public class RenderEmpowerer extends TileEntityRenderer<TileEntityEmpowerer> {
                 }
             }
         }
+
+ */
     }
 }

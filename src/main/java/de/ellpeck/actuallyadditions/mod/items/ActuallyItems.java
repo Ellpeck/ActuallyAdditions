@@ -20,6 +20,7 @@ import de.ellpeck.actuallyadditions.mod.material.ArmorMaterials;
 import de.ellpeck.actuallyadditions.mod.material.ToolMaterials;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTier;
 import net.minecraft.item.Items;
 import net.minecraftforge.fml.RegistryObject;
@@ -45,8 +46,18 @@ public final class ActuallyItems {
     public static final RegistryObject<Item> COIL = ITEMS.register("coil", ItemBase::new);
     public static final RegistryObject<Item> COIL_ADVANCED = ITEMS.register("coil_advanced", ItemBase::new);
     public static final RegistryObject<Item> RICE_DOUGH = ITEMS.register("rice_dough", ItemBase::new);
-    public static final RegistryObject<Item> TINY_COAL = ITEMS.register("tiny_coal", ItemBase::new);
-    public static final RegistryObject<Item> TINY_CHARCOAL = ITEMS.register("tiny_charcoal", ItemBase::new);
+    public static final RegistryObject<Item> TINY_COAL = ITEMS.register("tiny_coal", () -> new ItemBase() {
+        @Override
+        public int getBurnTime(ItemStack stack) {
+            return 200;
+        }
+    });
+    public static final RegistryObject<Item> TINY_CHARCOAL = ITEMS.register("tiny_charcoal", () -> new ItemBase() {
+        @Override
+        public int getBurnTime(ItemStack stack) {
+            return 200;
+        }
+    });
     public static final RegistryObject<Item> RICE_SLIME = ITEMS.register("rice_slime", ItemBase::new);
     public static final RegistryObject<Item> CUP = ITEMS.register("cup", ItemBase::new);
     public static final RegistryObject<Item> BAT_WING = ITEMS.register("bat_wing", ItemBase::new);

@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.booklet.gui;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
@@ -18,6 +19,7 @@ import de.ellpeck.actuallyadditions.mod.booklet.button.EntryButton;
 import de.ellpeck.actuallyadditions.mod.booklet.entry.BookletEntryTrials;
 import de.ellpeck.actuallyadditions.mod.booklet.misc.BookletUtils;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -64,11 +66,11 @@ public class GuiEntry extends GuiBooklet {
     }
 
     @Override
-    public void drawScreenPre(int mouseX, int mouseY, float partialTicks) {
-        super.drawScreenPre(mouseX, mouseY, partialTicks);
+    public void drawScreenPre(MatrixStack matrices, int mouseX, int mouseY, float partialTicks) {
+        super.drawScreenPre(matrices, mouseX, mouseY, partialTicks);
 
         String name = this.entry.getLocalizedName();
-        this.fontRenderer.drawString(name, this.guiLeft + this.xSize / 2 - this.fontRenderer.getStringWidth(name) / 2, this.guiTop - 1, 0xFFFFFF, true);
+        this.font.draw(matrices, name, this.guiLeft + this.xSize / 2 - this.font.width(name) / 2, this.guiTop - 1, 0xFFFFFF);
 
         for (int i = 0; i < 2; i++) {
             String pageStrg = "Page " + (this.entryPage * 2 + i + 1) + "/" + this.pageAmount * 2;
@@ -83,7 +85,7 @@ public class GuiEntry extends GuiBooklet {
         if (this.hasSearchBar() && this.searchText != null) {
             this.searchField.setValue(this.searchText);
             if (this.focusSearch) {
-                this.searchField.setFocused(true);
+                this.searchField.setFocus(true);
             }
         }
 
@@ -100,9 +102,9 @@ public class GuiEntry extends GuiBooklet {
             }
         }
     }
-
+/*
     @Override
-    protected void actionPerformed(GuiButton button) throws IOException {
+    protected void actionPerformed(Button button) throws IOException {
         if (button instanceof EntryButton) {
             int actualId = button.id + this.entryPage * BUTTONS_PER_PAGE * 2;
 
@@ -111,7 +113,7 @@ public class GuiEntry extends GuiBooklet {
                 if (chapter != null) {
                     IBookletPage[] pages = chapter.getAllPages();
                     if (pages != null && pages.length > 0) {
-                        this.mc.displayGuiScreen(BookletUtils.createPageGui(this.previousScreen, this, pages[0]));
+                        this.minecraft.setScreen(BookletUtils.createPageGui(this.previousScreen, this, pages[0]));
                     }
                 }
             }
@@ -119,6 +121,8 @@ public class GuiEntry extends GuiBooklet {
             super.actionPerformed(button);
         }
     }
+
+ */
 
     @Override
     public void addOrModifyItemRenderer(ItemStack renderedStack, int x, int y, float scale, boolean shouldTryTransfer) {
@@ -132,7 +136,7 @@ public class GuiEntry extends GuiBooklet {
 
     @Override
     public void onPageLeftButtonPressed() {
-        this.mc.displayGuiScreen(new GuiEntry(this.previousScreen, this.parentPage, this.entry, this.entryPage - 1, this.searchText, this.searchField.isFocused()));
+        this.minecraft.setScreen(new GuiEntry(this.previousScreen, this.parentPage, this.entry, this.entryPage - 1, this.searchText, this.searchField.isFocused()));
     }
 
     @Override
@@ -142,7 +146,7 @@ public class GuiEntry extends GuiBooklet {
 
     @Override
     public void onPageRightButtonPressed() {
-        this.mc.displayGuiScreen(new GuiEntry(this.previousScreen, this.parentPage, this.entry, this.entryPage + 1, this.searchText, this.searchField.isFocused()));
+        this.minecraft.setScreen(new GuiEntry(this.previousScreen, this.parentPage, this.entry, this.entryPage + 1, this.searchText, this.searchField.isFocused()));
     }
 
     @Override
@@ -152,8 +156,8 @@ public class GuiEntry extends GuiBooklet {
 
     @Override
     public void onBackButtonPressed() {
-        if (!isShiftKeyDown()) {
-            this.mc.displayGuiScreen(this.parentPage);
+        if (!hasShiftDown()) {
+            this.minecraft.setScreen(this.parentPage);
         } else {
             super.onBackButtonPressed();
         }

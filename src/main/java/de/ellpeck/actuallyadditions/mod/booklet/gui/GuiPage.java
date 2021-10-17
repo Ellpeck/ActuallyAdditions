@@ -10,7 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.booklet.gui;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
@@ -85,7 +87,7 @@ public class GuiPage extends GuiBooklet {
             }
         }
     }
-
+/*
     @Override
     public void actionPerformed(GuiButton button) throws IOException {
         if (button == this.buttonViewOnline) {
@@ -109,7 +111,7 @@ public class GuiPage extends GuiBooklet {
             }
         }
     }
-
+ */
     @Override
     public void init() {
         this.itemDisplays.clear();
@@ -146,8 +148,8 @@ public class GuiPage extends GuiBooklet {
     }
 
     @Override
-    public void updateScreen() {
-        super.updateScreen();
+    public void tick() {
+        super.tick();
 
         for (int i = 0; i < this.pages.length; i++) {
             IBookletPage page = this.pages[i];
@@ -160,13 +162,13 @@ public class GuiPage extends GuiBooklet {
     }
 
     @Override
-    public void drawScreenPre(int mouseX, int mouseY, float partialTicks) {
-        super.drawScreenPre(mouseX, mouseY, partialTicks);
+    public void drawScreenPre(MatrixStack stack, int mouseX, int mouseY, float partialTicks) {
+        super.drawScreenPre(stack, mouseX, mouseY, partialTicks);
 
         if (this.pages[0] != null) {
             IBookletChapter chapter = this.pages[0].getChapter();
             String name = chapter.getLocalizedName();
-            this.fontRenderer.drawString(name, this.guiLeft + this.xSize / 2 - this.fontRenderer.getStringWidth(name) / 2, this.guiTop - 1, 0xFFFFFF, true);
+            this.font.draw(stack, name, this.guiLeft + this.xSize / 2 - this.font.width(name) / 2, this.guiTop - 1, 0xFFFFFF);
         }
 
         for (int i = 0; i < this.pages.length; i++) {
@@ -176,7 +178,7 @@ public class GuiPage extends GuiBooklet {
                 String pageStrg = "Page " + (chapter.getPageIndex(this.pages[i]) + 1) + "/" + chapter.getAllPages().length;
                 this.renderScaledAsciiString(pageStrg, this.guiLeft + 25 + i * 136, this.guiTop + this.ySize - 7, 0xFFFFFF, false, this.getLargeFontSize());
 
-                GlStateManager.color1arg(1F, 1F, 1F);
+                RenderSystem.color3f(1f, 1f, 1f);
                 page.drawScreenPre(this, this.guiLeft + 6 + i * 142, this.guiTop + 7, mouseX, mouseY, partialTicks);
             }
         }
@@ -186,13 +188,13 @@ public class GuiPage extends GuiBooklet {
     }
 
     @Override
-    public void drawScreenPost(int mouseX, int mouseY, float partialTicks) {
-        super.drawScreenPost(mouseX, mouseY, partialTicks);
+    public void drawScreenPost(MatrixStack stack, int mouseX, int mouseY, float partialTicks) {
+        super.drawScreenPost(stack, mouseX, mouseY, partialTicks);
 
         for (int i = 0; i < this.pages.length; i++) {
             IBookletPage page = this.pages[i];
             if (page != null) {
-                GlStateManager.color1arg(1F, 1F, 1F);
+                RenderSystem.color3f(1F, 1F, 1F);
                 page.drawScreenPost(this, this.guiLeft + 6 + i * 142, this.guiTop + 7, mouseX, mouseY, partialTicks);
             }
         }
@@ -235,7 +237,7 @@ public class GuiPage extends GuiBooklet {
 
                 int pageNumToOpen = chapter.getPageIndex(page) - 1;
                 if (pageNumToOpen >= 0 && pageNumToOpen < pages.length) {
-                    this.mc.displayGuiScreen(BookletUtils.createPageGui(this.previousScreen, this.parentPage, pages[pageNumToOpen]));
+                    this.minecraft.setScreen(BookletUtils.createPageGui(this.previousScreen, this.parentPage, pages[pageNumToOpen]));
                 }
             }
         }
@@ -265,7 +267,7 @@ public class GuiPage extends GuiBooklet {
 
                 int pageNumToOpen = chapter.getPageIndex(page) + 1;
                 if (pageNumToOpen >= 0 && pageNumToOpen < pages.length) {
-                    this.mc.displayGuiScreen(BookletUtils.createPageGui(this.previousScreen, this.parentPage, pages[pageNumToOpen]));
+                    this.minecraft.setScreen(BookletUtils.createPageGui(this.previousScreen, this.parentPage, pages[pageNumToOpen]));
                 }
             }
         }
@@ -278,8 +280,8 @@ public class GuiPage extends GuiBooklet {
 
     @Override
     public void onBackButtonPressed() {
-        if (!isShiftKeyDown()) {
-            this.mc.displayGuiScreen(this.parentPage);
+        if (!hasShiftDown()) {
+            this.minecraft.setScreen(this.parentPage);
         } else {
             super.onBackButtonPressed();
         }
