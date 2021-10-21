@@ -14,9 +14,7 @@ import java.io.File;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.client.event.ConfigChangedEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class ConfigurationHandler {
 

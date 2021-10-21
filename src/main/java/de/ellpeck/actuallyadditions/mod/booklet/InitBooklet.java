@@ -123,6 +123,7 @@ public final class InitBooklet {
     }
 
     private static void initChapters() {
+        /*
         //Getting Started
         chaptersIntroduction[0] = new BookletChapter("bookTutorial", ActuallyAdditionsAPI.entryGettingStarted, new ItemStack(ActuallyItems.ITEM_BOOKLET.get()), new PageTextOnly(1), new PageTextOnly(2), new PageTextOnly(3), new PageCrafting(4, ItemCrafting.recipeBook).setNoText());
         //        chaptersIntroduction[1] = new BookletChapter("videoGuide", ActuallyAdditionsAPI.entryGettingStarted, new ItemStack(InitItems.itemMisc.get(), 1, TheMiscItems.YOUTUBE_ICON.ordinal()), new PageLinkButton(1, "https://www.youtube.com/watch?v=fhjz0Ew56pM"), new PageLinkButton(2, "https://www.youtube.com/playlist?list=PLJeFZ64pT89MrTRZYzD_rtHFajPVlt6cF")).setImportant();
@@ -294,5 +295,7 @@ public final class InitBooklet {
         new BookletChapterTrials("empoweredOil", FluidUtil.getFilledBucket(new FluidStack(InitFluids.fluidEmpoweredOil, FluidAttributes.BUCKET_VOLUME)), false);
         new BookletChapterTrials("mobFarm", new ItemStack(Items.ROTTEN_FLESH), false);
         new BookletChapterTrials("empowererAutomation", new ItemStack(ActuallyBlocks.EMPOWERER.get()), false);
+
+         */
     }
 }

@@ -13,7 +13,7 @@ package de.ellpeck.actuallyadditions.mod.blocks.base;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-
+/*
 public class BlockFluidFlowing extends BlockFluidClassic implements ItemBlockBase.ICustomRarity {
 
     public BlockFluidFlowing(Fluid fluid, Material material) {
@@ -31,3 +31,5 @@ public class BlockFluidFlowing extends BlockFluidClassic implements ItemBlockBas
         return !world.getBlockState(pos).getMaterial().isLiquid() && super.displaceIfPossible(world, pos);
     }
 }
+
+ */

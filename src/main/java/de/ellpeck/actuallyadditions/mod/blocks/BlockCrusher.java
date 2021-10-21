@@ -35,19 +35,20 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
+import javax.annotation.Nullable;
 import java.util.Random;
 
 public class BlockCrusher extends BlockContainerBase {
     private final boolean isDouble;
 
     public BlockCrusher(boolean isDouble) {
-        super(ActuallyBlocks.defaultPickProps(0).tickRandomly());
+        super(ActuallyBlocks.defaultPickProps(0).randomTicks());
         this.isDouble = isDouble;
-        this.setDefaultState(this.stateContainer.getBaseState().with(HORIZONTAL_FACING, Direction.NORTH).with(LIT, false));
+        this.registerDefaultState(getStateDefinition().any().setValue(HORIZONTAL_FACING, Direction.NORTH).setValue(LIT, false));
     }
 
     @Override
-    public TileEntity createNewTileEntity(IBlockReader worldIn) {
+    public TileEntity newBlockEntity(IBlockReader worldIn) {
         return this.isDouble
             ? new TileEntityCrusherDouble()
             : new TileEntityCrusher();
@@ -55,7 +56,7 @@ public class BlockCrusher extends BlockContainerBase {
 
     @Override
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random rand) {
-        if (state.get(BlockStateProperties.LIT)) {
+        if (state.getValue(BlockStateProperties.LIT)) {
             for (int i = 0; i < 5; i++) {
                 double xRand = rand.nextDouble() / 0.75D - 0.5D;
                 double zRand = rand.nextDouble() / 0.75D - 0.5D;
@@ -66,7 +67,7 @@ public class BlockCrusher extends BlockContainerBase {
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (this.isDouble) {
             return this.openGui(world, player, pos, TileEntityCrusherDouble.class);
         }
@@ -76,24 +77,24 @@ public class BlockCrusher extends BlockContainerBase {
 
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
-        return this.getDefaultState().with(HORIZONTAL_FACING, context.getNearestLookingDirection().getOpposite()).with(LIT, false);
+        return defaultBlockState().setValue(HORIZONTAL_FACING, context.getNearestLookingDirection().getOpposite()).setValue(LIT, false);
     }
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(LIT).add(HORIZONTAL_FACING);
     }
 
     @Override
     public int getLightValue(BlockState state, IBlockReader world, BlockPos pos) {
-        return state.get(LIT)
+        return state.getValue(LIT)
             ? 12
             : 0;
     }
 
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        switch (state.get(HORIZONTAL_FACING)) {
+        switch (state.getValue(HORIZONTAL_FACING)) {
             case EAST:
                 return Shapes.GrinderShapes.SHAPE_E;
             case SOUTH:

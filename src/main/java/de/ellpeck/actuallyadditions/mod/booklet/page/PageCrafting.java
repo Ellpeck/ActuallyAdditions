@@ -17,7 +17,6 @@ import de.ellpeck.actuallyadditions.mod.util.RefHelp;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
-import de.ellpeck.actuallyadditions.mod.util.crafting.BlankRecipe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
@@ -62,7 +61,7 @@ public class PageCrafting extends BookletPage {
     public void drawScreenPre(GuiBookletBase gui, int startX, int startY, int mouseX, int mouseY, float partialTicks) {
         super.drawScreenPre(gui, startX, startY, mouseX, mouseY, partialTicks);
 
-        gui.mc.getTextureManager().bindTexture(GuiBooklet.RES_LOC_GADGETS);
+        gui.getMinecraft().getTextureManager().bind(GuiBooklet.RES_LOC_GADGETS);
         GuiUtils.drawTexturedModalRect(startX + 5, startY + 6, 20, 0, 116, 54, 0);
 
         if (this.recipeTypeLocKey != null) {
@@ -112,9 +111,12 @@ public class PageCrafting extends BookletPage {
                     ItemStack output = recipe.getResultItem();
                     if (StackUtil.isValid(output)) {
                         ItemStack copy = output.copy();
+                        /*
                         if (this.isWildcard) {
                             copy.setItemDamage(Util.WILDCARD);
                         }
+
+                         */
                         list.add(copy);
                     }
                 }
@@ -126,7 +128,7 @@ public class PageCrafting extends BookletPage {
         Ingredient[] ings = new Ingredient[9];
         int width = 3;
         int height = 3;
-
+/*
         if (recipe instanceof BlankRecipe) {
             this.recipeTypeLocKey = "tooltip." + ActuallyAdditions.MODID + ".disabled";
             gui.addOrModifyItemRenderer(recipe.getResultItem(), startX + 100, startY + 25, 1F, false);
@@ -163,6 +165,8 @@ public class PageCrafting extends BookletPage {
             this.recipeTypeLocKey = "booklet." + ActuallyAdditions.MODID + ".shapelessOreRecipe";
         }
 
+
+ */
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 Ingredient ing = ings[y * width + x];
@@ -173,10 +177,11 @@ public class PageCrafting extends BookletPage {
                         if (StackUtil.isValid(stack)) {
                             ItemStack copy = stack.copy();
                             copy.setCount(1);
+                            /*
                             if (copy.getItemDamage() == Util.WILDCARD) {
                                 copy.setItemDamage(0);
                             }
-
+                            */
                             gui.addOrModifyItemRenderer(copy, startX + 6 + x * 18, startY + 7 + y * 18, 1F, true);
                         }
                     }
