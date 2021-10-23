@@ -31,13 +31,14 @@ import de.ellpeck.actuallyadditions.mod.misc.DungeonLoot;
 import de.ellpeck.actuallyadditions.mod.misc.apiimpl.LaserRelayConnectionHandler;
 import de.ellpeck.actuallyadditions.mod.misc.apiimpl.MethodHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
-import de.ellpeck.actuallyadditions.mod.recipe.EmpowererHandler;
 import de.ellpeck.actuallyadditions.mod.recipe.HairyBallHandler;
 import de.ellpeck.actuallyadditions.mod.update.UpdateChecker;
+import de.ellpeck.actuallyadditions.mod.util.ResourceReloader;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.crafting.CraftingHelper;
+import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -91,6 +92,7 @@ public class ActuallyAdditions {
         MinecraftForge.EVENT_BUS.addListener(this::serverStopped);
         MinecraftForge.EVENT_BUS.register(new CommonEvents());
         MinecraftForge.EVENT_BUS.register(new DungeonLoot());
+        MinecraftForge.EVENT_BUS.addListener(ActuallyAdditions::reloadEvent);
 
         eventBus.addListener(this::setup);
         eventBus.addListener(this::clientSetup);
@@ -116,9 +118,12 @@ public class ActuallyAdditions {
         CrusherCrafting.init();
         HairyBallHandler.init();
         LensRecipeHandler.init();
-        EmpowererHandler.init();
         LensMining.init();
         InitBooklet.init();
+    }
+
+    private static void reloadEvent(AddReloadListenerEvent event){
+        event.addListener(new ResourceReloader(event.getDataPackRegistries()));
     }
 
     private void clientSetup(FMLClientSetupEvent event) {

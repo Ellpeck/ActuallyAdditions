@@ -26,8 +26,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class MiscRecipeGenerator extends RecipeProvider {
-    public MiscRecipeGenerator(DataGenerator p_i48262_1_) {
+public class EmpoweringRecipeGenerator extends RecipeProvider {
+    public EmpoweringRecipeGenerator(DataGenerator p_i48262_1_) {
         super(p_i48262_1_);
     }
 
