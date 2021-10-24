@@ -37,8 +37,6 @@ import net.minecraftforge.fluids.capability.templates.FluidTank;
 
 import javax.annotation.Nullable;
 
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
-
 public class TileEntityCanolaPress extends TileEntityInventoryBase implements INamedContainerProvider, ISharingFluidHandler {
 
     public static final int PRODUCE = 80;
@@ -113,7 +111,7 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IN
 
                         this.inv.setStackInSlot(0, StackUtil.shrink(this.inv.getStackInSlot(0), 1));
 
-                        this.tank.fill(new FluidStack(InitFluids.fluidCanolaOil.get(), PRODUCE), IFluidHandler.FluidAction.EXECUTE);
+                        this.tank.fill(new FluidStack(InitFluids.CANOLA_OIL.get(), PRODUCE), IFluidHandler.FluidAction.EXECUTE);
                         this.setChanged();
                     }
                 }

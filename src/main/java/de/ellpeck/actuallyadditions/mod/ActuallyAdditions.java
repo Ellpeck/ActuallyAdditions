@@ -93,6 +93,7 @@ public class ActuallyAdditions {
         MinecraftForge.EVENT_BUS.register(new CommonEvents());
         MinecraftForge.EVENT_BUS.register(new DungeonLoot());
         MinecraftForge.EVENT_BUS.addListener(ActuallyAdditions::reloadEvent);
+        InitFluids.init(eventBus);
 
         eventBus.addListener(this::setup);
         eventBus.addListener(this::clientSetup);
@@ -109,7 +110,6 @@ public class ActuallyAdditions {
 
         commonCapsLoaded = false; // Loader.isModLoaded("commoncapabilities");
 
-        InitFluids.init();
         new UpdateChecker();
         BannerHelper.init();
         InitEntities.init(); // todo: [port] replace

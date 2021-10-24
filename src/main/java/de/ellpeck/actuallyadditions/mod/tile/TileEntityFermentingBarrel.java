@@ -13,7 +13,6 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFermentingBarrel;
-import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -28,12 +27,9 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.templates.FluidTank;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
 
 public class TileEntityFermentingBarrel extends TileEntityBase implements ISharingFluidHandler, INamedContainerProvider {
 
@@ -155,8 +151,8 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
 
     public class FermentingBarrelMultiTank implements IFluidHandler {
 
-        public FluidStack canolaTank = new FluidStack(InitFluids.fluidCanolaOil.get(), 0);
-        public FluidStack oilTank = new FluidStack(InitFluids.fluidRefinedCanolaOil.get(), 0);
+        public FluidStack canolaTank = new FluidStack(InitFluids.CANOLA_OIL.get(), 0);
+        public FluidStack oilTank = new FluidStack(InitFluids.REFINED_CANOLA_OIL.get(), 0);
         private int capacity = FluidAttributes.BUCKET_VOLUME * 2;
 
         @Override
@@ -177,12 +173,12 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
 
         @Override
         public boolean isFluidValid(int tank, @Nonnull FluidStack stack) {
-            return tank == 0? stack.getFluid() == InitFluids.fluidCanolaOil.get():stack.getFluid() == InitFluids.fluidRefinedCanolaOil.get();
+            return tank == 0? stack.getFluid() == InitFluids.CANOLA_OIL.get():stack.getFluid() == InitFluids.REFINED_CANOLA_OIL.get();
         }
 
         @Override
         public int fill(FluidStack resource, FluidAction action) {
-            if (resource.isEmpty() || resource.getFluid() != InitFluids.fluidCanolaOil.get())
+            if (resource.isEmpty() || resource.getFluid() != InitFluids.CANOLA_OIL.get())
             return 0;
 
             if(action.simulate())
@@ -230,7 +226,7 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
         @Nonnull
         @Override
         public FluidStack drain(FluidStack resource, FluidAction action) {
-            if (resource.isEmpty() || resource.getFluid() != InitFluids.fluidRefinedCanolaOil.get())
+            if (resource.isEmpty() || resource.getFluid() != InitFluids.REFINED_CANOLA_OIL.get())
                 return FluidStack.EMPTY;
 
             return drain(resource.getAmount(), action);

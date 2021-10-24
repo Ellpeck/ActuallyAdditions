@@ -35,10 +35,10 @@ public final class InitCrafting {
 
         int[] power = ConfigIntListValues.OIL_POWER.getValue();
         int[] time = ConfigIntListValues.OIL_TIME.getValue();
-        ActuallyAdditionsAPI.addOilGenRecipe(InitFluids.fluidCanolaOil.getName(), power[0], time[0]);
-        ActuallyAdditionsAPI.addOilGenRecipe(InitFluids.fluidRefinedCanolaOil.getName(), power[1], time[1]);
-        ActuallyAdditionsAPI.addOilGenRecipe(InitFluids.fluidCrystalOil.getName(), power[2], time[2]);
-        ActuallyAdditionsAPI.addOilGenRecipe(InitFluids.fluidEmpoweredOil.getName(), power[3], time[3]);
+        ActuallyAdditionsAPI.addOilGenRecipe(InitFluids.CANOLA_OIL.getName(), power[0], time[0]);
+        ActuallyAdditionsAPI.addOilGenRecipe(InitFluids.REFINED_CANOLA_OIL.getName(), power[1], time[1]);
+        ActuallyAdditionsAPI.addOilGenRecipe(InitFluids.CRYSTALIZED_OIL.getName(),  power[2], time[2]);
+        ActuallyAdditionsAPI.addOilGenRecipe(InitFluids.EMPOWERED_OIL.getName(), power[3], time[3]);
 
         ActuallyAdditionsAPI.addFarmerBehavior(new DefaultFarmerBehavior());
         ActuallyAdditionsAPI.addFarmerBehavior(new CactusFarmerBehavior());
