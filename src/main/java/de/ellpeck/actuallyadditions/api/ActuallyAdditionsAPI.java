@@ -19,6 +19,7 @@ import de.ellpeck.actuallyadditions.api.laser.ILaserRelayConnectionHandler;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.api.lens.LensConversion;
 import de.ellpeck.actuallyadditions.api.recipe.*;
+import de.ellpeck.actuallyadditions.mod.crafting.CrushingRecipe;
 import de.ellpeck.actuallyadditions.mod.crafting.EmpowererRecipe;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -38,7 +39,7 @@ public final class ActuallyAdditionsAPI {
     public static final String API_ID = MOD_ID + "api";
     public static final String API_VERSION = "34";
 
-    public static final List<CrusherRecipe> CRUSHER_RECIPES = new ArrayList<>();
+    public static final List<CrushingRecipe> CRUSHER_RECIPES = new ArrayList<>();
     public static final List<BallOfFurReturn> BALL_OF_FUR_RETURN_ITEMS = new ArrayList<>();
     //    public static final List<TreasureChestLoot> TREASURE_CHEST_LOOT = new ArrayList<>();
     public static final List<LensConversionRecipe> RECONSTRUCTOR_LENS_CONVERSION_RECIPES = new ArrayList<>();
@@ -133,7 +134,7 @@ public final class ActuallyAdditionsAPI {
      * @param outputTwoChance The chance of the second output (0 won't occur at all, 100 will all the time)
      */
     public static void addCrusherRecipe(ItemStack input, ItemStack outputOne, ItemStack outputTwo, int outputTwoChance) {
-        CRUSHER_RECIPES.add(new CrusherRecipe(Ingredient.of(input), outputOne, outputTwo.isEmpty()
+        CRUSHER_RECIPES.add(new CrushingRecipe(Ingredient.of(input), outputOne, outputTwo.isEmpty()
             ? ItemStack.EMPTY
             : outputTwo, outputTwoChance));
     }
@@ -147,7 +148,7 @@ public final class ActuallyAdditionsAPI {
      * @param outputTwoChance The chance of the second output (0 won't occur at all, 100 will all the time)
      */
     public static void addCrusherRecipe(Ingredient input, ItemStack outputOne, ItemStack outputTwo, int outputTwoChance) {
-        CRUSHER_RECIPES.add(new CrusherRecipe(input, outputOne, outputTwo.isEmpty()
+        CRUSHER_RECIPES.add(new CrushingRecipe(input, outputOne, outputTwo.isEmpty()
             ? ItemStack.EMPTY
             : outputTwo, outputTwoChance));
     }

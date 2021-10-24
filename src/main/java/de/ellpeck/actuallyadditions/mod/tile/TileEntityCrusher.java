@@ -10,9 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import de.ellpeck.actuallyadditions.api.recipe.CrusherRecipe;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
-import de.ellpeck.actuallyadditions.mod.blocks.BlockPoweredFurnace;
+import de.ellpeck.actuallyadditions.mod.crafting.CrushingRecipe;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerGrinder;
 import de.ellpeck.actuallyadditions.mod.misc.SoundHandler;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
@@ -20,7 +19,6 @@ import de.ellpeck.actuallyadditions.mod.recipe.CrusherRecipeRegistry;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -189,7 +187,7 @@ public class TileEntityCrusher extends TileEntityInventoryBase implements IButto
 
     public boolean canCrushOn(int theInput, int theFirstOutput, int theSecondOutput) {
         if (StackUtil.isValid(this.inv.getStackInSlot(theInput))) {
-            CrusherRecipe recipe = CrusherRecipeRegistry.getRecipeFromInput(this.inv.getStackInSlot(theInput));
+            CrushingRecipe recipe = CrusherRecipeRegistry.getRecipeFromInput(this.inv.getStackInSlot(theInput));
             if (recipe == null) {
                 return false;
             }
@@ -219,7 +217,7 @@ public class TileEntityCrusher extends TileEntityInventoryBase implements IButto
     }
 
     public void finishCrushing(int theInput, int theFirstOutput, int theSecondOutput) {
-        CrusherRecipe recipe = CrusherRecipeRegistry.getRecipeFromInput(this.inv.getStackInSlot(theInput));
+        CrushingRecipe recipe = CrusherRecipeRegistry.getRecipeFromInput(this.inv.getStackInSlot(theInput));
         if (recipe == null) {
             return;
         }

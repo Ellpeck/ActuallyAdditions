@@ -11,9 +11,9 @@
 package de.ellpeck.actuallyadditions.mod.booklet.page;
 
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
-import de.ellpeck.actuallyadditions.api.recipe.CrusherRecipe;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiBooklet;
+import de.ellpeck.actuallyadditions.mod.crafting.CrushingRecipe;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.item.ItemStack;
@@ -25,12 +25,12 @@ import java.util.List;
 
 public class PageCrusherRecipe extends BookletPage {
 
-    private final CrusherRecipe recipe;
+    private final CrushingRecipe recipe;
     private int counter = 0;
     private int rotate = 0;
     private final ItemStack[] stacks;
 
-    public PageCrusherRecipe(int localizationKey, CrusherRecipe recipe) {
+    public PageCrusherRecipe(int localizationKey, CrushingRecipe recipe) {
         super(localizationKey);
         this.recipe = recipe;
         this.stacks = recipe.getInput().getItems();
