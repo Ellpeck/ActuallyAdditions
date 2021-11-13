@@ -18,9 +18,8 @@ import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.renderer.model.ModelResourceLocation;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.EnumAction;
-import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Rarity;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -99,9 +98,9 @@ public class ItemFoods extends ItemFoodBase {
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack) {
+    public Rarity getRarity(ItemStack stack) {
         return stack.getItemDamage() >= ALL_FOODS.length
-            ? EnumRarity.COMMON
+            ? Rarity.COMMON
             : ALL_FOODS[stack.getItemDamage()].rarity;
     }
 

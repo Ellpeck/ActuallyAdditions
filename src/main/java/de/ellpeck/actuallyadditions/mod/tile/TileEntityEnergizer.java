@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerEnergizer;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
@@ -29,8 +30,6 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 import javax.annotation.Nullable;
 
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
-
 public class TileEntityEnergizer extends TileEntityInventoryBase implements INamedContainerProvider {
 
     public final CustomEnergyStorage storage = new CustomEnergyStorage(50000, 1000, 0);
@@ -38,7 +37,7 @@ public class TileEntityEnergizer extends TileEntityInventoryBase implements INam
     private int lastEnergy;
 
     public TileEntityEnergizer() {
-        super(ActuallyTiles.ENERGIZER_TILE.get(), 2);
+        super(ActuallyBlocks.ENERGIZER.getTileEntityType(), 2);
     }
 
     @Override

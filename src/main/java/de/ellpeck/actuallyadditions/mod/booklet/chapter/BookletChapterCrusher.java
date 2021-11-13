@@ -12,9 +12,6 @@ package de.ellpeck.actuallyadditions.mod.booklet.chapter;
 
 import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
-import de.ellpeck.actuallyadditions.mod.booklet.page.PageCrusherRecipe;
-import de.ellpeck.actuallyadditions.mod.crafting.CrusherCrafting;
-import de.ellpeck.actuallyadditions.mod.crafting.CrushingRecipe;
 import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
@@ -30,10 +27,12 @@ public class BookletChapterCrusher extends BookletChapter {
     private static IBookletPage[] getPages(IBookletPage... pages) {
         List<IBookletPage> allPages = new ArrayList<>();
         allPages.addAll(Arrays.asList(pages));
-
+/*
         for (CrushingRecipe recipe : CrusherCrafting.MISC_RECIPES) {
             allPages.add(new PageCrusherRecipe(allPages.size() + 1, recipe).setNoText());
         }
+
+ */
 
         return allPages.toArray(new IBookletPage[allPages.size()]);
     }

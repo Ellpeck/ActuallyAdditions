@@ -17,6 +17,7 @@ import de.ellpeck.actuallyadditions.mod.util.IColorProvidingItem;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Rarity;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -44,7 +45,7 @@ public class ItemDust extends ItemBase implements IColorProvidingItem {
     }
 
     @Override
-    public EnumRarity getRarity(ItemStack stack) {
+    public Rarity getRarity(ItemStack stack) {
         return stack.getItemDamage() >= ALL_DUSTS.length
                 ? EnumRarity.COMMON
                 : ALL_DUSTS[stack.getItemDamage()].rarity;

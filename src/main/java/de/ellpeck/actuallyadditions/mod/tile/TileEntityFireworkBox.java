@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFireworkBox;
 import de.ellpeck.actuallyadditions.mod.network.gui.INumberReactor;
 import net.minecraft.entity.player.PlayerEntity;
@@ -36,8 +37,6 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
-
 public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisplay, INumberReactor, INamedContainerProvider {
 
     public static final int USE_PER_SHOT = 500;
@@ -59,7 +58,7 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisp
     private int oldEnergy;
 
     public TileEntityFireworkBox() {
-        super(ActuallyTiles.FIREWORKBOX_TILE.get());
+        super(ActuallyBlocks.FIREWORK_BOX.getTileEntityType());
     }
 
     @Override

@@ -10,12 +10,14 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
+
 public class TileEntityLaserRelayEnergyAdvanced extends TileEntityLaserRelayEnergy {
 
     public static final int CAP = 10000;
 
     public TileEntityLaserRelayEnergyAdvanced() {
-        super(ActuallyTiles.LASERRELAYENERGYADVANCED_TILE.get());
+        super(ActuallyBlocks.LASER_RELAY_ADVANCED.getTileEntityType());
     }
 
     @Override

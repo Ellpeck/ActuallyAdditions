@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
 import net.minecraftforge.common.util.LazyOptional;
@@ -17,8 +18,6 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
 
 public class TileEntityShockSuppressor extends TileEntityBase implements IEnergyDisplay {
 
@@ -32,7 +31,7 @@ public class TileEntityShockSuppressor extends TileEntityBase implements IEnergy
     private int oldEnergy;
 
     public TileEntityShockSuppressor() {
-        super(ActuallyTiles.SHOCKSUPPRESSOR_TILE.get());
+        super(ActuallyBlocks.SHOCK_SUPPRESSOR.getTileEntityType());
     }
 
     @Override

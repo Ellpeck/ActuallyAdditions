@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFeeder;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import net.minecraft.entity.passive.AnimalEntity;
@@ -32,8 +33,6 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Optional;
 
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
-
 public class TileEntityFeeder extends TileEntityInventoryBase implements INamedContainerProvider {
 
     public static final int THRESHOLD = 30;
@@ -44,7 +43,7 @@ public class TileEntityFeeder extends TileEntityInventoryBase implements INamedC
     private int lastTimer;
 
     public TileEntityFeeder() {
-        super(ActuallyTiles.FEEDER_TILE.get(), 1);
+        super(ActuallyBlocks.FEEDER.getTileEntityType(), 1);
     }
 
     public int getCurrentTimerToScale(int i) {

@@ -187,7 +187,7 @@ public class TileEntityCrusher extends TileEntityInventoryBase implements IButto
 
     public boolean canCrushOn(int theInput, int theFirstOutput, int theSecondOutput) {
         if (StackUtil.isValid(this.inv.getStackInSlot(theInput))) {
-            CrushingRecipe recipe = CrusherRecipeRegistry.getRecipeFromInput(this.inv.getStackInSlot(theInput));
+            CrushingRecipe recipe = null;//CrusherRecipeRegistry.getRecipeFromInput(this.inv.getStackInSlot(theInput)); //TODO
             if (recipe == null) {
                 return false;
             }
@@ -202,7 +202,7 @@ public class TileEntityCrusher extends TileEntityInventoryBase implements IButto
                     outputTwo.setDamage(0);
                 }
                  */
-                if ((!StackUtil.isValid(this.inv.getStackInSlot(theFirstOutput)) || this.inv.getStackInSlot(theFirstOutput).sameItem(outputOne) && this.inv.getStackInSlot(theFirstOutput).getCount() <= this.inv.getStackInSlot(theFirstOutput).getMaxStackSize() - outputOne.getCount()) && (!StackUtil.isValid(outputTwo) || !StackUtil.isValid(this.inv.getStackInSlot(theSecondOutput)) || this.inv.getStackInSlot(theSecondOutput).isItemEqual(outputTwo) && this.inv.getStackInSlot(theSecondOutput).getCount() <= this.inv.getStackInSlot(theSecondOutput).getMaxStackSize() - outputTwo.getCount())) {
+                if ((!StackUtil.isValid(this.inv.getStackInSlot(theFirstOutput)) || this.inv.getStackInSlot(theFirstOutput).sameItem(outputOne) && this.inv.getStackInSlot(theFirstOutput).getCount() <= this.inv.getStackInSlot(theFirstOutput).getMaxStackSize() - outputOne.getCount()) && (!StackUtil.isValid(outputTwo) || !StackUtil.isValid(this.inv.getStackInSlot(theSecondOutput)) || this.inv.getStackInSlot(theSecondOutput).sameItem(outputTwo) && this.inv.getStackInSlot(theSecondOutput).getCount() <= this.inv.getStackInSlot(theSecondOutput).getMaxStackSize() - outputTwo.getCount())) {
                     return true;
                 }
             }
@@ -217,7 +217,7 @@ public class TileEntityCrusher extends TileEntityInventoryBase implements IButto
     }
 
     public void finishCrushing(int theInput, int theFirstOutput, int theSecondOutput) {
-        CrushingRecipe recipe = CrusherRecipeRegistry.getRecipeFromInput(this.inv.getStackInSlot(theInput));
+        CrushingRecipe recipe = null; //CrusherRecipeRegistry.getRecipeFromInput(this.inv.getStackInSlot(theInput));//TODO
         if (recipe == null) {
             return;
         }

@@ -16,7 +16,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -27,9 +26,6 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
-import net.minecraftforge.fml.network.NetworkHooks;
-
-import net.minecraft.block.AbstractBlock.Properties;
 
 public class BlockFermentingBarrel extends BlockContainerBase {
 
@@ -47,9 +43,11 @@ public class BlockFermentingBarrel extends BlockContainerBase {
         if (!world.isClientSide) {
             TileEntityFermentingBarrel press = (TileEntityFermentingBarrel) world.getBlockEntity(pos);
             if (press != null) {
-                if (!this.tryUseItemOnTank(player, hand, press.canolaTank) && !this.tryUseItemOnTank(player, hand, press.oilTank)) {
+               /* if (!this.tryUseItemOnTank(player, hand, press.tanks.canolaTank) && !this.tryUseItemOnTank(player, hand, press.tanks.oilTank)) {
                     NetworkHooks.openGui((ServerPlayerEntity) player, press, pos);
                 }
+
+                */
             }
             return ActionResultType.PASS;
         }

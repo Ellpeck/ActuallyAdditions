@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.api.laser.IConnectionPair;
 import de.ellpeck.actuallyadditions.api.laser.LaserType;
 import de.ellpeck.actuallyadditions.api.laser.Network;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
@@ -35,8 +36,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
 
 public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay {
 
@@ -85,7 +84,7 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay {
     }
 
     public TileEntityLaserRelayEnergy() {
-        this(ActuallyTiles.LASERRELAYENERGY_TILE.get());
+        this(ActuallyBlocks.LASER_RELAY.getTileEntityType());
     }
 
     private int transmitEnergy(Direction from, int maxTransmit, boolean simulate) {

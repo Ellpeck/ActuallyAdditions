@@ -21,8 +21,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
-
 public class TileEntityLavaFactoryController extends TileEntityBase implements IEnergyDisplay {
 
     public static final int NOT_MULTI = 0;
@@ -36,7 +34,7 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
     private int oldEnergy;
 
     public TileEntityLavaFactoryController() {
-        super(ActuallyTiles.LAVAFACTORYCONTROLLER_TILE.get());
+        super(ActuallyBlocks.LAVA_FACTORY_CONTROLLER.getTileEntityType());
     }
 
     @Override
@@ -82,7 +80,7 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
         BlockPos thisPos = this.worldPosition;
         BlockPos[] positions = new BlockPos[]{thisPos.offset(1, 1, 0), thisPos.offset(-1, 1, 0), thisPos.offset(0, 1, 1), thisPos.offset(0, 1, -1)};
 
-        if (this.level != null && WorldUtil.hasBlocksInPlacesGiven(positions, ActuallyBlocks.LAVA_CASING.get(), this.level)) {
+        if (this.level != null && WorldUtil.hasBlocksInPlacesGiven(positions, ActuallyBlocks.LAVA_FACTORY_CASING.get(), this.level)) {
             BlockPos pos = thisPos.above();
             BlockState state = this.level.getBlockState(pos);
             Block block = state.getBlock();
