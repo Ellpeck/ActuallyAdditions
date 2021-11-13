@@ -11,6 +11,7 @@ import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.crafting.IIngredientSerializer;
 
+import javax.annotation.Nonnull;
 import java.util.stream.Stream;
 
 public class TargetNBTIngredient extends Ingredient {
@@ -19,6 +20,7 @@ public class TargetNBTIngredient extends Ingredient {
     }
 
     @Override
+    @Nonnull
     public IIngredientSerializer<? extends Ingredient> getSerializer() {
         return SERIALIZER;
     }
@@ -29,13 +31,15 @@ public class TargetNBTIngredient extends Ingredient {
     public static TargetNBTIngredient of(ItemStack itemStack) {
         return new TargetNBTIngredient(Stream.of(new SingleItemList(itemStack)));
     }
-    public static TargetNBTIngredient of(ITag tag) {
+    @Nonnull
+    public static TargetNBTIngredient of(@Nonnull ITag tag) {
         return new TargetNBTIngredient(Stream.of(new TagList(tag)));
     }
 
 
 
     @Override
+    @Nonnull
     public JsonElement toJson() {
         JsonObject tmp = super.toJson().getAsJsonObject();
         tmp.addProperty("type", Serializer.NAME.toString());
@@ -48,12 +52,14 @@ public class TargetNBTIngredient extends Ingredient {
         public static ResourceLocation NAME = new ResourceLocation(ActuallyAdditions.MODID, "nbt_target");
 
         @Override
+        @Nonnull
         public TargetNBTIngredient parse(PacketBuffer buffer) {
             return new TargetNBTIngredient(Stream.generate(() -> new SingleItemList(buffer.readItem())).limit(buffer.readVarInt()));
         }
 
         @Override
-        public TargetNBTIngredient parse(JsonObject json) {
+        @Nonnull
+        public TargetNBTIngredient parse(@Nonnull JsonObject json) {
             return new TargetNBTIngredient(Stream.of(Ingredient.valueFromJson(json)));
         }
 

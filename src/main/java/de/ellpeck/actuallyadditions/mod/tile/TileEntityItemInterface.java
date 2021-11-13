@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.api.laser.Network;
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketServerToClient;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
@@ -66,9 +67,9 @@ public class TileEntityItemInterface extends TileEntityBase {
                 IItemHandlerInfo info = TileEntityItemInterface.this.getSwitchedIndexHandler(slot);
                 if (info != null && info.isLoaded() && TileEntityItemInterface.this.isWhitelisted(info, stack, false)) {
                     ItemStack remain = info.handler.insertItem(info.switchedIndex, stack, simulate);
-                    if (!ItemStack.areItemStacksEqual(remain, stack) && !simulate) {
-                        TileEntityItemInterface.this.markDirty();
-                        TileEntityItemInterface.this.doItemParticle(stack, info.relayInQuestion.getPos(), TileEntityItemInterface.this.connectedRelay.getPos());
+                    if (!ItemStack.isSame(remain, stack) && !simulate) {
+                        TileEntityItemInterface.this.setChanged();
+                        TileEntityItemInterface.this.doItemParticle(stack, info.relayInQuestion.getBlockPos(), TileEntityItemInterface.this.connectedRelay.getBlockPos());
                     }
                     return remain;
                 }
@@ -83,8 +84,8 @@ public class TileEntityItemInterface extends TileEntityBase {
                     if (info != null && info.isLoaded() && TileEntityItemInterface.this.isWhitelisted(info, stackIn, true)) {
                         ItemStack extracted = info.handler.extractItem(info.switchedIndex, amount, simulate);
                         if (StackUtil.isValid(extracted) && !simulate) {
-                            TileEntityItemInterface.this.markDirty();
-                            TileEntityItemInterface.this.doItemParticle(extracted, TileEntityItemInterface.this.connectedRelay.getPos(), info.relayInQuestion.getPos());
+                            TileEntityItemInterface.this.setChanged();
+                            TileEntityItemInterface.this.doItemParticle(extracted, TileEntityItemInterface.this.connectedRelay.getBlockPos(), info.relayInQuestion.getBlockPos());
                         }
                         return extracted;
                     }
@@ -118,7 +119,7 @@ public class TileEntityItemInterface extends TileEntityBase {
     }
 
     public TileEntityItemInterface() {
-        this(ActuallyTiles.ITEMVIEWER_TILE.get());
+        this(ActuallyBlocks.ITEM_INTERFACE.getTileEntityType());
     }
 
     @Override
@@ -153,9 +154,9 @@ public class TileEntityItemInterface extends TileEntityBase {
     }
 
     public void doItemParticle(ItemStack stack, BlockPos input, BlockPos output) {
-        if (!this.world.isRemote) {
+        if (!this.level.isClientSide) {
             CompoundNBT compound = new CompoundNBT();
-            stack.write(compound);
+            stack.save(compound);
 
             compound.putDouble("InX", input.getX());
             compound.putDouble("InY", input.getY());
@@ -166,9 +167,9 @@ public class TileEntityItemInterface extends TileEntityBase {
             compound.putDouble("OutZ", output.getZ());
 
             int rangeSq = 16 * 16;
-            for (PlayerEntity player : this.world.getPlayers()) {
+            for (PlayerEntity player : this.level.players()) {
                 if (player instanceof ServerPlayerEntity) {
-                    if (player.getDistanceSq(input.getX(), input.getY(), input.getZ()) <= rangeSq || player.getDistanceSq(output.getX(), output.getY(), output.getZ()) <= rangeSq) {
+                    if (player.distanceToSqr(input.getX(), input.getY(), input.getZ()) <= rangeSq || player.distanceToSqr(output.getX(), output.getY(), output.getZ()) <= rangeSq) {
                         PacketHandler.sendTo(new PacketServerToClient(compound, PacketHandler.LASER_PARTICLE_HANDLER), (ServerPlayerEntity) player);
                     }
                 }
@@ -249,13 +250,13 @@ public class TileEntityItemInterface extends TileEntityBase {
     @Override
     public void saveDataOnChangeOrWorldStart() {
         TileEntityLaserRelayItem tileFound = null;
-        if (this.world != null) { //Why is that even possible..?
+        if (this.level != null) { //Why is that even possible..?
             for (int i = 0; i <= 5; i++) {
                 Direction side = WorldUtil.getDirectionBySidesInOrder(i);
-                BlockPos pos = this.getPos().offset(side);
+                BlockPos pos = this.getBlockPos().relative(side);
 
-                if (this.world.isBlockLoaded(pos)) {
-                    TileEntity tile = this.world.getTileEntity(pos);
+                if (this.level.isLoaded(pos)) {
+                    TileEntity tile = this.level.getBlockEntity(pos);
 
                     if (tile instanceof TileEntityLaserRelayItem) {
                         if (tileFound != null) {
@@ -312,7 +313,7 @@ public class TileEntityItemInterface extends TileEntityBase {
         }
 
         public boolean isLoaded() {
-            return this.relayInQuestion.hasWorld() && this.relayInQuestion.getWorld().isBlockLoaded(this.relayInQuestion.getPos());
+            return this.relayInQuestion.hasLevel() && this.relayInQuestion.getLevel().isLoaded(this.relayInQuestion.getBlockPos());
         }
     }
 
@@ -326,7 +327,7 @@ public class TileEntityItemInterface extends TileEntityBase {
         }
 
         public boolean isLoaded() {
-            return this.relayInQuestion.hasWorld() && this.relayInQuestion.getWorld().isBlockLoaded(this.relayInQuestion.getPos());
+            return this.relayInQuestion.hasLevel() && this.relayInQuestion.getLevel().isLoaded(this.relayInQuestion.getBlockPos());
         }
 
         @Override

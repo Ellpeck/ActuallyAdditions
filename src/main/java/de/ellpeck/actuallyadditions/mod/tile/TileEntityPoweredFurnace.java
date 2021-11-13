@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFurnaceDouble;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
@@ -23,13 +24,12 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipe;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
-import net.minecraft.util.datafix.fixes.FurnaceRecipes;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 
@@ -55,7 +55,7 @@ public class TileEntityPoweredFurnace extends TileEntityInventoryBase implements
     private boolean lastSmelted;
 
     public TileEntityPoweredFurnace() {
-        super(ActuallyTiles.FURNACE_DOUBLE_TILE.get(), 4);
+        super(ActuallyBlocks.POWERED_FURNACE.getTileEntityType(), 4);
     }
 
     public static void autoSplit(ItemStackHandlerAA inv, int slot1, int slot2) {
@@ -111,7 +111,7 @@ public class TileEntityPoweredFurnace extends TileEntityInventoryBase implements
     @Override
     public void updateEntity() {
         super.updateEntity();
-        if (!this.world.isRemote) {
+        if (!this.level.isClientSide) {
             if (this.isAutoSplit) {
                 autoSplit(this.inv, SLOT_INPUT_1, SLOT_INPUT_2);
             }
@@ -149,8 +149,8 @@ public class TileEntityPoweredFurnace extends TileEntityInventoryBase implements
                 this.secondSmeltTime = 0;
             }
 
-            BlockState currState = this.world.getBlockState(this.pos);
-            boolean current = currState.get(BlockStateProperties.LIT);
+            BlockState currState = this.level.getBlockState(this.getBlockPos());
+            boolean current = currState.getValue(BlockStateProperties.LIT);
             boolean changeTo = current;
             if (this.lastSmelted != smelted) {
                 changeTo = smelted;
@@ -163,7 +163,7 @@ public class TileEntityPoweredFurnace extends TileEntityInventoryBase implements
             }
 
             if (changeTo != current) {
-                this.world.setBlockState(this.pos, currState.with(BlockStateProperties.LIT, changeTo));
+                this.level.setBlock(this.worldPosition, currState.setValue(BlockStateProperties.LIT, changeTo), Constants.BlockFlags.DEFAULT);
             }
 
             this.lastSmelted = smelted;
@@ -179,7 +179,7 @@ public class TileEntityPoweredFurnace extends TileEntityInventoryBase implements
 
     @Override
     public IAcceptor getAcceptor() {
-        return (slot, stack, automation) -> !automation || (slot == SLOT_INPUT_1 || slot == SLOT_INPUT_2) && StackUtil.isValid(FurnaceRecipes.instance().getSmeltingResult(stack));
+        return (slot, stack, automation) -> !automation || (slot == SLOT_INPUT_1 || slot == SLOT_INPUT_2); //&& StackUtil.isValid(FurnaceRecipes.instance().getSmeltingResult(stack)); //TODO
     }
 
     @Override
@@ -189,9 +189,9 @@ public class TileEntityPoweredFurnace extends TileEntityInventoryBase implements
 
     public boolean canSmeltOn(int theInput, int theOutput) {
         if (StackUtil.isValid(this.inv.getStackInSlot(theInput))) {
-            ItemStack output = FurnaceRecipes.instance().getSmeltingResult(this.inv.getStackInSlot(theInput));
+            ItemStack output = ItemStack.EMPTY; //FurnaceRecipes.instance().getSmeltingResult(this.inv.getStackInSlot(theInput)); //TODO
             if (StackUtil.isValid(output)) {
-                if (!StackUtil.isValid(this.inv.getStackInSlot(theOutput)) || this.inv.getStackInSlot(theOutput).isItemEqual(output) && this.inv.getStackInSlot(theOutput).getCount() <= this.inv.getStackInSlot(theOutput).getMaxStackSize() - output.getCount()) {
+                if (!StackUtil.isValid(this.inv.getStackInSlot(theOutput)) || this.inv.getStackInSlot(theOutput).sameItem(output) && this.inv.getStackInSlot(theOutput).getCount() <= this.inv.getStackInSlot(theOutput).getMaxStackSize() - output.getCount()) {
                     return true;
                 }
             }
@@ -201,7 +201,7 @@ public class TileEntityPoweredFurnace extends TileEntityInventoryBase implements
     }
 
     public void finishBurning(int theInput, int theOutput) {
-        ItemStack output = FurnaceRecipe.instance().getSmeltingResult(this.inv.getStackInSlot(theInput));
+        ItemStack output = ItemStack.EMPTY; //FurnaceRecipe.instance().getSmeltingResult(this.inv.getStackInSlot(theInput)); //TODO
         if (!StackUtil.isValid(this.inv.getStackInSlot(theOutput))) {
             this.inv.setStackInSlot(theOutput, output.copy());
         } else if (this.inv.getStackInSlot(theOutput).getItem() == output.getItem()) {
@@ -223,7 +223,7 @@ public class TileEntityPoweredFurnace extends TileEntityInventoryBase implements
     public void onButtonPressed(int buttonID, PlayerEntity player) {
         if (buttonID == 0) {
             this.isAutoSplit = !this.isAutoSplit;
-            this.markDirty();
+            this.setChanged();
         }
     }
 

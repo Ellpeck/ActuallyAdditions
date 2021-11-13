@@ -37,9 +37,6 @@ import net.minecraftforge.fluids.capability.templates.FluidTank;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
-import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
-
 public class TileEntityOilGenerator extends TileEntityBase implements ISharingEnergyProvider, ISharingFluidHandler, INamedContainerProvider {
 
     int[] i = ConfigIntListValues.OIL_POWER.getValue();
@@ -59,12 +56,12 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
             return FluidStack.EMPTY;
         }
 
-        @Override
+        //@Override
         public boolean canFillFluidType(FluidStack stack) {
             Fluid fluid = stack == null
                 ? null
                 : stack.getFluid();
-            return fluid != null && getRecipeForFluid(fluid.getName()) != null;
+            return fluid != null && getRecipeForFluid(fluid.getRegistryName().toString()) != null;
         }
     };
     public final LazyOptional<IFluidHandler> lazyTank = LazyOptional.of(() -> this.tank);
@@ -103,7 +100,7 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
         if (stack != null) {
             Fluid fluid = stack.getFluid();
             if (fluid != null) {
-                return getRecipeForFluid(fluid.getName());
+                return getRecipeForFluid(fluid.getRegistryName().toString());
             }
         }
         return null;

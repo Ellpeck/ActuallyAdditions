@@ -10,10 +10,12 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
+
 public class TileEntityFluidPlacer extends TileEntityFluidCollector {
 
     public TileEntityFluidPlacer() {
-        super(ActuallyTiles.FLUIDPLACER_TILE.get());
+        super(ActuallyBlocks.FLUID_PLACER.getTileEntityType());
         this.isPlacer = true;
     }
 

@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerRangedCollector;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
@@ -31,15 +32,13 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
-
 public class TileEntityRangedCollector extends TileEntityInventoryBase implements IButtonReactor, INamedContainerProvider {
 
     public static final int RANGE = 6;
     public FilterSettings filter = new FilterSettings(12, true, true, false, false, 0, -1000);
 
     public TileEntityRangedCollector() {
-        super(ActuallyTiles.RANGEDCOLLECTOR_TILE.get(), 6);
+        super(ActuallyBlocks.RANGED_COLLECTOR.getTileEntityType(), 6);
     }
 
     @Override

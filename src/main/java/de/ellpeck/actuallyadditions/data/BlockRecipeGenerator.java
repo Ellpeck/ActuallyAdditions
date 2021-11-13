@@ -168,7 +168,7 @@ public class BlockRecipeGenerator extends RecipeProvider {
                 .save(consumer);
 
         // Item Interface
-        Recipe.shaped(ActuallyBlocks.ITEM_VIEWER.getItem())
+        Recipe.shaped(ActuallyBlocks.ITEM_INTERFACE.getItem())
                 .pattern("OBO", "RCR", "OBO")
                 .define('B', Tags.Items.DUSTS_REDSTONE)
                 .define('O', ActuallyItems.COIL.get())
@@ -177,7 +177,7 @@ public class BlockRecipeGenerator extends RecipeProvider {
                 .save(consumer);
 
         // Hopping Item Interface
-        Recipe.shapeless(ActuallyBlocks.ITEM_VIEWER_HOPPING.get()).ingredients(ActuallyBlocks.ITEM_VIEWER.get()).save(consumer);
+        Recipe.shapeless(ActuallyBlocks.ITEM_INTERFACE_HOPPING.get()).ingredients(ActuallyBlocks.ITEM_INTERFACE.get()).save(consumer);
 
 
     }

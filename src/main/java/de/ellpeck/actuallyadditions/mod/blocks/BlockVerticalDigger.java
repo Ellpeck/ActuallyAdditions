@@ -41,12 +41,12 @@ public class BlockVerticalDigger extends DirectionalBlock.Container implements I
 
     @Override
     public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        return this.openGui(worldIn, player, pos, TileEntityMiner.class);
+        return this.openGui(worldIn, player, pos, TileEntityVerticalDigger.class);
     }
 
     @Override
     public TileEntity newBlockEntity(IBlockReader world) {
-        return new TileEntityMiner();
+        return new TileEntityVerticalDigger();
     }
 
     @Override
@@ -56,13 +56,13 @@ public class BlockVerticalDigger extends DirectionalBlock.Container implements I
             return;
         }
         TileEntity tile = minecraft.level.getBlockEntity(((BlockRayTraceResult) rayCast).getBlockPos());
-        if (tile instanceof TileEntityMiner) {
-            TileEntityMiner miner = (TileEntityMiner) tile;
+        if (tile instanceof TileEntityVerticalDigger) {
+            TileEntityVerticalDigger miner = (TileEntityVerticalDigger) tile;
             String info = miner.checkY == 0
                 ? "Done Mining!"
                 : miner.checkY == -1
-                    ? "Calculating positions..."
-                    : "Mining at " + (miner.getBlockPos().getX() + miner.checkX) + ", " + miner.checkY + ", " + (miner.getBlockPos().getZ() + miner.checkZ) + ".";
+                ? "Calculating positions..."
+                : "Mining at " + (miner.getBlockPos().getX() + miner.checkX) + ", " + miner.checkY + ", " + (miner.getBlockPos().getZ() + miner.checkZ) + ".";
             minecraft.font.drawShadow(matrices, info, resolution.getGuiScaledWidth() / 2f + 5, resolution.getGuiScaledHeight() / 2f - 20, StringUtil.DECIMAL_COLOR_WHITE);
         }
     }

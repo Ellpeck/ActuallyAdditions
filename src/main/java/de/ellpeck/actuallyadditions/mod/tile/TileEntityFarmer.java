@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.farmer.FarmerResult;
 import de.ellpeck.actuallyadditions.api.farmer.IFarmerBehavior;
 import de.ellpeck.actuallyadditions.api.internal.IFarmer;
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFarmer;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
@@ -41,8 +42,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
-
 public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer, INamedContainerProvider {
 
     private static final List<IFarmerBehavior> SORTED_FARMER_BEHAVIORS = new ArrayList<>();
@@ -55,7 +54,7 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
     private int lastEnergy;
 
     public TileEntityFarmer() {
-        super(ActuallyTiles.FARMER_TILE.get(), 12);
+        super(ActuallyBlocks.FARMER.getTileEntityType(), 12);
     }
 
     @Override

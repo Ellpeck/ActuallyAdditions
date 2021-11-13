@@ -11,9 +11,8 @@
 package de.ellpeck.actuallyadditions.mod.entity;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.client.registry.RenderingRegistry;
-import net.minecraftforge.fml.common.registry.EntityRegistry;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 
 public final class InitEntities {
@@ -21,12 +20,12 @@ public final class InitEntities {
     public static void init() {
         ActuallyAdditions.LOGGER.info("Initializing Entities...");
 
-        EntityRegistry.registerModEntity(new ResourceLocation(ActuallyAdditions.MODID, "worm"), EntityWorm.class, ActuallyAdditions.MODID + ".worm", 0, ActuallyAdditions.INSTANCE, 64, 1, false);
+        //EntityRegistry.registerModEntity(new ResourceLocation(ActuallyAdditions.MODID, "worm"), EntityWorm.class, ActuallyAdditions.MODID + ".worm", 0, ActuallyAdditions.INSTANCE, 64, 1, false);
     }
 
     @OnlyIn(Dist.CLIENT)
     public static void initClient() {
-        RenderingRegistry.registerEntityRenderingHandler(EntityWorm.class, RenderWorm::new);
+        //RenderingRegistry.registerEntityRenderingHandler(EntityWorm.class, RenderWorm::new);
     }
 
 }

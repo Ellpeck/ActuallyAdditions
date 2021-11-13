@@ -21,7 +21,6 @@ import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.common.ToolType;
-import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -156,9 +155,9 @@ public final class ActuallyBlocks {
     // Interface Blocks
     public static final AABlockReg<BlockPlayerInterface, AABlockItem, TileEntityPlayerInterface> PLAYER_INTERFACE = new AABlockReg<>("player_interface", BlockPlayerInterface::new,
         (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityPlayerInterface::new);
-    public static final AABlockReg<BlockItemInterface, AABlockItem, TileEntityItemInterface> ITEM_VIEWER = new AABlockReg<>("item_viewer", BlockItemInterface::new,
+    public static final AABlockReg<BlockItemInterface, AABlockItem, TileEntityItemInterface> ITEM_INTERFACE = new AABlockReg<>("item_viewer", BlockItemInterface::new,
         (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityItemInterface::new);
-    public static final AABlockReg<BlockItemInterfaceHopping, AABlockItem, TileEntityItemInterfaceHopping> ITEM_VIEWER_HOPPING = new AABlockReg<>("item_viewer_hopping", BlockItemInterfaceHopping::new,
+    public static final AABlockReg<BlockItemInterfaceHopping, AABlockItem, TileEntityItemInterfaceHopping> ITEM_INTERFACE_HOPPING = new AABlockReg<>("item_viewer_hopping", BlockItemInterfaceHopping::new,
         (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityItemInterfaceHopping::new);
 
     // Phantom stuff

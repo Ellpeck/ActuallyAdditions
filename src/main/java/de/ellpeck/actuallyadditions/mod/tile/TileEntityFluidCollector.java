@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFluidCollector;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
@@ -40,9 +41,6 @@ import net.minecraftforge.fluids.capability.templates.FluidTank;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
-import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 
 public class TileEntityFluidCollector extends TileEntityBase implements ISharingFluidHandler, INamedContainerProvider {
 
@@ -84,7 +82,7 @@ public class TileEntityFluidCollector extends TileEntityBase implements ISharing
     }
 
     public TileEntityFluidCollector() {
-        this(ActuallyTiles.FLUIDCOLLECTOR_TILE.get());
+        this(ActuallyBlocks.FLUID_COLLECTOR.getTileEntityType());
         this.isPlacer = false;
     }
 

@@ -8,8 +8,6 @@ import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
 
-import net.minecraft.block.AbstractBlock.Properties;
-
 /**
  * Wrapper for Fully Direction block states extending from our base blocks. It's not super nice but it'll do.
  */
@@ -28,7 +26,7 @@ public abstract class FullyDirectionalBlock extends BlockBase {
     }
 
     public BlockState getBaseConstructorState() {
-        return this.stateContainer.getBaseState().with(FACING, Direction.NORTH);
+        return this.stateDefinition.getOwner().defaultBlockState().setValue(FACING, Direction.NORTH);
     }
 
     @Override

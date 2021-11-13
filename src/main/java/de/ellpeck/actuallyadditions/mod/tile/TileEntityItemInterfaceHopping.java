@@ -11,15 +11,18 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import de.ellpeck.actuallyadditions.mod.util.compat.SlotlessableItemHandlerWrapper;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.EntityPredicates;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.util.LazyOptional;
@@ -34,7 +37,7 @@ public class TileEntityItemInterfaceHopping extends TileEntityItemInterface {
     private SlotlessableItemHandlerWrapper handlerToPushTo;
 
     public TileEntityItemInterfaceHopping() {
-        super(ActuallyTiles.ITEMVIEWERHOPPING_TILE.get());
+        super(ActuallyBlocks.ITEM_INTERFACE_HOPPING.getTileEntityType());
     }
 
     @Override
@@ -42,12 +45,14 @@ public class TileEntityItemInterfaceHopping extends TileEntityItemInterface {
         super.updateEntity();
 
         // TODO: [port] validate this is the correct way to get total game time getGameTime
-        if (!this.world.isRemote && this.world.getWorldInfo().getGameTime() % 10 == 0) {
+        if (!this.level.isClientSide && this.level.getLevelData().getGameTime() % 10 == 0) {
             if (this.handlerToPullFrom != null) {
                 WorldUtil.doItemInteraction(this.handlerToPullFrom, this.itemHandler, 4);
             } else {
-                if (this.world.getWorldInfo().getGameTime() % 20 == 0) {
-                    List<ItemEntity> items = this.world.getEntitiesWithinAABB(ItemEntity.class, new AxisAlignedBB(this.pos.getX(), this.pos.getY() + 0.5, this.pos.getZ(), this.pos.getX() + 1, this.pos.getY() + 2, this.pos.getZ() + 1));
+                if (this.level.getLevelData().getGameTime() % 20 == 0) {
+                    //TODO hmm?
+                    AxisAlignedBB axisAlignedBB = new AxisAlignedBB(this.getBlockPos().getX(), this.getBlockPos().getY() + 0.5, this.getBlockPos().getZ(), this.getBlockPos().getX() + 1, this.getBlockPos().getY() + 2, this.getBlockPos().getZ() + 1);
+                    List<ItemEntity> items = this.level.getEntities(EntityType.ITEM, axisAlignedBB, EntityPredicates.ENTITY_STILL_ALIVE);
                     if (items != null && !items.isEmpty()) {
                         for (ItemEntity item : items) {
                             if (item != null && item.isAlive()) {
@@ -96,7 +101,7 @@ public class TileEntityItemInterfaceHopping extends TileEntityItemInterface {
         this.handlerToPullFrom = null;
         this.handlerToPushTo = null;
 
-        TileEntity from = this.world.getTileEntity(this.pos.offset(Direction.UP));
+        TileEntity from = this.level.getBlockEntity(this.getBlockPos().relative(Direction.UP));
         if (from != null && !(from instanceof TileEntityItemInterface)) {
             LazyOptional<IItemHandler> normal = from.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.DOWN);
 
@@ -112,12 +117,12 @@ public class TileEntityItemInterfaceHopping extends TileEntityItemInterface {
             this.handlerToPullFrom = new SlotlessableItemHandlerWrapper(normal, slotless);
         }
 
-        BlockState state = this.world.getBlockState(this.pos);
-        Direction facing = state.get(BlockStateProperties.FACING);
+        BlockState state = this.level.getBlockState(this.getBlockPos());
+        Direction facing = state.getValue(BlockStateProperties.FACING);
 
-        BlockPos toPos = this.pos.offset(facing);
-        if (this.world.isBlockLoaded(toPos)) {
-            TileEntity to = this.world.getTileEntity(toPos);
+        BlockPos toPos = this.getBlockPos().relative(facing);
+        if (this.level.isLoaded(toPos)) {
+            TileEntity to = this.level.getBlockEntity(toPos);
             if (to != null && !(to instanceof TileEntityItemInterface)) {
                 LazyOptional<IItemHandler> normal = to.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing.getOpposite());
 
