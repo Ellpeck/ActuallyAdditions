@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.entity.EntityWorm;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
@@ -51,7 +52,7 @@ public class ItemWorm extends ItemBase {
             List<EntityWorm> worms = context.getLevel().getEntitiesOfClass(EntityWorm.class, new AxisAlignedBB(pos.getX() - 1, pos.getY(), pos.getZ() - 1, pos.getX() + 2, pos.getY() + 1, pos.getZ() + 2));
             if (worms.isEmpty()) {
                 if (!context.getLevel().isClientSide) {
-                    EntityWorm worm = new EntityWorm(context.getLevel());
+                    EntityWorm worm = new EntityWorm(ActuallyAdditions.ENTITY_WORM.get(), context.getLevel());
                     worm.setPos(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
                     worm.setCustomName(stack.getHoverName()); // TODO: WHAT DOES THIS EVEN DO?
                     context.getLevel().addFreshEntity(worm);

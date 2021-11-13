@@ -11,14 +11,10 @@
 package de.ellpeck.actuallyadditions.mod.data;
 
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
-import de.ellpeck.actuallyadditions.mod.booklet.gui.GuiBooklet;
-import de.ellpeck.actuallyadditions.mod.booklet.misc.BookletUtils;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.nbt.StringNBT;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,8 +55,8 @@ public final class PlayerData {
         public IBookletPage[] bookmarks = new IBookletPage[12];
         public List<String> completedTrials = new ArrayList<>();
 
-        @OnlyIn(Dist.CLIENT)
-        public GuiBooklet lastOpenBooklet;
+//        @OnlyIn(Dist.CLIENT)
+//        public GuiBooklet lastOpenBooklet;
 
         public PlayerSave(UUID id) {
             this.id = id;
@@ -103,8 +99,8 @@ public final class PlayerData {
             ListNBT bookmarks = new ListNBT();
             for (IBookletPage bookmark : this.bookmarks) {
                 bookmarks.add(StringNBT.valueOf(bookmark == null
-                    ? ""
-                    : bookmark.getIdentifier()));
+                        ? ""
+                        : bookmark.getIdentifier()));
             }
             return bookmarks;
         }
@@ -113,8 +109,8 @@ public final class PlayerData {
             for (int i = 0; i < bookmarks.size(); i++) {
                 String strg = bookmarks.getString(i);
                 if (!strg.isEmpty()) {
-                    IBookletPage page = BookletUtils.getBookletPageById(strg);
-                    this.bookmarks[i] = page;
+//                    IBookletPage page = BookletUtils.getBookletPageById(strg);
+                    this.bookmarks[i] = null; // page;
                 } else {
                     this.bookmarks[i] = null;
                 }

@@ -20,12 +20,6 @@ import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
 import de.ellpeck.actuallyadditions.api.recipe.LensConversionRecipe;
 import de.ellpeck.actuallyadditions.mod.blocks.BlockLaserRelay;
-import de.ellpeck.actuallyadditions.mod.booklet.chapter.BookletChapter;
-import de.ellpeck.actuallyadditions.mod.booklet.chapter.BookletChapterTrials;
-import de.ellpeck.actuallyadditions.mod.booklet.page.PageCrafting;
-import de.ellpeck.actuallyadditions.mod.booklet.page.PageFurnace;
-import de.ellpeck.actuallyadditions.mod.booklet.page.PagePicture;
-import de.ellpeck.actuallyadditions.mod.booklet.page.PageTextOnly;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
 import de.ellpeck.actuallyadditions.mod.items.lens.LensRecipeHandler;
 import de.ellpeck.actuallyadditions.mod.recipe.CrusherRecipeRegistry;
@@ -39,8 +33,8 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Potion;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
@@ -97,12 +91,12 @@ public class MethodHandler implements IMethodHandler {
         for (int i = 0; i < effects.length; i++) {
             if (effects[i].getEffect() == effect.getEffect()) {
                 effects[i] = new EffectInstance(effects[i].getEffect(), effects[i].getDuration() + (addDur
-                    ? effect.getDuration()
-                    : 0), effects[i].getAmplifier() + (addAmp
-                    ? effect.getAmplifier() > 0
-                    ? effect.getAmplifier()
-                    : 1
-                    : 0));
+                        ? effect.getDuration()
+                        : 0), effects[i].getAmplifier() + (addAmp
+                        ? effect.getAmplifier() > 0
+                        ? effect.getAmplifier()
+                        : 1
+                        : 0));
             }
             this.addEffectToStack(stack, effects[i]);
         }
@@ -112,7 +106,7 @@ public class MethodHandler implements IMethodHandler {
     public void addEffectToStack(ItemStack stack, EffectInstance effect) {
         CompoundNBT tag = stack.getOrCreateTag();
 
-        int prevCounter = tag.putInt("Counter");
+        int prevCounter = tag.getInt("Counter");
         CompoundNBT compound = new CompoundNBT();
         //compound.putInt("ID", Potion.getIdFromPotion(effect.getEffect())); //TODO ?!
         compound.putInt("Duration", effect.getDuration());
@@ -132,13 +126,13 @@ public class MethodHandler implements IMethodHandler {
         int counter = tag.getInt("Counter");
         while (counter > 0) {
             CompoundNBT compound = (CompoundNBT) tag.get(counter + "");
-            EffectInstance effect = new EffectInstance(Potion.getPotionById(compound.getInt("ID")), compound.getInt("Duration"), compound.getByte("Amplifier"));
+            EffectInstance effect = new EffectInstance(Effect.byId(compound.getInt("ID")), compound.getInt("Duration"), compound.getByte("Amplifier"));
             effects.add(effect);
             counter--;
         }
         return effects.size() > 0
-            ? effects.toArray(new EffectInstance[effects.size()])
-            : null;
+                ? effects.toArray(new EffectInstance[effects.size()])
+                : null;
     }
 
     @Override

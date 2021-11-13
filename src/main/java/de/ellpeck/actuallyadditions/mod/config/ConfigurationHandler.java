@@ -10,39 +10,33 @@
 
 package de.ellpeck.actuallyadditions.mod.config;
 
-import java.io.File;
-
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-
 public class ConfigurationHandler {
-
-    public static Configuration config;
-
-    public ConfigurationHandler(File configFile) {
-        ActuallyAdditions.LOGGER.info("Grabbing Configurations...");
-
-        MinecraftForge.EVENT_BUS.register(this);
-
-        config = new Configuration(configFile);
-        config.load();
-
-        redefineConfigs();
-    }
-
-    public static void redefineConfigs() {
-        ConfigValues.defineConfigValues(config);
-
-        if (config.hasChanged()) {
-            config.save();
-        }
-    }
-
-    @SubscribeEvent
-    public void onConfigurationChangedEvent(ConfigChangedEvent.OnConfigChangedEvent event) {
-        if (event.getModID().equalsIgnoreCase(ActuallyAdditions.MODID)) {
-            redefineConfigs();
-        }
-    }
+//
+//    public static Configuration config;
+//
+//    public ConfigurationHandler(File configFile) {
+//        ActuallyAdditions.LOGGER.info("Grabbing Configurations...");
+//
+//        MinecraftForge.EVENT_BUS.register(this);
+//
+//        config = new Configuration(configFile);
+//        config.load();
+//
+//        redefineConfigs();
+//    }
+//
+//    public static void redefineConfigs() {
+//        ConfigValues.defineConfigValues(config);
+//
+//        if (config.hasChanged()) {
+//            config.save();
+//        }
+//    }
+//
+//    @SubscribeEvent
+//    public void onConfigurationChangedEvent(ConfigChangedEvent.OnConfigChangedEvent event) {
+//        if (event.getModID().equalsIgnoreCase(ActuallyAdditions.MODID)) {
+//            redefineConfigs();
+//        }
+//    }
 }
