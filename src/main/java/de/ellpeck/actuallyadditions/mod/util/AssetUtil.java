@@ -28,7 +28,9 @@ import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.particles.IParticleData;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -165,60 +167,60 @@ public final class AssetUtil {
         GlStateManager.enableTexture2D();
     }
 
-    @OnlyIn(Dist.CLIENT)
-    public static void renderNameTag(String tag, double x, double y, double z) {
-        FontRenderer fontrenderer = Minecraft.getInstance().font;
-        float f = 1.6F;
-        float f1 = 0.016666668F * f;
-        GlStateManager._pushMatrix();
-        GlStateManager.translate(x, y, z);
-        GL11.glNormal3f(0.0F, 1.0F, 0.0F);
-        GlStateManager.rotate(-Minecraft.getInstance().getEntityRenderDispatcher().playerViewY, 0.0F, 1.0F, 0.0F);
-        GlStateManager.rotate(Minecraft.getInstance().getEntityRenderDispatcher().playerViewX, 1.0F, 0.0F, 0.0F);
-        GlStateManager.scale(-f1, -f1, f1);
-        GlStateManager._disableLighting();
-        GlStateManager._depthMask(false);
-        GlStateManager.disableDepth();
-        GlStateManager._enableBlend();
-        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
-        Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder renderer = tessellator.getBuilder();
-        int i = 0;
-        int j = fontrenderer.width(tag) / 2;
-        GlStateManager.disableTexture2D();
-        renderer.begin(7, DefaultVertexFormats.POSITION_COLOR);
-        renderer.vertex(-j - 1, -1 + i, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
-        renderer.vertex(-j - 1, 8 + i, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
-        renderer.vertex(j + 1, 8 + i, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
-        renderer.vertex(j + 1, -1 + i, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
-        tessellator.end();
-        GlStateManager.enableTexture2D();
-        fontrenderer.draw(tag, -fontrenderer.width(tag) / 2, i, 553648127);
-        GlStateManager.enableDepth();
-        GlStateManager._depthMask(true);
-        fontrenderer.draw(tag, -fontrenderer.width(tag) / 2, i, -1);
-        GlStateManager._enableLighting();
-        GlStateManager._disableBlend();
-        GlStateManager.color3arg(1.0F, 1.0F, 1.0F, 1.0F);
-        GlStateManager._popMatrix();
-    }
+//    @OnlyIn(Dist.CLIENT)
+//    public static void renderNameTag(String tag, double x, double y, double z) {
+//        FontRenderer fontrenderer = Minecraft.getInstance().font;
+//        float f = 1.6F;
+//        float f1 = 0.016666668F * f;
+//        GlStateManager._pushMatrix();
+//        GlStateManager.translate(x, y, z);
+//        GL11.glNormal3f(0.0F, 1.0F, 0.0F);
+//        GlStateManager.rotate(-Minecraft.getInstance().getEntityRenderDispatcher().playerViewY, 0.0F, 1.0F, 0.0F);
+//        GlStateManager.rotate(Minecraft.getInstance().getEntityRenderDispatcher().playerViewX, 1.0F, 0.0F, 0.0F);
+//        GlStateManager.scale(-f1, -f1, f1);
+//        GlStateManager._disableLighting();
+//        GlStateManager._depthMask(false);
+//        GlStateManager.disableDepth();
+//        GlStateManager._enableBlend();
+//        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+//        Tessellator tessellator = Tessellator.getInstance();
+//        BufferBuilder renderer = tessellator.getBuilder();
+//        int i = 0;
+//        int j = fontrenderer.width(tag) / 2;
+//        GlStateManager.disableTexture2D();
+//        renderer.begin(7, DefaultVertexFormats.POSITION_COLOR);
+//        renderer.vertex(-j - 1, -1 + i, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
+//        renderer.vertex(-j - 1, 8 + i, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
+//        renderer.vertex(j + 1, 8 + i, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
+//        renderer.vertex(j + 1, -1 + i, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
+//        tessellator.end();
+//        GlStateManager.enableTexture2D();
+//        fontrenderer.draw(tag, -fontrenderer.width(tag) / 2, i, 553648127);
+//        GlStateManager.enableDepth();
+//        GlStateManager._depthMask(true);
+//        fontrenderer.draw(tag, -fontrenderer.width(tag) / 2, i, -1);
+//        GlStateManager._enableLighting();
+//        GlStateManager._disableBlend();
+//        GlStateManager.color3arg(1.0F, 1.0F, 1.0F, 1.0F);
+//        GlStateManager._popMatrix();
+//    }
 
     public static void spawnLaserWithTimeServer(World world, double startX, double startY, double startZ, double endX, double endY, double endZ, float[] color, int maxAge, double rotationTime, float size, float alpha) {
         if (!world.isClientSide) {
             CompoundNBT data = new CompoundNBT();
-            data.setDouble("StartX", startX);
-            data.setDouble("StartY", startY);
-            data.setDouble("StartZ", startZ);
-            data.setDouble("EndX", endX);
-            data.setDouble("EndY", endY);
-            data.setDouble("EndZ", endZ);
-            data.setFloat("Color1", color[0]);
-            data.setFloat("Color2", color[1]);
-            data.setFloat("Color3", color[2]);
-            data.setDouble("RotationTime", rotationTime);
-            data.setFloat("Size", size);
-            data.setInteger("MaxAge", maxAge);
-            data.setFloat("Alpha", alpha);
+            data.putDouble("StartX", startX);
+            data.putDouble("StartY", startY);
+            data.putDouble("StartZ", startZ);
+            data.putDouble("EndX", endX);
+            data.putDouble("EndY", endY);
+            data.putDouble("EndZ", endZ);
+            data.putFloat("Color1", color[0]);
+            data.putFloat("Color2", color[1]);
+            data.putFloat("Color3", color[2]);
+            data.putDouble("RotationTime", rotationTime);
+            data.putFloat("Size", size);
+            data.putInt("MaxAge", maxAge);
+            data.putFloat("Alpha", alpha);
             PacketHandler.THE_NETWORK.sendToAllAround(new PacketServerToClient(data, PacketHandler.LASER_HANDLER), new NetworkRegistry.TargetPoint(world.provider.getDimension(), startX, startY, startZ, 96));
         }
     }
@@ -227,9 +229,9 @@ public final class AssetUtil {
     public static void spawnLaserWithTimeClient(double startX, double startY, double startZ, double endX, double endY, double endZ, float[] color, int maxAge, double rotationTime, float size, float alpha) {
         Minecraft mc = Minecraft.getInstance();
 
-        if (mc.player.distanceTo(startX, startY, startZ) <= 64 || mc.player.distanceTo(endX, endY, endZ) <= 64) {
+        if (mc.player.distanceToSqr(startX, startY, startZ) <= 64 || mc.player.distanceToSqr(endX, endY, endZ) <= 64) {
             Particle fx = new ParticleBeam(mc.level, startX, startY, startZ, endX, endY, endZ, color, maxAge, rotationTime, size, alpha);
-            mc.effectRenderer.addEffect(fx);
+            mc.level.addParticle((IParticleData) fx, startX, startY, startZ, 0, 0, 0);
         }
     }
 
@@ -245,12 +247,12 @@ public final class AssetUtil {
         float g = color[1];
         float b = color[2];
 
-        Vec3d vec1 = new Vec3d(firstX, firstY, firstZ);
-        Vec3d vec2 = new Vec3d(secondX, secondY, secondZ);
-        Vec3d combinedVec = vec2.subtract(vec1);
+        Vector3d vec1 = new Vector3d(firstX, firstY, firstZ);
+        Vector3d vec2 = new Vector3d(secondX, secondY, secondZ);
+        Vector3d combinedVec = vec2.subtract(vec1);
 
         double rot = rotationTime > 0
-                ? 360D * (world.getTotalWorldTime() % rotationTime / rotationTime)
+                ? 360D * (world.getGameTime() % rotationTime / rotationTime)
                 : 0;
         double pitch = Math.atan2(combinedVec.y, Math.sqrt(combinedVec.x * combinedVec.x + combinedVec.z * combinedVec.z));
         double yaw = Math.atan2(-combinedVec.z, combinedVec.x);
@@ -261,7 +263,7 @@ public final class AssetUtil {
 
         GlStateManager._disableLighting();
         GlStateManager._enableBlend();
-        GlStateManager._blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE);
+        GlStateManager._blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE);
         int func = GL11.glGetInteger(GL11.GL_ALPHA_TEST_FUNC);
         float ref = GL11.glGetFloat(GL11.GL_ALPHA_TEST_REF);
         GlStateManager._alphaFunc(GL11.GL_ALWAYS, 0);
