@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -25,8 +26,6 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 import java.util.ArrayList;
 
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
-
 public class TileEntityHeatCollector extends TileEntityBase implements ISharingEnergyProvider, IEnergyDisplay {
 
     public static final int ENERGY_PRODUCE = 40;
@@ -37,7 +36,7 @@ public class TileEntityHeatCollector extends TileEntityBase implements ISharingE
     private int disappearTime;
 
     public TileEntityHeatCollector() {
-        super(ActuallyTiles.HEATCOLLECTOR_TILE.get());
+        super(ActuallyBlocks.HEAT_COLLECTOR.getTileEntityType());
     }
 
     @Override

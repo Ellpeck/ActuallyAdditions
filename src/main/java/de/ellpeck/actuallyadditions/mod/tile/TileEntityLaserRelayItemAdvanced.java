@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFilter;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerLaserRelayItemWhitelist;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotFilter;
@@ -35,7 +36,7 @@ public class TileEntityLaserRelayItemAdvanced extends TileEntityLaserRelayItem i
     public FilterSettings rightFilter = new FilterSettings(12, true, true, false, false, 0, -2000);
 
     public TileEntityLaserRelayItemAdvanced() {
-        super(ActuallyTiles.LASERRELAYITEMWHITELIST_TILE.get());
+        super(ActuallyBlocks.LASER_RELAY_ITEM_ADVANCED.getTileEntityType());
     }
 
     @Override
@@ -131,7 +132,7 @@ public class TileEntityLaserRelayItemAdvanced extends TileEntityLaserRelayItem i
     public void updateEntity() {
         super.updateEntity();
 
-        if (!this.world.isRemote) {
+        if (!this.level.isClientSide) {
             if ((this.leftFilter.needsUpdateSend() || this.rightFilter.needsUpdateSend()) && this.sendUpdateWithInterval()) {
                 this.leftFilter.updateLasts();
                 this.rightFilter.updateLasts();

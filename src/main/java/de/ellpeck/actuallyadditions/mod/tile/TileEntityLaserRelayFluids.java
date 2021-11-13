@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.api.laser.IConnectionPair;
 import de.ellpeck.actuallyadditions.api.laser.LaserType;
 import de.ellpeck.actuallyadditions.api.laser.Network;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayEnergy.Mode;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
@@ -37,9 +38,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
-import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
-
 public class TileEntityLaserRelayFluids extends TileEntityLaserRelay {
 
     public final ConcurrentHashMap<Direction, TileEntity> handlersAround = new ConcurrentHashMap<>();
@@ -47,7 +45,7 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay {
     private Mode mode = Mode.BOTH;
 
     public TileEntityLaserRelayFluids() {
-        super(ActuallyTiles.LASERRELAYFLUIDS_TILE.get(), LaserType.FLUID);
+        super(ActuallyBlocks.LASER_RELAY_FLUIDS.getTileEntityType(), LaserType.FLUID);
 
         for (int i = 0; i < this.fluidHandlers.length; i++) {
             Direction facing = Direction.values()[i];

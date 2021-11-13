@@ -10,12 +10,14 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
+
 public class TileEntityLaserRelayEnergyExtreme extends TileEntityLaserRelayEnergy {
 
     public static final int CAP = 100000;
 
     public TileEntityLaserRelayEnergyExtreme() {
-        super(ActuallyTiles.LASERRELAYENERGYEXTREME_TILE.get());
+        super(ActuallyBlocks.LASER_RELAY_EXTREME.getTileEntityType());
     }
 
     @Override

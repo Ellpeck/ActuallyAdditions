@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.api.laser.IConnectionPair;
 import de.ellpeck.actuallyadditions.api.laser.LaserType;
 import de.ellpeck.actuallyadditions.api.laser.Network;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityItemInterface.GenericItemHandlerInfo;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
@@ -35,8 +36,6 @@ import net.minecraftforge.items.IItemHandler;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
-
 public class TileEntityLaserRelayItem extends TileEntityLaserRelay {
 
     public final Map<BlockPos, SlotlessableItemHandlerWrapper> handlersAround = new ConcurrentHashMap<>();
@@ -47,7 +46,7 @@ public class TileEntityLaserRelayItem extends TileEntityLaserRelay {
     }
 
     public TileEntityLaserRelayItem() {
-        this(ActuallyTiles.LASERRELAYITEM_TILE.get());
+        this(ActuallyBlocks.LASER_RELAY_ITEM.getTileEntityType());
     }
 
     public int getPriority() {
@@ -74,7 +73,7 @@ public class TileEntityLaserRelayItem extends TileEntityLaserRelay {
             BlockPos pos = this.getBlockPos().relative(side);
             if (this.level.hasChunkAt(pos)) {
                 TileEntity tile = this.level.getBlockEntity(pos);
-                if (tile != null && !(tile instanceof TileEntityItemViewer) && !(tile instanceof TileEntityLaserRelay)) {
+                if (tile != null && !(tile instanceof TileEntityItemInterface) && !(tile instanceof TileEntityLaserRelay)) {
                     LazyOptional<IItemHandler> itemHandler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite());
 
                     Object slotlessHandler = null;
