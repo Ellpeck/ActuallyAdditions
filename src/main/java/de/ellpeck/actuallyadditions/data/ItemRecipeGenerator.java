@@ -9,6 +9,7 @@ import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheFoods;
 import net.minecraft.data.*;
 import net.minecraft.enchantment.Enchantments;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.tags.ItemTags;
@@ -16,6 +17,7 @@ import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.crafting.NBTIngredient;
+import net.minecraftforge.fml.RegistryObject;
 
 import java.nio.file.Path;
 import java.util.Arrays;
@@ -28,6 +30,9 @@ public class ItemRecipeGenerator extends RecipeProvider {
 
     @Override
     protected void buildShapelessRecipes(Consumer<IFinishedRecipe> consumer) {
+
+        generateEquipment(consumer);
+        generatePaxels(consumer);
 
         //Goggles
         Recipe.shaped(ActuallyItems.ENGINEER_GOGGLES.get())
@@ -383,6 +388,8 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .define('C', ActuallyItems.COIL_ADVANCED.get())
             .save(WrappedRecipe.Inject(consumer, ActuallyRecipes.KEEP_DATA_SHAPED_RECIPE.get()));
 
+
+
         //
         //        //Magnet Ring
         //        RecipeHandler.addOreDictRecipe(new ItemStack(InitItems.itemMagnetRing), "RIB", "IOI", "BIR", 'R', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.REDSTONE.ordinal()), 'I', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal()), 'B', new ItemStack(Items.DYE, 1, 4), 'O', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.RING.ordinal()));
@@ -458,9 +465,118 @@ public class ItemRecipeGenerator extends RecipeProvider {
         //        GameRegistry.addSmelting(new ItemStack(InitItems.itemDust, 1, TheDusts.COAL.ordinal()), new ItemStack(Items.COAL), 1F);
     }
 
+    protected void generateEquipment(Consumer<IFinishedRecipe> consumer) {
+        addToolAndArmorRecipes(consumer, ActuallyItems.BLACK_QUARTZ, ActuallyItems.PICKAXE_QUARTZ, ActuallyItems.SWORD_QUARTZ, ActuallyItems.AXE_QUARTZ, ActuallyItems.SHOVEL_QUARTZ, ActuallyItems.HOE_QUARTZ, ActuallyItems.HELM_QUARTZ, ActuallyItems.CHEST_QUARTZ, ActuallyItems.PANTS_QUARTZ, ActuallyItems.BOOTS_QUARTZ);
+        addToolAndArmorRecipes(consumer, ActuallyItems.RESTONIA_CRYSTAL, ActuallyItems.PICKAXE_CRYSTAL_RESTONIA, ActuallyItems.SWORD_CRYSTAL_RESTONIA, ActuallyItems.AXE_CRYSTAL_RESTONIA, ActuallyItems.SHOVEL_CRYSTAL_RESTONIA, ActuallyItems.HOE_CRYSTAL_RESTONIA, ActuallyItems.HELM_CRYSTAL_RESTONIA, ActuallyItems.CHEST_CRYSTAL_RESTONIA, ActuallyItems.PANTS_CRYSTAL_RESTONIA, ActuallyItems.BOOTS_CRYSTAL_RESTONIA);
+        addToolAndArmorRecipes(consumer, ActuallyItems.EMERADIC_CRYSTAL, ActuallyItems.PICKAXE_CRYSTAL_EMERADIC, ActuallyItems.SWORD_CRYSTAL_EMERADIC, ActuallyItems.AXE_CRYSTAL_EMERADIC, ActuallyItems.SHOVEL_CRYSTAL_EMERADIC, ActuallyItems.HOE_CRYSTAL_EMERADIC, ActuallyItems.HELM_CRYSTAL_EMERADIC, ActuallyItems.CHEST_CRYSTAL_EMERADIC, ActuallyItems.PANTS_CRYSTAL_EMERADIC, ActuallyItems.BOOTS_CRYSTAL_EMERADIC);
+        addToolAndArmorRecipes(consumer, ActuallyItems.ENORI_CRYSTAL, ActuallyItems.PICKAXE_CRYSTAL_ENORI, ActuallyItems.SWORD_CRYSTAL_ENORI, ActuallyItems.AXE_CRYSTAL_ENORI, ActuallyItems.SHOVEL_CRYSTAL_ENORI, ActuallyItems.HOE_CRYSTAL_ENORI, ActuallyItems.HELM_CRYSTAL_ENORI, ActuallyItems.CHEST_CRYSTAL_ENORI, ActuallyItems.PANTS_CRYSTAL_ENORI, ActuallyItems.BOOTS_CRYSTAL_ENORI);
+        addToolAndArmorRecipes(consumer, ActuallyItems.DIAMATINE_CRYSTAL, ActuallyItems.PICKAXE_CRYSTAL_DIAMATINE, ActuallyItems.SWORD_CRYSTAL_DIAMATINE, ActuallyItems.AXE_CRYSTAL_DIAMATINE, ActuallyItems.SHOVEL_CRYSTAL_DIAMATINE, ActuallyItems.HOE_CRYSTAL_DIAMATINE, ActuallyItems.HELM_CRYSTAL_DIAMATINE, ActuallyItems.CHEST_CRYSTAL_DIAMATINE, ActuallyItems.PANTS_CRYSTAL_DIAMATINE, ActuallyItems.BOOTS_CRYSTAL_DIAMATINE);
+        addToolAndArmorRecipes(consumer, ActuallyItems.PALIS_CRYSTAL, ActuallyItems.PICKAXE_CRYSTAL_PALIS, ActuallyItems.SWORD_CRYSTAL_PALIS, ActuallyItems.AXE_CRYSTAL_PALIS, ActuallyItems.SHOVEL_CRYSTAL_PALIS, ActuallyItems.HOE_CRYSTAL_PALIS, ActuallyItems.HELM_CRYSTAL_PALIS, ActuallyItems.CHEST_CRYSTAL_PALIS, ActuallyItems.PANTS_CRYSTAL_PALIS, ActuallyItems.BOOTS_CRYSTAL_PALIS);
+        addToolAndArmorRecipes(consumer, ActuallyItems.VOID_CRYSTAL, ActuallyItems.PICKAXE_CRYSTAL_VOID, ActuallyItems.SWORD_CRYSTAL_VOID, ActuallyItems.AXE_CRYSTAL_VOID, ActuallyItems.SHOVEL_CRYSTAL_VOID, ActuallyItems.HOE_CRYSTAL_VOID, ActuallyItems.HELM_CRYSTAL_VOID, ActuallyItems.CHEST_CRYSTAL_VOID, ActuallyItems.PANTS_CRYSTAL_VOID, ActuallyItems.BOOTS_CRYSTAL_VOID);
+    }
+
+    protected void generatePaxels(Consumer<IFinishedRecipe> consumer) {
+        addPaxel(consumer, ActuallyItems.WOODEN_PAXEL, Items.WOODEN_AXE, Items.WOODEN_PICKAXE, Items.WOODEN_SWORD, Items.WOODEN_SHOVEL, Items.WOODEN_HOE);
+        addPaxel(consumer, ActuallyItems.STONE_PAXEL, Items.STONE_AXE, Items.STONE_PICKAXE, Items.STONE_SWORD, Items.STONE_SHOVEL, Items.STONE_HOE);
+        addPaxel(consumer, ActuallyItems.IRON_PAXEL, Items.IRON_AXE, Items.IRON_PICKAXE, Items.IRON_SWORD, Items.IRON_SHOVEL, Items.IRON_HOE);
+        addPaxel(consumer, ActuallyItems.GOLD_PAXEL, Items.GOLDEN_AXE, Items.GOLDEN_PICKAXE, Items.GOLDEN_SWORD, Items.GOLDEN_SHOVEL, Items.GOLDEN_HOE);
+        addPaxel(consumer, ActuallyItems.DIAMOND_PAXEL, Items.DIAMOND_AXE, Items.DIAMOND_PICKAXE, Items.DIAMOND_SWORD, Items.DIAMOND_SHOVEL, Items.DIAMOND_HOE);
+        addPaxel(consumer, ActuallyItems.NETHERITE_PAXEL, Items.NETHERITE_AXE, Items.NETHERITE_PICKAXE, Items.NETHERITE_SWORD, Items.NETHERITE_SHOVEL, Items.NETHERITE_HOE);
+
+        addPaxel(consumer, ActuallyItems.QUARTZ_PAXEL, ActuallyItems.AXE_QUARTZ, ActuallyItems.PICKAXE_QUARTZ, ActuallyItems.SWORD_QUARTZ, ActuallyItems.SHOVEL_QUARTZ, ActuallyItems.HOE_QUARTZ);
+        addPaxel(consumer, ActuallyItems.PAXEL_CRYSTAL_RESTONIA, ActuallyItems.AXE_CRYSTAL_RESTONIA, ActuallyItems.PICKAXE_CRYSTAL_RESTONIA, ActuallyItems.SWORD_CRYSTAL_RESTONIA, ActuallyItems.SHOVEL_CRYSTAL_RESTONIA, ActuallyItems.HOE_CRYSTAL_RESTONIA);
+        addPaxel(consumer, ActuallyItems.PAXEL_CRYSTAL_EMERADIC, ActuallyItems.AXE_CRYSTAL_EMERADIC, ActuallyItems.PICKAXE_CRYSTAL_EMERADIC, ActuallyItems.SWORD_CRYSTAL_EMERADIC, ActuallyItems.SHOVEL_CRYSTAL_EMERADIC, ActuallyItems.HOE_CRYSTAL_EMERADIC);
+        addPaxel(consumer, ActuallyItems.PAXEL_CRYSTAL_PALIS, ActuallyItems.AXE_CRYSTAL_PALIS, ActuallyItems.PICKAXE_CRYSTAL_PALIS, ActuallyItems.SWORD_CRYSTAL_PALIS, ActuallyItems.SHOVEL_CRYSTAL_PALIS, ActuallyItems.HOE_CRYSTAL_PALIS);
+        addPaxel(consumer, ActuallyItems.PAXEL_CRYSTAL_DIAMATINE, ActuallyItems.AXE_CRYSTAL_DIAMATINE, ActuallyItems.PICKAXE_CRYSTAL_DIAMATINE, ActuallyItems.SWORD_CRYSTAL_DIAMATINE, ActuallyItems.SHOVEL_CRYSTAL_DIAMATINE, ActuallyItems.HOE_CRYSTAL_DIAMATINE);
+        addPaxel(consumer, ActuallyItems.PAXEL_CRYSTAL_VOID, ActuallyItems.AXE_CRYSTAL_VOID, ActuallyItems.PICKAXE_CRYSTAL_VOID, ActuallyItems.SWORD_CRYSTAL_VOID, ActuallyItems.SHOVEL_CRYSTAL_VOID, ActuallyItems.HOE_CRYSTAL_VOID);
+        addPaxel(consumer, ActuallyItems.PAXEL_CRYSTAL_ENORI, ActuallyItems.AXE_CRYSTAL_ENORI, ActuallyItems.PICKAXE_CRYSTAL_ENORI, ActuallyItems.SWORD_CRYSTAL_ENORI, ActuallyItems.SHOVEL_CRYSTAL_ENORI, ActuallyItems.HOE_CRYSTAL_ENORI);
+    }
+
+    public static void addPaxel(Consumer<IFinishedRecipe> consumer, RegistryObject<Item> output, Item axe, Item pickaxe, Item sword, Item shovel, Item hoe) {
+        Recipe.shapeless(output.get())
+            .requires(axe)
+            .requires(pickaxe)
+            .requires(sword)
+            .requires(shovel)
+            .requires(hoe)
+            .save(consumer);
+    }
+
+    public static void addPaxel(Consumer<IFinishedRecipe> consumer, RegistryObject<Item> output, RegistryObject<Item> axe, RegistryObject<Item> pickaxe, RegistryObject<Item> sword, RegistryObject<Item> shovel, RegistryObject<Item> hoe) {
+        Recipe.shapeless(output.get())
+            .requires(axe.get())
+            .requires(pickaxe.get())
+            .requires(sword.get())
+            .requires(shovel.get())
+            .requires(hoe.get())
+            .save(consumer);
+    }
+
+
     @Override
     protected void saveAdvancement(DirectoryCache cache, JsonObject cache2, Path advancementJson) {
         //Nope...
+    }
+
+    public static void addToolAndArmorRecipes(Consumer<IFinishedRecipe> consumer, RegistryObject<Item> base, RegistryObject<Item> pickaxe, RegistryObject<Item> sword, RegistryObject<Item> axe, RegistryObject<Item> shovel, RegistryObject<Item> hoe, RegistryObject<Item> helm, RegistryObject<Item> chest, RegistryObject<Item> pants, RegistryObject<Item> boots) {
+        //Pickaxe
+        Recipe.shaped(pickaxe.get())
+            .pattern("EEE", " S ", " S ")
+            .define('E', base.get())
+            .define('S', Tags.Items.RODS_WOODEN)
+            .save(consumer);
+
+        //Sword
+        Recipe.shaped(sword.get())
+            .pattern("E", "E", "S")
+            .define('E', base.get())
+            .define('S', Tags.Items.RODS_WOODEN)
+            .save(consumer);
+
+        //Axe
+        Recipe.shaped(axe.get())
+            .pattern("EE", "ES", " S")
+            .define('E', base.get())
+            .define('S', Tags.Items.RODS_WOODEN)
+            .save(consumer);
+
+        //Shovel
+        Recipe.shaped(shovel.get())
+            .pattern("E", "S", "S")
+            .define('E', base.get())
+            .define('S', Tags.Items.RODS_WOODEN)
+            .save(consumer);
+
+        //Hoe
+        Recipe.shaped(hoe.get())
+            .pattern("EE", " S", " S")
+            .define('E', base.get())
+            .define('S', Tags.Items.RODS_WOODEN)
+            .save(consumer);
+
+        //Helm
+        Recipe.shaped(helm.get())
+            .pattern("OOO", "O O")
+            .define('O', base.get())
+            .save(consumer);
+
+        //Chest
+        Recipe.shaped(chest.get())
+            .pattern("O O", "OOO", "OOO")
+            .define('O', base.get())
+            .save(consumer);
+
+        //Legs
+        Recipe.shaped(pants.get())
+            .pattern("OOO", "O O", "O O")
+            .define('O', base.get())
+            .save(consumer);
+
+        //Boots
+        Recipe.shaped(boots.get())
+            .pattern("O O", "O O")
+            .define('O', base.get())
+            .save(consumer);
     }
 
     public static class Recipe {

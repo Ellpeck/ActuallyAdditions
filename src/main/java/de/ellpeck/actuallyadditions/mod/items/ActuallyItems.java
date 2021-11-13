@@ -171,17 +171,18 @@ public final class ActuallyItems {
     public static final RegistryObject<Item> PANTS_QUARTZ = ITEMS.register("pants_quartz", () -> new ItemArmorAA(ArmorMaterials.QUARTZ, EquipmentSlotType.LEGS));
     public static final RegistryObject<Item> BOOTS_QUARTZ = ITEMS.register("boots_quartz", () -> new ItemArmorAA(ArmorMaterials.QUARTZ, EquipmentSlotType.FEET));
 
-    public static final RegistryObject<Item> PICKAXE_QUARTZ = ITEMS.register("pickaxe_quartz", () -> new ItemPickaxeAA(ToolMaterials.QUARTZ));
-    public static final RegistryObject<Item> AXE_QUARTZ = ITEMS.register("axe_quartz", () -> new ItemAxeAA(ToolMaterials.QUARTZ));
-    public static final RegistryObject<Item> SHOVEL_QUARTZ = ITEMS.register("shovel_quartz", () -> new ItemShovelAA(ToolMaterials.QUARTZ));
-    public static final RegistryObject<Item> SWORD_QUARTZ = ITEMS.register("sword_quartz", () -> new ItemSwordAA(ToolMaterials.QUARTZ));
-    public static final RegistryObject<Item> HOE_QUARTZ = ITEMS.register("hoe_quartz", () -> new ItemHoeAA(ToolMaterials.QUARTZ));
+    public static final RegistryObject<Item> PICKAXE_QUARTZ = ITEMS.register("pickaxe_quartz", () -> new ItemPickaxeAA(ToolMaterials.BLACK_QUARTZ));
+    public static final RegistryObject<Item> AXE_QUARTZ = ITEMS.register("axe_quartz", () -> new ItemAxeAA(ToolMaterials.BLACK_QUARTZ));
+    public static final RegistryObject<Item> SHOVEL_QUARTZ = ITEMS.register("shovel_quartz", () -> new ItemShovelAA(ToolMaterials.BLACK_QUARTZ));
+    public static final RegistryObject<Item> SWORD_QUARTZ = ITEMS.register("sword_quartz", () -> new ItemSwordAA(ToolMaterials.BLACK_QUARTZ));
+    public static final RegistryObject<Item> HOE_QUARTZ = ITEMS.register("hoe_quartz", () -> new ItemHoeAA(ToolMaterials.BLACK_QUARTZ));
     public static final RegistryObject<Item> WOODEN_PAXEL = ITEMS.register("wooden_paxel", () -> new ItemAllToolAA(ItemTier.WOOD));
     public static final RegistryObject<Item> STONE_PAXEL = ITEMS.register("stone_paxel", () -> new ItemAllToolAA(ItemTier.STONE));
     public static final RegistryObject<Item> IRON_PAXEL = ITEMS.register("iron_paxel", () -> new ItemAllToolAA(ItemTier.IRON));
     public static final RegistryObject<Item> GOLD_PAXEL = ITEMS.register("gold_paxel", () -> new ItemAllToolAA(ItemTier.GOLD));
     public static final RegistryObject<Item> DIAMOND_PAXEL = ITEMS.register("diamond_paxel", () -> new ItemAllToolAA(ItemTier.DIAMOND));
-    public static final RegistryObject<Item> QUARTZ_PAXEL = ITEMS.register("quartz_paxel", () -> new ItemAllToolAA(ToolMaterials.QUARTZ));
+    public static final RegistryObject<Item> NETHERITE_PAXEL = ITEMS.register("netherite_paxel", () -> new ItemAllToolAA(ItemTier.NETHERITE));
+    public static final RegistryObject<Item> QUARTZ_PAXEL = ITEMS.register("quartz_paxel", () -> new ItemAllToolAA(ToolMaterials.BLACK_QUARTZ));
 
     public static final RegistryObject<Item> PICKAXE_CRYSTAL_RESTONIA = ITEMS.register("pickaxe_crystal_restonia", () -> new ItemPickaxeAA(ToolMaterials.RESTONIA));
     public static final RegistryObject<Item> AXE_CRYSTAL_RESTONIA = ITEMS.register("axe_crystal_restonia", () -> new ItemAxeAA(ToolMaterials.RESTONIA));
