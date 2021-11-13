@@ -6,7 +6,6 @@ import de.ellpeck.actuallyadditions.mod.crafting.ActuallyRecipes;
 import de.ellpeck.actuallyadditions.mod.crafting.TargetNBTIngredient;
 import de.ellpeck.actuallyadditions.mod.crafting.WrappedRecipe;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
-import de.ellpeck.actuallyadditions.mod.items.metalists.TheFoods;
 import net.minecraft.data.*;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.Item;
@@ -171,12 +170,12 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .define('S', ActuallyItems.ENORI_CRYSTAL.get()).save(consumer);
 
 
-        //Rice Recipes
+/*        //Rice Recipes
         Recipe.shaped(Items.PAPER, 3)
             .pattern("R  ")
             .pattern(" R ")
             .pattern("  R")
-            .define('R', TheFoods.RICE).save(consumer); //TODO foods need worked on still.
+            .define('R', TheFoods.RICE).save(consumer); //TODO foods need worked on still.*/
 
         Recipe.shaped(ActuallyItems.RICE_SLIME.get())
             .pattern(" R ")

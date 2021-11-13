@@ -13,20 +13,17 @@ package de.ellpeck.actuallyadditions.mod.items.base;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockPlant;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemSeeds;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.IBlockReader;
 
-public class ItemSeed extends ItemSeeds {
+public class ItemSeed /* extends ItemSeeds*/ {
 
     public final Block plant;
     public final String oredictName;
 
     public ItemSeed(String oredictName, Block plant, Item returnItem, int returnMeta) {
-        super(plant, Blocks.FARMLAND);
+        //super(plant, Blocks.FARMLAND);
         this.oredictName = oredictName;
         this.plant = plant;
 
@@ -35,8 +32,8 @@ public class ItemSeed extends ItemSeeds {
         }
     }
 
-    @Override
-    public BlockState getPlant(IBlockAccess world, BlockPos pos) {
+    //@Override
+    public BlockState getPlant(IBlockReader world, BlockPos pos) {
         return this.plant.defaultBlockState();
     }
 }

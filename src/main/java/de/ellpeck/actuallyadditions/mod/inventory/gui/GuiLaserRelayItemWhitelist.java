@@ -14,7 +14,6 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerLaserRelayItemWhitelist;
-import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiInputter.SmallerButton;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayItemAdvanced;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
@@ -64,8 +63,8 @@ public class GuiLaserRelayItemWhitelist extends GuiWtfMojang<ContainerLaserRelay
         this.leftFilter = new FilterSettingsGui(this.tile.leftFilter, this.leftPos + 3, this.topPos + 6, this.buttonList);
         this.rightFilter = new FilterSettingsGui(this.tile.rightFilter, this.leftPos + 157, this.topPos + 6, this.buttonList);
 
-        this.buttonSmartWhitelistLeft = new SmallerButton(2, this.leftPos + 3, this.topPos + 79, "S");
-        this.buttonSmartWhitelistRight = new SmallerButton(3, this.leftPos + 157, this.topPos + 79, "S");
+        this.buttonSmartWhitelistLeft = new Buttons.SmallerButton(2, this.leftPos + 3, this.topPos + 79, "S");
+        this.buttonSmartWhitelistRight = new Buttons.SmallerButton(3, this.leftPos + 157, this.topPos + 79, "S");
         this.addButton(this.buttonSmartWhitelistLeft);
         this.addButton(this.buttonSmartWhitelistRight);
     }

@@ -13,14 +13,12 @@ package de.ellpeck.actuallyadditions.mod.items.base;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockPlant;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemSeedFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.IBlockReader;
 
-public class ItemFoodSeed extends ItemSeedFood {
+public class ItemFoodSeed /*extends ItemSeedFood */{ //TODO what is this?!
 
     public final Block plant;
     public final String name;
@@ -28,7 +26,7 @@ public class ItemFoodSeed extends ItemSeedFood {
     private final int maxUseDuration;
 
     public ItemFoodSeed(String name, String oredictName, Block plant, Item returnItem, int returnMeta, int healAmount, float saturation, int maxUseDuration) {
-        super(healAmount, saturation, plant, Blocks.FARMLAND);
+        //super(healAmount, saturation, plant, Blocks.FARMLAND);
         this.name = name;
         this.oredictName = oredictName;
         this.plant = plant;
@@ -39,13 +37,13 @@ public class ItemFoodSeed extends ItemSeedFood {
         }
     }
 
-    @Override
+    //@Override
     public int getMaxItemUseDuration(ItemStack stack) {
         return this.maxUseDuration;
     }
 
-    @Override
-    public BlockState getPlant(IBlockAccess world, BlockPos pos) {
+    //@Override
+    public BlockState getPlant(IBlockReader world, BlockPos pos) {
         return this.plant.defaultBlockState();
     }
 }

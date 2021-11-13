@@ -10,75 +10,33 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.mod.items.base.ItemFoodBase;
+import de.ellpeck.actuallyadditions.mod.items.base.ActuallyItem;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheJams;
-import de.ellpeck.actuallyadditions.mod.util.IColorProvidingItem;
-import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import net.minecraft.client.renderer.color.IItemColor;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.init.Items;
-import net.minecraft.item.EnumRarity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.Food;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 
 
-public class ItemJams extends ItemFoodBase implements IColorProvidingItem {
+public class ItemJams extends ActuallyItem {
 
     public static final TheJams[] ALL_JAMS = TheJams.values();
 
     public ItemJams() {
-        super(0, 0.0F, false, name);
-        this.setHasSubtypes(true);
-        this.setMaxDamage(0);
-        this.setAlwaysEdible();
+        super(baseProps().food(new Food.Builder().alwaysEat().build()));
     }
 
-    @Override
-    public int getMetadata(int damage) {
-        return damage;
-    }
 
-    @Override
-    public String getDescriptionId(ItemStack stack) {
-        return stack.getItemDamage() >= ALL_JAMS.length
-            ? StringUtil.BUGGED_ITEM_NAME
-            : this.getDescriptionId() + "_" + ALL_JAMS[stack.getItemDamage()].name;
-    }
-
-    @Override
-    public EnumRarity getRarity(ItemStack stack) {
-        return stack.getItemDamage() >= ALL_JAMS.length
-            ? EnumRarity.COMMON
-            : ALL_JAMS[stack.getItemDamage()].rarity;
-    }
-
-    @Override
-    @OnlyIn(Dist.CLIENT)
-    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> list) {
-        if (this.isInCreativeTab(tab)) {
-            for (int j = 0; j < ALL_JAMS.length; j++) {
-                list.add(new ItemStack(this, 1, j));
-            }
-        }
-    }
-
-    @Override
-    public ItemStack onItemUseFinish(ItemStack stack, World world, EntityLivingBase player) {
+    //@Override
+    public ItemStack onItemUseFinish(ItemStack stack, World world, LivingEntity player) {
         ItemStack stackToReturn = super.finishUsingItem(stack, world, player);
-
+/*
         if (player instanceof PlayerEntity && !world.isClientSide && stack.getItemDamage() < ALL_JAMS.length) {
-            PotionEffect firstEffectToGet = new PotionEffect(Potion.getPotionById(ALL_JAMS[stack.getItemDamage()].firstEffectToGet), 200);
-            player.addPotionEffect(firstEffectToGet);
+            Effect firstEffectToGet = new Effect(Potion.getPotionById(ALL_JAMS[stack.getItemDamage()].firstEffectToGet), 200);
+            player.addEffect(firstEffectToGet);
 
-            PotionEffect secondEffectToGet = new PotionEffect(Potion.getPotionById(ALL_JAMS[stack.getItemDamage()].secondEffectToGet), 600);
-            player.addPotionEffect(secondEffectToGet);
+            Effect secondEffectToGet = new Effect(Potion.getPotionById(ALL_JAMS[stack.getItemDamage()].secondEffectToGet), 600);
+            player.addEffect(secondEffectToGet);
 
             ItemStack returnItem = new ItemStack(Items.GLASS_BOTTLE);
             if (!((PlayerEntity) player).inventory.add(returnItem.copy())) {
@@ -87,9 +45,12 @@ public class ItemJams extends ItemFoodBase implements IColorProvidingItem {
                 player.world.addEntity(entityItem);
             }
         }
+
+ */
         return stackToReturn;
     }
 
+    /*
     @Override
     public int getHealAmount(ItemStack stack) {
         return stack.getItemDamage() >= ALL_JAMS.length
@@ -104,20 +65,5 @@ public class ItemJams extends ItemFoodBase implements IColorProvidingItem {
             : ALL_JAMS[stack.getItemDamage()].saturation;
     }
 
-    @Override
-    protected void registerRendering() {
-        for (int i = 0; i < ALL_JAMS.length; i++) {
-            ActuallyAdditions.PROXY.addRenderRegister(new ItemStack(this, 1, i), this.getRegistryName(), "inventory");
-        }
-    }
-
-    @Override
-    @OnlyIn(Dist.CLIENT)
-    public IItemColor getItemColor() {
-        return (stack, pass) -> pass > 0
-            ? stack.getItemDamage() >= ALL_JAMS.length
-            ? 0xFFFFFF
-            : ALL_JAMS[stack.getItemDamage()].color
-            : 0xFFFFFF;
-    }
+     */
 }

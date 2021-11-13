@@ -13,7 +13,6 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import de.ellpeck.actuallyadditions.api.tile.IPhantomTile;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerPhantomPlacer;
-import de.ellpeck.actuallyadditions.mod.inventory.GuiHandler;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
@@ -38,8 +37,6 @@ import net.minecraft.world.server.ServerWorld;
 
 import javax.annotation.Nullable;
 import java.util.List;
-
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
 
 public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements IPhantomTile, IButtonReactor, INamedContainerProvider {
 
@@ -193,11 +190,6 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
     @Override
     public void setBoundPosition(BlockPos pos) {
         this.boundPosition = pos;
-    }
-
-    @Override
-    public int getGuiID() {
-        return GuiHandler.GuiTypes.PHANTOM_PLACER.ordinal();
     }
 
     @Override

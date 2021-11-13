@@ -14,13 +14,11 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import de.ellpeck.actuallyadditions.mod.tile.CustomEnergyStorage;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.resources.I18n;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.client.gui.GuiUtils;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -69,14 +67,14 @@ public class EnergyDisplay extends AbstractGui {
         if (this.rfReference.getEnergyStored() > 0) {
             int i = this.rfReference.getEnergyStored() * 83 / this.rfReference.getMaxEnergyStored();
 
-            float[] color = AssetUtil.getWheelColor(mc.level.getTotalWorldTime() % 256);
-            RenderSystem.color4f(color[0] / 255F, color[1] / 255F, color[2] / 255F);
+            float[] color = AssetUtil.getWheelColor(mc.level.getGameTime() % 256);
+            RenderSystem.color3f(color[0] / 255F, color[1] / 255F, color[2] / 255F);
             this.blit(matrices, barX + 1, barY + 84 - i, 36, 172, 16, i);
-            RenderSystem.color4f(1F, 1F, 1F);
+            RenderSystem.color3f(1F, 1F, 1F);
         }
 
         if (this.drawTextNextTo) {
-            this.drawString(mc.font, this.getOverlayText(), barX + 25, barY + 78, StringUtil.DECIMAL_COLOR_WHITE);
+            //this.drawString(mc.font, this.getOverlayText(), barX + 25, barY + 78, StringUtil.DECIMAL_COLOR_WHITE);
         }
     }
 
@@ -86,16 +84,16 @@ public class EnergyDisplay extends AbstractGui {
 
             List<String> text = new ArrayList<>();
             text.add(this.getOverlayText());
-            GuiUtils.drawHoveringText(matrices, text, mouseX, mouseY, mc.getWindow().getWidth(), mc.getWindow().getHeight(), -1, mc.font);
+            //GuiUtils.drawHoveringText(matrices, text, mouseX, mouseY, mc.getWindow().getWidth(), mc.getWindow().getHeight(), -1, mc.font);
         }
     }
 
     private boolean isMouseOver(int mouseX, int mouseY) {
         return mouseX >= this.x && mouseY >= this.y && mouseX < this.x + (this.outline
-                ? 26
-                : 18) && mouseY < this.y + (this.outline
-                ? 93
-                : 85);
+            ? 26
+            : 18) && mouseY < this.y + (this.outline
+            ? 93
+            : 85);
     }
 
     private String getOverlayText() {

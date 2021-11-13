@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.systems.RenderSystem;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerBag;
 import de.ellpeck.actuallyadditions.mod.network.PacketClientToServer;
@@ -50,7 +51,7 @@ public class GuiBag extends GuiWtfMojang<ContainerBag> {
     public void init() {
         super.init();
 
-        this.filter = new FilterSettingsGui(this.container.filter, this.leftPos + 138, this.topPos + 10, this.buttonList);
+        this.filter = new FilterSettingsGui(this.container.filter, this.leftPos + 138, this.topPos + 10, this.buttons);
 
         this.buttonAutoInsert = new Button(0, this.leftPos - 21, this.topPos + 8, 20, 20, (this.container.autoInsert
             ? TextFormatting.DARK_GREEN
@@ -61,20 +62,20 @@ public class GuiBag extends GuiWtfMojang<ContainerBag> {
     @Override
     protected void actionPerformed(Button button) throws IOException {
         CompoundNBT data = new CompoundNBT();
-        data.setInteger("ButtonID", button.id);
-        data.setInteger("PlayerID", Minecraft.getInstance().player.getId());
-        data.setInteger("WorldID", Minecraft.getInstance().level.provider.getDimension());
+        data.putInt("ButtonID", button.id);
+        data.putInt("PlayerID", Minecraft.getInstance().player.getId());
+        data.putInt("WorldID", Minecraft.getInstance().level.provider.getDimension());
         PacketHandler.THE_NETWORK.sendToServer(new PacketClientToServer(data, PacketHandler.GUI_BUTTON_TO_CONTAINER_HANDLER));
     }
 
     @Override
-    public void updateScreen() {
-        super.updateScreen();
+    public void tick() {
+        super.tick();
         this.filter.tick();
 
-        this.buttonAutoInsert.displayString = (this.container.autoInsert
-            ? TextFormatting.DARK_GREEN
-            : TextFormatting.RED) + "I";
+        //this.buttonAutoInsert.displayString = (this.container.autoInsert
+        //    ? TextFormatting.DARK_GREEN
+        //    : TextFormatting.RED) + "I";
     }
 
     @Override

@@ -215,7 +215,7 @@ public class ClientEvents {
 
                         GlStateManager._pushMatrix();
                         GlStateManager._color4f(1F, 1F, 1F, 1F);
-                        energyDisplay.draw();
+                        energyDisplay.draw(event.getMatrixStack());
                         GlStateManager._popMatrix();
                     }
                 }

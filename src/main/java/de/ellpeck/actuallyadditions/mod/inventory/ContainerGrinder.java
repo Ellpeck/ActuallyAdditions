@@ -12,9 +12,7 @@ package de.ellpeck.actuallyadditions.mod.inventory;
 
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotOutput;
-import de.ellpeck.actuallyadditions.mod.recipe.CrusherRecipeRegistry;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityCrusher;
-import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -64,6 +62,7 @@ public class ContainerGrinder extends Container {
 
     @Override
     public ItemStack quickMoveStack(PlayerEntity player, int slot) {
+        /*
         int inventoryStart = this.isDouble
                 ? 6
                 : 3;
@@ -124,7 +123,9 @@ public class ContainerGrinder extends Container {
 
             return currentStack;
         }
-        return StackUtil.getEmpty();
+
+         */
+        return ItemStack.EMPTY;
     }
 
     @Override

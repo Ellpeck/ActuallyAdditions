@@ -10,40 +10,19 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.items.metalists.TheDusts;
-import de.ellpeck.actuallyadditions.mod.util.IColorProvidingItem;
-import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import net.minecraft.client.renderer.color.IItemColor;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Rarity;
-import net.minecraft.util.NonNullList;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 
-public class ItemDust extends ItemBase implements IColorProvidingItem {
+public class ItemDust extends ItemBase {
 
     public static final TheDusts[] ALL_DUSTS = TheDusts.values();
 
     public ItemDust() {
-        super(name);
-        this.setHasSubtypes(true);
+        //super(name);
     }
 
-    @Override
-    public int getMetadata(int damage) {
-        return damage;
-    }
-
-    @Override
-    public String getDescriptionId(ItemStack stack) {
-        return stack.getItemDamage() >= ALL_DUSTS.length
-                ? StringUtil.BUGGED_ITEM_NAME
-                : this.getDescriptionId() + "_" + ALL_DUSTS[stack.getItemDamage()].name;
-    }
-
+/*
     @Override
     public Rarity getRarity(ItemStack stack) {
         return stack.getItemDamage() >= ALL_DUSTS.length
@@ -51,31 +30,9 @@ public class ItemDust extends ItemBase implements IColorProvidingItem {
                 : ALL_DUSTS[stack.getItemDamage()].rarity;
     }
 
-    @Override
-    @OnlyIn(Dist.CLIENT)
-    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> list) {
-        if (this.isInCreativeTab(tab)) {
-            for (int j = 0; j < ALL_DUSTS.length; j++) {
-                list.add(new ItemStack(this, 1, j));
-            }
-        }
-    }
+ */
 
-    @Override
-    protected void registerRendering() {
-        for (int i = 0; i < ALL_DUSTS.length; i++) {
-            ActuallyAdditions.PROXY.addRenderRegister(new ItemStack(this, 1, i), this.getRegistryName(), "inventory");
-        }
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    @Override
-    public IItemColor getItemColor() {
-        return (stack, pass) -> stack.getItemDamage() >= ALL_DUSTS.length
-                ? 0xFFFFFF
-                : ALL_DUSTS[stack.getItemDamage()].color;
-    }
-
+    /*
     @Override
     public int getItemBurnTime(ItemStack stack) {
         if (stack.getMetadata() == 6) {
@@ -83,4 +40,6 @@ public class ItemDust extends ItemBase implements IColorProvidingItem {
         }
         return super.getItemBurnTime(stack);
     }
+
+     */
 }

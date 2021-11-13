@@ -26,7 +26,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.ClickType;
 import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.IContainerListener;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -122,6 +121,7 @@ public class ContainerBag extends Container implements IButtonReactor {
         super.broadcastChanges();
 
         if (this.filter.needsUpdateSend() || this.autoInsert != this.oldAutoInsert) {
+            /*
             for (IContainerListener listener : this.containerListeners) {
                 listener.setContainerData(this, 0, this.filter.isWhitelist
                     ? 1
@@ -140,6 +140,7 @@ public class ContainerBag extends Container implements IButtonReactor {
                     ? 1
                     : 0);
             }
+             */
             this.filter.updateLasts();
             this.oldAutoInsert = this.autoInsert;
         }

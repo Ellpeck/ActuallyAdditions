@@ -15,7 +15,6 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntListValues;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer.*;
-import net.minecraft.util.ResourceLocation;
 
 // TODO: [port] MOVE TO DATA_GENERATOR
 @Deprecated
@@ -48,7 +47,7 @@ public final class InitCrafting {
         //        ActuallyAdditionsAPI.addFarmerBehavior(new EnderlillyFarmerBehavior());
         //        ActuallyAdditionsAPI.addFarmerBehavior(new RedOrchidFarmerBehavior());
 
-        new RecipePotionRingCharging(new ResourceLocation(ActuallyAdditions.MODID, "potion_ring_charging"));
-        new RecipeBioMash(new ResourceLocation(ActuallyAdditions.MODID, "bio_mash"));
+        //new RecipePotionRingCharging(new ResourceLocation(ActuallyAdditions.MODID, "potion_ring_charging"));
+        //new RecipeBioMash(new ResourceLocation(ActuallyAdditions.MODID, "bio_mash"));
     }
 }

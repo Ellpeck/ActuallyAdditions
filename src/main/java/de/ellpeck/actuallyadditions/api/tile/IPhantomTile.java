@@ -38,11 +38,6 @@ public interface IPhantomTile {
     void setBoundPosition(BlockPos pos);
 
     /**
-     * @return The ID of the GUI it opens, -1 if none
-     */
-    int getGuiID();
-
-    /**
      * @return The range the tile currently has
      */
     int getRange();

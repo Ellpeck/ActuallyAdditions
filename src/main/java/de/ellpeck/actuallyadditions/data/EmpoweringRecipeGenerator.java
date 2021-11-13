@@ -132,35 +132,35 @@ public class EmpoweringRecipeGenerator extends RecipeProvider {
 
         public EmpoweringBuilder addModifier(IItemProvider input) {
             if (modifiers.size() >= 4)
-                throw new InvalidStateException("too many modifiers for empowering recipe, input: " + input.asItem().getRegistryName());
+                throw new IllegalStateException("too many modifiers for empowering recipe, input: " + input.asItem().getRegistryName());
             modifiers.add(Ingredient.of(input));
             return this;
         }
 
         public EmpoweringBuilder addModifier(ItemStack input) {
             if (modifiers.size() >= 4)
-                throw new InvalidStateException("too many modifiers for empowering recipe, input: " + input.getItem().getRegistryName());
+                throw new IllegalStateException("too many modifiers for empowering recipe, input: " + input.getItem().getRegistryName());
             modifiers.add(Ingredient.of(input));
             return this;
         }
 
         public EmpoweringBuilder addModifier(ITag<Item> input) {
             if (modifiers.size() >= 4)
-                throw new InvalidStateException("too many modifiers for empowering recipe, input: " + input.toString());
+                throw new IllegalStateException("too many modifiers for empowering recipe, input: " + input.toString());
             modifiers.add(Ingredient.of(input));
             return this;
         }
 
         public void save(Consumer<IFinishedRecipe> consumer, ResourceLocation name) {
             if (modifiers.size() != 4)
-                throw new InvalidStateException("invalid modifier count: " + modifiers.size() + ", recipe: " + name.toString());
+                throw new IllegalStateException("invalid modifier count: " + modifiers.size() + ", recipe: " + name.toString());
             consumer.accept(new EmpowererRecipe.FinishedRecipe(name, result, base, modifiers.get(0), modifiers.get(1), modifiers.get(2), modifiers.get(3), energy, time, color));
         }
 
         public void save(Consumer<IFinishedRecipe> consumer, String name) {
             ResourceLocation res = new ResourceLocation(ActuallyAdditions.MODID, "empowering/" + name);
             if (modifiers.size() != 4)
-                throw new InvalidStateException("invalid modifier count: " + modifiers.size() + ", recipe: " + res);
+                throw new IllegalStateException("invalid modifier count: " + modifiers.size() + ", recipe: " + res);
             consumer.accept(new EmpowererRecipe.FinishedRecipe(res, result, base, modifiers.get(0), modifiers.get(1), modifiers.get(2), modifiers.get(3), energy, time, color));
         }
     }

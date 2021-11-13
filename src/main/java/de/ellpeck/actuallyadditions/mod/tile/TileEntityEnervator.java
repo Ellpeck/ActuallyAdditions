@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerEnervator;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
@@ -29,8 +30,6 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 import javax.annotation.Nullable;
 
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
-
 public class TileEntityEnervator extends TileEntityInventoryBase implements ISharingEnergyProvider, INamedContainerProvider {
 
     public final CustomEnergyStorage storage = new CustomEnergyStorage(50000, 0, 1000);
@@ -38,7 +37,7 @@ public class TileEntityEnervator extends TileEntityInventoryBase implements ISha
     private int lastEnergy;
 
     public TileEntityEnervator() {
-        super(ActuallyTiles.ENERVATOR_TILE.get(), 2);
+        super(ActuallyBlocks.ENERVATOR.getTileEntityType(), 2);
     }
 
     @Override
