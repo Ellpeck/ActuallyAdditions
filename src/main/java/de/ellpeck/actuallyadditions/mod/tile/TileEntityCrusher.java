@@ -242,7 +242,7 @@ public class TileEntityCrusher extends TileEntityInventoryBase implements IButto
                 outputTwo.setDamage(0);
             }
              */
-            int rand = this.level.random.nextInt(100) + 1;
+            float rand = this.level.random.nextFloat();
             if (rand <= recipe.getSecondChance()) {
                 if (!StackUtil.isValid(this.inv.getStackInSlot(theSecondOutput))) {
                     this.inv.setStackInSlot(theSecondOutput, outputTwo.copy());

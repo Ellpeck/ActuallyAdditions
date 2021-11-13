@@ -4,7 +4,10 @@ import com.google.gson.JsonObject;
 import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.*;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.IRecipeSerializer;
+import net.minecraft.item.crafting.IRecipeType;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.JSONUtils;
@@ -80,7 +83,8 @@ public class LaserRecipe implements IRecipe<IInventory> {
         public LaserRecipe fromJson(ResourceLocation pRecipeId, JsonObject pJson) {
             Ingredient ingredient = Ingredient.fromJson(JSONUtils.getAsJsonObject(pJson, "ingredient"));
             int energy = JSONUtils.getAsInt(pJson, "energy");
-            ItemStack result = new ItemStack(JSONUtils.getAsItem(pJson, "result"));
+            JsonObject resultObject = JSONUtils.getAsJsonObject(pJson, "result");
+            ItemStack result = new ItemStack(JSONUtils.getAsItem(resultObject, "item"));
 
             return new LaserRecipe(pRecipeId, result, ingredient, energy);
         }
@@ -117,9 +121,13 @@ public class LaserRecipe implements IRecipe<IInventory> {
 
         @Override
         public void serializeRecipeData(JsonObject pJson) {
-            pJson.add("input", itemIngredient.toJson());
+            pJson.add("ingredient", itemIngredient.toJson());
             pJson.addProperty("energy", energy);
-            pJson.addProperty("output", output.asItem().getRegistryName().toString());
+
+            JsonObject resultObject = new JsonObject();
+            resultObject.addProperty("item", output.asItem().getRegistryName().toString());
+
+            pJson.add("result", resultObject);
         }
 
         @Override

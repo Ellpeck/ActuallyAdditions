@@ -1,5 +1,6 @@
 package de.ellpeck.actuallyadditions.mod.crafting;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import net.minecraft.data.IFinishedRecipe;
@@ -16,39 +17,44 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class CrushingRecipe implements IRecipe<IInventory> {
     public static String NAME = "crushing";
-    private ResourceLocation id;
+    private final ResourceLocation id;
     protected Ingredient input;
     protected ItemStack outputOne;
     protected ItemStack outputTwo;
-    protected int outputChance;
+    protected float chance1;
+    protected float chance2;
 
-    public CrushingRecipe(ResourceLocation id, Ingredient input, ItemStack outputOne, ItemStack outputTwo, int outputChance) {
+    public CrushingRecipe(ResourceLocation id, Ingredient input, ItemStack outputOne, float chance1, ItemStack outputTwo, float chance2) {
         this.id = id;
         this.input = input;
         this.outputOne = outputOne;
         this.outputTwo = outputTwo;
-        this.outputChance = outputChance;
+        this.chance1 = chance1;
+        this.chance2 = chance2;
     }
 
-    public CrushingRecipe(Ingredient input, ItemStack outputOne, ItemStack outputTwo, int outputChance) {
+    public CrushingRecipe(Ingredient input, ItemStack outputOne, float chance1, ItemStack outputTwo, float chance2) {
         this.id = new ResourceLocation(ActuallyAdditions.MODID, input.getItems()[0].getItem().getRegistryName().getPath() + "_crushing");
         this.input = input;
         this.outputOne = outputOne;
         this.outputTwo = outputTwo;
-        this.outputChance = outputChance;
+        this.chance1 = chance1;
+        this.chance2 = chance2;
     }
 
     @Override
-    public boolean matches(IInventory pInv, World pLevel) {
+    public boolean matches(IInventory pInv, @Nonnull World pLevel) {
         return input.test(pInv.getItem(0));
     }
 
     @Override
-    public ItemStack assemble(IInventory pInv) {
+    @Nonnull
+    public ItemStack assemble(@Nonnull IInventory pInv) {
         return ItemStack.EMPTY;
     }
 
@@ -58,21 +64,25 @@ public class CrushingRecipe implements IRecipe<IInventory> {
     }
 
     @Override
+    @Nonnull
     public ItemStack getResultItem() {
         return outputOne;
     }
 
     @Override
+    @Nonnull
     public ResourceLocation getId() {
         return id;
     }
 
     @Override
+    @Nonnull
     public IRecipeSerializer<?> getSerializer() {
         return ActuallyRecipes.CRUSHING_RECIPE.get();
     }
 
     @Override
+    @Nonnull
     public IRecipeType<?> getType() {
         return ActuallyRecipes.Types.CRUSHING;
     }
@@ -85,8 +95,11 @@ public class CrushingRecipe implements IRecipe<IInventory> {
         return this.outputTwo;
     }
 
-    public int getSecondChance() {
-        return this.outputChance;
+    public float getFirstChance() {
+        return this.chance1;
+    }
+    public float getSecondChance() {
+        return this.chance2;
     }
 
     public Ingredient getInput() {
@@ -96,64 +109,96 @@ public class CrushingRecipe implements IRecipe<IInventory> {
     public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<CrushingRecipe> {
 
         @Override
-        public CrushingRecipe fromJson(ResourceLocation pRecipeId, JsonObject pJson) {
-            Ingredient ingredient = Ingredient.fromJson(JSONUtils.getAsJsonObject(pJson, "input"));
-            ItemStack output1 = new ItemStack(JSONUtils.getAsItem(pJson, "output_one"));
-            ItemStack output2 = new ItemStack(JSONUtils.getAsItem(pJson, "output_two"));
-            int chance = JSONUtils.getAsInt(pJson, "second_chance");
+        @Nonnull
+        public CrushingRecipe fromJson(@Nonnull ResourceLocation pRecipeId, @Nonnull JsonObject pJson) {
+            Ingredient ingredient = Ingredient.fromJson(JSONUtils.getAsJsonObject(pJson, "ingredient"));
 
-            return new CrushingRecipe(pRecipeId, ingredient, output1, output2, chance);
+            JsonArray resultList = JSONUtils.getAsJsonObject(pJson, "result").getAsJsonArray();
+            if (resultList.size() < 1)
+                throw new IllegalStateException(pRecipeId.toString() + ": Recipe must contain at least 1 result item");
+
+            ItemStack output1 = new ItemStack(JSONUtils.getAsItem(resultList.get(0).getAsJsonObject(), "item"));
+            float chance1 = JSONUtils.getAsFloat(resultList.get(0).getAsJsonObject(), "chance");
+
+            ItemStack output2 = ItemStack.EMPTY;
+            float chance2 = 1.0f;
+            if (resultList.size() > 1) {
+                output2 = new ItemStack(JSONUtils.getAsItem(resultList.get(1).getAsJsonObject(), "item"));
+                chance2 = JSONUtils.getAsFloat(resultList.get(1).getAsJsonObject(), "chance");
+            }
+
+            return new CrushingRecipe(pRecipeId, ingredient, output1, chance1, output2, chance2);
         }
 
-        @Nullable
         @Override
-        public CrushingRecipe fromNetwork(ResourceLocation pRecipeId, PacketBuffer pBuffer) {
+        public CrushingRecipe fromNetwork(@Nonnull ResourceLocation pRecipeId, @Nonnull PacketBuffer pBuffer) {
             Ingredient ingredient = Ingredient.fromNetwork(pBuffer);
             ItemStack output1 = pBuffer.readItem();
             ItemStack output2 = pBuffer.readItem();
-            int chance = pBuffer.readInt();
+            float chance1 = pBuffer.readFloat();
+            float chance2 = pBuffer.readFloat();
 
-            return new CrushingRecipe(pRecipeId, ingredient, output1, output2, chance);
+            return new CrushingRecipe(pRecipeId, ingredient, output1, chance1, output2, chance2);
         }
 
         @Override
-        public void toNetwork(PacketBuffer pBuffer, CrushingRecipe pRecipe) {
+        public void toNetwork(@Nonnull PacketBuffer pBuffer, CrushingRecipe pRecipe) {
             pRecipe.input.toNetwork(pBuffer);
             pBuffer.writeItem(pRecipe.outputOne);
             pBuffer.writeItem(pRecipe.outputTwo);
-            pBuffer.writeInt(pRecipe.outputChance);
+            pBuffer.writeFloat(pRecipe.chance1);
+            pBuffer.writeFloat(pRecipe.chance2);
         }
     }
 
     public static class FinishedRecipe implements IFinishedRecipe {
-        private ResourceLocation id;
+        private final ResourceLocation id;
         protected Ingredient input;
         protected IItemProvider outputOne;
+        protected int countOne;
+        protected float outputChance1;
         protected IItemProvider outputTwo;
-        protected int outputChance;
+        protected int countTwo;
+        protected float outputChance2;
 
-        public FinishedRecipe(ResourceLocation id, Ingredient input, IItemProvider outputOne, IItemProvider outputTwo, int outputChance) {
+        public FinishedRecipe(ResourceLocation id, Ingredient input, IItemProvider outputOne, int countOne, float outputChance1, IItemProvider outputTwo, int countTwo, float outputChance2) {
             this.id = id;
+            this.countOne = countOne;
+            this.countTwo = countTwo;
             this.input = input;
             this.outputOne = outputOne;
             this.outputTwo = outputTwo;
-            this.outputChance = outputChance;
+            this.outputChance1 = outputChance1;
+            this.outputChance2 = outputChance2;
         }
 
         @Override
         public void serializeRecipeData(JsonObject pJson) {
-            pJson.add("input", input.toJson());
-            pJson.addProperty("output_one", outputOne.asItem().getRegistryName().toString());
-            pJson.addProperty("output_two", outputTwo.asItem().getRegistryName().toString());
-            pJson.addProperty("second_chance", outputChance);
+            pJson.add("ingredient", input.toJson());
+
+            JsonObject result1 = new JsonObject();
+            result1.addProperty("item", outputOne.asItem().getRegistryName().toString());
+            result1.addProperty("chance", outputChance1);
+
+            JsonObject result2 = new JsonObject();
+            result1.addProperty("item", outputTwo.asItem().getRegistryName().toString());
+            result1.addProperty("chance", outputChance2);
+
+            JsonArray resultList = new JsonArray();
+            resultList.add(result1);
+            resultList.add(result2);
+
+            pJson.add("result", resultList);
         }
 
         @Override
+        @Nonnull
         public ResourceLocation getId() {
             return id;
         }
 
         @Override
+        @Nonnull
         public IRecipeSerializer<?> getType() {
             return ActuallyRecipes.CRUSHING_RECIPE.get();
         }
