@@ -28,6 +28,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.ForgeHooks;
@@ -116,8 +117,8 @@ public final class WorldUtil {
     public static void doEnergyInteraction(TileEntity tileFrom, TileEntity tileTo, Direction sideTo, int maxTransfer) {
         if (maxTransfer > 0) {
             Direction opp = sideTo == null
-                ? null
-                : sideTo.getOpposite();
+                    ? null
+                    : sideTo.getOpposite();
             IEnergyStorage handlerFrom = tileFrom.getCapability(CapabilityEnergy.ENERGY, sideTo);
             IEnergyStorage handlerTo = tileTo.getCapability(CapabilityEnergy.ENERGY, opp);
             if (handlerFrom != null && handlerTo != null) {
@@ -151,7 +152,6 @@ public final class WorldUtil {
      * @param positions The Positions, an array of {x, y, z} arrays containing Positions
      * @param block     The Block
      * @param world     The World
-     *
      * @return Is every block present?
      */
     public static boolean hasBlocksInPlacesGiven(BlockPos[] positions, Block block, World world) {
@@ -258,14 +258,14 @@ public final class WorldUtil {
         double d0 = player.posX;
         double d1 = player.posY + player.getEyeHeight();
         double d2 = player.posZ;
-        Vec3d vec3 = new Vec3d(d0, d1, d2);
+        Vector3d vec3 = new Vector3d(d0, d1, d2);
         float f2 = MathHelper.cos(-f1 * 0.017453292F - (float) Math.PI);
         float f3 = MathHelper.sin(-f1 * 0.017453292F - (float) Math.PI);
         float f4 = -MathHelper.cos(-f * 0.017453292F);
         float f5 = MathHelper.sin(-f * 0.017453292F);
         float f6 = f3 * f4;
         float f7 = f2 * f4;
-        Vec3d vec31 = vec3.add(f6 * distance, f5 * distance, f7 * distance);
+        Vector3d vec31 = vec3.add(f6 * distance, f5 * distance, f7 * distance);
         return world.clipWithInteractionOverride(vec3, vec31, p1, p2, p3);
     }
 
@@ -308,7 +308,6 @@ public final class WorldUtil {
      * @param world  The player's world.
      * @param player The player that is breaking this block.
      * @param pos    The pos to break.
-     *
      * @return If the break was successful.
      */
     public static boolean breakExtraBlock(ItemStack stack, World world, PlayerEntity player, BlockPos pos) {
