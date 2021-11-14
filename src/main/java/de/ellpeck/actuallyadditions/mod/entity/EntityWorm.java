@@ -10,7 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.entity;
 
-import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
+import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer.DefaultFarmerBehavior;
 import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
@@ -104,7 +104,7 @@ public class EntityWorm extends Entity {
                 }
             }
 
-            int dieTime = ConfigIntValues.WORMS_DIE_TIME.getValue();
+            int dieTime = CommonConfig.OTHER.WORMS_DIE_TIME.get();
             if (dieTime > 0 && this.timer >= dieTime) {
                 this.removeAfterChangingDimensions();
             }

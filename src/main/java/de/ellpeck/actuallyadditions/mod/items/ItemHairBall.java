@@ -11,8 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
-import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
-import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
+import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.passive.OcelotEntity;
@@ -43,9 +42,9 @@ public class ItemHairBall extends ItemBase {
     @SubscribeEvent
     public void livingUpdateEvent(LivingEvent.LivingUpdateEvent event) {
         //Ocelots dropping Hair Balls
-        if (ConfigBoolValues.DO_CAT_DROPS.isEnabled() && event.getEntityLiving() != null && event.getEntityLiving().level != null && !event.getEntityLiving().level.isClientSide) {
+        if (CommonConfig.OTHER.DO_CAT_DROPS.get() && event.getEntityLiving() != null && event.getEntityLiving().level != null && !event.getEntityLiving().level.isClientSide) {
             if (event.getEntityLiving() instanceof OcelotEntity && catIsTamedReflection((OcelotEntity) event.getEntityLiving()) || event.getEntityLiving() instanceof PlayerEntity && event.getEntityLiving().getUUID().equals(this.KittyVanCatUUID)) {
-                if (event.getEntityLiving().level.random.nextInt(ConfigIntValues.FUR_CHANCE.getValue()) == 0) {
+                if (event.getEntityLiving().level.random.nextInt(CommonConfig.OTHER.FUR_CHANCE.get()) == 0) {
                     ItemEntity item = new ItemEntity(event.getEntityLiving().level, event.getEntityLiving().getX() + 0.5, event.getEntityLiving().getY() + 0.5, event.getEntityLiving().getZ() + 0.5, new ItemStack(ActuallyItems.HAIRY_BALL.get()));
                     event.getEntityLiving().level.addFreshEntity(item);
                 }

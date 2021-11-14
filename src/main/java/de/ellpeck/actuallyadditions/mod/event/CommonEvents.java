@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.event;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData;
 import de.ellpeck.actuallyadditions.mod.data.WorldData;
@@ -162,7 +163,7 @@ public class CommonEvents {
     public void onCraftedEvent(PlayerEvent.ItemCraftedEvent event) {
         //checkAchievements(event.crafting, event.player, InitAchievements.Type.CRAFTING);
 
-        if (ConfigBoolValues.GIVE_BOOKLET_ON_FIRST_CRAFT.isEnabled()) {
+        if (CommonConfig.OTHER.GIVE_BOOKLET_ON_FIRST_CRAFT.get()) {
             if (!event.getPlayer().level.isClientSide && StackUtil.isValid(event.getCrafting()) && event.getCrafting().getItem() != ActuallyItems.ITEM_BOOKLET.get()) {
 
                 String name = event.getCrafting().getItem().getRegistryName().toString();

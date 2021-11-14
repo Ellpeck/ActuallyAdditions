@@ -10,13 +10,13 @@
 
 package de.ellpeck.actuallyadditions.mod.update;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
+import de.ellpeck.actuallyadditions.mod.util.Util;
+
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.Properties;
-
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
-import de.ellpeck.actuallyadditions.mod.util.Util;
 
 public class ThreadUpdateChecker extends Thread {
 
@@ -35,7 +35,7 @@ public class ThreadUpdateChecker extends Thread {
             updateProperties.load(new InputStreamReader(newestURL.openStream()));
 
             String currentMcVersion = Util.getMcVersion();
-            if (ConfigBoolValues.UPDATE_CHECK_VERSION_SPECIFIC.isEnabled()) {
+            if (CommonConfig.OTHER.UPDATE_CHECK_VERSION_SPECIFIC.get()) {
                 String newestVersionProp = updateProperties.getProperty(currentMcVersion);
 
                 UpdateChecker.updateVersionInt = Integer.parseInt(newestVersionProp);

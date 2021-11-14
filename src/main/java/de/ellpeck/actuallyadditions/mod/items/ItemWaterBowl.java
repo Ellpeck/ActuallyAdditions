@@ -10,7 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
-import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
+import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
@@ -46,7 +46,7 @@ public class ItemWaterBowl extends ItemBase {
     @SubscribeEvent
     public void onPlayerInteractEvent(PlayerInteractEvent.RightClickItem event) {
         if (event.getWorld() != null) {
-            if (ConfigBoolValues.WATER_BOWL.isEnabled()) {
+            if (CommonConfig.OTHER.WATER_BOWL.get()) {
                 if (StackUtil.isValid(event.getItemStack()) && event.getItemStack().getItem() == Items.BOWL) {
                     RayTraceResult rayTrace = WorldUtil.getNearestBlockWithDefaultReachDistance(event.getWorld(), event.getPlayer(), true, false, false);
                     if (rayTrace.getType() != RayTraceResult.Type.BLOCK) {
@@ -126,7 +126,7 @@ public class ItemWaterBowl extends ItemBase {
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
         if (!world.isClientSide) {
-            if (ConfigBoolValues.WATER_BOWL_LOSS.isEnabled()) {
+            if (CommonConfig.OTHER.WATER_BOWL_LOSS.get()) {
                 if (world.getGameTime() % 10 == 0 && world.random.nextFloat() >= 0.5F) {
                     int lastX = 0;
                     int lastY = 0;

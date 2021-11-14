@@ -11,7 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
+import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import de.ellpeck.actuallyadditions.mod.entity.EntityWorm;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import net.minecraft.block.BlockState;
@@ -68,7 +68,7 @@ public class ItemWorm extends ItemBase {
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public void onHoe(UseHoeEvent event) {
-        if (ConfigBoolValues.WORMS.isEnabled() && event.getResult() != Event.Result.DENY) {
+        if (CommonConfig.OTHER.WORMS.get() && event.getResult() != Event.Result.DENY) {
             World world = event.getEntity().level;
             if (!world.isClientSide) {
                 BlockPos pos = event.getContext().getClickedPos();

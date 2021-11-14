@@ -11,7 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.update;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
+import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.client.Minecraft;
@@ -34,7 +34,7 @@ public class UpdateChecker {
     public static boolean threadFinished = false;
 
     public UpdateChecker() {
-        if (ConfigBoolValues.DO_UPDATE_CHECK.isEnabled() && !Util.isDevVersion()) {
+        if (CommonConfig.OTHER.DO_UPDATE_CHECK.get() && !Util.isDevVersion()) {
             ActuallyAdditions.LOGGER.info("Initializing Update Checker...");
             new ThreadUpdateChecker();
             MinecraftForge.EVENT_BUS.register(this);

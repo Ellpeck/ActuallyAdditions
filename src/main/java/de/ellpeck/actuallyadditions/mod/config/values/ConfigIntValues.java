@@ -32,13 +32,6 @@ public enum ConfigIntValues {
             1,
             100,
             "The chances for lush caves to generate. The lower the number, the higher the chances."),
-    WORMS_DIE_TIME(
-            "Worm Death Time",
-            ConfigCategories.OTHER,
-            0,
-            0,
-            10000000,
-            "The amount of ticks it takes for a worm to die. When at 0 ticks, it will not die."),
 
     TILE_ENTITY_UPDATE_INTERVAL(
             "Tile Entities: Update Interval",
@@ -77,14 +70,6 @@ public enum ConfigIntValues {
             500,
             "The size of the booklet's large font in percent. Set to 0 to use defaults from the lang file."),
 
-    ELEVEN("What is 11", ConfigCategories.OTHER, 11, 0, 12, "11?"),
-    FUR_CHANCE(
-            "Fur Drop Chance",
-            ConfigCategories.OTHER,
-            5000,
-            1,
-            Integer.MAX_VALUE,
-            "The 1/n drop chance, per tick, for a fur ball to be dropped."),
     RECONSTRUCTOR_POWER(
             "Atomic Reconstructor Power",
             ConfigCategories.MACHINE_VALUES,

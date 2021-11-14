@@ -13,7 +13,7 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import de.ellpeck.actuallyadditions.api.lens.ILensItem;
 import de.ellpeck.actuallyadditions.mod.blocks.base.FullyDirectionalBlock;
-import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
+import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.Lang;
@@ -72,7 +72,7 @@ public class BlockAtomicReconstructor extends FullyDirectionalBlock.Container im
                         player.inventory.removeItem(player.inventory.selected, 1);
                     }
                     //Shush, don't tell anyone!
-                    else if (ConfigIntValues.ELEVEN.getValue() == 11 && item == Items.MUSIC_DISC_11) {
+                    else if (CommonConfig.OTHER.ELEVEN.get() == 11 && item == Items.MUSIC_DISC_11) {
                         reconstructor.counter++;
                         reconstructor.setChanged();
                     }

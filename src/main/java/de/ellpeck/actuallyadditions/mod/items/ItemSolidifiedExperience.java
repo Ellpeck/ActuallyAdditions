@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import net.minecraft.entity.CreatureEntity;
@@ -69,7 +70,7 @@ public class ItemSolidifiedExperience extends ItemBase {
                 }
             }
 
-            if (ConfigBoolValues.SOLID_XP_ALWAYS_ORBS.currentValue || player instanceof FakePlayer) {
+            if (CommonConfig.OTHER.SOLID_XP_ALWAYS_ORBS.get() || player instanceof FakePlayer) {
                 ExperienceOrbEntity orb = new ExperienceOrbEntity(world, player.getX() + 0.5, player.getY() + 0.5, player.getZ() + 0.5, amount);
                 orb.getPersistentData().putBoolean(ActuallyAdditions.MODID + "FromSolidified", true);
                 world.addFreshEntity(orb);
