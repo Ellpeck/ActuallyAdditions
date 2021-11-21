@@ -23,6 +23,7 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTier;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -256,5 +257,9 @@ public final class ActuallyItems {
 
     public static Item.Properties defaultNonStacking() {
         return defaultProps().stacksTo(1);
+    }
+
+    public static void init(IEventBus evt) {
+        ITEMS.register(evt);
     }
 }

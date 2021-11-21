@@ -21,6 +21,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.common.ToolType;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -277,5 +278,10 @@ public final class ActuallyBlocks {
 
     public static AbstractBlock.Properties defaultPickProps(int harvestLevel) {
         return AbstractBlock.Properties.of(Material.STONE).harvestLevel(harvestLevel).harvestTool(ToolType.PICKAXE).strength(1.5F, 10.0F).sound(SoundType.STONE);
+    }
+
+    public static void init(IEventBus evt) {
+        BLOCKS.register(evt);
+        TILES.register(evt);
     }
 }
