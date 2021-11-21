@@ -12,12 +12,9 @@ package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerGrinder;
-import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityCrusher;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
@@ -26,9 +23,6 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-
-import java.io.IOException;
-import java.util.Collections;
 
 @OnlyIn(Dist.CLIENT)
 public class GuiGrinder extends GuiWtfMojang<ContainerGrinder> {
@@ -56,18 +50,18 @@ public class GuiGrinder extends GuiWtfMojang<ContainerGrinder> {
             ? 13
             : 42), this.topPos + 5, this.tileGrinder.storage);
 
-        if (this.isDouble) {
-            this.buttonAutoSplit = new GuiInputter.SmallerButton(0, this.leftPos - 10, this.topPos, "S");
-            this.addButton(this.buttonAutoSplit);
-        }
+//        if (this.isDouble) {
+//            this.buttonAutoSplit = new GuiInputter.SmallerButton(0, this.leftPos - 10, this.topPos, "S");
+//            this.addButton(this.buttonAutoSplit);
+//        }
     }
 
-    @Override
-    protected void actionPerformed(Button button) throws IOException {
-        if (this.isDouble && button.id == 0) {
-            PacketHandlerHelper.sendButtonPacket(this.tileGrinder, button.id);
-        }
-    }
+//    @Override
+//    protected void actionPerformed(Button button) throws IOException {
+//        if (this.isDouble && button.id == 0) {
+//            PacketHandlerHelper.sendButtonPacket(this.tileGrinder, button.id);
+//        }
+//    }
 
     @Override
     public void tick() {
@@ -85,12 +79,12 @@ public class GuiGrinder extends GuiWtfMojang<ContainerGrinder> {
         super.render(matrices, x, y, f);
         this.energy.render(matrices, x, y);
 
-        if (this.isDouble && this.buttonAutoSplit.isMouseOver()) {
-
-            this.drawHoveringText(Collections.singletonList(TextFormatting.BOLD + (this.tileGrinder.isAutoSplit
-                ? StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.autoSplitItems.on")
-                : StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.autoSplitItems.off"))), x, y);
-        }
+//        if (this.isDouble && this.buttonAutoSplit.isMouseOver()) {
+//
+//            this.drawHoveringText(Collections.singletonList(TextFormatting.BOLD + (this.tileGrinder.isAutoSplit
+//                ? StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.autoSplitItems.on")
+//                : StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.autoSplitItems.off"))), x, y);
+//        }
     }
 
     @Override

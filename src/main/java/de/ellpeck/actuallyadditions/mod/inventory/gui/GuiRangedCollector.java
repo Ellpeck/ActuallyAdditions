@@ -13,10 +13,8 @@ package de.ellpeck.actuallyadditions.mod.inventory.gui;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerRangedCollector;
-import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityRangedCollector;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
@@ -43,14 +41,14 @@ public class GuiRangedCollector extends GuiWtfMojang<ContainerRangedCollector> {
     public void init() {
         super.init();
 
-        this.filter = new FilterSettingsGui(this.collector.filter, this.leftPos + 3, this.topPos + 6, this.buttonList);
+        //this.filter = new FilterSettingsGui(this.collector.filter, this.leftPos + 3, this.topPos + 6, this.buttonList);
     }
 
     @Override
     public void render(MatrixStack matrices, int x, int y, float f) {
         super.render(matrices, x, y, f);
 
-        this.filter.drawHover(matrices, x, y);
+        //this.filter.drawHover(matrices, x, y);
     }
 
     @Override
@@ -76,8 +74,8 @@ public class GuiRangedCollector extends GuiWtfMojang<ContainerRangedCollector> {
         this.blit(matrices, this.leftPos, this.topPos, 0, 0, 176, 86);
     }
 
-    @Override
-    public void actionPerformed(Button button) {
-        PacketHandlerHelper.sendButtonPacket(this.collector, button.id);
-    }
+//    @Override
+//    public void actionPerformed(Button button) {
+//        PacketHandlerHelper.sendButtonPacket(this.collector, button.id);
+//    }
 }

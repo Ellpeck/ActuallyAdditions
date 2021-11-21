@@ -11,9 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.platform.GlStateManager;
-import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.fluid.Fluid;
@@ -21,16 +18,11 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.templates.FluidTank;
-import net.minecraftforge.fml.client.gui.GuiUtils;
-
-import java.text.NumberFormat;
-import java.util.Collections;
 
 @OnlyIn(Dist.CLIENT)
 public class FluidDisplay extends AbstractGui {
 
-    private FluidTank fluidReference;
+    private FluidStack fluidReference;
     private Fluid oldFluid;
 
     private int x;
@@ -41,15 +33,15 @@ public class FluidDisplay extends AbstractGui {
 
     private boolean drawTextNextTo;
 
-    public FluidDisplay(int x, int y, FluidTank fluidReference, boolean outline, boolean drawTextNextTo) {
+    public FluidDisplay(int x, int y, FluidStack fluidReference, boolean outline, boolean drawTextNextTo) {
         this.setData(x, y, fluidReference, outline, drawTextNextTo);
     }
 
-    public FluidDisplay(int x, int y, FluidTank fluidReference) {
+    public FluidDisplay(int x, int y, FluidStack fluidReference) {
         this(x, y, fluidReference, false, false);
     }
 
-    public void setData(int x, int y, FluidTank fluidReference, boolean outline, boolean drawTextNextTo) {
+    public void setData(int x, int y, FluidStack fluidReference, boolean outline, boolean drawTextNextTo) {
         this.x = x;
         this.y = y;
         this.fluidReference = fluidReference;
@@ -58,7 +50,7 @@ public class FluidDisplay extends AbstractGui {
     }
 
     public void draw(MatrixStack matrices) {
-        Minecraft mc = Minecraft.getInstance();
+/*        Minecraft mc = Minecraft.getInstance();
         mc.getTextureManager().bind(AssetUtil.GUI_INVENTORY_LOCATION);
 
         int barX = this.x;
@@ -101,7 +93,7 @@ public class FluidDisplay extends AbstractGui {
 
         if (this.drawTextNextTo) {
             this.drawString(mc.font, this.getOverlayText(), barX + 25, barY + 78, StringUtil.DECIMAL_COLOR_WHITE);
-        }
+        }*/
     }
 
     public void render(MatrixStack matrices, int mouseX, int mouseY) {
@@ -111,16 +103,17 @@ public class FluidDisplay extends AbstractGui {
             ? 93
             : 85)) {
             Minecraft mc = Minecraft.getInstance();
-            GuiUtils.drawHoveringText(Collections.singletonList(this.getOverlayText()), mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.font);
+            //GuiUtils.drawHoveringText(Collections.singletonList(this.getOverlayText()), mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.font);
         }
     }
 
     private String getOverlayText() {
-        NumberFormat format = NumberFormat.getInstance();
+/*        NumberFormat format = NumberFormat.getInstance();
         FluidStack stack = this.fluidReference.getFluid();
         String cap = format.format(this.fluidReference.getCapacity());
         return stack == null || stack.getFluid() == null
             ? "0/" + cap + " mB"
-            : format.format(this.fluidReference.getFluidAmount()) + "/" + cap + " mB " + stack.getLocalizedName();
+            : format.format(this.fluidReference.getFluidAmount()) + "/" + cap + " mB " + stack.getLocalizedName();*/
+        return "";
     }
 }

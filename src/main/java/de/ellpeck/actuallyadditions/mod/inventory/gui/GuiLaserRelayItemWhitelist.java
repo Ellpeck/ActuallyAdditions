@@ -14,7 +14,6 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerLaserRelayItemWhitelist;
-import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayItemAdvanced;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
@@ -22,12 +21,8 @@ import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @OnlyIn(Dist.CLIENT)
 public class GuiLaserRelayItemWhitelist extends GuiWtfMojang<ContainerLaserRelayItemWhitelist> {
@@ -60,30 +55,30 @@ public class GuiLaserRelayItemWhitelist extends GuiWtfMojang<ContainerLaserRelay
     public void init() {
         super.init();
 
-        this.leftFilter = new FilterSettingsGui(this.tile.leftFilter, this.leftPos + 3, this.topPos + 6, this.buttonList);
-        this.rightFilter = new FilterSettingsGui(this.tile.rightFilter, this.leftPos + 157, this.topPos + 6, this.buttonList);
-
-        this.buttonSmartWhitelistLeft = new Buttons.SmallerButton(2, this.leftPos + 3, this.topPos + 79, "S");
-        this.buttonSmartWhitelistRight = new Buttons.SmallerButton(3, this.leftPos + 157, this.topPos + 79, "S");
-        this.addButton(this.buttonSmartWhitelistLeft);
-        this.addButton(this.buttonSmartWhitelistRight);
+//        this.leftFilter = new FilterSettingsGui(this.tile.leftFilter, this.leftPos + 3, this.topPos + 6, this.buttonList);
+//        this.rightFilter = new FilterSettingsGui(this.tile.rightFilter, this.leftPos + 157, this.topPos + 6, this.buttonList);
+//
+//        this.buttonSmartWhitelistLeft = new Buttons.SmallerButton(2, this.leftPos + 3, this.topPos + 79, "S");
+//        this.buttonSmartWhitelistRight = new Buttons.SmallerButton(3, this.leftPos + 157, this.topPos + 79, "S");
+//        this.addButton(this.buttonSmartWhitelistLeft);
+//        this.addButton(this.buttonSmartWhitelistRight);
     }
-
-    @Override
-    public void actionPerformed(Button button) {
-        PacketHandlerHelper.sendButtonPacket(this.tile, button.id);
-    }
+//
+//    @Override
+//    public void actionPerformed(Button button) {
+//        PacketHandlerHelper.sendButtonPacket(this.tile, button.id);
+//    }
 
     @Override
     public void render(MatrixStack matrices, int x, int y, float f) {
         super.render(matrices, x, y, f);
-
-        if (this.buttonSmartWhitelistLeft.isMouseOver() || this.buttonSmartWhitelistRight.isMouseOver()) {
-            List<String> list = new ArrayList<>();
-            list.add(TextFormatting.BOLD + StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.smart"));
-            list.addAll(this.font.listFormattedStringToWidth(StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.smartInfo"), 200));
-            this.drawHoveringText(list, x, y);
-        }
+//
+//        if (this.buttonSmartWhitelistLeft.isMouseOver() || this.buttonSmartWhitelistRight.isMouseOver()) {
+//            List<String> list = new ArrayList<>();
+//            list.add(TextFormatting.BOLD + StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.smart"));
+//            list.addAll(this.font.listFormattedStringToWidth(StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.smartInfo"), 200));
+//            this.drawHoveringText(list, x, y);
+//        }
 
         this.leftFilter.drawHover(x, y);
         this.rightFilter.drawHover(x, y);

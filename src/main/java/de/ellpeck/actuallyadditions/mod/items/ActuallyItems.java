@@ -12,17 +12,17 @@ package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
-import de.ellpeck.actuallyadditions.mod.items.base.*;
+import de.ellpeck.actuallyadditions.mod.items.base.ItemArmorAA;
+import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
+import de.ellpeck.actuallyadditions.mod.items.base.ItemHoeAA;
+import de.ellpeck.actuallyadditions.mod.items.base.ItemSwordAA;
 import de.ellpeck.actuallyadditions.mod.items.lens.ItemLens;
-import de.ellpeck.actuallyadditions.mod.items.metalists.TheFoods;
 import de.ellpeck.actuallyadditions.mod.material.ArmorMaterials;
 import de.ellpeck.actuallyadditions.mod.material.ToolMaterials;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTier;
-import net.minecraft.item.Items;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -144,7 +144,7 @@ public final class ActuallyItems {
     public static final RegistryObject<Item> COFFEE = ITEMS.register("coffee", ItemCoffee::new);
     public static final RegistryObject<Item> PHANTOM_CONNECTOR = ITEMS.register("phantom_connector", ItemPhantomConnector::new);
     public static final RegistryObject<Item> RESONANT_RICE = ITEMS.register("resonant_rice", ItemResonantRice::new);
-    public static final RegistryObject<Item> FOOD = ITEMS.register("food", ItemFoods::new); //just... food?
+    public static final RegistryObject<Item> FOOD = ITEMS.register("food", ItemBase::new); //just... food? //TODO
     public static final RegistryObject<Item> JAM = ITEMS.register("jam", ItemJams::new);
     public static final RegistryObject<Item> KNIFE = ITEMS.register("knife", ItemKnife::new);
     public static final RegistryObject<Item> CRAFTER_ON_A_STICK = ITEMS.register("crafter_on_a_stick", ItemCrafterOnAStick::new);
@@ -160,10 +160,10 @@ public final class ActuallyItems {
     public static final RegistryObject<Item> HAIRY_BALL = ITEMS.register("hairy_ball", ItemHairBall::new);
     public static final RegistryObject<Item> COFFEE_BEANS = ITEMS.register("coffee_beans", ItemCoffeeBean::new);
 
-    public static final RegistryObject<Item> RICE_SEED = ITEMS.register("rice_seed", () -> new ItemSeed("seedRice", ActuallyBlocks.RICE.get(), FOOD.get(), TheFoods.RICE.ordinal()));
-    public static final RegistryObject<Item> CANOLA_SEED = ITEMS.register("canola_seed", () -> new ItemFoodSeed("seedCanola", ActuallyBlocks.CANOLA, itemMisc, 0, 1, 0.01F, 10).setPotionEffect(new PotionEffect(MobEffects.NAUSEA, 1000, 0), 0.2F));
-    public static final RegistryObject<Item> FLAX_SEED = ITEMS.register("flax_seed", () -> new ItemSeed("seedFlax", ActuallyBlocks.FLAX, Items.STRING, 0));
-    public static final RegistryObject<Item> COFFEE_SEED = ITEMS.register("coffee_seed", () -> new ItemSeed("seedCoffeeBeans", ActuallyBlocks.COFFEE, COFFEE_BEANS, 0));
+    public static final RegistryObject<Item> RICE_SEED = ITEMS.register("rice_seed", ItemBase::new); //() -> new ItemSeed("seedRice", ActuallyBlocks.RICE.get(), FOOD.get(), TheFoods.RICE.ordinal()));
+    public static final RegistryObject<Item> CANOLA_SEED = ITEMS.register("canola_seed", ItemBase::new); //() -> new ItemFoodSeed("seedCanola", ActuallyBlocks.CANOLA, itemMisc, 0, 1, 0.01F, 10).setPotionEffect(new PotionEffect(MobEffects.NAUSEA, 1000, 0), 0.2F));
+    public static final RegistryObject<Item> FLAX_SEED = ITEMS.register("flax_seed", ItemBase::new); //() -> new ItemSeed("seedFlax", ActuallyBlocks.FLAX, Items.STRING, 0));
+    public static final RegistryObject<Item> COFFEE_SEED = ITEMS.register("coffee_seed", ItemBase::new); //() -> new ItemSeed("seedCoffeeBeans", ActuallyBlocks.COFFEE, COFFEE_BEANS, 0));
 
     // TOOLS & ARMOR
     public static final RegistryObject<Item> HELM_QUARTZ = ITEMS.register("helm_quartz", () -> new ItemArmorAA(ArmorMaterials.QUARTZ, EquipmentSlotType.HEAD));
@@ -173,7 +173,7 @@ public final class ActuallyItems {
 
     public static final RegistryObject<Item> PICKAXE_QUARTZ = ITEMS.register("pickaxe_quartz", () -> new ItemPickaxeAA(ToolMaterials.BLACK_QUARTZ));
     public static final RegistryObject<Item> AXE_QUARTZ = ITEMS.register("axe_quartz", () -> new ItemAxeAA(ToolMaterials.BLACK_QUARTZ));
-    public static final RegistryObject<Item> SHOVEL_QUARTZ = ITEMS.register("shovel_quartz", () -> new ItemShovelAA(ToolMaterials.BLACK_QUARTZ));
+    public static final RegistryObject<Item> SHOVEL_QUARTZ = ITEMS.register("shovel_quartz", ItemBase::new); //() -> new ItemShovelAA(ToolMaterials.BLACK_QUARTZ));
     public static final RegistryObject<Item> SWORD_QUARTZ = ITEMS.register("sword_quartz", () -> new ItemSwordAA(ToolMaterials.BLACK_QUARTZ));
     public static final RegistryObject<Item> HOE_QUARTZ = ITEMS.register("hoe_quartz", () -> new ItemHoeAA(ToolMaterials.BLACK_QUARTZ));
     public static final RegistryObject<Item> WOODEN_PAXEL = ITEMS.register("wooden_paxel", () -> new AllInOneTool(ItemTier.WOOD));
@@ -186,7 +186,7 @@ public final class ActuallyItems {
 
     public static final RegistryObject<Item> PICKAXE_CRYSTAL_RESTONIA = ITEMS.register("pickaxe_crystal_restonia", () -> new ItemPickaxeAA(ToolMaterials.RESTONIA));
     public static final RegistryObject<Item> AXE_CRYSTAL_RESTONIA = ITEMS.register("axe_crystal_restonia", () -> new ItemAxeAA(ToolMaterials.RESTONIA));
-    public static final RegistryObject<Item> SHOVEL_CRYSTAL_RESTONIA = ITEMS.register("shovel_crystal_restonia", () -> new ItemShovelAA(ToolMaterials.RESTONIA));
+    public static final RegistryObject<Item> SHOVEL_CRYSTAL_RESTONIA = ITEMS.register("shovel_crystal_restonia", ItemBase::new); // () -> new ItemShovelAA(ToolMaterials.RESTONIA));
     public static final RegistryObject<Item> SWORD_CRYSTAL_RESTONIA = ITEMS.register("sword_crystal_restonia", () -> new ItemSwordAA(ToolMaterials.RESTONIA));
     public static final RegistryObject<Item> HOE_CRYSTAL_RESTONIA = ITEMS.register("hoe_crystal_restonia", () -> new ItemHoeAA(ToolMaterials.RESTONIA));
     public static final RegistryObject<Item> HELM_CRYSTAL_RESTONIA = ITEMS.register("helm_crystal_restonia", () -> new ItemArmorAA(ArmorMaterials.RESTONIA, EquipmentSlotType.HEAD));
@@ -197,7 +197,7 @@ public final class ActuallyItems {
 
     public static final RegistryObject<Item> PICKAXE_CRYSTAL_PALIS = ITEMS.register("pickaxe_crystal_palis", () -> new ItemPickaxeAA(ToolMaterials.PALIS));
     public static final RegistryObject<Item> AXE_CRYSTAL_PALIS = ITEMS.register("axe_crystal_palis", () -> new ItemAxeAA(ToolMaterials.PALIS));
-    public static final RegistryObject<Item> SHOVEL_CRYSTAL_PALIS = ITEMS.register("shovel_crystal_palis", () -> new ItemShovelAA(ToolMaterials.PALIS));
+    public static final RegistryObject<Item> SHOVEL_CRYSTAL_PALIS = ITEMS.register("shovel_crystal_palis", ItemBase::new); //() -> new ItemShovelAA(ToolMaterials.PALIS));
     public static final RegistryObject<Item> SWORD_CRYSTAL_PALIS = ITEMS.register("sword_crystal_palis", () -> new ItemSwordAA(ToolMaterials.PALIS));
     public static final RegistryObject<Item> HOE_CRYSTAL_PALIS = ITEMS.register("hoe_crystal_palis", () -> new ItemHoeAA(ToolMaterials.PALIS));
     public static final RegistryObject<Item> HELM_CRYSTAL_PALIS = ITEMS.register("helm_crystal_palis", () -> new ItemArmorAA(ArmorMaterials.PALIS, EquipmentSlotType.HEAD));
@@ -208,7 +208,7 @@ public final class ActuallyItems {
 
     public static final RegistryObject<Item> PICKAXE_CRYSTAL_DIAMATINE = ITEMS.register("pickaxe_crystal_diamatine", () -> new ItemPickaxeAA(ToolMaterials.DIAMATINE));
     public static final RegistryObject<Item> AXE_CRYSTAL_DIAMATINE = ITEMS.register("axe_crystal_diamatine", () -> new ItemAxeAA(ToolMaterials.DIAMATINE));
-    public static final RegistryObject<Item> SHOVEL_CRYSTAL_DIAMATINE = ITEMS.register("shovel_crystal_diamatine", () -> new ItemShovelAA(ToolMaterials.DIAMATINE));
+    public static final RegistryObject<Item> SHOVEL_CRYSTAL_DIAMATINE = ITEMS.register("shovel_crystal_diamatine", ItemBase::new); //() -> new ItemShovelAA(ToolMaterials.DIAMATINE));
     public static final RegistryObject<Item> SWORD_CRYSTAL_DIAMATINE = ITEMS.register("sword_crystal_diamatine", () -> new ItemSwordAA(ToolMaterials.DIAMATINE));
     public static final RegistryObject<Item> HOE_CRYSTAL_DIAMATINE = ITEMS.register("hoe_crystal_diamatine", () -> new ItemHoeAA(ToolMaterials.DIAMATINE));
     public static final RegistryObject<Item> HELM_CRYSTAL_DIAMATINE = ITEMS.register("helm_crystal_diamatine", () -> new ItemArmorAA(ArmorMaterials.DIAMATINE, EquipmentSlotType.HEAD));
@@ -219,7 +219,7 @@ public final class ActuallyItems {
 
     public static final RegistryObject<Item> PICKAXE_CRYSTAL_VOID = ITEMS.register("pickaxe_crystal_void", () -> new ItemPickaxeAA(ToolMaterials.VOID));
     public static final RegistryObject<Item> AXE_CRYSTAL_VOID = ITEMS.register("axe_crystal_void", () -> new ItemAxeAA(ToolMaterials.VOID));
-    public static final RegistryObject<Item> SHOVEL_CRYSTAL_VOID = ITEMS.register("shovel_crystal_void", () -> new ItemShovelAA(ToolMaterials.VOID));
+    public static final RegistryObject<Item> SHOVEL_CRYSTAL_VOID = ITEMS.register("shovel_crystal_void", ItemBase::new); // () -> new ItemShovelAA(ToolMaterials.VOID));
     public static final RegistryObject<Item> SWORD_CRYSTAL_VOID = ITEMS.register("sword_crystal_void", () -> new ItemSwordAA(ToolMaterials.VOID));
     public static final RegistryObject<Item> HOE_CRYSTAL_VOID = ITEMS.register("hoe_crystal_void", () -> new ItemHoeAA(ToolMaterials.VOID));
     public static final RegistryObject<Item> HELM_CRYSTAL_VOID = ITEMS.register("helm_crystal_void", () -> new ItemArmorAA(ArmorMaterials.VOID, EquipmentSlotType.HEAD));
@@ -230,7 +230,7 @@ public final class ActuallyItems {
 
     public static final RegistryObject<Item> PICKAXE_CRYSTAL_EMERADIC = ITEMS.register("pickaxe_crystal_emeradic", () -> new ItemPickaxeAA(ToolMaterials.EMERADIC));
     public static final RegistryObject<Item> AXE_CRYSTAL_EMERADIC = ITEMS.register("axe_crystal_emeradic", () -> new ItemAxeAA(ToolMaterials.EMERADIC));
-    public static final RegistryObject<Item> SHOVEL_CRYSTAL_EMERADIC = ITEMS.register("shovel_crystal_emeradic", () -> new ItemShovelAA(ToolMaterials.EMERADIC));
+    public static final RegistryObject<Item> SHOVEL_CRYSTAL_EMERADIC = ITEMS.register("shovel_crystal_emeradic", ItemBase::new); //() -> new ItemShovelAA(ToolMaterials.EMERADIC));
     public static final RegistryObject<Item> SWORD_CRYSTAL_EMERADIC = ITEMS.register("sword_crystal_emeradic", () -> new ItemSwordAA(ToolMaterials.EMERADIC));
     public static final RegistryObject<Item> HOE_CRYSTAL_EMERADIC = ITEMS.register("hoe_crystal_emeradic", () -> new ItemHoeAA(ToolMaterials.EMERADIC));
     public static final RegistryObject<Item> HELM_CRYSTAL_EMERADIC = ITEMS.register("helm_crystal_emeradic", () -> new ItemArmorAA(ArmorMaterials.DIAMATINE, EquipmentSlotType.HEAD));
@@ -241,7 +241,7 @@ public final class ActuallyItems {
 
     public static final RegistryObject<Item> PICKAXE_CRYSTAL_ENORI = ITEMS.register("pickaxe_crystal_enori", () -> new ItemPickaxeAA(ToolMaterials.ENORI));
     public static final RegistryObject<Item> AXE_CRYSTAL_ENORI = ITEMS.register("axe_crystal_enori", () -> new ItemAxeAA(ToolMaterials.ENORI));
-    public static final RegistryObject<Item> SHOVEL_CRYSTAL_ENORI = ITEMS.register("shovel_crystal_enori", () -> new ItemShovelAA(ToolMaterials.ENORI));
+    public static final RegistryObject<Item> SHOVEL_CRYSTAL_ENORI = ITEMS.register("shovel_crystal_enori", ItemBase::new); //() -> new ItemShovelAA(ToolMaterials.ENORI));
     public static final RegistryObject<Item> SWORD_CRYSTAL_ENORI = ITEMS.register("sword_crystal_enori", () -> new ItemSwordAA(ToolMaterials.ENORI));
     public static final RegistryObject<Item> HOE_CRYSTAL_ENORI = ITEMS.register("hoe_crystal_enori", () -> new ItemHoeAA(ToolMaterials.ENORI));
     public static final RegistryObject<Item> HELM_CRYSTAL_ENORI = ITEMS.register("helm_crystal_enori", () -> new ItemArmorAA(ArmorMaterials.ENORI, EquipmentSlotType.HEAD));

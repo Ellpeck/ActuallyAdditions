@@ -12,12 +12,9 @@ package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFurnaceDouble;
-import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityPoweredFurnace;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
@@ -26,9 +23,6 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-
-import java.io.IOException;
-import java.util.Collections;
 
 @OnlyIn(Dist.CLIENT)
 public class GuiFurnaceDouble extends GuiWtfMojang<ContainerFurnaceDouble> {
@@ -51,11 +45,11 @@ public class GuiFurnaceDouble extends GuiWtfMojang<ContainerFurnaceDouble> {
         super.render(matrices, x, y, f);
         this.energy.render(matrices, x, y);
 
-        if (this.buttonAutoSplit.isMouseOver(x, y)) {
-            this.drawHoveringText(Collections.singletonList(TextFormatting.BOLD + (this.tileFurnace.isAutoSplit
-                ? StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.autoSplitItems.on")
-                : StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.autoSplitItems.off"))), x, y);
-        }
+//        if (this.buttonAutoSplit.isMouseOver(x, y)) {
+//            this.drawHoveringText(Collections.singletonList(TextFormatting.BOLD + (this.tileFurnace.isAutoSplit
+//                ? StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.autoSplitItems.on")
+//                : StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.autoSplitItems.off"))), x, y);
+//        }
     }
 
     @Override
@@ -63,8 +57,8 @@ public class GuiFurnaceDouble extends GuiWtfMojang<ContainerFurnaceDouble> {
         super.init();
         this.energy = new EnergyDisplay(this.leftPos + 27, this.topPos + 5, this.tileFurnace.storage);
 
-        this.buttonAutoSplit = new GuiInputter.SmallerButton(0, this.leftPos, this.topPos, "S");
-        this.addButton(this.buttonAutoSplit);
+//        this.buttonAutoSplit = new GuiInputter.SmallerButton(0, this.leftPos, this.topPos, "S");
+//        this.addButton(this.buttonAutoSplit);
     }
 
 
@@ -77,12 +71,12 @@ public class GuiFurnaceDouble extends GuiWtfMojang<ContainerFurnaceDouble> {
             : TextFormatting.RED));
     }
 
-    @Override
-    protected void actionPerformed(Button button) throws IOException {
-        if (button.id == 0) {
-            PacketHandlerHelper.sendButtonPacket(this.tileFurnace, button.id);
-        }
-    }
+//    @Override
+//    protected void actionPerformed(Button button) throws IOException {
+//        if (button.id == 0) {
+//            PacketHandlerHelper.sendButtonPacket(this.tileFurnace, button.id);
+//        }
+//    }
 
     @Override
     public void renderLabels(MatrixStack matrices, int x, int y) {

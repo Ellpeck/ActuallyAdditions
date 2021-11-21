@@ -15,21 +15,15 @@ import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.api.recipe.WeightedOre;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
-import de.ellpeck.actuallyadditions.mod.recipe.CrusherRecipeRegistry;
-import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.NetherrackBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.common.util.FakePlayerFactory;
+import net.minecraftforge.common.Tags;
 
 import java.util.List;
 
@@ -125,7 +119,7 @@ public class LensMining extends Lens {
 
                 List<WeightedOre> ores = null;
                 Block hitBlock = hitState.getBlock();
-                if (hitBlock instanceof BlockStone) {
+                if (hitBlock.is(Tags.Blocks.STONE)) { //TODO maybe?
                     ores = ActuallyAdditionsAPI.STONE_ORES;
                 } else if (hitBlock instanceof NetherrackBlock) {
                     ores = ActuallyAdditionsAPI.NETHERRACK_ORES;
@@ -139,7 +133,7 @@ public class LensMining extends Lens {
                     boolean found = false;
                     while (!found) {
                         WeightedOre ore = WeightedRandom.getRandomItem(tile.getWorldObject().random, ores, totalWeight);
-                        if (ore != null) {
+/*                        if (ore != null) {
                             List<ItemStack> stacks = OreDictionary.getOres(ore.name, false);
                             if (stacks != null && !stacks.isEmpty()) {
                                 for (ItemStack aStack : stacks) {
@@ -154,19 +148,19 @@ public class LensMining extends Lens {
                                     }
                                 }
                             }
-                        }
+                        }*/
                     }
 
                     if (tile.getEnergy() >= adaptedUse) {
                         Block block = Block.byItem(stack.getItem());
-                        if (block != Blocks.AIR) {
+/*                        if (block != Blocks.AIR) {
                             BlockState state = block.getStateForPlacement(tile.getWorldObject(), hitPos, Direction.UP, 0, 0, 0, stack.getMetadata(), FakePlayerFactory.getMinecraft((WorldServer) tile.getWorldObject()), Hand.MAIN_HAND);
                             tile.getWorldObject().setBlock(hitPos, state, 2);
 
                             tile.getWorldObject().levelEvent(2001, hitPos, Block.getId(state));
 
                             tile.extractEnergy(adaptedUse);
-                        }
+                        }*/
                     }
                 }
             }

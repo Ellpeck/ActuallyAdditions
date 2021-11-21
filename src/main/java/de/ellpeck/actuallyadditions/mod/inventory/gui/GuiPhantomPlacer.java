@@ -12,23 +12,14 @@ package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerPhantomPlacer;
-import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityPhantomPlacer;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 @OnlyIn(Dist.CLIENT)
 public class GuiPhantomPlacer extends GuiWtfMojang<ContainerPhantomPlacer> {
@@ -47,44 +38,44 @@ public class GuiPhantomPlacer extends GuiWtfMojang<ContainerPhantomPlacer> {
     public void init() {
         super.init();
 
-        if (!this.placer.isBreaker) {
-            this.addButton(new Button(0, this.leftPos + 63, this.topPos + 75, 50, 20, this.getSide()));
-        }
+//        if (!this.placer.isBreaker) {
+//            this.addButton(new Button(0, this.leftPos + 63, this.topPos + 75, 50, 20, this.getSide()));
+//        }
     }
 
     @Override
     public void tick() {
         super.tick();
 
-        if (!this.placer.isBreaker) {
-            this.buttonList.get(0).displayString = this.getSide();
-        }
+//        if (!this.placer.isBreaker) {
+//            this.buttonList.get(0).displayString = this.getSide();
+//        }
     }
 
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float partialTicks) {
         super.render(matrices, mouseX, mouseY, partialTicks);
 
-        if (!this.placer.isBreaker && this.buttonList.get(0).isMouseOver()) {
-            String loc = "info." + ActuallyAdditions.MODID + ".placer.sides";
-
-            List<String> textList = new ArrayList<>();
-            textList.add(TextFormatting.GOLD + StringUtil.localize(loc + ".1"));
-            textList.addAll(this.font.listFormattedStringToWidth(StringUtil.localize(loc + ".2"), 200));
-            this.drawHoveringText(textList, mouseX, mouseY);
-        }
+//        if (!this.placer.isBreaker && this.buttonList.get(0).isMouseOver()) {
+//            String loc = "info." + ActuallyAdditions.MODID + ".placer.sides";
+//
+//            List<String> textList = new ArrayList<>();
+//            textList.add(TextFormatting.GOLD + StringUtil.localize(loc + ".1"));
+//            textList.addAll(this.font.listFormattedStringToWidth(StringUtil.localize(loc + ".2"), 200));
+//            this.drawHoveringText(textList, mouseX, mouseY);
+//        }
     }
 
-    @Override
-    protected void actionPerformed(Button button) throws IOException {
-        if (!this.placer.isBreaker) {
-            PacketHandlerHelper.sendButtonPacket(this.placer, button.id);
-        }
-    }
+//    @Override
+//    protected void actionPerformed(Button button) throws IOException {
+//        if (!this.placer.isBreaker) {
+//            PacketHandlerHelper.sendButtonPacket(this.placer, button.id);
+//        }
+//    }
 
-    private String getSide() {
-        return GuiInputter.SIDES[this.placer.side + 1];
-    }
+//    private String getSide() {
+//        return GuiInputter.SIDES[this.placer.side + 1];
+//    }
 
     @Override
     public void renderLabels(MatrixStack matrices, int x, int y) {

@@ -13,11 +13,9 @@ package de.ellpeck.actuallyadditions.mod.inventory.gui;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerMiner;
-import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityVerticalDigger;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
@@ -42,13 +40,13 @@ public class GuiMiner extends GuiWtfMojang<ContainerMiner> {
     public void init() {
         super.init();
 
-        Button buttonMode = new Button(this.leftPos + this.imageWidth / 2 - 51, this.topPos + 75, 50, 20, "Mode", button -> {
-        });
-        this.addButton(buttonMode);
-
-        Button buttonReset = new Button(this.leftPos + this.imageWidth / 2 + 1, this.topPos + 75, 50, 20, "Reset", button -> {
-        });
-        this.addButton(buttonReset);
+//        Button buttonMode = new Button(this.leftPos + this.imageWidth / 2 - 51, this.topPos + 75, 50, 20, "Mode", button -> {
+//        });
+//        this.addButton(buttonMode);
+//
+//        Button buttonReset = new Button(this.leftPos + this.imageWidth / 2 + 1, this.topPos + 75, 50, 20, "Reset", button -> {
+//        });
+//        this.addButton(buttonReset);
     }
 
     @Override
@@ -72,8 +70,8 @@ public class GuiMiner extends GuiWtfMojang<ContainerMiner> {
         this.font.draw(matrices, mining, this.leftPos + this.imageWidth / 2 - this.font.width(mining) / 2, this.topPos + 8, StringUtil.DECIMAL_COLOR_GRAY_TEXT);
     }
 
-    @Override
-    public void actionPerformed(Button button) {
-        PacketHandlerHelper.sendButtonPacket(this.miner, button.id);
-    }
+//    @Override
+//    public void actionPerformed(Button button) {
+//        PacketHandlerHelper.sendButtonPacket(this.miner, button.id);
+//    }
 }

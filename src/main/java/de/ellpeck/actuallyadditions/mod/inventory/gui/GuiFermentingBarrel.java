@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.systems.RenderSystem;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFermentingBarrel;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityFermentingBarrel;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
@@ -46,8 +47,8 @@ public class GuiFermentingBarrel extends GuiWtfMojang<ContainerFermentingBarrel>
     @Override
     public void init() {
         super.init();
-        this.input = new FluidDisplay(this.leftPos + 60, this.topPos + 5, this.press.canolaTank);
-        this.output = new FluidDisplay(this.leftPos + 98, this.topPos + 5, this.press.oilTank);
+        this.input = new FluidDisplay(this.leftPos + 60, this.topPos + 5, this.press.tanks.canolaTank);
+        this.output = new FluidDisplay(this.leftPos + 98, this.topPos + 5, this.press.tanks.oilTank);
     }
 
     @Override

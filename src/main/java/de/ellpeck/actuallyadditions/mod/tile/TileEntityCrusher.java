@@ -15,7 +15,6 @@ import de.ellpeck.actuallyadditions.mod.crafting.CrushingRecipe;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerGrinder;
 import de.ellpeck.actuallyadditions.mod.misc.SoundHandler;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
-import de.ellpeck.actuallyadditions.mod.recipe.CrusherRecipeRegistry;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
@@ -177,7 +176,7 @@ public class TileEntityCrusher extends TileEntityInventoryBase implements IButto
 
     @Override
     public IAcceptor getAcceptor() {
-        return (slot, stack, automation) -> !automation || (slot == SLOT_INPUT_1 || slot == SLOT_INPUT_2) && CrusherRecipeRegistry.getRecipeFromInput(stack) != null;
+        return (slot, stack, automation) -> !automation || (slot == SLOT_INPUT_1 || slot == SLOT_INPUT_2); /*CrusherRecipeRegistry.getRecipeFromInput(stack) != null*/ //TODO
     }
 
     @Override

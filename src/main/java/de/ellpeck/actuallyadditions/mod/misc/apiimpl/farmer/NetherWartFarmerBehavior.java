@@ -52,7 +52,7 @@ public class NetherWartFarmerBehavior implements IFarmerBehavior {
             if (state.getBlock() instanceof NetherWartBlock) {
                 if (state.getValue(BlockStateProperties.AGE_3) >= 3) {
                     NonNullList<ItemStack> drops = NonNullList.create();
-                    state.getBlock().getDrops(drops, world, pos, state, 0);
+                    //state.getBlock().getDrops(drops, world, pos, state, 0);
                     if (!drops.isEmpty()) {
                         boolean toInput = farmer.canAddToSeeds(drops);
                         if (toInput || farmer.canAddToOutput(drops)) {

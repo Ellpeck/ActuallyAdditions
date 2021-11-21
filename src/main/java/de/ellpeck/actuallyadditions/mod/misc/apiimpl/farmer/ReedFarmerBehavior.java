@@ -55,7 +55,7 @@ public class ReedFarmerBehavior implements IFarmerBehavior {
                         BlockState upState = world.getBlockState(up);
                         if (upState.getBlock() instanceof SugarCaneBlock) {
                             NonNullList<ItemStack> drops = NonNullList.create();
-                            upState.getBlock().getDrops(drops, world, pos, state, 0);
+                            //upState.getBlock().getDrops(drops, world, pos, state, 0);
 
                             if (!drops.isEmpty()) {
                                 if (farmer.canAddToOutput(drops)) {

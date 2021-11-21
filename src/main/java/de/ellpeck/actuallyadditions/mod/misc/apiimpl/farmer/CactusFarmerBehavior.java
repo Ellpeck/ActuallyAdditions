@@ -62,7 +62,7 @@ public class CactusFarmerBehavior implements IFarmerBehavior {
                         BlockState upState = world.getBlockState(up);
                         if (upState.getBlock() == Blocks.CACTUS) {
                             NonNullList<ItemStack> drops = NonNullList.create();
-                            upState.getBlock().getDrops(drops, world, up, upState, 0);
+                            //upState.getBlock().getDrops(drops, world, up, upState, 0);
 
                             if (!drops.isEmpty()) {
                                 if (farmer.canAddToOutput(drops)) {

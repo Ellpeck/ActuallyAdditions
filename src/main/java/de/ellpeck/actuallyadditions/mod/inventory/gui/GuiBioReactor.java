@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.systems.RenderSystem;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerBioReactor;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBioReactor;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
@@ -41,7 +42,7 @@ public class GuiBioReactor extends GuiWtfMojang<ContainerBioReactor> {
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float partialTicks) {
         super.render(matrices, mouseX, mouseY, partialTicks);
-        this.energy.render(mouseX, mouseY);
+        //this.energy.render(mouseX, mouseY);
     }
 
     @Override
@@ -68,6 +69,6 @@ public class GuiBioReactor extends GuiWtfMojang<ContainerBioReactor> {
             drawCenteredString(matrices, this.font, this.tile.producePerTick + " " + I18n.get("actuallyadditions.cft"), this.leftPos + 87, this.topPos + 86, 0xFFFFFF);
         }
 
-        this.energy.draw();
+        //this.energy.draw();
     }
 }

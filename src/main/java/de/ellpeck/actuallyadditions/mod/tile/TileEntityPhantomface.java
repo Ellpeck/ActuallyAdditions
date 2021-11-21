@@ -30,8 +30,6 @@ import net.minecraftforge.common.util.LazyOptional;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
-
 public abstract class TileEntityPhantomface extends TileEntityInventoryBase implements IPhantomTile {
     public static final int RANGE = 16;
     public BlockPos boundPosition;
@@ -176,7 +174,7 @@ public abstract class TileEntityPhantomface extends TileEntityInventoryBase impl
         this.boundPosition = pos;
     }
 
-    @Override
+    //@Override
     public int getGuiID() {
         return -1;
     }

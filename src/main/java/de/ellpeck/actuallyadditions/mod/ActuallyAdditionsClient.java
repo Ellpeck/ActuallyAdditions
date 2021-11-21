@@ -49,7 +49,6 @@ public class ActuallyAdditionsClient {
         ScreenManager.register(ActuallyContainers.FLUID_COLLECTOR_CONTAINER.get(), GuiFluidCollector::new);
         ScreenManager.register(ActuallyContainers.FURNACE_DOUBLE_CONTAINER.get(), GuiFurnaceDouble::new);
         ScreenManager.register(ActuallyContainers.GRINDER_CONTAINER.get(), GuiGrinder::new);
-        ScreenManager.register(ActuallyContainers.INPUTTER_CONTAINER.get(), GuiInputter::new);
         ScreenManager.register(ActuallyContainers.LASER_RELAY_ITEM_WHITELIST_CONTAINER.get(), GuiLaserRelayItemWhitelist::new);
         ScreenManager.register(ActuallyContainers.MINER_CONTAINER.get(), GuiMiner::new);
         ScreenManager.register(ActuallyContainers.OIL_GENERATOR_CONTAINER.get(), GuiOilGenerator::new);

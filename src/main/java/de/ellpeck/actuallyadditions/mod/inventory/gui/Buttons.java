@@ -1,13 +1,12 @@
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -31,30 +30,33 @@ public class Buttons {
 
         @Override
         public void render(MatrixStack matrices, int x, int y, float f) {
+            /*
             if (this.visible) {
                 Minecraft.getInstance().getTextureManager().bind(this.resLoc);
                 RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
                 this.isHovered = x >= this.x && y >= this.y && x < this.x + this.width && y < this.y + this.height;
-                int k = this.getHoverState(this.hovered);
+                //int k = this.getHoverState(this.hovered);
                 GlStateManager._enableBlend();
                 GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
                 GlStateManager._blendFunc(770, 771);
                 this.blit(matrices, this.x, this.y, this.smaller
                     ? 200
                     : 176, k * this.height, this.width, this.height);
-                this.mouseDragged(mc, x, y);
+                //this.mouseDragged(mc, x, y);
 
                 int color = 14737632;
                 if (this.packedFGColour != 0) {
                     color = this.packedFGColour;
                 } else if (!this.enabled) {
                     color = 10526880;
-                } else if (this.hovered) {
+                } else if (this.isHovered) {
                     color = 16777120;
                 }
 
-                this.drawCenteredString(mc.fontRenderer, this.displayString, this.x + this.width / 2, this.y + (this.height - 8) / 2, color);
+                //this.drawCenteredString(Minecraft.getInstance().font, this.getMessage().getString(), this.x + this.width / 2, this.y + (this.height - 8) / 2, color);
             }
+
+             */
         }
     }
 
@@ -64,22 +66,22 @@ public class Buttons {
         public final ResourceLocation resLoc = AssetUtil.getGuiLocation("gui_inputter");
 
         public TinyButton(int id, int x, int y) {
-            super(id, x, y, 8, 8, "");
+            super(x, y, 8, 8, new StringTextComponent(""), Button::onPress);
         }
 
-        @Override
+        //@Override
         public void drawButton(Minecraft mc, int x, int y, float f) {
-            if (this.visible) {
-                mc.getTextureManager().bind(this.resLoc);
-                RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-                this.hovered = x >= this.x && y >= this.y && x < this.x + this.width && y < this.y + this.height;
-                int k = this.getHoverState(this.hovered);
-                GlStateManager._enableBlend();
-                GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
-                GlStateManager._blendFunc(770, 771);
-                this.blit(matrices, this.x, this.y, 192, k * 8, 8, 8);
-                this.mouseDragged(mc, x, y);
-            }
+//            if (this.visible) {
+//                mc.getTextureManager().bind(this.resLoc);
+//                RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+//                this.hovered = x >= this.x && y >= this.y && x < this.x + this.width && y < this.y + this.height;
+//                int k = this.getHoverState(this.hovered);
+//                GlStateManager._enableBlend();
+//                GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+//                GlStateManager._blendFunc(770, 771);
+//                this.blit(matrices, this.x, this.y, 192, k * 8, 8, 8);
+//                this.mouseDragged(mc, x, y);
+//            }
         }
     }
 }

@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.systems.RenderSystem;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFeeder;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityFeeder;
@@ -21,8 +22,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-
-import java.util.Arrays;
 
 @OnlyIn(Dist.CLIENT)
 public class GuiFeeder extends GuiWtfMojang<ContainerFeeder> {
@@ -46,7 +45,7 @@ public class GuiFeeder extends GuiWtfMojang<ContainerFeeder> {
                 : this.tileFeeder.currentAnimalAmount >= TileEntityFeeder.THRESHOLD
                     ? StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.tooMany")
                     : StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.notEnough")};
-            this.drawHoveringText(Arrays.asList(array), x, y);
+            //this.drawHoveringText(Arrays.asList(array), x, y);
         }
     }
 

@@ -58,7 +58,7 @@ public class MelonPumpkinFarmerBehavior implements IFarmerBehavior {
             Block block = state.getBlock();
             if (block == Blocks.PUMPKIN || block == Blocks.MELON) {
                 NonNullList<ItemStack> drops = NonNullList.create();
-                block.getDrops(drops, world, pos, state, 0);
+                //block.getDrops(drops, world, pos, state, 0);
                 if (!drops.isEmpty()) {
                     if (farmer.canAddToOutput(drops)) {
                         world.levelEvent(2001, pos, Block.getId(state));

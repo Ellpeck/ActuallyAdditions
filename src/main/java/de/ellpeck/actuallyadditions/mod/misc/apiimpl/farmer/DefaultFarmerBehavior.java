@@ -97,7 +97,7 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
         List<ItemStack> seeds = new ArrayList<>();
         List<ItemStack> other = new ArrayList<>();
         NonNullList<ItemStack> drops = NonNullList.create();
-        state.getBlock().getDrops(drops, world, pos, state, 0);
+        //state.getBlock().getDrops(drops, world, pos, state, 0);
         for (ItemStack stack : drops) {
             if (this.getPlantableFromStack(stack) != null) {
                 seeds.add(stack);
@@ -177,7 +177,7 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
         if (!player.mayUseItemAt(pos.relative(Direction.UP), Direction.UP, itemstack)) {
             return ActionResultType.FAIL;
         } else {
-            int hook = net.minecraftforge.event.ForgeEventFactory.onHoeUse(itemstack, player, world, pos);
+ /*           int hook = net.minecraftforge.event.ForgeEventFactory.onHoeUse(itemstack, player, world, pos);
             if (hook != 0) {
                 return hook > 0
                     ? ActionResultType.SUCCESS
@@ -205,7 +205,7 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
                     }
                 }
             }
-
+*/
             return ActionResultType.PASS;
         }
     }

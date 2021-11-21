@@ -30,7 +30,6 @@ public class ActuallyContainers {
     public static final RegistryObject<ContainerType<ContainerFluidCollector>> FLUID_COLLECTOR_CONTAINER = CONTAINERS.register("fluid_collector_container", () -> IForgeContainerType.create(ContainerFluidCollector::fromNetwork));
     public static final RegistryObject<ContainerType<ContainerFurnaceDouble>> FURNACE_DOUBLE_CONTAINER = CONTAINERS.register("furnace_double_container", () -> IForgeContainerType.create(ContainerFurnaceDouble::fromNetwork));
     public static final RegistryObject<ContainerType<ContainerGrinder>> GRINDER_CONTAINER = CONTAINERS.register("grinder_container", () -> IForgeContainerType.create(ContainerGrinder::fromNetwork));
-    public static final RegistryObject<ContainerType<ContainerInputter>> INPUTTER_CONTAINER = CONTAINERS.register("inputter_container", () -> IForgeContainerType.create(ContainerInputter::fromNetwork));
     public static final RegistryObject<ContainerType<ContainerLaserRelayItemWhitelist>> LASER_RELAY_ITEM_WHITELIST_CONTAINER = CONTAINERS.register("laser_relay_item_whitelist_container", () -> IForgeContainerType.create(ContainerLaserRelayItemWhitelist::fromNetwork));
     public static final RegistryObject<ContainerType<ContainerMiner>> MINER_CONTAINER = CONTAINERS.register("miner_container", () -> IForgeContainerType.create(ContainerMiner::fromNetwork));
     public static final RegistryObject<ContainerType<ContainerOilGenerator>> OIL_GENERATOR_CONTAINER = CONTAINERS.register("oil_generator_container", () -> IForgeContainerType.create(ContainerOilGenerator::fromNetwork));

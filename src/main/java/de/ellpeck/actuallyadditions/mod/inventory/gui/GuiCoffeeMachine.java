@@ -14,18 +14,14 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerCoffeeMachine;
-import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityCoffeeMachine;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-
-import java.util.Collections;
 
 @OnlyIn(Dist.CLIENT)
 public class GuiCoffeeMachine extends GuiWtfMojang<ContainerCoffeeMachine> {
@@ -47,11 +43,11 @@ public class GuiCoffeeMachine extends GuiWtfMojang<ContainerCoffeeMachine> {
     public void init() {
         super.init();
 
-        Button buttonOkay = new Button(this.leftPos + 60, this.topPos + 11, 58, 20, StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.ok"));
-        this.addButton(buttonOkay);
-
-        this.energy = new EnergyDisplay(this.leftPos + 16, this.topPos + 5, this.machine.storage);
-        this.fluid = new FluidDisplay(this.leftPos - 30, this.topPos + 1, this.machine.tank, true, false);
+//        Button buttonOkay = new Button(this.leftPos + 60, this.topPos + 11, 58, 20, StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.ok"));
+//        this.addButton(buttonOkay);
+//
+//        this.energy = new EnergyDisplay(this.leftPos + 16, this.topPos + 5, this.machine.storage);
+//        this.fluid = new FluidDisplay(this.leftPos - 30, this.topPos + 1, this.machine.tank, true, false);
     }
 
     @Override
@@ -60,7 +56,7 @@ public class GuiCoffeeMachine extends GuiWtfMojang<ContainerCoffeeMachine> {
 
         String text2 = this.machine.coffeeCacheAmount + "/" + TileEntityCoffeeMachine.COFFEE_CACHE_MAX_AMOUNT + " " + StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.coffee");
         if (x >= this.leftPos + 40 && y >= this.topPos + 25 && x <= this.leftPos + 49 && y <= this.topPos + 56) {
-            this.drawHoveringText(Collections.singletonList(text2), x, y);
+            //this.drawHoveringText(Collections.singletonList(text2), x, y);
         }
 
         this.energy.render(matrices, x, y);
@@ -99,8 +95,8 @@ public class GuiCoffeeMachine extends GuiWtfMojang<ContainerCoffeeMachine> {
         this.fluid.draw(matrices);
     }
 
-    @Override
-    public void actionPerformed(Button button) {
-        PacketHandlerHelper.sendButtonPacket(this.machine, button.id);
-    }
+//    @Override
+//    public void actionPerformed(Button button) {
+//        PacketHandlerHelper.sendButtonPacket(this.machine, button.id);
+//    }
 }

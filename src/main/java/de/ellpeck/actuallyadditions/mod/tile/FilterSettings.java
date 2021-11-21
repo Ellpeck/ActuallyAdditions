@@ -18,7 +18,6 @@ import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import org.apache.commons.lang3.ArrayUtils;
 
 public class FilterSettings {
 
@@ -86,46 +85,43 @@ public class FilterSettings {
             return true;
         }
 
-        if (oredict != 0) {
-            int[] firstIds = OreDictionary.getOreIDs(first);
-            int[] secondIds = OreDictionary.getOreIDs(second);
-            boolean firstEmpty = ArrayUtils.isEmpty(firstIds);
-            boolean secondEmpty = ArrayUtils.isEmpty(secondIds);
-
-            //Both empty, meaning none has OreDict entries, so they are equal
-            if (firstEmpty && secondEmpty) {
-                return true;
-            }
-            //Only one empty, meaning they are not equal
-            else if (firstEmpty || secondEmpty) {
-                return false;
-            } else {
-                for (int id : firstIds) {
-                    if (ArrayUtils.contains(secondIds, id)) {
-                        //Needs to match only one id, so return true on first match
-                        if (oredict == 1) {
-                            return true;
-                        }
-                    }
-                    //Needs to match every id, so just return false when no match
-                    else if (oredict == 2) {
-                        return false;
-                    }
-
-                }
-                //If oredict mode 1, this will fail because nothing matched
-                //If oredict mode 2, this will mean nothing hasn't matched
-                return oredict == 2;
-            }
-        }
+//        if (oredict != 0) {
+//            boolean firstEmpty = ArrayUtils.isEmpty(firstIds);
+//            boolean secondEmpty = ArrayUtils.isEmpty(secondIds);
+//
+//            //Both empty, meaning none has OreDict entries, so they are equal
+//            if (firstEmpty && secondEmpty) {
+//                return true;
+//            }
+//            //Only one empty, meaning they are not equal
+//            else if (firstEmpty || secondEmpty) {
+//                return false;
+//            } else {
+//                for (int id : firstIds) {
+//                    if (ArrayUtils.contains(secondIds, id)) {
+//                        //Needs to match only one id, so return true on first match
+//                        if (oredict == 1) {
+//                            return true;
+//                        }
+//                    }
+//                    //Needs to match every id, so just return false when no match
+//                    else if (oredict == 2) {
+//                        return false;
+//                    }
+//
+//                }
+//                //If oredict mode 1, this will fail because nothing matched
+//                //If oredict mode 2, this will mean nothing hasn't matched
+//                return oredict == 2;
+//            }
+//        }
 
         if (firstItem != secondItem) {
             return false;
         }
 
-        boolean metaFine = !meta || first.getItemDamage() == second.getItemDamage();
         boolean nbtFine = !nbt || ItemStack.tagMatches(first, second);
-        if (metaFine && nbtFine) {
+        if (nbtFine) {
             return true;
         }
         return false;
@@ -139,11 +135,11 @@ public class FilterSettings {
         compound.putBoolean("Mod", this.respectMod);
         compound.putInt("Oredict", this.respectOredict);
         TileEntityInventoryBase.saveSlots(this.filterInventory, compound);
-        tag.setTag(name, compound);
+        tag.put(name, compound);
     }
 
     public void readFromNBT(CompoundNBT tag, String name) {
-        CompoundNBT compound = tag.getCompoundTag(name);
+        CompoundNBT compound = tag.getCompound(name);
         this.isWhitelist = compound.getBoolean("Whitelist");
         this.respectMeta = compound.getBoolean("Meta");
         this.respectNBT = compound.getBoolean("NBT");
