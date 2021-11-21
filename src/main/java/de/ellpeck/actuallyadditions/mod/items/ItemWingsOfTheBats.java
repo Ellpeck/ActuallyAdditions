@@ -69,8 +69,8 @@ public class ItemWingsOfTheBats extends ItemBase {
     public double getDurabilityForDisplay(ItemStack stack) {
         PlayerEntity player = ClientProxy.getCurrentPlayer();
         if (player != null) {
-            PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(player);
-            double diff = MAX_FLY_TIME - data.batWingsFlyTime;
+//            PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(player);
+            double diff = MAX_FLY_TIME - 1;//data.batWingsFlyTime; // TODO: fix me
             return 1 - diff / MAX_FLY_TIME;
         }
         return super.getDurabilityForDisplay(stack);
@@ -80,8 +80,8 @@ public class ItemWingsOfTheBats extends ItemBase {
     public int getRGBDurabilityForDisplay(ItemStack stack) {
         PlayerEntity player = ClientProxy.getCurrentPlayer();
         if (player != null) {
-            PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(player);
-            int curr = data.batWingsFlyTime;
+//            PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(player);
+            int curr = 1;//data.batWingsFlyTime; // TODO: fix me
             return MathHelper.hsvToRgb(Math.max(0.0F, 1 - (float) curr / MAX_FLY_TIME) / 3.0F, 1.0F, 1.0F);
         }
         return super.getRGBDurabilityForDisplay(stack);

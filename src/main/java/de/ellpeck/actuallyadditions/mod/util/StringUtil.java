@@ -85,7 +85,7 @@ public final class StringUtil {
 //        try {
 //            Method m = LanguageMap.class.getDeclaredMethod("inject", LanguageMap.class, InputStream.class);
 //            m.setAccessible(true);
-//            m.invoke(null, cancerino = new LanguageMap(), ActuallyAdditions.class.getResourceAsStream("/assets/actuallyadditions/lang/en_US.lang"));
+//            m.invoke(null, cancerino = new LanguageMap(), ActuallyAdditions.class.getResourceAsStream("/assets/actuallyadditions/lang/en_us.json"));
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //            throw new RuntimeException("Actually Additions failed to access LanguageMap.inject.  Report this!");
