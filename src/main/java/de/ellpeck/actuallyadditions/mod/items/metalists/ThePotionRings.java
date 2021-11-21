@@ -21,120 +21,110 @@ import net.minecraft.potion.Effects;
 public enum ThePotionRings {
 
     SPEED(
-        Effects.MOVEMENT_SPEED.getDescriptionId(),
-        8171462,
-        Effects.MOVEMENT_SPEED,
-        0,
-        1,
-        10,
-        false,
-        Rarity.UNCOMMON,
-        new ItemStack(Items.SUGAR)
+            8171462,
+            Effects.MOVEMENT_SPEED,
+            0,
+            1,
+            10,
+            false,
+            Rarity.UNCOMMON,
+            new ItemStack(Items.SUGAR)
     ),
     //Slowness
     HASTE(
-        Effects.HASTE.getName(),
-        14270531,
-        MobEffects.HASTE,
-        0,
-        1,
-        10,
-        false,
-        Rarity.EPIC,
-        new ItemStack(Items.REPEATER)
+            14270531,
+            Effects.DIG_SPEED, // todo: wrong
+            0,
+            1,
+            10,
+            false,
+            Rarity.EPIC,
+            new ItemStack(Items.REPEATER)
     ),
     //Mining Fatigue
     STRENGTH(
-        MobEffects.STRENGTH.getName(),
-        9643043,
-        MobEffects.STRENGTH,
-        0,
-        1,
-        10,
-        false,
-        Rarity.RARE,
-        new ItemStack(Items.BLAZE_POWDER)
+            9643043,
+            Effects.DAMAGE_BOOST, // TODO: wrong?
+            0,
+            1,
+            10,
+            false,
+            Rarity.RARE,
+            new ItemStack(Items.BLAZE_POWDER)
     ),
     //Health (Not Happening)
     //Damage
     JUMP_BOOST(
-        MobEffects.JUMP_BOOST.getName(),
-        7889559,
-        MobEffects.JUMP_BOOST,
-        0,
-        1,
-        10,
-        false,
-        Rarity.RARE,
-        new ItemStack(Blocks.PISTON)
+            7889559,
+            Effects.JUMP,
+            0,
+            1,
+            10,
+            false,
+            Rarity.RARE,
+            new ItemStack(Blocks.PISTON)
     ),
     //Nausea
     REGEN(
-        MobEffects.REGENERATION.getName(),
-        13458603,
-        MobEffects.REGENERATION,
-        0,
-        1,
-        50,
-        true,
-        Rarity.RARE,
-        new ItemStack(Items.GHAST_TEAR)
+            13458603,
+            Effects.REGENERATION,
+            0,
+            1,
+            50,
+            true,
+            Rarity.RARE,
+            new ItemStack(Items.GHAST_TEAR)
     ),
     RESISTANCE(
-        MobEffects.RESISTANCE.getName(),
-        10044730,
-        MobEffects.RESISTANCE,
-        0,
-        1,
-        10,
-        false,
-        Rarity.EPIC,
-        new ItemStack(Items.SLIME_BALL)
+            10044730,
+            Effects.DAMAGE_RESISTANCE,
+            0,
+            1,
+            10,
+            false,
+            Rarity.EPIC,
+            new ItemStack(Items.SLIME_BALL)
     ),
     FIRE_RESISTANCE(
-        MobEffects.FIRE_RESISTANCE.getName(),
-        14981690,
-        MobEffects.FIRE_RESISTANCE,
-        0,
-        0,
-        10,
-        false,
-        Rarity.UNCOMMON,
-        new ItemStack(Items.MAGMA_CREAM)
+            14981690,
+            Effects.FIRE_RESISTANCE,
+            0,
+            0,
+            10,
+            false,
+            Rarity.UNCOMMON,
+            new ItemStack(Items.MAGMA_CREAM)
     ),
     WATER_BREATHING(
-        MobEffects.WATER_BREATHING.getName(),
-        3035801,
-        MobEffects.WATER_BREATHING,
-        0,
-        0,
-        10,
-        false,
-        Rarity.RARE,
-        new ItemStack(Items.FISH, 1, 3)
+            3035801,
+            Effects.WATER_BREATHING,
+            0,
+            0,
+            10,
+            false,
+            Rarity.RARE,
+            new ItemStack(Items.TROPICAL_FISH)
     ),
     INVISIBILITY(
-        MobEffects.INVISIBILITY.getName(),
-        8356754,
-        MobEffects.INVISIBILITY,
-        0,
-        0,
-        10,
-        false,
-        Rarity.EPIC,
-        new ItemStack(Items.FERMENTED_SPIDER_EYE)
+            8356754,
+            Effects.INVISIBILITY,
+            0,
+            0,
+            10,
+            false,
+            Rarity.EPIC,
+            new ItemStack(Items.FERMENTED_SPIDER_EYE)
     ),
     //Blindness
     NIGHT_VISION(
-        MobEffects.NIGHT_VISION.getName(),
-        2039713,
-        MobEffects.NIGHT_VISION,
-        0,
-        0,
-        300,
-        false,
-        Rarity.RARE,
-        new ItemStack(Items.GOLDEN_CARROT)
+            2039713,
+            Effects.NIGHT_VISION,
+            0,
+            0,
+            300,
+            false,
+            Rarity.RARE,
+            new ItemStack(Items.GOLDEN_CARROT)
     );
     //Hunger
     //Weakness
@@ -153,8 +143,8 @@ public enum ThePotionRings {
     public final boolean needsWaitBeforeActivating;
     public final ItemStack craftingItem;
 
-    ThePotionRings(String name, int color, Effect effect, int normalAmplifier, int advancedAmplifier, int activeTime, boolean needsWaitBeforeActivating, Rarity rarity, ItemStack craftingItem) {
-        this.name = name;
+    ThePotionRings(int color, Effect effect, int normalAmplifier, int advancedAmplifier, int activeTime, boolean needsWaitBeforeActivating, Rarity rarity, ItemStack craftingItem) {
+        this.name = effect.getDisplayName().getString();
         this.color = color;
         this.rarity = rarity;
         this.effect = effect;
