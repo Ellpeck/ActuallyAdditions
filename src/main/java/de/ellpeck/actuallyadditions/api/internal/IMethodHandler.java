@@ -10,15 +10,10 @@
 
 package de.ellpeck.actuallyadditions.api.internal;
 
-import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
-import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
-import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.potion.EffectInstance;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.List;
@@ -50,25 +45,25 @@ public interface IMethodHandler {
         //Use Ingredient input on AA API class
     boolean addCrusherRecipes(List<ItemStack> inputs, ItemStack outputOne, int outputOneAmount, ItemStack outputTwo, int outputTwoAmount, int outputTwoChance);
 
-    IBookletPage generateTextPage(int id);
-
-    IBookletPage generatePicturePage(int id, ResourceLocation resLoc, int textStartY);
-
-    IBookletPage generateCraftingPage(int id, IRecipe... recipes);
-
-    IBookletPage generateFurnacePage(int id, ItemStack input, ItemStack result);
-
-    IBookletChapter generateBookletChapter(String identifier, IBookletEntry entry, ItemStack displayStack, IBookletPage... pages);
-
-    IBookletPage generateTextPage(int id, int priority);
-
-    IBookletPage generatePicturePage(int id, ResourceLocation resLoc, int textStartY, int priority);
-
-    IBookletPage generateCraftingPage(int id, int priority, IRecipe... recipes);
-
-    IBookletPage generateFurnacePage(int id, ItemStack input, ItemStack result, int priority);
-
-    IBookletChapter generateBookletChapter(String identifier, IBookletEntry entry, ItemStack displayStack, int priority, IBookletPage... pages);
-
-    IBookletChapter createTrial(String identifier, ItemStack displayStack, boolean textOnSecondPage);
+//    IBookletPage generateTextPage(int id);
+//
+//    IBookletPage generatePicturePage(int id, ResourceLocation resLoc, int textStartY);
+//
+//    IBookletPage generateCraftingPage(int id, IRecipe... recipes);
+//
+//    IBookletPage generateFurnacePage(int id, ItemStack input, ItemStack result);
+//
+//    IBookletChapter generateBookletChapter(String identifier, IBookletEntry entry, ItemStack displayStack, IBookletPage... pages);
+//
+//    IBookletPage generateTextPage(int id, int priority);
+//
+//    IBookletPage generatePicturePage(int id, ResourceLocation resLoc, int textStartY, int priority);
+//
+//    IBookletPage generateCraftingPage(int id, int priority, IRecipe... recipes);
+//
+//    IBookletPage generateFurnacePage(int id, ItemStack input, ItemStack result, int priority);
+//
+//    IBookletChapter generateBookletChapter(String identifier, IBookletEntry entry, ItemStack displayStack, int priority, IBookletPage... pages);
+//
+//    IBookletChapter createTrial(String identifier, ItemStack displayStack, boolean textOnSecondPage);
 }

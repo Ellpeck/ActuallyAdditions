@@ -11,9 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.misc.apiimpl;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
-import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
-import de.ellpeck.actuallyadditions.api.booklet.IBookletEntry;
-import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.internal.IMethodHandler;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
@@ -31,13 +28,11 @@ import net.minecraft.block.Blocks;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3i;
@@ -314,58 +309,58 @@ public class MethodHandler implements IMethodHandler {
         return hasWorkedOnce;
     }
 
-    @Override
-    public IBookletPage generateTextPage(int id) {
-        return this.generateTextPage(id, 0);
-    }
+//    @Override
+//    public IBookletPage generateTextPage(int id) {
+//        return this.generateTextPage(id, 0);
+//    }
 
-    @Override
-    public IBookletPage generatePicturePage(int id, ResourceLocation resLoc, int textStartY) {
-        return this.generatePicturePage(id, resLoc, textStartY, 0);
-    }
+//    @Override
+//    public IBookletPage generatePicturePage(int id, ResourceLocation resLoc, int textStartY) {
+//        return this.generatePicturePage(id, resLoc, textStartY, 0);
+//    }
 
-    @Override
-    public IBookletPage generateCraftingPage(int id, IRecipe... recipes) {
-        return this.generateCraftingPage(id, 0, recipes);
-    }
+//    @Override
+//    public IBookletPage generateCraftingPage(int id, IRecipe... recipes) {
+//        return this.generateCraftingPage(id, 0, recipes);
+//    }
 
-    @Override
-    public IBookletPage generateFurnacePage(int id, ItemStack input, ItemStack result) {
-        return this.generateFurnacePage(id, input, result, 0);
-    }
+//    @Override
+//    public IBookletPage generateFurnacePage(int id, ItemStack input, ItemStack result) {
+//        return this.generateFurnacePage(id, input, result, 0);
+//    }
 
-    @Override
-    public IBookletChapter generateBookletChapter(String identifier, IBookletEntry entry, ItemStack displayStack, IBookletPage... pages) {
-        return this.generateBookletChapter(identifier, entry, displayStack, 0, pages);
-    }
+//    @Override
+//    public IBookletChapter generateBookletChapter(String identifier, IBookletEntry entry, ItemStack displayStack, IBookletPage... pages) {
+//        return this.generateBookletChapter(identifier, entry, displayStack, 0, pages);
+//    }
 
-    @Override
-    public IBookletPage generateTextPage(int id, int priority) {
-        return new PageTextOnly(id, priority);
-    }
+//    @Override
+//    public IBookletPage generateTextPage(int id, int priority) {
+//        return new PageTextOnly(id, priority);
+//    }
 
-    @Override
-    public IBookletPage generatePicturePage(int id, ResourceLocation resLoc, int textStartY, int priority) {
-        return new PagePicture(id, resLoc, textStartY, priority);
-    }
+//    @Override
+//    public IBookletPage generatePicturePage(int id, ResourceLocation resLoc, int textStartY, int priority) {
+//        return new PagePicture(id, resLoc, textStartY, priority);
+//    }
 
-    @Override
-    public IBookletPage generateCraftingPage(int id, int priority, IRecipe... recipes) {
-        return new PageCrafting(id, priority, recipes);
-    }
+//    @Override
+//    public IBookletPage generateCraftingPage(int id, int priority, IRecipe... recipes) {
+//        return new PageCrafting(id, priority, recipes);
+//    }
 
-    @Override
-    public IBookletPage generateFurnacePage(int id, ItemStack input, ItemStack result, int priority) {
-        return new PageFurnace(id, result, priority);
-    }
+//    @Override
+//    public IBookletPage generateFurnacePage(int id, ItemStack input, ItemStack result, int priority) {
+//        return new PageFurnace(id, result, priority);
+//    }
 
-    @Override
-    public IBookletChapter generateBookletChapter(String identifier, IBookletEntry entry, ItemStack displayStack, int priority, IBookletPage... pages) {
-        return new BookletChapter(identifier, entry, displayStack, priority, pages);
-    }
+//    @Override
+//    public IBookletChapter generateBookletChapter(String identifier, IBookletEntry entry, ItemStack displayStack, int priority, IBookletPage... pages) {
+//        return new BookletChapter(identifier, entry, displayStack, priority, pages);
+//    }
 
-    @Override
-    public IBookletChapter createTrial(String identifier, ItemStack displayStack, boolean textOnSecondPage) {
-        return new BookletChapterTrials(identifier, displayStack, textOnSecondPage);
-    }
+//    @Override
+//    public IBookletChapter createTrial(String identifier, ItemStack displayStack, boolean textOnSecondPage) {
+//        return new BookletChapterTrials(identifier, displayStack, textOnSecondPage);
+//    }
 }
