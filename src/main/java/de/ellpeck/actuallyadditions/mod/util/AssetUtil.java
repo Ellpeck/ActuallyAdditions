@@ -13,19 +13,15 @@ package de.ellpeck.actuallyadditions.mod.util;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
-import de.ellpeck.actuallyadditions.mod.network.PacketServerToClient;
 import de.ellpeck.actuallyadditions.mod.particle.ParticleBeam;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.client.renderer.*;
-import net.minecraft.client.renderer.model.IBakedModel;
+import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
-import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.IParticleData;
@@ -34,9 +30,6 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.ForgeHooksClient;
-import net.minecraftforge.fml.network.NetworkRegistry;
-import org.lwjgl.opengl.GL11;
 
 public final class AssetUtil {
 
@@ -92,7 +85,7 @@ public final class AssetUtil {
 
     @OnlyIn(Dist.CLIENT)
     public static void renderItemWithoutScrewingWithColors(ItemStack stack) {
-        if (StackUtil.isValid(stack)) {
+/*        if (StackUtil.isValid(stack)) {
             Minecraft mc = Minecraft.getInstance();
             ItemRenderer renderer = mc.getItemRenderer();
             TextureManager manager = mc.getTextureManager();
@@ -112,12 +105,12 @@ public final class AssetUtil {
             GlStateManager._disableBlend();
             manager.bind(TextureMap.LOCATION_BLOCKS_TEXTURE);
             manager.getTexture(TextureMap.LOCATION_BLOCKS_TEXTURE).restoreLastBlurMipmap();
-        }
+        }*/
     }
 
     @OnlyIn(Dist.CLIENT)
     public static void renderStackToGui(ItemStack stack, int x, int y, float scale) {
-        GlStateManager._pushMatrix();
+/*        GlStateManager._pushMatrix();
         GlStateManager._enableBlend();
         GlStateManager._blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         RenderHelper.enableGUIStandardItemLighting();
@@ -134,13 +127,13 @@ public final class AssetUtil {
         mc.font.setUnicodeFlag(flagBefore);
 
         RenderHelper.turnOff();
-        GlStateManager._popMatrix();
+        GlStateManager._popMatrix();*/
     }
 
     //Copied from Gui.class and changed
     @OnlyIn(Dist.CLIENT)
     public static void drawHorizontalGradientRect(int left, int top, int right, int bottom, int startColor, int endColor, float zLevel) {
-        float f = (startColor >> 24 & 255) / 255.0F;
+/*        float f = (startColor >> 24 & 255) / 255.0F;
         float f1 = (startColor >> 16 & 255) / 255.0F;
         float f2 = (startColor >> 8 & 255) / 255.0F;
         float f3 = (startColor & 255) / 255.0F;
@@ -164,7 +157,7 @@ public final class AssetUtil {
         GlStateManager._shadeModel(7424);
         GlStateManager._disableBlend();
         GlStateManager.enableAlpha();
-        GlStateManager.enableTexture2D();
+        GlStateManager.enableTexture2D();*/
     }
 
 //    @OnlyIn(Dist.CLIENT)
@@ -221,7 +214,7 @@ public final class AssetUtil {
             data.putFloat("Size", size);
             data.putInt("MaxAge", maxAge);
             data.putFloat("Alpha", alpha);
-            PacketHandler.THE_NETWORK.sendToAllAround(new PacketServerToClient(data, PacketHandler.LASER_HANDLER), new NetworkRegistry.TargetPoint(world.provider.getDimension(), startX, startY, startZ, 96));
+            //PacketHandler.THE_NETWORK.sendToAllAround(new PacketServerToClient(data, PacketHandler.LASER_HANDLER), new NetworkRegistry.TargetPoint(world.provider.getDimension(), startX, startY, startZ, 96)); //TODO
         }
     }
 
@@ -261,7 +254,7 @@ public final class AssetUtil {
 
         GlStateManager._pushMatrix();
 
-        GlStateManager._disableLighting();
+/*        GlStateManager._disableLighting();
         GlStateManager._enableBlend();
         GlStateManager._blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE);
         int func = GL11.glGetInteger(GL11.GL_ALPHA_TEST_FUNC);
@@ -270,7 +263,7 @@ public final class AssetUtil {
         GlStateManager.translate(firstX - TileEntityRendererDispatcher.staticPlayerX, firstY - TileEntityRendererDispatcher.staticPlayerY, firstZ - TileEntityRendererDispatcher.staticPlayerZ);
         GlStateManager.rotate((float) (180 * yaw / Math.PI), 0, 1, 0);
         GlStateManager.rotate((float) (180 * pitch / Math.PI), 0, 0, 1);
-        GlStateManager.rotate((float) rot, 1, 0, 0);
+        GlStateManager.rotate((float) rot, 1, 0, 0);*/
 
         /*if(r != r2 || g != g2 || b != b2){
             render.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
@@ -318,8 +311,8 @@ public final class AssetUtil {
             tessy.draw();
         }
         else{*/
-        GlStateManager.disableTexture2D();
-        render.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_LMAP_COLOR);
+        //GlStateManager.disableTexture2D();
+        //render.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_LMAP_COLOR);
         for (double i = 0; i < 4; i++) {
             double width = beamWidth * (i / 4.0);
             render.vertex(length, width, width).uv(0, 0).uv2(MAX_LIGHT_X, MAX_LIGHT_Y).color(r, g, b, alpha).endVertex();
@@ -344,11 +337,11 @@ public final class AssetUtil {
         }
         tessy.end();
 
-        GlStateManager.enableTexture2D();
+        //GlStateManager.enableTexture2D();
         //}
 
-        GlStateManager._alphaFunc(func, ref);
-        GlStateManager._blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
+        //GlStateManager._alphaFunc(func, ref);
+        //GlStateManager._blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
         GlStateManager._disableBlend();
         GlStateManager._enableLighting();
         GlStateManager._popMatrix();
