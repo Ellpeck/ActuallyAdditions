@@ -12,6 +12,6 @@ package de.ellpeck.actuallyadditions.mod.items.base;
 
 public class ItemFoodBase extends ItemBase {
     public ItemFoodBase(int heal, float saturation, boolean wolfFood) {
-        super(heal, saturation, wolfFood);
+        //super(heal, saturation, wolfFood);
     }
 }

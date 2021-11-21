@@ -43,8 +43,8 @@ public class GuiOilGenerator extends GuiWtfMojang<ContainerOilGenerator> {
     @Override
     public void init() {
         super.init();
-        this.energy = new EnergyDisplay(this.leftPos + 42, this.topPos + 5, this.generator.storage);
-        this.fluid = new FluidDisplay(this.leftPos + 116, this.topPos + 5, this.generator.tank);
+        //this.energy = new EnergyDisplay(this.leftPos + 42, this.topPos + 5, this.generator.storage);
+        //this.fluid = new FluidDisplay(this.leftPos + 116, this.topPos + 5, this.generator.tank);
     }
 
     @Override

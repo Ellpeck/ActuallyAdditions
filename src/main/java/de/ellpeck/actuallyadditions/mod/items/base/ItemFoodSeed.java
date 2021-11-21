@@ -33,7 +33,7 @@ public class ItemFoodSeed /*extends ItemSeedFood */{ //TODO what is this?!
         this.maxUseDuration = maxUseDuration;
 
         if (plant instanceof BlockPlant) {
-            ((BlockPlant) plant).doStuff(this, returnItem, returnMeta);
+            //((BlockPlant) plant).doStuff(this, returnItem, returnMeta);
         }
     }
 

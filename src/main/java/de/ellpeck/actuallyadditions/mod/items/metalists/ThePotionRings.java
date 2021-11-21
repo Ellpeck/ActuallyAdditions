@@ -14,13 +14,14 @@ import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.Rarity;
+import net.minecraft.potion.Effects;
 import net.minecraft.potion.Potion;
 
 @Deprecated
 public enum ThePotionRings {
 
     SPEED(
-        MobEffects.SPEED.getName(),
+        Effects.SPEED.getName(),
         8171462,
         MobEffects.SPEED,
         0,
@@ -32,7 +33,7 @@ public enum ThePotionRings {
     ),
     //Slowness
     HASTE(
-        MobEffects.HASTE.getName(),
+        Effects.HASTE.getName(),
         14270531,
         MobEffects.HASTE,
         0,
@@ -156,7 +157,7 @@ public enum ThePotionRings {
         this.name = name;
         this.color = color;
         this.rarity = rarity;
-        this.effectID = Potion.getIdFromPotion(effect);
+        this.effectID = Potion.byName(effect);
         this.normalAmplifier = normalAmplifier;
         this.advancedAmplifier = advancedAmplifier;
         this.activeTime = activeTime;

@@ -39,8 +39,8 @@ public class GuiCanolaPress extends GuiWtfMojang<ContainerCanolaPress> {
     @Override
     public void init() {
         super.init();
-        this.energy = new EnergyDisplay(this.leftPos + 42, this.topPos + 5, this.press.storage);
-        this.fluid = new FluidDisplay(this.leftPos + 116, this.topPos + 5, this.press.tank);
+        //this.energy = new EnergyDisplay(this.leftPos + 42, this.topPos + 5, this.press.storage);
+        //this.fluid = new FluidDisplay(this.leftPos + 116, this.topPos + 5, this.press.tank);
     }
 
     @Override

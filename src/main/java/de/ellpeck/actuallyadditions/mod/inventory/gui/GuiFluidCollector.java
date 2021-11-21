@@ -46,7 +46,7 @@ public class GuiFluidCollector extends GuiWtfMojang<ContainerFluidCollector> {
     @Override
     public void init() {
         super.init();
-        this.fluid = new FluidDisplay(this.leftPos + 67, this.topPos + 5, this.collector.tank);
+        //this.fluid = new FluidDisplay(this.leftPos + 67, this.topPos + 5, this.collector.tank);
     }
 
     @Override

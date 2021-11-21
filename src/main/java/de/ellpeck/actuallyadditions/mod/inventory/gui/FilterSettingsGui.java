@@ -18,6 +18,7 @@ import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -38,19 +39,19 @@ public class FilterSettingsGui extends AbstractGui {
     public FilterSettingsGui(FilterSettings settings, int x, int y, List<Button> buttonList) {
         this.theSettings = settings;
 
-        this.whitelistButton = new Buttons.SmallerButton(this.theSettings.whitelistButtonId, x, y,  true);
+        this.whitelistButton = new Buttons.SmallerButton( x, y, new TranslationTextComponent(""), true, Button::onPress); //TODO these need translation keys
         buttonList.add(this.whitelistButton);
         y += 14;
-        this.metaButton = new Buttons.SmallerButton(this.theSettings.metaButtonId, x, y,  true);
+        this.metaButton = new Buttons.SmallerButton( x, y, new TranslationTextComponent(""), true, Button::onPress); //TODO also button actions
         buttonList.add(this.metaButton);
         y += 14;
-        this.nbtButton = new Buttons.SmallerButton(this.theSettings.nbtButtonId, x, y,  true);
+        this.nbtButton = new Buttons.SmallerButton( x, y, new TranslationTextComponent(""), true, Button::onPress);
         buttonList.add(this.nbtButton);
         y += 14;
-        this.oredictButton = new Buttons.SmallerButton(this.theSettings.oredictButtonId, x, y,  true);
+        this.oredictButton = new Buttons.SmallerButton( x, y, new TranslationTextComponent(""), true, Button::onPress);
         buttonList.add(this.oredictButton);
         y += 15;
-        this.modButton = new Buttons.SmallerButton(this.theSettings.modButtonId, x, y,  true);
+        this.modButton = new Buttons.SmallerButton( x, y, new TranslationTextComponent(""), true, Button::onPress);
         buttonList.add(this.modButton);
 
         this.tick();
@@ -103,7 +104,7 @@ public class FilterSettingsGui extends AbstractGui {
             //list.addAll(mc.font.listFormattedStringToWidth(StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.respectModInfo"), 200));
 
             //GuiUtils.drawHoveringText(list, mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.font);
-        } else if (this.oredictButton.isMouseOver()) {
+        } else if (this.oredictButton.isMouseOver(mouseX, mouseY)) {
             List<String> list = new ArrayList<>();
             list.add(TextFormatting.BOLD + (this.theSettings.respectOredict == 0
                 ? StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.ignoreOredict")
