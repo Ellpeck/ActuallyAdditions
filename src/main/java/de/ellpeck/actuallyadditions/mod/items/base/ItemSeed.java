@@ -28,7 +28,7 @@ public class ItemSeed /* extends ItemSeeds*/ {
         this.plant = plant;
 
         if (plant instanceof BlockPlant) {
-            ((BlockPlant) plant).doStuff(this, returnItem, returnMeta);
+            //((BlockPlant) plant).doStuff(this, returnItem, returnMeta); //TODO
         }
     }
 

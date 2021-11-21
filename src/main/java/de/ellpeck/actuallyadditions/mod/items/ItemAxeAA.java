@@ -10,20 +10,21 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
-import com.google.common.collect.Sets;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemToolAA;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.material.Material;
 import net.minecraft.item.IItemTier;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tags.ITag;
 
-import java.util.Collections;
 import java.util.Set;
 
 public class ItemAxeAA extends ItemToolAA {
+    public ItemAxeAA(float p_i48512_1_, float p_i48512_2_, IItemTier p_i48512_3_, Set<Block> p_i48512_4_, Properties p_i48512_5_, String name, ItemStack repairItem, ITag<Item> repairTag) {
+        super(p_i48512_1_, p_i48512_2_, p_i48512_3_, p_i48512_4_, p_i48512_5_, name, repairItem, repairTag);
+    }
 
+/*
     private static final Set<Block> EFFECTIVE_ON = Sets.newHashSet(Blocks.PLANKS, Blocks.BOOKSHELF, Blocks.LOG, Blocks.LOG2, Blocks.CHEST, Blocks.PUMPKIN, Blocks.LIT_PUMPKIN, Blocks.MELON_BLOCK, Blocks.LADDER, Blocks.WOODEN_BUTTON, Blocks.WOODEN_PRESSURE_PLATE);
 
     public ItemAxeAA(IItemTier material) {
@@ -42,5 +43,5 @@ public class ItemAxeAA extends ItemToolAA {
     @Override
     public Set<String> getToolClasses(ItemStack stack) {
         return Collections.singleton("axe");
-    }
+    }*/
 }

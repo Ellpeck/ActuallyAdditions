@@ -10,33 +10,18 @@
 
 package de.ellpeck.actuallyadditions.mod.misc.apiimpl;
 
-import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.internal.IMethodHandler;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
-import de.ellpeck.actuallyadditions.api.recipe.LensConversionRecipe;
-import de.ellpeck.actuallyadditions.mod.blocks.BlockLaserRelay;
-import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
-import de.ellpeck.actuallyadditions.mod.items.lens.LensRecipeHandler;
-import de.ellpeck.actuallyadditions.mod.recipe.CrusherRecipeRegistry;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
-import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3i;
-import net.minecraftforge.common.util.FakePlayerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -132,7 +117,7 @@ public class MethodHandler implements IMethodHandler {
 
     @Override
     public boolean invokeConversionLens(BlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile) {
-        if (hitBlock != null) {
+/*        if (hitBlock != null) {
             int range = 1;
             int rangeX = 0;
             int rangeY = 0;
@@ -170,7 +155,7 @@ public class MethodHandler implements IMethodHandler {
                                     recipe.transformHook(ItemStack.EMPTY, state, pos, tile);
                                     if (output.getItem() instanceof BlockItem) {
                                         Block toPlace = Block.byItem(output.getItem());
-                                        BlockState state2Place = toPlace.getStateForPlacement(tile.getWorldObject(), pos, facing, 0, 0, 0, output.getMetadata(), FakePlayerFactory.getMinecraft((WorldServer) tile.getWorldObject()), Hand.MAIN_HAND);
+                                        BlockState state2Place = toPlace.defaultBlockState(); //.getStateForPlacement(tile.getWorldObject(), pos, facing, 0, 0, 0, output.getMetadata(), FakePlayerFactory.getMinecraft((WorldServer) tile.getWorldObject()), Hand.MAIN_HAND); //TODO
                                         tile.getWorldObject().setBlock(pos, state2Place, 2);
                                     } else {
                                         ItemEntity item = new ItemEntity(tile.getWorldObject(), pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, output.copy());
@@ -194,7 +179,7 @@ public class MethodHandler implements IMethodHandler {
             List<ItemEntity> items = tile.getWorldObject().getEntitiesOfClass(ItemEntity.class, aabb);
             for (ItemEntity item : items) {
                 ItemStack stack = item.getItem();
-                if (item.isAlive() && StackUtil.isValid(stack) && !item.getEntityData().getBoolean("aa_cnv")) {
+                if (item.isAlive() && StackUtil.isValid(stack) && !item.getPersistentData().getBoolean("aa_cnv")) {
                     LensConversionRecipe recipe = LensRecipeHandler.findMatchingRecipe(stack, tile.getLens());
                     if (recipe != null) {
                         int itemsPossible = Math.min(tile.getEnergy() / recipe.getEnergyUsed(), stack.getCount());
@@ -215,7 +200,7 @@ public class MethodHandler implements IMethodHandler {
                             outputCopy.setCount(itemsPossible);
 
                             ItemEntity newItem = new ItemEntity(tile.getWorldObject(), item.getX(), item.getY(), item.getZ(), outputCopy);
-                            newItem.getEntityData().putBoolean("aa_cnv", true);
+                            newItem.getPersistentData().putBoolean("aa_cnv", true);
                             tile.getWorldObject().addFreshEntity(newItem);
 
                             tile.extractEnergy(recipe.getEnergyUsed() * itemsPossible);
@@ -225,7 +210,7 @@ public class MethodHandler implements IMethodHandler {
                 }
             }
             return !hitState.getBlock().isAir(hitState, tile.getWorldObject(), hitBlock);
-        }
+        }*/
         return false;
     }
 
@@ -256,7 +241,7 @@ public class MethodHandler implements IMethodHandler {
     @Override
     public boolean addCrusherRecipes(List<ItemStack> inputs, List<ItemStack> outputOnes, int outputOneAmounts, List<ItemStack> outputTwos, int outputTwoAmounts, int outputTwoChance) {
         boolean hasWorkedOnce = false;
-        for (ItemStack input : inputs) {
+/*        for (ItemStack input : inputs) {
             if (StackUtil.isValid(input) && CrusherRecipeRegistry.getRecipeFromInput(input) == null) {
                 for (ItemStack outputOne : outputOnes) {
                     if (StackUtil.isValid(outputOne) && !CrusherRecipeRegistry.hasBlacklistedOutput(outputOne, ConfigStringListValues.CRUSHER_OUTPUT_BLACKLIST.getValue())) {
@@ -280,14 +265,14 @@ public class MethodHandler implements IMethodHandler {
                     }
                 }
             }
-        }
+        }*/ //TODO
         return hasWorkedOnce;
     }
 
     @Override
     public boolean addCrusherRecipes(List<ItemStack> inputs, ItemStack outputOne, int outputOneAmount, ItemStack outputTwo, int outputTwoAmount, int outputTwoChance) {
         boolean hasWorkedOnce = false;
-        for (ItemStack input : inputs) {
+/*        for (ItemStack input : inputs) {
             if (StackUtil.isValid(input) && CrusherRecipeRegistry.getRecipeFromInput(input) == null) {
                 if (StackUtil.isValid(outputOne) && !CrusherRecipeRegistry.hasBlacklistedOutput(outputOne, ConfigStringListValues.CRUSHER_OUTPUT_BLACKLIST.getValue())) {
                     ItemStack outputOneCopy = outputOne.copy();
@@ -305,7 +290,7 @@ public class MethodHandler implements IMethodHandler {
                     }
                 }
             }
-        }
+        }*/
         return hasWorkedOnce;
     }
 

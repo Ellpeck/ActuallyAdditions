@@ -10,18 +10,15 @@
 
 package de.ellpeck.actuallyadditions.mod.items.base;
 
-import de.ellpeck.actuallyadditions.api.misc.IDisableableItem;
-import de.ellpeck.actuallyadditions.mod.blocks.base.ItemBlockBase;
-import de.ellpeck.actuallyadditions.mod.config.ConfigurationHandler;
-import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
-import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.item.IItemTier;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
 
-public class ItemSwordAA extends SwordItem implements IDisableableItem {
+public class ItemSwordAA extends SwordItem {
+    public ItemSwordAA(IItemTier p_i48460_1_, int p_i48460_2_, float p_i48460_3_, Properties p_i48460_4_) {
+        super(p_i48460_1_, p_i48460_2_, p_i48460_3_, p_i48460_4_);
+    }
 
-    private final boolean disabled;
+/*    private final boolean disabled;
 
     public ItemSwordAA(IItemTier toolMat) {
         super(toolMat);
@@ -48,5 +45,5 @@ public class ItemSwordAA extends SwordItem implements IDisableableItem {
     @Override
     public boolean isDisabled() {
         return this.disabled;
-    }
+    }*/
 }

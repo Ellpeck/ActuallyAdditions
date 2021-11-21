@@ -16,6 +16,6 @@ public class ItemCoffeeBean extends ItemFoodBase {
 
     public ItemCoffeeBean() {
         super(1, 1F, false);
-        this.setMaxDamage(0);
+        //this.setMaxDamage(0);
     }
 }

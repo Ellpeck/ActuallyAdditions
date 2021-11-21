@@ -10,17 +10,15 @@
 
 package de.ellpeck.actuallyadditions.mod.items.base;
 
-import de.ellpeck.actuallyadditions.api.misc.IDisableableItem;
-import de.ellpeck.actuallyadditions.mod.config.ConfigurationHandler;
-import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
-import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.item.HoeItem;
 import net.minecraft.item.IItemTier;
-import net.minecraft.item.ItemStack;
 
-public class ItemHoeAA extends HoeItem implements IDisableableItem {
+public class ItemHoeAA extends HoeItem {
+    public ItemHoeAA(IItemTier p_i231595_1_, int p_i231595_2_, float p_i231595_3_, Properties p_i231595_4_) {
+        super(p_i231595_1_, p_i231595_2_, p_i231595_3_, p_i231595_4_);
+    }
 
-    private final ItemStack repairItem;
+/*    private final ItemStack repairItem;
     private final boolean disabled;
 
     public ItemHoeAA(IItemTier toolMat) {
@@ -43,5 +41,5 @@ public class ItemHoeAA extends HoeItem implements IDisableableItem {
     @Override
     public boolean isDisabled() {
         return this.disabled;
-    }
+    }*/
 }
