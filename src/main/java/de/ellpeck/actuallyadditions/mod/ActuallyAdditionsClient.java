@@ -81,7 +81,7 @@ public class ActuallyAdditionsClient {
     }
 
     // TODO: [port] validate that this works
-    public void sendBreakPacket(BlockPos pos) {
+    public static void sendBreakPacket(BlockPos pos) {
         ClientPlayNetHandler connection = Minecraft.getInstance().getConnection();
         assert connection != null;
         assert Minecraft.getInstance().hitResult != null;
