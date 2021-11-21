@@ -10,12 +10,25 @@
 
 package de.ellpeck.actuallyadditions.mod.items.base;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.SwordItem;
+import net.minecraftforge.common.ToolType;
 
 public class ItemSwordAA extends SwordItem {
-    public ItemSwordAA(IItemTier p_i48460_1_, int p_i48460_2_, float p_i48460_3_, Properties p_i48460_4_) {
-        super(p_i48460_1_, p_i48460_2_, p_i48460_3_, p_i48460_4_);
+    private IItemTier tier;
+    public ItemSwordAA(IItemTier tier) {
+        super(tier,
+            (int) tier.getAttackDamageBonus(),
+            tier.getSpeed(),
+            new Properties()
+                .addToolType(ToolType.AXE, tier.getLevel())
+                .addToolType(ToolType.HOE, tier.getLevel())
+                .addToolType(ToolType.SHOVEL, tier.getLevel())
+                .addToolType(ToolType.PICKAXE, tier.getLevel())
+                .durability(tier.getUses() * 4)
+                .tab(ActuallyAdditions.GROUP)
+        );
     }
 
 /*    private final boolean disabled;

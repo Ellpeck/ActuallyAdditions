@@ -10,12 +10,27 @@
 
 package de.ellpeck.actuallyadditions.mod.items.base;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import net.minecraft.item.HoeItem;
 import net.minecraft.item.IItemTier;
+import net.minecraftforge.common.ToolType;
 
 public class ItemHoeAA extends HoeItem {
-    public ItemHoeAA(IItemTier p_i231595_1_, int p_i231595_2_, float p_i231595_3_, Properties p_i231595_4_) {
-        super(p_i231595_1_, p_i231595_2_, p_i231595_3_, p_i231595_4_);
+    private IItemTier tier;
+    public ItemHoeAA(IItemTier tier) {
+        super(tier,
+            4,
+            -2f,
+            new Properties()
+                .addToolType(ToolType.AXE, tier.getLevel())
+                .addToolType(ToolType.HOE, tier.getLevel())
+                .addToolType(ToolType.SHOVEL, tier.getLevel())
+                .addToolType(ToolType.PICKAXE, tier.getLevel())
+                .durability(tier.getUses() * 4)
+                .tab(ActuallyAdditions.GROUP)
+        );
+
+        this.tier = tier;
     }
 
 /*    private final ItemStack repairItem;

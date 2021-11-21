@@ -10,18 +10,30 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
-import de.ellpeck.actuallyadditions.mod.items.base.ItemToolAA;
-import net.minecraft.block.Block;
+import com.google.common.collect.ImmutableSet;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import net.minecraft.item.IItemTier;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tags.ITag;
+import net.minecraft.item.ToolItem;
+import net.minecraftforge.common.ToolType;
 
-import java.util.Set;
+public class ItemPickaxeAA extends ToolItem {
+    private final IItemTier tier;
+    public ItemPickaxeAA(IItemTier tier) {
+        super(
+            4.0f,
+            -2f,
+            tier,
+            ImmutableSet.of(),
+            new Properties()
+                .addToolType(ToolType.AXE, tier.getLevel())
+                .addToolType(ToolType.HOE, tier.getLevel())
+                .addToolType(ToolType.SHOVEL, tier.getLevel())
+                .addToolType(ToolType.PICKAXE, tier.getLevel())
+                .durability(tier.getUses() * 4)
+                .tab(ActuallyAdditions.GROUP)
+        );
 
-public class ItemPickaxeAA extends ItemToolAA {
-    public ItemPickaxeAA(float p_i48512_1_, float p_i48512_2_, IItemTier p_i48512_3_, Set<Block> p_i48512_4_, Properties p_i48512_5_, String name, ItemStack repairItem, ITag<Item> repairTag) {
-        super(p_i48512_1_, p_i48512_2_, p_i48512_3_, p_i48512_4_, p_i48512_5_, name, repairItem, repairTag);
+        this.tier = tier;
     }
 
 /*
