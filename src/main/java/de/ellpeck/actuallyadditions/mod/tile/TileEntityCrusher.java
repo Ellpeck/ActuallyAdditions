@@ -12,7 +12,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.crafting.CrushingRecipe;
-import de.ellpeck.actuallyadditions.mod.inventory.ContainerGrinder;
+import de.ellpeck.actuallyadditions.mod.inventory.CrusherContainer;
 import de.ellpeck.actuallyadditions.mod.misc.SoundHandler;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
@@ -287,6 +287,6 @@ public class TileEntityCrusher extends TileEntityInventoryBase implements IButto
     @Nullable
     @Override
     public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity player) {
-        return new ContainerGrinder(windowId, playerInventory, this);
+        return new CrusherContainer(windowId, playerInventory, this);
     }
 }

@@ -22,11 +22,11 @@ import net.minecraft.network.PacketBuffer;
 
 import java.util.Objects;
 
-public class ContainerGrinder extends Container {
+public class CrusherContainer extends Container {
     public final TileEntityCrusher tileGrinder;
     public final boolean isDouble;
 
-    public ContainerGrinder(int windowId, PlayerInventory inventory, TileEntityCrusher tile) {
+    public CrusherContainer(int windowId, PlayerInventory inventory, TileEntityCrusher tile) {
         super(ActuallyContainers.GRINDER_CONTAINER.get(), windowId);
         this.tileGrinder = tile;
         this.isDouble = tile.isDouble;
@@ -56,8 +56,8 @@ public class ContainerGrinder extends Container {
         }
     }
 
-    public static ContainerGrinder fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
-        return new ContainerGrinder(windowId, inv, (TileEntityCrusher) Objects.requireNonNull(inv.player.level.getBlockEntity(data.readBlockPos())));
+    public static CrusherContainer fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
+        return new CrusherContainer(windowId, inv, (TileEntityCrusher) Objects.requireNonNull(inv.player.level.getBlockEntity(data.readBlockPos())));
     }
 
     @Override

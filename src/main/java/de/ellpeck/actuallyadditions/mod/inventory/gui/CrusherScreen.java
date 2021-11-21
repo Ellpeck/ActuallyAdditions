@@ -12,7 +12,8 @@ package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-import de.ellpeck.actuallyadditions.mod.inventory.ContainerGrinder;
+import de.ellpeck.actuallyadditions.mod.inventory.CrusherContainer;
+import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityCrusher;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.client.gui.widget.button.Button;
@@ -21,11 +22,12 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class GuiGrinder extends GuiWtfMojang<ContainerGrinder> {
+public class CrusherScreen extends GuiWtfMojang<CrusherContainer> {
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_grinder");
     private static final ResourceLocation RES_LOC_DOUBLE = AssetUtil.getGuiLocation("gui_grinder_double");
@@ -35,7 +37,7 @@ public class GuiGrinder extends GuiWtfMojang<ContainerGrinder> {
 
     private Button buttonAutoSplit;
 
-    public GuiGrinder(ContainerGrinder container, PlayerInventory inventory, ITextComponent title) {
+    public CrusherScreen(CrusherContainer container, PlayerInventory inventory, ITextComponent title) {
         super(container, inventory);
         this.tileGrinder = container.tileGrinder;
         this.isDouble = container.isDouble;
@@ -50,18 +52,17 @@ public class GuiGrinder extends GuiWtfMojang<ContainerGrinder> {
             ? 13
             : 42), this.topPos + 5, this.tileGrinder.storage);
 
-//        if (this.isDouble) {
-//            this.buttonAutoSplit = new GuiInputter.SmallerButton(0, this.leftPos - 10, this.topPos, "S");
-//            this.addButton(this.buttonAutoSplit);
-//        }
+        if (this.isDouble) {
+            this.buttonAutoSplit = new Buttons.SmallerButton( this.leftPos - 10, this.topPos, new StringTextComponent("S"), (button) -> actionPerformed(0));
+            this.addButton(this.buttonAutoSplit);
+        }
     }
 
-//    @Override
-//    protected void actionPerformed(Button button) throws IOException {
-//        if (this.isDouble && button.id == 0) {
-//            PacketHandlerHelper.sendButtonPacket(this.tileGrinder, button.id);
-//        }
-//    }
+    protected void actionPerformed(int id) {
+        if (this.isDouble && id == 0) {
+            PacketHandlerHelper.sendButtonPacket(this.tileGrinder, id);
+        }
+    }
 
     @Override
     public void tick() {
@@ -75,16 +76,14 @@ public class GuiGrinder extends GuiWtfMojang<ContainerGrinder> {
     }
 
     @Override
-    public void render(MatrixStack matrices, int x, int y, float f) {
-        super.render(matrices, x, y, f);
-        this.energy.render(matrices, x, y);
+    public void render(MatrixStack matrixStack, int x, int y, float f) {
+        super.render(matrixStack, x, y, f);
+        this.energy.render(matrixStack, x, y);
 
-//        if (this.isDouble && this.buttonAutoSplit.isMouseOver()) {
-//
-//            this.drawHoveringText(Collections.singletonList(TextFormatting.BOLD + (this.tileGrinder.isAutoSplit
-//                ? StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.autoSplitItems.on")
-//                : StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.autoSplitItems.off"))), x, y);
-//        }
+        if (this.isDouble && this.buttonAutoSplit.isMouseOver(x,y)) {
+
+            drawString(matrixStack, font, new TranslationTextComponent("info.actuallyadditions.gui.autosplititems." + (tileGrinder.isAutoSplit?"on":"off")).withStyle(TextFormatting.BOLD), x , y, 0xffffff);
+        }
     }
 
     @Override
@@ -120,10 +119,10 @@ public class GuiGrinder extends GuiWtfMojang<ContainerGrinder> {
         this.energy.draw(matrices);
     }
 
-    public static class GuiGrinderDouble extends GuiGrinder {
+    public static class CrusherDoubleScreen extends CrusherScreen {
 
-        public GuiGrinderDouble(ContainerGrinder containerGrinder, PlayerInventory inventory, ITextComponent tile) {
-            super(containerGrinder, inventory, tile);
+        public CrusherDoubleScreen(CrusherContainer crusherContainer, PlayerInventory inventory, ITextComponent tile) {
+            super(crusherContainer, inventory, tile);
         }
     }
 }
