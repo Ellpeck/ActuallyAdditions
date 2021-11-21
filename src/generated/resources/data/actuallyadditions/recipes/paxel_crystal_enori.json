@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "actuallyadditions:axe_crystal_enori"
+    },
+    {
+      "item": "actuallyadditions:pickaxe_crystal_enori"
+    },
+    {
+      "item": "actuallyadditions:sword_crystal_enori"
+    },
+    {
+      "item": "actuallyadditions:shovel_crystal_enori"
+    },
+    {
+      "item": "actuallyadditions:hoe_crystal_enori"
+    }
+  ],
+  "result": {
+    "item": "actuallyadditions:paxel_crystal_enori"
+  }
+}

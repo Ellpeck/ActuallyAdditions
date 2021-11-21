@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "OAO",
+    "ACA",
+    "OAO"
+  ],
+  "key": {
+    "A": {
+      "item": "actuallyadditions:void_empowered_crystal"
+    },
+    "O": {
+      "tag": "forge:obsidian"
+    },
+    "C": {
+      "item": "actuallyadditions:coil_advanced"
+    }
+  },
+  "result": {
+    "item": "actuallyadditions:shock_suppressor"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "WIW",
+    "IQI",
+    "WIW"
+  ],
+  "key": {
+    "I": {
+      "tag": "forge:ingots/iron"
+    },
+    "W": {
+      "tag": "minecraft:planks"
+    },
+    "Q": {
+      "item": "actuallyadditions:black_quartz"
+    }
+  },
+  "result": {
+    "item": "actuallyadditions:crate_keeper"
+  }
+}

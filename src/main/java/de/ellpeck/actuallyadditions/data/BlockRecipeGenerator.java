@@ -2,13 +2,11 @@ package de.ellpeck.actuallyadditions.data;
 
 import com.google.gson.JsonObject;
 import de.ellpeck.actuallyadditions.api.ActuallyTags;
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import net.minecraft.data.*;
 import net.minecraft.item.Items;
 import net.minecraft.util.IItemProvider;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.Tags;
 
 import java.nio.file.Path;
@@ -47,7 +45,7 @@ public class BlockRecipeGenerator extends RecipeProvider {
                 .pattern("C", "S")
                 .define('C', ActuallyTags.Items.TINY_COALS)
                 .define('S', Tags.Items.RODS_WOODEN)
-                .save(consumer, new ResourceLocation(ActuallyAdditions.MODID, "tiny_torch"));
+                .save(consumer);
 
         //Fireworks Box
         Recipe.shaped(ActuallyBlocks.FIREWORK_BOX.getItem())
@@ -235,12 +233,6 @@ public class BlockRecipeGenerator extends RecipeProvider {
                 this.unlockedBy("has_book", has(ActuallyItems.ITEM_BOOKLET.get()));
                 super.save(consumer);
             }
-
-            @Override
-            public void save(Consumer<IFinishedRecipe> consumer, ResourceLocation location) {
-                this.unlockedBy("has_book", has(ActuallyItems.ITEM_BOOKLET.get()));
-                super.save(consumer, location);
-            }
         }
 
         private static class Shaped extends ShapedRecipeBuilder {
@@ -278,12 +270,6 @@ public class BlockRecipeGenerator extends RecipeProvider {
             public void save(Consumer<IFinishedRecipe> consumerIn) {
                 this.unlockedBy("has_book", has(ActuallyItems.ITEM_BOOKLET.get()));
                 super.save(consumerIn);
-            }
-
-            @Override
-            public void save(Consumer<IFinishedRecipe> consumerIn, ResourceLocation id) {
-                this.unlockedBy("has_book", has(ActuallyItems.ITEM_BOOKLET.get()));
-                super.save(consumerIn, id);
             }
         }
     }

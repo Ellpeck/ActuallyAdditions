@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " R ",
+    "IGI"
+  ],
+  "key": {
+    "R": {
+      "item": "actuallyadditions:restonia_crystal"
+    },
+    "I": {
+      "item": "minecraft:iron_bars"
+    },
+    "G": {
+      "tag": "forge:glass"
+    }
+  },
+  "result": {
+    "item": "actuallyadditions:engineer_goggles"
+  }
+}

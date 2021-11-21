@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SLS",
+    "SCS",
+    "LVL"
+  ],
+  "key": {
+    "S": {
+      "tag": "forge:string"
+    },
+    "L": {
+      "tag": "forge:leather"
+    },
+    "C": {
+      "tag": "forge:chests/wooden"
+    },
+    "V": {
+      "item": "actuallyadditions:void_crystal_block"
+    }
+  },
+  "result": {
+    "item": "actuallyadditions:bag"
+  }
+}

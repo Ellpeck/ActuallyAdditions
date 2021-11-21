@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "O O",
+    "OOO",
+    "OOO"
+  ],
+  "key": {
+    "O": {
+      "item": "actuallyadditions:diamatine_crystal"
+    }
+  },
+  "result": {
+    "item": "actuallyadditions:chest_crystal_diamatine"
+  }
+}

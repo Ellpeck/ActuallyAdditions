@@ -1,0 +1,23 @@
+{
+  "type": "actuallyadditions:copy_nbt",
+  "pattern": [
+    " R ",
+    "ICI",
+    "III"
+  ],
+  "key": {
+    "R": {
+      "item": "actuallyadditions:battery",
+      "type": "actuallyadditions:nbt_target"
+    },
+    "I": {
+      "item": "actuallyadditions:enori_crystal"
+    },
+    "C": {
+      "item": "actuallyadditions:coil_advanced"
+    }
+  },
+  "result": {
+    "item": "actuallyadditions:battery_double"
+  }
+}

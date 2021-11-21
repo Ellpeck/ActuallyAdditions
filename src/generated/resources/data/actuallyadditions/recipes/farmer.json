@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ISI",
+    "SCS",
+    "ISI"
+  ],
+  "key": {
+    "I": {
+      "item": "actuallyadditions:enori_crystal_block"
+    },
+    "C": {
+      "item": "actuallyadditions:iron_casing"
+    },
+    "S": {
+      "tag": "forge:seeds"
+    }
+  },
+  "result": {
+    "item": "actuallyadditions:farmer"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "actuallyadditions:item_viewer"
+    }
+  ],
+  "result": {
+    "item": "actuallyadditions:item_viewer_hopping"
+  }
+}

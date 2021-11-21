@@ -1,0 +1,24 @@
+{
+  "type": "actuallyadditions:empowering",
+  "base": {
+    "item": "actuallyadditions:emeradic_crystal_block"
+  },
+  "modifier1": {
+    "tag": "forge:dyes/lime"
+  },
+  "modifier2": {
+    "item": "minecraft:tall_grass"
+  },
+  "modifier3": {
+    "tag": "minecraft:saplings"
+  },
+  "modifier4": {
+    "tag": "forge:slimeballs"
+  },
+  "energy": 50000,
+  "time": 3492376,
+  "color": 500,
+  "result": {
+    "item": "actuallyadditions:empowered_emeradic_crystal_block"
+  }
+}

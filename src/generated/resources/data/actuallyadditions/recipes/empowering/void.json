@@ -1,0 +1,24 @@
+{
+  "type": "actuallyadditions:empowering",
+  "base": {
+    "item": "actuallyadditions:void_crystal"
+  },
+  "modifier1": {
+    "tag": "forge:dyes/black"
+  },
+  "modifier2": {
+    "tag": "minecraft:coals"
+  },
+  "modifier3": {
+    "item": "minecraft:flint"
+  },
+  "modifier4": {
+    "tag": "forge:stone"
+  },
+  "energy": 5000,
+  "time": 3355443,
+  "color": 50,
+  "result": {
+    "item": "actuallyadditions:void_empowered_crystal"
+  }
+}

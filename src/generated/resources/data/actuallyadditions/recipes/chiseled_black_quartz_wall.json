@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "QQQ",
+    "QQQ"
+  ],
+  "key": {
+    "Q": {
+      "item": "actuallyadditions:chiseled_black_quartz_block"
+    }
+  },
+  "result": {
+    "item": "actuallyadditions:chiseled_black_quartz_wall"
+  }
+}

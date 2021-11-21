@@ -1,0 +1,10 @@
+{
+  "type": "actuallyadditions:laser",
+  "ingredient": {
+    "tag": "forge:storage_blocks/iron"
+  },
+  "energy": 800,
+  "result": {
+    "item": "actuallyadditions:enori_crystal_block"
+  }
+}

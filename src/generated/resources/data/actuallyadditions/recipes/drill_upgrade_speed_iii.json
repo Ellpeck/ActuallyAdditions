@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ISI",
+    "SRS",
+    "ISI"
+  ],
+  "key": {
+    "I": {
+      "item": "actuallyadditions:enori_empowered_crystal"
+    },
+    "S": {
+      "item": "minecraft:sugar"
+    },
+    "R": {
+      "item": "actuallyadditions:diamatine_empowered_crystal"
+    }
+  },
+  "result": {
+    "item": "actuallyadditions:drill_upgrade_speed_iii"
+  }
+}

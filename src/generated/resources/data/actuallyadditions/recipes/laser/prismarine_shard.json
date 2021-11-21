@@ -1,0 +1,10 @@
+{
+  "type": "actuallyadditions:laser",
+  "ingredient": {
+    "item": "minecraft:quartz"
+  },
+  "energy": 30000,
+  "result": {
+    "item": "minecraft:prismarine_shard"
+  }
+}

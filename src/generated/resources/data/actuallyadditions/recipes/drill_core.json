@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ICI",
+    "CRC",
+    "ICI"
+  ],
+  "key": {
+    "C": {
+      "item": "actuallyadditions:coil"
+    },
+    "R": {
+      "item": "actuallyadditions:restonia_crystal"
+    },
+    "I": {
+      "item": "actuallyadditions:enori_crystal"
+    }
+  },
+  "result": {
+    "item": "actuallyadditions:drill_core"
+  }
+}

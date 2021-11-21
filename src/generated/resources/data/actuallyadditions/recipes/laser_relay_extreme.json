@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " I ",
+    "XRX",
+    " I "
+  ],
+  "key": {
+    "I": {
+      "item": "actuallyadditions:diamatine_empowered_crystal"
+    },
+    "R": {
+      "item": "actuallyadditions:laser_relay_advanced"
+    },
+    "X": {
+      "item": "actuallyadditions:restonia_crystal"
+    }
+  },
+  "result": {
+    "item": "actuallyadditions:laser_relay_extreme"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "DID",
+    "ICI",
+    "DID"
+  ],
+  "key": {
+    "I": {
+      "item": "actuallyadditions:enori_empowered_crystal"
+    },
+    "D": {
+      "item": "actuallyadditions:diamatine_crystal"
+    },
+    "C": {
+      "item": "actuallyadditions:coil_advanced"
+    }
+  },
+  "result": {
+    "item": "actuallyadditions:drill_upgrade_five_by_five"
+  }
+}

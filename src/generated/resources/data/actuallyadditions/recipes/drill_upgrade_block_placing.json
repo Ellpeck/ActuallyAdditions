@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CEC",
+    "RAR",
+    "CEC"
+  ],
+  "key": {
+    "C": {
+      "tag": "forge:cobblestone"
+    },
+    "E": {
+      "item": "minecraft:paper"
+    },
+    "A": {
+      "item": "actuallyadditions:coil"
+    },
+    "R": {
+      "item": "actuallyadditions:enori_crystal"
+    }
+  },
+  "result": {
+    "item": "actuallyadditions:drill_upgrade_block_placing"
+  }
+}

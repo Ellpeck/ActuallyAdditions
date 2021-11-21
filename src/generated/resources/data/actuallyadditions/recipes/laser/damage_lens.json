@@ -1,0 +1,10 @@
+{
+  "type": "actuallyadditions:laser",
+  "ingredient": {
+    "item": "actuallyadditions:explosion_lens"
+  },
+  "energy": 5000,
+  "result": {
+    "item": "actuallyadditions:damage_lens"
+  }
+}

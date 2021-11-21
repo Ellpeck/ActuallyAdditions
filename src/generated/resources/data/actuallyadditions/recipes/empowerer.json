@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " R ",
+    " B ",
+    "CDC"
+  ],
+  "key": {
+    "R": {
+      "item": "actuallyadditions:restonia_crystal"
+    },
+    "B": {
+      "item": "actuallyadditions:battery_double"
+    },
+    "C": {
+      "item": "actuallyadditions:iron_casing"
+    },
+    "D": {
+      "item": "actuallyadditions:display_stand"
+    }
+  },
+  "result": {
+    "item": "actuallyadditions:empowerer"
+  }
+}

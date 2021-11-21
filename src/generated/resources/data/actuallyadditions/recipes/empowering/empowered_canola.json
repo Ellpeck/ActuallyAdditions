@@ -1,0 +1,24 @@
+{
+  "type": "actuallyadditions:empowering",
+  "base": {
+    "item": "actuallyadditions:crystallized_canola_seed"
+  },
+  "modifier1": {
+    "item": "actuallyadditions:canola_seed"
+  },
+  "modifier2": {
+    "item": "actuallyadditions:canola_seed"
+  },
+  "modifier3": {
+    "item": "actuallyadditions:canola_seed"
+  },
+  "modifier4": {
+    "item": "actuallyadditions:canola_seed"
+  },
+  "energy": 1000,
+  "time": 88908,
+  "color": 30,
+  "result": {
+    "item": "actuallyadditions:empowered_canola_seed"
+  }
+}

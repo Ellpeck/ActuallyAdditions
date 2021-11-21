@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "DID",
+    "ICI",
+    "DID"
+  ],
+  "key": {
+    "I": {
+      "item": "actuallyadditions:enori_crystal"
+    },
+    "D": {
+      "item": "actuallyadditions:diamatine_crystal"
+    },
+    "C": {
+      "item": "actuallyadditions:coil"
+    }
+  },
+  "result": {
+    "item": "actuallyadditions:drill_upgrade_three_by_three"
+  }
+}

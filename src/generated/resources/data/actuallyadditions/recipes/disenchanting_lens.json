@@ -1,0 +1,35 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "actuallyadditions:lens"
+    },
+    {
+      "item": "minecraft:enchanting_table"
+    },
+    {
+      "item": "actuallyadditions:diamatine_empowered_crystal"
+    },
+    {
+      "item": "actuallyadditions:diamatine_empowered_crystal"
+    },
+    {
+      "item": "actuallyadditions:diamatine_empowered_crystal"
+    },
+    {
+      "item": "actuallyadditions:diamatine_empowered_crystal"
+    },
+    {
+      "item": "actuallyadditions:diamatine_empowered_crystal"
+    },
+    {
+      "item": "actuallyadditions:diamatine_empowered_crystal"
+    },
+    {
+      "item": "actuallyadditions:diamatine_empowered_crystal"
+    }
+  ],
+  "result": {
+    "item": "actuallyadditions:disenchanting_lens"
+  }
+}

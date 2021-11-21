@@ -1,0 +1,10 @@
+{
+  "type": "actuallyadditions:laser",
+  "ingredient": {
+    "item": "actuallyadditions:laser_relay"
+  },
+  "energy": 2000,
+  "result": {
+    "item": "actuallyadditions:laser_relay_fluids"
+  }
+}

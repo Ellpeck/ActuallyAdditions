@@ -1,0 +1,24 @@
+{
+  "type": "actuallyadditions:empowering",
+  "base": {
+    "item": "actuallyadditions:enori_crystal"
+  },
+  "modifier1": {
+    "tag": "forge:dyes/gray"
+  },
+  "modifier2": {
+    "item": "minecraft:snowball"
+  },
+  "modifier3": {
+    "item": "minecraft:stone_button"
+  },
+  "modifier4": {
+    "tag": "forge:cobblestone"
+  },
+  "energy": 5000,
+  "time": 13421772,
+  "color": 50,
+  "result": {
+    "item": "actuallyadditions:enori_empowered_crystal"
+  }
+}

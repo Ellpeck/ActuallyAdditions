@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "O O",
+    "OOO",
+    "OOO"
+  ],
+  "key": {
+    "O": {
+      "item": "actuallyadditions:restonia_crystal"
+    }
+  },
+  "result": {
+    "item": "actuallyadditions:chest_crystal_restonia"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "type": "actuallyadditions:laser",
+  "ingredient": {
+    "tag": "forge:sand"
+  },
+  "energy": 20000,
+  "result": {
+    "item": "minecraft:soul_sand"
+  }
+}

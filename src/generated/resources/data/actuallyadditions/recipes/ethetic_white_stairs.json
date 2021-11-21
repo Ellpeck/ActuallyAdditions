@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "Q  ",
+    "QQ ",
+    "QQQ"
+  ],
+  "key": {
+    "Q": {
+      "item": "actuallyadditions:ethetic_white_block"
+    }
+  },
+  "result": {
+    "item": "actuallyadditions:ethetic_white_stairs"
+  }
+}

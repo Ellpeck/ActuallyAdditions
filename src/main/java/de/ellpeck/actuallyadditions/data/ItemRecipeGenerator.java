@@ -1,6 +1,7 @@
 package de.ellpeck.actuallyadditions.data;
 
 import com.google.gson.JsonObject;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.crafting.ActuallyRecipes;
 import de.ellpeck.actuallyadditions.mod.crafting.TargetNBTIngredient;
@@ -87,7 +88,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .define('S', Tags.Items.STRING)
             .define('L', Tags.Items.LEATHER)
             .define('C', Tags.Items.CHESTS_WOODEN)
-            .define('B', ActuallyBlocks.VOID_CRYSTAL.getItem()).save(consumer);
+            .define('V', ActuallyBlocks.VOID_CRYSTAL.getItem()).save(consumer);
 
         //Void Bag
         Recipe.shapeless(ActuallyItems.VOID_BAG.get())
@@ -111,7 +112,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
 
 
         //Clearing NBT Storage
-        Recipe.shapeless(ActuallyItems.LASER_WRENCH.get()).ingredients(ActuallyItems.LASER_WRENCH.get()).save(consumer);
+        Recipe.shapeless(ActuallyItems.LASER_WRENCH.get()).ingredients(ActuallyItems.LASER_WRENCH.get()).name(new ResourceLocation(ActuallyAdditions.MODID, "laser_wrench_nbt")).save(consumer);
         Recipe.shapeless(ActuallyItems.PHANTOM_CONNECTOR.get()).ingredients(ActuallyItems.PHANTOM_CONNECTOR.get()).save(consumer);
 
         //Disenchanting Lens
@@ -178,18 +179,22 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .define('R', TheFoods.RICE).save(consumer); //TODO foods need worked on still.*/
 
         Recipe.shaped(ActuallyItems.RICE_SLIME.get())
+            .requiresBook()
             .pattern(" R ")
             .pattern("RBR")
             .pattern(" R ")
             .define('R', ActuallyItems.RICE_DOUGH.get())
-            .define('B', Items.WATER_BUCKET).save(consumer);
+            .define('B', Items.WATER_BUCKET)
+            .save(consumer, new ResourceLocation(ActuallyAdditions.MODID, "rice_slime"));
 
         Recipe.shaped(ActuallyItems.RICE_SLIME.get())
+            .requiresBook()
             .pattern(" R ")
             .pattern("RBR")
             .pattern(" R ")
             .define('R', ActuallyItems.RICE_DOUGH.get())
-            .define('B', Items.POTION).save(consumer);
+            .define('B', Items.POTION)
+            .save(consumer, new ResourceLocation(ActuallyAdditions.MODID, "rice_slime_potion"));
 
         //Leaf Blower
         Recipe.shaped(ActuallyItems.LEAF_BLOWER.get())
@@ -303,7 +308,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .define('C', ActuallyItems.COIL_ADVANCED.get()).save(consumer);
 
         //Placing
-        Recipe.Shaped.shaped(ActuallyItems.DRILL_UPGRADE_BLOCK_PLACING.get())
+        Recipe.shaped(ActuallyItems.DRILL_UPGRADE_BLOCK_PLACING.get())
             .pattern("CEC")
             .pattern("RAR")
             .pattern("CEC")
@@ -596,6 +601,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
         }
 
         private static class Shapeless extends ShapelessRecipeBuilder {
+            private ResourceLocation name;
             public Shapeless(IItemProvider result) {
                 this(result, 1);
             }
@@ -609,16 +615,19 @@ public class ItemRecipeGenerator extends RecipeProvider {
                 return this;
             }
 
-            @Override
-            public void save(Consumer<IFinishedRecipe> consumer) {
-                this.unlockedBy("has_book", has(ActuallyItems.ITEM_BOOKLET.get()));
-                super.save(consumer);
+            public ItemRecipeGenerator.Recipe.Shapeless name(ResourceLocation name) {
+                this.name = name;
+                return this;
             }
 
             @Override
-            public void save(Consumer<IFinishedRecipe> consumer, ResourceLocation location) {
+            public void save(Consumer<IFinishedRecipe> consumer) {
                 this.unlockedBy("has_book", has(ActuallyItems.ITEM_BOOKLET.get()));
-                super.save(consumer, location);
+                if (this.name != null) {
+                    this.save(consumer, this.name);
+                } else {
+                    super.save(consumer);
+                }
             }
         }
 
@@ -653,16 +662,15 @@ public class ItemRecipeGenerator extends RecipeProvider {
                 return this;
             }
 
+            public ItemRecipeGenerator.Recipe.Shaped requiresBook() {
+                this.unlockedBy("has_book", has(ActuallyItems.ITEM_BOOKLET.get()));
+                return this;
+            }
+
             @Override
             public void save(Consumer<IFinishedRecipe> consumerIn) {
                 this.unlockedBy("has_book", has(ActuallyItems.ITEM_BOOKLET.get()));
                 super.save(consumerIn);
-            }
-
-            @Override
-            public void save(Consumer<IFinishedRecipe> consumerIn, ResourceLocation id) {
-                this.unlockedBy("has_book", has(ActuallyItems.ITEM_BOOKLET.get()));
-                super.save(consumerIn, id);
             }
         }
     }

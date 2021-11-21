@@ -1,0 +1,10 @@
+{
+  "type": "actuallyadditions:laser",
+  "ingredient": {
+    "tag": "forge:storage_blocks/redstone"
+  },
+  "energy": 400,
+  "result": {
+    "item": "actuallyadditions:restonia_crystal_block"
+  }
+}

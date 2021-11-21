@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GGC",
+    "RCR",
+    "CGG"
+  ],
+  "key": {
+    "R": {
+      "item": "minecraft:compass"
+    },
+    "G": {
+      "item": "actuallyadditions:restonia_crystal"
+    },
+    "C": {
+      "item": "actuallyadditions:coil_advanced"
+    }
+  },
+  "result": {
+    "item": "actuallyadditions:laser_upgrade_range",
+    "count": 2
+  }
+}

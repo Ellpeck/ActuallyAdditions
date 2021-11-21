@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GGG",
+    "RCR",
+    "GGG"
+  ],
+  "key": {
+    "G": {
+      "tag": "forge:glass/black"
+    },
+    "R": {
+      "item": "actuallyadditions:void_crystal"
+    },
+    "C": {
+      "item": "actuallyadditions:coil_advanced"
+    }
+  },
+  "result": {
+    "item": "actuallyadditions:laser_upgrade_invisibility",
+    "count": 4
+  }
+}

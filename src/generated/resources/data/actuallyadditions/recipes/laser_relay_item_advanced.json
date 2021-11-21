@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "actuallyadditions:laser_relay_item"
+    },
+    {
+      "item": "actuallyadditions:coil_advanced"
+    },
+    {
+      "item": "actuallyadditions:black_quartz"
+    }
+  ],
+  "result": {
+    "item": "actuallyadditions:laser_relay_item_advanced"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "type": "actuallyadditions:laser",
+  "ingredient": {
+    "item": "minecraft:red_mushroom"
+  },
+  "energy": 150000,
+  "result": {
+    "item": "minecraft:nether_wart"
+  }
+}

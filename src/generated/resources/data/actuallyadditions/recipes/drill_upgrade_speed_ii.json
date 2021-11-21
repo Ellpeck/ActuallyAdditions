@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ISI",
+    "SRS",
+    "ISI"
+  ],
+  "key": {
+    "I": {
+      "item": "actuallyadditions:enori_crystal"
+    },
+    "S": {
+      "item": "minecraft:sugar"
+    },
+    "R": {
+      "item": "minecraft:cake"
+    }
+  },
+  "result": {
+    "item": "actuallyadditions:drill_upgrade_speed_ii"
+  }
+}

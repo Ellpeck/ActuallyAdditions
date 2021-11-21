@@ -1,0 +1,10 @@
+{
+  "type": "actuallyadditions:laser",
+  "ingredient": {
+    "item": "minecraft:rotten_flesh"
+  },
+  "energy": 20000,
+  "result": {
+    "item": "minecraft:leather"
+  }
+}

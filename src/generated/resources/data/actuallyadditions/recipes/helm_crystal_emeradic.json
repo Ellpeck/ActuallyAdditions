@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "OOO",
+    "O O"
+  ],
+  "key": {
+    "O": {
+      "item": "actuallyadditions:emeradic_crystal"
+    }
+  },
+  "result": {
+    "item": "actuallyadditions:helm_crystal_emeradic"
+  }
+}

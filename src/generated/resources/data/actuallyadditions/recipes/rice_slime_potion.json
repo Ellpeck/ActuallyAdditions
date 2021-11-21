@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " R ",
+    "RBR",
+    " R "
+  ],
+  "key": {
+    "R": {
+      "item": "actuallyadditions:rice_dough"
+    },
+    "B": {
+      "item": "minecraft:potion"
+    }
+  },
+  "result": {
+    "item": "actuallyadditions:rice_slime"
+  }
+}
