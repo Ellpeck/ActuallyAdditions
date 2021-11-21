@@ -5,7 +5,7 @@ license="MIT"
 [[mods]]
 modId="actuallyadditions"
 version="${file.jarVersion}"
-displayName="Example Mod"
+displayName="Actually Additions"
 logoFile="assets/actuallyadditions/textures/logo.png"
 credits="Author: Ellpeck; Textures and Models: BootyToast, GlenthorLP, canitzp"
 authors="Ellpeck"
