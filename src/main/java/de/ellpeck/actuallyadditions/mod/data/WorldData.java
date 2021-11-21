@@ -17,6 +17,7 @@ import de.ellpeck.actuallyadditions.mod.misc.apiimpl.LaserRelayConnectionHandler
 import io.netty.util.internal.ConcurrentSet;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
+import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.storage.WorldSavedData;
 
@@ -36,13 +37,13 @@ public class WorldData extends WorldSavedData {
         super(SAVE_NAME);
     }
 
-    public static WorldData get(ServerWorld world) {
-        WorldData storage = world.getDataStorage().get(WorldData::new, SAVE_NAME);
+    public static WorldData get(World world) {
+        WorldData storage = ((ServerWorld) world).getDataStorage().get(WorldData::new, SAVE_NAME);
 
         if (storage == null) {
             storage = new WorldData();
             storage.setDirty();
-            world.getDataStorage().set(storage);
+            ((ServerWorld) world).getDataStorage().set(storage);
         }
 
         return storage;
