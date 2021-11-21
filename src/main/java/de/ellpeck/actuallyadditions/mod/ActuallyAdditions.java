@@ -93,6 +93,7 @@ public class ActuallyAdditions {
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         ActuallyBlocks.BLOCKS.register(eventBus);
+        ActuallyItems.ITEMS.register(eventBus);
         ActuallyBlocks.TILES.register(eventBus);
         ActuallyRecipes.init(eventBus);
         ActuallyContainers.CONTAINERS.register(eventBus);

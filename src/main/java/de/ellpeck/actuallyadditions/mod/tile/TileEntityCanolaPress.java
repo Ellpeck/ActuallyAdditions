@@ -13,7 +13,6 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerCanolaPress;
-import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
@@ -60,7 +59,11 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IN
     private int lastProcessTime;
 
     public TileEntityCanolaPress() {
-        super(ActuallyBlocks.CANOLA_PRESS.getTileEntityType(),  1);
+        super(ActuallyBlocks.CANOLA_PRESS.getTileEntityType(), 1);
+    }
+
+    public static boolean isCanola(ItemStack stack) {
+        return stack.getItem() == ActuallyBlocks.CANOLA.getItem();
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -130,10 +133,6 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IN
     @Override
     public IAcceptor getAcceptor() {
         return (slot, stack, automation) -> slot == 0 && isCanola(stack);
-    }
-
-    public static boolean isCanola(ItemStack stack) {
-        return stack.getItem() == ActuallyItems.CANOLA.get();
     }
 
     @Override

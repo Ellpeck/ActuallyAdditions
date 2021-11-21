@@ -44,9 +44,6 @@ import net.minecraftforge.fluids.capability.templates.FluidTank;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
-import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
-
 public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements INamedContainerProvider, IButtonReactor, ISharingFluidHandler {
 
     public static final int SLOT_COFFEE_BEANS = 0;
@@ -89,7 +86,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     private int lastBrewTime;
 
     public TileEntityCoffeeMachine() {
-        super(ActuallyBlocks.COFFEE_MACHINE.getTileEntityType(),  11);
+        super(ActuallyBlocks.COFFEE_MACHINE.getTileEntityType(), 11);
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -189,7 +186,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
                 this.storage.extractEnergyInternal(ENERGY_USED, false);
                 if (this.brewTime >= TIME_USED) {
                     this.brewTime = 0;
-                    ItemStack output = new ItemStack(ActuallyItems.COFFEE.get());
+                    ItemStack output = new ItemStack(ActuallyBlocks.COFFEE.getItem());
                     for (int i = 3; i < this.inv.getSlots(); i++) {
                         if (StackUtil.isValid(this.inv.getStackInSlot(i))) {
                             CoffeeIngredient ingredient = ItemCoffee.getIngredientFromStack(this.inv.getStackInSlot(i));

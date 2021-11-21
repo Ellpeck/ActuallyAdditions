@@ -35,7 +35,7 @@ public final class ActuallyItems {
     public static final RegistryObject<Item> itemMisc = ITEMS.register("misc", ItemBase::new);
 
     // MISC ITEMS
-    public static final RegistryObject<Item> CANOLA = ITEMS.register("canola", ItemBase::new);
+//    public static final RegistryObject<Item> CANOLA = ITEMS.register("canola", ItemBase::new);
     public static final RegistryObject<Item> COFFEE_CUP = ITEMS.register("coffee_cup", ItemBase::new);
     public static final RegistryObject<Item> PAPER_CONE = ITEMS.register("paper_cone", ItemBase::new);
     public static final RegistryObject<Item> MASHED_FOOD = ITEMS.register("mashed_food", ItemBase::new);
@@ -141,7 +141,7 @@ public final class ActuallyItems {
     public static final RegistryObject<Item> DRILL_UPGRADE_FIVE_BY_FIVE = ITEMS.register("drill_upgrade_five_by_five", () -> new ItemDrillUpgrade(ItemDrillUpgrade.UpgradeType.FIVE_BY_FIVE));
     public static final RegistryObject<Item> DRILL_UPGRADE_BLOCK_PLACING = ITEMS.register("drill_upgrade_block_placing", () -> new ItemDrillUpgrade(ItemDrillUpgrade.UpgradeType.PLACER));
     public static final RegistryObject<Item> FERTILIZER = ITEMS.register("fertilizer", ItemFertilizer::new);
-    public static final RegistryObject<Item> COFFEE = ITEMS.register("coffee", ItemCoffee::new);
+    //    public static final RegistryObject<Item> COFFEE = ITEMS.register("coffee", ItemCoffee::new);
     public static final RegistryObject<Item> PHANTOM_CONNECTOR = ITEMS.register("phantom_connector", ItemPhantomConnector::new);
     public static final RegistryObject<Item> RESONANT_RICE = ITEMS.register("resonant_rice", ItemResonantRice::new);
     public static final RegistryObject<Item> FOOD = ITEMS.register("food", ItemBase::new); //just... food? //TODO

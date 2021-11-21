@@ -10,8 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory;
 
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
-import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityCanolaPress;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.player.PlayerEntity;
@@ -27,10 +27,6 @@ public class ContainerCanolaPress extends Container {
 
     public final TileEntityCanolaPress press;
 
-    public static ContainerCanolaPress fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
-        return new ContainerCanolaPress(windowId, inv, (TileEntityCanolaPress) Objects.requireNonNull(inv.player.level.getBlockEntity(data.readBlockPos())));
-    }
-
     public ContainerCanolaPress(int windowId, PlayerInventory inventory, TileEntityCanolaPress tile) {
         super(ActuallyContainers.CANOLA_PRESS_CONTAINER.get(), windowId);
         this.press = tile;
@@ -45,6 +41,10 @@ public class ContainerCanolaPress extends Container {
         for (int i = 0; i < 9; i++) {
             this.addSlot(new Slot(inventory, i, 8 + i * 18, 155));
         }
+    }
+
+    public static ContainerCanolaPress fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
+        return new ContainerCanolaPress(windowId, inv, (TileEntityCanolaPress) Objects.requireNonNull(inv.player.level.getBlockEntity(data.readBlockPos())));
     }
 
     @Override
@@ -63,7 +63,7 @@ public class ContainerCanolaPress extends Container {
             //Other Slots in Inventory excluded
             if (slot >= inventoryStart) {
                 //Shift from Inventory
-                if (newStack.getItem() == ActuallyItems.CANOLA.get()) {
+                if (newStack.getItem() == ActuallyBlocks.CANOLA.getItem()) {
                     if (!this.moveItemStackTo(newStack, 0, 1, false)) {
                         return StackUtil.getEmpty();
                     }

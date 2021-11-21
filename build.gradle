@@ -91,18 +91,18 @@ dependencies {
 }
 
 // not sure if this is still needed
-processResources {
-    inputs.property('version', project.version)
-
-    from(sourceSets.main.resources.srcDirs) {
-        include 'META-INF/mods.toml'
-        expand 'version': project.version
-    }
-
-    from(sourceSets.main.resources.srcDirs) {
-        exclude 'META-INF/mods.toml'
-    }
-}
+//processResources {
+//    inputs.property('version', project.version)
+//
+//    from(sourceSets.main.resources.srcDirs) {
+//        include 'META-INF/mods.toml'
+//        expand 'version': project.version
+//    }
+//
+//    from(sourceSets.main.resources.srcDirs) {
+//        exclude 'META-INF/mods.toml'
+//    }
+//}
 
 jar {
     group = 'artifact'
