@@ -15,6 +15,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.nbt.StringNBT;
+import net.minecraft.world.server.ServerWorld;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +25,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public final class PlayerData {
 
     public static PlayerSave getDataFromPlayer(PlayerEntity player) {
-        WorldData worldData = WorldData.get(player.getCommandSenderWorld());
+        WorldData worldData = WorldData.get((ServerWorld) player.getCommandSenderWorld());
         ConcurrentHashMap<UUID, PlayerSave> data = worldData.playerSaveData;
         UUID id = player.getUUID();
 

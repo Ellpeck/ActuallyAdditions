@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
+import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import net.minecraft.entity.ai.attributes.Attribute;
@@ -33,7 +34,7 @@ public class ItemKnife extends ItemBase {
 
     @Override
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack stack) {
-        Multimap<Attribute, AttributeModifier> map = super.getAttributeModifiers(slot, stack);
+        Multimap<Attribute, AttributeModifier> map = ArrayListMultimap.create();
         if (slot == EquipmentSlotType.MAINHAND) {
             // TODO: [port] validate
             map.put(Attributes.ATTACK_DAMAGE, new AttributeModifier("Knife Modifier", 3, AttributeModifier.Operation.ADDITION));

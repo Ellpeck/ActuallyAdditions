@@ -31,23 +31,21 @@ import net.minecraftforge.common.PlantType;
 import net.minecraftforge.items.ItemHandlerHelper;
 
 import java.util.List;
-
-// CROP BLOCK DEFAULTS TO 7 YEARS OF AGE.
-import net.minecraft.block.AbstractBlock.Properties;
+import java.util.function.Supplier;
 
 public class BlockPlant extends CropsBlock {
-    public Item seedItem;
+    public Supplier<Item> seedItem;
 
     // Stolen from potato for now
     //    PotatoBlock(AbstractBlock.Properties.create(Material.PLANTS).doesNotBlockMovement().tickRandomly().zeroHardnessAndResistance().sound(SoundType.CROP)));
-    public BlockPlant(Item seedItem) {
+    public BlockPlant(Supplier<Item> seedItem) {
         super(Properties.of(Material.PLANT).noCollission().randomTicks().instabreak().sound(SoundType.CROP));
         this.seedItem = seedItem;
     }
 
     // Remove
     @Deprecated
-    public void doStuff(Item seedItem, Item returnItem, int returnMeta) {
+    public void doStuff(Supplier<Item> seedItem, Item returnItem, int returnMeta) {
         this.seedItem = seedItem;
         //        this.returnItem = returnItem;
         //        this.returnMeta = returnMeta;
@@ -95,7 +93,7 @@ public class BlockPlant extends CropsBlock {
 
     @Override
     protected IItemProvider getBaseSeedId() {
-        return this.seedItem;
+        return this.seedItem.get();
     }
 
     //    @Override

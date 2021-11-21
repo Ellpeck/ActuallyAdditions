@@ -6,15 +6,8 @@ public class CommonConfig {
     private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
     public static ForgeConfigSpec COMMON_CONFIG;
 
-
-
     static {
-
-
-
-
         OTHER.build();
-
         COMMON_CONFIG = BUILDER.build();
     }
 

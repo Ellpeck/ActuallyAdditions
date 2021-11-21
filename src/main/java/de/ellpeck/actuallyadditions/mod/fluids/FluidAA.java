@@ -46,7 +46,7 @@ public class FluidAA implements Supplier<Fluid> {
         source = InitFluids.FLUIDS.register(name, () ->  new ForgeFlowingFluid.Source(props));
         flowing = InitFluids.FLUIDS.register(name + "_flowing", () -> new ForgeFlowingFluid.Flowing(props));
         fluidBlock = ActuallyBlocks.BLOCKS.register(name, () -> new FlowingFluidBlock(source, AbstractBlock.Properties.of(Material.WATER)));
-        bucket = ActuallyItems.ITEMS.register(name + "_bucket", () -> new BucketItem(source.get(), new Item.Properties().craftRemainder(Items.BUCKET).tab(ActuallyAdditions.GROUP).stacksTo(1)));
+        bucket = ActuallyItems.ITEMS.register(name + "_bucket", () -> new BucketItem(source, new Item.Properties().craftRemainder(Items.BUCKET).tab(ActuallyAdditions.GROUP).stacksTo(1)));
     }
 
     public static ForgeFlowingFluid.Properties makeProperties(String texture, Supplier<FlowingFluidBlock> blockSupplier, Supplier<ForgeFlowingFluid> stillSupplier, Supplier<ForgeFlowingFluid> flowingSupplier, Supplier<Item> bucketSupplier) {

@@ -14,9 +14,7 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.api.recipe.WeightedOre;
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
-import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.NetherrackBlock;
@@ -90,25 +88,26 @@ public class LensMining extends Lens {
         ActuallyAdditionsAPI.addMiningLensNetherOre("oreCobalt", 50);
         ActuallyAdditionsAPI.addMiningLensNetherOre("oreArdite", 50);
 
-        for (String conf : ConfigStringListValues.MINING_LENS_EXTRA_WHITELIST.getValue()) {
-            if (conf.contains("@")) {
-                try {
-                    String[] split = conf.split("@");
-
-                    String ore = split[0];
-                    int weight = Integer.parseInt(split[1]);
-                    String dim = split[2];
-
-                    if ("n".equals(dim)) {
-                        ActuallyAdditionsAPI.addMiningLensNetherOre(ore, weight);
-                    } else if ("s".equals(dim)) {
-                        ActuallyAdditionsAPI.addMiningLensStoneOre(ore, weight);
-                    }
-                } catch (Exception e) {
-                    ActuallyAdditions.LOGGER.warn("A config option appears to be incorrect: The entry " + conf + " can't be parsed!");
-                }
-            }
-        }
+        // TODO: fix me
+//        for (String conf : ConfigStringListValues.MINING_LENS_EXTRA_WHITELIST.getValue()) {
+//            if (conf.contains("@")) {
+//                try {
+//                    String[] split = conf.split("@");
+//
+//                    String ore = split[0];
+//                    int weight = Integer.parseInt(split[1]);
+//                    String dim = split[2];
+//
+//                    if ("n".equals(dim)) {
+//                        ActuallyAdditionsAPI.addMiningLensNetherOre(ore, weight);
+//                    } else if ("s".equals(dim)) {
+//                        ActuallyAdditionsAPI.addMiningLensStoneOre(ore, weight);
+//                    }
+//                } catch (Exception e) {
+//                    ActuallyAdditions.LOGGER.warn("A config option appears to be incorrect: The entry " + conf + " can't be parsed!");
+//                }
+//            }
+//        }
     }
 
     @Override

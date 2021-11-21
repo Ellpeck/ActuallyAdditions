@@ -261,13 +261,13 @@ public final class ActuallyBlocks {
     //public static final AABlockReg<> WILD_PLANT = new AABlockReg<>("wild", BlockWildPlant::new); //TODO: what is this?
 
     //TODO: Are plants normal blocks / blockitems? i have no idea... news at 11...
-   public static final AABlockReg<BlockPlant, AABlockItem, ?> RICE = new AABlockReg<>("rice", () -> new BlockPlant(ActuallyItems.RICE_SEED.get()),
+   public static final AABlockReg<BlockPlant, AABlockItem, ?> RICE = new AABlockReg<>("rice", () -> new BlockPlant(ActuallyItems.RICE_SEED),
        (b) -> new AABlockItem(b, defaultBlockItemProperties));
-    public static final AABlockReg<BlockPlant, AABlockItem, ?> CANOLA = new AABlockReg<>("canola", () -> new BlockPlant(ActuallyItems.CANOLA_SEED.get()),
+    public static final AABlockReg<BlockPlant, AABlockItem, ?> CANOLA = new AABlockReg<>("canola", () -> new BlockPlant(ActuallyItems.CANOLA_SEED),
         (b) -> new AABlockItem(b, defaultBlockItemProperties));
-    public static final AABlockReg<BlockPlant, AABlockItem, ?> FLAX = new AABlockReg<>("flax", () -> new BlockPlant(ActuallyItems.FLAX_SEED.get()),
+    public static final AABlockReg<BlockPlant, AABlockItem, ?> FLAX = new AABlockReg<>("flax", () -> new BlockPlant(ActuallyItems.FLAX_SEED),
         (b) -> new AABlockItem(b, defaultBlockItemProperties));
-    public static final AABlockReg<BlockPlant, AABlockItem, ?> COFFEE = new AABlockReg<>("coffee", () -> new BlockPlant(ActuallyItems.COFFEE_SEED.get()),
+    public static final AABlockReg<BlockPlant, AABlockItem, ?> COFFEE = new AABlockReg<>("coffee", () -> new BlockPlant(ActuallyItems.COFFEE_SEED),
         (b) -> new AABlockItem(b, defaultBlockItemProperties));
     public static final AABlockReg<BlockGreenhouseGlass, AABlockItem, ?> GREENHOUSE_GLASS = new AABlockReg<>("greenhouse_glass", BlockGreenhouseGlass::new,
         (b) -> new AABlockItem(b, defaultBlockItemProperties));
