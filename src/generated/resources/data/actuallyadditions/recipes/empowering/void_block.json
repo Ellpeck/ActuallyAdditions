@@ -3,18 +3,20 @@
   "base": {
     "item": "actuallyadditions:void_crystal_block"
   },
-  "modifier1": {
-    "tag": "forge:dyes/black"
-  },
-  "modifier2": {
-    "tag": "minecraft:coals"
-  },
-  "modifier3": {
-    "item": "minecraft:flint"
-  },
-  "modifier4": {
-    "tag": "forge:stone"
-  },
+  "modifiers": [
+    {
+      "tag": "forge:dyes/black"
+    },
+    {
+      "tag": "minecraft:coals"
+    },
+    {
+      "item": "minecraft:flint"
+    },
+    {
+      "tag": "forge:stone"
+    }
+  ],
   "energy": 50000,
   "time": 3355443,
   "color": 500,

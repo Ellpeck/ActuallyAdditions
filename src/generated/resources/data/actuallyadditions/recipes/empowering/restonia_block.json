@@ -3,18 +3,20 @@
   "base": {
     "item": "actuallyadditions:restonia_crystal_block"
   },
-  "modifier1": {
-    "tag": "forge:dyes/red"
-  },
-  "modifier2": {
-    "item": "minecraft:nether_brick"
-  },
-  "modifier3": {
-    "tag": "forge:dusts/redstone"
-  },
-  "modifier4": {
-    "item": "minecraft:brick"
-  },
+  "modifiers": [
+    {
+      "tag": "forge:dyes/red"
+    },
+    {
+      "item": "minecraft:nether_brick"
+    },
+    {
+      "tag": "forge:dusts/redstone"
+    },
+    {
+      "item": "minecraft:brick"
+    }
+  ],
   "energy": 50000,
   "time": 10365735,
   "color": 500,

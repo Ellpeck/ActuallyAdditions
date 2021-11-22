@@ -3,18 +3,20 @@
   "base": {
     "item": "actuallyadditions:diamatine_crystal_block"
   },
-  "modifier1": {
-    "tag": "forge:dyes/light_blue"
-  },
-  "modifier2": {
-    "item": "minecraft:clay_ball"
-  },
-  "modifier3": {
-    "item": "minecraft:clay_ball"
-  },
-  "modifier4": {
-    "item": "minecraft:clay"
-  },
+  "modifiers": [
+    {
+      "tag": "forge:dyes/light_blue"
+    },
+    {
+      "item": "minecraft:clay_ball"
+    },
+    {
+      "item": "minecraft:clay_ball"
+    },
+    {
+      "item": "minecraft:clay"
+    }
+  ],
   "energy": 50000,
   "time": 6522834,
   "color": 500,

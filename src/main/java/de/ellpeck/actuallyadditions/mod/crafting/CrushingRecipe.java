@@ -113,7 +113,7 @@ public class CrushingRecipe implements IRecipe<IInventory> {
         public CrushingRecipe fromJson(@Nonnull ResourceLocation pRecipeId, @Nonnull JsonObject pJson) {
             Ingredient ingredient = Ingredient.fromJson(JSONUtils.getAsJsonObject(pJson, "ingredient"));
 
-            JsonArray resultList = JSONUtils.getAsJsonObject(pJson, "result").getAsJsonArray();
+            JsonArray resultList = JSONUtils.getAsJsonArray(pJson, "result");
             if (resultList.size() < 1)
                 throw new IllegalStateException(pRecipeId.toString() + ": Recipe must contain at least 1 result item");
 

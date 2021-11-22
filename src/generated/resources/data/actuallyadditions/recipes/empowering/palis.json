@@ -3,18 +3,20 @@
   "base": {
     "item": "actuallyadditions:palis_crystal"
   },
-  "modifier1": {
-    "tag": "forge:dyes/cyan"
-  },
-  "modifier2": {
-    "item": "minecraft:prismarine_shard"
-  },
-  "modifier3": {
-    "item": "minecraft:prismarine_shard"
-  },
-  "modifier4": {
-    "item": "minecraft:prismarine_shard"
-  },
+  "modifiers": [
+    {
+      "tag": "forge:dyes/cyan"
+    },
+    {
+      "item": "minecraft:prismarine_shard"
+    },
+    {
+      "item": "minecraft:prismarine_shard"
+    },
+    {
+      "item": "minecraft:prismarine_shard"
+    }
+  ],
   "energy": 5000,
   "time": 2437779,
   "color": 50,

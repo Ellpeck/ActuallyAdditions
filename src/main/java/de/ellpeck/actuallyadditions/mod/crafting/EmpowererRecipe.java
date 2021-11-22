@@ -1,5 +1,6 @@
 package de.ellpeck.actuallyadditions.mod.crafting;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.inventory.IInventory;
@@ -154,10 +155,15 @@ public class EmpowererRecipe implements IRecipe<IInventory> {
         @Nonnull
         public EmpowererRecipe fromJson(@Nonnull ResourceLocation pRecipeId, @Nonnull JsonObject pJson) {
             Ingredient base = Ingredient.fromJson(JSONUtils.getAsJsonObject(pJson, "base"));
-            Ingredient mod1 = Ingredient.fromJson(JSONUtils.getAsJsonObject(pJson, "modifier1"));
-            Ingredient mod2 = Ingredient.fromJson(JSONUtils.getAsJsonObject(pJson, "modifier2"));
-            Ingredient mod3 = Ingredient.fromJson(JSONUtils.getAsJsonObject(pJson, "modifier3"));
-            Ingredient mod4 = Ingredient.fromJson(JSONUtils.getAsJsonObject(pJson, "modifier4"));
+
+            JsonArray modifiers = JSONUtils.getAsJsonArray(pJson, "modifiers");
+            if (modifiers.size() != 4)
+                throw new IllegalStateException(pRecipeId.toString() + ": Must have exactly 4 modifiers, has: " + modifiers.size());
+
+            Ingredient mod1 = Ingredient.fromJson(modifiers.get(0));
+            Ingredient mod2 = Ingredient.fromJson(modifiers.get(1));
+            Ingredient mod3 = Ingredient.fromJson(modifiers.get(2));
+            Ingredient mod4 = Ingredient.fromJson(modifiers.get(3));
             int energy = JSONUtils.getAsInt(pJson, "energy");
             int color = JSONUtils.getAsInt(pJson, "color");
             int time = JSONUtils.getAsInt(pJson, "time");
@@ -225,10 +231,15 @@ public class EmpowererRecipe implements IRecipe<IInventory> {
         @Override
         public void serializeRecipeData(JsonObject pJson) {
             pJson.add("base", base.toJson());
-            pJson.add("modifier1", mod1.toJson());
-            pJson.add("modifier2", mod2.toJson());
-            pJson.add("modifier3", mod3.toJson());
-            pJson.add("modifier4", mod4.toJson());
+
+            JsonArray modifiers = new JsonArray();
+
+            modifiers.add(mod1.toJson());
+            modifiers.add(mod2.toJson());
+            modifiers.add(mod3.toJson());
+            modifiers.add(mod4.toJson());
+
+            pJson.add("modifiers", modifiers);
             pJson.addProperty("energy", energy);
             pJson.addProperty("time", time);
             pJson.addProperty("color", color);

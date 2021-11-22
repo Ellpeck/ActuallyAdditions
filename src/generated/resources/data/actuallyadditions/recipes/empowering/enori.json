@@ -3,18 +3,20 @@
   "base": {
     "item": "actuallyadditions:enori_crystal"
   },
-  "modifier1": {
-    "tag": "forge:dyes/gray"
-  },
-  "modifier2": {
-    "item": "minecraft:snowball"
-  },
-  "modifier3": {
-    "item": "minecraft:stone_button"
-  },
-  "modifier4": {
-    "tag": "forge:cobblestone"
-  },
+  "modifiers": [
+    {
+      "tag": "forge:dyes/gray"
+    },
+    {
+      "item": "minecraft:snowball"
+    },
+    {
+      "item": "minecraft:stone_button"
+    },
+    {
+      "tag": "forge:cobblestone"
+    }
+  ],
   "energy": 5000,
   "time": 13421772,
   "color": 50,

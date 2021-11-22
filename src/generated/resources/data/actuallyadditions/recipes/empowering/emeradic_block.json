@@ -3,18 +3,20 @@
   "base": {
     "item": "actuallyadditions:emeradic_crystal_block"
   },
-  "modifier1": {
-    "tag": "forge:dyes/lime"
-  },
-  "modifier2": {
-    "item": "minecraft:tall_grass"
-  },
-  "modifier3": {
-    "tag": "minecraft:saplings"
-  },
-  "modifier4": {
-    "tag": "forge:slimeballs"
-  },
+  "modifiers": [
+    {
+      "tag": "forge:dyes/lime"
+    },
+    {
+      "item": "minecraft:tall_grass"
+    },
+    {
+      "tag": "minecraft:saplings"
+    },
+    {
+      "tag": "forge:slimeballs"
+    }
+  ],
   "energy": 50000,
   "time": 3492376,
   "color": 500,
