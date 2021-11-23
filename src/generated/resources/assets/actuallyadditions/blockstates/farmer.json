@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "actuallyadditions:block/farmer"
+    },
+    "facing=south": {
+      "model": "actuallyadditions:block/farmer",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "actuallyadditions:block/farmer",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "actuallyadditions:block/farmer",
+      "y": 90
+    }
+  }
+}

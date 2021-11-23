@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "actuallyadditions:block/leaf_generator"
+    },
+    "facing=south": {
+      "model": "actuallyadditions:block/leaf_generator",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "actuallyadditions:block/leaf_generator",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "actuallyadditions:block/leaf_generator",
+      "y": 90
+    }
+  }
+}

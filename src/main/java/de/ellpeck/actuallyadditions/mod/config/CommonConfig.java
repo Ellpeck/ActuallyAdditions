@@ -1,5 +1,8 @@
 package de.ellpeck.actuallyadditions.mod.config;
 
+import net.minecraft.item.Item;
+import net.minecraft.item.Items;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 public class CommonConfig {
@@ -29,6 +32,8 @@ public class CommonConfig {
         public static ForgeConfigSpec.BooleanValue SUPER_DUPER_HARD_MODE;
         public static ForgeConfigSpec.BooleanValue MOST_BLAND_PERSON_EVER;
         public static ForgeConfigSpec.IntValue ELEVEN;
+        public static ForgeConfigSpec.ConfigValue<String> REDSTONECONFIGURATOR;
+        public static Item redstoneConfigureItem = Items.AIR;
 
 
         public static void build() {
@@ -82,6 +87,8 @@ public class CommonConfig {
                 .define("noColoredItemNames", false); //TODO is this still needed?
 
             ELEVEN = BUILDER.comment("11?").defineInRange("whatIs11", 11, 0, 12);
+
+            REDSTONECONFIGURATOR = BUILDER.comment("define the item used to configure Redstone Mode").define("redstoneConfigurator", Items.REDSTONE_TORCH.getRegistryName().toString(), obj -> obj instanceof String && ResourceLocation.isValidResourceLocation((String) obj));
 
             BUILDER.pop();
         }

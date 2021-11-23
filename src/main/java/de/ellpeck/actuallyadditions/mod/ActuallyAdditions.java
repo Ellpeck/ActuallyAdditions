@@ -37,8 +37,11 @@ import de.ellpeck.actuallyadditions.mod.update.UpdateChecker;
 import de.ellpeck.actuallyadditions.mod.util.ResourceReloader;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.event.AddReloadListenerEvent;
@@ -102,6 +105,7 @@ public class ActuallyAdditions {
         ActuallyRecipes.init(eventBus);
         ActuallyContainers.CONTAINERS.register(eventBus);
         ENTITIES.register(eventBus);
+        eventBus.addListener(this::onConfigReload);
 
         MinecraftForge.EVENT_BUS.addListener(this::serverStarted);
         MinecraftForge.EVENT_BUS.addListener(this::serverStopped);
@@ -138,6 +142,11 @@ public class ActuallyAdditions {
         HairyBallHandler.init();
         LensRecipeHandler.init();
         LensMining.init();
+    }
+
+    private void onConfigReload(ModConfig.ModConfigEvent event) {
+        Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(CommonConfig.OTHER.REDSTONECONFIGURATOR.get()));
+        CommonConfig.OTHER.redstoneConfigureItem = item != null?item: Items.AIR;
     }
 
     private void clientSetup(FMLClientSetupEvent event) {

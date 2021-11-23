@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "lit=false": {
+      "model": "actuallyadditions:block/lamp_light_gray"
+    },
+    "lit=true": {
+      "model": "actuallyadditions:block/lamp_light_gray"
+    }
+  }
+}
