@@ -107,7 +107,7 @@ public class ItemWingsOfTheBats extends ItemBase {
 
                 if (event.getEntityLiving().level.random.nextInt(15) <= looting * 2) {
                     LivingEntity entityLiving = event.getEntityLiving();
-                    event.getDrops().add(new ItemEntity(event.getEntityLiving().level, entityLiving.getX(), entityLiving.getY(), entityLiving.getZ(), new ItemStack(ActuallyItems.BAT_WING.get(), event.getEntityLiving().level.random.nextInt(2 + looting) + 1)));
+                    event.getDrops().add(new ItemEntity(event.getEntityLiving().level, entityLiving.getX(), entityLiving.getY(), entityLiving.getZ(), new ItemStack(ActuallyItems.BATS_WING.get(), event.getEntityLiving().level.random.nextInt(2 + looting) + 1)));
                 }
             }
         }

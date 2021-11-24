@@ -1,0 +1,23 @@
+{
+  "type": "actuallyadditions:copy_nbt",
+  "pattern": [
+    " R ",
+    "ICI",
+    "III"
+  ],
+  "key": {
+    "R": {
+      "item": "actuallyadditions:quadruple_battery",
+      "type": "actuallyadditions:nbt_target"
+    },
+    "I": {
+      "item": "actuallyadditions:empowered_diamatine_crystal"
+    },
+    "C": {
+      "item": "actuallyadditions:advanced_coil"
+    }
+  },
+  "result": {
+    "item": "actuallyadditions:quintuple_battery"
+  }
+}

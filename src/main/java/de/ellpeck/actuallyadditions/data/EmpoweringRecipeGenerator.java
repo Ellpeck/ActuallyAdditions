@@ -103,10 +103,10 @@ public class EmpoweringRecipeGenerator extends RecipeProvider {
                 .addModifier(Tags.Items.SLIMEBALLS).save(consumer, "emeradic_block");
 
         EmpoweringBuilder.builder(ActuallyItems.EMPOWERED_CANOLA_SEED.get(), ActuallyItems.CRYSTALLIZED_CANOLA_SEED.get(), 1000, 30, 0x015b4c)
-                .addModifier(ActuallyItems.CANOLA_SEED.get())
-                .addModifier(ActuallyItems.CANOLA_SEED.get())
-                .addModifier(ActuallyItems.CANOLA_SEED.get())
-                .addModifier(ActuallyItems.CANOLA_SEED.get()).save(consumer, "empowered_canola");
+                .addModifier(ActuallyItems.CANOLA_SEEDS.get())
+                .addModifier(ActuallyItems.CANOLA_SEEDS.get())
+                .addModifier(ActuallyItems.CANOLA_SEEDS.get())
+                .addModifier(ActuallyItems.CANOLA_SEEDS.get()).save(consumer, "empowered_canola");
     }
 
 

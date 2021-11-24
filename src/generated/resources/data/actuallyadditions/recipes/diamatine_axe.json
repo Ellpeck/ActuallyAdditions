@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "EE",
+    "ES",
+    " S"
+  ],
+  "key": {
+    "E": {
+      "item": "actuallyadditions:diamatine_crystal"
+    },
+    "S": {
+      "tag": "forge:rods/wooden"
+    }
+  },
+  "result": {
+    "item": "actuallyadditions:diamatine_axe"
+  }
+}

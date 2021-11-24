@@ -35,7 +35,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
         generatePaxels(consumer);
 
         //Goggles
-        Recipe.shaped(ActuallyItems.ENGINEER_GOGGLES.get())
+        Recipe.shaped(ActuallyItems.ENGINEERS_GOGGLES.get())
             .pattern(" R ")
             .pattern("IGI")
             .define('R', ActuallyItems.RESTONIA_CRYSTAL.get())
@@ -43,12 +43,12 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .define('G', Tags.Items.GLASS).save(consumer);
 
         //Advanced Goggles
-        Recipe.shaped(ActuallyItems.ENGINEER_GOGGLES_ADVANCED.get())
+        Recipe.shaped(ActuallyItems.ENGINEERS_GOGGLES_ADVANCED.get())
             .pattern(" R ")
             .pattern("IGI")
             .define('R', ActuallyItems.EMPOWERED_RESTONIA_CRYSTAL.get())
             .define('I', Items.IRON_BARS)
-            .define('G', ActuallyItems.ENGINEER_GOGGLES.get()).save(consumer);
+            .define('G', ActuallyItems.ENGINEERS_GOGGLES.get()).save(consumer);
 
         //Laser Upgrades
         //Invisibility
@@ -58,7 +58,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .pattern("GGG")
             .define('G', Tags.Items.GLASS_BLACK)
             .define('R', ActuallyItems.VOID_CRYSTAL.get())
-            .define('C', ActuallyItems.COIL_ADVANCED.get()).save(consumer);
+            .define('C', ActuallyItems.ADVANCED_COIL.get()).save(consumer);
 
         //Range
         Recipe.shaped(ActuallyItems.LASER_UPGRADE_RANGE.get(), 2)
@@ -67,21 +67,21 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .pattern("CGG")
             .define('R', Items.COMPASS)
             .define('G', ActuallyItems.RESTONIA_CRYSTAL.get())
-            .define('C', ActuallyItems.COIL_ADVANCED.get()).save(consumer);
+            .define('C', ActuallyItems.ADVANCED_COIL.get()).save(consumer);
 
         //Filling Wand
-        Recipe.shaped(ActuallyItems.FILLING_WAND.get())
+        Recipe.shaped(ActuallyItems.HANDHELD_FILLER.get())
             .pattern("IPI")
             .pattern("DCD")
             .pattern(" B ")
             .define('I', ActuallyItems.EMPOWERED_ENORI_CRYSTAL.get())
             .define('P', ActuallyItems.PALIS_CRYSTAL.get())
-            .define('C', ActuallyItems.COIL_ADVANCED.get())
+            .define('C', ActuallyItems.ADVANCED_COIL.get())
             .define('D', ActuallyItems.DIAMATINE_CRYSTAL.get())
-            .define('B', ActuallyItems.BATTERY_TRIPLE.get()).save(consumer);
+            .define('B', ActuallyItems.TRIPLE_BATTERY.get()).save(consumer);
 
         //Bag
-        Recipe.shaped(ActuallyItems.BAG.get())
+        Recipe.shaped(ActuallyItems.TRAVELERS_SACK.get())
             .pattern("SLS")
             .pattern("SCS")
             .pattern("LVL")
@@ -91,8 +91,8 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .define('V', ActuallyBlocks.VOID_CRYSTAL.getItem()).save(consumer);
 
         //Void Bag
-        Recipe.shapeless(ActuallyItems.VOID_BAG.get())
-            .requires(ActuallyItems.BAG.get())
+        Recipe.shapeless(ActuallyItems.VOID_SACK.get())
+            .requires(ActuallyItems.TRAVELERS_SACK.get())
             .requires(Tags.Items.ENDER_PEARLS)
             .requires(Tags.Items.OBSIDIAN)
             .requires(ActuallyBlocks.VOID_CRYSTAL.getItem())
@@ -108,7 +108,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
 
         //Booklet
         Recipe.shapeless(ActuallyItems.ITEM_BOOKLET.get())
-            .ingredients(ActuallyItems.CANOLA_SEED.get(), Items.PAPER).save(consumer);
+            .ingredients(ActuallyItems.CANOLA_SEEDS.get(), Items.PAPER).save(consumer);
 
 
         //Clearing NBT Storage
@@ -116,13 +116,13 @@ public class ItemRecipeGenerator extends RecipeProvider {
         Recipe.shapeless(ActuallyItems.PHANTOM_CONNECTOR.get()).ingredients(ActuallyItems.PHANTOM_CONNECTOR.get()).save(consumer);
 
         //Disenchanting Lens
-        Recipe.shapeless(ActuallyItems.DISENCHANTING_LENS.get())
+        Recipe.shapeless(ActuallyItems.LENS_OF_DISENCHANTING.get())
             .requires(ActuallyItems.LENS.get())
             .requires(Items.ENCHANTING_TABLE)
             .requires(ActuallyItems.EMPOWERED_DIAMATINE_CRYSTAL.get(), 7).save(consumer);
 
         //Mining Lens
-        Recipe.shaped(ActuallyItems.MINING_LENS.get())
+        Recipe.shaped(ActuallyItems.LENS_OF_THE_MINER.get())
             .pattern("DGI")
             .pattern("CLB")
             .pattern("QPE")
@@ -139,9 +139,9 @@ public class ItemRecipeGenerator extends RecipeProvider {
         //Killer Lens
         ItemStack enchantedBook = new ItemStack(Items.ENCHANTED_BOOK);
         enchantedBook.enchant(Enchantments.SHARPNESS, 5);
-        Recipe.shapeless(ActuallyItems.MORE_DAMAGE_LENS.get())
+        Recipe.shapeless(ActuallyItems.LENS_OF_THE_KILLER.get())
             .requires(Items.DIAMOND_SWORD)
-            .requires(ActuallyItems.DAMAGE_LENS.get())
+            .requires(ActuallyItems.LENS_OF_CERTAIN_DEATH.get())
             .requires(NBTIngredient.of(enchantedBook)).save(consumer);
 
 
@@ -167,7 +167,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .pattern("C  ")
             .pattern(" S ")
             .pattern("  S")
-            .define('C', ActuallyItems.COIL_ADVANCED.get())
+            .define('C', ActuallyItems.ADVANCED_COIL.get())
             .define('S', ActuallyItems.ENORI_CRYSTAL.get()).save(consumer);
 
 
@@ -178,7 +178,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .pattern("  R")
             .define('R', TheFoods.RICE).save(consumer); //TODO foods need worked on still.*/
 
-        Recipe.shaped(ActuallyItems.RICE_SLIME.get())
+        Recipe.shaped(ActuallyItems.RICE_SLIMEBALL.get())
             .requiresBook()
             .pattern(" R ")
             .pattern("RBR")
@@ -187,7 +187,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .define('B', Items.WATER_BUCKET)
             .save(consumer, new ResourceLocation(ActuallyAdditions.MODID, "rice_slime"));
 
-        Recipe.shaped(ActuallyItems.RICE_SLIME.get())
+        Recipe.shaped(ActuallyItems.RICE_SLIMEBALL.get())
             .requiresBook()
             .pattern(" R ")
             .pattern("RBR")
@@ -204,7 +204,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .define('I', ActuallyItems.ENORI_CRYSTAL.get())
             .define('P', Items.PISTON)
             .define('F', Items.FLINT)
-            .define('C', ActuallyItems.COIL_ADVANCED.get()).save(consumer);
+            .define('C', ActuallyItems.ADVANCED_COIL.get()).save(consumer);
 
         //Drill //TODO is this still being colorable?
         Recipe.shaped(ActuallyItems.DRILL.get())
@@ -212,7 +212,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .pattern("CRC")
             .pattern("III")
             .define('D', Tags.Items.GEMS_DIAMOND)
-            .define('C', ActuallyItems.COIL_ADVANCED.get())
+            .define('C', ActuallyItems.ADVANCED_COIL.get())
             .define('R', ActuallyItems.DRILL_CORE.get())
             .define('I', ActuallyItems.ENORI_CRYSTAL.get()).save(consumer);
 
@@ -221,19 +221,19 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .pattern("ICI")
             .pattern("CRC")
             .pattern("ICI")
-            .define('C', ActuallyItems.COIL.get())
+            .define('C', ActuallyItems.BASIC_COIL.get())
             .define('R', ActuallyItems.RESTONIA_CRYSTAL.get())
             .define('I', ActuallyItems.ENORI_CRYSTAL.get()).save(consumer);
 
         //Tele Staff
-        Recipe.shaped(ActuallyItems.TELE_STAFF.get())
+        Recipe.shaped(ActuallyItems.TELEPORT_STAFF.get())
             .pattern(" FE")
             .pattern(" S ")
             .pattern("SB ")
             .define('F', ActuallyItems.EMPOWERED_DIAMATINE_CRYSTAL.get())
             .define('E', ActuallyBlocks.ENDER_PEARL_BLOCK.getItem())
             .define('S', ActuallyBlocks.ENDER_CASING.getItem())
-            .define('B', ActuallyItems.BATTERY.get()).save(consumer);
+            .define('B', ActuallyItems.SINGLE_BATTERY.get()).save(consumer);
 
         //Drill Speed upgrade
         Recipe.shaped(ActuallyItems.DRILL_UPGRADE_SPEED.get())
@@ -287,7 +287,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .pattern("DID")
             .define('I', ActuallyItems.ENORI_CRYSTAL.get())
             .define('D', ActuallyItems.DIAMATINE_CRYSTAL.get())
-            .define('C', ActuallyItems.COIL.get()).save(consumer);
+            .define('C', ActuallyItems.BASIC_COIL.get()).save(consumer);
 
         //5x5
         Recipe.shaped(ActuallyItems.DRILL_UPGRADE_FIVE_BY_FIVE.get())
@@ -296,7 +296,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .pattern("DID")
             .define('I', ActuallyItems.EMPOWERED_ENORI_CRYSTAL.get())
             .define('D', ActuallyItems.DIAMATINE_CRYSTAL.get())
-            .define('C', ActuallyItems.COIL_ADVANCED.get()).save(consumer);
+            .define('C', ActuallyItems.ADVANCED_COIL.get()).save(consumer);
 
         //Silk Touch
         Recipe.shaped(ActuallyItems.DRILL_UPGRADE_SILK_TOUCH.get())
@@ -305,7 +305,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .pattern("DSD")
             .define('D', ActuallyItems.EMERADIC_CRYSTAL.get())
             .define('S', ActuallyItems.DIAMATINE_CRYSTAL.get())
-            .define('C', ActuallyItems.COIL_ADVANCED.get()).save(consumer);
+            .define('C', ActuallyItems.ADVANCED_COIL.get()).save(consumer);
 
         //Placing
         Recipe.shaped(ActuallyItems.DRILL_UPGRADE_BLOCK_PLACING.get())
@@ -314,7 +314,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .pattern("CEC")
             .define('C', Tags.Items.COBBLESTONE)
             .define('E', Items.PAPER)
-            .define('A', ActuallyItems.COIL.get())
+            .define('A', ActuallyItems.BASIC_COIL.get())
             .define('R', ActuallyItems.ENORI_CRYSTAL.get()).save(consumer);
 
         //Bat Wings
@@ -322,12 +322,12 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .pattern("WNW")
             .pattern("WDW")
             .pattern("WNW")
-            .define('W', ActuallyItems.BAT_WING.get())
+            .define('W', ActuallyItems.BATS_WING.get())
             .define('N', ActuallyBlocks.DIAMATINE_CRYSTAL.getItem())
             .define('D', ActuallyItems.ENDER_STAR.get()).save(consumer);
 
         //Coil
-        Recipe.shaped(ActuallyItems.COIL.get())
+        Recipe.shaped(ActuallyItems.BASIC_COIL.get())
             .pattern(" R ")
             .pattern("RIR")
             .pattern(" R ")
@@ -335,61 +335,61 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .define('R', ActuallyItems.RESTONIA_CRYSTAL.get()).save(consumer);
 
         //Advanced Coil
-        Recipe.shaped(ActuallyItems.COIL_ADVANCED.get())
+        Recipe.shaped(ActuallyItems.ADVANCED_COIL.get())
             .pattern("GGG")
             .pattern("GCG")
             .pattern("GGG")
-            .define('C', ActuallyItems.COIL.get())
+            .define('C', ActuallyItems.BASIC_COIL.get())
             .define('G', Items.GOLD_NUGGET).save(consumer);
 
         //Battery
-        Recipe.shaped(ActuallyItems.BATTERY.get())
+        Recipe.shaped(ActuallyItems.SINGLE_BATTERY.get())
             .pattern(" R ")
             .pattern("ICI")
             .pattern("III")
             .define('R', ActuallyItems.RESTONIA_CRYSTAL.get())
             .define('I', ActuallyItems.ENORI_CRYSTAL.get())
-            .define('C', ActuallyItems.COIL_ADVANCED.get())
+            .define('C', ActuallyItems.ADVANCED_COIL.get())
             .save(consumer);
 
         //Double Battery
-        Recipe.shaped(ActuallyItems.BATTERY_DOUBLE.get())
+        Recipe.shaped(ActuallyItems.DOUBLE_BATTERY.get())
             .pattern(" R ")
             .pattern("ICI")
             .pattern("III")
-            .define('R', TargetNBTIngredient.of(ActuallyItems.BATTERY.get()))
+            .define('R', TargetNBTIngredient.of(ActuallyItems.SINGLE_BATTERY.get()))
             .define('I', ActuallyItems.ENORI_CRYSTAL.get())
-            .define('C', ActuallyItems.COIL_ADVANCED.get())
+            .define('C', ActuallyItems.ADVANCED_COIL.get())
             .save(WrappedRecipe.Inject(consumer, ActuallyRecipes.KEEP_DATA_SHAPED_RECIPE.get()));
 
         //Triple Battery
-        Recipe.shaped(ActuallyItems.BATTERY_TRIPLE.get())
+        Recipe.shaped(ActuallyItems.TRIPLE_BATTERY.get())
             .pattern(" R ")
             .pattern("ICI")
             .pattern("III")
-            .define('R', TargetNBTIngredient.of(ActuallyItems.BATTERY_DOUBLE.get()))
+            .define('R', TargetNBTIngredient.of(ActuallyItems.DOUBLE_BATTERY.get()))
             .define('I', ActuallyItems.EMPOWERED_ENORI_CRYSTAL.get())
-            .define('C', ActuallyItems.COIL_ADVANCED.get())
+            .define('C', ActuallyItems.ADVANCED_COIL.get())
             .save(WrappedRecipe.Inject(consumer, ActuallyRecipes.KEEP_DATA_SHAPED_RECIPE.get()));
 
         //Quad Battery
-        Recipe.shaped(ActuallyItems.BATTERY_QUADRUPLE.get())
+        Recipe.shaped(ActuallyItems.QUADRUPLE_BATTERY.get())
             .pattern(" R ")
             .pattern("ICI")
             .pattern("III")
-            .define('R', TargetNBTIngredient.of(ActuallyItems.BATTERY_TRIPLE.get()))
+            .define('R', TargetNBTIngredient.of(ActuallyItems.TRIPLE_BATTERY.get()))
             .define('I', ActuallyItems.EMPOWERED_ENORI_CRYSTAL.get())
-            .define('C', ActuallyItems.COIL_ADVANCED.get())
+            .define('C', ActuallyItems.ADVANCED_COIL.get())
             .save(WrappedRecipe.Inject(consumer, ActuallyRecipes.KEEP_DATA_SHAPED_RECIPE.get()));
 
         //Quintuple Battery
-        Recipe.shaped(ActuallyItems.BATTERY_QUINTUPLE.get())
+        Recipe.shaped(ActuallyItems.QUINTUPLE_BATTERY.get())
             .pattern(" R ")
             .pattern("ICI")
             .pattern("III")
-            .define('R', TargetNBTIngredient.of(ActuallyItems.BATTERY_QUADRUPLE.get()))
+            .define('R', TargetNBTIngredient.of(ActuallyItems.QUADRUPLE_BATTERY.get()))
             .define('I', ActuallyItems.EMPOWERED_DIAMATINE_CRYSTAL.get())
-            .define('C', ActuallyItems.COIL_ADVANCED.get())
+            .define('C', ActuallyItems.ADVANCED_COIL.get())
             .save(WrappedRecipe.Inject(consumer, ActuallyRecipes.KEEP_DATA_SHAPED_RECIPE.get()));
 
 
@@ -471,29 +471,29 @@ public class ItemRecipeGenerator extends RecipeProvider {
 
     protected void generateEquipment(Consumer<IFinishedRecipe> consumer) {
         addToolAndArmorRecipes(consumer, ActuallyItems.BLACK_QUARTZ, ActuallyItems.PICKAXE_QUARTZ, ActuallyItems.SWORD_QUARTZ, ActuallyItems.AXE_QUARTZ, ActuallyItems.SHOVEL_QUARTZ, ActuallyItems.HOE_QUARTZ, ActuallyItems.HELM_QUARTZ, ActuallyItems.CHEST_QUARTZ, ActuallyItems.PANTS_QUARTZ, ActuallyItems.BOOTS_QUARTZ);
-        addToolAndArmorRecipes(consumer, ActuallyItems.RESTONIA_CRYSTAL, ActuallyItems.PICKAXE_CRYSTAL_RESTONIA, ActuallyItems.SWORD_CRYSTAL_RESTONIA, ActuallyItems.AXE_CRYSTAL_RESTONIA, ActuallyItems.SHOVEL_CRYSTAL_RESTONIA, ActuallyItems.HOE_CRYSTAL_RESTONIA, ActuallyItems.HELM_CRYSTAL_RESTONIA, ActuallyItems.CHEST_CRYSTAL_RESTONIA, ActuallyItems.PANTS_CRYSTAL_RESTONIA, ActuallyItems.BOOTS_CRYSTAL_RESTONIA);
-        addToolAndArmorRecipes(consumer, ActuallyItems.EMERADIC_CRYSTAL, ActuallyItems.PICKAXE_CRYSTAL_EMERADIC, ActuallyItems.SWORD_CRYSTAL_EMERADIC, ActuallyItems.AXE_CRYSTAL_EMERADIC, ActuallyItems.SHOVEL_CRYSTAL_EMERADIC, ActuallyItems.HOE_CRYSTAL_EMERADIC, ActuallyItems.HELM_CRYSTAL_EMERADIC, ActuallyItems.CHEST_CRYSTAL_EMERADIC, ActuallyItems.PANTS_CRYSTAL_EMERADIC, ActuallyItems.BOOTS_CRYSTAL_EMERADIC);
-        addToolAndArmorRecipes(consumer, ActuallyItems.ENORI_CRYSTAL, ActuallyItems.PICKAXE_CRYSTAL_ENORI, ActuallyItems.SWORD_CRYSTAL_ENORI, ActuallyItems.AXE_CRYSTAL_ENORI, ActuallyItems.SHOVEL_CRYSTAL_ENORI, ActuallyItems.HOE_CRYSTAL_ENORI, ActuallyItems.HELM_CRYSTAL_ENORI, ActuallyItems.CHEST_CRYSTAL_ENORI, ActuallyItems.PANTS_CRYSTAL_ENORI, ActuallyItems.BOOTS_CRYSTAL_ENORI);
-        addToolAndArmorRecipes(consumer, ActuallyItems.DIAMATINE_CRYSTAL, ActuallyItems.PICKAXE_CRYSTAL_DIAMATINE, ActuallyItems.SWORD_CRYSTAL_DIAMATINE, ActuallyItems.AXE_CRYSTAL_DIAMATINE, ActuallyItems.SHOVEL_CRYSTAL_DIAMATINE, ActuallyItems.HOE_CRYSTAL_DIAMATINE, ActuallyItems.HELM_CRYSTAL_DIAMATINE, ActuallyItems.CHEST_CRYSTAL_DIAMATINE, ActuallyItems.PANTS_CRYSTAL_DIAMATINE, ActuallyItems.BOOTS_CRYSTAL_DIAMATINE);
-        addToolAndArmorRecipes(consumer, ActuallyItems.PALIS_CRYSTAL, ActuallyItems.PICKAXE_CRYSTAL_PALIS, ActuallyItems.SWORD_CRYSTAL_PALIS, ActuallyItems.AXE_CRYSTAL_PALIS, ActuallyItems.SHOVEL_CRYSTAL_PALIS, ActuallyItems.HOE_CRYSTAL_PALIS, ActuallyItems.HELM_CRYSTAL_PALIS, ActuallyItems.CHEST_CRYSTAL_PALIS, ActuallyItems.PANTS_CRYSTAL_PALIS, ActuallyItems.BOOTS_CRYSTAL_PALIS);
-        addToolAndArmorRecipes(consumer, ActuallyItems.VOID_CRYSTAL, ActuallyItems.PICKAXE_CRYSTAL_VOID, ActuallyItems.SWORD_CRYSTAL_VOID, ActuallyItems.AXE_CRYSTAL_VOID, ActuallyItems.SHOVEL_CRYSTAL_VOID, ActuallyItems.HOE_CRYSTAL_VOID, ActuallyItems.HELM_CRYSTAL_VOID, ActuallyItems.CHEST_CRYSTAL_VOID, ActuallyItems.PANTS_CRYSTAL_VOID, ActuallyItems.BOOTS_CRYSTAL_VOID);
+        addToolAndArmorRecipes(consumer, ActuallyItems.RESTONIA_CRYSTAL, ActuallyItems.RESTONIA_PICKAXE, ActuallyItems.RESTONIA_SWORD, ActuallyItems.RESTONIA_AXE, ActuallyItems.RESTONIA_SHOVEL, ActuallyItems.RESTONIA_HOE, ActuallyItems.RESTONIA_HELMET, ActuallyItems.RESTONIA_CHEST, ActuallyItems.RESTONIA_LEGGINGS, ActuallyItems.RESTONIA_BOOTS);
+        addToolAndArmorRecipes(consumer, ActuallyItems.EMERADIC_CRYSTAL, ActuallyItems.EMERADIC_PICKAXE, ActuallyItems.EMERADIC_SWORD, ActuallyItems.EMERADIC_AXE, ActuallyItems.EMERADIC_SHOVEL, ActuallyItems.EMERADIC_HOE, ActuallyItems.EMERADIC_HELMET, ActuallyItems.EMERADIC_CHEST, ActuallyItems.EMERADIC_LEGGINGS, ActuallyItems.EMERADIC_BOOTS);
+        addToolAndArmorRecipes(consumer, ActuallyItems.ENORI_CRYSTAL, ActuallyItems.ENORI_PICKAXE, ActuallyItems.ENORI_SWORD, ActuallyItems.ENORI_AXE, ActuallyItems.ENORI_SHOVEL, ActuallyItems.ENORI_HOE, ActuallyItems.ENORI_HELMET, ActuallyItems.ENORI_CHEST, ActuallyItems.ENORI_LEGGINGS, ActuallyItems.ENORI_BOOTS);
+        addToolAndArmorRecipes(consumer, ActuallyItems.DIAMATINE_CRYSTAL, ActuallyItems.DIAMATINE_PICKAXE, ActuallyItems.DIAMATINE_SWORD, ActuallyItems.DIAMATINE_AXE, ActuallyItems.DIAMATINE_SHOVEL, ActuallyItems.DIAMATINE_HOE, ActuallyItems.DIAMATINE_HELMET, ActuallyItems.DIAMATINE_CHEST, ActuallyItems.DIAMATINE_LEGGINGS, ActuallyItems.DIAMATINE_BOOTS);
+        addToolAndArmorRecipes(consumer, ActuallyItems.PALIS_CRYSTAL, ActuallyItems.PALIS_PICKAXE, ActuallyItems.PALIS_SWORD, ActuallyItems.PALIS_AXE, ActuallyItems.PALIS_SHOVEL, ActuallyItems.PALIS_HOE, ActuallyItems.PALIS_HELMET, ActuallyItems.PALIS_CHEST, ActuallyItems.PALIS_LEGGINGS, ActuallyItems.PALIS_BOOTS);
+        addToolAndArmorRecipes(consumer, ActuallyItems.VOID_CRYSTAL, ActuallyItems.VOID_PICKAXE, ActuallyItems.VOID_SWORD, ActuallyItems.VOID_AXE, ActuallyItems.VOID_SHOVEL, ActuallyItems.VOID_HOE, ActuallyItems.VOID_HELMET, ActuallyItems.VOID_CHEST, ActuallyItems.VOID_LEGGINGS, ActuallyItems.VOID_BOOTS);
     }
 
     protected void generatePaxels(Consumer<IFinishedRecipe> consumer) {
-        addPaxel(consumer, ActuallyItems.WOODEN_PAXEL, Items.WOODEN_AXE, Items.WOODEN_PICKAXE, Items.WOODEN_SWORD, Items.WOODEN_SHOVEL, Items.WOODEN_HOE);
-        addPaxel(consumer, ActuallyItems.STONE_PAXEL, Items.STONE_AXE, Items.STONE_PICKAXE, Items.STONE_SWORD, Items.STONE_SHOVEL, Items.STONE_HOE);
-        addPaxel(consumer, ActuallyItems.IRON_PAXEL, Items.IRON_AXE, Items.IRON_PICKAXE, Items.IRON_SWORD, Items.IRON_SHOVEL, Items.IRON_HOE);
-        addPaxel(consumer, ActuallyItems.GOLD_PAXEL, Items.GOLDEN_AXE, Items.GOLDEN_PICKAXE, Items.GOLDEN_SWORD, Items.GOLDEN_SHOVEL, Items.GOLDEN_HOE);
-        addPaxel(consumer, ActuallyItems.DIAMOND_PAXEL, Items.DIAMOND_AXE, Items.DIAMOND_PICKAXE, Items.DIAMOND_SWORD, Items.DIAMOND_SHOVEL, Items.DIAMOND_HOE);
-        addPaxel(consumer, ActuallyItems.NETHERITE_PAXEL, Items.NETHERITE_AXE, Items.NETHERITE_PICKAXE, Items.NETHERITE_SWORD, Items.NETHERITE_SHOVEL, Items.NETHERITE_HOE);
+        addPaxel(consumer, ActuallyItems.WOODEN_AIOT, Items.WOODEN_AXE, Items.WOODEN_PICKAXE, Items.WOODEN_SWORD, Items.WOODEN_SHOVEL, Items.WOODEN_HOE);
+        addPaxel(consumer, ActuallyItems.STONE_AIOT, Items.STONE_AXE, Items.STONE_PICKAXE, Items.STONE_SWORD, Items.STONE_SHOVEL, Items.STONE_HOE);
+        addPaxel(consumer, ActuallyItems.IRON_AIOT, Items.IRON_AXE, Items.IRON_PICKAXE, Items.IRON_SWORD, Items.IRON_SHOVEL, Items.IRON_HOE);
+        addPaxel(consumer, ActuallyItems.GOLD_AIOT, Items.GOLDEN_AXE, Items.GOLDEN_PICKAXE, Items.GOLDEN_SWORD, Items.GOLDEN_SHOVEL, Items.GOLDEN_HOE);
+        addPaxel(consumer, ActuallyItems.DIAMOND_AIOT, Items.DIAMOND_AXE, Items.DIAMOND_PICKAXE, Items.DIAMOND_SWORD, Items.DIAMOND_SHOVEL, Items.DIAMOND_HOE);
+        addPaxel(consumer, ActuallyItems.NETHERITE_AIOT, Items.NETHERITE_AXE, Items.NETHERITE_PICKAXE, Items.NETHERITE_SWORD, Items.NETHERITE_SHOVEL, Items.NETHERITE_HOE);
 
-        addPaxel(consumer, ActuallyItems.QUARTZ_PAXEL, ActuallyItems.AXE_QUARTZ, ActuallyItems.PICKAXE_QUARTZ, ActuallyItems.SWORD_QUARTZ, ActuallyItems.SHOVEL_QUARTZ, ActuallyItems.HOE_QUARTZ);
-        addPaxel(consumer, ActuallyItems.PAXEL_CRYSTAL_RESTONIA, ActuallyItems.AXE_CRYSTAL_RESTONIA, ActuallyItems.PICKAXE_CRYSTAL_RESTONIA, ActuallyItems.SWORD_CRYSTAL_RESTONIA, ActuallyItems.SHOVEL_CRYSTAL_RESTONIA, ActuallyItems.HOE_CRYSTAL_RESTONIA);
-        addPaxel(consumer, ActuallyItems.PAXEL_CRYSTAL_EMERADIC, ActuallyItems.AXE_CRYSTAL_EMERADIC, ActuallyItems.PICKAXE_CRYSTAL_EMERADIC, ActuallyItems.SWORD_CRYSTAL_EMERADIC, ActuallyItems.SHOVEL_CRYSTAL_EMERADIC, ActuallyItems.HOE_CRYSTAL_EMERADIC);
-        addPaxel(consumer, ActuallyItems.PAXEL_CRYSTAL_PALIS, ActuallyItems.AXE_CRYSTAL_PALIS, ActuallyItems.PICKAXE_CRYSTAL_PALIS, ActuallyItems.SWORD_CRYSTAL_PALIS, ActuallyItems.SHOVEL_CRYSTAL_PALIS, ActuallyItems.HOE_CRYSTAL_PALIS);
-        addPaxel(consumer, ActuallyItems.PAXEL_CRYSTAL_DIAMATINE, ActuallyItems.AXE_CRYSTAL_DIAMATINE, ActuallyItems.PICKAXE_CRYSTAL_DIAMATINE, ActuallyItems.SWORD_CRYSTAL_DIAMATINE, ActuallyItems.SHOVEL_CRYSTAL_DIAMATINE, ActuallyItems.HOE_CRYSTAL_DIAMATINE);
-        addPaxel(consumer, ActuallyItems.PAXEL_CRYSTAL_VOID, ActuallyItems.AXE_CRYSTAL_VOID, ActuallyItems.PICKAXE_CRYSTAL_VOID, ActuallyItems.SWORD_CRYSTAL_VOID, ActuallyItems.SHOVEL_CRYSTAL_VOID, ActuallyItems.HOE_CRYSTAL_VOID);
-        addPaxel(consumer, ActuallyItems.PAXEL_CRYSTAL_ENORI, ActuallyItems.AXE_CRYSTAL_ENORI, ActuallyItems.PICKAXE_CRYSTAL_ENORI, ActuallyItems.SWORD_CRYSTAL_ENORI, ActuallyItems.SHOVEL_CRYSTAL_ENORI, ActuallyItems.HOE_CRYSTAL_ENORI);
+        addPaxel(consumer, ActuallyItems.QUARTZ_AIOT, ActuallyItems.AXE_QUARTZ, ActuallyItems.PICKAXE_QUARTZ, ActuallyItems.SWORD_QUARTZ, ActuallyItems.SHOVEL_QUARTZ, ActuallyItems.HOE_QUARTZ);
+        addPaxel(consumer, ActuallyItems.RESTONIA_AIOT, ActuallyItems.RESTONIA_AXE, ActuallyItems.RESTONIA_PICKAXE, ActuallyItems.RESTONIA_SWORD, ActuallyItems.RESTONIA_SHOVEL, ActuallyItems.RESTONIA_HOE);
+        addPaxel(consumer, ActuallyItems.EMERADIC_AIOT, ActuallyItems.EMERADIC_AXE, ActuallyItems.EMERADIC_PICKAXE, ActuallyItems.EMERADIC_SWORD, ActuallyItems.EMERADIC_SHOVEL, ActuallyItems.EMERADIC_HOE);
+        addPaxel(consumer, ActuallyItems.PALIS_AIOT, ActuallyItems.PALIS_AXE, ActuallyItems.PALIS_PICKAXE, ActuallyItems.PALIS_SWORD, ActuallyItems.PALIS_SHOVEL, ActuallyItems.PALIS_HOE);
+        addPaxel(consumer, ActuallyItems.DIAMATINE_AIOT, ActuallyItems.DIAMATINE_AXE, ActuallyItems.DIAMATINE_PICKAXE, ActuallyItems.DIAMATINE_SWORD, ActuallyItems.DIAMATINE_SHOVEL, ActuallyItems.DIAMATINE_HOE);
+        addPaxel(consumer, ActuallyItems.VOID_AIOT, ActuallyItems.VOID_AXE, ActuallyItems.VOID_PICKAXE, ActuallyItems.VOID_SWORD, ActuallyItems.VOID_SHOVEL, ActuallyItems.VOID_HOE);
+        addPaxel(consumer, ActuallyItems.ENORI_AIOT, ActuallyItems.ENORI_AXE, ActuallyItems.ENORI_PICKAXE, ActuallyItems.ENORI_SWORD, ActuallyItems.ENORI_SHOVEL, ActuallyItems.ENORI_HOE);
     }
 
     public static void addPaxel(Consumer<IFinishedRecipe> consumer, RegistryObject<Item> output, Item axe, Item pickaxe, Item sword, Item shovel, Item hoe) {

@@ -1,7 +1,7 @@
 {
   "type": "actuallyadditions:laser",
   "ingredient": {
-    "item": "actuallyadditions:canola_seed"
+    "item": "actuallyadditions:canola_seeds"
   },
   "energy": 2000,
   "result": {

@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "actuallyadditions:diamatine_axe"
+    },
+    {
+      "item": "actuallyadditions:diamatine_pickaxe"
+    },
+    {
+      "item": "actuallyadditions:diamatine_sword"
+    },
+    {
+      "item": "actuallyadditions:diamatine_shovel"
+    },
+    {
+      "item": "actuallyadditions:diamatine_hoe"
+    }
+  ],
+  "result": {
+    "item": "actuallyadditions:diamatine_aiot"
+  }
+}

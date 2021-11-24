@@ -2,17 +2,14 @@ package de.ellpeck.actuallyadditions.data;
 
 import com.google.gson.JsonObject;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlock;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.crafting.LaserRecipe;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
-import net.minecraft.block.Blocks;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DirectoryCache;
 import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.data.RecipeProvider;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.tags.ITag;
@@ -52,10 +49,10 @@ public class LaserRecipeGenerator extends RecipeProvider {
         laserCrystalizeRecipe(consumer, ActuallyItems.ENORI_CRYSTAL.get(), Tags.Items.INGOTS_IRON, 80);
 
         //Lenses
-        laserRecipe(consumer, ActuallyItems.COLOR_LENS.get(), ActuallyItems.LENS.get(), 5000);
-        laserRecipe(consumer, ActuallyItems.EXPLOSION_LENS.get(), ActuallyItems.COLOR_LENS.get(), 5000);
-        laserRecipe(consumer, ActuallyItems.DAMAGE_LENS.get(), ActuallyItems.EXPLOSION_LENS.get(), 5000);
-        laserRecipe(consumer, ActuallyItems.LENS.get(), ActuallyItems.DAMAGE_LENS.get(), 5000);
+        laserRecipe(consumer, ActuallyItems.LENS_OF_COLOR.get(), ActuallyItems.LENS.get(), 5000);
+        laserRecipe(consumer, ActuallyItems.LENS_OF_DETONATION.get(), ActuallyItems.LENS_OF_COLOR.get(), 5000);
+        laserRecipe(consumer, ActuallyItems.LENS_OF_CERTAIN_DEATH.get(), ActuallyItems.LENS_OF_DETONATION.get(), 5000);
+        laserRecipe(consumer, ActuallyItems.LENS.get(), ActuallyItems.LENS_OF_CERTAIN_DEATH.get(), 5000);
 
         //Relays
         laserRecipe(consumer, ActuallyBlocks.LASER_RELAY_FLUIDS.getItem(), ActuallyBlocks.LASER_RELAY.getItem(), 2000);
@@ -67,7 +64,7 @@ public class LaserRecipeGenerator extends RecipeProvider {
         laserRecipe(consumer, Items.LEATHER, Items.ROTTEN_FLESH, 20000);
         laserRecipe(consumer, Items.NETHER_WART, Items.RED_MUSHROOM, 150000);
         laserRecipe(consumer, Items.PRISMARINE_SHARD, Items.QUARTZ, 30000);
-        laserRecipe(consumer, ActuallyItems.CRYSTALLIZED_CANOLA_SEED.get(), ActuallyItems.CANOLA_SEED.get(), 2000);
+        laserRecipe(consumer, ActuallyItems.CRYSTALLIZED_CANOLA_SEED.get(), ActuallyItems.CANOLA_SEEDS.get(), 2000);
         laserRecipe(consumer, ActuallyBlocks.ETHETIC_WHITE_BLOCK.getItem(), Items.QUARTZ_BLOCK, 10);
         laserRecipe(consumer, ActuallyBlocks.ETHETIC_GREEN_BLOCK.getItem(), Items.CHISELED_QUARTZ_BLOCK, 10);
 

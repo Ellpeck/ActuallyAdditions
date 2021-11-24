@@ -21,7 +21,7 @@ public class BlockRecipeGenerator extends RecipeProvider {
     @Override
     protected void buildShapelessRecipes(Consumer<IFinishedRecipe> consumer) {
         //Battery Box
-        Recipe.shapeless(ActuallyBlocks.BATTERY_BOX.getItem()).ingredients(ActuallyBlocks.ENERGIZER.get(), ActuallyBlocks.ENERVATOR.get(), ActuallyItems.COIL.get()).save(consumer);
+        Recipe.shapeless(ActuallyBlocks.BATTERY_BOX.getItem()).ingredients(ActuallyBlocks.ENERGIZER.get(), ActuallyBlocks.ENERVATOR.get(), ActuallyItems.BASIC_COIL.get()).save(consumer);
 
         //Farmer
         Recipe.shaped(ActuallyBlocks.FARMER.getItem())
@@ -35,7 +35,7 @@ public class BlockRecipeGenerator extends RecipeProvider {
         Recipe.shaped(ActuallyBlocks.EMPOWERER.getItem())
                 .pattern(" R ", " B ", "CDC")
                 .define('R', ActuallyItems.RESTONIA_CRYSTAL.get())
-                .define('B', ActuallyItems.BATTERY_DOUBLE.get())
+                .define('B', ActuallyItems.DOUBLE_BATTERY.get())
                 .define('C', ActuallyBlocks.IRON_CASING.get())
                 .define('D', ActuallyBlocks.DISPLAY_STAND.get())
                 .save(consumer);
@@ -62,13 +62,13 @@ public class BlockRecipeGenerator extends RecipeProvider {
                 .pattern("OAO", "ACA", "OAO")
                 .define('A', ActuallyItems.EMPOWERED_VOID_CRYSTAL.get())
                 .define('O', Tags.Items.OBSIDIAN)
-                .define('C', ActuallyItems.COIL_ADVANCED.get())
+                .define('C', ActuallyItems.ADVANCED_COIL.get())
                 .save(consumer);
 
         //Display Stand
         Recipe.shaped(ActuallyBlocks.DISPLAY_STAND.getItem())
                 .pattern(" R ", "EEE", "GGG")
-                .define('R', ActuallyItems.COIL_ADVANCED.get())
+                .define('R', ActuallyItems.ADVANCED_COIL.get())
                 .define('E', ActuallyBlocks.ETHETIC_GREEN_BLOCK.get())
                 .define('G', ActuallyBlocks.ETHETIC_WHITE_BLOCK.get())
                 .save(consumer);
@@ -141,7 +141,7 @@ public class BlockRecipeGenerator extends RecipeProvider {
                 .define('B', Tags.Items.STORAGE_BLOCKS_REDSTONE)
                 .define('O', Tags.Items.OBSIDIAN)
                 .define('R', ActuallyItems.RESTONIA_CRYSTAL.get())
-                .define('C', ActuallyItems.COIL_ADVANCED.get())
+                .define('C', ActuallyItems.ADVANCED_COIL.get())
                 .save(consumer);
 
         // Advanced Laser Relay
@@ -162,14 +162,14 @@ public class BlockRecipeGenerator extends RecipeProvider {
 
         // Whitelist Item Laser Relay
         Recipe.shapeless(ActuallyBlocks.LASER_RELAY_ITEM_ADVANCED.getItem())
-                .ingredients(ActuallyBlocks.LASER_RELAY_ITEM.get(), ActuallyItems.COIL_ADVANCED.get(), ActuallyItems.BLACK_QUARTZ.get())
+                .ingredients(ActuallyBlocks.LASER_RELAY_ITEM.get(), ActuallyItems.ADVANCED_COIL.get(), ActuallyItems.BLACK_QUARTZ.get())
                 .save(consumer);
 
         // Item Interface
         Recipe.shaped(ActuallyBlocks.ITEM_INTERFACE.getItem())
                 .pattern("OBO", "RCR", "OBO")
                 .define('B', Tags.Items.DUSTS_REDSTONE)
-                .define('O', ActuallyItems.COIL.get())
+                .define('O', ActuallyItems.BASIC_COIL.get())
                 .define('R', ActuallyItems.RESTONIA_CRYSTAL.get())
                 .define('C', Tags.Items.CHESTS_WOODEN)
                 .save(consumer);

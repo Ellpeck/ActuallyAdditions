@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "actuallyadditions:void_axe"
+    },
+    {
+      "item": "actuallyadditions:void_pickaxe"
+    },
+    {
+      "item": "actuallyadditions:void_sword"
+    },
+    {
+      "item": "actuallyadditions:void_shovel"
+    },
+    {
+      "item": "actuallyadditions:void_hoe"
+    }
+  ],
+  "result": {
+    "item": "actuallyadditions:void_aiot"
+  }
+}

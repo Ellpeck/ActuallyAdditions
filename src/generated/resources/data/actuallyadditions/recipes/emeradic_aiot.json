@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "actuallyadditions:emeradic_axe"
+    },
+    {
+      "item": "actuallyadditions:emeradic_pickaxe"
+    },
+    {
+      "item": "actuallyadditions:emeradic_sword"
+    },
+    {
+      "item": "actuallyadditions:emeradic_shovel"
+    },
+    {
+      "item": "actuallyadditions:emeradic_hoe"
+    }
+  ],
+  "result": {
+    "item": "actuallyadditions:emeradic_aiot"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "type": "actuallyadditions:copy_nbt",
+  "pattern": [
+    " R ",
+    "ICI",
+    "III"
+  ],
+  "key": {
+    "R": {
+      "item": "actuallyadditions:double_battery",
+      "type": "actuallyadditions:nbt_target"
+    },
+    "I": {
+      "item": "actuallyadditions:empowered_enori_crystal"
+    },
+    "C": {
+      "item": "actuallyadditions:advanced_coil"
+    }
+  },
+  "result": {
+    "item": "actuallyadditions:triple_battery"
+  }
+}

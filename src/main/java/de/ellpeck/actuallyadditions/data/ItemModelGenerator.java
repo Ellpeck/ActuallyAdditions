@@ -2,6 +2,7 @@ package de.ellpeck.actuallyadditions.data;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
+import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import net.minecraft.block.Block;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.item.Item;
@@ -23,7 +24,7 @@ public class ItemModelGenerator extends ItemModelProvider {
         //simpleItem(ActuallyItems.BOOKLET); // will require complex I think
 
         // All items?
-        //ActuallyItems.SIMPLE_ITEMS.forEach(this::simpleItem);
+        ActuallyItems.SIMPLE_ITEMS.forEach(this::simpleItem);
 
         // Toolsets
 /*        ActuallyItems.ALL_TOOL_SETS.stream()
