@@ -181,8 +181,8 @@ public class CrushingRecipe implements IRecipe<IInventory> {
             result1.addProperty("chance", outputChance1);
 
             JsonObject result2 = new JsonObject();
-            result1.addProperty("item", outputTwo.asItem().getRegistryName().toString());
-            result1.addProperty("chance", outputChance2);
+            result2.addProperty("item", outputTwo.asItem().getRegistryName().toString());
+            result2.addProperty("chance", outputChance2);
 
             JsonArray resultList = new JsonArray();
             resultList.add(result1);

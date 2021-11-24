@@ -26,7 +26,7 @@ public class CrushingRecipeGenerator extends RecipeProvider {
 
     @Override
     protected void buildShapelessRecipes(Consumer<IFinishedRecipe> consumer) {
-        consumer.accept(new CrushingRecipe.FinishedRecipe(new ResourceLocation(ActuallyAdditions.MODID, "bone_crusher"),
+        consumer.accept(new CrushingRecipe.FinishedRecipe(new ResourceLocation(ActuallyAdditions.MODID, "crushing/bone_crusher"),
             Ingredient.of(Items.BONE), Items.BONE_MEAL, 6, 1.0f , Items.AIR, 0, 0.0f));
     }
 }

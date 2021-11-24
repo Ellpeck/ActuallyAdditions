@@ -75,7 +75,7 @@ public class ItemSolidifiedExperience extends ItemBase {
                 orb.getPersistentData().putBoolean(ActuallyAdditions.MODID + "FromSolidified", true);
                 world.addFreshEntity(orb);
             } else {
-                player.giveExperienceLevels(amount);
+                player.giveExperiencePoints(amount);
             }
         }
         return ActionResult.success(stack);
