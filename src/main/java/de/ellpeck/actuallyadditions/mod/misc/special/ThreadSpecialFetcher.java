@@ -10,11 +10,11 @@
 
 package de.ellpeck.actuallyadditions.mod.misc.special;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.Properties;
-
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 
 public class ThreadSpecialFetcher extends Thread {
 
@@ -28,7 +28,8 @@ public class ThreadSpecialFetcher extends Thread {
     public void run() {
         ActuallyAdditions.LOGGER.info("Fetching Special People Stuff...");
         try {
-            URL url = new URL("https://raw.githubusercontent.com/Ellpeck/ActuallyAdditions/main/specialPeopleStuff.properties");
+            //URL url = new URL("https://raw.githubusercontent.com/Ellpeck/ActuallyAdditions/main/specialPeopleStuff.properties");
+            URL url = new URL("https://raw.githubusercontent.com/Ellpeck/ActuallyAdditions/1.16/specialPeopleStuff.properties");
             Properties specialProperties = new Properties();
             specialProperties.load(new InputStreamReader(url.openStream()));
             SpecialRenderInit.parse(specialProperties);
