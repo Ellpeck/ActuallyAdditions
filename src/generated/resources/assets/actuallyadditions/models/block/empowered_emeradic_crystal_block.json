@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "actuallyadditions:block/empowered_emeradic_crystal_block"
+  }
+}

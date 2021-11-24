@@ -40,7 +40,7 @@ public class BlockStateGenerator extends BlockStateProvider {
         horizontallyDirectionalBlock(ActuallyBlocks.POWERED_FURNACE);
         horizontallyDirectionalBlock(ActuallyBlocks.COAL_GENERATOR);
         horizontallyDirectionalBlock(ActuallyBlocks.OIL_GENERATOR);
-        //horizontallyDirectionalBlock(ActuallyBlocks.LAMP_CONTROLLER); //TODO missing
+        horizontallyDirectionalBlock(ActuallyBlocks.LAMP_CONTROLLER);
         horizontallyDirectionalBlock(ActuallyBlocks.LAVA_FACTORY_CONTROLLER);
 
         // Standard Block
@@ -59,18 +59,18 @@ public class BlockStateGenerator extends BlockStateProvider {
         standardBlock(ActuallyBlocks.PLAYER_INTERFACE);
         standardBlock(ActuallyBlocks.ITEM_INTERFACE);
         standardBlock(ActuallyBlocks.FIREWORK_BOX);
-        standardBlock(ActuallyBlocks.RESTONIA_CRYSTAL);
-        standardBlock(ActuallyBlocks.PALIS_CRYSTAL);
-        standardBlock(ActuallyBlocks.DIAMATINE_CRYSTAL);
-        standardBlock(ActuallyBlocks.VOID_CRYSTAL);
-        standardBlock(ActuallyBlocks.EMERADIC_CRYSTAL);
-        standardBlock(ActuallyBlocks.ENORI_CRYSTAL);
-        standardBlock(ActuallyBlocks.EMPOWERED_RESTONIA_CRYSTAL);
-        standardBlock(ActuallyBlocks.EMPOWERED_PALIS_CRYSTAL);
-        standardBlock(ActuallyBlocks.EMPOWERED_DIAMATINE_CRYSTAL);
-        standardBlock(ActuallyBlocks.EMPOWERED_VOID_CRYSTAL);
-        standardBlock(ActuallyBlocks.EMPOWERED_EMERADIC_CRYSTAL);
-        standardBlock(ActuallyBlocks.EMPOWERED_ENORI_CRYSTAL);
+        buildCubeAll(ActuallyBlocks.RESTONIA_CRYSTAL);
+        buildCubeAll(ActuallyBlocks.PALIS_CRYSTAL);
+        buildCubeAll(ActuallyBlocks.DIAMATINE_CRYSTAL);
+        buildCubeAll(ActuallyBlocks.VOID_CRYSTAL);
+        buildCubeAll(ActuallyBlocks.EMERADIC_CRYSTAL);
+        buildCubeAll(ActuallyBlocks.ENORI_CRYSTAL);
+        buildCubeAll(ActuallyBlocks.EMPOWERED_RESTONIA_CRYSTAL);
+        buildCubeAll(ActuallyBlocks.EMPOWERED_PALIS_CRYSTAL);
+        buildCubeAll(ActuallyBlocks.EMPOWERED_DIAMATINE_CRYSTAL);
+        buildCubeAll(ActuallyBlocks.EMPOWERED_VOID_CRYSTAL);
+        buildCubeAll(ActuallyBlocks.EMPOWERED_EMERADIC_CRYSTAL);
+        buildCubeAll(ActuallyBlocks.EMPOWERED_ENORI_CRYSTAL);
         standardBlock(ActuallyBlocks.LASER_RELAY);
         standardBlock(ActuallyBlocks.LASER_RELAY_ADVANCED);
         standardBlock(ActuallyBlocks.LASER_RELAY_EXTREME);
@@ -180,6 +180,14 @@ public class BlockStateGenerator extends BlockStateProvider {
         simpleBlock(block.get(), model);
     }
 
+    private void standardBlockWithCube(Supplier<Block> block) {
+        ResourceLocation name = block.get().getRegistryName();
+        assert name != null;
+
+        ModelFile model = models().cubeAll(name.toString(), modLoc("block/" + name.getPath()));
+        simpleBlock(block.get(), model);
+    }
+
     private void buildLitState(Supplier<Block> block) {
         ResourceLocation name = block.get().getRegistryName();
         assert name != null;
@@ -188,7 +196,7 @@ public class BlockStateGenerator extends BlockStateProvider {
             .partialState().with(BlockStateProperties.LIT, false)
             .addModels(ConfiguredModel.builder().modelFile(models().cubeAll(name.toString(), modLoc("block/" + name.getPath()))).build())
             .partialState().with(BlockStateProperties.LIT, true)
-            .addModels(ConfiguredModel.builder().modelFile(models().cubeAll(name.toString(), modLoc("block/" + name.getPath().replace("_block", "_on_block")))).build());
+            .addModels(ConfiguredModel.builder().modelFile(models().cubeAll(name.toString(), modLoc("block/" + name.getPath() + "_on"))).build());
     }
 
     private void fullyDirectionalBlock(Supplier<Block> block) {

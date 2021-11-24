@@ -54,7 +54,7 @@ public final class ActuallyBlocks {
     public static final AABlockReg<BlockLavaFactoryController, AABlockItem, TileEntityLavaFactoryController> LAVA_FACTORY_CONTROLLER
         = new AABlockReg<>("lava_factory_controller", BlockLavaFactoryController::new, (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityLavaFactoryController::new);
 
-    public static final AABlockReg<BlockLampPowerer, AABlockItem, ?> LAMP_POWERER = new AABlockReg<>("lamp_powerer", BlockLampPowerer::new, (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<BlockLampController, AABlockItem, ?> LAMP_CONTROLLER = new AABlockReg<>("lamp_controller", BlockLampController::new, (b) -> new AABlockItem(b, defaultBlockItemProperties));
 
     public static final AABlockReg<BlockCanolaPress, AABlockItem, TileEntityCanolaPress> CANOLA_PRESS = new AABlockReg<>("canola_press", BlockCanolaPress::new,
         (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityCanolaPress::new);
