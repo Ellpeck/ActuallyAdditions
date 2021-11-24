@@ -40,7 +40,7 @@ public class BlockStateGenerator extends BlockStateProvider {
         horizontallyDirectionalBlock(ActuallyBlocks.POWERED_FURNACE);
         horizontallyDirectionalBlock(ActuallyBlocks.COAL_GENERATOR);
         horizontallyDirectionalBlock(ActuallyBlocks.OIL_GENERATOR);
-        horizontallyDirectionalBlock(ActuallyBlocks.LAMP_CONTROLLER);
+        fullyDirectionalBlock(ActuallyBlocks.LAMP_CONTROLLER);
         horizontallyDirectionalBlock(ActuallyBlocks.LAVA_FACTORY_CONTROLLER);
 
         // Standard Block

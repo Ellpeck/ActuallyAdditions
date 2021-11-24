@@ -154,14 +154,14 @@ public class EmpoweringRecipeGenerator extends RecipeProvider {
         public void save(Consumer<IFinishedRecipe> consumer, ResourceLocation name) {
             if (modifiers.size() != 4)
                 throw new IllegalStateException("invalid modifier count: " + modifiers.size() + ", recipe: " + name.toString());
-            consumer.accept(new EmpowererRecipe.FinishedRecipe(name, result, base, modifiers.get(0), modifiers.get(1), modifiers.get(2), modifiers.get(3), energy, time, color));
+            consumer.accept(new EmpowererRecipe.FinishedRecipe(name, result, base, modifiers.get(0), modifiers.get(1), modifiers.get(2), modifiers.get(3), energy, color, time));
         }
 
         public void save(Consumer<IFinishedRecipe> consumer, String name) {
             ResourceLocation res = new ResourceLocation(ActuallyAdditions.MODID, "empowering/" + name);
             if (modifiers.size() != 4)
                 throw new IllegalStateException("invalid modifier count: " + modifiers.size() + ", recipe: " + res);
-            consumer.accept(new EmpowererRecipe.FinishedRecipe(res, result, base, modifiers.get(0), modifiers.get(1), modifiers.get(2), modifiers.get(3), energy, time, color));
+            consumer.accept(new EmpowererRecipe.FinishedRecipe(res, result, base, modifiers.get(0), modifiers.get(1), modifiers.get(2), modifiers.get(3), energy, color, time));
         }
     }
 }
