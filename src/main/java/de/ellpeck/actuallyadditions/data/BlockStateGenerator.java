@@ -139,31 +139,31 @@ public class BlockStateGenerator extends BlockStateProvider {
         buildCubeAll(ActuallyBlocks.ETHETIC_WHITE_BLOCK);
 
         // Walls
-        wallBlock((WallBlock) ActuallyBlocks.BLACK_QUARTZ_WALL.get(), modLoc("block/black_quartz"));
+        wallBlock((WallBlock) ActuallyBlocks.BLACK_QUARTZ_WALL.get(), modLoc("block/black_quartz_block"));
         wallBlock((WallBlock) ActuallyBlocks.SMOOTH_BLACK_QUARTZ_WALL.get(), modLoc("block/smooth_black_quartz"));
-        wallBlock((WallBlock) ActuallyBlocks.CHISELED_BLACK_QUARTZ_WALL.get(), modLoc("block/black_quartz_chiseled"));
+        wallBlock((WallBlock) ActuallyBlocks.CHISELED_BLACK_QUARTZ_WALL.get(), modLoc("block/chiseled_black_quartz"));
         wallBlock((WallBlock) ActuallyBlocks.BLACK_QUARTZ_PILLAR_WALL.get(), modLoc("block/black_quartz_pillar"));
         wallBlock((WallBlock) ActuallyBlocks.BLACK_QUARTZ_BRICK_WALL.get(), modLoc("block/black_quartz_brick"));
         wallBlock((WallBlock) ActuallyBlocks.ETHETIC_GREEN_WALL.get(), modLoc("block/ethetic_green_block"));
         wallBlock((WallBlock) ActuallyBlocks.ETHETIC_WHITE_WALL.get(), modLoc("block/ethetic_white_block"));
 
         // Stairs
-        stairsBlock((StairsBlock) ActuallyBlocks.BLACK_QUARTZ_STAIR.get(), modLoc("block/black_quartz"));
+        stairsBlock((StairsBlock) ActuallyBlocks.BLACK_QUARTZ_STAIR.get(), modLoc("block/black_quartz_block"));
         stairsBlock((StairsBlock) ActuallyBlocks.SMOOTH_BLACK_QUARTZ_STAIR.get(), modLoc("block/smooth_black_quartz"));
-        stairsBlock((StairsBlock) ActuallyBlocks.CHISELED_BLACK_QUARTZ_STAIR.get(), modLoc("block/black_quartz_chiseled"));
+        stairsBlock((StairsBlock) ActuallyBlocks.CHISELED_BLACK_QUARTZ_STAIR.get(), modLoc("block/chiseled_black_quartz"));
         stairsBlock((StairsBlock) ActuallyBlocks.BLACK_QUARTZ_PILLAR_STAIR.get(), modLoc("block/black_quartz_pillar"));
         stairsBlock((StairsBlock) ActuallyBlocks.BLACK_QUARTZ_BRICK_STAIR.get(), modLoc("block/black_quartz_brick"));
         stairsBlock((StairsBlock) ActuallyBlocks.ETHETIC_GREEN_STAIRS.get(), modLoc("block/ethetic_green_block"));
         stairsBlock((StairsBlock) ActuallyBlocks.ETHETIC_WHITE_STAIRS.get(), modLoc("block/ethetic_white_block"));
 
         // Slabs
-        slabBlock((SlabBlock) ActuallyBlocks.BLACK_QUARTZ_SLAB.get(), modLoc("block/black_quartz_block"), modLoc("block/black_quartz"));
+        slabBlock((SlabBlock) ActuallyBlocks.BLACK_QUARTZ_SLAB.get(), modLoc("block/black_quartz_block"), modLoc("block/black_quartz_block"));
         slabBlock((SlabBlock) ActuallyBlocks.SMOOTH_BLACK_QUARTZ_SLAB.get(), modLoc("block/smooth_black_quartz"), modLoc("block/smooth_black_quartz"));
-        //slabBlock((SlabBlock) ActuallyBlocks.CHISELED_BLACK_QUARTZ_SLAB.get(), modLoc("block/black_quartz_chiseled"), modLoc("block/black_quartz_chiseled"));
-        //slabBlock((SlabBlock) ActuallyBlocks.BLACK_QUARTZ_PILLAR_SLAB.get(), modLoc("block/black_quartz_pillar"), modLoc("block/black_quartz_pillar"));
-        //slabBlock((SlabBlock) ActuallyBlocks.BLACK_QUARTZ_BRICK_SLAB.get(), modLoc("block/black_quartz_brick"), modLoc("block/black_quartz_brick"));
-        //slabBlock((SlabBlock) ActuallyBlocks.ETHETIC_GREEN_SLAB.get(), modLoc("block/ethetic_green_block"), modLoc("block/ethetic_green_block"));
-        //slabBlock((SlabBlock) ActuallyBlocks.ETHETIC_WHITE_SLAB.get(), modLoc("block/ethetic_white_block"), modLoc("block/ethetic_white_block"));
+        slabBlock((SlabBlock) ActuallyBlocks.CHISELED_BLACK_QUARTZ_SLAB.get(), modLoc("block/chiseled_black_quartz"), modLoc("block/chiseled_black_quartz"));
+        slabBlock((SlabBlock) ActuallyBlocks.BLACK_QUARTZ_PILLAR_SLAB.get(), modLoc("block/black_quartz_pillar"), modLoc("block/black_quartz_pillar"));
+        slabBlock((SlabBlock) ActuallyBlocks.BLACK_QUARTZ_BRICK_SLAB.get(), modLoc("block/black_quartz_brick"), modLoc("block/black_quartz_brick"));
+        slabBlock((SlabBlock) ActuallyBlocks.ETHETIC_GREEN_SLAB.get(), modLoc("block/ethetic_green_block"), modLoc("block/ethetic_green_block"));
+        slabBlock((SlabBlock) ActuallyBlocks.ETHETIC_WHITE_SLAB.get(), modLoc("block/ethetic_white_block"), modLoc("block/ethetic_white_block"));
 
     }
 
@@ -174,7 +174,7 @@ public class BlockStateGenerator extends BlockStateProvider {
 
     private void standardBlock(Supplier<Block> block) {
         ResourceLocation name = block.get().getRegistryName();
-        ModelFile model = new ModelFile.UncheckedModelFile(modLoc("block/" + name.toString().split(":")[1]));
+        ModelFile model = new ModelFile.UncheckedModelFile(modLoc("block/" + name.getPath()));
 
         assert name != null;
         simpleBlock(block.get(), model);

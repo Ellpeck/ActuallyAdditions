@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "actuallyadditions:block/chiseled_black_quartz_top",
+    "side": "actuallyadditions:block/chiseled_black_quartz"
+  }
+}
