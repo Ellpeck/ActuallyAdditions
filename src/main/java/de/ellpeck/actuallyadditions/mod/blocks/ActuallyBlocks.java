@@ -214,10 +214,10 @@ public final class ActuallyBlocks {
 
     //Black Quartz
     public static final AABlockReg<ActuallyBlock, AABlockItem, ?> BLACK_QUARTZ = new AABlockReg<>("black_quartz_block", () -> new ActuallyBlock(miscBlockProperties), (b) -> new AABlockItem(b, defaultBlockItemProperties));
-    public static final AABlockReg<ActuallyBlock, AABlockItem, ?> BLACK_QUARTZ_PILLAR = new AABlockReg<>("black_quartz_pillar", () -> new ActuallyBlock(miscBlockProperties), (b) -> new AABlockItem(b, defaultBlockItemProperties));
-    public static final AABlockReg<ActuallyBlock, AABlockItem, ?> CHISELED_BLACK_QUARTZ = new AABlockReg<>("chiseled_black_quartz", () -> new ActuallyBlock(miscBlockProperties), (b) -> new AABlockItem(b, defaultBlockItemProperties));
-    public static final AABlockReg<ActuallyBlock, AABlockItem, ?> SMOOTH_BLACK_QUARTZ = new AABlockReg<>("smooth_black_quartz", () -> new ActuallyBlock(miscBlockProperties), (b) -> new AABlockItem(b, defaultBlockItemProperties));
-    public static final AABlockReg<ActuallyBlock, AABlockItem, ?> BLACK_QUARTZ_BRICK = new AABlockReg<>("black_quartz_brick", () -> new ActuallyBlock(miscBlockProperties), (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<ActuallyBlock, AABlockItem, ?> BLACK_QUARTZ_PILLAR = new AABlockReg<>("black_quartz_pillar_block", () -> new ActuallyBlock(miscBlockProperties), (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<ActuallyBlock, AABlockItem, ?> CHISELED_BLACK_QUARTZ = new AABlockReg<>("chiseled_black_quartz_block", () -> new ActuallyBlock(miscBlockProperties), (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<ActuallyBlock, AABlockItem, ?> SMOOTH_BLACK_QUARTZ = new AABlockReg<>("smooth_black_quartz_block", () -> new ActuallyBlock(miscBlockProperties), (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<ActuallyBlock, AABlockItem, ?> BLACK_QUARTZ_BRICK = new AABlockReg<>("black_quartz_brick_block", () -> new ActuallyBlock(miscBlockProperties), (b) -> new AABlockItem(b, defaultBlockItemProperties));
 
     //Walls
     public static final AABlockReg<WallBlock, AABlockItem, ?> ETHETIC_GREEN_WALL = new AABlockReg<>("ethetic_green_wall", () -> new WallBlock(AbstractBlock.Properties.copy(ETHETIC_GREEN_BLOCK.get())), (b) -> new AABlockItem(b, defaultBlockItemProperties));

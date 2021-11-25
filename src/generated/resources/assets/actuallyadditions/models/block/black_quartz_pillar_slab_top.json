@@ -1,8 +1,8 @@
 {
   "parent": "minecraft:block/slab_top",
   "textures": {
-    "side": "actuallyadditions:block/black_quartz_pillar",
-    "bottom": "actuallyadditions:block/black_quartz_pillar",
-    "top": "actuallyadditions:block/black_quartz_pillar"
+    "side": "actuallyadditions:block/black_quartz_pillar_block",
+    "bottom": "actuallyadditions:block/black_quartz_pillar_block",
+    "top": "actuallyadditions:block/black_quartz_pillar_block"
   }
 }

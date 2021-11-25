@@ -1,8 +1,8 @@
 {
   "parent": "minecraft:block/inner_stairs",
   "textures": {
-    "side": "actuallyadditions:block/black_quartz_brick",
-    "bottom": "actuallyadditions:block/black_quartz_brick",
-    "top": "actuallyadditions:block/black_quartz_brick"
+    "side": "actuallyadditions:block/black_quartz_brick_block",
+    "bottom": "actuallyadditions:block/black_quartz_brick_block",
+    "top": "actuallyadditions:block/black_quartz_brick_block"
   }
 }

@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/template_wall_side",
   "textures": {
-    "wall": "actuallyadditions:block/chiseled_black_quartz"
+    "wall": "actuallyadditions:block/chiseled_black_quartz_block"
   }
 }

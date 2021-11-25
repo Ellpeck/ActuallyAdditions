@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/cube_column",
-  "textures": {
-    "end": "actuallyadditions:block/black_quartz_pillar_top",
-    "side": "actuallyadditions:block/black_quartz_pillar"
-  }
-}

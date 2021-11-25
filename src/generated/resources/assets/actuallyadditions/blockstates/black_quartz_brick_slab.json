@@ -7,7 +7,7 @@
       "model": "actuallyadditions:block/black_quartz_brick_slab"
     },
     "type=double": {
-      "model": "actuallyadditions:block/black_quartz_brick"
+      "model": "actuallyadditions:block/black_quartz_brick_block"
     }
   }
 }

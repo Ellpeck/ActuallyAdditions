@@ -1,3 +1,6 @@
 {
-  "parent": "actuallyadditions:block/ethetic_green_wall"
+  "parent": "minecraft:block/wall_inventory",
+  "textures": {
+    "wall": "actuallyadditions:block/ethetic_green_block"
+  }
 }

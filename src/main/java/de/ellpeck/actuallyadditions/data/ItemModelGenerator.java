@@ -4,8 +4,10 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import net.minecraft.block.Block;
+import net.minecraft.block.WallBlock;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -38,17 +40,15 @@ public class ItemModelGenerator extends ItemModelProvider {
     }
 
     private void registerBlockModel(RegistryObject<Block> block) {
-/*        String path = block.get().getRegistryName().getPath();
+        String path = block.get().getRegistryName().getPath();
         if (block.get() instanceof WallBlock) {
             String name = path;
-            path = "block/" + path.replace("wall_", "");
+            path = "block/" + path.replace("_wall", "_block");
             withExistingParent(name, new ResourceLocation("block/wall_inventory"))
                 .texture("wall", modLoc(path));
             return;
         }
-        getBuilder(path).parent(new ModelFile.UncheckedModelFile(modLoc("block/" + path)));*/
-        String path = block.get().getRegistryName().getPath();
-        getBuilder(path).parent(new ModelFile.UncheckedModelFile(modLoc("block/"+path)));
+        getBuilder(path).parent(new ModelFile.UncheckedModelFile(modLoc("block/" + path)));
     }
 
     private void simpleItem(Supplier<Item> item) {

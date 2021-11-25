@@ -1,8 +1,8 @@
 {
   "parent": "minecraft:block/stairs",
   "textures": {
-    "side": "actuallyadditions:block/chiseled_black_quartz",
-    "bottom": "actuallyadditions:block/chiseled_black_quartz",
-    "top": "actuallyadditions:block/chiseled_black_quartz"
+    "side": "actuallyadditions:block/chiseled_black_quartz_block",
+    "bottom": "actuallyadditions:block/chiseled_black_quartz_block",
+    "top": "actuallyadditions:block/chiseled_black_quartz_block"
   }
 }

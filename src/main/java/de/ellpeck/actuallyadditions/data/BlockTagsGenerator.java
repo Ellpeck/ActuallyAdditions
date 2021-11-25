@@ -1,8 +1,10 @@
 package de.ellpeck.actuallyadditions.data;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import net.minecraft.data.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
@@ -16,15 +18,15 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 
     @Override
     public void addTags() {
-        //        getOrCreateBuilder(BlockTags.WALLS).add(
-        //            ActuallyBlocks.WHITE_WALL.get(),
-        //            ActuallyBlocks.GREEN_WALL.get(),
-        //            ActuallyBlocks.BLACK_QUARTZ_WALL.get(),
-        //            ActuallyBlocks.BLACK_SMOOTH_QUARTZ_WALL.get(),
-        //            ActuallyBlocks.BLACK_PILLAR_QUARTZ_WALL.get(),
-        //            ActuallyBlocks.BLACK_CHISELED_QUARTZ_WALL.get(),
-        //            ActuallyBlocks.BLACK_BRICK_QUARTZ_WALL.get()
-        //        );
+        tag(BlockTags.WALLS).add(
+            ActuallyBlocks.ETHETIC_WHITE_WALL.get(),
+            ActuallyBlocks.ETHETIC_GREEN_WALL.get(),
+            ActuallyBlocks.BLACK_QUARTZ_WALL.get(),
+            ActuallyBlocks.SMOOTH_BLACK_QUARTZ_WALL.get(),
+            ActuallyBlocks.BLACK_QUARTZ_PILLAR_WALL.get(),
+            ActuallyBlocks.CHISELED_BLACK_QUARTZ_WALL.get(),
+            ActuallyBlocks.BLACK_QUARTZ_BRICK_WALL.get()
+        );
     }
 
     /**
