@@ -49,7 +49,7 @@ public class ItemFilter extends ItemBase {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
 
         ItemStackHandlerAA inv = new ItemStackHandlerAA(ContainerFilter.SLOT_AMOUNT);
-        ItemDrill.loadSlotsFromNBT(inv, stack);
+        DrillItem.loadSlotsFromNBT(inv, stack);
         for (int i = 0; i < inv.getSlots(); i++) {
             ItemStack slot = inv.getStackInSlot(i);
             if (StackUtil.isValid(slot)) {

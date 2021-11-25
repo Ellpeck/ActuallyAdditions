@@ -3,6 +3,9 @@ package de.ellpeck.actuallyadditions.data;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import net.minecraft.block.Block;
+import net.minecraft.block.SlabBlock;
+import net.minecraft.block.StairsBlock;
+import net.minecraft.block.WallBlock;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.ResourceLocation;
@@ -127,43 +130,40 @@ public class BlockStateGenerator extends BlockStateProvider {
         buildCubeAll(ActuallyBlocks.WOOD_CASING);
 
         // Quartz
-        standardBlock(ActuallyBlocks.BLACK_QUARTZ_BLOCK);
-        //buildCubeAll(ActuallyBlocks.BLACK_QUARTZ_SMOOTH); //TODO
-        standardBlock(ActuallyBlocks.CHISELED_BLACK_QUARTZ_BLOCK);
-        standardBlock(ActuallyBlocks.BLACK_QUARTZ_PILLAR_BLOCK);
-        //buildCubeAll(ActuallyBlocks.BLACK_QUARTZ_BRICK); //TODO
+        standardBlock(ActuallyBlocks.BLACK_QUARTZ);
+        buildCubeAll(ActuallyBlocks.SMOOTH_BLACK_QUARTZ);
+        standardBlock(ActuallyBlocks.CHISELED_BLACK_QUARTZ);
+        standardBlock(ActuallyBlocks.BLACK_QUARTZ_PILLAR);
+        buildCubeAll(ActuallyBlocks.BLACK_QUARTZ_BRICK);
         buildCubeAll(ActuallyBlocks.ETHETIC_GREEN_BLOCK);
         buildCubeAll(ActuallyBlocks.ETHETIC_WHITE_BLOCK);
 
-/*        // Walls
-        wallBlock((WallBlock) ActuallyBlocks.BLACK_QUARTZ_WALL.get(), modLoc("block/black_quartz_block"));
-        wallBlock((WallBlock) ActuallyBlocks.BLACK_SMOOTH_QUARTZ_WALL.get(), modLoc("block/black_quartz_smooth_block"));
-        wallBlock((WallBlock) ActuallyBlocks.BLACK_CHISELED_QUARTZ_WALL.get(), modLoc("block/black_quartz_chiseled_block"));
-        wallBlock((WallBlock) ActuallyBlocks.BLACK_PILLAR_QUARTZ_WALL.get(), modLoc("block/black_quartz_pillar_block"));
-        wallBlock((WallBlock) ActuallyBlocks.BLACK_BRICK_QUARTZ_WALL.get(), modLoc("block/black_quartz_brick_block"));
-
-        wallBlock((WallBlock) ActuallyBlocks.GREEN_WALL.get(), modLoc("block/green_block"));
-        wallBlock((WallBlock) ActuallyBlocks.WHITE_WALL.get(), modLoc("block/white_block"));
+        // Walls
+        wallBlock((WallBlock) ActuallyBlocks.BLACK_QUARTZ_WALL.get(), modLoc("block/black_quartz"));
+        wallBlock((WallBlock) ActuallyBlocks.SMOOTH_BLACK_QUARTZ_WALL.get(), modLoc("block/smooth_black_quartz"));
+        wallBlock((WallBlock) ActuallyBlocks.CHISELED_BLACK_QUARTZ_WALL.get(), modLoc("block/black_quartz_chiseled"));
+        wallBlock((WallBlock) ActuallyBlocks.BLACK_QUARTZ_PILLAR_WALL.get(), modLoc("block/black_quartz_pillar"));
+        wallBlock((WallBlock) ActuallyBlocks.BLACK_QUARTZ_BRICK_WALL.get(), modLoc("block/black_quartz_brick"));
+        wallBlock((WallBlock) ActuallyBlocks.ETHETIC_GREEN_WALL.get(), modLoc("block/ethetic_green_block"));
+        wallBlock((WallBlock) ActuallyBlocks.ETHETIC_WHITE_WALL.get(), modLoc("block/ethetic_white_block"));
 
         // Stairs
-        stairsBlock((StairsBlock) ActuallyBlocks.BLACK_QUARTZ_STAIR.get(), modLoc("block/black_quartz_block"));
-        stairsBlock((StairsBlock) ActuallyBlocks.BLACK_SMOOTH_QUARTZ_STAIR.get(), modLoc("block/black_quartz_smooth_block"));
-        stairsBlock((StairsBlock) ActuallyBlocks.BLACK_CHISELED_QUARTZ_STAIR.get(), modLoc("block/black_quartz_chiseled_block"));
-        stairsBlock((StairsBlock) ActuallyBlocks.BLACK_PILLAR_QUARTZ_STAIR.get(), modLoc("block/black_quartz_pillar_block"));
-        stairsBlock((StairsBlock) ActuallyBlocks.BLACK_BRICK_QUARTZ_STAIR.get(), modLoc("block/black_quartz_brick_block"));
-
-        stairsBlock((StairsBlock) ActuallyBlocks.GREEN_STAIRS.get(), modLoc("block/green_block"));
-        stairsBlock((StairsBlock) ActuallyBlocks.WHITE_STAIRS.get(), modLoc("block/white_block"));
+        stairsBlock((StairsBlock) ActuallyBlocks.BLACK_QUARTZ_STAIR.get(), modLoc("block/black_quartz"));
+        stairsBlock((StairsBlock) ActuallyBlocks.SMOOTH_BLACK_QUARTZ_STAIR.get(), modLoc("block/smooth_black_quartz"));
+        stairsBlock((StairsBlock) ActuallyBlocks.CHISELED_BLACK_QUARTZ_STAIR.get(), modLoc("block/black_quartz_chiseled"));
+        stairsBlock((StairsBlock) ActuallyBlocks.BLACK_QUARTZ_PILLAR_STAIR.get(), modLoc("block/black_quartz_pillar"));
+        stairsBlock((StairsBlock) ActuallyBlocks.BLACK_QUARTZ_BRICK_STAIR.get(), modLoc("block/black_quartz_brick"));
+        stairsBlock((StairsBlock) ActuallyBlocks.ETHETIC_GREEN_STAIRS.get(), modLoc("block/ethetic_green_block"));
+        stairsBlock((StairsBlock) ActuallyBlocks.ETHETIC_WHITE_STAIRS.get(), modLoc("block/ethetic_white_block"));
 
         // Slabs
-        slabBlock((SlabBlock) ActuallyBlocks.BLACK_QUARTZ_SLAB.get(), modLoc("block/black_quartz_block"), modLoc("block/black_quartz_block"));
-        slabBlock((SlabBlock) ActuallyBlocks.BLACK_SMOOTH_QUARTZ_SLAB.get(), modLoc("block/black_quartz_smooth_block"), modLoc("block/black_quartz_smooth_block"));
-        slabBlock((SlabBlock) ActuallyBlocks.BLACK_CHISELED_QUARTZ_SLAB.get(), modLoc("block/black_quartz_chiseled_block"), modLoc("block/black_quartz_chiseled_block"));
-        slabBlock((SlabBlock) ActuallyBlocks.BLACK_PILLAR_QUARTZ_SLAB.get(), modLoc("block/black_quartz_pillar_block"), modLoc("block/black_quartz_pillar_block"));
-        slabBlock((SlabBlock) ActuallyBlocks.BLACK_BRICK_QUARTZ_SLAB.get(), modLoc("block/black_quartz_brick_block"), modLoc("block/black_quartz_brick_block"));
-
-        slabBlock((SlabBlock) ActuallyBlocks.GREEN_SLAB.get(), modLoc("block/green_block"), modLoc("block/green_block"));
-        slabBlock((SlabBlock) ActuallyBlocks.WHITE_SLAB.get(), modLoc("block/white_block"), modLoc("block/white_block"));*/
+        slabBlock((SlabBlock) ActuallyBlocks.BLACK_QUARTZ_SLAB.get(), modLoc("block/black_quartz_block"), modLoc("block/black_quartz"));
+        slabBlock((SlabBlock) ActuallyBlocks.SMOOTH_BLACK_QUARTZ_SLAB.get(), modLoc("block/smooth_black_quartz"), modLoc("block/smooth_black_quartz"));
+        //slabBlock((SlabBlock) ActuallyBlocks.CHISELED_BLACK_QUARTZ_SLAB.get(), modLoc("block/black_quartz_chiseled"), modLoc("block/black_quartz_chiseled"));
+        //slabBlock((SlabBlock) ActuallyBlocks.BLACK_QUARTZ_PILLAR_SLAB.get(), modLoc("block/black_quartz_pillar"), modLoc("block/black_quartz_pillar"));
+        //slabBlock((SlabBlock) ActuallyBlocks.BLACK_QUARTZ_BRICK_SLAB.get(), modLoc("block/black_quartz_brick"), modLoc("block/black_quartz_brick"));
+        //slabBlock((SlabBlock) ActuallyBlocks.ETHETIC_GREEN_SLAB.get(), modLoc("block/ethetic_green_block"), modLoc("block/ethetic_green_block"));
+        //slabBlock((SlabBlock) ActuallyBlocks.ETHETIC_WHITE_SLAB.get(), modLoc("block/ethetic_white_block"), modLoc("block/ethetic_white_block"));
 
     }
 

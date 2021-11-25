@@ -16,8 +16,8 @@ import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotDeletion;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotFilter;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotImmovable;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
+import de.ellpeck.actuallyadditions.mod.items.DrillItem;
 import de.ellpeck.actuallyadditions.mod.items.ItemBag;
-import de.ellpeck.actuallyadditions.mod.items.ItemDrill;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.tile.FilterSettings;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
@@ -101,7 +101,7 @@ public class ContainerBag extends Container implements IButtonReactor {
 
         ItemStack stack = inventory.getSelected();
         if (StackUtil.isValid(stack) && stack.getItem() instanceof ItemBag) {
-            ItemDrill.loadSlotsFromNBT(this.bagInventory, inventory.getSelected());
+            DrillItem.loadSlotsFromNBT(this.bagInventory, inventory.getSelected());
             if (stack.hasTag()) {
                 CompoundNBT compound = stack.getOrCreateTag();
                 this.filter.readFromNBT(compound, "Filter");
@@ -226,7 +226,7 @@ public class ContainerBag extends Container implements IButtonReactor {
     public void removed(PlayerEntity player) {
         ItemStack stack = this.inventory.getSelected();
         if (StackUtil.isValid(stack) && stack.getItem() instanceof ItemBag) {
-            ItemDrill.writeSlotsToNBT(this.bagInventory, this.inventory.getSelected());
+            DrillItem.writeSlotsToNBT(this.bagInventory, this.inventory.getSelected());
             CompoundNBT compound = stack.getOrCreateTag();
             this.filter.writeToNBT(compound, "Filter");
             compound.putBoolean("AutoInsert", this.autoInsert);

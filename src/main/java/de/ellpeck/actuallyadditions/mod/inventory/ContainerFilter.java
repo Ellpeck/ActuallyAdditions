@@ -12,7 +12,7 @@ package de.ellpeck.actuallyadditions.mod.inventory;
 
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotFilter;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotImmovable;
-import de.ellpeck.actuallyadditions.mod.items.ItemDrill;
+import de.ellpeck.actuallyadditions.mod.items.DrillItem;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.player.PlayerEntity;
@@ -59,7 +59,7 @@ public class ContainerFilter extends Container {
 
         ItemStack stack = inventory.getSelected();
         if (SlotFilter.isFilter(stack)) {
-            ItemDrill.loadSlotsFromNBT(this.filterInventory, inventory.getSelected());
+            DrillItem.loadSlotsFromNBT(this.filterInventory, inventory.getSelected());
         }
     }
 
@@ -122,7 +122,7 @@ public class ContainerFilter extends Container {
     public void removed(PlayerEntity player) {
         ItemStack stack = this.inventory.getSelected();
         if (SlotFilter.isFilter(stack)) {
-            ItemDrill.writeSlotsToNBT(this.filterInventory, this.inventory.getSelected());
+            DrillItem.writeSlotsToNBT(this.filterInventory, this.inventory.getSelected());
         }
         super.removed(player);
     }

@@ -13,7 +13,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerMiner;
-import de.ellpeck.actuallyadditions.mod.items.ItemDrill;
+import de.ellpeck.actuallyadditions.mod.items.DrillItem;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
@@ -138,7 +138,7 @@ public class TileEntityVerticalDigger extends TileEntityInventoryBase implements
             Block block = state.getBlock();
             ItemStack stack = block.getPickBlock(state, new BlockRayTraceResult(new Vector3d(0, 0, 0), Direction.DOWN, pos, false), this.level, pos, FakePlayerFactory.getMinecraft((ServerWorld) this.level));
             if (!block.isAir(this.level.getBlockState(pos), this.level, pos)) {
-                if (block.getHarvestLevel(this.level.getBlockState(pos)) <= ItemDrill.HARVEST_LEVEL && state.getDestroySpeed(this.level, pos) >= 0F && !(block instanceof IFluidBlock) && this.isMinable(block, stack)) {
+                if (block.getHarvestLevel(this.level.getBlockState(pos)) <= DrillItem.HARVEST_LEVEL && state.getDestroySpeed(this.level, pos) >= 0F && !(block instanceof IFluidBlock) && this.isMinable(block, stack)) {
                     List<ItemStack> drops = Block.getDrops(state, (ServerWorld) this.level, pos, this.level.getBlockEntity(pos));
                     float chance = WorldUtil.fireFakeHarvestEventsForDropChance(this, drops, this.level, pos);
 

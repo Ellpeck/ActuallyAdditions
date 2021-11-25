@@ -17,17 +17,17 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 
     @Override
     protected void addTags() {
-        this.tag(ActuallyTags.Items.COFFEE_BEANS)
+        tag(ActuallyTags.Items.COFFEE_BEANS)
             .add(ActuallyItems.COFFEE_BEANS.get());
-        this.tag(ActuallyTags.Items.TINY_COALS)
-                .add(ActuallyItems.TINY_COAL.get())
-                .add(ActuallyItems.TINY_CHARCOAL.get());
-        //        getOrCreateBuilder(ActuallyTags.Items.DRILLS).add(
-        //            ActuallyItems.DRILL_MAIN.get(),
-        //            ActuallyItems.DRILL_BLACK.get(), ActuallyItems.DRILL_BLACK.get(), ActuallyItems.DRILL_BLUE.get(), ActuallyItems.DRILL_BROWN.get(),
-        //            ActuallyItems.DRILL_CYAN.get(), ActuallyItems.DRILL_GRAY.get(), ActuallyItems.DRILL_GREEN.get(), ActuallyItems.DRILL_LIGHT_GRAY.get(),
-        //            ActuallyItems.DRILL_LIME.get(), ActuallyItems.DRILL_MAGENTA.get(), ActuallyItems.DRILL_ORANGE.get(), ActuallyItems.DRILL_PINK.get(),
-        //            ActuallyItems.DRILL_PURPLE.get(), ActuallyItems.DRILL_RED.get(), ActuallyItems.DRILL_WHITE.get(), ActuallyItems.DRILL_YELLOW.get()
-        //        );
+        tag(ActuallyTags.Items.TINY_COALS)
+            .add(ActuallyItems.TINY_COAL.get())
+            .add(ActuallyItems.TINY_CHARCOAL.get());
+        tag(ActuallyTags.Items.DRILLS).add(
+            ActuallyItems.DRILL_MAIN.get(),
+            ActuallyItems.DRILL_BLACK.get(), ActuallyItems.DRILL_BLACK.get(), ActuallyItems.DRILL_BLUE.get(), ActuallyItems.DRILL_BROWN.get(),
+            ActuallyItems.DRILL_CYAN.get(), ActuallyItems.DRILL_GRAY.get(), ActuallyItems.DRILL_GREEN.get(), ActuallyItems.DRILL_LIGHT_GRAY.get(),
+            ActuallyItems.DRILL_LIME.get(), ActuallyItems.DRILL_MAGENTA.get(), ActuallyItems.DRILL_ORANGE.get(), ActuallyItems.DRILL_PINK.get(),
+            ActuallyItems.DRILL_PURPLE.get(), ActuallyItems.DRILL_RED.get(), ActuallyItems.DRILL_WHITE.get(), ActuallyItems.DRILL_YELLOW.get()
+        );
     }
 }

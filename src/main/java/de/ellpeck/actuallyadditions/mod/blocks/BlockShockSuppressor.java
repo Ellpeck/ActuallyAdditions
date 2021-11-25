@@ -10,8 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityShockSuppressor;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
@@ -24,11 +24,12 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.ExplosionEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class BlockShockSuppressor extends BlockContainerBase {
+public class BlockShockSuppressor extends Block {
 
     public BlockShockSuppressor() {
         super(ActuallyBlocks.defaultPickProps(0, 20F, 2000.0F));
@@ -87,9 +88,15 @@ public class BlockShockSuppressor extends BlockContainerBase {
         }
     }
 
+    @Nullable
     @Override
-    public TileEntity newBlockEntity(IBlockReader worldIn) {
+    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
         return new TileEntityShockSuppressor();
+    }
+
+    @Override
+    public boolean hasTileEntity(BlockState state) {
+        return true;
     }
 
     @Override

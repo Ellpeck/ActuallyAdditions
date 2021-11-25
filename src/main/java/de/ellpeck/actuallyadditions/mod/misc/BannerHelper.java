@@ -17,7 +17,7 @@ import net.minecraft.item.ItemStack;
 public final class BannerHelper {
 
     public static void init() {
-        addCraftingPattern("drill", new ItemStack(ActuallyItems.DRILL.get()));
+        addCraftingPattern("drill", new ItemStack(ActuallyItems.DRILL_MAIN.get()));
         addCraftingPattern("leaf_blo", new ItemStack(ActuallyItems.LEAF_BLOWER.get()));
         addCraftingPattern("phan_con", new ItemStack(ActuallyItems.PHANTOM_CONNECTOR.get()));
         addCraftingPattern("book", new ItemStack(ActuallyItems.ITEM_BOOKLET.get()));

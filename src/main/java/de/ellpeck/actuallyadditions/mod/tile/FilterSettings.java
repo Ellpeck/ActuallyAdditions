@@ -12,7 +12,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFilter;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotFilter;
-import de.ellpeck.actuallyadditions.mod.items.ItemDrill;
+import de.ellpeck.actuallyadditions.mod.items.DrillItem;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.item.Item;
@@ -62,7 +62,7 @@ public class FilterSettings {
                 if (StackUtil.isValid(slot)) {
                     if (SlotFilter.isFilter(slot)) {
                         ItemStackHandlerAA inv = new ItemStackHandlerAA(ContainerFilter.SLOT_AMOUNT);
-                        ItemDrill.loadSlotsFromNBT(inv, slot);
+                        DrillItem.loadSlotsFromNBT(inv, slot);
                         for (int k = 0; k < inv.getSlots(); k++) {
                             ItemStack filterSlot = inv.getStackInSlot(k);
                             if (StackUtil.isValid(filterSlot) && areEqualEnough(filterSlot, stack, meta, nbt, mod, oredict)) {

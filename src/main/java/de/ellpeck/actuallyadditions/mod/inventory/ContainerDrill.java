@@ -12,7 +12,7 @@ package de.ellpeck.actuallyadditions.mod.inventory;
 
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotImmovable;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
-import de.ellpeck.actuallyadditions.mod.items.ItemDrill;
+import de.ellpeck.actuallyadditions.mod.items.DrillItem;
 import de.ellpeck.actuallyadditions.mod.items.ItemDrillUpgrade;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
@@ -62,8 +62,8 @@ public class ContainerDrill extends Container {
         }
 
         ItemStack stack = inventory.getSelected();
-        if (StackUtil.isValid(stack) && stack.getItem() instanceof ItemDrill) {
-            ItemDrill.loadSlotsFromNBT(this.drillInventory, inventory.getSelected());
+        if (StackUtil.isValid(stack) && stack.getItem() instanceof DrillItem) {
+            DrillItem.loadSlotsFromNBT(this.drillInventory, inventory.getSelected());
         }
     }
 
@@ -129,8 +129,8 @@ public class ContainerDrill extends Container {
     @Override
     public void removed(PlayerEntity player) {
         ItemStack stack = this.inventory.getSelected();
-        if (StackUtil.isValid(stack) && stack.getItem() instanceof ItemDrill) {
-            ItemDrill.writeSlotsToNBT(this.drillInventory, this.inventory.getSelected());
+        if (StackUtil.isValid(stack) && stack.getItem() instanceof DrillItem) {
+            DrillItem.writeSlotsToNBT(this.drillInventory, this.inventory.getSelected());
         }
         super.removed(player);
     }

@@ -70,13 +70,13 @@ public final class LaserRelayConnectionHandler implements ILaserRelayConnectionH
     @Override
     public ConcurrentSet<IConnectionPair> getConnectionsFor(BlockPos relay, World world) {
         ConcurrentSet<IConnectionPair> allPairs = new ConcurrentSet<>();
-        for (Network aNetwork : WorldData.get(world).laserRelayNetworks) {
+/*        for (Network aNetwork : WorldData.get(world).laserRelayNetworks) {
             for (IConnectionPair pair : aNetwork.connections) {
                 if (pair.contains(relay)) {
                     allPairs.add(pair);
                 }
             }
-        }
+        }*/ //TODO ohhh boy
         return allPairs;
     }
 

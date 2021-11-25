@@ -17,8 +17,8 @@ import de.ellpeck.actuallyadditions.mod.data.PlayerData;
 import de.ellpeck.actuallyadditions.mod.data.WorldData;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerBag;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
+import de.ellpeck.actuallyadditions.mod.items.DrillItem;
 import de.ellpeck.actuallyadditions.mod.items.ItemBag;
-import de.ellpeck.actuallyadditions.mod.items.ItemDrill;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.tile.FilterSettings;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
@@ -72,7 +72,7 @@ public class CommonEvents {
 
                                 boolean isVoid = ((ItemBag) invStack.getItem()).isVoid;
                                 ItemStackHandlerAA inv = new ItemStackHandlerAA(ContainerBag.getSlotAmount(isVoid));
-                                ItemDrill.loadSlotsFromNBT(inv, invStack);
+                                DrillItem.loadSlotsFromNBT(inv, invStack);
 
                                 FilterSettings filter = new FilterSettings(4, false, false, false, false, 0, 0);
                                 filter.readFromNBT(invStack.getOrCreateTag(), "Filter");
@@ -107,7 +107,7 @@ public class CommonEvents {
 
                                 if (changed) {
                                     if (!isVoid) {
-                                        ItemDrill.writeSlotsToNBT(inv, invStack);
+                                        DrillItem.writeSlotsToNBT(inv, invStack);
                                     }
                                     event.setResult(Event.Result.ALLOW);
                                 }

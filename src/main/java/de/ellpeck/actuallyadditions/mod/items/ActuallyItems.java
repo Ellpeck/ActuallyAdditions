@@ -34,17 +34,10 @@ import java.util.Set;
 public final class ActuallyItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ActuallyAdditions.MODID);
 
-    // REMOVE ME
-    @Deprecated
-    public static final RegistryObject<Item> itemMisc = ITEMS.register("misc", ItemBase::new);
-
     // MISC ITEMS
 //    public static final RegistryObject<Item> CANOLA = ITEMS.register("canola", ItemBase::new);
     public static final RegistryObject<Item> COFFEE_CUP = ITEMS.register("coffee_cup", ItemBase::new);
     public static final RegistryObject<Item> PAPER_CONE = ITEMS.register("paper_cone", ItemBase::new);
-    public static final RegistryObject<Item> MASHED_FOOD = ITEMS.register("mashed_food", ItemBase::new);
-    public static final RegistryObject<Item> KNIFE_BLADE = ITEMS.register("knife_blade", ItemBase::new);
-    public static final RegistryObject<Item> KNIFE_HANDLE = ITEMS.register("knife_handle", ItemBase::new);
     public static final RegistryObject<Item> DOUGH = ITEMS.register("dough", ItemBase::new);
     public static final RegistryObject<Item> RING = ITEMS.register("ring", ItemBase::new);
     public static final RegistryObject<Item> BASIC_COIL = ITEMS.register("basic_coil", ItemBase::new);
@@ -66,12 +59,8 @@ public final class ActuallyItems {
     public static final RegistryObject<Item> EMPTY_CUP = ITEMS.register("empty_cup", ItemBase::new);
     public static final RegistryObject<Item> BATS_WING = ITEMS.register("bats_wing", ItemBase::new);
     public static final RegistryObject<Item> DRILL_CORE = ITEMS.register("drill_core", ItemBase::new);
-    public static final RegistryObject<Item> BLACK_DYE = ITEMS.register("black_dye", ItemBase::new);
     public static final RegistryObject<Item> LENS = ITEMS.register("lens", ItemBase::new);
     public static final RegistryObject<Item> ENDER_STAR = ITEMS.register("ender_star", ItemBase::new);
-    public static final RegistryObject<Item> SPAWNER_SHARD = ITEMS.register("spawner_shard", ItemBase::new);
-    public static final RegistryObject<Item> BIOMASS = ITEMS.register("biomass", ItemBase::new);
-    public static final RegistryObject<Item> BIOCOAL = ITEMS.register("biocoal", ItemBase::new);
     public static final RegistryObject<Item> CRYSTALLIZED_CANOLA_SEED = ITEMS.register("crystallized_canola_seed", ItemBase::new);
     public static final RegistryObject<Item> EMPOWERED_CANOLA_SEED = ITEMS.register("empowered_canola_seed", ItemBase::new);
 
@@ -126,10 +115,27 @@ public final class ActuallyItems {
     public static final RegistryObject<Item> ITEM_BOOKLET = ITEMS.register("booklet", ItemBooklet::new);
     public static final RegistryObject<Item> RING_OF_GROWTH = ITEMS.register("ring_of_growth", ItemGrowthRing::new);
     public static final RegistryObject<Item> RING_OF_MAGNETIZING = ITEMS.register("ring_of_magnetizing", ItemMagnetRing::new);
-    //public static final RegistryObject<Item> WATER_REMOVAL_RING = ITEMS.register("water_removal_ring", ItemWaterRemovalRing::new);
     public static final RegistryObject<Item> TELEPORT_STAFF = ITEMS.register("teleport_staff", ItemTeleStaff::new);
     public static final RegistryObject<Item> WINGS_OF_THE_BATS = ITEMS.register("wings_of_the_bats", ItemWingsOfTheBats::new);
-    public static final RegistryObject<Item> DRILL = ITEMS.register("drill", ItemDrill::new);
+
+    public static final RegistryObject<Item> DRILL_MAIN = ITEMS.register("drill_light_blue", DrillItem::new);
+    public static final RegistryObject<Item> DRILL_BLACK = ITEMS.register("drill_black", DrillItem::new);
+    public static final RegistryObject<Item> DRILL_BLUE = ITEMS.register("drill_blue", DrillItem::new);
+    public static final RegistryObject<Item> DRILL_BROWN = ITEMS.register("drill_brown", DrillItem::new);
+    public static final RegistryObject<Item> DRILL_CYAN = ITEMS.register("drill_cyan", DrillItem::new);
+    public static final RegistryObject<Item> DRILL_GRAY = ITEMS.register("drill_gray", DrillItem::new);
+    public static final RegistryObject<Item> DRILL_GREEN = ITEMS.register("drill_green", DrillItem::new);
+    public static final RegistryObject<Item> DRILL_LIGHT_GRAY = ITEMS.register("drill_light_gray", DrillItem::new);
+    public static final RegistryObject<Item> DRILL_LIME = ITEMS.register("drill_lime", DrillItem::new);
+    public static final RegistryObject<Item> DRILL_MAGENTA = ITEMS.register("drill_magenta", DrillItem::new);
+    public static final RegistryObject<Item> DRILL_ORANGE = ITEMS.register("drill_orange", DrillItem::new);
+    public static final RegistryObject<Item> DRILL_PINK = ITEMS.register("drill_pink", DrillItem::new);
+    public static final RegistryObject<Item> DRILL_PURPLE = ITEMS.register("drill_purple", DrillItem::new);
+    public static final RegistryObject<Item> DRILL_RED = ITEMS.register("drill_red", DrillItem::new);
+    public static final RegistryObject<Item> DRILL_WHITE = ITEMS.register("drill_white", DrillItem::new);
+    public static final RegistryObject<Item> DRILL_YELLOW = ITEMS.register("drill_yellow", DrillItem::new);
+
+
     public static final RegistryObject<Item> SINGLE_BATTERY = ITEMS.register("single_battery", () -> new ItemBattery(200000, 1000));
     public static final RegistryObject<Item> DOUBLE_BATTERY = ITEMS.register("double_battery", () -> new ItemBattery(350000, 5000));
     public static final RegistryObject<Item> TRIPLE_BATTERY = ITEMS.register("triple_battery", () -> new ItemBattery(600000, 10000));
@@ -145,21 +151,21 @@ public final class ActuallyItems {
     public static final RegistryObject<Item> DRILL_UPGRADE_FIVE_BY_FIVE = ITEMS.register("drill_upgrade_five_by_five", () -> new ItemDrillUpgrade(ItemDrillUpgrade.UpgradeType.FIVE_BY_FIVE));
     public static final RegistryObject<Item> DRILL_UPGRADE_BLOCK_PLACING = ITEMS.register("drill_upgrade_block_placing", () -> new ItemDrillUpgrade(ItemDrillUpgrade.UpgradeType.PLACER));
     public static final RegistryObject<Item> FERTILIZER = ITEMS.register("fertilizer", ItemFertilizer::new);
-    //    public static final RegistryObject<Item> COFFEE = ITEMS.register("coffee", ItemCoffee::new);
+    //    public static final RegistryObject<Item> COFFEE = ITEMS.register("coffee", ItemCoffee::new); //TODO flatten
     public static final RegistryObject<Item> PHANTOM_CONNECTOR = ITEMS.register("phantom_connector", ItemPhantomConnector::new);
     public static final RegistryObject<Item> RESONANT_RICE = ITEMS.register("resonant_rice", ItemResonantRice::new);
-    public static final RegistryObject<Item> FOOD = ITEMS.register("food", ItemBase::new); //just... food? //TODO
-    public static final RegistryObject<Item> JAM = ITEMS.register("jam", ItemJams::new);
+    //public static final RegistryObject<Item> FOOD = ITEMS.register("food", ItemBase::new); //just... food? //TODO
+    //public static final RegistryObject<Item> JAM = ITEMS.register("jam", ItemJams::new); //TODO flatten
     public static final RegistryObject<Item> KNIFE = ITEMS.register("knife", ItemKnife::new);
     public static final RegistryObject<Item> CRAFTER_ON_A_STICK = ITEMS.register("crafter_on_a_stick", ItemCrafterOnAStick::new);
-    public static final RegistryObject<Item> DUST = ITEMS.register("dust", ItemDust::new);
+    //public static final RegistryObject<Item> DUST = ITEMS.register("dust", ItemDust::new); //TODO flatten
     public static final RegistryObject<Item> SOLIDIFIED_EXPERIENCE = ITEMS.register("solidified_experience", ItemSolidifiedExperience::new);
     public static final RegistryObject<Item> LEAF_BLOWER = ITEMS.register("leaf_blower", () -> new ItemLeafBlower(false));
     public static final RegistryObject<Item> ADVANCED_LEAF_BLOWER = ITEMS.register("advanced_leaf_blower", () -> new ItemLeafBlower(true));
 
-    // TODO [port] unflatten
-    public static final RegistryObject<Item> POTION_RING = ITEMS.register("potion_ring", () -> new ItemPotionRing(false));
-    public static final RegistryObject<Item> POTION_RING_ADVANCED = ITEMS.register("potion_ring_advanced", () -> new ItemPotionRing(true));
+    // TODO [port] flatten
+    //public static final RegistryObject<Item> POTION_RING = ITEMS.register("potion_ring", () -> new ItemPotionRing(false));
+    //public static final RegistryObject<Item> POTION_RING_ADVANCED = ITEMS.register("potion_ring_advanced", () -> new ItemPotionRing(true));
 
     public static final RegistryObject<Item> HAIRY_BALL = ITEMS.register("hairy_ball", ItemHairBall::new);
     public static final RegistryObject<Item> COFFEE_BEANS = ITEMS.register("coffee_beans", ItemCoffeeBean::new);
@@ -170,16 +176,16 @@ public final class ActuallyItems {
     public static final RegistryObject<Item> COFFEE_SEEDS = ITEMS.register("coffee_seeds", ItemBase::new); //() -> new ItemSeed("seedCoffeeBeans", ActuallyBlocks.COFFEE, COFFEE_BEANS, 0));
 
     // TOOLS & ARMOR
-    public static final RegistryObject<Item> HELM_QUARTZ = ITEMS.register("helm_quartz", () -> new ItemArmorAA(ArmorMaterials.QUARTZ, EquipmentSlotType.HEAD));
-    public static final RegistryObject<Item> CHEST_QUARTZ = ITEMS.register("chest_quartz", () -> new ItemArmorAA(ArmorMaterials.QUARTZ, EquipmentSlotType.CHEST));
-    public static final RegistryObject<Item> PANTS_QUARTZ = ITEMS.register("pants_quartz", () -> new ItemArmorAA(ArmorMaterials.QUARTZ, EquipmentSlotType.LEGS));
-    public static final RegistryObject<Item> BOOTS_QUARTZ = ITEMS.register("boots_quartz", () -> new ItemArmorAA(ArmorMaterials.QUARTZ, EquipmentSlotType.FEET));
+    public static final RegistryObject<Item> QUARTZ_HELMET = ITEMS.register("quartz_helmet", () -> new ItemArmorAA(ArmorMaterials.QUARTZ, EquipmentSlotType.HEAD));
+    public static final RegistryObject<Item> QUARTZ_CHEST = ITEMS.register("quartz_chest", () -> new ItemArmorAA(ArmorMaterials.QUARTZ, EquipmentSlotType.CHEST));
+    public static final RegistryObject<Item> QUARTZ_LEGGINGS = ITEMS.register("quartz_leggings", () -> new ItemArmorAA(ArmorMaterials.QUARTZ, EquipmentSlotType.LEGS));
+    public static final RegistryObject<Item> QUARTZ_BOOTS = ITEMS.register("quartz_boots", () -> new ItemArmorAA(ArmorMaterials.QUARTZ, EquipmentSlotType.FEET));
 
-    public static final RegistryObject<Item> PICKAXE_QUARTZ = ITEMS.register("pickaxe_quartz", () -> new ItemPickaxeAA(ToolMaterials.BLACK_QUARTZ));
-    public static final RegistryObject<Item> AXE_QUARTZ = ITEMS.register("axe_quartz", () -> new ItemAxeAA(ToolMaterials.BLACK_QUARTZ));
-    public static final RegistryObject<Item> SHOVEL_QUARTZ = ITEMS.register("shovel_quartz", ItemBase::new); //() -> new ItemShovelAA(ToolMaterials.BLACK_QUARTZ));
-    public static final RegistryObject<Item> SWORD_QUARTZ = ITEMS.register("sword_quartz", () -> new ItemSwordAA(ToolMaterials.BLACK_QUARTZ));
-    public static final RegistryObject<Item> HOE_QUARTZ = ITEMS.register("hoe_quartz", () -> new ItemHoeAA(ToolMaterials.BLACK_QUARTZ));
+    public static final RegistryObject<Item> QUARTZ_PICKAXE = ITEMS.register("quartz_pickaxe", () -> new ItemPickaxeAA(ToolMaterials.BLACK_QUARTZ));
+    public static final RegistryObject<Item> QUARTZ_AXE = ITEMS.register("quartz_axe", () -> new ItemAxeAA(ToolMaterials.BLACK_QUARTZ));
+    public static final RegistryObject<Item> QUARTZ_SHOVEL = ITEMS.register("quartz_shovel", ItemBase::new); //() -> new ItemShovelAA(ToolMaterials.BLACK_QUARTZ));
+    public static final RegistryObject<Item> QUARTZ_SWORD = ITEMS.register("quartz_sword", () -> new ItemSwordAA(ToolMaterials.BLACK_QUARTZ));
+    public static final RegistryObject<Item> QUARTZ_HOE = ITEMS.register("quartz_hoe", () -> new ItemHoeAA(ToolMaterials.BLACK_QUARTZ));
     public static final RegistryObject<Item> WOODEN_AIOT = ITEMS.register("wooden_aiot", () -> new AllInOneTool(ItemTier.WOOD));
     public static final RegistryObject<Item> STONE_AIOT = ITEMS.register("stone_aiot", () -> new AllInOneTool(ItemTier.STONE));
     public static final RegistryObject<Item> IRON_AIOT = ITEMS.register("iron_aiot", () -> new AllInOneTool(ItemTier.IRON));
@@ -269,14 +275,13 @@ public final class ActuallyItems {
         HANDHELD_FILLER, TRAVELERS_SACK, VOID_SACK, WORM, PLAYER_PROBE, FILTER, WATER_BOWL, PAPER_CONE, DOUGH,
         RING, BASIC_COIL, ADVANCED_COIL, RICE_DOUGH, TINY_COAL, TINY_CHARCOAL, RICE_SLIMEBALL, /*CANOLA,*/ EMPTY_CUP,
         BATS_WING, DRILL_CORE, LENS, ENDER_STAR, CRYSTALLIZED_CANOLA_SEED, EMPOWERED_CANOLA_SEED, LENS_OF_COLOR,
-/*        LENS_OF_DETONATION, LENS_OF_CERTAIN_DEATH, LENS_OF_THE_KILLER, LENS_OF_DISENCHANTING, LENS_OF_THE_MINER,*/
+        LENS_OF_DETONATION, LENS_OF_CERTAIN_DEATH, LENS_OF_THE_KILLER, LENS_OF_DISENCHANTING, LENS_OF_THE_MINER,
         LASER_WRENCH, TELEPORT_STAFF, WINGS_OF_THE_BATS, SINGLE_BATTERY, DOUBLE_BATTERY, TRIPLE_BATTERY, QUADRUPLE_BATTERY, QUINTUPLE_BATTERY,
-/*        DRILL_BLACK, DRILL_BLUE, DRILL_BROWN, DRILL_CYAN, DRILL_GRAY, DRILL_GREEN, DRILL_MAIN, DRILL_LIGHT_GRAY,
-        DRILL_LIME, DRILL_MAGENTA, DRILL_ORANGE, DRILL_PINK, DRILL_PURPLE, DRILL_RED, DRILL_WHITE, DRILL_YELLOW, DRILL_SPEED_AUGMENT_I,
-        DRILL_SPEED_AUGMENT_II, DRILL_SPEED_AUGMENT_III, DRILL_SILK_TOUCH_AUGMENT, DRILL_FORTUNE_AUGMENT_I, DRILL_FORTUNE_AUGMENT_II,
-        DRILL_MINING_AUGMENT_I, DRILL_MINING_AUGMENT_II, DRILL_BLOCK_PLACING_AUGMENT, */
-        FERTILIZER, COFFEE_CUP, PHANTOM_CONNECTOR,
-        RESONANT_RICE,
+        DRILL_BLACK, DRILL_BLUE, DRILL_BROWN, DRILL_CYAN, DRILL_GRAY, DRILL_GREEN, DRILL_MAIN, DRILL_LIGHT_GRAY,
+        DRILL_LIME, DRILL_MAGENTA, DRILL_ORANGE, DRILL_PINK, DRILL_PURPLE, DRILL_RED, DRILL_WHITE, DRILL_YELLOW,
+        DRILL_UPGRADE_SPEED, DRILL_UPGRADE_SPEED_II, DRILL_UPGRADE_SPEED_III, DRILL_UPGRADE_SILK_TOUCH,
+        DRILL_UPGRADE_FORTUNE, DRILL_UPGRADE_FORTUNE_II, DRILL_UPGRADE_THREE_BY_THREE, DRILL_UPGRADE_FIVE_BY_FIVE, DRILL_UPGRADE_BLOCK_PLACING,
+        FERTILIZER, COFFEE_CUP, PHANTOM_CONNECTOR, RESONANT_RICE,
 /*        FOOD_CHEESE, FOOD_PUMPKIN_STEW, FOOD_CARROT_JUICE, FOOD_FISH_N_CHIPS, FOOD_FRENCH_FRIES, FOOD_FRENCH_FRY,
         FOOD_SPAGHETTI, FOOD_NOODLE, FOOD_CHOCOLATE_CAKE, FOOD_CHOCOLATE, FOOD_TOAST, FOOD_SUBMARINE_SANDWICH, FOOD_BIG_COOKIE,
         FOOD_HAMBURGER, FOOD_PIZZA, FOOD_BAGUETTE, FOOD_RICE, FOOD_RICE_BREAD, FOOD_DOUGHNUT, FOOD_TOAST_O_CHOCOLATE,
@@ -292,7 +297,15 @@ public final class ActuallyItems {
         ADVANCED_RING_OF_JUMP_BOOST, ADVANCED_RING_OF_REGENERATION, ADVANCED_RING_OF_RESISTANCE, ADVANCED_RING_OF_FIRE_RESISTANCE,
         ADVANCED_RING_OF_WATER_BREATHING, ADVANCED_RING_OF_INVISIBILITY, ADVANCED_RING_OF_NIGHT_VISION,*/
         HAIRY_BALL,
-        COFFEE_BEANS, RICE_SEEDS, CANOLA_SEEDS, FLAX_SEEDS, COFFEE_SEEDS
+        COFFEE_BEANS, RICE_SEEDS, CANOLA_SEEDS, FLAX_SEEDS, COFFEE_SEEDS ,
+        QUARTZ_HELMET, QUARTZ_CHEST, QUARTZ_LEGGINGS, QUARTZ_BOOTS, QUARTZ_PICKAXE, QUARTZ_AXE, QUARTZ_SHOVEL, QUARTZ_SWORD, QUARTZ_HOE,
+        WOODEN_AIOT, STONE_AIOT, IRON_AIOT, GOLD_AIOT, DIAMOND_AIOT, NETHERITE_AIOT, QUARTZ_AIOT,
+        RESTONIA_PICKAXE, RESTONIA_AXE, RESTONIA_SHOVEL, RESTONIA_SWORD, RESTONIA_HOE, RESTONIA_HELMET, RESTONIA_CHEST, RESTONIA_LEGGINGS, RESTONIA_BOOTS, RESTONIA_AIOT,
+        PALIS_PICKAXE, PALIS_AXE, PALIS_SHOVEL, PALIS_SWORD, PALIS_HOE, PALIS_HELMET, PALIS_CHEST, PALIS_LEGGINGS, PALIS_BOOTS, PALIS_AIOT,
+        DIAMATINE_PICKAXE, DIAMATINE_AXE, DIAMATINE_SHOVEL, DIAMATINE_SWORD, DIAMATINE_HOE, DIAMATINE_HELMET, DIAMATINE_CHEST, DIAMATINE_LEGGINGS, DIAMATINE_BOOTS, DIAMATINE_AIOT,
+        VOID_PICKAXE, VOID_AXE, VOID_SHOVEL, VOID_SWORD, VOID_HOE, VOID_HELMET, VOID_CHEST, VOID_LEGGINGS, VOID_BOOTS, VOID_AIOT,
+        EMERADIC_PICKAXE, EMERADIC_AXE, EMERADIC_SHOVEL, EMERADIC_SWORD, EMERADIC_HOE, EMERADIC_HELMET, EMERADIC_CHEST, EMERADIC_LEGGINGS, EMERADIC_BOOTS, EMERADIC_AIOT,
+        ENORI_PICKAXE, ENORI_AXE, ENORI_SHOVEL, ENORI_SWORD, ENORI_HOE, ENORI_HELMET, ENORI_CHEST, ENORI_LEGGINGS, ENORI_BOOTS, ENORI_AIOT
     );
 
     public static Item.Properties defaultProps() {

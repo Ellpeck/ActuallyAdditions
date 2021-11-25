@@ -51,7 +51,7 @@ public class ItemBag extends ItemBase {
                     boolean changed = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, context.getClickedFace())
                         .map(cap -> {
                             boolean localChanged = false;
-                            ItemDrill.loadSlotsFromNBT(inv, stack);
+                            DrillItem.loadSlotsFromNBT(inv, stack);
 
                             for (int j = 0; j < inv.getSlots(); j++) {
                                 ItemStack invStack = inv.getStackInSlot(j);
@@ -74,7 +74,7 @@ public class ItemBag extends ItemBase {
                         }).orElse(false);
 
                     if (changed) {
-                        ItemDrill.writeSlotsToNBT(inv, stack);
+                        DrillItem.writeSlotsToNBT(inv, stack);
                     }
                 }
                 return ActionResultType.SUCCESS;

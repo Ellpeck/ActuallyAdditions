@@ -14,7 +14,7 @@ import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFilter;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerLaserRelayItemWhitelist;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotFilter;
-import de.ellpeck.actuallyadditions.mod.items.ItemDrill;
+import de.ellpeck.actuallyadditions.mod.items.DrillItem;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
@@ -104,7 +104,7 @@ public class TileEntityLaserRelayItemAdvanced extends TileEntityLaserRelayItem i
                 if (StackUtil.isValid(slot)) {
                     if (SlotFilter.isFilter(slot)) {
                         ItemStackHandlerAA inv = new ItemStackHandlerAA(ContainerFilter.SLOT_AMOUNT);
-                        ItemDrill.loadSlotsFromNBT(inv, slot);
+                        DrillItem.loadSlotsFromNBT(inv, slot);
 
                         boolean did = false;
                         for (int j = 0; j < inv.getSlots(); j++) {
@@ -116,7 +116,7 @@ public class TileEntityLaserRelayItemAdvanced extends TileEntityLaserRelayItem i
                         }
 
                         if (did) {
-                            ItemDrill.writeSlotsToNBT(inv, slot);
+                            DrillItem.writeSlotsToNBT(inv, slot);
                             break;
                         }
                     }

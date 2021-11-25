@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/stairs",
+  "textures": {
+    "side": "actuallyadditions:block/ethetic_white_block",
+    "bottom": "actuallyadditions:block/ethetic_white_block",
+    "top": "actuallyadditions:block/ethetic_white_block"
+  }
+}

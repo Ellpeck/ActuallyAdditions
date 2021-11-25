@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "DDD",
+    "CRC",
+    "III"
+  ],
+  "key": {
+    "D": {
+      "tag": "forge:gems/diamond"
+    },
+    "C": {
+      "item": "actuallyadditions:advanced_coil"
+    },
+    "R": {
+      "item": "actuallyadditions:drill_core"
+    },
+    "I": {
+      "item": "actuallyadditions:enori_crystal"
+    }
+  },
+  "result": {
+    "item": "actuallyadditions:drill_light_blue"
+  }
+}
