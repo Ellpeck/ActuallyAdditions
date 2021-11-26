@@ -100,8 +100,8 @@ public final class PlayerData {
             ListNBT bookmarks = new ListNBT();
             for (IBookletPage bookmark : this.bookmarks) {
                 bookmarks.add(StringNBT.valueOf(bookmark == null
-                        ? ""
-                        : bookmark.getIdentifier()));
+                    ? ""
+                    : bookmark.getIdentifier()));
             }
             return bookmarks;
         }

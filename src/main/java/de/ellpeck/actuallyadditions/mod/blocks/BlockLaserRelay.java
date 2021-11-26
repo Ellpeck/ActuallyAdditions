@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.laser.Network;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.FullyDirectionalBlock;
+import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
 import de.ellpeck.actuallyadditions.mod.items.ItemEngineerGoggles;
 import de.ellpeck.actuallyadditions.mod.items.ItemLaserRelayUpgrade;
@@ -187,7 +188,7 @@ public class BlockLaserRelay extends FullyDirectionalBlock.Container implements 
                         if (compass) {
                             expl = relay.getCompassDisplayString();
                         } else {
-                            expl = TextFormatting.GRAY.toString() + TextFormatting.ITALIC + StringUtil.localizeFormatted("info." + ActuallyAdditions.MODID + ".laserRelay.mode.noCompasss", StringUtil.localize(ConfigValues.itemCompassConfigurator.getDescriptionId() + ".name"));
+                            expl = TextFormatting.GRAY.toString() + TextFormatting.ITALIC + StringUtil.localizeFormatted("info." + ActuallyAdditions.MODID + ".laserRelay.mode.noCompasss", StringUtil.localize(CommonConfig.OTHER.relayConfigureItem.getDescriptionId() + ".name"));
                         }
 
                         StringUtil.drawSplitString(minecraft.font, expl, resolution.getGuiScaledWidth() / 2 + 5, resolution.getGuiScaledHeight() / 2 + 15, Integer.MAX_VALUE, StringUtil.DECIMAL_COLOR_WHITE, true);

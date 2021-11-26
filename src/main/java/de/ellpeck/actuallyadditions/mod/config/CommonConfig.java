@@ -33,7 +33,9 @@ public class CommonConfig {
         public static ForgeConfigSpec.BooleanValue MOST_BLAND_PERSON_EVER;
         public static ForgeConfigSpec.IntValue ELEVEN;
         public static ForgeConfigSpec.ConfigValue<String> REDSTONECONFIGURATOR;
+        public static ForgeConfigSpec.ConfigValue<String> RELAYCONFIGURATOR;
         public static Item redstoneConfigureItem = Items.AIR;
+        public static Item relayConfigureItem = Items.AIR;
 
 
         public static void build() {
@@ -89,6 +91,7 @@ public class CommonConfig {
             ELEVEN = BUILDER.comment("11?").defineInRange("whatIs11", 11, 0, 12);
 
             REDSTONECONFIGURATOR = BUILDER.comment("define the item used to configure Redstone Mode").define("redstoneConfigurator", Items.REDSTONE_TORCH.getRegistryName().toString(), obj -> obj instanceof String && ResourceLocation.isValidResourceLocation((String) obj));
+            RELAYCONFIGURATOR = BUILDER.comment("define the item used to configure Direction in laser relays").define("relayConfigurator", Items.COMPASS.getRegistryName().toString(), obj -> obj instanceof String && ResourceLocation.isValidResourceLocation((String) obj));
 
             BUILDER.pop();
         }

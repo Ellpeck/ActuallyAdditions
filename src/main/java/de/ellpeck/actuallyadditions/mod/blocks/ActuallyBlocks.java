@@ -208,6 +208,10 @@ public final class ActuallyBlocks {
     // Misc building blocks
     public static final AABlockReg<ActuallyBlock, AABlockItem, ?> ENDER_PEARL_BLOCK = new AABlockReg<>("ender_pearl_block", () -> new ActuallyBlock(miscBlockProperties),
         (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<ActuallyBlock, AABlockItem, ?> CHARCOAL_BLOCK = new AABlockReg<>("charcoal_block", () -> new ActuallyBlock(miscBlockProperties),
+        (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<ActuallyBlock, AABlockItem, ?> BLACK_QUARTZ_ORE = new AABlockReg<>("black_quartz_ore", () -> new ActuallyBlock(miscBlockProperties),
+        (b) -> new AABlockItem(b, defaultBlockItemProperties));
 
     public static final AABlockReg<ActuallyBlock, AABlockItem, ?> ETHETIC_GREEN_BLOCK = new AABlockReg<>("ethetic_green_block", () -> new ActuallyBlock(miscBlockProperties), (b) -> new AABlockItem(b, defaultBlockItemProperties));
     public static final AABlockReg<ActuallyBlock, AABlockItem, ?> ETHETIC_WHITE_BLOCK = new AABlockReg<>("ethetic_white_block", () -> new ActuallyBlock(miscBlockProperties), (b) -> new AABlockItem(b, defaultBlockItemProperties));
@@ -253,6 +257,7 @@ public final class ActuallyBlocks {
     // Other Misc Blocks
     public static final AABlockReg<BlockTinyTorch, AABlockItem, ?> TINY_TORCH = new AABlockReg<>("tiny_torch", BlockTinyTorch::new,
         (b) -> new AABlockItem(b, defaultBlockItemProperties));
+
 
     //public static final AABlockReg<> WILD_PLANT = new AABlockReg<>("wild", BlockWildPlant::new); //TODO: what is this?
 
