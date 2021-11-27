@@ -1,9 +1,9 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"particle": "actuallyadditions:block/enderpearl_block",
-		"base": "actuallyadditions:block/enderpearl_block",
-		"frame": "actuallyadditions:block/crystal_diamatine_block",
+		"particle": "actuallyadditions:block/ender_pearl_block",
+		"base": "actuallyadditions:block/ender_pearl_block",
+		"frame": "actuallyadditions:block/diamatine_crystal_block",
 		"redstone": "actuallyadditions:block/phantomface_redstone"
 	},
 	"elements": [
