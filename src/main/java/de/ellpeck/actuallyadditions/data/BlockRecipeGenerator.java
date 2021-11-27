@@ -59,28 +59,28 @@ public class BlockRecipeGenerator extends RecipeProvider {
 
         //Shock Suppressor
         Recipe.shaped(ActuallyBlocks.SHOCK_SUPPRESSOR.getItem())
-                .pattern("OAO", "ACA", "OAO")
-                .define('A', ActuallyItems.EMPOWERED_VOID_CRYSTAL.get())
-                .define('O', Tags.Items.OBSIDIAN)
-                .define('C', ActuallyItems.ADVANCED_COIL.get())
-                .save(consumer);
+            .pattern("OAO", "ACA", "OAO")
+            .define('A', ActuallyItems.EMPOWERED_VOID_CRYSTAL.get())
+            .define('O', Tags.Items.OBSIDIAN)
+            .define('C', ActuallyItems.ADVANCED_COIL.get())
+            .save(consumer);
 
         //Display Stand
         Recipe.shaped(ActuallyBlocks.DISPLAY_STAND.getItem())
-                .pattern(" R ", "EEE", "GGG")
-                .define('R', ActuallyItems.ADVANCED_COIL.get())
-                .define('E', ActuallyBlocks.ETHETIC_GREEN_BLOCK.get())
-                .define('G', ActuallyBlocks.ETHETIC_WHITE_BLOCK.get())
-                .save(consumer);
+            .pattern(" R ", "EEE", "GGG")
+            .define('R', ActuallyItems.ADVANCED_COIL.get())
+            .define('E', ActuallyBlocks.ETHETIC_GREEN_BLOCK.get())
+            .define('G', ActuallyBlocks.ETHETIC_WHITE_BLOCK.get())
+            .save(consumer);
 
         //Vertical Digger
         Recipe.shaped(ActuallyBlocks.VERTICAL_DIGGER.getItem())
-                .pattern("IRI", "RCR", "IDI")
-                .define('R', Tags.Items.STORAGE_BLOCKS_REDSTONE)
-                .define('I', ActuallyBlocks.IRON_CASING.get())
-                .define('C', ActuallyItems.EMPOWERED_VOID_CRYSTAL.get())
-                .define('D', ActuallyTags.Items.DRILLS)
-                .save(consumer);
+            .pattern("IRI", "RCR", "IDI")
+            .define('R', Tags.Items.STORAGE_BLOCKS_REDSTONE)
+            .define('I', ActuallyBlocks.IRON_CASING.get())
+            .define('C', ActuallyItems.EMPOWERED_VOID_CRYSTAL.get())
+            .define('D', ActuallyTags.Items.DRILLS)
+            .save(consumer);
 
         //Black Quartz Wall
         Recipe.wall(ActuallyBlocks.BLACK_QUARTZ_WALL.getItem(), ActuallyBlocks.BLACK_QUARTZ_PILLAR.get(), consumer);

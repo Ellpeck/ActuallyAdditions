@@ -121,12 +121,12 @@ public class BlockStateGenerator extends BlockStateProvider {
         buildCubeAll(ActuallyBlocks.FLAX);
         buildCubeAll(ActuallyBlocks.COFFEE);
 
-        //buildCubeAll(ActuallyBlocks.CHARCOAL); //TODO hmm?
+        buildCubeAll(ActuallyBlocks.CHARCOAL_BLOCK);
         buildCubeAll(ActuallyBlocks.ENDER_CASING);
         buildCubeAll(ActuallyBlocks.ENDER_PEARL_BLOCK);
         buildCubeAll(ActuallyBlocks.IRON_CASING);
         standardBlock(ActuallyBlocks.LAVA_FACTORY_CASING);
-        //buildCubeAll(ActuallyBlocks.ORE_BLACK_QUARTZ); //TODO HMM
+        buildCubeAll(ActuallyBlocks.BLACK_QUARTZ_ORE);
         buildCubeAll(ActuallyBlocks.WOOD_CASING);
 
         // Quartz

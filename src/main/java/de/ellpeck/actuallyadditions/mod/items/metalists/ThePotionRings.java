@@ -21,117 +21,105 @@ import net.minecraft.potion.Effects;
 public enum ThePotionRings {
 
     SPEED(
-            8171462,
-            Effects.MOVEMENT_SPEED,
-            0,
-            1,
-            10,
-            false,
-            Rarity.UNCOMMON,
-            new ItemStack(Items.SUGAR)
+        8171462,
+        Effects.MOVEMENT_SPEED,
+        0,
+        1,
+        10,
+        false,
+        Rarity.UNCOMMON,
+        new ItemStack(Items.SUGAR)
     ),
-    //Slowness
     HASTE(
-            14270531,
-            Effects.DIG_SPEED, // todo: wrong
-            0,
-            1,
-            10,
-            false,
-            Rarity.EPIC,
-            new ItemStack(Items.REPEATER)
+        14270531,
+        Effects.DIG_SPEED,
+        0,
+        1,
+        10,
+        false,
+        Rarity.EPIC,
+        new ItemStack(Items.REPEATER)
     ),
-    //Mining Fatigue
     STRENGTH(
-            9643043,
-            Effects.DAMAGE_BOOST, // TODO: wrong?
-            0,
-            1,
-            10,
-            false,
-            Rarity.RARE,
-            new ItemStack(Items.BLAZE_POWDER)
+        9643043,
+        Effects.DAMAGE_BOOST,
+        0,
+        1,
+        10,
+        false,
+        Rarity.RARE,
+        new ItemStack(Items.BLAZE_POWDER)
     ),
-    //Health (Not Happening)
-    //Damage
     JUMP_BOOST(
-            7889559,
-            Effects.JUMP,
-            0,
-            1,
-            10,
-            false,
-            Rarity.RARE,
-            new ItemStack(Blocks.PISTON)
+        7889559,
+        Effects.JUMP,
+        0,
+        1,
+        10,
+        false,
+        Rarity.RARE,
+        new ItemStack(Blocks.PISTON)
     ),
-    //Nausea
     REGEN(
-            13458603,
-            Effects.REGENERATION,
-            0,
-            1,
-            50,
-            true,
-            Rarity.RARE,
-            new ItemStack(Items.GHAST_TEAR)
+        13458603,
+        Effects.REGENERATION,
+        0,
+        1,
+        50,
+        true,
+        Rarity.RARE,
+        new ItemStack(Items.GHAST_TEAR)
     ),
     RESISTANCE(
-            10044730,
-            Effects.DAMAGE_RESISTANCE,
-            0,
-            1,
-            10,
-            false,
-            Rarity.EPIC,
-            new ItemStack(Items.SLIME_BALL)
+        10044730,
+        Effects.DAMAGE_RESISTANCE,
+        0,
+        1,
+        10,
+        false,
+        Rarity.EPIC,
+        new ItemStack(Items.SLIME_BALL)
     ),
     FIRE_RESISTANCE(
-            14981690,
-            Effects.FIRE_RESISTANCE,
-            0,
-            0,
-            10,
-            false,
-            Rarity.UNCOMMON,
-            new ItemStack(Items.MAGMA_CREAM)
+        14981690,
+        Effects.FIRE_RESISTANCE,
+        0,
+        0,
+        10,
+        false,
+        Rarity.UNCOMMON,
+        new ItemStack(Items.MAGMA_CREAM)
     ),
     WATER_BREATHING(
-            3035801,
-            Effects.WATER_BREATHING,
-            0,
-            0,
-            10,
-            false,
-            Rarity.RARE,
-            new ItemStack(Items.TROPICAL_FISH)
+        3035801,
+        Effects.WATER_BREATHING,
+        0,
+        0,
+        10,
+        false,
+        Rarity.RARE,
+        new ItemStack(Items.TROPICAL_FISH)
     ),
     INVISIBILITY(
-            8356754,
-            Effects.INVISIBILITY,
-            0,
-            0,
-            10,
-            false,
-            Rarity.EPIC,
-            new ItemStack(Items.FERMENTED_SPIDER_EYE)
+        8356754,
+        Effects.INVISIBILITY,
+        0,
+        0,
+        10,
+        false,
+        Rarity.EPIC,
+        new ItemStack(Items.FERMENTED_SPIDER_EYE)
     ),
-    //Blindness
     NIGHT_VISION(
-            2039713,
-            Effects.NIGHT_VISION,
-            0,
-            0,
-            300,
-            false,
-            Rarity.RARE,
-            new ItemStack(Items.GOLDEN_CARROT)
+        2039713,
+        Effects.NIGHT_VISION,
+        0,
+        0,
+        300,
+        false,
+        Rarity.RARE,
+        new ItemStack(Items.GOLDEN_CARROT)
     );
-    //Hunger
-    //Weakness
-    //Poison
-    //Withering
-    //Health Boost (Not Happening)
-    //Absorption (Not Happening)
 
     public final String name;
     public final int color;

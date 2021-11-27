@@ -30,6 +30,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Set;
+import java.util.function.Supplier;
 
 public final class ActuallyItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ActuallyAdditions.MODID);
@@ -163,9 +164,26 @@ public final class ActuallyItems {
     public static final RegistryObject<Item> LEAF_BLOWER = ITEMS.register("leaf_blower", () -> new ItemLeafBlower(false));
     public static final RegistryObject<Item> ADVANCED_LEAF_BLOWER = ITEMS.register("advanced_leaf_blower", () -> new ItemLeafBlower(true));
 
-    // TODO [port] flatten
-    //public static final RegistryObject<Item> POTION_RING = ITEMS.register("potion_ring", () -> new ItemPotionRing(false));
-    //public static final RegistryObject<Item> POTION_RING_ADVANCED = ITEMS.register("potion_ring_advanced", () -> new ItemPotionRing(true));
+    public static final RegistryObject<Item> RING_OF_SPEED = ITEMS.register("ring_of_speed", basicItem());
+    public static final RegistryObject<Item> RING_OF_HASTE = ITEMS.register("ring_of_haste", basicItem());
+    public static final RegistryObject<Item> RING_OF_STRENGTH = ITEMS.register("ring_of_strength", basicItem());
+    public static final RegistryObject<Item> RING_OF_JUMP_BOOST = ITEMS.register("ring_of_jump_boost", basicItem());
+    public static final RegistryObject<Item> RING_OF_REGENERATION = ITEMS.register("ring_of_regeneration", basicItem());
+    public static final RegistryObject<Item> RING_OF_RESISTANCE = ITEMS.register("ring_of_resistance", basicItem());
+    public static final RegistryObject<Item> RING_OF_FIRE_RESISTANCE = ITEMS.register("ring_of_fire_resistance", basicItem());
+    public static final RegistryObject<Item> RING_OF_WATER_BREATHING = ITEMS.register("ring_of_water_breathing", basicItem());
+    public static final RegistryObject<Item> RING_OF_INVISIBILITY = ITEMS.register("ring_of_invisibility", basicItem());
+    public static final RegistryObject<Item> RING_OF_NIGHT_VISION = ITEMS.register("ring_of_night_vision", basicItem());
+    public static final RegistryObject<Item> ADVANCED_RING_OF_SPEED = ITEMS.register("advanced_ring_of_speed", basicItem());
+    public static final RegistryObject<Item> ADVANCED_RING_OF_HASTE = ITEMS.register("advanced_ring_of_haste", basicItem());
+    public static final RegistryObject<Item> ADVANCED_RING_OF_STRENGTH = ITEMS.register("advanced_ring_of_strength", basicItem());
+    public static final RegistryObject<Item> ADVANCED_RING_OF_JUMP_BOOST = ITEMS.register("advanced_ring_of_jump_boost", basicItem());
+    public static final RegistryObject<Item> ADVANCED_RING_OF_REGENERATION = ITEMS.register("advanced_ring_of_regeneration", basicItem());
+    public static final RegistryObject<Item> ADVANCED_RING_OF_RESISTANCE = ITEMS.register("advanced_ring_of_resistance", basicItem());
+    public static final RegistryObject<Item> ADVANCED_RING_OF_FIRE_RESISTANCE = ITEMS.register("advanced_ring_of_fire_resistance", basicItem());
+    public static final RegistryObject<Item> ADVANCED_RING_OF_WATER_BREATHING = ITEMS.register("advanced_ring_of_water_breathing", basicItem());
+    public static final RegistryObject<Item> ADVANCED_RING_OF_INVISIBILITY = ITEMS.register("advanced_ring_of_invisibility", basicItem());
+    public static final RegistryObject<Item> ADVANCED_RING_OF_NIGHT_VISION = ITEMS.register("advanced_ring_of_night_vision", basicItem());
 
     public static final RegistryObject<Item> HAIRY_BALL = ITEMS.register("hairy_ball", ItemHairBall::new);
     public static final RegistryObject<Item> COFFEE_BEANS = ITEMS.register("coffee_beans", ItemCoffeeBean::new);
@@ -291,11 +309,11 @@ public final class ActuallyItems {
         CRUSHED_QUARTZ, CRUSHED_COAL, CRUSHED_BLACK_QUARTZ, */
         SOLIDIFIED_EXPERIENCE, LEAF_BLOWER, ADVANCED_LEAF_BLOWER,
         RING_OF_GROWTH, RING_OF_MAGNETIZING,
-/*        RING_OF_SPEED, RING_OF_HASTE, RING_OF_STRENGTH, RING_OF_JUMP_BOOST,
+        RING_OF_SPEED, RING_OF_HASTE, RING_OF_STRENGTH, RING_OF_JUMP_BOOST,
         RING_OF_REGENERATION, RING_OF_RESISTANCE, RING_OF_FIRE_RESISTANCE, RING_OF_WATER_BREATHING, RING_OF_INVISIBILITY,
         RING_OF_NIGHT_VISION, ADVANCED_RING_OF_SPEED, ADVANCED_RING_OF_HASTE, ADVANCED_RING_OF_STRENGTH,
         ADVANCED_RING_OF_JUMP_BOOST, ADVANCED_RING_OF_REGENERATION, ADVANCED_RING_OF_RESISTANCE, ADVANCED_RING_OF_FIRE_RESISTANCE,
-        ADVANCED_RING_OF_WATER_BREATHING, ADVANCED_RING_OF_INVISIBILITY, ADVANCED_RING_OF_NIGHT_VISION,*/
+        ADVANCED_RING_OF_WATER_BREATHING, ADVANCED_RING_OF_INVISIBILITY, ADVANCED_RING_OF_NIGHT_VISION,
         HAIRY_BALL,
         COFFEE_BEANS, RICE_SEEDS, CANOLA_SEEDS, FLAX_SEEDS, COFFEE_SEEDS ,
         QUARTZ_HELMET, QUARTZ_CHEST, QUARTZ_LEGGINGS, QUARTZ_BOOTS, QUARTZ_PICKAXE, QUARTZ_AXE, QUARTZ_SHOVEL, QUARTZ_SWORD, QUARTZ_HOE,
@@ -308,6 +326,9 @@ public final class ActuallyItems {
         ENORI_PICKAXE, ENORI_AXE, ENORI_SHOVEL, ENORI_SWORD, ENORI_HOE, ENORI_HELMET, ENORI_CHEST, ENORI_LEGGINGS, ENORI_BOOTS, ENORI_AIOT
     );
 
+    private static Supplier<Item> basicItem() {
+        return () -> new Item(defaultProps());
+    }
     public static Item.Properties defaultProps() {
         return new Item.Properties().tab(ActuallyAdditions.GROUP);
     }
