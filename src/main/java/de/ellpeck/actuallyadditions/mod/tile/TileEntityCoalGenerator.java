@@ -10,8 +10,11 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
+import de.ellpeck.actuallyadditions.mod.crafting.SingleItem;
+import de.ellpeck.actuallyadditions.mod.crafting.SolidFuelRecipe;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerCoalGenerator;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
@@ -30,11 +33,13 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.common.util.RecipeMatcher;
 import net.minecraftforge.energy.IEnergyStorage;
 
 import javax.annotation.Nullable;
 
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
+import net.minecraftforge.fml.server.ServerLifecycleHooks;
 
 public class TileEntityCoalGenerator extends TileEntityInventoryBase implements INamedContainerProvider, ISharingEnergyProvider {
 
@@ -46,8 +51,7 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
     private int lastBurnTime;
     private int lastCurrentBurnTime;
     private int lastCompare;
-    private ItemStack curStack = ItemStack.EMPTY;
-    private int curBurn = -1;
+    private SolidFuelRecipe currentRecipe = null;
 
     public TileEntityCoalGenerator() {
         super(ActuallyBlocks.COAL_GENERATOR.getTileEntityType(), 1);
@@ -89,27 +93,27 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
         if (!this.level.isClientSide) {
             boolean flag = this.currentBurnTime > 0;
 
-            if (this.currentBurnTime > 0) {
+            if (this.currentBurnTime > 0 && currentRecipe != null) {
                 this.currentBurnTime--;
-                int produce = ConfigIntValues.COAL_GENERATOR_CF_PRODUCTION.getValue();
+                int produce = currentRecipe.getTotalEnergy() / currentRecipe.getBurnTime();
                 if (produce > 0) {
                     this.storage.addEnergyRaw(produce);
                 }
             }
 
-            ItemStack stack = this.inv.getStackInSlot(0);
-            if (!stack.isEmpty() && stack != this.curStack) {
-                this.curStack = stack;
-                this.curBurn = ForgeHooks.getBurnTime(stack);
-            } else if (stack.isEmpty()) {
-                this.curStack = ItemStack.EMPTY;
-                this.curBurn = -1;
-            }
-
-            if (!this.isRedstonePowered && this.currentBurnTime <= 0 && this.curBurn > 0 && this.storage.getEnergyStored() < this.storage.getMaxEnergyStored()) {
-                this.maxBurnTime = this.curBurn;
-                this.currentBurnTime = this.curBurn;
-                this.inv.setStackInSlot(0, StackUtil.shrinkForContainer(stack, 1));
+            if (!this.isRedstonePowered && this.currentBurnTime <= 0 && this.storage.getEnergyStored() < this.storage.getMaxEnergyStored()) {
+                ItemStack stack = this.inv.getStackInSlot(0);
+                if (!stack.isEmpty()) {
+                    for (SolidFuelRecipe fuelRecipe : ActuallyAdditionsAPI.SOLID_FUEL_RECIPES) {
+                        if (fuelRecipe.matches(new SingleItem(stack), null)) {
+                            this.currentRecipe = fuelRecipe;
+                            this.maxBurnTime = fuelRecipe.getBurnTime();
+                            this.currentBurnTime = this.maxBurnTime;
+                            this.inv.setStackInSlot(0, StackUtil.shrinkForContainer(stack, 1));
+                            break;
+                        }
+                    }
+                }
             }
 
             if (flag != this.currentBurnTime > 0 || this.lastCompare != this.getComparatorStrength()) {

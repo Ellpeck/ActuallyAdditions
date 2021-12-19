@@ -19,6 +19,7 @@ public class ActuallyRecipes {
     public static final RegistryObject<IRecipeSerializer<?>> LASER_RECIPE = SERIALIZERS.register(LaserRecipe.NAME, LaserRecipe.Serializer::new);
     public static final RegistryObject<IRecipeSerializer<?>> EMPOWERING_RECIPE = SERIALIZERS.register(EmpowererRecipe.NAME, EmpowererRecipe.Serializer::new);
     public static final RegistryObject<IRecipeSerializer<?>> CRUSHING_RECIPE = SERIALIZERS.register(CrushingRecipe.NAME, CrushingRecipe.Serializer::new);
+    public static final RegistryObject<IRecipeSerializer<?>> SOLID_FUEL_RECIPE = SERIALIZERS.register(SolidFuelRecipe.NAME, SolidFuelRecipe.Serializer::new);
 
 
 
@@ -26,7 +27,7 @@ public class ActuallyRecipes {
         public static final IRecipeType<LaserRecipe> LASER = IRecipeType.register(ActuallyAdditions.MODID + ":laser");
         public static final IRecipeType<EmpowererRecipe> EMPOWERING = IRecipeType.register(ActuallyAdditions.MODID + ":empower");
         public static final IRecipeType<CrushingRecipe> CRUSHING = IRecipeType.register(ActuallyAdditions.MODID + ":crushing");
-        //public static final IRecipeType<SolidFuelRecipe> SOLIDFUEL = IRecipeType.register(ActuallyAdditions.MODID + ":solid_fuel");
+        public static final IRecipeType<SolidFuelRecipe> SOLID_FUEL = IRecipeType.register(ActuallyAdditions.MODID + ":solid_fuel");
         //public static final IRecipeType<LiquidFuelRecipe> LIQUIDFUEL = IRecipeType.register(ActuallyAdditions.MODID + ":liquid_fuel");
         //public static final IRecipeType<PressingRecipe> PRESSING = IRecipeType.register(ActuallyAdditions.MODID + ":pressing");
         //public static final IRecipeType<FermentingRecipe> FERMENTING = IRecipeType.register(ActuallyAdditions.MODID + ":fermenting");

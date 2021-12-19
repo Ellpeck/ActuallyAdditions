@@ -1,0 +1,8 @@
+{
+  "type": "actuallyadditions:solid_fuel",
+  "item": {
+    "item": "minecraft:coal"
+  },
+  "total_energy": 1600,
+  "burn_time": 48000
+}

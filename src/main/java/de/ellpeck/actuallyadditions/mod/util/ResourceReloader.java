@@ -22,5 +22,8 @@ public class ResourceReloader implements ISelectiveResourceReloadListener {
         RecipeManager recipeManager = data.getRecipeManager();
         ActuallyAdditionsAPI.EMPOWERER_RECIPES.clear();
         ActuallyAdditionsAPI.EMPOWERER_RECIPES.addAll(recipeManager.getAllRecipesFor(ActuallyRecipes.Types.EMPOWERING));
+
+        ActuallyAdditionsAPI.SOLID_FUEL_RECIPES.clear();
+        ActuallyAdditionsAPI.SOLID_FUEL_RECIPES.addAll(recipeManager.getAllRecipesFor(ActuallyRecipes.Types.SOLID_FUEL));
     }
 }
