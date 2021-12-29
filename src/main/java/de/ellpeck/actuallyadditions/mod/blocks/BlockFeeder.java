@@ -30,7 +30,7 @@ public class BlockFeeder extends BlockContainerBase {
         super(ActuallyBlocks.defaultPickProps(0, 0.5F, 6.0F));
     }
 
-    @Override
+    //@Override
     public TileEntity newBlockEntity(IBlockReader worldIn) {
         return new TileEntityFeeder();
     }

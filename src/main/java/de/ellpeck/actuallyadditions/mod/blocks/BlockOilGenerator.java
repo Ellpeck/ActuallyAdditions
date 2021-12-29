@@ -36,7 +36,7 @@ public class BlockOilGenerator extends DirectionalBlock.Container {
         super(ActuallyBlocks.defaultPickProps(0).randomTicks());
     }
 
-    @Override
+    //@Override
     public TileEntity newBlockEntity(IBlockReader worldIn) {
         return new TileEntityOilGenerator();
     }

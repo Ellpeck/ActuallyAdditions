@@ -21,9 +21,11 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import javax.annotation.Nonnull;
+
 
 @OnlyIn(Dist.CLIENT)
-public class GuiRangedCollector extends GuiWtfMojang<ContainerRangedCollector> {
+public class GuiRangedCollector extends AAScreen<ContainerRangedCollector> {
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_ranged_collector");
     private final TileEntityRangedCollector collector;
@@ -31,7 +33,7 @@ public class GuiRangedCollector extends GuiWtfMojang<ContainerRangedCollector> {
     private FilterSettingsGui filter;
 
     public GuiRangedCollector(ContainerRangedCollector container, PlayerInventory inventory, ITextComponent title) {
-        super(container, inventory);
+        super(container, inventory, title);
         this.collector = container.collector;
         this.imageWidth = 176;
         this.imageHeight = 86 + 86;
@@ -45,7 +47,7 @@ public class GuiRangedCollector extends GuiWtfMojang<ContainerRangedCollector> {
     }
 
     @Override
-    public void render(MatrixStack matrices, int x, int y, float f) {
+    public void render(@Nonnull MatrixStack matrices, int x, int y, float f) {
         super.render(matrices, x, y, f);
 
         //this.filter.drawHover(matrices, x, y);
@@ -59,7 +61,7 @@ public class GuiRangedCollector extends GuiWtfMojang<ContainerRangedCollector> {
     }
 
     @Override
-    public void renderLabels(MatrixStack matrices, int x, int y) {
+    public void renderLabels(@Nonnull MatrixStack matrices, int x, int y) {
         AssetUtil.displayNameString(matrices, this.font, this.imageWidth, -10, this.collector);
     }
 

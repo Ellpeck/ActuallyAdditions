@@ -22,15 +22,17 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import javax.annotation.Nonnull;
+
 
 @OnlyIn(Dist.CLIENT)
-public class GuiXPSolidifier extends GuiWtfMojang<ContainerXPSolidifier> {
+public class GuiXPSolidifier extends AAScreen<ContainerXPSolidifier> {
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_xp_solidifier");
     private final TileEntityXPSolidifier solidifier;
 
     public GuiXPSolidifier(ContainerXPSolidifier container, PlayerInventory inventory, ITextComponent title) {
-        super(container, inventory);
+        super(container, inventory, title);
         this.solidifier = container.solidifier;
         this.imageWidth = 176;
         this.imageHeight = 93 + 86;
@@ -71,7 +73,7 @@ public class GuiXPSolidifier extends GuiWtfMojang<ContainerXPSolidifier> {
     }
 
     @Override
-    public void renderLabels(MatrixStack matrices, int x, int y) {
+    public void renderLabels(@Nonnull MatrixStack matrices, int x, int y) {
         AssetUtil.displayNameString(matrices, this.font, this.imageWidth, -10, this.solidifier);
     }
 

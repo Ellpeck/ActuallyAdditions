@@ -44,7 +44,7 @@ public class BlockVerticalDigger extends DirectionalBlock.Container implements I
         return this.openGui(worldIn, player, pos, TileEntityVerticalDigger.class);
     }
 
-    @Override
+    //@Override
     public TileEntity newBlockEntity(IBlockReader world) {
         return new TileEntityVerticalDigger();
     }

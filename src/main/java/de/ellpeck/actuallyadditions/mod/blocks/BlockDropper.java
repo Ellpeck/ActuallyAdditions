@@ -28,7 +28,7 @@ public class BlockDropper extends FullyDirectionalBlock.Container {
         super(ActuallyBlocks.defaultPickProps(0));
     }
 
-    @Override
+    //@Override
     public TileEntity newBlockEntity(IBlockReader worldIn) {
         return new TileEntityDropper();
     }

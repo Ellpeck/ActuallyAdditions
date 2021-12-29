@@ -22,20 +22,22 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import javax.annotation.Nonnull;
+
 
 @OnlyIn(Dist.CLIENT)
-public class GuiDrill extends GuiWtfMojang<ContainerDrill> {
+public class GuiDrill extends AAScreen<ContainerDrill> {
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_drill");
 
     public GuiDrill(ContainerDrill container, PlayerInventory inventory, ITextComponent title) {
-        super(container, inventory);
+        super(container, inventory, title);
         this.imageWidth = 176;
         this.imageHeight = 54 + 86;
     }
 
     @Override
-    public void renderLabels(MatrixStack matrices, int x, int y) {
+    public void renderLabels(@Nonnull MatrixStack matrices, int x, int y) {
         AssetUtil.displayNameString(matrices, this.font, this.imageWidth, -10, StringUtil.localize("container." + ActuallyAdditions.MODID + ".drill.name"));
     }
 

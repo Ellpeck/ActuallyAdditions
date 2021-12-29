@@ -21,14 +21,16 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import javax.annotation.Nonnull;
+
 @OnlyIn(Dist.CLIENT)
-public class GuiPhantomPlacer extends GuiWtfMojang<ContainerPhantomPlacer> {
+public class GuiPhantomPlacer extends AAScreen<ContainerPhantomPlacer> {
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_breaker");
     private final TileEntityPhantomPlacer placer;
 
     public GuiPhantomPlacer(ContainerPhantomPlacer container, PlayerInventory inventory, ITextComponent title) {
-        super(container, inventory);
+        super(container, inventory, title);
         this.placer = container.placer;
         this.imageWidth = 176;
         this.imageHeight = 93 + 86;
@@ -53,7 +55,7 @@ public class GuiPhantomPlacer extends GuiWtfMojang<ContainerPhantomPlacer> {
     }
 
     @Override
-    public void render(MatrixStack matrices, int mouseX, int mouseY, float partialTicks) {
+    public void render(@Nonnull MatrixStack matrices, int mouseX, int mouseY, float partialTicks) {
         super.render(matrices, mouseX, mouseY, partialTicks);
 
 //        if (!this.placer.isBreaker && this.buttonList.get(0).isMouseOver()) {
@@ -78,7 +80,7 @@ public class GuiPhantomPlacer extends GuiWtfMojang<ContainerPhantomPlacer> {
 //    }
 
     @Override
-    public void renderLabels(MatrixStack matrices, int x, int y) {
+    public void renderLabels(@Nonnull MatrixStack matrices, int x, int y) {
         AssetUtil.displayNameString(matrices, this.font, this.imageWidth, -10, this.placer);
     }
 

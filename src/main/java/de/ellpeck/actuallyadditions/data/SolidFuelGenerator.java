@@ -29,16 +29,17 @@ public class SolidFuelGenerator extends RecipeProvider {
     @Override
     protected void buildShapelessRecipes(Consumer<IFinishedRecipe> consumer) {
         addFuel(consumer, "coal", Items.COAL, 48000, 1600);
+        addFuel(consumer, "stick", Items.STICK, 1000, 200); //TEST
         addFuel(consumer, "charcoal", Items.CHARCOAL, 48000, 1600);
     }
 
     private void addFuel(Consumer<IFinishedRecipe> consumer, String name, Item item, int energy, int burnTime) {
-        consumer.accept(new SolidFuelRecipe.FinishedRecipe(new ResourceLocation(ActuallyAdditions.MODID, "solid_fuel/"+name), Ingredient.of(item), burnTime, energy));
+        consumer.accept(new SolidFuelRecipe.FinishedRecipe(new ResourceLocation(ActuallyAdditions.MODID, "solid_fuel/"+name), Ingredient.of(item), energy, burnTime));
     }
     private void addFuel(Consumer<IFinishedRecipe> consumer, String name, Ingredient item, int energy, int burnTime) {
-        consumer.accept(new SolidFuelRecipe.FinishedRecipe(new ResourceLocation(ActuallyAdditions.MODID, "solid_fuel/"+name), item, burnTime, energy));
+        consumer.accept(new SolidFuelRecipe.FinishedRecipe(new ResourceLocation(ActuallyAdditions.MODID, "solid_fuel/"+name), item, energy, burnTime));
     }
     private void addFuel(Consumer<IFinishedRecipe> consumer, String name, ITag tag, int energy, int burnTime) {
-        consumer.accept(new SolidFuelRecipe.FinishedRecipe(new ResourceLocation(ActuallyAdditions.MODID, "solid_fuel/"+name), Ingredient.of(tag), burnTime, energy));
+        consumer.accept(new SolidFuelRecipe.FinishedRecipe(new ResourceLocation(ActuallyAdditions.MODID, "solid_fuel/"+name), Ingredient.of(tag), energy, burnTime));
     }
 }

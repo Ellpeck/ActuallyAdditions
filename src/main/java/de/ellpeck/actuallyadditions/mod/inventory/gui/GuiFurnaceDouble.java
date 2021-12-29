@@ -24,8 +24,10 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import javax.annotation.Nonnull;
+
 @OnlyIn(Dist.CLIENT)
-public class GuiFurnaceDouble extends GuiWtfMojang<ContainerFurnaceDouble> {
+public class GuiFurnaceDouble extends AAScreen<ContainerFurnaceDouble> {
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_furnace_double");
     private final TileEntityPoweredFurnace tileFurnace;
@@ -34,14 +36,14 @@ public class GuiFurnaceDouble extends GuiWtfMojang<ContainerFurnaceDouble> {
     private Button buttonAutoSplit;
 
     public GuiFurnaceDouble(ContainerFurnaceDouble container, PlayerInventory inventory, ITextComponent title) {
-        super(container, inventory);
+        super(container, inventory, title);
         this.tileFurnace = container.furnace;
         this.imageWidth = 176;
         this.imageHeight = 93 + 86;
     }
 
     @Override
-    public void render(MatrixStack matrices, int x, int y, float f) {
+    public void render(@Nonnull MatrixStack matrices, int x, int y, float f) {
         super.render(matrices, x, y, f);
         this.energy.render(matrices, x, y);
 
@@ -79,7 +81,7 @@ public class GuiFurnaceDouble extends GuiWtfMojang<ContainerFurnaceDouble> {
 //    }
 
     @Override
-    public void renderLabels(MatrixStack matrices, int x, int y) {
+    public void renderLabels(@Nonnull MatrixStack matrices, int x, int y) {
         AssetUtil.displayNameString(matrices, this.font, this.imageWidth, -10, this.tileFurnace);
     }
 

@@ -26,8 +26,10 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import javax.annotation.Nonnull;
+
 @OnlyIn(Dist.CLIENT)
-public class CrusherScreen extends GuiWtfMojang<CrusherContainer> {
+public class CrusherScreen extends AAScreen<CrusherContainer> {
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_grinder");
     private static final ResourceLocation RES_LOC_DOUBLE = AssetUtil.getGuiLocation("gui_grinder_double");
@@ -38,7 +40,7 @@ public class CrusherScreen extends GuiWtfMojang<CrusherContainer> {
     private Button buttonAutoSplit;
 
     public CrusherScreen(CrusherContainer container, PlayerInventory inventory, ITextComponent title) {
-        super(container, inventory);
+        super(container, inventory, title);
         this.tileGrinder = container.tileGrinder;
         this.isDouble = container.isDouble;
         this.imageWidth = 176;
@@ -76,7 +78,7 @@ public class CrusherScreen extends GuiWtfMojang<CrusherContainer> {
     }
 
     @Override
-    public void render(MatrixStack matrixStack, int x, int y, float f) {
+    public void render(@Nonnull MatrixStack matrixStack, int x, int y, float f) {
         super.render(matrixStack, x, y, f);
         this.energy.render(matrixStack, x, y);
 
@@ -87,7 +89,7 @@ public class CrusherScreen extends GuiWtfMojang<CrusherContainer> {
     }
 
     @Override
-    public void renderLabels(MatrixStack matrices, int x, int y) {
+    public void renderLabels(@Nonnull MatrixStack matrices, int x, int y) {
         AssetUtil.displayNameString(matrices, this.font, this.imageWidth, -10, this.tileGrinder);
     }
 

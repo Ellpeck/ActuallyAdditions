@@ -33,7 +33,7 @@ public class BlockFluidCollector extends FullyDirectionalBlock.Container {
         this.isPlacer = isPlacer;
     }
 
-    @Override
+    //@Override
     public TileEntity newBlockEntity(IBlockReader worldIn) {
         return this.isPlacer
             ? new TileEntityFluidPlacer()

@@ -38,7 +38,7 @@ public class BlockPlayerInterface extends BlockContainerBase implements IHudDisp
         super(ActuallyBlocks.defaultPickProps(0, 4.5F, 10.0F));
     }
 
-    @Override
+    //@Override
     public TileEntity newBlockEntity(IBlockReader worldIn) {
         return new TileEntityPlayerInterface();
     }

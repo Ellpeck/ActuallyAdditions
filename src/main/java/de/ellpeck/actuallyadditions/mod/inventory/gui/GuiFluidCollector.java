@@ -21,23 +21,25 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import javax.annotation.Nonnull;
+
 
 @OnlyIn(Dist.CLIENT)
-public class GuiFluidCollector extends GuiWtfMojang<ContainerFluidCollector> {
+public class GuiFluidCollector extends AAScreen<ContainerFluidCollector> {
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_fluid_collector");
     private final TileEntityFluidCollector collector;
     private FluidDisplay fluid;
 
     public GuiFluidCollector(ContainerFluidCollector container, PlayerInventory inventory, ITextComponent title) {
-        super(container, inventory);
+        super(container, inventory, title);
         this.collector = container.collector;
         this.imageWidth = 176;
         this.imageHeight = 93 + 86;
     }
 
     @Override
-    public void render(MatrixStack matrices, int x, int y, float f) {
+    public void render(@Nonnull MatrixStack matrices, int x, int y, float f) {
         super.render(matrices, x, y, f);
 
         this.fluid.render(matrices, x, y);
@@ -50,7 +52,7 @@ public class GuiFluidCollector extends GuiWtfMojang<ContainerFluidCollector> {
     }
 
     @Override
-    public void renderLabels(MatrixStack matrices, int x, int y) {
+    public void renderLabels(@Nonnull MatrixStack matrices, int x, int y) {
         AssetUtil.displayNameString(matrices, this.font, this.imageWidth, -10, this.collector);
     }
 

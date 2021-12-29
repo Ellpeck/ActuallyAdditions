@@ -23,8 +23,10 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import javax.annotation.Nonnull;
+
 @OnlyIn(Dist.CLIENT)
-public class GuiCoffeeMachine extends GuiWtfMojang<ContainerCoffeeMachine> {
+public class GuiCoffeeMachine extends AAScreen<ContainerCoffeeMachine> {
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_coffee_machine");
     private final TileEntityCoffeeMachine machine;
@@ -33,7 +35,7 @@ public class GuiCoffeeMachine extends GuiWtfMojang<ContainerCoffeeMachine> {
     private FluidDisplay fluid;
 
     public GuiCoffeeMachine(ContainerCoffeeMachine container, PlayerInventory inventory, ITextComponent title) {
-        super(container, inventory);
+        super(container, inventory, title);
         this.machine = container.machine;
         this.imageWidth = 176;
         this.imageHeight = 93 + 86;
@@ -51,7 +53,7 @@ public class GuiCoffeeMachine extends GuiWtfMojang<ContainerCoffeeMachine> {
     }
 
     @Override
-    public void render(MatrixStack matrices, int x, int y, float f) {
+    public void render(@Nonnull MatrixStack matrices, int x, int y, float f) {
         super.render(matrices, x, y, f);
 
         String text2 = this.machine.coffeeCacheAmount + "/" + TileEntityCoffeeMachine.COFFEE_CACHE_MAX_AMOUNT + " " + StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.coffee");
@@ -64,7 +66,7 @@ public class GuiCoffeeMachine extends GuiWtfMojang<ContainerCoffeeMachine> {
     }
 
     @Override
-    public void renderLabels(MatrixStack matrices, int x, int y) {
+    public void renderLabels(@Nonnull MatrixStack matrices, int x, int y) {
         AssetUtil.displayNameString(matrices, this.font, this.imageWidth, -10, this.machine);
     }
 

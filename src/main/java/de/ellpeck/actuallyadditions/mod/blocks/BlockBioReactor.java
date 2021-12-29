@@ -28,7 +28,7 @@ public class BlockBioReactor extends BlockContainerBase {
         super(ActuallyBlocks.defaultPickProps(0, 2.0F, 10.0F));
     }
 
-    @Override
+    //@Override
     public TileEntity newBlockEntity(IBlockReader worldIn) {
         return new TileEntityBioReactor();
     }

@@ -19,6 +19,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
+import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
@@ -35,7 +36,7 @@ import net.minecraftforge.items.IItemHandler;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public abstract class TileEntityBase extends TileEntity implements ITickable {
+public abstract class TileEntityBase extends TileEntity implements ITickableTileEntity {
 
     public boolean isRedstonePowered;
     public boolean isPulseMode;
@@ -46,17 +47,6 @@ public abstract class TileEntityBase extends TileEntity implements ITickable {
 
     public TileEntityBase(TileEntityType<?> type) {
         super(type);
-    }
-
-    private static void register(Class<? extends TileEntityBase> tileClass) {
-        // TODO: [port] migrate to register system.
-        //        try {
-        //            //This is hacky and dirty but it works so whatever
-        //            ResourceLocation name = new ResourceLocation(ActuallyAdditions.MODID, tileClass.newInstance().name);
-        //            GameRegistry.registerTileEntity(tileClass, name);
-        //        } catch (Exception e) {
-        //            ActuallyAdditions.LOGGER.fatal("Registering a TileEntity failed!", e);
-        //        }
     }
 
     @Override
@@ -271,7 +261,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickable {
     }
 
     protected boolean sendUpdateWithInterval() {
-        if (this.ticksElapsed % ConfigIntValues.TILE_ENTITY_UPDATE_INTERVAL.getValue() == 0) {
+        if (this.ticksElapsed % 5 == 0) { //TODO was a config TILE_ENTITY_UPDATE_INTERVAL
             this.sendUpdate();
             return true;
         } else {

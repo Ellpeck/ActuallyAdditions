@@ -48,7 +48,7 @@ public class BlockCoffeeMachine extends DirectionalBlock.Container {
     }
 
     @Nullable
-    @Override
+    //@Override
     public TileEntity newBlockEntity(IBlockReader worldIn) {
         return new TileEntityCoffeeMachine();
     }

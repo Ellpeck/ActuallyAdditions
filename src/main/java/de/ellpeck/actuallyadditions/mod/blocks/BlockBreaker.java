@@ -35,7 +35,7 @@ public class BlockBreaker extends FullyDirectionalBlock.Container {
     }
 
     @Nullable
-    @Override
+    //@Override
     public TileEntity newBlockEntity(IBlockReader world) {
         return this.isPlacer
             ? new TileEntityPlacer()

@@ -23,9 +23,11 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import javax.annotation.Nonnull;
+
 
 @OnlyIn(Dist.CLIENT)
-public class GuiOilGenerator extends GuiWtfMojang<ContainerOilGenerator> {
+public class GuiOilGenerator extends AAScreen<ContainerOilGenerator> {
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_oil_generator");
     private final TileEntityOilGenerator generator;
@@ -34,7 +36,7 @@ public class GuiOilGenerator extends GuiWtfMojang<ContainerOilGenerator> {
     private FluidDisplay fluid;
 
     public GuiOilGenerator(ContainerOilGenerator container, PlayerInventory inventory, ITextComponent title) {
-        super(container, inventory);
+        super(container, inventory, title);
         this.generator = container.generator;
         this.imageWidth = 176;
         this.imageHeight = 93 + 86;
@@ -48,14 +50,14 @@ public class GuiOilGenerator extends GuiWtfMojang<ContainerOilGenerator> {
     }
 
     @Override
-    public void render(MatrixStack matrices, int x, int y, float f) {
+    public void render(@Nonnull MatrixStack matrices, int x, int y, float f) {
         super.render(matrices, x, y, f);
         this.energy.render(matrices, x, y);
         this.fluid.render(matrices, x, y);
     }
 
     @Override
-    public void renderLabels(MatrixStack matrices, int x, int y) {
+    public void renderLabels(@Nonnull MatrixStack matrices, int x, int y) {
         AssetUtil.displayNameString(matrices, this.font, this.imageWidth, -10, this.generator);
     }
 

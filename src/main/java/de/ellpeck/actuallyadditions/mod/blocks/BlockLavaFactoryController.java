@@ -37,7 +37,7 @@ public class BlockLavaFactoryController extends DirectionalBlock.Container imple
         super(ActuallyBlocks.defaultPickProps(0, 4.5F, 20.0F));
     }
 
-    @Override
+    //@Override
     public TileEntity newBlockEntity(IBlockReader worldIn) {
         return new TileEntityLavaFactoryController();
     }

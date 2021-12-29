@@ -24,7 +24,7 @@ public class BlockHeatCollector extends BlockContainerBase {
         super(ActuallyBlocks.defaultPickProps(0, 2.5F, 10.0F));
     }
 
-    @Override
+    //@Override
     public TileEntity newBlockEntity(IBlockReader worldIn) {
         return new TileEntityHeatCollector();
     }

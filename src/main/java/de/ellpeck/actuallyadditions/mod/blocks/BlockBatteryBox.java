@@ -39,7 +39,7 @@ public class BlockBatteryBox extends BlockContainerBase {
     //    }
 
     @Nullable
-    @Override
+    //@Override
     public TileEntity newBlockEntity(IBlockReader worldIn) {
         return new TileEntityBatteryBox();
     }

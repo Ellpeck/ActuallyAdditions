@@ -35,7 +35,7 @@ public class BlockEmpowerer extends BlockContainerBase {
     }
 
     @Nullable
-    @Override
+    //@Override
     public TileEntity newBlockEntity(IBlockReader worldIn) {
         return new TileEntityEmpowerer();
     }

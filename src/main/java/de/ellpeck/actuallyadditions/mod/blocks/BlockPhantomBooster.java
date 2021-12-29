@@ -25,7 +25,7 @@ public class BlockPhantomBooster extends BlockContainerBase {
         super(ActuallyBlocks.defaultPickProps(0));
     }
 
-    @Override
+    //@Override
     public TileEntity newBlockEntity(IBlockReader world) {
         return new TileEntityPhantomBooster();
     }

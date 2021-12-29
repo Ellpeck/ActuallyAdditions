@@ -89,7 +89,7 @@ public class BlockAtomicReconstructor extends FullyDirectionalBlock.Container im
     }
 
     @Nullable
-    @Override
+    //@Override
     public TileEntity newBlockEntity(IBlockReader worldIn) {
         return new TileEntityAtomicReconstructor();
     }

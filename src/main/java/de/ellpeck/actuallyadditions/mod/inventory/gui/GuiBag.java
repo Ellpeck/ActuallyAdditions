@@ -19,7 +19,9 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 
-public class GuiBag extends GuiWtfMojang<ContainerBag> {
+import javax.annotation.Nonnull;
+
+public class GuiBag extends AAScreen<ContainerBag> {
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_bag");
     private static final ResourceLocation RES_LOC_VOID = AssetUtil.getGuiLocation("gui_void_bag");
 
@@ -29,7 +31,7 @@ public class GuiBag extends GuiWtfMojang<ContainerBag> {
     private Button buttonAutoInsert;
 
     public GuiBag(ContainerBag container, PlayerInventory inventory, ITextComponent title) {
-        super(container, inventory);
+        super(container, inventory, title);
         this.imageWidth = 176;
         this.imageHeight = 90 + 86;
         this.isVoid = container.isVoid;
@@ -75,7 +77,7 @@ public class GuiBag extends GuiWtfMojang<ContainerBag> {
     }*/
 
     @Override
-    public void render(MatrixStack stack, int mouseX, int mouseY, float partialTicks) {
+    public void render(@Nonnull MatrixStack stack, int mouseX, int mouseY, float partialTicks) {
         super.render(stack, mouseX, mouseY, partialTicks);
         this.filter.drawHover(mouseX, mouseY);
 

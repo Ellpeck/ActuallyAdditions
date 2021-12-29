@@ -21,26 +21,23 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import javax.annotation.Nonnull;
+
 @OnlyIn(Dist.CLIENT)
-public class GuiBreaker extends GuiWtfMojang<ContainerBreaker> {
+public class GuiBreaker extends AAScreen<ContainerBreaker> {
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_breaker");
     private final TileEntityBreaker breaker;
 
     public GuiBreaker(ContainerBreaker container, PlayerInventory inventory, ITextComponent title) {
-        super(container, inventory);
+        super(container, inventory, title);
         this.breaker = container.breaker;
         this.imageWidth = 176;
         this.imageHeight = 93 + 86;
     }
 
     @Override
-    protected void renderLabels(MatrixStack matrices, int x, int y) {
-        AssetUtil.displayNameString(matrices, this.font, this.imageWidth, -10, this.breaker);
-    }
-
-    @Override
-    protected void renderBg(MatrixStack matrices, float partialTicks, int x, int y) {
+    protected void renderBg(@Nonnull MatrixStack matrices, float partialTicks, int x, int y) {
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 
         this.getMinecraft().getTextureManager().bind(AssetUtil.GUI_INVENTORY_LOCATION);

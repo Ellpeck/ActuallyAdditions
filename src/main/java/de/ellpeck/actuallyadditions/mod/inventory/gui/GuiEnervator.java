@@ -21,16 +21,18 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import javax.annotation.Nonnull;
+
 
 @OnlyIn(Dist.CLIENT)
-public class GuiEnervator extends GuiWtfMojang<ContainerEnervator> {
+public class GuiEnervator extends AAScreen<ContainerEnervator> {
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_energizer");
     private final TileEntityEnervator enervator;
     private EnergyDisplay energy;
 
     public GuiEnervator(ContainerEnervator container, PlayerInventory inventory, ITextComponent title) {
-        super(container, inventory);
+        super(container, inventory, title);
         this.enervator = container.enervator;
         this.imageWidth = 176;
         this.imageHeight = 93 + 86;
@@ -43,13 +45,13 @@ public class GuiEnervator extends GuiWtfMojang<ContainerEnervator> {
     }
 
     @Override
-    public void render(MatrixStack matrices, int x, int y, float f) {
+    public void render(@Nonnull MatrixStack matrices, int x, int y, float f) {
         super.render(matrices, x, y, f);
         this.energy.render(matrices, x, y);
     }
 
     @Override
-    public void renderLabels(MatrixStack matrices, int x, int y) {
+    public void renderLabels(@Nonnull MatrixStack matrices, int x, int y) {
         AssetUtil.displayNameString(matrices, this.font, this.imageWidth, -10, this.enervator);
     }
 

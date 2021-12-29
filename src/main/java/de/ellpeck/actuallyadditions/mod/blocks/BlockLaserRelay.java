@@ -146,7 +146,7 @@ public class BlockLaserRelay extends FullyDirectionalBlock.Container implements 
         return ActionResultType.FAIL;
     }
 
-    @Override
+    //@Override
     public TileEntity newBlockEntity(IBlockReader world) {
         switch (this.type) {
             case ITEM:

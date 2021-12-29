@@ -21,9 +21,11 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import javax.annotation.Nonnull;
+
 
 @OnlyIn(Dist.CLIENT)
-public class GuiFermentingBarrel extends GuiWtfMojang<ContainerFermentingBarrel> {
+public class GuiFermentingBarrel extends AAScreen<ContainerFermentingBarrel> {
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_fermenting_barrel");
     private final TileEntityFermentingBarrel press;
@@ -31,14 +33,14 @@ public class GuiFermentingBarrel extends GuiWtfMojang<ContainerFermentingBarrel>
     private FluidDisplay output;
 
     public GuiFermentingBarrel(ContainerFermentingBarrel container, PlayerInventory inventory, ITextComponent title) {
-        super(container, inventory);
+        super(container, inventory, title);
         this.press = container.barrel;
         this.imageWidth = 176;
         this.imageHeight = 93 + 86;
     }
 
     @Override
-    public void render(MatrixStack matrices, int x, int y, float f) {
+    public void render(@Nonnull MatrixStack matrices, int x, int y, float f) {
         super.render(matrices, x, y, f);
         this.input.render(matrices, x, y);
         this.output.render(matrices, x, y);
@@ -52,7 +54,7 @@ public class GuiFermentingBarrel extends GuiWtfMojang<ContainerFermentingBarrel>
     }
 
     @Override
-    public void renderLabels(MatrixStack matrices, int x, int y) {
+    public void renderLabels(@Nonnull MatrixStack matrices, int x, int y) {
         AssetUtil.displayNameString(matrices, this.font, this.imageWidth, -10, this.press);
     }
 

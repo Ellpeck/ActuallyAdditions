@@ -23,21 +23,23 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import javax.annotation.Nonnull;
+
 @OnlyIn(Dist.CLIENT)
-public class GuiFeeder extends GuiWtfMojang<ContainerFeeder> {
+public class GuiFeeder extends AAScreen<ContainerFeeder> {
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_feeder");
     public final TileEntityFeeder tileFeeder;
 
     public GuiFeeder(ContainerFeeder container, PlayerInventory inventory, ITextComponent title) {
-        super(container, inventory);
+        super(container, inventory, title);
         this.tileFeeder = container.feeder;
         this.imageWidth = 176;
         this.imageHeight = 70 + 86;
     }
 
     @Override
-    public void render(MatrixStack matrices, int x, int y, float f) {
+    public void render(@Nonnull MatrixStack matrices, int x, int y, float f) {
         super.render(matrices, x, y, f);
         if (x >= this.leftPos + 69 && y >= this.topPos + 30 && x <= this.leftPos + 69 + 10 && y <= this.topPos + 30 + 10) {
             String[] array = new String[]{this.tileFeeder.currentAnimalAmount + " " + StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.animals"), this.tileFeeder.currentAnimalAmount >= 2 && this.tileFeeder.currentAnimalAmount < TileEntityFeeder.THRESHOLD
@@ -50,7 +52,7 @@ public class GuiFeeder extends GuiWtfMojang<ContainerFeeder> {
     }
 
     @Override
-    public void renderLabels(MatrixStack matrices, int x, int y) {
+    public void renderLabels(@Nonnull MatrixStack matrices, int x, int y) {
         AssetUtil.displayNameString(matrices, this.font, this.imageWidth, -10, this.tileFeeder);
     }
 

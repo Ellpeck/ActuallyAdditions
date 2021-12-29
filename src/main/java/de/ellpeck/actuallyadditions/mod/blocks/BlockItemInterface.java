@@ -26,7 +26,7 @@ public class BlockItemInterface extends BlockContainerBase {
         super(ActuallyBlocks.defaultPickProps(0));
     }
 
-    @Override
+    //@Override
     public TileEntity newBlockEntity(IBlockReader worldIn) {
         return new TileEntityItemInterface();
     }

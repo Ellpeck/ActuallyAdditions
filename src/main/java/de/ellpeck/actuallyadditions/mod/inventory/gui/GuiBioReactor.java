@@ -20,14 +20,16 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 
-public class GuiBioReactor extends GuiWtfMojang<ContainerBioReactor> {
+import javax.annotation.Nonnull;
+
+public class GuiBioReactor extends AAScreen<ContainerBioReactor> {
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_bio_reactor");
     private final TileEntityBioReactor tile;
     private EnergyDisplay energy;
 
     public GuiBioReactor(ContainerBioReactor container, PlayerInventory inventory, ITextComponent title) {
-        super(container, inventory);
+        super(container, inventory, title);
         this.tile = container.tile;
         this.imageWidth = 176;
         this.imageHeight = 93 + 86;
@@ -40,13 +42,13 @@ public class GuiBioReactor extends GuiWtfMojang<ContainerBioReactor> {
     }
 
     @Override
-    public void render(MatrixStack matrices, int mouseX, int mouseY, float partialTicks) {
+    public void render(@Nonnull MatrixStack matrices, int mouseX, int mouseY, float partialTicks) {
         super.render(matrices, mouseX, mouseY, partialTicks);
         //this.energy.render(mouseX, mouseY);
     }
 
     @Override
-    public void renderLabels(MatrixStack matrices, int x, int y) {
+    public void renderLabels(@Nonnull MatrixStack matrices, int x, int y) {
         AssetUtil.displayNameString(matrices, this.font, this.imageWidth, -10, this.tile);
     }
 

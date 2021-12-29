@@ -91,13 +91,6 @@ public enum ConfigIntValues {
                     1,
             Integer.MAX_VALUE,
             "The energy use of the Atomic Reconstructor's Mining Lens."),
-    COAL_GENERATOR_CF_PRODUCTION(
-            "Coal Generator Energy Production",
-            ConfigCategories.MACHINE_VALUES,
-            30,
-            1,
-            Integer.MAX_VALUE,
-            "The Coal Generator's Energy Production in CF/tick while burning."),
     LEAF_GENERATOR_COOLDOWN(
             "Leaf Generator Cooldown",
             ConfigCategories.MACHINE_VALUES,

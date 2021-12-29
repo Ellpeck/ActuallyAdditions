@@ -21,15 +21,17 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import javax.annotation.Nonnull;
+
 @OnlyIn(Dist.CLIENT)
-public class GuiEnergizer extends GuiWtfMojang<ContainerEnergizer> {
+public class GuiEnergizer extends AAScreen<ContainerEnergizer> {
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_energizer");
     private final TileEntityEnergizer energizer;
     private EnergyDisplay energy;
 
     public GuiEnergizer(ContainerEnergizer container, PlayerInventory inventory, ITextComponent title) {
-        super(container, inventory);
+        super(container, inventory, title);
         this.energizer = container.energizer;
         this.imageWidth = 176;
         this.imageHeight = 93 + 86;
@@ -42,13 +44,13 @@ public class GuiEnergizer extends GuiWtfMojang<ContainerEnergizer> {
     }
 
     @Override
-    public void render(MatrixStack matrices, int x, int y, float f) {
+    public void render(@Nonnull MatrixStack matrices, int x, int y, float f) {
         super.render(matrices, x, y, f);
         this.energy.render(matrices, x, y);
     }
 
     @Override
-    public void renderLabels(MatrixStack matrices, int x, int y) {
+    public void renderLabels(@Nonnull MatrixStack matrices, int x, int y) {
         AssetUtil.displayNameString(matrices, this.font, this.imageWidth, -10, this.energizer);
     }
 

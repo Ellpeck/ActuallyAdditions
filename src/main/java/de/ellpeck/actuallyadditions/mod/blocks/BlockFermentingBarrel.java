@@ -33,7 +33,7 @@ public class BlockFermentingBarrel extends BlockContainerBase {
         super(Properties.of(Material.WOOD).harvestTool(ToolType.AXE).harvestLevel(0).strength(0.5F, 5.0F).sound(SoundType.WOOD));
     }
 
-    @Override
+    //@Override
     public TileEntity newBlockEntity(IBlockReader worldIn) {
         return new TileEntityFermentingBarrel();
     }

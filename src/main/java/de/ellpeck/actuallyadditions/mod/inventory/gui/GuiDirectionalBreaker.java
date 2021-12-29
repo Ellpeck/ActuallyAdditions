@@ -21,15 +21,17 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import javax.annotation.Nonnull;
+
 @OnlyIn(Dist.CLIENT)
-public class GuiDirectionalBreaker extends GuiWtfMojang<ContainerDirectionalBreaker> {
+public class GuiDirectionalBreaker extends AAScreen<ContainerDirectionalBreaker> {
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_directional_breaker");
     private final TileEntityLongRangeBreaker breaker;
     private EnergyDisplay energy;
 
     public GuiDirectionalBreaker(ContainerDirectionalBreaker container, PlayerInventory inventory, ITextComponent title) {
-        super(container, inventory);
+        super(container, inventory, title);
         this.breaker = container.breaker;
         this.imageWidth = 176;
         this.imageHeight = 93 + 86;
@@ -42,14 +44,14 @@ public class GuiDirectionalBreaker extends GuiWtfMojang<ContainerDirectionalBrea
     }
 
     @Override
-    public void render(MatrixStack matrices, int x, int y, float f) {
+    public void render(@Nonnull MatrixStack matrices, int x, int y, float f) {
         super.render(matrices, x, y, f);
 
         this.energy.render(matrices, x, y);
     }
 
     @Override
-    public void renderLabels(MatrixStack matrices, int x, int y) {
+    public void renderLabels(@Nonnull MatrixStack matrices, int x, int y) {
         AssetUtil.displayNameString(matrices, this.font, this.imageWidth, -10, this.breaker);
     }
 

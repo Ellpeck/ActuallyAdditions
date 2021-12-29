@@ -17,8 +17,10 @@ import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.client.gui.GuiUtils;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -82,9 +84,9 @@ public class EnergyDisplay extends AbstractGui {
         if (this.isMouseOver(mouseX, mouseY)) {
             Minecraft mc = Minecraft.getInstance();
 
-            List<String> text = new ArrayList<>();
-            text.add(this.getOverlayText());
-            //GuiUtils.drawHoveringText(matrices, text, mouseX, mouseY, mc.getWindow().getWidth(), mc.getWindow().getHeight(), -1, mc.font);
+            List<StringTextComponent> text = new ArrayList<>();
+            text.add(new StringTextComponent(this.getOverlayText()));
+            GuiUtils.drawHoveringText(matrices, text, mouseX, mouseY, mc.getWindow().getWidth(), mc.getWindow().getHeight(), -1, mc.font);
         }
     }
 
@@ -98,6 +100,6 @@ public class EnergyDisplay extends AbstractGui {
 
     private String getOverlayText() {
         NumberFormat format = NumberFormat.getInstance();
-        return String.format("%s/%s %s", format.format(this.rfReference.getEnergyStored()), format.format(this.rfReference.getMaxEnergyStored()), I18n.get("actuallyadditions.cflong"));
+        return String.format("%s/%s %s", format.format(this.rfReference.getEnergyStored()), format.format(this.rfReference.getMaxEnergyStored()), I18n.get("actuallyadditions.fe"));
     }
 }

@@ -40,7 +40,7 @@ public class BlockCanolaPress extends BlockContainerBase {
     //    }
 
     @Nullable
-    @Override
+    //@Override
     public TileEntity newBlockEntity(IBlockReader world) {
         return new TileEntityCanolaPress();
     }

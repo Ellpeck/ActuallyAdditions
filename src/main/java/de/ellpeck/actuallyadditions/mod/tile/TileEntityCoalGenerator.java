@@ -27,8 +27,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeHooks;
@@ -72,6 +74,8 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
         if (type != NBTType.SAVE_BLOCK) {
             compound.putInt("BurnTime", this.currentBurnTime);
             compound.putInt("MaxBurnTime", this.maxBurnTime);
+            if (currentRecipe != null)
+                compound.putString("currentRecipe", currentRecipe.getId().toString());
         }
         this.storage.writeToNBT(compound);
         super.writeSyncableNBT(compound, type);
@@ -82,6 +86,15 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
         if (type != NBTType.SAVE_BLOCK) {
             this.currentBurnTime = compound.getInt("BurnTime");
             this.maxBurnTime = compound.getInt("MaxBurnTime");
+            if (compound.contains("currentRecipe")) {
+                ResourceLocation id = new ResourceLocation(compound.getString("currentRecipe"));
+                for (SolidFuelRecipe fuelRecipe : ActuallyAdditionsAPI.SOLID_FUEL_RECIPES) {
+                    if (fuelRecipe.getId().equals(id)) {
+                        this.currentRecipe = fuelRecipe;
+                        break;
+                    }
+                }
+            }
         }
         this.storage.readFromNBT(compound);
         super.readSyncableNBT(compound, type);
@@ -137,7 +150,13 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
 
     @Override
     public IAcceptor getAcceptor() {
-        return (slot, stack, automation) -> ForgeHooks.getBurnTime(stack) > 0;
+        return (slot, stack, automation) -> {
+            SingleItem singleItem = new SingleItem(stack);
+            for (SolidFuelRecipe recipe : ActuallyAdditionsAPI.SOLID_FUEL_RECIPES) {
+                if (recipe.matches(singleItem, null))return true;
+            }
+            return false;
+        };
     }
 
     @Override
@@ -177,7 +196,7 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
 
     @Override
     public ITextComponent getDisplayName() {
-        return StringTextComponent.EMPTY;
+        return new TranslationTextComponent("container.actuallyadditions.coalGenerator");
     }
 
     @Nullable

@@ -30,7 +30,7 @@ public class BlockFarmer extends DirectionalBlock.Container {
         super(ActuallyBlocks.defaultPickProps(0));
     }
 
-    @Override
+    //@Override
     public TileEntity newBlockEntity(IBlockReader worldIn) {
         return new TileEntityFarmer();
     }

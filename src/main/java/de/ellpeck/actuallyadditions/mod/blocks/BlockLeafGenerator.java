@@ -30,7 +30,7 @@ public class BlockLeafGenerator extends DirectionalBlock.Container {
         super(Properties.of(Material.METAL).strength(5.0F, 10.0F).harvestTool(ToolType.PICKAXE).harvestLevel(0).strength(5.0F, 10.0F).sound(SoundType.METAL));
     }
 
-    @Override
+    //@Override
     public TileEntity newBlockEntity(IBlockReader worldIn) {
         return new TileEntityLeafGenerator();
     }

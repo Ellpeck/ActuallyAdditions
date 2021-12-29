@@ -33,7 +33,7 @@ public class BlockEnergizer extends BlockContainerBase {
         this.isEnergizer = isEnergizer;
     }
 
-    @Override
+    //@Override
     public TileEntity newBlockEntity(IBlockReader worldIn) {
         return this.isEnergizer
             ? new TileEntityEnergizer()

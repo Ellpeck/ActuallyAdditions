@@ -38,7 +38,7 @@ public class BlockFireworkBox extends BlockContainerBase {
         return this.openGui(world, player, pos, TileEntityFireworkBox.class);
     }
 
-    @Override
+    //@Override
     public TileEntity newBlockEntity(IBlockReader worldIn) {
         return new TileEntityFireworkBox();
     }

@@ -43,7 +43,7 @@ import net.minecraftforge.fml.network.NetworkHooks;
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public abstract class BlockContainerBase extends ContainerBlock {
+public abstract class BlockContainerBase extends Block {
     public BlockContainerBase(Properties properties) {
         super(properties);
     }
@@ -51,13 +51,13 @@ public abstract class BlockContainerBase extends ContainerBlock {
     public ActionResultType openGui(World world, PlayerEntity player, BlockPos pos, Class<? extends INamedContainerProvider> expectedInstance) {
         if (!world.isClientSide) {
             TileEntity tile = world.getBlockEntity(pos);
-            if (tile != null && tile.getClass().isInstance(expectedInstance)) {
+            if (expectedInstance.isInstance(tile)) {
                 NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) tile, pos);
             }
             return ActionResultType.SUCCESS;
         }
 
-        return ActionResultType.PASS;
+        return ActionResultType.SUCCESS;
     }
 
     private void dropInventory(World world, BlockPos position) {

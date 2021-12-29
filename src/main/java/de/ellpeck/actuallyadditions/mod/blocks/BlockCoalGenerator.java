@@ -26,6 +26,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
+import javax.annotation.Nullable;
 import java.util.Random;
 
 public class BlockCoalGenerator extends DirectionalBlock.Container {
@@ -34,7 +35,13 @@ public class BlockCoalGenerator extends DirectionalBlock.Container {
     }
 
     @Override
-    public TileEntity newBlockEntity(IBlockReader worldIn) {
+    public boolean hasTileEntity(BlockState state) {
+        return true;
+    }
+
+    @Nullable
+    @Override
+    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
         return new TileEntityCoalGenerator();
     }
 

@@ -36,7 +36,7 @@ public class BlockDisplayStand extends BlockContainerBase {
     }
 
     @Nullable
-    @Override
+    //@Override
     public TileEntity newBlockEntity(IBlockReader worldIn) {
         return new TileEntityDisplayStand();
     }

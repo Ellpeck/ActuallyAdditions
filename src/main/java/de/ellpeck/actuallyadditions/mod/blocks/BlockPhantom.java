@@ -80,7 +80,7 @@ public class BlockPhantom extends BlockContainerBase implements IHudDisplay {
         return this.type == Type.PLACER || this.type == Type.BREAKER;
     }
 
-    @Override
+    //@Override
     public TileEntity newBlockEntity(IBlockReader worldIn) {
         switch (this.type) {
             case PLACER:
