@@ -43,7 +43,7 @@ import javax.annotation.Nullable;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
 
-public class TileEntityCoalGenerator extends TileEntityInventoryBase implements INamedContainerProvider, ISharingEnergyProvider {
+public class TileEntityCoalGenerator extends TileEntityInventoryBase implements INamedContainerProvider, ISharingEnergyProvider, IEnergyDisplay {
 
     public final CustomEnergyStorage storage = new CustomEnergyStorage(60000, 0, 80);
     public final LazyOptional<IEnergyStorage> lazyEnergy = LazyOptional.of(() -> this.storage);
@@ -203,5 +203,15 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
     @Override
     public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity player) {
         return new ContainerCoalGenerator(windowId, playerInventory, this);
+    }
+
+    @Override
+    public CustomEnergyStorage getEnergyStorage() {
+        return storage;
+    }
+
+    @Override
+    public boolean needsHoldShift() {
+        return false;
     }
 }
