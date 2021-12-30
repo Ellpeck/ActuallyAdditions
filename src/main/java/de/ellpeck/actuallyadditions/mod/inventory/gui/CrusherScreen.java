@@ -58,6 +58,9 @@ public class CrusherScreen extends AAScreen<CrusherContainer> {
             this.buttonAutoSplit = new Buttons.SmallerButton( this.leftPos - 10, this.topPos, new StringTextComponent("S"), (button) -> actionPerformed(0));
             this.addButton(this.buttonAutoSplit);
         }
+
+        titleLabelX = (int) (imageWidth / 2.0f - font.width(title) / 2.0f);
+        titleLabelY = -10;
     }
 
     protected void actionPerformed(int id) {
@@ -86,11 +89,6 @@ public class CrusherScreen extends AAScreen<CrusherContainer> {
 
             drawString(matrixStack, font, new TranslationTextComponent("info.actuallyadditions.gui.autosplititems." + (tileGrinder.isAutoSplit?"on":"off")).withStyle(TextFormatting.BOLD), x , y, 0xffffff);
         }
-    }
-
-    @Override
-    public void renderLabels(@Nonnull MatrixStack matrices, int x, int y) {
-        AssetUtil.displayNameString(matrices, this.font, this.imageWidth, -10, this.tileGrinder);
     }
 
     @Override

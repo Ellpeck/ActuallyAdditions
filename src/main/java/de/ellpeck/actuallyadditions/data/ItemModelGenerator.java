@@ -2,6 +2,7 @@ package de.ellpeck.actuallyadditions.data;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
+import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.WallBlock;
@@ -10,6 +11,7 @@ import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
+import net.minecraftforge.client.model.generators.loaders.DynamicBucketModelBuilder;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.fml.RegistryObject;
 
@@ -36,7 +38,10 @@ public class ItemModelGenerator extends ItemModelProvider {
 
 
         // Blocks
-        ActuallyBlocks.BLOCKS.getEntries().forEach(this::registerBlockModel);
+        ActuallyBlocks.BLOCKS.getEntries().stream().filter(b -> !b.get().getRegistryName().getPath().contains("oil")).forEach(this::registerBlockModel);
+
+        withExistingParent(InitFluids.CANOLA_OIL.getBucket().getRegistryName().getPath(), "forge:item/bucket")
+            .customLoader((builder, template) -> DynamicBucketModelBuilder.begin(builder, template).fluid(InitFluids.CANOLA_OIL.get()));
     }
 
     private void registerBlockModel(RegistryObject<Block> block) {

@@ -90,8 +90,8 @@ public class CommonConfig {
 
             ELEVEN = BUILDER.comment("11?").defineInRange("whatIs11", 11, 0, 12);
 
-            REDSTONECONFIGURATOR = BUILDER.comment("define the item used to configure Redstone Mode").define("redstoneConfigurator", Items.REDSTONE_TORCH.getRegistryName().toString(), obj -> obj instanceof String && ResourceLocation.isValidResourceLocation((String) obj));
-            RELAYCONFIGURATOR = BUILDER.comment("define the item used to configure Direction in laser relays").define("relayConfigurator", Items.COMPASS.getRegistryName().toString(), obj -> obj instanceof String && ResourceLocation.isValidResourceLocation((String) obj));
+            REDSTONECONFIGURATOR = BUILDER.comment("define the item used to configure Redstone Mode").define("redstoneConfigurator", Items.REDSTONE_TORCH.getRegistryName().toString(), obj -> obj instanceof String);
+            RELAYCONFIGURATOR = BUILDER.comment("define the item used to configure Direction in laser relays").define("relayConfigurator", Items.COMPASS.getRegistryName().toString(), obj -> obj instanceof String);
 
             BUILDER.pop();
         }

@@ -47,11 +47,17 @@ public class BlockCrusher extends BlockContainerBase {
         this.registerDefaultState(getStateDefinition().any().setValue(HORIZONTAL_FACING, Direction.NORTH).setValue(LIT, false));
     }
 
-    //@Override
-    public TileEntity newBlockEntity(IBlockReader worldIn) {
+    @Nullable
+    @Override
+    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
         return this.isDouble
             ? new TileEntityCrusherDouble()
             : new TileEntityCrusher();
+    }
+
+    @Override
+    public boolean hasTileEntity(BlockState state) {
+        return true;
     }
 
     @Override

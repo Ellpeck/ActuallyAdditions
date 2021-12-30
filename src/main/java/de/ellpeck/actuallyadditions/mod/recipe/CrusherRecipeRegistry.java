@@ -10,6 +10,10 @@
 
 package de.ellpeck.actuallyadditions.mod.recipe;
 
+import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
+import de.ellpeck.actuallyadditions.mod.crafting.CrushingRecipe;
+import net.minecraft.item.ItemStack;
+
 public final class CrusherRecipeRegistry {
     //
     //    public static final ArrayList<SearchCase> SEARCH_CASES = new ArrayList<>();
@@ -103,11 +107,11 @@ public final class CrusherRecipeRegistry {
     //        return false;
     //    }
     //
-    //    public static CrusherRecipe getRecipeFromInput(ItemStack input) {
-    //        for (CrusherRecipe recipe : ActuallyAdditionsAPI.CRUSHER_RECIPES)
-    //            if (recipe.matches(input)) return recipe;
-    //        return null;
-    //    }
+    public static CrushingRecipe getRecipeFromInput(ItemStack input) {
+        for (CrushingRecipe recipe : ActuallyAdditionsAPI.CRUSHER_RECIPES)
+            if (recipe.matches(input)) return recipe;
+        return null;
+    }
     //
     //    public static class SearchCase {
     //

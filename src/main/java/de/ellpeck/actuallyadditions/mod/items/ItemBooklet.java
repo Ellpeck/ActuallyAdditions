@@ -73,6 +73,7 @@ public class ItemBooklet extends ItemBase implements IHudDisplay {
         return ActionResult.success(player.getItemInHand(hand));
     }
 
+    @OnlyIn(Dist.CLIENT)
     @Override
     public void appendHoverText(ItemStack stack, @Nullable World playerIn, List<ITextComponent> tooltip, ITooltipFlag advanced) {
         tooltip.add(new TranslationTextComponent("tooltip." + ActuallyAdditions.MODID + "." + this.getDescription().getString() + ".desc"));

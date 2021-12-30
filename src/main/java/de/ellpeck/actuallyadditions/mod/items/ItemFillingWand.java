@@ -33,6 +33,8 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -85,7 +87,7 @@ public class ItemFillingWand extends ItemEnergy {
 
         ItemStack stack = context.getPlayer().getItemInHand(context.getHand());
         if (!context.getLevel().isClientSide && context.getPlayer().getUseItemRemainingTicks() <= 0) {
-            if (context.getPlayer().isShiftKeyDown()) {
+            if (context.getPlayer().isCrouching()) {
                 BlockState state = context.getLevel().getBlockState(context.getClickedPos());
                 saveData(state, stack);
                 return ActionResultType.SUCCESS;
@@ -218,6 +220,7 @@ public class ItemFillingWand extends ItemEnergy {
         }
     }
 
+    @OnlyIn(Dist.CLIENT)
     @Override
     public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);

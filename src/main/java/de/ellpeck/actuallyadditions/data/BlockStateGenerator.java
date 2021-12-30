@@ -2,6 +2,7 @@ package de.ellpeck.actuallyadditions.data;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
+import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import net.minecraft.block.Block;
 import net.minecraft.block.SlabBlock;
 import net.minecraft.block.StairsBlock;
@@ -164,7 +165,6 @@ public class BlockStateGenerator extends BlockStateProvider {
         slabBlock((SlabBlock) ActuallyBlocks.BLACK_QUARTZ_BRICK_SLAB.get(), modLoc("block/black_quartz_brick_block"), modLoc("block/black_quartz_brick_block"));
         slabBlock((SlabBlock) ActuallyBlocks.ETHETIC_GREEN_SLAB.get(), modLoc("block/ethetic_green_block"), modLoc("block/ethetic_green_block"));
         slabBlock((SlabBlock) ActuallyBlocks.ETHETIC_WHITE_SLAB.get(), modLoc("block/ethetic_white_block"), modLoc("block/ethetic_white_block"));
-
     }
 
 

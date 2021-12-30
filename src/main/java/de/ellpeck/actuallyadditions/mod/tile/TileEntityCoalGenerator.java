@@ -118,7 +118,7 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
                 ItemStack stack = this.inv.getStackInSlot(0);
                 if (!stack.isEmpty()) {
                     for (SolidFuelRecipe fuelRecipe : ActuallyAdditionsAPI.SOLID_FUEL_RECIPES) {
-                        if (fuelRecipe.matches(new SingleItem(stack), null)) {
+                        if (fuelRecipe.matches(stack)) {
                             this.currentRecipe = fuelRecipe;
                             this.maxBurnTime = fuelRecipe.getBurnTime();
                             this.currentBurnTime = this.maxBurnTime;
@@ -151,9 +151,8 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
     @Override
     public IAcceptor getAcceptor() {
         return (slot, stack, automation) -> {
-            SingleItem singleItem = new SingleItem(stack);
             for (SolidFuelRecipe recipe : ActuallyAdditionsAPI.SOLID_FUEL_RECIPES) {
-                if (recipe.matches(singleItem, null))return true;
+                if (recipe.matches(stack))return true;
             }
             return false;
         };

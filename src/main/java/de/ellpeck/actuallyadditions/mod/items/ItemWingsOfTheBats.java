@@ -41,7 +41,7 @@ public class ItemWingsOfTheBats extends ItemBase {
         super(ActuallyItems.defaultProps().stacksTo(1));
 
         // TODO: Lets move this somewhere global. Don't like event logic in a single place.
-        MinecraftForge.EVENT_BUS.register(this);
+        //MinecraftForge.EVENT_BUS.register(this);
     }
 
     /**
@@ -67,23 +67,23 @@ public class ItemWingsOfTheBats extends ItemBase {
 
     @Override
     public double getDurabilityForDisplay(ItemStack stack) {
-        PlayerEntity player = ClientProxy.getCurrentPlayer();
+/*        PlayerEntity player = ClientProxy.getCurrentPlayer();
         if (player != null) {
 //            PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(player);
             double diff = MAX_FLY_TIME - 1;//data.batWingsFlyTime; // TODO: fix me
             return 1 - diff / MAX_FLY_TIME;
-        }
+        }*/ //TODO
         return super.getDurabilityForDisplay(stack);
     }
 
     @Override
     public int getRGBDurabilityForDisplay(ItemStack stack) {
-        PlayerEntity player = ClientProxy.getCurrentPlayer();
+/*        PlayerEntity player = ClientProxy.getCurrentPlayer();
         if (player != null) {
 //            PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(player);
             int curr = 1;//data.batWingsFlyTime; // TODO: fix me
             return MathHelper.hsvToRgb(Math.max(0.0F, 1 - (float) curr / MAX_FLY_TIME) / 3.0F, 1.0F, 1.0F);
-        }
+        }*/
         return super.getRGBDurabilityForDisplay(stack);
     }
 

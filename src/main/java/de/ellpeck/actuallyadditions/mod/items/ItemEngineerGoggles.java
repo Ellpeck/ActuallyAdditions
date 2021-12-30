@@ -40,7 +40,7 @@ public class ItemEngineerGoggles extends ItemArmorAA implements IGoggles {
         super(ArmorMaterials.GOGGLES, EquipmentSlotType.HEAD, ActuallyItems.defaultProps().setNoRepair().durability(0));
         this.displayMobs = displayMobs;
 
-        MinecraftForge.EVENT_BUS.register(this);
+        //MinecraftForge.EVENT_BUS.register(this);
     }
 
     public static boolean isWearing(PlayerEntity player) {
@@ -51,7 +51,7 @@ public class ItemEngineerGoggles extends ItemArmorAA implements IGoggles {
     @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
     public void onClientTick(TickEvent.ClientTickEvent event) {
-        PlayerEntity player = ClientProxy.getCurrentPlayer();
+ /*       PlayerEntity player = ClientProxy.getCurrentPlayer();
         if (player != null && isWearing(player)) {
             ItemStack face = player.inventory.armor.get(3);
             if (((IGoggles) face.getItem()).displaySpectralMobs()) {
@@ -85,7 +85,7 @@ public class ItemEngineerGoggles extends ItemArmorAA implements IGoggles {
                 }
             }
             this.cachedGlowingEntities.clear();
-        }
+        }*/
     }
 
     @Override

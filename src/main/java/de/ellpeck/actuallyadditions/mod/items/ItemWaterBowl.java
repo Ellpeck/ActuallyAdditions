@@ -40,7 +40,7 @@ public class ItemWaterBowl extends ItemBase {
 
     public ItemWaterBowl() {
         super(ActuallyItems.defaultProps().stacksTo(1));
-        MinecraftForge.EVENT_BUS.register(this);
+        //MinecraftForge.EVENT_BUS.register(this);
     }
 
     @SubscribeEvent

@@ -35,7 +35,7 @@ public class ItemWorm extends ItemBase {
 
     public ItemWorm() {
         super();
-        MinecraftForge.EVENT_BUS.register(this);
+        //MinecraftForge.EVENT_BUS.register(this);
 
         // TODO: [port] Not sure what this does
         //        this.addPropertyOverride(new ResourceLocation(ActuallyAdditions.MODID, "snail"), (IItemPropertyGetter) (stack, world, entity) -> "snail mail".equalsIgnoreCase(stack.getDisplayName().getString())

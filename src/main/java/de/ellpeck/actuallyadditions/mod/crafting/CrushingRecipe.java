@@ -48,8 +48,12 @@ public class CrushingRecipe implements IRecipe<IInventory> {
     }
 
     @Override
-    public boolean matches(IInventory pInv, @Nonnull World pLevel) {
+    public boolean matches(IInventory pInv, World pLevel) {
         return input.test(pInv.getItem(0));
+    }
+
+    public boolean matches (ItemStack stack) {
+        return input.test(stack);
     }
 
     @Override

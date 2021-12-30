@@ -37,8 +37,12 @@ public class SolidFuelRecipe implements IRecipe<SingleItem> {
     }
 
     @Override
-    public boolean matches(SingleItem pInv, @Nullable World pLevel) {
+    public boolean matches(SingleItem pInv, World pLevel) {
         return itemIngredient.test(pInv.getItem());
+    }
+
+    public boolean matches(ItemStack stack) {
+        return this.itemIngredient.test(stack);
     }
 
     @Override

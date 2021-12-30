@@ -36,7 +36,7 @@ public class ItemHairBall extends ItemBase {
         super();
 
         // TODO: [port] move this.
-        MinecraftForge.EVENT_BUS.register(this);
+        //MinecraftForge.EVENT_BUS.register(this);
     }
 
     @SubscribeEvent

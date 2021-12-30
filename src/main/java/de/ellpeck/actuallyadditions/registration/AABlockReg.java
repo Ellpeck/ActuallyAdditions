@@ -15,10 +15,9 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class AABlockReg<B extends Block, I extends Item, T extends TileEntity> implements Supplier<Block> {
-//public class AABlock implements Supplier<Block> {
     private final String name;
-    private final RegistryObject<B> block;
-    private final RegistryObject<I> item;
+    private RegistryObject<B> block;
+    private RegistryObject<I> item;
     private RegistryObject<TileEntityType<T>> tileEntityType;
 
     public AABlockReg(String name, Supplier<B> blockSupplier, Function<B, I> itemSupplier, Supplier<T> tileSupplier) {

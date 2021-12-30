@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.mod.crafting.CrushingRecipe;
 import de.ellpeck.actuallyadditions.mod.inventory.CrusherContainer;
 import de.ellpeck.actuallyadditions.mod.misc.SoundHandler;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
+import de.ellpeck.actuallyadditions.mod.recipe.CrusherRecipeRegistry;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
@@ -31,6 +32,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 
@@ -216,7 +218,7 @@ public class TileEntityCrusher extends TileEntityInventoryBase implements IButto
     }
 
     public void finishCrushing(int theInput, int theFirstOutput, int theSecondOutput) {
-        CrushingRecipe recipe = null; //CrusherRecipeRegistry.getRecipeFromInput(this.inv.getStackInSlot(theInput));//TODO
+        CrushingRecipe recipe = CrusherRecipeRegistry.getRecipeFromInput(this.inv.getStackInSlot(theInput));//TODO
         if (recipe == null) {
             return;
         }
@@ -281,7 +283,7 @@ public class TileEntityCrusher extends TileEntityInventoryBase implements IButto
 
     @Override
     public ITextComponent getDisplayName() {
-        return StringTextComponent.EMPTY;
+        return new TranslationTextComponent("container.actuallyadditions.crusher");
     }
 
     @Nullable

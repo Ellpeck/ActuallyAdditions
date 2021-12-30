@@ -42,6 +42,8 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.event.AddReloadListenerEvent;
@@ -76,6 +78,7 @@ public class ActuallyAdditions {
     //    public static final boolean DEOBF = (boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
 
     public static final ItemGroup GROUP = new ItemGroup(MODID) {
+        @OnlyIn(Dist.CLIENT)
         @Override
         public ItemStack makeIcon() {
             return new ItemStack(ActuallyItems.ITEM_BOOKLET.get());

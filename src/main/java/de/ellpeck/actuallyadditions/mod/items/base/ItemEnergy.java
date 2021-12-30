@@ -67,6 +67,7 @@ public abstract class ItemEnergy extends ItemBase {
     //    }
 
 
+    @OnlyIn(Dist.CLIENT)
     @Override
     public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
@@ -77,7 +78,6 @@ public abstract class ItemEnergy extends ItemBase {
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
     public boolean isFoil(ItemStack stack) {
         return false;
     }
@@ -112,11 +112,9 @@ public abstract class ItemEnergy extends ItemBase {
 
     @Override
     public int getRGBDurabilityForDisplay(ItemStack stack) {
-        PlayerEntity player = ClientProxy.getCurrentPlayer();
-        if (player != null && player.level != null) {
-            float[] color = AssetUtil.getWheelColor(player.level.getGameTime() % 256);
-            return MathHelper.color(color[0] / 255F, color[1] / 255F, color[2] / 255F);
-        }
+        //float[] color = MathHelper.hsvToRgb(1, 1, 1);
+        //float[] color = AssetUtil.getWheelColor(player.level.getGameTime() % 256);
+        //return MathHelper.color(color[0] / 255F, color[1] / 255F, color[2] / 255F);
         return super.getRGBDurabilityForDisplay(stack);
     }
 

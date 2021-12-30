@@ -36,7 +36,7 @@ public class ItemSolidifiedExperience extends ItemBase {
         super();
 
         // TODO: [port] move this to another place
-        MinecraftForge.EVENT_BUS.register(this);
+        //MinecraftForge.EVENT_BUS.register(this);
     }
 
     @SubscribeEvent

@@ -127,7 +127,7 @@ public final class WorldUtil {
                     int drain = from.extractEnergy(maxTransfer, true);
                     if (drain > 0) {
                         int filled = to.receiveEnergy(drain, false);
-                        to.extractEnergy(filled, false);
+                        from.extractEnergy(filled, false);
                     }
                 });
             });

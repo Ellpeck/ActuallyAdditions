@@ -21,10 +21,10 @@ public final class InitFluids {
     public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(ForgeRegistries.FLUIDS, ActuallyAdditions.MODID);
     public static final DeferredRegister<Block> FLUID_BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, ActuallyAdditions.MODID);
 
-    public static final FluidAA CANOLA_OIL = new FluidAA("canolaoil", "canolaoil");
-    public static final FluidAA REFINED_CANOLA_OIL = new FluidAA("refinedcanolaoil", "refinedcanolaoil");
-    public static final FluidAA CRYSTALIZED_OIL = new FluidAA("crystaloil", "crystaloil");
-    public static final FluidAA EMPOWERED_OIL = new FluidAA("empoweredoil", "empoweredoil");
+    public static final FluidAA CANOLA_OIL = new FluidAA("canola_oil", "canola_oil");
+    public static final FluidAA REFINED_CANOLA_OIL = new FluidAA("refined_canola_oil", "refined_canola_oil");
+    public static final FluidAA CRYSTALIZED_OIL = new FluidAA("crystal_oil", "crystal_oil");
+    public static final FluidAA EMPOWERED_OIL = new FluidAA("empowered_oil", "empowered_oil");
 
 
     public static void init(IEventBus bus) {

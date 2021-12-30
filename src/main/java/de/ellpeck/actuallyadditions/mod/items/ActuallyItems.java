@@ -24,6 +24,7 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTier;
+import net.minecraft.item.Items;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
@@ -95,7 +96,7 @@ public final class ActuallyItems {
     public static final RegistryObject<Item> ENGINEERS_GOGGLES = ITEMS.register("engineers_goggles", () -> new ItemEngineerGoggles(false));
     public static final RegistryObject<Item> LASER_UPGRADE_RANGE = ITEMS.register("laser_upgrade_range", ItemBase::new);
     public static final RegistryObject<Item> LASER_UPGRADE_INVISIBILITY = ITEMS.register("laser_upgrade_invisibility", ItemBase::new);
-    public static final RegistryObject<Item> HANDHELD_FILLER = ITEMS.register("handheld_filler", ItemFillingWand::new);
+    public static final Supplier<Item> HANDHELD_FILLER = ITEMS.register("handheld_filler", ItemFillingWand::new);
     public static final RegistryObject<Item> TRAVELERS_SACK = ITEMS.register("travelers_sack", () -> new ItemBag(false));
     public static final RegistryObject<Item> VOID_SACK = ITEMS.register("void_sack", () -> new ItemBag(true));
     public static final RegistryObject<Item> WORM = ITEMS.register("worm", ItemWorm::new);
@@ -278,7 +279,7 @@ public final class ActuallyItems {
     public static final RegistryObject<Item> ENORI_BOOTS = ITEMS.register("enori_boots", () -> new ItemArmorAA(ArmorMaterials.ENORI, EquipmentSlotType.FEET));
     public static final RegistryObject<Item> ENORI_AIOT = ITEMS.register("enori_aiot", () -> new AllInOneTool(ToolMaterials.ENORI));
 
-    public static final Set<RegistryObject<Item>> SIMPLE_ITEMS = ImmutableSet.of(
+    public static final Set<Supplier<Item>> SIMPLE_ITEMS = ImmutableSet.of(
         // Crystals
         BLACK_QUARTZ, RESTONIA_CRYSTAL, PALIS_CRYSTAL, DIAMATINE_CRYSTAL,
         VOID_CRYSTAL, EMERADIC_CRYSTAL, ENORI_CRYSTAL, EMPOWERED_RESTONIA_CRYSTAL,
