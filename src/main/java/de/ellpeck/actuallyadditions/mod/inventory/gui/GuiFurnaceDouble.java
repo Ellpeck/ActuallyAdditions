@@ -12,19 +12,25 @@ package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFurnaceDouble;
+import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityPoweredFurnace;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.client.gui.GuiUtils;
 
 import javax.annotation.Nonnull;
+import java.util.Collections;
 
 @OnlyIn(Dist.CLIENT)
 public class GuiFurnaceDouble extends AAScreen<ContainerFurnaceDouble> {
@@ -47,20 +53,21 @@ public class GuiFurnaceDouble extends AAScreen<ContainerFurnaceDouble> {
         super.render(matrices, x, y, f);
         this.energy.render(matrices, x, y);
 
-//        if (this.buttonAutoSplit.isMouseOver(x, y)) {
-//            this.drawHoveringText(Collections.singletonList(TextFormatting.BOLD + (this.tileFurnace.isAutoSplit
-//                ? StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.autoSplitItems.on")
-//                : StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.autoSplitItems.off"))), x, y);
-//        }
+        if (this.buttonAutoSplit.isMouseOver(x, y)) {
+            GuiUtils.drawHoveringText(matrices, Collections.singletonList(this.tileFurnace.isAutoSplit
+                ? new TranslationTextComponent("info." + ActuallyAdditions.MODID + ".gui.autoSplitItems.on").withStyle(TextFormatting.BOLD)
+                : new TranslationTextComponent("info." + ActuallyAdditions.MODID + ".gui.autoSplitItems.off").withStyle(TextFormatting.BOLD)), x, y, this.width, this.height, 64, font);
+        }
     }
 
     @Override
     public void init() {
         super.init();
         this.energy = new EnergyDisplay(this.leftPos + 27, this.topPos + 5, this.tileFurnace.storage);
-
-//        this.buttonAutoSplit = new GuiInputter.SmallerButton(0, this.leftPos, this.topPos, "S");
-//        this.addButton(this.buttonAutoSplit);
+        titleLabelX = (int) (imageWidth / 2.0f - font.width(title) / 2.0f);
+        titleLabelY = -10;
+        this.buttonAutoSplit = new Buttons.SmallerButton(this.leftPos, this.topPos, new StringTextComponent("S"), (button) -> PacketHandlerHelper.sendButtonPacket(this.tileFurnace, 0));
+        this.addButton(this.buttonAutoSplit);
     }
 
 
@@ -79,11 +86,6 @@ public class GuiFurnaceDouble extends AAScreen<ContainerFurnaceDouble> {
 //            PacketHandlerHelper.sendButtonPacket(this.tileFurnace, button.id);
 //        }
 //    }
-
-    @Override
-    public void renderLabels(@Nonnull MatrixStack matrices, int x, int y) {
-        AssetUtil.displayNameString(matrices, this.font, this.imageWidth, -10, this.tileFurnace);
-    }
 
     @Override
     public void renderBg(MatrixStack matrices, float f, int x, int y) {

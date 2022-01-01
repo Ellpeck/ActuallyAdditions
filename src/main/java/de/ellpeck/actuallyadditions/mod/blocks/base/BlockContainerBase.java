@@ -272,7 +272,7 @@ public abstract class BlockContainerBase extends Block {
 
     @Override
     public void onRemove(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (state != newState) {
+        if (state.getBlock() != newState.getBlock()) {
             if (this.shouldDropInventory(world, pos)) {
                 this.dropInventory(world, pos);
             }

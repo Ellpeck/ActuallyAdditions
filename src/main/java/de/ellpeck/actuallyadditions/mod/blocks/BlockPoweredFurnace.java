@@ -14,6 +14,7 @@ import static net.minecraft.state.properties.BlockStateProperties.HORIZONTAL_FAC
 import static net.minecraft.state.properties.BlockStateProperties.LIT;
 
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
+import de.ellpeck.actuallyadditions.mod.blocks.base.DirectionalBlock;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityPoweredFurnace;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -33,9 +34,10 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
+import javax.annotation.Nullable;
 import java.util.Random;
 
-public class BlockPoweredFurnace extends BlockContainerBase {
+public class BlockPoweredFurnace extends DirectionalBlock.Container {
     public BlockPoweredFurnace() {
         // TODO: [port] confirm this is correct for light level... Might not be reactive.
         super(ActuallyBlocks.defaultPickProps(0).randomTicks().lightLevel(state -> state.getValue(LIT)
@@ -45,9 +47,15 @@ public class BlockPoweredFurnace extends BlockContainerBase {
         registerDefaultState(getStateDefinition().any().setValue(HORIZONTAL_FACING, Direction.NORTH).setValue(LIT, false));
     }
 
-    //@Override
-    public TileEntity newBlockEntity(IBlockReader worldIn) {
+    @Nullable
+    @Override
+    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
         return new TileEntityPoweredFurnace();
+    }
+
+    @Override
+    public boolean hasTileEntity(BlockState state) {
+        return true;
     }
 
     @Override
@@ -58,6 +66,8 @@ public class BlockPoweredFurnace extends BlockContainerBase {
             }
         }
     }
+
+
 
     @Override
     public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {

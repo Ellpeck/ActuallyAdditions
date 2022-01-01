@@ -21,14 +21,18 @@ import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
+import net.minecraft.util.datafix.fixes.FurnaceRecipes;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -179,7 +183,7 @@ public class TileEntityPoweredFurnace extends TileEntityInventoryBase implements
 
     @Override
     public IAcceptor getAcceptor() {
-        return (slot, stack, automation) -> !automation || (slot == SLOT_INPUT_1 || slot == SLOT_INPUT_2); //&& StackUtil.isValid(FurnaceRecipes.instance().getSmeltingResult(stack)); //TODO
+        return (slot, stack, automation) -> !automation || (slot == SLOT_INPUT_1 || slot == SLOT_INPUT_2) && StackUtil.isValid(level.getServer().getRecipeManager().getRecipeFor(IRecipeType.SMELTING, new Inventory(stack), this.level).map(recipe -> recipe.getResultItem()).orElse(ItemStack.EMPTY));
     }
 
     @Override
@@ -189,7 +193,7 @@ public class TileEntityPoweredFurnace extends TileEntityInventoryBase implements
 
     public boolean canSmeltOn(int theInput, int theOutput) {
         if (StackUtil.isValid(this.inv.getStackInSlot(theInput))) {
-            ItemStack output = ItemStack.EMPTY; //FurnaceRecipes.instance().getSmeltingResult(this.inv.getStackInSlot(theInput)); //TODO
+            ItemStack output = level.getServer().getRecipeManager().getRecipeFor(IRecipeType.SMELTING, new Inventory(this.inv.getStackInSlot(theInput)), this.level).map(recipe -> recipe.getResultItem()).orElse(ItemStack.EMPTY);
             if (StackUtil.isValid(output)) {
                 if (!StackUtil.isValid(this.inv.getStackInSlot(theOutput)) || this.inv.getStackInSlot(theOutput).sameItem(output) && this.inv.getStackInSlot(theOutput).getCount() <= this.inv.getStackInSlot(theOutput).getMaxStackSize() - output.getCount()) {
                     return true;
@@ -201,7 +205,7 @@ public class TileEntityPoweredFurnace extends TileEntityInventoryBase implements
     }
 
     public void finishBurning(int theInput, int theOutput) {
-        ItemStack output = ItemStack.EMPTY; //FurnaceRecipe.instance().getSmeltingResult(this.inv.getStackInSlot(theInput)); //TODO
+        ItemStack output = level.getServer().getRecipeManager().getRecipeFor(IRecipeType.SMELTING, new Inventory(this.inv.getStackInSlot(theInput)), this.level).map(recipe -> recipe.getResultItem()).orElse(ItemStack.EMPTY);
         if (!StackUtil.isValid(this.inv.getStackInSlot(theOutput))) {
             this.inv.setStackInSlot(theOutput, output.copy());
         } else if (this.inv.getStackInSlot(theOutput).getItem() == output.getItem()) {
@@ -234,7 +238,7 @@ public class TileEntityPoweredFurnace extends TileEntityInventoryBase implements
 
     @Override
     public ITextComponent getDisplayName() {
-        return StringTextComponent.EMPTY;
+        return new TranslationTextComponent("container.actuallyadditions.furnaceDouble");
     }
 
     @Nullable
