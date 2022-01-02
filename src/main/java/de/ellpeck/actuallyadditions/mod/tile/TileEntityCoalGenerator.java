@@ -103,7 +103,7 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
     @Override
     public void updateEntity() {
         super.updateEntity();
-        if (!this.level.isClientSide) {
+        if (!level.isClientSide) {
             boolean flag = this.currentBurnTime > 0;
 
             if (this.currentBurnTime > 0 && currentRecipe != null) {
@@ -117,16 +117,14 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
             if (!this.isRedstonePowered && this.currentBurnTime <= 0 && this.storage.getEnergyStored() < this.storage.getMaxEnergyStored()) {
                 ItemStack stack = this.inv.getStackInSlot(0);
                 if (!stack.isEmpty()) {
-                    for (SolidFuelRecipe fuelRecipe : ActuallyAdditionsAPI.SOLID_FUEL_RECIPES) {
-                        if (fuelRecipe.matches(stack)) {
-                            this.currentRecipe = fuelRecipe;
-                            this.maxBurnTime = fuelRecipe.getBurnTime();
-                            this.currentBurnTime = this.maxBurnTime;
-                            this.inv.setStackInSlot(0, StackUtil.shrinkForContainer(stack, 1));
-                            break;
-                        }
-                    }
-                }
+                    ActuallyAdditionsAPI.SOLID_FUEL_RECIPES.stream().filter(r -> r.matches(stack)).findFirst().ifPresent(recipe -> {
+                        this.currentRecipe = recipe;
+                        this.maxBurnTime = recipe.getBurnTime();
+                        this.currentBurnTime = this.maxBurnTime;
+                        this.inv.setStackInSlot(0, StackUtil.shrinkForContainer(stack, 1));
+                    });
+                } else
+                    this.currentRecipe = null;
             }
 
             if (flag != this.currentBurnTime > 0 || this.lastCompare != this.getComparatorStrength()) {

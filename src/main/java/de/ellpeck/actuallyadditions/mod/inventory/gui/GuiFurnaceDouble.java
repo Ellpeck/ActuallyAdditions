@@ -30,6 +30,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.client.gui.GuiUtils;
 
 import javax.annotation.Nonnull;
+import javax.xml.soap.Text;
 import java.util.Collections;
 
 @OnlyIn(Dist.CLIENT)
@@ -67,6 +68,7 @@ public class GuiFurnaceDouble extends AAScreen<ContainerFurnaceDouble> {
         titleLabelX = (int) (imageWidth / 2.0f - font.width(title) / 2.0f);
         titleLabelY = -10;
         this.buttonAutoSplit = new Buttons.SmallerButton(this.leftPos, this.topPos, new StringTextComponent("S"), (button) -> PacketHandlerHelper.sendButtonPacket(this.tileFurnace, 0));
+        buttonAutoSplit.setFGColor(this.tileFurnace.isAutoSplit ? TextFormatting.DARK_GREEN.getColor() : TextFormatting.RED.getColor());
         this.addButton(this.buttonAutoSplit);
     }
 
@@ -74,21 +76,11 @@ public class GuiFurnaceDouble extends AAScreen<ContainerFurnaceDouble> {
     @Override
     public void tick() {
         super.tick();
-
-        this.buttonAutoSplit.setMessage(new StringTextComponent("S").withStyle(this.tileFurnace.isAutoSplit
-            ? TextFormatting.DARK_GREEN
-            : TextFormatting.RED));
+        buttonAutoSplit.setFGColor(this.tileFurnace.isAutoSplit ? TextFormatting.DARK_GREEN.getColor() : TextFormatting.RED.getColor());
     }
 
-//    @Override
-//    protected void actionPerformed(Button button) throws IOException {
-//        if (button.id == 0) {
-//            PacketHandlerHelper.sendButtonPacket(this.tileFurnace, button.id);
-//        }
-//    }
-
     @Override
-    public void renderBg(MatrixStack matrices, float f, int x, int y) {
+    public void renderBg(@Nonnull MatrixStack matrices, float f, int x, int y) {
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 
         this.getMinecraft().getTextureManager().bind(AssetUtil.GUI_INVENTORY_LOCATION);

@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory;
 
+import de.ellpeck.actuallyadditions.mod.crafting.SingleItem;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotOutput;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityPoweredFurnace;
@@ -24,6 +25,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.network.PacketBuffer;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 
 public class ContainerFurnaceDouble extends Container {
@@ -53,8 +55,9 @@ public class ContainerFurnaceDouble extends Container {
         return new ContainerFurnaceDouble(windowId, inv, (TileEntityPoweredFurnace) Objects.requireNonNull(inv.player.level.getBlockEntity(data.readBlockPos())));
     }
 
+    @Nonnull
     @Override
-    public ItemStack quickMoveStack(PlayerEntity player, int slot) {
+    public ItemStack quickMoveStack(@Nonnull PlayerEntity player, int slot) {
         int inventoryStart = 4;
         int inventoryEnd = inventoryStart + 26;
         int hotbarStart = inventoryEnd + 1;
@@ -76,7 +79,7 @@ public class ContainerFurnaceDouble extends Container {
             //Other Slots in Inventory excluded
             else if (slot >= inventoryStart) {
                 // TODO: VALIDATE
-                IRecipe<?> irecipe = this.furnace.getLevel().getRecipeManager().getRecipeFor(IRecipeType.SMELTING, new Inventory(newStack), this.furnace.getLevel()).orElse(null);
+                IRecipe<?> irecipe = this.furnace.getLevel().getRecipeManager().getRecipeFor(IRecipeType.SMELTING, new SingleItem(newStack), this.furnace.getLevel()).orElse(null);
                 if (irecipe == null) {
                     return StackUtil.getEmpty();
                 }
@@ -121,7 +124,7 @@ public class ContainerFurnaceDouble extends Container {
     }
 
     @Override
-    public boolean stillValid(PlayerEntity player) {
+    public boolean stillValid(@Nonnull PlayerEntity player) {
         return this.furnace.canPlayerUse(player);
     }
 }

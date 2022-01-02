@@ -76,7 +76,7 @@ public class BlockPoweredFurnace extends DirectionalBlock.Container {
 
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
-        return defaultBlockState().setValue(HORIZONTAL_FACING, context.getNearestLookingDirection().getOpposite()).setValue(LIT, false);
+        return defaultBlockState().setValue(HORIZONTAL_FACING, context.getHorizontalDirection().getOpposite()).setValue(LIT, false);
     }
 
     @Override

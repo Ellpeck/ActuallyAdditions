@@ -22,7 +22,7 @@ public abstract class DirectionalBlock extends BlockBase {
 
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
-        return this.defaultBlockState().setValue(FACING, context.getNearestLookingDirection().getOpposite());
+        return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
     }
 
     @Override
@@ -41,7 +41,7 @@ public abstract class DirectionalBlock extends BlockBase {
 
         @Override
         public BlockState getStateForPlacement(BlockItemUseContext context) {
-            return this.defaultBlockState().setValue(FACING, context.getNearestLookingDirection().getOpposite());
+            return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
         }
 
         @Override

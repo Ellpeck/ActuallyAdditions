@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
+import de.ellpeck.actuallyadditions.mod.crafting.SingleItem;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFurnaceDouble;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
@@ -25,6 +26,7 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.AbstractCookingRecipe;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -37,6 +39,7 @@ import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class TileEntityPoweredFurnace extends TileEntityInventoryBase implements IButtonReactor, INamedContainerProvider {
@@ -183,7 +186,7 @@ public class TileEntityPoweredFurnace extends TileEntityInventoryBase implements
 
     @Override
     public IAcceptor getAcceptor() {
-        return (slot, stack, automation) -> !automation || (slot == SLOT_INPUT_1 || slot == SLOT_INPUT_2) && StackUtil.isValid(level.getServer().getRecipeManager().getRecipeFor(IRecipeType.SMELTING, new Inventory(stack), this.level).map(recipe -> recipe.getResultItem()).orElse(ItemStack.EMPTY));
+        return (slot, stack, automation) -> !automation || (slot == SLOT_INPUT_1 || slot == SLOT_INPUT_2) && StackUtil.isValid(level.getServer().getRecipeManager().getRecipeFor(IRecipeType.SMELTING, new SingleItem(stack), this.level).map(AbstractCookingRecipe::getResultItem).orElse(ItemStack.EMPTY));
     }
 
     @Override
@@ -193,19 +196,16 @@ public class TileEntityPoweredFurnace extends TileEntityInventoryBase implements
 
     public boolean canSmeltOn(int theInput, int theOutput) {
         if (StackUtil.isValid(this.inv.getStackInSlot(theInput))) {
-            ItemStack output = level.getServer().getRecipeManager().getRecipeFor(IRecipeType.SMELTING, new Inventory(this.inv.getStackInSlot(theInput)), this.level).map(recipe -> recipe.getResultItem()).orElse(ItemStack.EMPTY);
+            ItemStack output = level.getServer().getRecipeManager().getRecipeFor(IRecipeType.SMELTING, new Inventory(this.inv.getStackInSlot(theInput)), this.level).map(AbstractCookingRecipe::getResultItem).orElse(ItemStack.EMPTY);
             if (StackUtil.isValid(output)) {
-                if (!StackUtil.isValid(this.inv.getStackInSlot(theOutput)) || this.inv.getStackInSlot(theOutput).sameItem(output) && this.inv.getStackInSlot(theOutput).getCount() <= this.inv.getStackInSlot(theOutput).getMaxStackSize() - output.getCount()) {
-                    return true;
-                }
+                return !StackUtil.isValid(this.inv.getStackInSlot(theOutput)) || this.inv.getStackInSlot(theOutput).sameItem(output) && this.inv.getStackInSlot(theOutput).getCount() <= this.inv.getStackInSlot(theOutput).getMaxStackSize() - output.getCount();
             }
-
         }
         return false;
     }
 
     public void finishBurning(int theInput, int theOutput) {
-        ItemStack output = level.getServer().getRecipeManager().getRecipeFor(IRecipeType.SMELTING, new Inventory(this.inv.getStackInSlot(theInput)), this.level).map(recipe -> recipe.getResultItem()).orElse(ItemStack.EMPTY);
+        ItemStack output = level.getServer().getRecipeManager().getRecipeFor(IRecipeType.SMELTING, new Inventory(this.inv.getStackInSlot(theInput)), this.level).map(AbstractCookingRecipe::getResultItem).orElse(ItemStack.EMPTY);
         if (!StackUtil.isValid(this.inv.getStackInSlot(theOutput))) {
             this.inv.setStackInSlot(theOutput, output.copy());
         } else if (this.inv.getStackInSlot(theOutput).getItem() == output.getItem()) {
@@ -236,6 +236,7 @@ public class TileEntityPoweredFurnace extends TileEntityInventoryBase implements
         return this.lazyEnergy;
     }
 
+    @Nonnull
     @Override
     public ITextComponent getDisplayName() {
         return new TranslationTextComponent("container.actuallyadditions.furnaceDouble");
@@ -243,7 +244,7 @@ public class TileEntityPoweredFurnace extends TileEntityInventoryBase implements
 
     @Nullable
     @Override
-    public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity player) {
+    public Container createMenu(int windowId, @Nonnull PlayerInventory playerInventory, @Nonnull PlayerEntity player) {
         return new ContainerFurnaceDouble(windowId, playerInventory, this);
     }
 }
