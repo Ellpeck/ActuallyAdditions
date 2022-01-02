@@ -33,7 +33,7 @@ public final class PacketHandlerHelper {
         compound.putInt("X", pos.getX());
         compound.putInt("Y", pos.getY());
         compound.putInt("Z", pos.getZ());
-        compound.putString("WorldID", tile.getLevel().dimension().getRegistryName().toString());
+        compound.putString("WorldID", tile.getLevel().dimension().location().toString());
         compound.putInt("PlayerID", Minecraft.getInstance().player.getId());
         compound.putInt("ButtonID", buttonId);
         PacketHandler.THE_NETWORK.sendToServer(new PacketClientToServer(compound, PacketHandler.GUI_BUTTON_TO_TILE_HANDLER));
