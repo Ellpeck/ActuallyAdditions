@@ -15,12 +15,15 @@ import de.ellpeck.actuallyadditions.mod.blocks.render.*;
 import de.ellpeck.actuallyadditions.mod.entity.InitEntities;
 import de.ellpeck.actuallyadditions.mod.entity.RenderWorm;
 import de.ellpeck.actuallyadditions.mod.event.ClientEvents;
+import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.inventory.ActuallyContainers;
 import de.ellpeck.actuallyadditions.mod.inventory.gui.*;
 import de.ellpeck.actuallyadditions.mod.misc.special.SpecialRenderInit;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.network.play.ClientPlayNetHandler;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.network.play.client.CPlayerDiggingPacket;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -64,6 +67,18 @@ public class ActuallyAdditionsClient {
         setupSpecialRenders();
 
         RenderWorm.fixItemStack();// todo: remove
+        setupRenderLayers();
+    }
+
+    private static void setupRenderLayers() {
+        RenderTypeLookup.setRenderLayer(InitFluids.CANOLA_OIL.get(), RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(InitFluids.CANOLA_OIL.getFlowing(), RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(InitFluids.REFINED_CANOLA_OIL.get(), RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(InitFluids.REFINED_CANOLA_OIL.getFlowing(), RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(InitFluids.CRYSTALIZED_OIL.get(), RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(InitFluids.CRYSTALIZED_OIL.getFlowing(), RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(InitFluids.EMPOWERED_OIL.get(), RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(InitFluids.EMPOWERED_OIL.getFlowing(), RenderType.translucent());
     }
 
     private static void setupSpecialRenders() {

@@ -1,0 +1,8 @@
+{
+  "type": "actuallyadditions:solid_fuel",
+  "item": {
+    "tag": "actuallyadditions:tiny_coals"
+  },
+  "total_energy": 6000,
+  "burn_time": 200
+}

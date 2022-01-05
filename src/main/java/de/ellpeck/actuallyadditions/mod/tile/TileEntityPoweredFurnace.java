@@ -239,7 +239,7 @@ public class TileEntityPoweredFurnace extends TileEntityInventoryBase implements
     @Nonnull
     @Override
     public ITextComponent getDisplayName() {
-        return new TranslationTextComponent("container.actuallyadditions.furnaceDouble");
+        return new TranslationTextComponent("container.actuallyadditions.powered_furnace");
     }
 
     @Nullable

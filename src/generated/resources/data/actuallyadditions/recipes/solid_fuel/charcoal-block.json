@@ -1,0 +1,8 @@
+{
+  "type": "actuallyadditions:solid_fuel",
+  "item": {
+    "item": "actuallyadditions:charcoal_block"
+  },
+  "total_energy": 480000,
+  "burn_time": 16000
+}

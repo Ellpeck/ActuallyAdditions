@@ -42,7 +42,7 @@ public class FluidAA implements Supplier<Fluid> {
 
     public FluidAA(String fluidName, String textureName) {
         name = fluidName;
-        ForgeFlowingFluid.Properties props = makeProperties(textureName, fluidBlock, source, flowing, bucket);
+        ForgeFlowingFluid.Properties props = makeProperties(textureName, () -> fluidBlock.get(), () -> source.get(), () -> flowing.get(), () -> bucket.get());
         source = InitFluids.FLUIDS.register(name, () ->  new ForgeFlowingFluid.Source(props));
         flowing = InitFluids.FLUIDS.register(name + "_flowing", () -> new ForgeFlowingFluid.Flowing(props));
         fluidBlock = ActuallyBlocks.BLOCKS.register(name, () -> new FlowingFluidBlock(source, AbstractBlock.Properties.of(Material.WATER)));
@@ -50,7 +50,7 @@ public class FluidAA implements Supplier<Fluid> {
     }
 
     public static ForgeFlowingFluid.Properties makeProperties(String texture, Supplier<FlowingFluidBlock> blockSupplier, Supplier<ForgeFlowingFluid> stillSupplier, Supplier<ForgeFlowingFluid> flowingSupplier, Supplier<Item> bucketSupplier) {
-        return new ForgeFlowingFluid.Properties(stillSupplier, flowingSupplier, FluidAttributes.builder(new ResourceLocation(ActuallyAdditions.MODID,texture), new ResourceLocation(ActuallyAdditions.MODID, texture))).bucket(bucketSupplier).block(blockSupplier);
+        return new ForgeFlowingFluid.Properties(stillSupplier, flowingSupplier, FluidAttributes.builder(new ResourceLocation(ActuallyAdditions.MODID,texture + "_still"), new ResourceLocation(ActuallyAdditions.MODID, texture + "_flowing"))).bucket(bucketSupplier).block(blockSupplier);
     }
 
     @Override
