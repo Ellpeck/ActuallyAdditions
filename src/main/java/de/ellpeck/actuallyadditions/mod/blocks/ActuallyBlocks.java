@@ -264,7 +264,7 @@ public final class ActuallyBlocks {
     //TODO: Are plants normal blocks / blockitems? i have no idea... news at 11...
    public static final AABlockReg<BlockPlant, AABlockItem, ?> RICE = new AABlockReg<>("rice", () -> new BlockPlant(ActuallyItems.RICE_SEEDS),
        (b) -> new AABlockItem(b, defaultBlockItemProperties));
-    public static final AABlockReg<BlockPlant, AABlockItem, ?> CANOLA = new AABlockReg<>("canola", () -> new BlockPlant(ActuallyItems.CANOLA_SEEDS),
+    public static final AABlockReg<BlockPlant, AABlockItem, ?> CANOLA = new AABlockReg<>("canola_crop", () -> new BlockPlant(ActuallyItems.CANOLA_SEEDS),
         (b) -> new AABlockItem(b, defaultBlockItemProperties));
     public static final AABlockReg<BlockPlant, AABlockItem, ?> FLAX = new AABlockReg<>("flax", () -> new BlockPlant(ActuallyItems.FLAX_SEEDS),
         (b) -> new AABlockItem(b, defaultBlockItemProperties));

@@ -85,6 +85,7 @@ dependencies {
     runtimeOnly fg.deobf("mezz.jei:jei-${jei_version}")
 
     runtimeOnly fg.deobf("curse.maven:TOP-245211:3319255")
+    runtimeOnly fg.deobf("curse.maven:MEK-268560:3590099")
 }
 
 // not sure if this is still needed

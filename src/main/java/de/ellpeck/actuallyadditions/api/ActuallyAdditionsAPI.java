@@ -21,6 +21,7 @@ import de.ellpeck.actuallyadditions.api.lens.LensConversion;
 import de.ellpeck.actuallyadditions.api.recipe.*;
 import de.ellpeck.actuallyadditions.mod.crafting.CrushingRecipe;
 import de.ellpeck.actuallyadditions.mod.crafting.EmpowererRecipe;
+import de.ellpeck.actuallyadditions.mod.crafting.PressingRecipe;
 import de.ellpeck.actuallyadditions.mod.crafting.SolidFuelRecipe;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -48,6 +49,7 @@ public final class ActuallyAdditionsAPI {
     public static final Map<Item, IColorLensChanger> RECONSTRUCTOR_LENS_COLOR_CHANGERS = new HashMap<>();
 
     public static final List<SolidFuelRecipe> SOLID_FUEL_RECIPES = new ArrayList<>();
+    public static final List<PressingRecipe> PRESSING_RECIPES = new ArrayList<>();
     /**
      * Farmer behaviors are sorted when first accessed, this will not be done until after loading, but do not add behaviors at runtime.
      */

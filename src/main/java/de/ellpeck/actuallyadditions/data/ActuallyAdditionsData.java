@@ -37,6 +37,7 @@ public class ActuallyAdditionsData {
             generator.addProvider(new EmpoweringRecipeGenerator(generator));
             generator.addProvider(new CrushingRecipeGenerator(generator));
             generator.addProvider(new SolidFuelGenerator(generator));
+            generator.addProvider(new MiscMachineRecipeGenerator(generator));
         }
     }
 }

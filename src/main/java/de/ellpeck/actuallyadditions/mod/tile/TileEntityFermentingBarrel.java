@@ -27,6 +27,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.templates.FluidTank;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -74,8 +75,8 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
                 if (this.currentProcessTime >= PROCESS_TIME) {
                     this.currentProcessTime = 0;
 
-                    this.tanks.oilTank.grow(produce);
-                    this.tanks.canolaTank.shrink(produce);
+                    this.tanks.oilTank.getFluid().grow(produce);
+                    this.tanks.canolaTank.getFluid().shrink(produce);
                 }
             } else {
                 this.currentProcessTime = 0;
@@ -151,9 +152,9 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
 
     public class FermentingBarrelMultiTank implements IFluidHandler {
 
-        public FluidStack canolaTank = new FluidStack(InitFluids.CANOLA_OIL.get(), 0);
-        public FluidStack oilTank = new FluidStack(InitFluids.REFINED_CANOLA_OIL.get(), 0);
         private int capacity = FluidAttributes.BUCKET_VOLUME * 2;
+        public FluidTank canolaTank = new FluidTank(capacity);
+        public FluidTank oilTank = new FluidTank(capacity);
 
         @Override
         public int getTanks() {
@@ -163,7 +164,7 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
         @Nonnull
         @Override
         public FluidStack getFluidInTank(int tank) {
-            return tank == 0? canolaTank:oilTank;
+            return tank == 0 ? canolaTank.getFluid() : oilTank.getFluid();
         }
 
         @Override
@@ -186,22 +187,22 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
                 if (canolaTank.isEmpty())
                     return Math.min(capacity, resource.getAmount());
                 else
-                    return Math.min(capacity - canolaTank.getAmount(), resource.getAmount());
+                    return Math.min(capacity - canolaTank.getFluid().getAmount(), resource.getAmount());
             }
             else {
                 if (canolaTank.isEmpty()) {
-                    canolaTank = new FluidStack(resource, Math.min(capacity, resource.getAmount()));
+                    canolaTank.fill(new FluidStack(resource, Math.min(capacity, resource.getAmount())), FluidAction.EXECUTE);
                     //TODO need to set the BE dirty.
-                    return canolaTank.getAmount();
+                    return canolaTank.getFluid().getAmount();
                 }
                 else {
-                    int filledAmt = capacity - canolaTank.getAmount();
+                    int filledAmt = capacity - canolaTank.getFluid().getAmount();
                     if (resource.getAmount() < filledAmt) {
-                        canolaTank.grow(resource.getAmount());
+                        canolaTank.getFluid().grow(resource.getAmount());
                         filledAmt = resource.getAmount();
                     }
                     else
-                        canolaTank.setAmount(capacity);
+                        canolaTank.getFluid().setAmount(capacity);
 
                     if (filledAmt > 0){
                         //TODO set BE dirty
@@ -236,14 +237,14 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
         @Override
         public FluidStack drain(int maxDrain, FluidAction action) {
             int drained = maxDrain;
-            if (oilTank.getAmount() < drained)
+            if (oilTank.getFluid().getAmount() < drained)
             {
-                drained = oilTank.getAmount();
+                drained = oilTank.getFluid().getAmount();
             }
-            FluidStack stack = new FluidStack(oilTank, drained);
+            FluidStack stack = new FluidStack(oilTank.getFluid(), drained);
             if (action.execute() && drained > 0)
             {
-                oilTank.shrink(drained);
+                oilTank.getFluid().shrink(drained);
                 //TODO set BE dirty
             }
             return stack;

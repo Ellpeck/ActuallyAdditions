@@ -10,8 +10,12 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
+import de.ellpeck.actuallyadditions.mod.crafting.PressingRecipe;
+import de.ellpeck.actuallyadditions.mod.crafting.SingleItem;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
+import de.ellpeck.actuallyadditions.mod.fluids.OutputOnlyFluidTank;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerCanolaPress;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
@@ -26,31 +30,29 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 
 import javax.annotation.Nullable;
+import java.util.Optional;
 
 public class TileEntityCanolaPress extends TileEntityInventoryBase implements INamedContainerProvider, ISharingFluidHandler {
 
-    public static final int PRODUCE = 80;
+    //public static final int PRODUCE = 80;
     public static final int ENERGY_USE = 35;
     private static final int TIME = 30;
     public final CustomEnergyStorage storage = new CustomEnergyStorage(40000, 100, 0);
     public final LazyOptional<IEnergyStorage> lazyEnergy = LazyOptional.of(() -> this.storage);
 
-    public final FluidTank tank = new FluidTank(2 * Util.BUCKET) {
-        // TODO: [port] ensure this is the correct replacement for canFill
-        @Override
-        public boolean isFluidValid(FluidStack stack) {
-            return false;
-        }
-    };
+    public final OutputOnlyFluidTank tank = new OutputOnlyFluidTank(2 * FluidAttributes.BUCKET_VOLUME);
     public final LazyOptional<IFluidHandler> lazyFluid = LazyOptional.of(() -> this.tank);
 
     public int currentProcessTime;
@@ -62,9 +64,9 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IN
         super(ActuallyBlocks.CANOLA_PRESS.getTileEntityType(), 1);
     }
 
-    public static boolean isCanola(ItemStack stack) {
-        return stack.getItem() == ActuallyBlocks.CANOLA.getItem();
-    }
+//    public static boolean isCanola(ItemStack stack) {
+//        return stack.getItem() == ActuallyBlocks.CANOLA.getItem();
+//    }
 
     @OnlyIn(Dist.CLIENT)
     public int getTankScaled(int i) {
@@ -105,22 +107,25 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IN
     public void updateEntity() {
         super.updateEntity();
         if (!this.level.isClientSide) {
-            if (isCanola(this.inv.getStackInSlot(0)) && PRODUCE <= this.tank.getCapacity() - this.tank.getFluidAmount()) {
-                if (this.storage.getEnergyStored() >= ENERGY_USE) {
-                    this.currentProcessTime++;
-                    this.storage.extractEnergyInternal(ENERGY_USE, false);
-                    if (this.currentProcessTime >= TIME) {
-                        this.currentProcessTime = 0;
+            Optional<PressingRecipe> recipe = getRecipeForInput(this.inv.getStackInSlot(0));
+            recipe.ifPresent(r -> {
+                if ((r.getOutput().isFluidEqual(this.tank.getFluid()) || this.tank.isEmpty()) && r.getOutput().getAmount() <= this.tank.getCapacity() - this.tank.getFluidAmount()) {
+                    if (this.storage.getEnergyStored() >= ENERGY_USE) {
+                        this.currentProcessTime++;
+                        this.storage.extractEnergyInternal(ENERGY_USE, false);
+                        if (this.currentProcessTime >= TIME) {
+                            this.currentProcessTime = 0;
 
-                        this.inv.setStackInSlot(0, StackUtil.shrink(this.inv.getStackInSlot(0), 1));
-
-                        this.tank.fill(new FluidStack(InitFluids.CANOLA_OIL.get(), PRODUCE), IFluidHandler.FluidAction.EXECUTE);
-                        this.setChanged();
+                            this.inv.setStackInSlot(0, StackUtil.shrink(this.inv.getStackInSlot(0), 1));
+                            FluidStack produced = r.getOutput().copy();
+                            this.tank.fillInternal(produced, IFluidHandler.FluidAction.EXECUTE);
+                            this.setChanged();
+                        }
                     }
                 }
-            } else {
+            });
+            if (!recipe.isPresent())
                 this.currentProcessTime = 0;
-            }
 
             if ((this.storage.getEnergyStored() != this.lastEnergyStored || this.tank.getFluidAmount() != this.lastTankAmount | this.currentProcessTime != this.lastProcessTime) && this.sendUpdateWithInterval()) {
                 this.lastEnergyStored = this.storage.getEnergyStored();
@@ -130,9 +135,17 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IN
         }
     }
 
+    public boolean validInput(ItemStack stack) {
+        return getRecipeForInput(stack).isPresent();
+    }
+
+    public Optional<PressingRecipe> getRecipeForInput(ItemStack stack) {
+        return ActuallyAdditionsAPI.PRESSING_RECIPES.stream().filter(recipe -> recipe.matches(new SingleItem(stack), null)).findFirst();
+    }
+
     @Override
     public IAcceptor getAcceptor() {
-        return (slot, stack, automation) -> slot == 0 && isCanola(stack);
+        return (slot, stack, automation) -> slot == 0 && validInput(stack);
     }
 
     @Override
@@ -167,7 +180,7 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IN
 
     @Override
     public ITextComponent getDisplayName() {
-        return StringTextComponent.EMPTY;
+        return new TranslationTextComponent("container.actuallyadditions.canola_press");
     }
 
     @Nullable

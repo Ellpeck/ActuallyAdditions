@@ -41,8 +41,11 @@ public class GuiCanolaPress extends AAScreen<ContainerCanolaPress> {
     @Override
     public void init() {
         super.init();
-        //this.energy = new EnergyDisplay(this.leftPos + 42, this.topPos + 5, this.press.storage);
-        //this.fluid = new FluidDisplay(this.leftPos + 116, this.topPos + 5, this.press.tank);
+        this.energy = new EnergyDisplay(this.leftPos + 42, this.topPos + 5, this.press.storage);
+        this.fluid = new FluidDisplay(this.leftPos + 116, this.topPos + 5, this.press.tank);
+
+        titleLabelX = (int) (imageWidth / 2.0f - font.width(title) / 2.0f);
+        titleLabelY = -10;
     }
 
     @Override
@@ -51,11 +54,6 @@ public class GuiCanolaPress extends AAScreen<ContainerCanolaPress> {
 
         this.energy.render(matrices, x, y);
         this.fluid.render(matrices, x, y);
-    }
-
-    @Override
-    public void renderLabels(@Nonnull MatrixStack matrices, int x, int y) {
-        AssetUtil.displayNameString(matrices, this.font, this.imageWidth, -10, this.press);
     }
 
     @Override
