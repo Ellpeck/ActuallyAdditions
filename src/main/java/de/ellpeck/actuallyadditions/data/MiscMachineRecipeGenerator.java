@@ -9,8 +9,10 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DirectoryCache;
 import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.data.RecipeProvider;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.fluids.FluidStack;
 
 import java.nio.file.Path;
@@ -27,6 +29,11 @@ public class MiscMachineRecipeGenerator extends RecipeProvider {
 
     @Override
     protected void buildShapelessRecipes(Consumer<IFinishedRecipe> consumer) {
-        consumer.accept(new PressingRecipe.FinishedRecipe(new ResourceLocation(ActuallyAdditions.MODID, "pressing/canola"), Ingredient.of(ActuallyItems.CANOLA.get()), new FluidStack(InitFluids.CANOLA_OIL.get(), 80)));
+        consumer.accept(new PressingRecipe.FinishedRecipe(folderRecipe("pressing", "canola"),
+            Ingredient.of(ActuallyItems.CANOLA.get()), new FluidStack(InitFluids.CANOLA_OIL.get(), 80)));
+    }
+
+    private ResourceLocation folderRecipe(String folder, String recipe) {
+        return new ResourceLocation(ActuallyAdditions.MODID, folder + "/" + recipe);
     }
 }
