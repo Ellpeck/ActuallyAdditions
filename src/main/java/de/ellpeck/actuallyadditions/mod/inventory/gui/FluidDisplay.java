@@ -93,8 +93,7 @@ public class FluidDisplay extends AbstractGui {
             GlStateManager._disableAlphaTest();
             GlStateManager._blendFuncSeparate(770, 771, 1, 0);
             int i = this.fluidReference.getFluid().getAmount() * 83 / this.fluidReference.getCapacity();
-            blit(matrices, barX + 1, barY + 84 - i, 0, 0, 36, 172, 16, i, 16, 512);
-            //drawModalRectWithCustomSizedTexture(barX + 1, barY + 84 - i, 36, 172, 16, i, 16, 512);
+            this.blit(matrices, barX + 1, barY + 84 - i, 36, 172, 16, i);            //drawModalRectWithCustomSizedTexture(barX + 1, barY + 84 - i, 36, 172, 16, i, 16, 512);
             GlStateManager._disableBlend();
             GlStateManager._enableAlphaTest();
             GlStateManager._popMatrix();

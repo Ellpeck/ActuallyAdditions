@@ -24,6 +24,7 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
@@ -52,16 +53,17 @@ public class BlockCanolaPress extends BlockContainerBase {
 
     @Override
     public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-        if (!world.isClientSide) {
-            TileEntityCanolaPress tile = (TileEntityCanolaPress) world.getBlockEntity(pos);
-            if (tile != null) {
-                if (!this.tryUseItemOnTank(player, hand, tile.tank)) {
-                    NetworkHooks.openGui((ServerPlayerEntity) player, tile, pos);
-                }
-            }
-            return ActionResultType.PASS;
+        TileEntityCanolaPress tile = (TileEntityCanolaPress) world.getBlockEntity(pos);
+        if (tile == null)
+            return ActionResultType.PASS; //TODO this logic all needs to be rechecked...
+        if (world.isClientSide)
+            return ActionResultType.SUCCESS;
+        if (!player.isShiftKeyDown()) {
+            if (!FluidUtil.interactWithFluidHandler(player, hand, tile.tank))
+                NetworkHooks.openGui((ServerPlayerEntity) player, tile, pos);
+            return ActionResultType.SUCCESS;
         }
-        return super.use(state, world, pos, player, hand, hit);
+        return ActionResultType.PASS;
     }
 
     @Override

@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.inventory;
 
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
+import de.ellpeck.actuallyadditions.mod.crafting.PressingRecipe;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityCanolaPress;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
@@ -22,6 +23,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 
 import java.util.Objects;
+import java.util.Optional;
 
 public class ContainerCanolaPress extends Container {
 
@@ -63,7 +65,8 @@ public class ContainerCanolaPress extends Container {
             //Other Slots in Inventory excluded
             if (slot >= inventoryStart) {
                 //Shift from Inventory
-                if (newStack.getItem() == ActuallyBlocks.CANOLA.getItem()) {
+                Optional<PressingRecipe> recipeOptional = TileEntityCanolaPress.getRecipeForInput(newStack);
+                if (recipeOptional.isPresent()) {
                     if (!this.moveItemStackTo(newStack, 0, 1, false)) {
                         return StackUtil.getEmpty();
                     }

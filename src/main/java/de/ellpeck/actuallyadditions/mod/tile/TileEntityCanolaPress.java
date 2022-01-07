@@ -139,7 +139,7 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IN
         return getRecipeForInput(stack).isPresent();
     }
 
-    public Optional<PressingRecipe> getRecipeForInput(ItemStack stack) {
+    public static Optional<PressingRecipe> getRecipeForInput(ItemStack stack) {
         return ActuallyAdditionsAPI.PRESSING_RECIPES.stream().filter(recipe -> recipe.matches(new SingleItem(stack), null)).findFirst();
     }
 
