@@ -186,7 +186,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
                 this.storage.extractEnergyInternal(ENERGY_USED, false);
                 if (this.brewTime >= TIME_USED) {
                     this.brewTime = 0;
-                    ItemStack output = new ItemStack(ActuallyBlocks.COFFEE.getItem());
+                    ItemStack output = new ItemStack(ActuallyItems.COFFEE_BEANS.get());
                     for (int i = 3; i < this.inv.getSlots(); i++) {
                         if (StackUtil.isValid(this.inv.getStackInSlot(i))) {
                             CoffeeIngredient ingredient = ItemCoffee.getIngredientFromStack(this.inv.getStackInSlot(i));

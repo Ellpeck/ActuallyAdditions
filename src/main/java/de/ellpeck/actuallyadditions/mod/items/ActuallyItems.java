@@ -13,6 +13,8 @@ package de.ellpeck.actuallyadditions.mod.items;
 import com.google.common.collect.ImmutableSet;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.blocks.AABlockItem;
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemArmorAA;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemHoeAA;
@@ -189,10 +191,10 @@ public final class ActuallyItems {
     public static final RegistryObject<Item> HAIRY_BALL = ITEMS.register("hairy_ball", ItemHairBall::new);
     public static final RegistryObject<Item> COFFEE_BEANS = ITEMS.register("coffee_beans", ItemCoffeeBean::new);
 
-    public static final RegistryObject<Item> RICE_SEEDS = ITEMS.register("rice_seeds", ItemBase::new); //() -> new ItemSeed("seedRice", ActuallyBlocks.RICE.get(), FOOD.get(), TheFoods.RICE.ordinal()));
-    public static final RegistryObject<Item> CANOLA_SEEDS = ITEMS.register("canola_seeds", ItemBase::new); //() -> new ItemFoodSeed("seedCanola", ActuallyBlocks.CANOLA, itemMisc, 0, 1, 0.01F, 10).setPotionEffect(new PotionEffect(MobEffects.NAUSEA, 1000, 0), 0.2F));
-    public static final RegistryObject<Item> FLAX_SEEDS = ITEMS.register("flax_seeds", ItemBase::new); //() -> new ItemSeed("seedFlax", ActuallyBlocks.FLAX, Items.STRING, 0));
-    public static final RegistryObject<Item> COFFEE_SEEDS = ITEMS.register("coffee_seeds", ItemBase::new); //() -> new ItemSeed("seedCoffeeBeans", ActuallyBlocks.COFFEE, COFFEE_BEANS, 0));
+    public static final RegistryObject<Item> RICE_SEEDS = ITEMS.register("rice_seeds", () -> new AABlockItem.AASeedItem(ActuallyBlocks.RICE.get(), ActuallyItems.defaultProps())); //() -> new ItemSeed("seedRice", ActuallyBlocks.RICE.get(), FOOD.get(), TheFoods.RICE.ordinal()));
+    public static final RegistryObject<Item> CANOLA_SEEDS = ITEMS.register("canola_seeds", () -> new AABlockItem.AASeedItem(ActuallyBlocks.CANOLA.get(), ActuallyItems.defaultProps())); //() -> new ItemFoodSeed("seedCanola", ActuallyBlocks.CANOLA, itemMisc, 0, 1, 0.01F, 10).setPotionEffect(new PotionEffect(MobEffects.NAUSEA, 1000, 0), 0.2F));
+    public static final RegistryObject<Item> FLAX_SEEDS = ITEMS.register("flax_seeds", () -> new AABlockItem.AASeedItem(ActuallyBlocks.FLAX.get(), ActuallyItems.defaultProps())); //() -> new ItemSeed("seedFlax", ActuallyBlocks.FLAX, Items.STRING, 0));
+    public static final RegistryObject<Item> COFFEE_SEEDS = ITEMS.register("coffee_seeds", () -> new AABlockItem.AASeedItem(ActuallyBlocks.COFFEE.get(), ActuallyItems.defaultProps())); //() -> new ItemSeed("seedCoffeeBeans", ActuallyBlocks.COFFEE, COFFEE_BEANS, 0));
 
     // TOOLS & ARMOR
     public static final RegistryObject<Item> QUARTZ_HELMET = ITEMS.register("quartz_helmet", () -> new ItemArmorAA(ArmorMaterials.QUARTZ, EquipmentSlotType.HEAD));

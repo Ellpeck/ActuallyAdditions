@@ -10,7 +10,9 @@
 
 package de.ellpeck.actuallyadditions.api.farmer;
 
+import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.internal.IFarmer;
+import de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -44,5 +46,13 @@ public interface IFarmerBehavior {
 
     default Integer getPrioInt() {
         return getPriority();
+    }
+
+    static void initBehaviors() {
+        ActuallyAdditionsAPI.addFarmerBehavior(new DefaultFarmerBehavior());
+        ActuallyAdditionsAPI.addFarmerBehavior(new CactusFarmerBehavior());
+        ActuallyAdditionsAPI.addFarmerBehavior(new NetherWartFarmerBehavior());
+        ActuallyAdditionsAPI.addFarmerBehavior(new ReedFarmerBehavior());
+        ActuallyAdditionsAPI.addFarmerBehavior(new MelonPumpkinFarmerBehavior());
     }
 }

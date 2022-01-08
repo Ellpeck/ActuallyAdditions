@@ -20,12 +20,15 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.loot.LootContext;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.common.util.FakePlayerFactory;
 
 import java.util.ArrayList;
@@ -83,12 +86,11 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
                     return this.doFarmerStuff(state, world, pos, farmer);
                 }
             }
-            // TODO: [port] come back and see what this is actually doing
-            //            else if (CropsBlock.AGE.equals(block.getBlockState().getProperty("age"))) {
-            //                if (state.get(BlockStateProperties.AGE_0_7) >= 7 && !(block instanceof StemBlock)) {
-            //                    return this.doFarmerStuff(state, world, pos, farmer);
-            //                }
-            //            }
+            else if (state.hasProperty(BlockStateProperties.AGE_25)) {
+                if (state.getValue(BlockStateProperties.AGE_25) >= 7 && !(block instanceof StemBlock)) {
+                    return this.doFarmerStuff(state, world, pos, farmer);
+                }
+            }
         }
         return FarmerResult.FAIL;
     }
@@ -177,15 +179,13 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
         if (!player.mayUseItemAt(pos.relative(Direction.UP), Direction.UP, itemstack)) {
             return ActionResultType.FAIL;
         } else {
- /*           int hook = net.minecraftforge.event.ForgeEventFactory.onHoeUse(itemstack, player, world, pos);
+/*            int hook = net.minecraftforge.event.ForgeEventFactory.onHoeUse(itemstack, player, world, pos);
             if (hook != 0) {
                 return hook > 0
                     ? ActionResultType.SUCCESS
                     : ActionResultType.FAIL;
             }
 
-            BlockState iblockstate = world.getBlockState(pos);
-            Block block = iblockstate.getBlock();
 
             if (world.isEmptyBlock(pos.above())) {
                 if (block == Blocks.GRASS || block == Blocks.GRASS_PATH) {
@@ -204,8 +204,7 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
                         default:
                     }
                 }
-            }
-*/
+            }*/
             return ActionResultType.PASS;
         }
     }

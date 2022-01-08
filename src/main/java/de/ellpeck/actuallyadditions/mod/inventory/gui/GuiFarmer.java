@@ -44,11 +44,9 @@ public class GuiFarmer extends AAScreen<ContainerFarmer> {
         super.init();
 
         this.energy = new EnergyDisplay(this.leftPos + 33, this.topPos + 6, this.farmer.storage);
-    }
 
-    @Override
-    public void renderLabels(@Nonnull MatrixStack matrices, int x, int y) {
-        AssetUtil.displayNameString(matrices, this.font, this.imageWidth, -10, this.farmer);
+        titleLabelX = (int) (imageWidth / 2.0f - font.width(title) / 2.0f);
+        titleLabelY = -10;
     }
 
     @Override

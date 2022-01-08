@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
+import de.ellpeck.actuallyadditions.api.farmer.IFarmerBehavior;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import de.ellpeck.actuallyadditions.mod.crafting.ActuallyRecipes;
@@ -119,6 +120,7 @@ public class ActuallyAdditions {
 
         eventBus.addListener(this::setup);
         eventBus.addListener(this::clientSetup);
+        IFarmerBehavior.initBehaviors();
     }
 
     private static void reloadEvent(AddReloadListenerEvent event) {

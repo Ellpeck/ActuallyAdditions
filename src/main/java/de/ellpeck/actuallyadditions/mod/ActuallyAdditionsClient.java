@@ -79,6 +79,8 @@ public class ActuallyAdditionsClient {
         RenderTypeLookup.setRenderLayer(InitFluids.CRYSTALIZED_OIL.getFlowing(), RenderType.translucent());
         RenderTypeLookup.setRenderLayer(InitFluids.EMPOWERED_OIL.get(), RenderType.translucent());
         RenderTypeLookup.setRenderLayer(InitFluids.EMPOWERED_OIL.getFlowing(), RenderType.translucent());
+
+        RenderTypeLookup.setRenderLayer(ActuallyBlocks.CANOLA.get(), RenderType.cutout());
     }
 
     private static void setupSpecialRenders() {

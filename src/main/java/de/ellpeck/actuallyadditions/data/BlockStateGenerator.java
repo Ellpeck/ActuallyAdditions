@@ -3,10 +3,7 @@ package de.ellpeck.actuallyadditions.data;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
-import net.minecraft.block.Block;
-import net.minecraft.block.SlabBlock;
-import net.minecraft.block.StairsBlock;
-import net.minecraft.block.WallBlock;
+import net.minecraft.block.*;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.ResourceLocation;
@@ -117,8 +114,18 @@ public class BlockStateGenerator extends BlockStateProvider {
         buildLitState(ActuallyBlocks.LAMP_BLACK);
 
         // TO BE SORTED
+        getVariantBuilder(ActuallyBlocks.CANOLA.get()).partialState()
+            .with(CropsBlock.AGE, 0).modelForState().modelFile(models().crop("canola_1", modLoc("block/canola_stage_1"))).addModel().partialState()
+            .with(CropsBlock.AGE, 1).modelForState().modelFile(models().crop("canola_2", modLoc("block/canola_stage_2"))).addModel().partialState()
+            .with(CropsBlock.AGE, 2).modelForState().modelFile(models().crop("canola_2", modLoc("block/canola_stage_2"))).addModel().partialState()
+            .with(CropsBlock.AGE, 3).modelForState().modelFile(models().crop("canola_2", modLoc("block/canola_stage_2"))).addModel().partialState()
+            .with(CropsBlock.AGE, 4).modelForState().modelFile(models().crop("canola_3", modLoc("block/canola_stage_3"))).addModel().partialState()
+            .with(CropsBlock.AGE, 5).modelForState().modelFile(models().crop("canola_3", modLoc("block/canola_stage_3"))).addModel().partialState()
+            .with(CropsBlock.AGE, 6).modelForState().modelFile(models().crop("canola_3", modLoc("block/canola_stage_3"))).addModel().partialState()
+            .with(CropsBlock.AGE, 7).modelForState().modelFile(models().crop("canola_4", modLoc("block/canola_stage_4"))).addModel();
+
         buildCubeAll(ActuallyBlocks.RICE);
-        buildCubeAll(ActuallyBlocks.CANOLA);
+        //buildCubeAll(ActuallyBlocks.CANOLA);
         buildCubeAll(ActuallyBlocks.FLAX);
         buildCubeAll(ActuallyBlocks.COFFEE);
 

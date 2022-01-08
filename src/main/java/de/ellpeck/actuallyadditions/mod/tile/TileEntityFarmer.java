@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.api.farmer.FarmerResult;
 import de.ellpeck.actuallyadditions.api.farmer.IFarmerBehavior;
 import de.ellpeck.actuallyadditions.api.internal.IFarmer;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
+import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFarmer;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
@@ -33,6 +34,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -92,7 +94,7 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
                     this.waitTime--;
 
                     if (this.waitTime <= 0) {
-                        int area = ConfigIntValues.FARMER_AREA.getValue();
+                        int area = CommonConfig.MACHINES.FARMER_AREA.get();
                         if (area % 2 == 0) {
                             area++;
                         }
@@ -130,6 +132,7 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
         SORTED_FARMER_BEHAVIORS.clear();
         SORTED_FARMER_BEHAVIORS.addAll(ActuallyAdditionsAPI.FARMER_BEHAVIORS);
         Collections.sort(SORTED_FARMER_BEHAVIORS, (b1, b2) -> b2.getPrioInt().compareTo(b1.getPrioInt()));
+        sorted = true;
     }
 
     private void checkBehaviors(BlockPos query) {
@@ -237,7 +240,7 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
 
     @Override
     public ITextComponent getDisplayName() {
-        return StringTextComponent.EMPTY;
+        return new TranslationTextComponent("container.actuallyadditions.farmer");
     }
 
     @Nullable

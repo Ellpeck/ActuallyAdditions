@@ -8,7 +8,7 @@
  * © 2015-2017 Ellpeck
  */
 
-package de.ellpeck.actuallyadditions.mod.blocks.metalists;
+/*package de.ellpeck.actuallyadditions.mod.blocks.metalists;
 
 import com.google.common.base.Preconditions;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
@@ -19,7 +19,7 @@ import net.minecraft.util.IStringSerializable;
 @Deprecated
 public enum TheWildPlants implements IStringSerializable {
 
-    CANOLA("canola", Rarity.RARE, ActuallyBlocks.CANOLA.getBlock()),
+    CANOLA("canola", Rarity.RARE, ActuallyBlocks.CANOLA.get()),
     FLAX("flax", Rarity.RARE, ActuallyBlocks.FLAX.getBlock()),
     RICE("rice", Rarity.RARE, ActuallyBlocks.RICE.getBlock()),
     COFFEE("coffee", Rarity.RARE, ActuallyBlocks.COFFEE.getBlock());
@@ -46,4 +46,4 @@ public enum TheWildPlants implements IStringSerializable {
     public Block getNormalVersion() {
         return this.normal;
     }
-}
+}*/

@@ -11,8 +11,22 @@ public class CommonConfig {
 
     static {
         OTHER.build();
+        MACHINES.build();
         COMMON_CONFIG = BUILDER.build();
     }
+
+    public static class MACHINES {
+        public static ForgeConfigSpec.IntValue FARMER_AREA;
+
+        public static void build() {
+            BUILDER.comment("Machine Settings").push("machineSettings");
+
+            FARMER_AREA = BUILDER.comment("The size of the farmer's farming area.  Default is 9x9, must be an odd number.").defineInRange("farmerArea", 9, 1, Integer.MAX_VALUE);
+
+            BUILDER.pop();
+        }
+    }
+
 
     public static class OTHER {
         public static ForgeConfigSpec.BooleanValue SOLID_XP_ALWAYS_ORBS;
@@ -39,6 +53,7 @@ public class CommonConfig {
 
 
         public static void build() {
+
             BUILDER.comment("Everything else").push("other");
 
             SOLID_XP_ALWAYS_ORBS = BUILDER.comment("If true, Solidified Experience will always spawn orbs, even for regular players.")

@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.blocks;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.blocks.base.AACrops;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockPlant;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.Crystals;
@@ -20,10 +21,13 @@ import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.IItemProvider;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+
+import java.util.function.Supplier;
 
 public final class ActuallyBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, ActuallyAdditions.MODID);
@@ -259,17 +263,11 @@ public final class ActuallyBlocks {
         (b) -> new AABlockItem(b, defaultBlockItemProperties));
 
 
-    //public static final AABlockReg<> WILD_PLANT = new AABlockReg<>("wild", BlockWildPlant::new); //TODO: what is this?
+    public static Supplier<Block> CANOLA = BLOCKS.register("canola", () -> new AACrops(defaultCropProps(), ActuallyItems.CANOLA_SEEDS));
+    public static Supplier<Block> RICE = BLOCKS.register("rice", () -> new AACrops(defaultCropProps(), ActuallyItems.RICE_SEEDS));
+    public static Supplier<Block> FLAX = BLOCKS.register("flax", () -> new AACrops(defaultCropProps(), ActuallyItems.FLAX_SEEDS));
+    public static Supplier<Block> COFFEE = BLOCKS.register("coffee", () -> new AACrops(defaultCropProps(), ActuallyItems.COFFEE_SEEDS));
 
-    //TODO: Are plants normal blocks / blockitems? i have no idea... news at 11...
-   public static final AABlockReg<BlockPlant, AABlockItem, ?> RICE = new AABlockReg<>("rice", () -> new BlockPlant(ActuallyItems.RICE_SEEDS),
-       (b) -> new AABlockItem(b, defaultBlockItemProperties));
-    public static final AABlockReg<BlockPlant, AABlockItem, ?> CANOLA = new AABlockReg<>("canola_crop", () -> new BlockPlant(ActuallyItems.CANOLA_SEEDS),
-        (b) -> new AABlockItem(b, defaultBlockItemProperties));
-    public static final AABlockReg<BlockPlant, AABlockItem, ?> FLAX = new AABlockReg<>("flax", () -> new BlockPlant(ActuallyItems.FLAX_SEEDS),
-        (b) -> new AABlockItem(b, defaultBlockItemProperties));
-    public static final AABlockReg<BlockPlant, AABlockItem, ?> COFFEE = new AABlockReg<>("coffee", () -> new BlockPlant(ActuallyItems.COFFEE_SEEDS),
-        (b) -> new AABlockItem(b, defaultBlockItemProperties));
     public static final AABlockReg<BlockGreenhouseGlass, AABlockItem, ?> GREENHOUSE_GLASS = new AABlockReg<>("greenhouse_glass", BlockGreenhouseGlass::new,
         (b) -> new AABlockItem(b, defaultBlockItemProperties));
 
@@ -279,6 +277,10 @@ public final class ActuallyBlocks {
 
     public static AbstractBlock.Properties defaultPickProps(int harvestLevel) {
         return AbstractBlock.Properties.of(Material.STONE).harvestLevel(harvestLevel).harvestTool(ToolType.PICKAXE).strength(1.5F, 10.0F).sound(SoundType.STONE);
+    }
+
+    public static AbstractBlock.Properties defaultCropProps() {
+        return AbstractBlock.Properties.of(Material.PLANT).noCollission().randomTicks().instabreak().sound(SoundType.CROP);
     }
 
     public static void init(IEventBus evt) {

@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.blocks;
 
 import de.ellpeck.actuallyadditions.mod.blocks.base.DirectionalBlock;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityCanolaPress;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityFarmer;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -24,15 +25,23 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
+import javax.annotation.Nullable;
+
 public class BlockFarmer extends DirectionalBlock.Container {
 
     public BlockFarmer() {
         super(ActuallyBlocks.defaultPickProps(0));
     }
 
-    //@Override
-    public TileEntity newBlockEntity(IBlockReader worldIn) {
+    @Nullable
+    @Override
+    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
         return new TileEntityFarmer();
+    }
+
+    @Override
+    public boolean hasTileEntity(BlockState state) {
+        return true;
     }
 
     @Override
