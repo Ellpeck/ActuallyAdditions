@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "age=0": {
+      "model": "actuallyadditions:block/canola_1"
+    },
+    "age=1": {
+      "model": "actuallyadditions:block/canola_2"
+    },
+    "age=2": {
+      "model": "actuallyadditions:block/canola_2"
+    },
+    "age=3": {
+      "model": "actuallyadditions:block/canola_2"
+    },
+    "age=4": {
+      "model": "actuallyadditions:block/canola_3"
+    },
+    "age=5": {
+      "model": "actuallyadditions:block/canola_3"
+    },
+    "age=6": {
+      "model": "actuallyadditions:block/canola_3"
+    },
+    "age=7": {
+      "model": "actuallyadditions:block/canola_4"
+    }
+  }
+}
