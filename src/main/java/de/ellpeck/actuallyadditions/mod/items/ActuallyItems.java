@@ -46,6 +46,7 @@ public final class ActuallyItems {
     public static final RegistryObject<Item> RING = ITEMS.register("ring", ItemBase::new);
     public static final RegistryObject<Item> BASIC_COIL = ITEMS.register("basic_coil", ItemBase::new);
     public static final RegistryObject<Item> ADVANCED_COIL = ITEMS.register("advanced_coil", ItemBase::new);
+    public static final RegistryObject<Item> RICE = ITEMS.register("rice", ItemBase::new);
     public static final RegistryObject<Item> RICE_DOUGH = ITEMS.register("rice_dough", ItemBase::new);
     public static final RegistryObject<Item> TINY_COAL = ITEMS.register("tiny_coal", () -> new ItemBase() {
         @Override
@@ -155,7 +156,7 @@ public final class ActuallyItems {
     public static final RegistryObject<Item> DRILL_UPGRADE_FIVE_BY_FIVE = ITEMS.register("drill_upgrade_five_by_five", () -> new ItemDrillUpgrade(ItemDrillUpgrade.UpgradeType.FIVE_BY_FIVE));
     public static final RegistryObject<Item> DRILL_UPGRADE_BLOCK_PLACING = ITEMS.register("drill_upgrade_block_placing", () -> new ItemDrillUpgrade(ItemDrillUpgrade.UpgradeType.PLACER));
     public static final RegistryObject<Item> FERTILIZER = ITEMS.register("fertilizer", ItemFertilizer::new);
-    //    public static final RegistryObject<Item> COFFEE = ITEMS.register("coffee", ItemCoffee::new); //TODO flatten
+    public static final RegistryObject<Item> COFFEE = ITEMS.register("coffee", ItemCoffee::new); //TODO flatten
     public static final RegistryObject<Item> PHANTOM_CONNECTOR = ITEMS.register("phantom_connector", ItemPhantomConnector::new);
     public static final RegistryObject<Item> RESONANT_RICE = ITEMS.register("resonant_rice", ItemResonantRice::new);
     //public static final RegistryObject<Item> FOOD = ITEMS.register("food", ItemBase::new); //just... food? //TODO
@@ -190,6 +191,7 @@ public final class ActuallyItems {
 
     public static final RegistryObject<Item> HAIRY_BALL = ITEMS.register("hairy_ball", ItemHairBall::new);
     public static final RegistryObject<Item> COFFEE_BEANS = ITEMS.register("coffee_beans", ItemCoffeeBean::new);
+    public static final RegistryObject<Item> FLAX = ITEMS.register("flax", ItemBase::new);
 
     public static final RegistryObject<Item> RICE_SEEDS = ITEMS.register("rice_seeds", () -> new AABlockItem.AASeedItem(ActuallyBlocks.RICE.get(), ActuallyItems.defaultProps())); //() -> new ItemSeed("seedRice", ActuallyBlocks.RICE.get(), FOOD.get(), TheFoods.RICE.ordinal()));
     public static final RegistryObject<Item> CANOLA_SEEDS = ITEMS.register("canola_seeds", () -> new AABlockItem.AASeedItem(ActuallyBlocks.CANOLA.get(), ActuallyItems.defaultProps())); //() -> new ItemFoodSeed("seedCanola", ActuallyBlocks.CANOLA, itemMisc, 0, 1, 0.01F, 10).setPotionEffect(new PotionEffect(MobEffects.NAUSEA, 1000, 0), 0.2F));
@@ -302,7 +304,7 @@ public final class ActuallyItems {
         DRILL_LIME, DRILL_MAGENTA, DRILL_ORANGE, DRILL_PINK, DRILL_PURPLE, DRILL_RED, DRILL_WHITE, DRILL_YELLOW,
         DRILL_UPGRADE_SPEED, DRILL_UPGRADE_SPEED_II, DRILL_UPGRADE_SPEED_III, DRILL_UPGRADE_SILK_TOUCH,
         DRILL_UPGRADE_FORTUNE, DRILL_UPGRADE_FORTUNE_II, DRILL_UPGRADE_THREE_BY_THREE, DRILL_UPGRADE_FIVE_BY_FIVE, DRILL_UPGRADE_BLOCK_PLACING,
-        FERTILIZER, COFFEE_CUP, PHANTOM_CONNECTOR, RESONANT_RICE,
+        FERTILIZER, COFFEE_CUP, PHANTOM_CONNECTOR, RESONANT_RICE, RICE,
 /*        FOOD_CHEESE, FOOD_PUMPKIN_STEW, FOOD_CARROT_JUICE, FOOD_FISH_N_CHIPS, FOOD_FRENCH_FRIES, FOOD_FRENCH_FRY,
         FOOD_SPAGHETTI, FOOD_NOODLE, FOOD_CHOCOLATE_CAKE, FOOD_CHOCOLATE, FOOD_TOAST, FOOD_SUBMARINE_SANDWICH, FOOD_BIG_COOKIE,
         FOOD_HAMBURGER, FOOD_PIZZA, FOOD_BAGUETTE, FOOD_RICE, FOOD_RICE_BREAD, FOOD_DOUGHNUT, FOOD_TOAST_O_CHOCOLATE,

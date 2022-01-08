@@ -1,5 +1,6 @@
 package de.ellpeck.actuallyadditions.data;
 
+import com.google.common.collect.ImmutableSet;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.fluids.FluidAA;
@@ -17,6 +18,7 @@ import net.minecraftforge.client.model.generators.loaders.DynamicBucketModelBuil
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.fml.RegistryObject;
 
+import java.util.Set;
 import java.util.function.Supplier;
 
 public class ItemModelGenerator extends ItemModelProvider {
@@ -39,8 +41,19 @@ public class ItemModelGenerator extends ItemModelProvider {
             .forEach(item -> simpleItem(() -> item));*/
 
 
+        Set<Block> ignoreList = ImmutableSet.of(
+            InitFluids.CANOLA_OIL.getBlock(),
+            InitFluids.REFINED_CANOLA_OIL.getBlock(),
+            InitFluids.CRYSTALIZED_OIL.getBlock(),
+            InitFluids.EMPOWERED_OIL.getBlock(),
+            ActuallyBlocks.CANOLA.get(),
+            ActuallyBlocks.RICE.get(),
+            ActuallyBlocks.FLAX.get(),
+            ActuallyBlocks.COFFEE.get()
+        );
+
         // Blocks
-        ActuallyBlocks.BLOCKS.getEntries().stream().filter(b -> !b.get().getRegistryName().getPath().contains("oil")).forEach(this::registerBlockModel);
+        ActuallyBlocks.BLOCKS.getEntries().stream().filter(b -> !ignoreList.contains(b.get())).forEach(this::registerBlockModel);
 
         generateBucket(InitFluids.CANOLA_OIL);
         generateBucket(InitFluids.REFINED_CANOLA_OIL);

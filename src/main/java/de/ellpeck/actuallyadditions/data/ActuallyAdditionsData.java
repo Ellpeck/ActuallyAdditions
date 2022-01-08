@@ -24,7 +24,7 @@ public class ActuallyAdditionsData {
         if (event.includeServer()) {
             BlockTagsGenerator generatorBlockTags = new BlockTagsGenerator(generator, helper);
 
-            //            generator.addProvider(new GeneratorLoot(generator));
+            generator.addProvider(new LootTableGenerator(generator));
             generator.addProvider(new BlockRecipeGenerator(generator));
             generator.addProvider(new ItemRecipeGenerator(generator));
             generator.addProvider(generatorBlockTags);

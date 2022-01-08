@@ -115,19 +115,45 @@ public class BlockStateGenerator extends BlockStateProvider {
 
         // TO BE SORTED
         getVariantBuilder(ActuallyBlocks.CANOLA.get()).partialState()
-            .with(CropsBlock.AGE, 0).modelForState().modelFile(models().crop("canola_1", modLoc("block/canola_stage_1"))).addModel().partialState()
-            .with(CropsBlock.AGE, 1).modelForState().modelFile(models().crop("canola_2", modLoc("block/canola_stage_2"))).addModel().partialState()
-            .with(CropsBlock.AGE, 2).modelForState().modelFile(models().crop("canola_2", modLoc("block/canola_stage_2"))).addModel().partialState()
-            .with(CropsBlock.AGE, 3).modelForState().modelFile(models().crop("canola_2", modLoc("block/canola_stage_2"))).addModel().partialState()
-            .with(CropsBlock.AGE, 4).modelForState().modelFile(models().crop("canola_3", modLoc("block/canola_stage_3"))).addModel().partialState()
-            .with(CropsBlock.AGE, 5).modelForState().modelFile(models().crop("canola_3", modLoc("block/canola_stage_3"))).addModel().partialState()
-            .with(CropsBlock.AGE, 6).modelForState().modelFile(models().crop("canola_3", modLoc("block/canola_stage_3"))).addModel().partialState()
-            .with(CropsBlock.AGE, 7).modelForState().modelFile(models().crop("canola_4", modLoc("block/canola_stage_4"))).addModel();
+            .with(CropsBlock.AGE, 0).modelForState().modelFile(models().crop("canola_1", modLoc("block/canola_stage_1"))).addModel()
+            .partialState().with(CropsBlock.AGE, 1).modelForState().modelFile(models().crop("canola_2", modLoc("block/canola_stage_2"))).addModel()
+            .partialState().with(CropsBlock.AGE, 2).modelForState().modelFile(models().crop("canola_2", modLoc("block/canola_stage_2"))).addModel()
+            .partialState().with(CropsBlock.AGE, 3).modelForState().modelFile(models().crop("canola_2", modLoc("block/canola_stage_2"))).addModel()
+            .partialState().with(CropsBlock.AGE, 4).modelForState().modelFile(models().crop("canola_3", modLoc("block/canola_stage_3"))).addModel()
+            .partialState().with(CropsBlock.AGE, 5).modelForState().modelFile(models().crop("canola_3", modLoc("block/canola_stage_3"))).addModel()
+            .partialState().with(CropsBlock.AGE, 6).modelForState().modelFile(models().crop("canola_3", modLoc("block/canola_stage_3"))).addModel()
+            .partialState().with(CropsBlock.AGE, 7).modelForState().modelFile(models().crop("canola_4", modLoc("block/canola_stage_4"))).addModel();
 
-        buildCubeAll(ActuallyBlocks.RICE);
-        //buildCubeAll(ActuallyBlocks.CANOLA);
-        buildCubeAll(ActuallyBlocks.FLAX);
-        buildCubeAll(ActuallyBlocks.COFFEE);
+        getVariantBuilder(ActuallyBlocks.RICE.get()).partialState()
+            .with(CropsBlock.AGE, 0).modelForState().modelFile(models().crop("rice_1", modLoc("block/rice_stage_1"))).addModel()
+            .partialState().with(CropsBlock.AGE, 1).modelForState().modelFile(models().crop("rice_2", modLoc("block/rice_stage_2"))).addModel()
+            .partialState().with(CropsBlock.AGE, 2).modelForState().modelFile(models().crop("rice_2", modLoc("block/rice_stage_2"))).addModel()
+            .partialState().with(CropsBlock.AGE, 3).modelForState().modelFile(models().crop("rice_2", modLoc("block/rice_stage_3"))).addModel()
+            .partialState().with(CropsBlock.AGE, 4).modelForState().modelFile(models().crop("rice_3", modLoc("block/rice_stage_4"))).addModel()
+            .partialState().with(CropsBlock.AGE, 5).modelForState().modelFile(models().crop("rice_3", modLoc("block/rice_stage_4"))).addModel()
+            .partialState().with(CropsBlock.AGE, 6).modelForState().modelFile(models().crop("rice_3", modLoc("block/rice_stage_5"))).addModel()
+            .partialState().with(CropsBlock.AGE, 7).modelForState().modelFile(models().crop("rice_4", modLoc("block/rice_stage_6"))).addModel();
+
+        getVariantBuilder(ActuallyBlocks.FLAX.get()).partialState()
+            .with(CropsBlock.AGE, 0).modelForState().modelFile(models().crop("flax_1", modLoc("block/flax_stage_1"))).addModel()
+            .partialState().with(CropsBlock.AGE, 1).modelForState().modelFile(models().crop("flax_2", modLoc("block/flax_stage_2"))).addModel()
+            .partialState().with(CropsBlock.AGE, 2).modelForState().modelFile(models().crop("flax_2", modLoc("block/flax_stage_2"))).addModel()
+            .partialState().with(CropsBlock.AGE, 3).modelForState().modelFile(models().crop("flax_2", modLoc("block/flax_stage_3"))).addModel()
+            .partialState().with(CropsBlock.AGE, 4).modelForState().modelFile(models().crop("flax_3", modLoc("block/flax_stage_4"))).addModel()
+            .partialState().with(CropsBlock.AGE, 5).modelForState().modelFile(models().crop("flax_3", modLoc("block/flax_stage_4"))).addModel()
+            .partialState().with(CropsBlock.AGE, 6).modelForState().modelFile(models().crop("flax_3", modLoc("block/flax_stage_5"))).addModel()
+            .partialState().with(CropsBlock.AGE, 7).modelForState().modelFile(models().crop("flax_4", modLoc("block/flax_stage_6"))).addModel();
+
+        getVariantBuilder(ActuallyBlocks.COFFEE.get()).partialState()
+            .with(CropsBlock.AGE, 0).modelForState().modelFile(models().crop("coffee_1", modLoc("block/coffee_stage_1"))).addModel()
+            .partialState().with(CropsBlock.AGE, 1).modelForState().modelFile(models().crop("coffee_2", modLoc("block/coffee_stage_2"))).addModel()
+            .partialState().with(CropsBlock.AGE, 2).modelForState().modelFile(models().crop("coffee_2", modLoc("block/coffee_stage_2"))).addModel()
+            .partialState().with(CropsBlock.AGE, 3).modelForState().modelFile(models().crop("coffee_2", modLoc("block/coffee_stage_3"))).addModel()
+            .partialState().with(CropsBlock.AGE, 4).modelForState().modelFile(models().crop("coffee_3", modLoc("block/coffee_stage_4"))).addModel()
+            .partialState().with(CropsBlock.AGE, 5).modelForState().modelFile(models().crop("coffee_3", modLoc("block/coffee_stage_4"))).addModel()
+            .partialState().with(CropsBlock.AGE, 6).modelForState().modelFile(models().crop("coffee_3", modLoc("block/coffee_stage_5"))).addModel()
+            .partialState().with(CropsBlock.AGE, 7).modelForState().modelFile(models().crop("coffee_4", modLoc("block/coffee_stage_6"))).addModel();
+
 
         buildCubeAll(ActuallyBlocks.CHARCOAL_BLOCK);
         buildCubeAll(ActuallyBlocks.ENDER_CASING);

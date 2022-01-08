@@ -1,7 +1,28 @@
 {
   "variants": {
-    "": {
-      "model": "actuallyadditions:block/rice"
+    "age=0": {
+      "model": "actuallyadditions:block/rice_1"
+    },
+    "age=1": {
+      "model": "actuallyadditions:block/rice_2"
+    },
+    "age=2": {
+      "model": "actuallyadditions:block/rice_2"
+    },
+    "age=3": {
+      "model": "actuallyadditions:block/rice_2"
+    },
+    "age=4": {
+      "model": "actuallyadditions:block/rice_3"
+    },
+    "age=5": {
+      "model": "actuallyadditions:block/rice_3"
+    },
+    "age=6": {
+      "model": "actuallyadditions:block/rice_3"
+    },
+    "age=7": {
+      "model": "actuallyadditions:block/rice_4"
     }
   }
 }

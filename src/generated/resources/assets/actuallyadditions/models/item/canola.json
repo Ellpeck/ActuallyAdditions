@@ -1,5 +1,5 @@
 {
-  "parent": "actuallyadditions:block/canola",
+  "parent": "minecraft:item/handheld",
   "textures": {
     "layer0": "actuallyadditions:item/canola"
   }
