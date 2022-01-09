@@ -66,8 +66,8 @@ public final class ActuallyItems {
     public static final RegistryObject<Item> DRILL_CORE = ITEMS.register("drill_core", ItemBase::new);
     public static final RegistryObject<Item> LENS = ITEMS.register("lens", ItemBase::new);
     public static final RegistryObject<Item> ENDER_STAR = ITEMS.register("ender_star", ItemBase::new);
-    public static final RegistryObject<Item> CRYSTALLIZED_CANOLA_SEED = ITEMS.register("crystallized_canola_seed", ItemBase::new);
-    public static final RegistryObject<Item> EMPOWERED_CANOLA_SEED = ITEMS.register("empowered_canola_seed", ItemBase::new);
+    public static final RegistryObject<Item> CRYSTALLIZED_CANOLA_SEED = ITEMS.register("crystallized_canola_seed", () -> new CanolaSeed(false));
+    public static final RegistryObject<Item> EMPOWERED_CANOLA_SEED = ITEMS.register("empowered_canola_seed", () -> new CanolaSeed(true));
 
     // SHARDS
     public static final RegistryObject<Item> RESTONIA_CRYSTAL_SHARD = ITEMS.register("restonia_crystal_shard", ItemBase::new);

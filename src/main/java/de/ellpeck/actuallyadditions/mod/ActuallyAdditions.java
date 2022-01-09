@@ -63,7 +63,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-//@Mod(modid = ActuallyAdditions.MODID, name = ActuallyAdditions.NAME, version = ActuallyAdditions.VERSION, guiFactory = ActuallyAdditions.GUIFACTORY, dependencies = ActuallyAdditions.DEPS)
 @Mod(ActuallyAdditions.MODID)
 public class ActuallyAdditions {
 
@@ -76,7 +75,6 @@ public class ActuallyAdditions {
     @Deprecated
     public static final String GUIFACTORY = "de.ellpeck.actuallyadditions.mod.config.GuiFactory";
     public static final String DEPS = "required:forge@[14.23.5.2836,);before:craftingtweaks;after:fastbench@[1.3.2,)";
-    //    public static final boolean DEOBF = (boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
 
     public static final ItemGroup GROUP = new ItemGroup(MODID) {
         @OnlyIn(Dist.CLIENT)
@@ -90,13 +88,6 @@ public class ActuallyAdditions {
     public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, "entities");
     public static final RegistryObject<EntityType<EntityWorm>> ENTITY_WORM = ENTITIES.register("worm", () -> EntityType.Builder.of(EntityWorm::new, EntityClassification.CREATURE).build(MODID + ":worm"));
 
-    @Deprecated
-    public static ActuallyAdditions INSTANCE;
-
-    // TODO: [port] eval
-    //    static {
-    //        FluidRegistry.enableUniversalBucket();
-    //    }
     public static boolean commonCapsLoaded;
 
     public ActuallyAdditions() {

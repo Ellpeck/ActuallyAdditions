@@ -42,6 +42,7 @@ import java.util.Locale;
 
 public class CommonEvents {
 
+    //TODO spawner shards are yeeted right?
     @SubscribeEvent
     public void onBlockBreakEvent(BlockEvent.BreakEvent event) {
         BlockState state = event.getState();
@@ -125,7 +126,7 @@ public class CommonEvents {
         }
     }
 
-    //TODO Checking Achievements?
+    //TODO Checking Achievements? yeet?
     /*public static void checkAchievements(ItemStack gotten, PlayerEntity player, InitAchievements.Type type){
         if(gotten != null && player != null){
             for(TheAchievements ach : TheAchievements.values()){
@@ -138,6 +139,7 @@ public class CommonEvents {
         }
     }*/
 
+    //TODO this isnt how this should be done im pretty sure...
     @SubscribeEvent
     public void onEntityDropEvent(LivingDropsEvent event) {
         if (event.getEntityLiving().level != null && !event.getEntityLiving().level.isClientSide && event.getSource().getEntity() instanceof PlayerEntity) {
@@ -159,6 +161,7 @@ public class CommonEvents {
         }
     }
 
+    //TODO im pretty sure this can be done with normal advancements...
     @SubscribeEvent
     public void onCraftedEvent(PlayerEvent.ItemCraftedEvent event) {
         //checkAchievements(event.crafting, event.player, InitAchievements.Type.CRAFTING);
@@ -182,11 +185,13 @@ public class CommonEvents {
         }
     }
 
+    //TODO im pretty sure this can be done with normal advancements...
     @SubscribeEvent
     public void onSmeltedEvent(PlayerEvent.ItemSmeltedEvent event) {
         //checkAchievements(event.smelting, event.player, InitAchievements.Type.SMELTING);
     }
 
+    //TODO im pretty sure this can be done with normal advancements...
     @SubscribeEvent
     public void onPickupEvent(EntityItemPickupEvent event) {
         //checkAchievements(event.getItem().getItem(), event.getEntityPlayer(), InitAchievements.Type.PICK_UP);
