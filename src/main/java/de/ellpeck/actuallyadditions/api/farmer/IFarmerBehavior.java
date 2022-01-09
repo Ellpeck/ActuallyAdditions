@@ -16,6 +16,7 @@ import de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 
 public interface IFarmerBehavior {
 
@@ -40,7 +41,7 @@ public interface IFarmerBehavior {
      * @param farmer The Farmer doing this action. Can be used to query and extract energy and add items to the slots
      * @return If harvesting was successful
      */
-    FarmerResult tryHarvestPlant(World world, BlockPos pos, IFarmer farmer);
+    FarmerResult tryHarvestPlant(ServerWorld world, BlockPos pos, IFarmer farmer);
 
     int getPriority();
 

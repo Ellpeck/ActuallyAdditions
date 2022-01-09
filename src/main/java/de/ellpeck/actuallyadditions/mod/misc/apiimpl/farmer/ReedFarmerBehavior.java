@@ -19,9 +19,15 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.SugarCaneBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.loot.LootContext;
+import net.minecraft.loot.LootParameters;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
+
+import java.util.List;
 
 public class ReedFarmerBehavior implements IFarmerBehavior {
 
@@ -42,7 +48,7 @@ public class ReedFarmerBehavior implements IFarmerBehavior {
     }
 
     @Override
-    public FarmerResult tryHarvestPlant(World world, BlockPos pos, IFarmer farmer) {
+    public FarmerResult tryHarvestPlant(ServerWorld world, BlockPos pos, IFarmer farmer) {
         int use = 250;
         if (farmer.getEnergy() >= use) {
             BlockState state = world.getBlockState(pos);
@@ -54,8 +60,9 @@ public class ReedFarmerBehavior implements IFarmerBehavior {
                         BlockPos up = pos.above(i);
                         BlockState upState = world.getBlockState(up);
                         if (upState.getBlock() instanceof SugarCaneBlock) {
-                            NonNullList<ItemStack> drops = NonNullList.create();
-                            //upState.getBlock().getDrops(drops, world, pos, state, 0);
+                            List<ItemStack> drops = state.getDrops(new LootContext.Builder(world)
+                                .withParameter(LootParameters.ORIGIN, new Vector3d(pos.getX(), pos.getY(), pos.getZ()))
+                                .withParameter(LootParameters.TOOL, ItemStack.EMPTY));
 
                             if (!drops.isEmpty()) {
                                 if (farmer.canAddToOutput(drops)) {

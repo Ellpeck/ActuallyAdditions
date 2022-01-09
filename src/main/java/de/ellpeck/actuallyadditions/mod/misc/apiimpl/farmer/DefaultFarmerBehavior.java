@@ -16,14 +16,14 @@ import de.ellpeck.actuallyadditions.api.internal.IFarmer;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.*;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.item.*;
 import net.minecraft.loot.LootContext;
+import net.minecraft.loot.LootParameters;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.IPlantable;
@@ -75,7 +75,7 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
     }
 
     @Override
-    public FarmerResult tryHarvestPlant(World world, BlockPos pos, IFarmer farmer) {
+    public FarmerResult tryHarvestPlant(ServerWorld world, BlockPos pos, IFarmer farmer) {
         int use = 250;
         if (farmer.getEnergy() >= use) {
             BlockState state = world.getBlockState(pos);
@@ -86,8 +86,8 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
                     return this.doFarmerStuff(state, world, pos, farmer);
                 }
             }
-            else if (state.hasProperty(BlockStateProperties.AGE_25)) {
-                if (state.getValue(BlockStateProperties.AGE_25) >= 7 && !(block instanceof StemBlock)) {
+            else if (state.hasProperty(BlockStateProperties.AGE_7)) {
+                if (state.getValue(BlockStateProperties.AGE_7) >= 7 && !(block instanceof StemBlock)) {
                     return this.doFarmerStuff(state, world, pos, farmer);
                 }
             }
@@ -95,11 +95,14 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
         return FarmerResult.FAIL;
     }
 
-    private FarmerResult doFarmerStuff(BlockState state, World world, BlockPos pos, IFarmer farmer) {
+    private FarmerResult doFarmerStuff(BlockState state, ServerWorld world, BlockPos pos, IFarmer farmer) {
         List<ItemStack> seeds = new ArrayList<>();
         List<ItemStack> other = new ArrayList<>();
-        NonNullList<ItemStack> drops = NonNullList.create();
-        //state.getBlock().getDrops(drops, world, pos, state, 0);
+        List<ItemStack> drops = state.getDrops(new LootContext.Builder(world)
+            .withParameter(LootParameters.ORIGIN, new Vector3d(pos.getX(), pos.getY(), pos.getZ()))
+            .withParameter(LootParameters.TOOL, ItemStack.EMPTY));
+        if (drops.isEmpty())
+            return FarmerResult.FAIL;
         for (ItemStack stack : drops) {
             if (this.getPlantableFromStack(stack) != null) {
                 seeds.add(stack);
@@ -172,39 +175,33 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
 
     public static ActionResultType useHoeAt(World world, BlockPos pos) {
 
-        PlayerEntity player = FakePlayerFactory.getMinecraft((ServerWorld) world);
+        PlayerEntity player = FakePlayerFactory.getMinecraft((ServerWorld) world); //TODO we need our own fakeplayer for the mod.
 
         ItemStack itemstack = getHoeStack();
 
         if (!player.mayUseItemAt(pos.relative(Direction.UP), Direction.UP, itemstack)) {
             return ActionResultType.FAIL;
         } else {
-/*            int hook = net.minecraftforge.event.ForgeEventFactory.onHoeUse(itemstack, player, world, pos);
+            ItemUseContext dummyContext = new ItemUseContext(world, player, Hand.MAIN_HAND, itemstack, new BlockRayTraceResult(new Vector3d(0.5, 0.5, 0.5), Direction.UP, pos, false));
+            int hook = net.minecraftforge.event.ForgeEventFactory.onHoeUse(dummyContext);
             if (hook != 0) {
                 return hook > 0
                     ? ActionResultType.SUCCESS
                     : ActionResultType.FAIL;
             }
 
-
             if (world.isEmptyBlock(pos.above())) {
+                Block block = world.getBlockState(pos).getBlock();
                 if (block == Blocks.GRASS || block == Blocks.GRASS_PATH) {
                     world.setBlockAndUpdate(pos, Blocks.FARMLAND.defaultBlockState());
                     return ActionResultType.SUCCESS;
                 }
 
-                if (block == Blocks.DIRT) {
-                    switch (iblockstate.getValue(BlockDirt.VARIANT)) {
-                        case DIRT:
-                            world.setBlockAndUpdate(pos, Blocks.FARMLAND.defaultBlockState());
-                            return ActionResultType.SUCCESS;
-                        case COARSE_DIRT:
-                            world.setBlockAndUpdate(pos, Blocks.DIRT.defaultBlockState().withProperty(BlockDirt.VARIANT, BlockDirt.DirtType.DIRT));
-                            return ActionResultType.SUCCESS;
-                        default:
-                    }
+                if (Tags.Blocks.DIRT.contains(block)) {
+                    world.setBlockAndUpdate(pos, Blocks.FARMLAND.defaultBlockState());
+                    return ActionResultType.SUCCESS;
                 }
-            }*/
+            }
             return ActionResultType.PASS;
         }
     }

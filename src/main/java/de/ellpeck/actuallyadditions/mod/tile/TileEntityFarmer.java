@@ -36,6 +36,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 
@@ -141,7 +142,7 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
         }
 
         for (IFarmerBehavior behavior : SORTED_FARMER_BEHAVIORS) {
-            FarmerResult harvestResult = behavior.tryHarvestPlant(this.level, query, this);
+            FarmerResult harvestResult = behavior.tryHarvestPlant((ServerWorld) level, query, this);
             if (harvestResult == FarmerResult.STOP_PROCESSING) {
                 return;
             }
