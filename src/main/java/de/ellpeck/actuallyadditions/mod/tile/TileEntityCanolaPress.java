@@ -46,7 +46,6 @@ import java.util.Optional;
 
 public class TileEntityCanolaPress extends TileEntityInventoryBase implements INamedContainerProvider, ISharingFluidHandler {
 
-    //public static final int PRODUCE = 80;
     public static final int ENERGY_USE = 35;
     private static final int TIME = 30;
     public final CustomEnergyStorage storage = new CustomEnergyStorage(40000, 100, 0);
@@ -63,10 +62,6 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IN
     public TileEntityCanolaPress() {
         super(ActuallyBlocks.CANOLA_PRESS.getTileEntityType(), 1);
     }
-
-//    public static boolean isCanola(ItemStack stack) {
-//        return stack.getItem() == ActuallyBlocks.CANOLA.getItem();
-//    }
 
     @OnlyIn(Dist.CLIENT)
     public int getTankScaled(int i) {

@@ -33,13 +33,13 @@ public class SolidFuelGenerator extends RecipeProvider {
 
     @Override
     protected void buildShapelessRecipes(@Nonnull Consumer<IFinishedRecipe> consumer) {
-        addFuel(consumer, "coal", Items.COAL, 48000, 1600);
-        addFuel(consumer, "stick", Items.STICK, 3000, 100);
-        addFuel(consumer, "tiny-coal", ActuallyTags.Items.TINY_COALS, 6000, 200);
-        addFuel(consumer, "charcoal", Items.CHARCOAL, 48000, 1600);
-        addFuel(consumer, "coal-block", Items.COAL_BLOCK, 480000, 16000);
-        addFuel(consumer, "charcoal-block", ActuallyBlocks.CHARCOAL_BLOCK.getItem(), 480000, 16000);
-        addFuel(consumer, "lava", Items.LAVA_BUCKET, 600000, 20000);
+        addFuel(consumer, "coal", Items.COAL, 32000, 1600);
+        addFuel(consumer, "stick", Items.STICK, 2000, 100);
+        addFuel(consumer, "tiny-coal", ActuallyTags.Items.TINY_COALS, 4000, 200);
+        addFuel(consumer, "charcoal", Items.CHARCOAL, 32000, 1600);
+        addFuel(consumer, "coal-block", Items.COAL_BLOCK, 320000, 16000);
+        addFuel(consumer, "charcoal-block", ActuallyBlocks.CHARCOAL_BLOCK.getItem(), 320000, 16000);
+        addFuel(consumer, "lava", Items.LAVA_BUCKET, 400000, 20000);
     }
 
     private void addFuel(Consumer<IFinishedRecipe> consumer, String name, Item item, int energy, int burnTime) {

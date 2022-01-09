@@ -10,7 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
+import de.ellpeck.actuallyadditions.mod.crafting.PressingRecipe;
 import de.ellpeck.actuallyadditions.mod.crafting.SingleItem;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFurnaceDouble;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
@@ -41,6 +43,7 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Optional;
 
 public class TileEntityPoweredFurnace extends TileEntityInventoryBase implements IButtonReactor, INamedContainerProvider {
 
@@ -184,9 +187,17 @@ public class TileEntityPoweredFurnace extends TileEntityInventoryBase implements
         }
     }
 
+    public boolean validInput(ItemStack stack) {
+        return getOutputForInput(stack).isPresent();
+    }
+
+    public Optional<ItemStack> getOutputForInput(ItemStack stack) {
+        return level.getServer().getRecipeManager().getRecipeFor(IRecipeType.SMELTING, new SingleItem(stack), level).map(AbstractCookingRecipe::getResultItem);
+    }
+
     @Override
     public IAcceptor getAcceptor() {
-        return (slot, stack, automation) -> !automation || (slot == SLOT_INPUT_1 || slot == SLOT_INPUT_2) && StackUtil.isValid(level.getServer().getRecipeManager().getRecipeFor(IRecipeType.SMELTING, new SingleItem(stack), this.level).map(AbstractCookingRecipe::getResultItem).orElse(ItemStack.EMPTY));
+        return (slot, stack, automation) -> !automation || (slot == SLOT_INPUT_1 || slot == SLOT_INPUT_2) && validInput(stack);
     }
 
     @Override
@@ -195,18 +206,20 @@ public class TileEntityPoweredFurnace extends TileEntityInventoryBase implements
     }
 
     public boolean canSmeltOn(int theInput, int theOutput) {
-        if (StackUtil.isValid(this.inv.getStackInSlot(theInput))) {
-            ItemStack output = level.getServer().getRecipeManager().getRecipeFor(IRecipeType.SMELTING, new Inventory(this.inv.getStackInSlot(theInput)), this.level).map(AbstractCookingRecipe::getResultItem).orElse(ItemStack.EMPTY);
-            if (StackUtil.isValid(output)) {
-                return !StackUtil.isValid(this.inv.getStackInSlot(theOutput)) || this.inv.getStackInSlot(theOutput).sameItem(output) && this.inv.getStackInSlot(theOutput).getCount() <= this.inv.getStackInSlot(theOutput).getMaxStackSize() - output.getCount();
+        ItemStack input = this.inv.getStackInSlot(theInput);
+        ItemStack output = this.inv.getStackInSlot(theOutput);
+        if (!input.isEmpty()) {
+            ItemStack outputStack = getOutputForInput(input).orElse(ItemStack.EMPTY);
+            if (!output.isEmpty()) {
+                return output.isEmpty() || output.sameItem(outputStack) && output.getCount() <= output.getMaxStackSize() - outputStack.getCount();
             }
         }
         return false;
     }
 
     public void finishBurning(int theInput, int theOutput) {
-        ItemStack output = level.getServer().getRecipeManager().getRecipeFor(IRecipeType.SMELTING, new Inventory(this.inv.getStackInSlot(theInput)), this.level).map(AbstractCookingRecipe::getResultItem).orElse(ItemStack.EMPTY);
-        if (!StackUtil.isValid(this.inv.getStackInSlot(theOutput))) {
+        ItemStack output = getOutputForInput(inv.getStackInSlot(theInput)).orElse(ItemStack.EMPTY);
+        if (inv.getStackInSlot(theOutput).isEmpty()) {
             this.inv.setStackInSlot(theOutput, output.copy());
         } else if (this.inv.getStackInSlot(theOutput).getItem() == output.getItem()) {
             this.inv.getStackInSlot(theOutput).grow(output.getCount());
