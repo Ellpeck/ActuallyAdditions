@@ -2,6 +2,7 @@ package de.ellpeck.actuallyadditions.data;
 
 import com.google.gson.JsonObject;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.crafting.FermentingRecipe;
 import de.ellpeck.actuallyadditions.mod.crafting.PressingRecipe;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
@@ -31,6 +32,9 @@ public class MiscMachineRecipeGenerator extends RecipeProvider {
     protected void buildShapelessRecipes(Consumer<IFinishedRecipe> consumer) {
         consumer.accept(new PressingRecipe.FinishedRecipe(folderRecipe("pressing", "canola"),
             Ingredient.of(ActuallyItems.CANOLA.get()), new FluidStack(InitFluids.CANOLA_OIL.get(), 80)));
+
+        consumer.accept(new FermentingRecipe.FinishedRecipe(folderRecipe("fermenting", "refined_canola"),
+            new FluidStack(InitFluids.CANOLA_OIL.get(), 80), new FluidStack(InitFluids.REFINED_CANOLA_OIL.get(), 80), 100));
     }
 
     private ResourceLocation folderRecipe(String folder, String recipe) {

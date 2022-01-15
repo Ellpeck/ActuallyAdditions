@@ -49,13 +49,11 @@ public class GuiFermentingBarrel extends AAScreen<ContainerFermentingBarrel> {
     @Override
     public void init() {
         super.init();
-        this.input = new FluidDisplay(this.leftPos + 60, this.topPos + 5, this.press.tanks.canolaTank);
-        this.output = new FluidDisplay(this.leftPos + 98, this.topPos + 5, this.press.tanks.oilTank);
-    }
+        this.input = new FluidDisplay(this.leftPos + 60, this.topPos + 5, this.press.tanks.inputTank);
+        this.output = new FluidDisplay(this.leftPos + 98, this.topPos + 5, this.press.tanks.outputTank);
 
-    @Override
-    public void renderLabels(@Nonnull MatrixStack matrices, int x, int y) {
-        AssetUtil.displayNameString(matrices, this.font, this.imageWidth, -10, this.press);
+        titleLabelX = (int) (imageWidth / 2.0f - font.width(title) / 2.0f);
+        titleLabelY = -10;
     }
 
     @Override

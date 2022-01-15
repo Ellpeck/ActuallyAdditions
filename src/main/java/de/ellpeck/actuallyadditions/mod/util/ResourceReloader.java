@@ -26,5 +26,8 @@ public class ResourceReloader implements IResourceManagerReloadListener {
 
         ActuallyAdditionsAPI.PRESSING_RECIPES.clear();
         ActuallyAdditionsAPI.PRESSING_RECIPES.addAll(recipeManager.getAllRecipesFor(ActuallyRecipes.Types.PRESSING));
+
+        ActuallyAdditionsAPI.FERMENTING_RECIPES.clear();
+        ActuallyAdditionsAPI.FERMENTING_RECIPES.addAll(recipeManager.getAllRecipesFor(ActuallyRecipes.Types.FERMENTING));
     }
 }
