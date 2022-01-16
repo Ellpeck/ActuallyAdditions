@@ -23,9 +23,11 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidTank;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.fml.client.gui.GuiUtils;
 
+import javax.annotation.Nonnull;
 import java.text.NumberFormat;
 import java.util.Collections;
 
@@ -43,12 +45,25 @@ public class FluidDisplay extends AbstractGui {
 
     private boolean drawTextNextTo;
 
+    private boolean drawCapacityInTooltip = true;
+
     public FluidDisplay(int x, int y, IFluidTank fluidReference, boolean outline, boolean drawTextNextTo) {
         this.setData(x, y, fluidReference, outline, drawTextNextTo);
     }
 
     public FluidDisplay(int x, int y, IFluidTank fluidReference) {
         this(x, y, fluidReference, false, false);
+    }
+
+    public FluidDisplay(int x, int y, FluidStack stack, int capacity, boolean drawCapacity) {
+        this.x = x;
+        this.y = y;
+        this.drawCapacityInTooltip = drawCapacity;
+        this.fluidReference = new DummyTank(stack, capacity);
+    }
+
+    public void setDrawCapacityInTooltip(boolean drawCapacityInTooltip) {
+        this.drawCapacityInTooltip = drawCapacityInTooltip;
     }
 
     public void setData(int x, int y, IFluidTank fluidReference, boolean outline, boolean drawTextNextTo) {
@@ -122,6 +137,54 @@ public class FluidDisplay extends AbstractGui {
         String cap = format.format(this.fluidReference.getCapacity());
         return stack.isEmpty()
             ? "0/" + cap + " mB"
-            : format.format(this.fluidReference.getFluidAmount()) + "/" + cap + " mB " + stack.getDisplayName().getString();
+            : format.format(this.fluidReference.getFluidAmount()) + (drawCapacityInTooltip?"/" + cap + " mB ":" mB ") + stack.getDisplayName().getString();
+    }
+
+    public static class DummyTank implements IFluidTank {
+        private final FluidStack fluid;
+        private final int capacity;
+
+        public DummyTank(FluidStack fluid, int capacity) {
+            this.fluid = fluid;
+            this.capacity = capacity;
+        }
+
+        @Nonnull
+        @Override
+        public FluidStack getFluid() {
+            return fluid;
+        }
+
+        @Override
+        public int getFluidAmount() {
+            return fluid.getAmount();
+        }
+
+        @Override
+        public int getCapacity() {
+            return capacity;
+        }
+
+        @Override
+        public boolean isFluidValid(FluidStack stack) {
+            return false;
+        }
+
+        @Override
+        public int fill(FluidStack resource, IFluidHandler.FluidAction action) {
+            return 0;
+        }
+
+        @Nonnull
+        @Override
+        public FluidStack drain(int maxDrain, IFluidHandler.FluidAction action) {
+            return FluidStack.EMPTY;
+        }
+
+        @Nonnull
+        @Override
+        public FluidStack drain(FluidStack resource, IFluidHandler.FluidAction action) {
+            return FluidStack.EMPTY;
+        }
     }
 }

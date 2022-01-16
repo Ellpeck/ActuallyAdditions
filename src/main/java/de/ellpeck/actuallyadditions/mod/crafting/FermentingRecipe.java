@@ -2,6 +2,7 @@ package de.ellpeck.actuallyadditions.mod.crafting;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.FluidDisplay;
 import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.inventory.IInventory;
@@ -19,13 +20,17 @@ import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Optional;
 
 public class FermentingRecipe implements IRecipe<IInventory> {
     public static final String NAME = "fermenting";
     private final ResourceLocation ID;
     private final FluidStack input;
     private final FluidStack output;
-    private int time;
+    private final int time;
+
+    private Optional<FluidDisplay> inputDisplay;
+    private Optional<FluidDisplay> outputDisplay;
 
     public FermentingRecipe(ResourceLocation ID, FluidStack input, FluidStack output, int timeIn) {
         this.ID = ID;
@@ -40,6 +45,22 @@ public class FermentingRecipe implements IRecipe<IInventory> {
 
     public boolean matches(FluidStack input, FluidStack output) {
         return input.isFluidEqual(this.input) && (output.isEmpty() || output.isFluidEqual(this.output) && input.getAmount() >= this.input.getAmount());
+    }
+
+    public Optional<FluidDisplay> getInputDisplay() {
+        return inputDisplay;
+    }
+
+    public void setInputDisplay(FluidDisplay inputDisplay) {
+        this.inputDisplay = Optional.of(inputDisplay);
+    }
+
+    public Optional<FluidDisplay> getOutputDisplay() {
+        return outputDisplay;
+    }
+
+    public void setOutputDisplay(FluidDisplay outputDisplay) {
+        this.outputDisplay = Optional.of(outputDisplay);
     }
 
     public int getTime() {

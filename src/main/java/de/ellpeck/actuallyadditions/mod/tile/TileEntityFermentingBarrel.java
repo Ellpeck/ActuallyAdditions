@@ -77,7 +77,9 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
             return;
 
         if (currentRecipe == null) {
-            this.currentRecipe = ActuallyAdditionsAPI.FERMENTING_RECIPES.stream().filter(recipe -> recipe.matches(this.tanks.getFluidInTank(0), this.tanks.getFluidInTank(1))).findFirst().orElse(null);
+            //No recipe currently selected, check for one every 20 ticks
+            if (ticksElapsed % 20 == 0)
+                this.currentRecipe = ActuallyAdditionsAPI.FERMENTING_RECIPES.stream().filter(recipe -> recipe.matches(this.tanks.getFluidInTank(0), this.tanks.getFluidInTank(1))).findFirst().orElse(null);
         } else {
             if (this.tanks.getFluidInTank(0).getAmount() >= currentRecipe.getInput().getAmount() &&
                 this.tanks.getFluidInTank(0).getFluid().isSame(currentRecipe.getInput().getFluid()) &&
@@ -154,6 +156,7 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
         return Direction.values();
     }
 
+    @Nonnull
     @Override
     public ITextComponent getDisplayName() {
         return new TranslationTextComponent("container.actuallyadditions.fermenting_barrel");
@@ -161,7 +164,7 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
 
     @Nullable
     @Override
-    public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity p_createMenu_3_) {
+    public Container createMenu(int windowId, @Nonnull PlayerInventory playerInventory, @Nonnull PlayerEntity p_createMenu_3_) {
         return new ContainerFermentingBarrel(windowId, playerInventory, this);
     }
 
@@ -174,9 +177,9 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
     }
 
 
-    public class FermentingBarrelMultiTank implements IFluidHandler {
+    public static class FermentingBarrelMultiTank implements IFluidHandler {
 
-        private int capacity = FluidAttributes.BUCKET_VOLUME * 2;
+        private final int capacity = FluidAttributes.BUCKET_VOLUME * 2;
         public FluidTank inputTank = new FluidTank(capacity);
         public FluidTank outputTank = new FluidTank(capacity);
 
