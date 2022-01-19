@@ -17,11 +17,13 @@ public class CommonConfig {
 
     public static class MACHINES {
         public static ForgeConfigSpec.IntValue FARMER_AREA;
+        public static ForgeConfigSpec.IntValue RECONSTRUCTOR_POWER;
 
         public static void build() {
             BUILDER.comment("Machine Settings").push("machineSettings");
 
             FARMER_AREA = BUILDER.comment("The size of the farmer's farming area.  Default is 9x9, must be an odd number.").defineInRange("farmerArea", 9, 1, Integer.MAX_VALUE);
+            RECONSTRUCTOR_POWER = BUILDER.comment("The amount of power the atomic reconstructor can store.").defineInRange("reconstructorPower", 300000, 300000, Integer.MAX_VALUE);
 
             BUILDER.pop();
         }

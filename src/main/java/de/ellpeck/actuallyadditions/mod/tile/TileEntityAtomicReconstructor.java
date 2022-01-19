@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.ILensItem;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
+import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.misc.SoundHandler;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
@@ -45,7 +46,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
 
     public TileEntityAtomicReconstructor() {
         super(ActuallyBlocks.ATOMIC_RECONSTRUCTOR.getTileEntityType(), 1);
-        int power = ConfigIntValues.RECONSTRUCTOR_POWER.getValue();
+        int power = CommonConfig.MACHINES.RECONSTRUCTOR_POWER.get();
         int recieve = MathHelper.ceil(power * 0.016666F);
         this.storage = new CustomEnergyStorage(power, recieve, 0);
         this.lazyEnergy = LazyOptional.of(() -> this.storage);
@@ -153,7 +154,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
 
     @Override
     public IAcceptor getAcceptor() {
-        return (slot, stack, automation) -> StackUtil.isValid(stack) && stack.getItem() instanceof ILensItem;
+        return (slot, stack, automation) -> !stack.isEmpty() && stack.getItem() instanceof ILensItem;
     }
 
     @Override

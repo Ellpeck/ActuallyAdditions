@@ -14,17 +14,29 @@ import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.internal.IMethodHandler;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
+import de.ellpeck.actuallyadditions.api.recipe.LensConversionRecipe;
+import de.ellpeck.actuallyadditions.mod.blocks.BlockLaserRelay;
+import de.ellpeck.actuallyadditions.mod.crafting.LaserRecipe;
+import de.ellpeck.actuallyadditions.mod.items.lens.LensRecipeHandler;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.Direction;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.vector.Vector3i;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class MethodHandler implements IMethodHandler {
 
@@ -71,12 +83,12 @@ public class MethodHandler implements IMethodHandler {
         for (int i = 0; i < effects.length; i++) {
             if (effects[i].getEffect() == effect.getEffect()) {
                 effects[i] = new EffectInstance(effects[i].getEffect(), effects[i].getDuration() + (addDur
-                        ? effect.getDuration()
-                        : 0), effects[i].getAmplifier() + (addAmp
-                        ? effect.getAmplifier() > 0
-                        ? effect.getAmplifier()
-                        : 1
-                        : 0));
+                    ? effect.getDuration()
+                    : 0), effects[i].getAmplifier() + (addAmp
+                    ? effect.getAmplifier() > 0
+                    ? effect.getAmplifier()
+                    : 1
+                    : 0));
             }
             this.addEffectToStack(stack, effects[i]);
         }
@@ -111,13 +123,13 @@ public class MethodHandler implements IMethodHandler {
             counter--;
         }
         return effects.size() > 0
-                ? effects.toArray(new EffectInstance[effects.size()])
-                : null;
+            ? effects.toArray(new EffectInstance[effects.size()])
+            : null;
     }
 
     @Override
     public boolean invokeConversionLens(BlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile) {
-/*        if (hitBlock != null) {
+        if (hitBlock != null) {
             int range = 1;
             int rangeX = 0;
             int rangeY = 0;
@@ -147,12 +159,12 @@ public class MethodHandler implements IMethodHandler {
                             if (state.getBlock() instanceof BlockLaserRelay) {
                                 continue;
                             }
-                            LensConversionRecipe recipe = LensRecipeHandler.findMatchingRecipe(new ItemStack(state.getBlock(), 1, state.getBlock().getMetaFromState(state)), tile.getLens());
-                            if (recipe != null && tile.getEnergy() >= recipe.getEnergyUsed()) {
-                                ItemStack output = recipe.getOutput();
-                                if (StackUtil.isValid(output)) {
+                            Optional<LaserRecipe> recipe = LaserRecipe.getRecipeForStack(new ItemStack(state.getBlock()));
+                            if (recipe.isPresent() && tile.getEnergy() >= recipe.get().getEnergy()) {
+                                ItemStack output = recipe.get().getResultItem().copy();
+                                if (!output.isEmpty()) {
                                     tile.getWorldObject().levelEvent(2001, pos, Block.getId(state));
-                                    recipe.transformHook(ItemStack.EMPTY, state, pos, tile);
+                                    //recipe.transformHook(ItemStack.EMPTY, state, pos, tile); //TODO empty method
                                     if (output.getItem() instanceof BlockItem) {
                                         Block toPlace = Block.byItem(output.getItem());
                                         BlockState state2Place = toPlace.defaultBlockState(); //.getStateForPlacement(tile.getWorldObject(), pos, facing, 0, 0, 0, output.getMetadata(), FakePlayerFactory.getMinecraft((WorldServer) tile.getWorldObject()), Hand.MAIN_HAND); //TODO
@@ -163,7 +175,7 @@ public class MethodHandler implements IMethodHandler {
                                         tile.getWorldObject().setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
                                     }
 
-                                    tile.extractEnergy(recipe.getEnergyUsed());
+                                    tile.extractEnergy(recipe.get().getEnergy());
                                     break;
                                 }
                             }
@@ -180,12 +192,12 @@ public class MethodHandler implements IMethodHandler {
             for (ItemEntity item : items) {
                 ItemStack stack = item.getItem();
                 if (item.isAlive() && StackUtil.isValid(stack) && !item.getPersistentData().getBoolean("aa_cnv")) {
-                    LensConversionRecipe recipe = LensRecipeHandler.findMatchingRecipe(stack, tile.getLens());
-                    if (recipe != null) {
-                        int itemsPossible = Math.min(tile.getEnergy() / recipe.getEnergyUsed(), stack.getCount());
+                    Optional<LaserRecipe> recipe = LaserRecipe.getRecipeForStack(stack);
+                    if (recipe.isPresent()) {
+                        int itemsPossible = Math.min(tile.getEnergy() / recipe.get().getEnergy(), stack.getCount());
 
                         if (itemsPossible > 0) {
-                            recipe.transformHook(item.getItem(), null, item.blockPosition(), tile);
+                            //recipe.transformHook(item.getItem(), null, item.blockPosition(), tile); //TODO empty method
                             item.remove();
 
                             if (stack.getCount() - itemsPossible > 0) {
@@ -196,21 +208,21 @@ public class MethodHandler implements IMethodHandler {
                                 tile.getWorldObject().addFreshEntity(inputLeft);
                             }
 
-                            ItemStack outputCopy = recipe.getOutput().copy();
+                            ItemStack outputCopy = recipe.get().getResultItem().copy();
                             outputCopy.setCount(itemsPossible);
 
                             ItemEntity newItem = new ItemEntity(tile.getWorldObject(), item.getX(), item.getY(), item.getZ(), outputCopy);
                             newItem.getPersistentData().putBoolean("aa_cnv", true);
                             tile.getWorldObject().addFreshEntity(newItem);
 
-                            tile.extractEnergy(recipe.getEnergyUsed() * itemsPossible);
+                            tile.extractEnergy(recipe.get().getEnergy() * itemsPossible);
                             break;
                         }
                     }
                 }
             }
             return !hitState.getBlock().isAir(hitState, tile.getWorldObject(), hitBlock);
-        }*/
+        }
         return false;
     }
 

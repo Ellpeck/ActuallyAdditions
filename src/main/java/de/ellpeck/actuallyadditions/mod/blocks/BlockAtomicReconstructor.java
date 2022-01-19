@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.api.lens.ILensItem;
 import de.ellpeck.actuallyadditions.mod.blocks.base.FullyDirectionalBlock;
 import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityFermentingBarrel;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.Lang;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
@@ -89,10 +90,16 @@ public class BlockAtomicReconstructor extends FullyDirectionalBlock.Container im
     }
 
     @Nullable
-    //@Override
-    public TileEntity newBlockEntity(IBlockReader worldIn) {
+    @Override
+    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
         return new TileEntityAtomicReconstructor();
     }
+
+    @Override
+    public boolean hasTileEntity(BlockState state) {
+        return true;
+    }
+
 
     //    public BlockState getBaseConstructorState() {
     //        return this.stateContainer.getBaseState().with(FACING, Direction.NORTH);

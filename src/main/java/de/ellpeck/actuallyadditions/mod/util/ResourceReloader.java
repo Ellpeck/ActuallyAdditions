@@ -3,10 +3,13 @@ package de.ellpeck.actuallyadditions.mod.util;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.mod.crafting.ActuallyRecipes;
+import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.RecipeManager;
 import net.minecraft.resources.DataPackRegistries;
 import net.minecraft.resources.IResourceManager;
 import net.minecraft.resources.IResourceManagerReloadListener;
+
+import java.util.List;
 
 @SuppressWarnings("deprecation")
 public class ResourceReloader implements IResourceManagerReloadListener {
@@ -29,5 +32,8 @@ public class ResourceReloader implements IResourceManagerReloadListener {
 
         ActuallyAdditionsAPI.FERMENTING_RECIPES.clear();
         ActuallyAdditionsAPI.FERMENTING_RECIPES.addAll(recipeManager.getAllRecipesFor(ActuallyRecipes.Types.FERMENTING));
+
+        ActuallyAdditionsAPI.CONVERSION_LASER_RECIPES.clear();
+        ActuallyAdditionsAPI.CONVERSION_LASER_RECIPES.addAll(recipeManager.getAllRecipesFor(ActuallyRecipes.Types.LASER));
     }
 }

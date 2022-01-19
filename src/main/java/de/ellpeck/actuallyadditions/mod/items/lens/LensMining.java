@@ -27,7 +27,7 @@ import java.util.List;
 
 public class LensMining extends Lens {
 
-    public static void init() {
+    public static void init() { //TODO ohhh boy
         ActuallyAdditionsAPI.addMiningLensStoneOre("oreCoal", 5000);
         ActuallyAdditionsAPI.addMiningLensNetherOre("oreNetherCoal", 5000);
         ActuallyAdditionsAPI.addMiningLensStoneOre("oreIron", 3000);

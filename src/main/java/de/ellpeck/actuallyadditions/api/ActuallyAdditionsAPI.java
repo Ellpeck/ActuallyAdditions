@@ -41,13 +41,15 @@ public final class ActuallyAdditionsAPI {
     public static final List<CrushingRecipe> CRUSHER_RECIPES = new ArrayList<>();
     public static final List<BallOfFurReturn> BALL_OF_FUR_RETURN_ITEMS = new ArrayList<>();
     //    public static final List<TreasureChestLoot> TREASURE_CHEST_LOOT = new ArrayList<>();
-    public static final List<LensConversionRecipe> RECONSTRUCTOR_LENS_CONVERSION_RECIPES = new ArrayList<>();
+    //public static final List<LensConversionRecipe> RECONSTRUCTOR_LENS_CONVERSION_RECIPES = new ArrayList<>();
     public static final List<EmpowererRecipe> EMPOWERER_RECIPES = new ArrayList<>();
     public static final Map<Item, IColorLensChanger> RECONSTRUCTOR_LENS_COLOR_CHANGERS = new HashMap<>();
 
     public static final List<SolidFuelRecipe> SOLID_FUEL_RECIPES = new ArrayList<>();
     public static final List<PressingRecipe> PRESSING_RECIPES = new ArrayList<>();
     public static final List<FermentingRecipe> FERMENTING_RECIPES = new ArrayList<>();
+    public static final List<LaserRecipe> CONVERSION_LASER_RECIPES = new ArrayList<>();
+
     /**
      * Farmer behaviors are sorted when first accessed, this will not be done until after loading, but do not add behaviors at runtime.
      */
@@ -260,12 +262,12 @@ public final class ActuallyAdditionsAPI {
      */
     @Deprecated
     public static void addReconstructorLensConversionRecipe(ItemStack input, ItemStack output, int energyUse, LensConversion type) {
-        RECONSTRUCTOR_LENS_CONVERSION_RECIPES.add(new LensConversionRecipe(input, output, energyUse, type));
+        //RECONSTRUCTOR_LENS_CONVERSION_RECIPES.add(new LensConversionRecipe(input, output, energyUse, type));
     }
 
     @Deprecated
     public static void addReconstructorLensConversionRecipe(ItemStack input, ItemStack output, int energyUse) {
-        addReconstructorLensConversionRecipe(input, output, energyUse, lensDefaultConversion);
+        //addReconstructorLensConversionRecipe(input, output, energyUse, lensDefaultConversion);
     }
 
     /**
@@ -279,11 +281,11 @@ public final class ActuallyAdditionsAPI {
      *                  Note how this always has to be the same instance of the lens type that the item also has for it to work!
      */
     public static void addReconstructorLensConversionRecipe(Ingredient input, ItemStack output, int energyUse, LensConversion type) {
-        RECONSTRUCTOR_LENS_CONVERSION_RECIPES.add(new LensConversionRecipe(input, output, energyUse, type));
+        //RECONSTRUCTOR_LENS_CONVERSION_RECIPES.add(new LensConversionRecipe(input, output, energyUse, type));
     }
 
     public static void addReconstructorLensConversionRecipe(Ingredient input, ItemStack output, int energyUse) {
-        addReconstructorLensConversionRecipe(input, output, energyUse, lensDefaultConversion);
+        //addReconstructorLensConversionRecipe(input, output, energyUse, lensDefaultConversion);
     }
 
     /**

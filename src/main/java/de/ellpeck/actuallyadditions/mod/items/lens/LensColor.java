@@ -58,7 +58,8 @@ public class LensColor extends Lens {
                 ItemStack returnStack = this.tryConvert(new ItemStack(block), hitState, hitBlock, tile);
                 if (returnStack != null && returnStack.getItem() instanceof BlockItem) {
                     Block toPlace = Block.byItem(returnStack.getItem());
-                    BlockState state2Place = toPlace.defaultBlockState(); //getStateForPlacement(tile.getWorldObject(), hitBlock, Direction.UP, 0, 0, 0, FakePlayerFactory.getMinecraft((ServerWorld) tile.getWorldObject()), Hand.MAIN_HAND); //TODO
+                    BlockState state2Place = toPlace.defaultBlockState();
+                    //getStateForPlacement(tile.getWorldObject(), hitBlock, Direction.UP, 0, 0, 0, FakePlayerFactory.getMinecraft((ServerWorld) tile.getWorldObject()), Hand.MAIN_HAND); //TODO
                     tile.getWorldObject().setBlock(hitBlock, state2Place, 2);
                     tile.extractEnergy(ENERGY_USE);
                 }

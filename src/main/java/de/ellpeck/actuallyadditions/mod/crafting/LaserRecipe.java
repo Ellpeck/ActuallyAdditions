@@ -1,6 +1,7 @@
 package de.ellpeck.actuallyadditions.mod.crafting;
 
 import com.google.gson.JsonObject;
+import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -16,6 +17,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import javax.annotation.Nullable;
+import java.util.Optional;
 
 
 public class LaserRecipe implements IRecipe<IInventory> {
@@ -37,8 +39,11 @@ public class LaserRecipe implements IRecipe<IInventory> {
     }
 
     public boolean matches(ItemStack itemStack, int energyIn) {
-
         return itemIngredient.test(itemStack) && (energyIn >= energy);
+    }
+
+    public boolean matches(ItemStack itemStack) {
+        return itemIngredient.test(itemStack);
     }
 
     //nah
@@ -75,6 +80,14 @@ public class LaserRecipe implements IRecipe<IInventory> {
     @Override
     public IRecipeType<?> getType() {
         return ActuallyRecipes.Types.LASER;
+    }
+
+    public static Optional<LaserRecipe> getRecipeForStack(ItemStack stack) {
+        return ActuallyAdditionsAPI.CONVERSION_LASER_RECIPES.stream().filter(recipe -> recipe.matches(stack)).findFirst();
+    }
+
+    public boolean validInput(ItemStack stack) {
+        return getRecipeForStack(stack).isPresent();
     }
 
     public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<LaserRecipe> {

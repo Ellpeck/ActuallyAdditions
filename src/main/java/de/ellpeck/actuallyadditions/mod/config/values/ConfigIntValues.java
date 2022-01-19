@@ -70,13 +70,6 @@ public enum ConfigIntValues {
             500,
             "The size of the booklet's large font in percent. Set to 0 to use defaults from the lang file."),
 
-    RECONSTRUCTOR_POWER(
-            "Atomic Reconstructor Power",
-            ConfigCategories.MACHINE_VALUES,
-            300000,
-            300000,
-            Integer.MAX_VALUE,
-            "The amount of power the atomic reconstructor can store."),
     MINING_LENS_USE(
             "Mining Lens Energy",
             ConfigCategories.MACHINE_VALUES,
