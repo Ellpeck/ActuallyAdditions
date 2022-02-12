@@ -239,7 +239,7 @@ public class MethodHandler implements IMethodHandler {
                     BlockPos hitBlock = tile.getPosition().relative(sideToManipulate, i + 1);
 
                     if (currentLens.invoke(tile.getWorldObject().getBlockState(hitBlock), hitBlock, tile) || i >= distance - 1) {
-                        TileEntityAtomicReconstructor.shootLaser(tile.getWorldObject(), tile.getX(), tile.getY(), tile.getZ(), hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), currentLens);
+                        TileEntityAtomicReconstructor.shootLaser(tile, tile.getWorldObject(), tile.getX(), tile.getY(), tile.getZ(), hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), currentLens);
                         break;
                     }
                 }

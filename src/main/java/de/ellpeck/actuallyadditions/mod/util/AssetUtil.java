@@ -12,23 +12,31 @@ package de.ellpeck.actuallyadditions.mod.util;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.blocks.render.RenderTypes;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketServerToClient;
 import de.ellpeck.actuallyadditions.mod.particle.ParticleBeam;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.IParticleData;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.vector.Matrix4f;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -226,11 +234,72 @@ public final class AssetUtil {
     @OnlyIn(Dist.CLIENT)
     public static void spawnLaserWithTimeClient(double startX, double startY, double startZ, double endX, double endY, double endZ, float[] color, int maxAge, double rotationTime, float size, float alpha) {
         Minecraft mc = Minecraft.getInstance();
+        TileEntity tile = mc.level.getBlockEntity(new BlockPos(startX, startY, startZ));
+        if(tile instanceof TileEntityAtomicReconstructor)
+            ((TileEntityAtomicReconstructor) tile).resetBeam(maxAge);
 
-        if (mc.player.distanceToSqr(startX, startY, startZ) <= 64 || mc.player.distanceToSqr(endX, endY, endZ) <= 64) {
+
+/*        if (mc.player.distanceToSqr(startX, startY, startZ) <= 64 || mc.player.distanceToSqr(endX, endY, endZ) <= 64) {
             Particle fx = new ParticleBeam(mc.level, startX, startY, startZ, endX, endY, endZ, color, maxAge, rotationTime, size, alpha);
             mc.level.addParticle((IParticleData) fx, startX, startY, startZ, 0, 0, 0);
+        }*/
+    }
+/*    @OnlyIn(Dist.CLIENT)
+    public static void renderLaser(MatrixStack matrixStack, IRenderTypeBuffer buffer, float x, float y, float z, float tx, float ty, float tz, float rotation, int color, float beamWidth) {
+
+
+    }*/
+
+    @OnlyIn(Dist.CLIENT)
+    public static void renderLaser(MatrixStack matrixStack, IRenderTypeBuffer buffer, float offX, float offY, float offZ, float yaw, float pitch, float length, float rotationTime, int color, float alpha, float beamWidth) {
+        World world = Minecraft.getInstance().level;
+        int r = (color >> 16) & 0xFF;
+        int g = (color >> 8) & 0xFF;
+        int b = color & 0xFF;
+        int a = (int) (alpha * 255);
+
+        int lightmap = LightTexture.pack(MAX_LIGHT_X, MAX_LIGHT_Y);
+
+        float roll = rotationTime > 0.0f ? 360.0f * (world.getGameTime() % rotationTime / rotationTime) : 0.0f;
+
+        IVertexBuilder builder = buffer.getBuffer(RenderTypes.LASER);
+        matrixStack.pushPose();
+        matrixStack.translate(0.5f, 0.5f, 0.5f);
+        matrixStack.translate(offX, offY, offZ);
+
+        matrixStack.mulPose(Vector3f.YP.rotationDegrees(yaw));
+        matrixStack.mulPose(Vector3f.XP.rotationDegrees(pitch));
+        matrixStack.mulPose(Vector3f.ZP.rotationDegrees(roll));
+
+        Matrix4f matrix = matrixStack.last().pose();
+
+        //Draw laser tube faces
+        for (int i = 0; i < 4; i++) {
+            float width = beamWidth * (i / 4.0f);
+            //top
+            builder.vertex(matrix, -width, width, 0.0f).color(r, g, b, a).uv2(lightmap).endVertex();
+            builder.vertex(matrix, width, width, 0.0f).color(r, g, b, a).uv2(lightmap).endVertex();
+            builder.vertex(matrix, width, width, -length).color(r, g, b, a).uv2(lightmap).endVertex();
+            builder.vertex(matrix, -width, width, -length).color(r, g, b, a).uv2(lightmap).endVertex();
+            //bottom
+            builder.vertex(matrix, -width, -width, 0.0f).color(r, g, b, a).uv2(lightmap).endVertex();
+            builder.vertex(matrix, -width, -width, -length).color(r, g, b, a).uv2(lightmap).endVertex();
+            builder.vertex(matrix, width, -width, -length).color(r, g, b, a).uv2(lightmap).endVertex();
+            builder.vertex(matrix, width, -width, 0.0f).color(r, g, b, a).uv2(lightmap).endVertex();
+            //left
+            builder.vertex(matrix, -width, width, 0.0f).color(r, g, b, a).uv2(lightmap).endVertex();
+            builder.vertex(matrix, -width, -width, 0.0f).color(r, g, b, a).uv2(lightmap).endVertex();
+            builder.vertex(matrix, -width, -width, -length).color(r, g, b, a).uv2(lightmap).endVertex();
+            builder.vertex(matrix, -width, width, -length).color(r, g, b, a).uv2(lightmap).endVertex();
+            //right
+            builder.vertex(matrix, width, width, 0.0f).color(r, g, b, a).uv2(lightmap).endVertex();
+            builder.vertex(matrix, width, -width, 0.0f).color(r, g, b, a).uv2(lightmap).endVertex();
+            builder.vertex(matrix, width, -width, -length).color(r, g, b, a).uv2(lightmap).endVertex();
+            builder.vertex(matrix, width, width, -length).color(r, g, b, a).uv2(lightmap).endVertex();
         }
+
+
+        matrixStack.popPose();
     }
 
     //Thanks to feldim2425 for this.

@@ -87,7 +87,7 @@ public class ActuallyAdditionsClient {
     }
 
     private static void setupSpecialRenders() {
-        ClientRegistry.bindTileEntityRenderer(ActuallyBlocks.ATOMIC_RECONSTRUCTOR.getTileEntityType(), RenderReconstructorLens::new);
+        ClientRegistry.bindTileEntityRenderer(ActuallyBlocks.ATOMIC_RECONSTRUCTOR.getTileEntityType(), ReconstructorRenderer::new);
         ClientRegistry.bindTileEntityRenderer(ActuallyBlocks.DISPLAY_STAND.getTileEntityType(), RenderDisplayStand::new);
         ClientRegistry.bindTileEntityRenderer(ActuallyBlocks.EMPOWERER.getTileEntityType(), RenderEmpowerer::new);
         ClientRegistry.bindTileEntityRenderer(ActuallyBlocks.BATTERY_BOX.getTileEntityType(), RenderBatteryBox::new);

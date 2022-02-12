@@ -43,6 +43,8 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     public int counter;
     private int currentTime;
     private int oldEnergy;
+    private int ttl = 0;
+    private int maxAge = 0;
 
     public TileEntityAtomicReconstructor() {
         super(ActuallyBlocks.ATOMIC_RECONSTRUCTOR.getTileEntityType(), 1);
@@ -52,9 +54,32 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
         this.lazyEnergy = LazyOptional.of(() -> this.storage);
     }
 
-    public static void shootLaser(World world, double startX, double startY, double startZ, double endX, double endY, double endZ, Lens currentLens) {
+    public static void shootLaser(IAtomicReconstructor tile, World world, double startX, double startY, double startZ, double endX, double endY, double endZ, Lens currentLens) {
         world.playSound(null, startX, startY, startZ, SoundHandler.reconstructor, SoundCategory.BLOCKS, 0.35F, 1.0F);
         AssetUtil.spawnLaserWithTimeServer(world, startX, startY, startZ, endX, endY, endZ, currentLens.getColor(), 25, 0, 0.2F, 0.8F);
+    }
+
+    @Override
+    public int getTTL() {
+        return this.ttl;
+    }
+
+    @Override
+    public void resetBeam(int maxAge) {
+        this.ttl = maxAge;
+        this.maxAge = maxAge;
+    }
+
+    public float getProgress(){
+        if (maxAge > 0)
+            return (float)ttl / (float)maxAge;
+        else
+            return 0.0f;
+    }
+
+    public void decTTL() {
+        if (this.ttl > 0)
+            this.ttl--;
     }
 
     @Override
