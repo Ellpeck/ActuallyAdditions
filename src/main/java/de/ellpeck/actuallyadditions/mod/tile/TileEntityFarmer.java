@@ -62,7 +62,6 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
 
     @Override
     public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
-        super.writeSyncableNBT(compound, type);
         if (type != NBTType.SAVE_BLOCK) {
             compound.putInt("WaitTime", this.waitTime);
         }
@@ -71,11 +70,11 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
             compound.putInt("CheckY", this.checkY);
         }
         this.storage.writeToNBT(compound);
+        super.writeSyncableNBT(compound, type);
     }
 
     @Override
     public void readSyncableNBT(CompoundNBT compound, NBTType type) {
-        super.readSyncableNBT(compound, type);
         if (type != NBTType.SAVE_BLOCK) {
             this.waitTime = compound.getInt("WaitTime");
         }
@@ -84,6 +83,7 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
             this.checkY = compound.getInt("CheckY");
         }
         this.storage.readFromNBT(compound);
+        super.readSyncableNBT(compound, type);
     }
 
     @Override
