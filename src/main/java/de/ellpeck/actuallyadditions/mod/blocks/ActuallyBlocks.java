@@ -152,9 +152,9 @@ public final class ActuallyBlocks {
     public static final AABlockReg<BlockColoredLamp, AABlockItem, ?> LAMP_BLACK = new AABlockReg<>("lamp_black", BlockColoredLamp::new, (b) -> new AABlockItem(b, defaultBlockItemProperties));
 
     // Empowerer / Display Stands
-    public static final AABlockReg<BlockEmpowerer, AABlockItem, TileEntityEmpowerer> EMPOWERER = new AABlockReg<>("empowerer", BlockEmpowerer::new,
+    public static final AABlockReg<BlockDisplayStand, AABlockItem, TileEntityEmpowerer> EMPOWERER = new AABlockReg<>("empowerer", () -> new BlockDisplayStand(true),
         (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityEmpowerer::new);
-    public static final AABlockReg<BlockDisplayStand, AABlockItem, TileEntityDisplayStand> DISPLAY_STAND = new AABlockReg<>("display_stand", BlockDisplayStand::new,
+    public static final AABlockReg<BlockDisplayStand, AABlockItem, TileEntityDisplayStand> DISPLAY_STAND = new AABlockReg<>("display_stand", () -> new BlockDisplayStand(false),
         (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityDisplayStand::new);
 
     // Interface Blocks

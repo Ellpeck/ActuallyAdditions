@@ -32,6 +32,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Matrix4f;
@@ -419,6 +420,25 @@ public final class AssetUtil {
         GlStateManager._disableBlend();
         GlStateManager._enableLighting();
         GlStateManager._popMatrix();
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public static void renderTextInWorld(MatrixStack matrixStack, double offsetX, double offsetY, double offsetZ, NonNullList<String> text, int color) {
+        matrixStack.pushPose();
+        matrixStack.translate(offsetX,offsetY,offsetZ);
+        matrixStack.scale(-1, -1, 1);
+        matrixStack.mulPose(Vector3f.YP.rotationDegrees(Minecraft.getInstance().cameraEntity.yRot));
+        matrixStack.scale(0.01F, 0.01F, 0.01F);
+
+        FontRenderer font = Minecraft.getInstance().font;
+
+        int y = 0;
+        for (String s : text) {
+            font.draw(matrixStack, s, 0, y, color);
+            y+= 10;
+        }
+
+        matrixStack.popPose();
     }
 
     public static float[] getWheelColor(float pos) {

@@ -12,6 +12,8 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityDisplayStand;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityEmpowerer;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityInventoryBase;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.BlockState;
@@ -31,47 +33,60 @@ import javax.annotation.Nullable;
 
 public class BlockDisplayStand extends BlockContainerBase {
 
-    public BlockDisplayStand() {
+    public BlockDisplayStand(boolean empowerer) {
         super(ActuallyBlocks.defaultPickProps(0));
+        isEmpowerer = empowerer;
+    }
+
+    private final boolean isEmpowerer;
+
+    public boolean isEmpowerer() {
+        return this.isEmpowerer;
     }
 
     @Nullable
-    //@Override
-    public TileEntity newBlockEntity(IBlockReader worldIn) {
-        return new TileEntityDisplayStand();
+    @Override
+    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+        return isEmpowerer? new TileEntityEmpowerer(): new TileEntityDisplayStand();
+    }
+
+    @Override
+    public boolean hasTileEntity(BlockState state) {
+        return true;
     }
 
     @Override
     public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
         ItemStack heldItem = player.getItemInHand(hand);
         if (!world.isClientSide) {
-            TileEntityDisplayStand stand = (TileEntityDisplayStand) world.getBlockEntity(pos);
+            TileEntityInventoryBase stand = (TileEntityInventoryBase) world.getBlockEntity(pos);
             if (stand != null) {
-                ItemStack display = stand.inv.getStackInSlot(0);
-                if (StackUtil.isValid(heldItem)) {
-                    if (!StackUtil.isValid(display)) {
+                ItemStack stackThere = stand.inv.getStackInSlot(0);
+                if (!heldItem.isEmpty()) {
+                    if (stackThere.isEmpty() && (!isEmpowerer || TileEntityEmpowerer.isPossibleInput(heldItem))) {
                         ItemStack toPut = heldItem.copy();
                         toPut.setCount(1);
                         stand.inv.setStackInSlot(0, toPut);
                         if (!player.isCreative()) {
                             heldItem.shrink(1);
                         }
-                        return ActionResultType.PASS;
-                    } else if (ItemUtil.canBeStacked(heldItem, display)) {
-                        int maxTransfer = Math.min(display.getCount(), heldItem.getMaxStackSize() - heldItem.getCount());
+                        return ActionResultType.CONSUME;
+                    } else if (ItemUtil.canBeStacked(heldItem, stackThere)) {
+                        int maxTransfer = Math.min(stackThere.getCount(), heldItem.getMaxStackSize() - heldItem.getCount());
                         if (maxTransfer > 0) {
-                            heldItem.grow(maxTransfer);
-                            ItemStack newDisplay = display.copy();
-                            newDisplay.shrink(maxTransfer);
-                            stand.inv.setStackInSlot(0, newDisplay);
-                            return ActionResultType.PASS;
+                            if (!player.isCreative())
+                                player.setItemInHand(hand, StackUtil.grow(heldItem, maxTransfer));
+                            ItemStack newStackThere = stackThere.copy();
+                            newStackThere.shrink(maxTransfer);
+                            stand.inv.setStackInSlot(0, newStackThere);
+                            return ActionResultType.CONSUME;
                         }
                     }
                 } else {
-                    if (StackUtil.isValid(display)) {
-                        player.setItemInHand(hand, display.copy());
-                        stand.inv.setStackInSlot(0, StackUtil.getEmpty());
-                        return ActionResultType.PASS;
+                    if (!stackThere.isEmpty() && hand == Hand.MAIN_HAND) {
+                        player.setItemInHand(hand, stackThere.copy());
+                        stand.inv.setStackInSlot(0, ItemStack.EMPTY);
+                        return ActionResultType.CONSUME;
                     }
                 }
             }

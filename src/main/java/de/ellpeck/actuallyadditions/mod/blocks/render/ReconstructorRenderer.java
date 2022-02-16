@@ -23,6 +23,7 @@ import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.vector.Quaternion;
 
 public class ReconstructorRenderer extends TileEntityRenderer<TileEntityAtomicReconstructor> {

@@ -22,6 +22,7 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.vector.Quaternion;
+import net.minecraft.util.math.vector.Vector3f;
 
 public class RenderDisplayStand extends TileEntityRenderer<TileEntityDisplayStand> {
     public RenderDisplayStand(TileEntityRendererDispatcher rendererDispatcherIn) {
@@ -38,9 +39,9 @@ public class RenderDisplayStand extends TileEntityRenderer<TileEntityDisplayStan
         matrices.pushPose();
         matrices.translate(0.5F, 1F, 0.5F);
 
-        double boop = Util.getMillis() / 800D;
+        float boop = Util.getMillis() / 800F;
         matrices.translate(0D, Math.sin(boop % (2 * Math.PI)) * 0.065, 0D);
-        matrices.mulPose(new Quaternion((float) (boop * 40D % 360), 0, 1, 0));
+        matrices.mulPose(Vector3f.YP.rotationDegrees(boop * 40F % 360.0F));
 
         float scale = stack.getItem() instanceof BlockItem
             ? 0.85F
