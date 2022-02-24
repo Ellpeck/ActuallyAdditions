@@ -11,7 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.blocks;
 
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBase;
-import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.SoundType;
@@ -28,24 +27,6 @@ import java.util.Random;
 public class BlockGreenhouseGlass extends BlockBase {
     public BlockGreenhouseGlass() {
         super(ActuallyBlocks.defaultPickProps(0, 0.5F, 10.0F).sound(SoundType.GLASS).randomTicks());
-    }
-
-
-    // TODO: [port] figure this out
-    //    @Override
-    //    @Deprecated
-    //    @OnlyIn(Dist.CLIENT)
-    //    public boolean shouldSideBeRendered(BlockState state, IBlockAccess world, BlockPos pos, Direction side) {
-    //        BlockState otherState = world.getBlockState(pos.offset(side));
-    //        Block block = otherState.getBlock();
-    //
-    //        return state != otherState || block != this && super.shouldSideBeRendered(state, world, pos, side);
-    //    }
-
-
-    @Override
-    public BlockRenderType getRenderShape(BlockState state) {
-        return BlockRenderType.INVISIBLE;
     }
 
     @Override
