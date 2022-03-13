@@ -200,7 +200,7 @@ public class ClientEvents {
                         if (StackUtil.isValid(stack) && stack.getItem() == ConfigValues.itemRedstoneTorchConfigurator) {
                             expl = TextFormatting.GREEN + StringUtil.localize("info." + ActuallyAdditions.MODID + ".redstoneMode.validItem");
                         } else {
-                                expl = TextFormatting.GRAY.toString() + TextFormatting.ITALIC + StringUtil.localizeFormatted("info." + ActuallyAdditions.MODID + ".redstoneMode.invalidItem", StringUtil.localize(CommonConfig.OTHER.redstoneConfigureItem.getDescriptionId() + ".name"));
+                                expl = TextFormatting.GRAY.toString() + TextFormatting.ITALIC + StringUtil.localizeFormatted("info." + ActuallyAdditions.MODID + ".redstoneMode.invalidItem", StringUtil.localize(CommonConfig.Other.redstoneConfigureItem.getDescriptionId() + ".name"));
                         }
                         font.drawShadow(event.getMatrixStack(), expl, event.getWindow().getGuiScaledWidth() / 2f + 5, event.getWindow().getGuiScaledHeight() / 2f + 15, StringUtil.DECIMAL_COLOR_WHITE);
                     }

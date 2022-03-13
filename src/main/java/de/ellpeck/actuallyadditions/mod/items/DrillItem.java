@@ -13,7 +13,7 @@ package de.ellpeck.actuallyadditions.mod.items;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
+import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerDrill;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityInventoryBase;
@@ -458,7 +458,7 @@ public class DrillItem extends ItemEnergy {
             if (location != null) {
                 String name = location.toString();
                 if (name != null) {
-                    for (String s : ConfigStringListValues.DRILL_EXTRA_MINING_WHITELIST.getValue()) {
+                    for (String s : CommonConfig.ItemSettings.DRILL_EXTRA_MINING_WHITELIST.get()) {
                         if (s != null && s.equals(name)) {
                             return true;
                         }

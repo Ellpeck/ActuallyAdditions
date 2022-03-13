@@ -35,7 +35,7 @@ public class LensDisruption extends Lens {
 
     @Override
     public boolean invoke(BlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile) {
-        if (CommonConfig.OTHER.ELEVEN.get() == 11 && tile.getEnergy() >= ENERGY_USE && hitBlock != null && !hitState.getBlock().isAir(hitState, tile.getWorldObject(), hitBlock)) {
+        if (CommonConfig.Other.ELEVEN.get() == 11 && tile.getEnergy() >= ENERGY_USE && hitBlock != null && !hitState.getBlock().isAir(hitState, tile.getWorldObject(), hitBlock)) {
             int range = 2;
             ArrayList<ItemEntity> items = (ArrayList<ItemEntity>) tile.getWorldObject().getEntitiesOfClass(ItemEntity.class, new AxisAlignedBB(hitBlock.getX() - range, hitBlock.getY() - range, hitBlock.getZ() - range, hitBlock.getX() + range, hitBlock.getY() + range, hitBlock.getZ() + range));
             for (ItemEntity item : items) {

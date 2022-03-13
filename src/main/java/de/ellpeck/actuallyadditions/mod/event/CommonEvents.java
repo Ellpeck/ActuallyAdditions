@@ -166,7 +166,7 @@ public class CommonEvents {
     public void onCraftedEvent(PlayerEvent.ItemCraftedEvent event) {
         //checkAchievements(event.crafting, event.player, InitAchievements.Type.CRAFTING);
 
-        if (CommonConfig.OTHER.GIVE_BOOKLET_ON_FIRST_CRAFT.get()) {
+        if (CommonConfig.Other.GIVE_BOOKLET_ON_FIRST_CRAFT.get()) {
             if (!event.getPlayer().level.isClientSide && StackUtil.isValid(event.getCrafting()) && event.getCrafting().getItem() != ActuallyItems.ITEM_BOOKLET.get()) {
 
                 String name = event.getCrafting().getItem().getRegistryName().toString();

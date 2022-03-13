@@ -16,11 +16,9 @@ import de.ellpeck.actuallyadditions.api.lens.ILensItem;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
-import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.misc.SoundHandler;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
-import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.Item;
@@ -32,8 +30,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
-
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
 
 public class TileEntityAtomicReconstructor extends TileEntityInventoryBase implements IEnergyDisplay, IAtomicReconstructor {
 
@@ -48,7 +44,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
 
     public TileEntityAtomicReconstructor() {
         super(ActuallyBlocks.ATOMIC_RECONSTRUCTOR.getTileEntityType(), 1);
-        int power = CommonConfig.MACHINES.RECONSTRUCTOR_POWER.get();
+        int power = CommonConfig.Machines.RECONSTRUCTOR_POWER.get();
         int recieve = MathHelper.ceil(power * 0.016666F);
         this.storage = new CustomEnergyStorage(power, recieve, 0);
         this.lazyEnergy = LazyOptional.of(() -> this.storage);

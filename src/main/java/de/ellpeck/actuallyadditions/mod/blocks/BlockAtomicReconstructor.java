@@ -15,7 +15,6 @@ import de.ellpeck.actuallyadditions.api.lens.ILensItem;
 import de.ellpeck.actuallyadditions.mod.blocks.base.FullyDirectionalBlock;
 import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityFermentingBarrel;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.Lang;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
@@ -73,7 +72,7 @@ public class BlockAtomicReconstructor extends FullyDirectionalBlock.Container im
                         player.inventory.removeItem(player.inventory.selected, 1);
                     }
                     //Shush, don't tell anyone!
-                    else if (CommonConfig.OTHER.ELEVEN.get() == 11 && item == Items.MUSIC_DISC_11) {
+                    else if (CommonConfig.Other.ELEVEN.get() == 11 && item == Items.MUSIC_DISC_11) {
                         reconstructor.counter++;
                         reconstructor.setChanged();
                     }

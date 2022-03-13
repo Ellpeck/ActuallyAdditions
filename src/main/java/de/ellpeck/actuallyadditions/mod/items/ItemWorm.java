@@ -23,7 +23,6 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -68,7 +67,7 @@ public class ItemWorm extends ItemBase {
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public void onHoe(UseHoeEvent event) {
-        if (CommonConfig.OTHER.WORMS.get() && event.getResult() != Event.Result.DENY) {
+        if (CommonConfig.Other.WORMS.get() && event.getResult() != Event.Result.DENY) {
             World world = event.getEntity().level;
             if (!world.isClientSide) {
                 BlockPos pos = event.getContext().getClickedPos();

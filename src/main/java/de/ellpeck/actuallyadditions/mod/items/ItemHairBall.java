@@ -19,7 +19,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -42,9 +41,9 @@ public class ItemHairBall extends ItemBase {
     @SubscribeEvent
     public void livingUpdateEvent(LivingEvent.LivingUpdateEvent event) {
         //Ocelots dropping Hair Balls
-        if (CommonConfig.OTHER.DO_CAT_DROPS.get() && event.getEntityLiving() != null && event.getEntityLiving().level != null && !event.getEntityLiving().level.isClientSide) {
+        if (CommonConfig.Other.DO_CAT_DROPS.get() && event.getEntityLiving() != null && event.getEntityLiving().level != null && !event.getEntityLiving().level.isClientSide) {
             if (event.getEntityLiving() instanceof OcelotEntity && catIsTamedReflection((OcelotEntity) event.getEntityLiving()) || event.getEntityLiving() instanceof PlayerEntity && event.getEntityLiving().getUUID().equals(this.KittyVanCatUUID)) {
-                if (event.getEntityLiving().level.random.nextInt(CommonConfig.OTHER.FUR_CHANCE.get()) == 0) {
+                if (event.getEntityLiving().level.random.nextInt(CommonConfig.Other.FUR_CHANCE.get()) == 0) {
                     ItemEntity item = new ItemEntity(event.getEntityLiving().level, event.getEntityLiving().getX() + 0.5, event.getEntityLiving().getY() + 0.5, event.getEntityLiving().getZ() + 0.5, new ItemStack(ActuallyItems.HAIRY_BALL.get()));
                     event.getEntityLiving().level.addFreshEntity(item);
                 }

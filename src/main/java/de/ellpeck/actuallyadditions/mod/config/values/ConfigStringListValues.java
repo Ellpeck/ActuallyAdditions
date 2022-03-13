@@ -49,11 +49,7 @@ public enum ConfigStringListValues {
             ConfigCategories.TOOL_VALUES,
             new String[] { "TConstruct:GravelOre" },
             "By default, the AIOT can mine certain blocks. If there is one that it can't mine, but should be able to, put its REGISTRY NAME here. These are the actual registered Item Names, the ones you use, for example, when using the /give Command."),
-    DRILL_EXTRA_MINING_WHITELIST(
-            "Drill Extra Whitelist",
-            ConfigCategories.TOOL_VALUES,
-            new String[] { "TConstruct:GravelOre" },
-            "By default, the Drill can mine certain blocks. If there is one that it can't mine, but should be able to, put its REGISTRY NAME here. These are the actual registered Item Names, the ones you use, for example, when using the /give Command."),
+
     MINER_EXTRA_WHITELIST(
             "Vertical Digger Extra Whitelist",
             ConfigCategories.MACHINE_VALUES,

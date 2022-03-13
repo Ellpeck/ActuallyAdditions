@@ -2,20 +2,39 @@ package de.ellpeck.actuallyadditions.mod.config;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ForgeConfigSpec;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CommonConfig {
     private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
     public static ForgeConfigSpec COMMON_CONFIG;
 
     static {
-        OTHER.build();
-        MACHINES.build();
+        Other.build();
+        Machines.build();
+        ItemSettings.build();
         COMMON_CONFIG = BUILDER.build();
     }
 
-    public static class MACHINES {
+    public static class ItemSettings {
+        public static ForgeConfigSpec.ConfigValue<List<String>> DRILL_EXTRA_MINING_WHITELIST;
+
+        public static void build() {
+            BUILDER.comment("Item settings").push("itemsSettings");
+
+            DRILL_EXTRA_MINING_WHITELIST = BUILDER
+                    .comment("By default, the Drill can mine certain blocks. If there is one that it can't mine, but should be able to, put its REGISTRY NAME here. These are the actual registered Item Names, the ones you use, for example, when using the /give Command.")
+                    .define("Drill Extra Whitelist", new ArrayList<String>() {{
+                        add("TConstruct:GravelOre");
+                    }});
+
+            BUILDER.pop();
+        }
+    }
+
+    public static class Machines {
         public static ForgeConfigSpec.IntValue FARMER_AREA;
         public static ForgeConfigSpec.IntValue RECONSTRUCTOR_POWER;
 
@@ -29,8 +48,7 @@ public class CommonConfig {
         }
     }
 
-
-    public static class OTHER {
+    public static class Other {
         public static ForgeConfigSpec.BooleanValue SOLID_XP_ALWAYS_ORBS;
         public static ForgeConfigSpec.BooleanValue DO_UPDATE_CHECK;
         public static ForgeConfigSpec.BooleanValue UPDATE_CHECK_VERSION_SPECIFIC;

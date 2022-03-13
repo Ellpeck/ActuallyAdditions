@@ -104,7 +104,7 @@ public class EntityWorm extends Entity {
                 }
             }
 
-            int dieTime = CommonConfig.OTHER.WORMS_DIE_TIME.get();
+            int dieTime = CommonConfig.Other.WORMS_DIE_TIME.get();
             if (dieTime > 0 && this.timer >= dieTime) {
                 this.removeAfterChangingDimensions();
             }

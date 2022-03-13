@@ -31,7 +31,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -46,7 +45,7 @@ public class ItemWaterBowl extends ItemBase {
     @SubscribeEvent
     public void onPlayerInteractEvent(PlayerInteractEvent.RightClickItem event) {
         if (event.getWorld() != null) {
-            if (CommonConfig.OTHER.WATER_BOWL.get()) {
+            if (CommonConfig.Other.WATER_BOWL.get()) {
                 if (StackUtil.isValid(event.getItemStack()) && event.getItemStack().getItem() == Items.BOWL) {
                     RayTraceResult rayTrace = WorldUtil.getNearestBlockWithDefaultReachDistance(event.getWorld(), event.getPlayer(), true, false, false);
                     if (rayTrace.getType() != RayTraceResult.Type.BLOCK) {
@@ -126,7 +125,7 @@ public class ItemWaterBowl extends ItemBase {
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
         if (!world.isClientSide) {
-            if (CommonConfig.OTHER.WATER_BOWL_LOSS.get()) {
+            if (CommonConfig.Other.WATER_BOWL_LOSS.get()) {
                 if (world.getGameTime() % 10 == 0 && world.random.nextFloat() >= 0.5F) {
                     int lastX = 0;
                     int lastY = 0;

@@ -35,7 +35,7 @@ public class ThreadUpdateChecker extends Thread {
             updateProperties.load(new InputStreamReader(newestURL.openStream()));
 
             String currentMcVersion = Util.getMcVersion();
-            if (CommonConfig.OTHER.UPDATE_CHECK_VERSION_SPECIFIC.get()) {
+            if (CommonConfig.Other.UPDATE_CHECK_VERSION_SPECIFIC.get()) {
                 String newestVersionProp = updateProperties.getProperty(currentMcVersion);
 
                 UpdateChecker.updateVersionInt = Integer.parseInt(newestVersionProp);

@@ -23,7 +23,6 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -70,7 +69,7 @@ public class ItemSolidifiedExperience extends ItemBase {
                 }
             }
 
-            if (CommonConfig.OTHER.SOLID_XP_ALWAYS_ORBS.get() || player instanceof FakePlayer) {
+            if (CommonConfig.Other.SOLID_XP_ALWAYS_ORBS.get() || player instanceof FakePlayer) {
                 ExperienceOrbEntity orb = new ExperienceOrbEntity(world, player.getX() + 0.5, player.getY() + 0.5, player.getZ() + 0.5, amount);
                 orb.getPersistentData().putBoolean(ActuallyAdditions.MODID + "FromSolidified", true);
                 world.addFreshEntity(orb);

@@ -141,10 +141,10 @@ public class ActuallyAdditions {
     }
 
     private void onConfigReload(ModConfig.ModConfigEvent event) {
-        Item item1 = ForgeRegistries.ITEMS.getValue(new ResourceLocation(CommonConfig.OTHER.REDSTONECONFIGURATOR.get()));
-        Item item2 = ForgeRegistries.ITEMS.getValue(new ResourceLocation(CommonConfig.OTHER.RELAYCONFIGURATOR.get()));
-        CommonConfig.OTHER.redstoneConfigureItem = item1 != null?item1: Items.AIR;
-        CommonConfig.OTHER.relayConfigureItem = item2 != null?item2: Items.AIR;
+        Item item1 = ForgeRegistries.ITEMS.getValue(new ResourceLocation(CommonConfig.Other.REDSTONECONFIGURATOR.get()));
+        Item item2 = ForgeRegistries.ITEMS.getValue(new ResourceLocation(CommonConfig.Other.RELAYCONFIGURATOR.get()));
+        CommonConfig.Other.redstoneConfigureItem = item1 != null?item1: Items.AIR;
+        CommonConfig.Other.relayConfigureItem = item2 != null?item2: Items.AIR;
     }
 
     private void clientSetup(FMLClientSetupEvent event) {
