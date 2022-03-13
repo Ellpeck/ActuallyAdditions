@@ -18,10 +18,9 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.math.vector.Vector3i;
 import net.minecraft.world.World;
 
 public class ItemTeleStaff extends ItemEnergy {
@@ -34,14 +33,14 @@ public class ItemTeleStaff extends ItemEnergy {
     public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
         ItemStack stack = player.getItemInHand(hand);
         if (!world.isClientSide) {
-            RayTraceResult rayTraceResult = player.pick(100,0,false);
-            if (rayTraceResult != null && (rayTraceResult.getType() == RayTraceResult.Type.BLOCK || player.xRot >= -5)) {
-                BlockRayTraceResult res = (BlockRayTraceResult)rayTraceResult;
-                BlockPos pos = res.getBlockPos().relative(res.getDirection());
+            RayTraceResult rayTraceResult = player.pick(100,1F,false);
+            if (rayTraceResult.getType() == RayTraceResult.Type.BLOCK || player.xRot >= -5) {
+                Vector3d location = rayTraceResult.getLocation();
+                Vector3d pos = Vector3d.atBottomCenterOf(new Vector3i(location.x, location.y, location.z));
                 int baseUse = 200;
-                int use = baseUse + (int) (baseUse * rayTraceResult.getLocation().distanceTo(new Vector3d(player.getX(), player.getY() + (player.getEyeHeight() - player.getEyeHeight()), player.getZ())));
+                int use = baseUse + (int) (baseUse * player.blockPosition().distSqr(new Vector3i(pos.x, pos.y, pos.z)));
                 if (this.getEnergyStored(stack) >= use) {
-                    ((ServerPlayerEntity) player).connection.teleport(pos.getX(), pos.getY(), pos.getY(), player.yRot, player.xRot);
+                    ((ServerPlayerEntity) player).connection.teleport(pos.x, pos.y + 1F, pos.z, player.yRot, player.xRot);
                     player.removeVehicle();
                     world.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0F, 1.0F);
                     if (!player.isCreative()) {
