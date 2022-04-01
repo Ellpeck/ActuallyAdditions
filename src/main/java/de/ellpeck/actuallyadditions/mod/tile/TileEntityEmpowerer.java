@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.crafting.ActuallyRecipes;
 import de.ellpeck.actuallyadditions.mod.crafting.EmpowererRecipe;
+import de.ellpeck.actuallyadditions.mod.crafting.SolidFuelRecipe;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
@@ -22,6 +23,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.server.ServerWorld;
 
@@ -34,8 +36,12 @@ import net.minecraftforge.fml.server.ServerLifecycleHooks;
 public class TileEntityEmpowerer extends TileEntityInventoryBase {
 
     public int processTime;
-    public int recipeForRenderIndex = -1;
-    private int lastRecipe;
+    private EmpowererRecipe currentRecipe = null;
+    private EmpowererRecipe lastRecipe = null;
+
+    public EmpowererRecipe getCurrentRecipe(){
+        return this.currentRecipe;
+    }
 
     public TileEntityEmpowerer() {
         super(ActuallyBlocks.EMPOWERER.getTileEntityType(), 1);
@@ -69,7 +75,7 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase {
             if (stands != null) {
                 EmpowererRecipe recipe = findMatchingRecipe(this.inv.getStackInSlot(0), stands[0].getStack(), stands[1].getStack(), stands[2].getStack(), stands[3].getStack());
                 if (recipe != null) {
-                    //this.recipeForRenderIndex = ActuallyAdditionsAPI.EMPOWERER_RECIPES.indexOf(recipe); //TODO whats this?
+                    currentRecipe = recipe;
 
                     boolean hasPower = true;
 
@@ -104,16 +110,16 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase {
                             this.setChanged();
 
                             this.processTime = 0;
-                            this.recipeForRenderIndex = -1;
+                            this.currentRecipe = null;
                         }
                     }
                 } else {
                     this.processTime = 0;
-                    this.recipeForRenderIndex = -1;
+                    this.currentRecipe = null;
                 }
 
-                if (this.lastRecipe != this.recipeForRenderIndex) {
-                    this.lastRecipe = this.recipeForRenderIndex;
+                if (this.lastRecipe != this.currentRecipe) {
+                    this.lastRecipe = this.currentRecipe;
                     this.sendUpdate();
                 }
             }
@@ -123,8 +129,7 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase {
     private TileEntityDisplayStand[] getNearbyStands() {
         TileEntityDisplayStand[] stands = new TileEntityDisplayStand[4];
 
-        // TODO: [port] validate this
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i <= 3; i++) {
             Direction facing = Direction.from2DDataValue(i);
             BlockPos offset = this.worldPosition.relative(facing, 3);
             TileEntity tile = this.level.getBlockEntity(offset);
@@ -145,7 +150,10 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase {
             compound.putInt("ProcessTime", this.processTime);
         }
         if (type == NBTType.SYNC) {
-            compound.putInt("RenderIndex", this.recipeForRenderIndex);
+            if (this.currentRecipe != null)
+                compound.putString("CurrentRecipe", this.currentRecipe.getId().toString());
+            else
+                compound.putString("CurrentRecipe", "");
         }
     }
 
@@ -155,8 +163,18 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase {
         if (type == NBTType.SAVE_TILE) {
             this.processTime = compound.getInt("ProcessTime");
         }
-        if (type == NBTType.SYNC) {
-            this.recipeForRenderIndex = compound.getInt("RenderIndex");
+        if (type == NBTType.SYNC && compound.contains("CurrentRecipe")) {
+            if (!compound.getString("CurrentRecipe").equals("")) {
+                ResourceLocation id = new ResourceLocation(compound.getString("CurrentRecipe"));
+                for (EmpowererRecipe empowererRecipe : ActuallyAdditionsAPI.EMPOWERER_RECIPES) {
+                    if (empowererRecipe.getId().equals(id)) {
+                        this.currentRecipe = empowererRecipe;
+                        break;
+                    }
+                }
+            }
+            else
+                this.currentRecipe = null;
         }
     }
 

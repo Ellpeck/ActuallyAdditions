@@ -303,6 +303,16 @@ public final class AssetUtil {
         matrixStack.popPose();
     }
 
+    public static void renderLaser(MatrixStack matrixStack, IRenderTypeBuffer buffer, Vector3d startOffset, Vector3d endOffset, float rotationTime, int color, float alpha, float beamWidth) {
+        Vector3d combined = endOffset.subtract(startOffset);
+
+        double pitch = Math.toDegrees(Math.atan2(combined.y, Math.sqrt(combined.x * combined.x + combined.z * combined.z)));
+        double yaw = Math.toDegrees(Math.atan2(-combined.z, combined.x));
+        double length = combined.length();
+
+        renderLaser(matrixStack, buffer, (float) startOffset.x, (float) startOffset.y, (float) startOffset.z, (float) yaw, (float) pitch, (float) length, rotationTime, color, alpha, beamWidth);
+    }
+
     //Thanks to feldim2425 for this.
     //I can't do rendering code. Ever.
     @OnlyIn(Dist.CLIENT)

@@ -93,7 +93,7 @@ public class BlockDisplayStand extends BlockContainerBase {
             return ActionResultType.FAIL;
         }
 
-        return ActionResultType.PASS;
+        return ActionResultType.CONSUME;
     }
 
     @Override

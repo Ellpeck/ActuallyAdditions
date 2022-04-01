@@ -26,6 +26,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Quaternion;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3f;
 
 public class RenderEmpowerer extends TileEntityRenderer<TileEntityEmpowerer> {
@@ -72,5 +73,14 @@ public class RenderEmpowerer extends TileEntityRenderer<TileEntityEmpowerer> {
         }
 
  */
+        if (tile.getCurrentRecipe() != null) {
+            EmpowererRecipe recipe = tile.getCurrentRecipe();
+            for (int i = 0; i <= 3; i++) {
+                Direction facing = Direction.from2DDataValue(i);
+                BlockPos offset = new BlockPos(0,0,0).relative(facing, 3);
+
+                AssetUtil.renderLaser(matrices, buffer, new Vector3d(0.0d, 0.0d, 0.0d), new Vector3d(offset.getX(), offset.getY() + 0.45, offset.getZ()), 80, recipe.getParticleColors(), 1.0f ,0.1F);
+            }
+        }
     }
 }
