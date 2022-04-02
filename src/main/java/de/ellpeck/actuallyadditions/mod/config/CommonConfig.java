@@ -37,12 +37,14 @@ public class CommonConfig {
     public static class Machines {
         public static ForgeConfigSpec.IntValue FARMER_AREA;
         public static ForgeConfigSpec.IntValue RECONSTRUCTOR_POWER;
+        public static ForgeConfigSpec.IntValue OIL_GENERATOR_TRANSFER;
 
         public static void build() {
             BUILDER.comment("Machine Settings").push("machineSettings");
 
             FARMER_AREA = BUILDER.comment("The size of the farmer's farming area.  Default is 9x9, must be an odd number.").defineInRange("farmerArea", 9, 1, Integer.MAX_VALUE);
             RECONSTRUCTOR_POWER = BUILDER.comment("The amount of power the atomic reconstructor can store.").defineInRange("reconstructorPower", 300000, 300000, Integer.MAX_VALUE);
+            OIL_GENERATOR_TRANSFER = BUILDER.comment("The amount of power the oil generator can transfer per tick.").defineInRange("oilGeneratorTransfer", 500, 100, Integer.MAX_VALUE);
 
             BUILDER.pop();
         }

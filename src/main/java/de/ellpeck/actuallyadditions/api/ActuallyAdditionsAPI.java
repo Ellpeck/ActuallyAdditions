@@ -57,7 +57,6 @@ public final class ActuallyAdditionsAPI {
     public static final List<IFarmerBehavior> FARMER_BEHAVIORS = new ArrayList<>();
     public static final List<CoffeeIngredient> COFFEE_MACHINE_INGREDIENTS = new ArrayList<>();
     //    public static final List<CompostRecipe> COMPOST_RECIPES = new ArrayList<>();
-    public static final List<OilGenRecipe> OIL_GENERATOR_RECIPES = new ArrayList<>();
     public static final List<IBookletEntry> BOOKLET_ENTRIES = new ArrayList<>();
     //This is added to automatically, you don't need to add anything to this list
     public static final List<IBookletChapter> ALL_CHAPTERS = new ArrayList<>();
@@ -179,27 +178,6 @@ public final class ActuallyAdditionsAPI {
     public static boolean addCrusherRecipes(List<ItemStack> inputs, ItemStack outputOne, int outputOneAmount, ItemStack outputTwo, int outputTwoAmount, int outputTwoChance) {
         return methodHandler.addCrusherRecipes(inputs, outputOne, outputOneAmount, outputTwo, outputTwoAmount, outputTwoChance);
     }
-
-    /**
-     * Adds a Recipe to the Oil generator
-     *
-     * @param fluidName The name of the fluid to be consumed
-     * @param genAmount The amount of energy generated per operation
-     */
-    public static void addOilGenRecipe(String fluidName, int genAmount) {
-        addOilGenRecipe(fluidName, genAmount, 100);
-    }
-
-    /**
-     * Adds a Recipe to the Oil generator
-     *
-     * @param fluidName The name of the fluid to be consumed
-     * @param genAmount The amount of energy generated per operation
-     */
-    public static void addOilGenRecipe(String fluidName, int genAmount, int genTime) {
-        OIL_GENERATOR_RECIPES.add(new OilGenRecipe(fluidName, genAmount, genTime));
-    }
-
     /**
      * Adds a new conversion recipe to the compost.
      *

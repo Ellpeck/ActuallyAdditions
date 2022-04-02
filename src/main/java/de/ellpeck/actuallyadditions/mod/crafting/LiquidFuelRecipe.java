@@ -28,6 +28,13 @@ public class LiquidFuelRecipe implements IRecipe<IInventory> {
     private int totalEnergy;
     private ResourceLocation id;
 
+    /**
+     * Oil generator recipe
+     * @param id ResourceLocation of the recipe
+     * @param fuel The fluid
+     * @param totalEnergy The total power generated.
+     * @param burnTime The length the fluid burns for, in ticks.
+     */
     public LiquidFuelRecipe(ResourceLocation id, FluidStack fuel, int totalEnergy, int burnTime) {
         this.fuel = fuel;
         this.burnTime = burnTime;
@@ -50,6 +57,14 @@ public class LiquidFuelRecipe implements IRecipe<IInventory> {
 
     public boolean matches(FluidStack stack) {
         return this.fuel.isFluidEqual(stack);
+    }
+
+    public int getFuelAmount() {
+        return this.fuel.getAmount();
+    }
+
+    public FluidStack getFuel() {
+        return fuel;
     }
 
     @Nonnull

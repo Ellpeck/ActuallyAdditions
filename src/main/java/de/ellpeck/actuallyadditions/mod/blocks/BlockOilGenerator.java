@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.blocks;
 
 import de.ellpeck.actuallyadditions.mod.blocks.base.DirectionalBlock;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityCoalGenerator;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityOilGenerator;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -28,6 +29,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.network.NetworkHooks;
 
+import javax.annotation.Nullable;
 import java.util.Random;
 
 public class BlockOilGenerator extends DirectionalBlock.Container {
@@ -36,8 +38,14 @@ public class BlockOilGenerator extends DirectionalBlock.Container {
         super(ActuallyBlocks.defaultPickProps(0).randomTicks());
     }
 
-    //@Override
-    public TileEntity newBlockEntity(IBlockReader worldIn) {
+    @Override
+    public boolean hasTileEntity(BlockState state) {
+        return true;
+    }
+
+    @Nullable
+    @Override
+    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
         return new TileEntityOilGenerator();
     }
 
@@ -65,7 +73,7 @@ public class BlockOilGenerator extends DirectionalBlock.Container {
             }
         }
 
-        return ActionResultType.PASS;
+        return ActionResultType.SUCCESS;
     }
 
     @Override

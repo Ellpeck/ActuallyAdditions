@@ -45,8 +45,10 @@ public class GuiOilGenerator extends AAScreen<ContainerOilGenerator> {
     @Override
     public void init() {
         super.init();
-        //this.energy = new EnergyDisplay(this.leftPos + 42, this.topPos + 5, this.generator.storage);
-        //this.fluid = new FluidDisplay(this.leftPos + 116, this.topPos + 5, this.generator.tank);
+        this.energy = new EnergyDisplay(this.leftPos + 42, this.topPos + 5, this.generator.storage);
+        this.fluid = new FluidDisplay(this.leftPos + 116, this.topPos + 5, this.generator.tank);
+        titleLabelX = (int) (imageWidth / 2.0f - font.width(title) / 2.0f);
+        titleLabelY = -10;
     }
 
     @Override
@@ -54,11 +56,6 @@ public class GuiOilGenerator extends AAScreen<ContainerOilGenerator> {
         super.render(matrices, x, y, f);
         this.energy.render(matrices, x, y);
         this.fluid.render(matrices, x, y);
-    }
-
-    @Override
-    public void renderLabels(@Nonnull MatrixStack matrices, int x, int y) {
-        AssetUtil.displayNameString(matrices, this.font, this.imageWidth, -10, this.generator);
     }
 
     @Override
@@ -77,12 +74,13 @@ public class GuiOilGenerator extends AAScreen<ContainerOilGenerator> {
         }
 
         if (this.generator.maxBurnTime > 0 && this.generator.currentEnergyProduce > 0) {
-            drawCenteredString(matrices, this.font, this.generator.currentEnergyProduce + " " + I18n.get("actuallyadditions.cft"), this.leftPos + 87, this.topPos + 65, 0xFFFFFF);
+            drawCenteredString(matrices, this.font, this.generator.currentEnergyProduce + " " + I18n.get("actuallyadditions.fet"), this.leftPos + 87, this.topPos + 65, 0xFFFFFF);
             drawCenteredString(matrices, this.font, "for " + this.generator.maxBurnTime + " t", this.leftPos + 87, this.topPos + 75, 0xFFFFFF);
             matrices.pushPose();
             matrices.scale(0.75F, 0.75F, 1F);
-            float xS = (this.leftPos + 87) * 1.365F - this.font.width("(per 50 mB)") / 2F;
-            StringUtil.renderScaledAsciiString(this.font, "(per 50 mB)", xS, (this.topPos + 85) * 1.345F, 0xFFFFFF, true, 0.75F);
+            int usage = this.generator.fuelUsage;
+            float xS = (this.leftPos + 87) * 1.365F - this.font.width("(per " + usage + " mB)") / 2F;
+            StringUtil.renderScaledAsciiString(this.font, "(per " + usage + " mB)", xS, (this.topPos + 85) * 1.345F, 0xFFFFFF, true, 0.75F);
             matrices.popPose();
         }
 
