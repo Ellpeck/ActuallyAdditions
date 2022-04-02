@@ -77,10 +77,10 @@ public class GuiOilGenerator extends AAScreen<ContainerOilGenerator> {
             drawCenteredString(matrices, this.font, this.generator.currentEnergyProduce + " " + I18n.get("actuallyadditions.fet"), this.leftPos + 87, this.topPos + 65, 0xFFFFFF);
             drawCenteredString(matrices, this.font, "for " + this.generator.maxBurnTime + " t", this.leftPos + 87, this.topPos + 75, 0xFFFFFF);
             matrices.pushPose();
-            matrices.scale(0.75F, 0.75F, 1F);
+            matrices.translate(this.leftPos + 87, this.topPos + 85, 0);
+            matrices.scale(0.5625F, 0.5625F, 1F);
             int usage = this.generator.fuelUsage;
-            float xS = (this.leftPos + 87) * 1.365F - this.font.width("(per " + usage + " mB)") / 2F;
-            StringUtil.renderScaledAsciiString(this.font, "(per " + usage + " mB)", xS, (this.topPos + 85) * 1.345F, 0xFFFFFF, true, 0.75F);
+            drawCenteredString(matrices, this.font, "(per " + usage + " mB)",0, 0, 0xFFFFFF);
             matrices.popPose();
         }
 

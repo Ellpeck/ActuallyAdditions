@@ -10,6 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.util;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.platform.GlStateManager;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.resources.I18n;
@@ -69,16 +71,15 @@ public final class StringUtil {
 //    }
 
     @OnlyIn(Dist.CLIENT)
-    public static void renderScaledAsciiString(FontRenderer font, String text, float x, float y, int color, boolean shadow, float scale) {
-//        GlStateManager._pushMatrix();
-//        GlStateManager.scale(scale, scale, scale);
-//        boolean oldUnicode = font.getUnicodeFlag();
-//        font.setUnicodeFlag(false);
-//
-//        font.draw(text, x / scale, y / scale, color, shadow);
-//
-//        font.setUnicodeFlag(oldUnicode);
-//        GlStateManager._popMatrix();
+    public static void renderScaledString(MatrixStack matrices, FontRenderer font, String text, float x, float y, int color, boolean shadow, float scale) {
+        matrices.pushPose();
+        matrices.translate(x, y, 0);
+        matrices.scale(scale, scale, 1.0F);
+        if (shadow)
+            font.drawShadow(matrices, text, 0, 0, color);
+        else
+            font.draw(matrices, text, x, y, color);
+        matrices.popPose();
     }
 
 //    static void setupLangMap() {
