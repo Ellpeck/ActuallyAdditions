@@ -9,7 +9,6 @@ import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.WallBlock;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
@@ -44,7 +43,7 @@ public class ItemModelGenerator extends ItemModelProvider {
         Set<Block> ignoreList = ImmutableSet.of(
             InitFluids.CANOLA_OIL.getBlock(),
             InitFluids.REFINED_CANOLA_OIL.getBlock(),
-            InitFluids.CRYSTALIZED_OIL.getBlock(),
+            InitFluids.CRYSTALLIZED_OIL.getBlock(),
             InitFluids.EMPOWERED_OIL.getBlock(),
             ActuallyBlocks.CANOLA.get(),
             ActuallyBlocks.RICE.get(),
@@ -57,7 +56,7 @@ public class ItemModelGenerator extends ItemModelProvider {
 
         generateBucket(InitFluids.CANOLA_OIL);
         generateBucket(InitFluids.REFINED_CANOLA_OIL);
-        generateBucket(InitFluids.CRYSTALIZED_OIL);
+        generateBucket(InitFluids.CRYSTALLIZED_OIL);
         generateBucket(InitFluids.EMPOWERED_OIL);
     }
 

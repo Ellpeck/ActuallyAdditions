@@ -1,0 +1,11 @@
+{
+  "type": "actuallyadditions:liquid_fuel",
+  "ingredient": {
+    "fluid": "actuallyadditions:refined_canola_oil",
+    "amount": 50
+  },
+  "result": {
+    "total_energy": 9600,
+    "burn_time": 120
+  }
+}

@@ -23,7 +23,7 @@ public final class InitFluids {
 
     public static final FluidAA CANOLA_OIL = new FluidAA("canola_oil", "fluid/canola_oil");
     public static final FluidAA REFINED_CANOLA_OIL = new FluidAA("refined_canola_oil", "fluid/refined_canola_oil");
-    public static final FluidAA CRYSTALIZED_OIL = new FluidAA("crystallized_oil", "fluid/crystallized_oil");
+    public static final FluidAA CRYSTALLIZED_OIL = new FluidAA("crystallized_oil", "fluid/crystallized_oil");
     public static final FluidAA EMPOWERED_OIL = new FluidAA("empowered_oil", "fluid/empowered_oil");
 
 

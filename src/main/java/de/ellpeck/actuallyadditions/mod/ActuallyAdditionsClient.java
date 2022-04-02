@@ -75,8 +75,8 @@ public class ActuallyAdditionsClient {
         RenderTypeLookup.setRenderLayer(InitFluids.CANOLA_OIL.getFlowing(), RenderType.translucent());
         RenderTypeLookup.setRenderLayer(InitFluids.REFINED_CANOLA_OIL.get(), RenderType.translucent());
         RenderTypeLookup.setRenderLayer(InitFluids.REFINED_CANOLA_OIL.getFlowing(), RenderType.translucent());
-        RenderTypeLookup.setRenderLayer(InitFluids.CRYSTALIZED_OIL.get(), RenderType.translucent());
-        RenderTypeLookup.setRenderLayer(InitFluids.CRYSTALIZED_OIL.getFlowing(), RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(InitFluids.CRYSTALLIZED_OIL.get(), RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(InitFluids.CRYSTALLIZED_OIL.getFlowing(), RenderType.translucent());
         RenderTypeLookup.setRenderLayer(InitFluids.EMPOWERED_OIL.get(), RenderType.translucent());
         RenderTypeLookup.setRenderLayer(InitFluids.EMPOWERED_OIL.getFlowing(), RenderType.translucent());
 

@@ -46,6 +46,7 @@ public final class ActuallyAdditionsAPI {
     public static final Map<Item, IColorLensChanger> RECONSTRUCTOR_LENS_COLOR_CHANGERS = new HashMap<>();
 
     public static final List<SolidFuelRecipe> SOLID_FUEL_RECIPES = new ArrayList<>();
+    public static final List<LiquidFuelRecipe> LIQUID_FUEL_RECIPES = new ArrayList<>();
     public static final List<PressingRecipe> PRESSING_RECIPES = new ArrayList<>();
     public static final List<FermentingRecipe> FERMENTING_RECIPES = new ArrayList<>();
     public static final List<LaserRecipe> CONVERSION_LASER_RECIPES = new ArrayList<>();

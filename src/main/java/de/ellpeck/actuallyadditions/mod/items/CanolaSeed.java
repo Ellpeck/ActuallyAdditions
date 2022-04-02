@@ -7,10 +7,8 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.fluid.Fluid;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fluids.IFluidBlock;
 
 public class CanolaSeed extends ItemBase {
     public boolean empowered;
@@ -34,12 +32,12 @@ public class CanolaSeed extends ItemBase {
                 if (block instanceof FlowingFluidBlock && state.getFluidState().isSource()) {
                     Fluid fluid = ((FlowingFluidBlock) block).getFluid();
                     if (fluid != null && fluid == (empowered
-                        ? InitFluids.CRYSTALIZED_OIL.get()
+                        ? InitFluids.CRYSTALLIZED_OIL.get()
                         : InitFluids.REFINED_CANOLA_OIL.get())) {
                         entity.kill();
                         entity.level.setBlockAndUpdate(pos, (empowered
                             ? InitFluids.EMPOWERED_OIL.getBlock()
-                            : InitFluids.CRYSTALIZED_OIL.getBlock()).defaultBlockState());
+                            : InitFluids.CRYSTALLIZED_OIL.getBlock()).defaultBlockState());
                     }
                 }
             }

@@ -1,0 +1,11 @@
+{
+  "type": "actuallyadditions:liquid_fuel",
+  "ingredient": {
+    "fluid": "actuallyadditions:crystallized_oil",
+    "amount": 50
+  },
+  "result": {
+    "total_energy": 28000,
+    "burn_time": 280
+  }
+}

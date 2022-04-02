@@ -80,6 +80,7 @@ public class FermentingRecipe implements IRecipe<IInventory> {
         return false;
     }
 
+    @Nonnull
     @Override
     public ItemStack assemble(IInventory pInv) {
         return ItemStack.EMPTY;
@@ -90,21 +91,25 @@ public class FermentingRecipe implements IRecipe<IInventory> {
         return false;
     }
 
+    @Nonnull
     @Override
     public ItemStack getResultItem() {
         return ItemStack.EMPTY;
     }
 
+    @Nonnull
     @Override
     public ResourceLocation getId() {
         return ID;
     }
 
+    @Nonnull
     @Override
     public IRecipeSerializer<?> getSerializer() {
         return ActuallyRecipes.FERMENTING_RECIPE.get();
     }
 
+    @Nonnull
     @Override
     public IRecipeType<?> getType() {
         return ActuallyRecipes.Types.FERMENTING;

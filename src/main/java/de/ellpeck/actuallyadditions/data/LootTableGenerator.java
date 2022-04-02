@@ -13,16 +13,11 @@ import net.minecraft.block.CropsBlock;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.LootTableProvider;
 import net.minecraft.data.loot.BlockLootTables;
-import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.loot.*;
 import net.minecraft.loot.conditions.BlockStateProperty;
-import net.minecraft.loot.functions.ApplyBonus;
-import net.minecraft.loot.functions.SetCount;
-import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.Tags;
 import net.minecraftforge.fml.RegistryObject;
 
 import javax.annotation.Nonnull;
@@ -216,7 +211,7 @@ public class LootTableGenerator extends LootTableProvider {
             final Set<Block> ignoreForNow = ImmutableSet.of(
                 InitFluids.CANOLA_OIL.getBlock(),
                 InitFluids.REFINED_CANOLA_OIL.getBlock(),
-                InitFluids.CRYSTALIZED_OIL.getBlock(),
+                InitFluids.CRYSTALLIZED_OIL.getBlock(),
                 InitFluids.EMPOWERED_OIL.getBlock()
             );
 
