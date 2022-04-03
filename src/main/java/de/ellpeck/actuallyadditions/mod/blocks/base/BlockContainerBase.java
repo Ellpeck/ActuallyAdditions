@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.blocks.base;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityInventoryBase;
@@ -91,7 +92,7 @@ public abstract class BlockContainerBase extends Block {
 
     public boolean tryToggleRedstone(World world, BlockPos pos, PlayerEntity player) {
         ItemStack stack = player.getMainHandItem();
-        if (StackUtil.isValid(stack) && stack.getItem() == ConfigValues.itemRedstoneTorchConfigurator) {
+        if (stack.getItem() == CommonConfig.Other.redstoneConfigureItem) {
             TileEntity tile = world.getBlockEntity(pos);
             if (tile instanceof TileEntityBase) {
                 TileEntityBase base = (TileEntityBase) tile;
@@ -155,6 +156,8 @@ public abstract class BlockContainerBase extends Block {
                     if (base.respondsToPulses()) {
                         // TODO: [port] eval what this does? :D
                         //                        world.scheduleUpdate(pos, this, this.tickRate(world));
+                        // Who knows -Flanks
+                        base.activateOnPulse();
                     }
                     base.setRedstonePowered(true);
                 } else if (!powered && wasPowered) {

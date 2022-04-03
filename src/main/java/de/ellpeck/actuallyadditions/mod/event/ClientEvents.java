@@ -191,16 +191,16 @@ public class ClientEvents {
                 if (tileHit instanceof TileEntityBase) {
                     TileEntityBase base = (TileEntityBase) tileHit;
                     if (base.isRedstoneToggle()) {
-                        String strg = String.format("%s: %s", StringUtil.localize("info." + ActuallyAdditions.MODID + ".redstoneMode.name"), TextFormatting.DARK_RED + StringUtil.localize("info." + ActuallyAdditions.MODID + ".redstoneMode." + (base.isPulseMode
+                        String strg = String.format("%s: %s", StringUtil.localize("info." + ActuallyAdditions.MODID + ".redstoneMode"), TextFormatting.DARK_RED + StringUtil.localize("info." + ActuallyAdditions.MODID + ".redstoneMode." + (base.isPulseMode
                             ? "pulse"
                             : "deactivation")) + TextFormatting.RESET);
                         font.drawShadow(event.getMatrixStack(), strg, event.getWindow().getGuiScaledWidth() / 2f + 5, event.getWindow().getGuiScaledHeight() / 2f + 5, StringUtil.DECIMAL_COLOR_WHITE);
 
                         String expl;
-                        if (StackUtil.isValid(stack) && stack.getItem() == ConfigValues.itemRedstoneTorchConfigurator) {
+                        if (StackUtil.isValid(stack) && stack.getItem() == CommonConfig.Other.redstoneConfigureItem.asItem()) {
                             expl = TextFormatting.GREEN + StringUtil.localize("info." + ActuallyAdditions.MODID + ".redstoneMode.validItem");
                         } else {
-                                expl = TextFormatting.GRAY.toString() + TextFormatting.ITALIC + StringUtil.localizeFormatted("info." + ActuallyAdditions.MODID + ".redstoneMode.invalidItem", StringUtil.localize(CommonConfig.Other.redstoneConfigureItem.getDescriptionId() + ".name"));
+                                expl = TextFormatting.GRAY.toString() + TextFormatting.ITALIC + StringUtil.localizeFormatted("info." + ActuallyAdditions.MODID + ".redstoneMode.invalidItem", StringUtil.localize(CommonConfig.Other.redstoneConfigureItem.asItem().getDescriptionId()));
                         }
                         font.drawShadow(event.getMatrixStack(), expl, event.getWindow().getGuiScaledWidth() / 2f + 5, event.getWindow().getGuiScaledHeight() / 2f + 15, StringUtil.DECIMAL_COLOR_WHITE);
                     }

@@ -38,8 +38,10 @@ public class GuiDropper extends AAScreen<ContainerDropper> {
     }
 
     @Override
-    public void renderLabels(@Nonnull MatrixStack matrices, int x, int y) {
-        AssetUtil.displayNameString(matrices, this.font, this.imageWidth, -10, this.dropper);
+    protected void init() {
+        super.init();
+        titleLabelX = (int) (imageWidth / 2.0f - font.width(title) / 2.0f);
+        titleLabelY = -10;
     }
 
     @Override

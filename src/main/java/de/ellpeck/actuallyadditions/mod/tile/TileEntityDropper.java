@@ -27,6 +27,7 @@ import net.minecraft.util.text.StringTextComponent;
 import javax.annotation.Nullable;
 
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
+import net.minecraft.util.text.TranslationTextComponent;
 
 public class TileEntityDropper extends TileEntityInventoryBase implements INamedContainerProvider {
 
@@ -106,7 +107,7 @@ public class TileEntityDropper extends TileEntityInventoryBase implements INamed
 
     @Override
     public ITextComponent getDisplayName() {
-        return StringTextComponent.EMPTY;
+        return new TranslationTextComponent("container.actuallyadditions.dropper");
     }
 
     @Nullable

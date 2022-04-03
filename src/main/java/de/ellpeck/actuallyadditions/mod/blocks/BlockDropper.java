@@ -22,21 +22,29 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
+import javax.annotation.Nullable;
+
 public class BlockDropper extends FullyDirectionalBlock.Container {
 
     public BlockDropper() {
         super(ActuallyBlocks.defaultPickProps(0));
     }
 
-    //@Override
-    public TileEntity newBlockEntity(IBlockReader worldIn) {
+    @Override
+    public boolean hasTileEntity(BlockState state) {
+        return true;
+    }
+
+    @Nullable
+    @Override
+    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
         return new TileEntityDropper();
     }
 
     @Override
     public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
         if (this.tryToggleRedstone(world, pos, player)) {
-            return ActionResultType.PASS;
+            return ActionResultType.CONSUME;
         }
 
         return this.openGui(world, player, pos, TileEntityDropper.class);
