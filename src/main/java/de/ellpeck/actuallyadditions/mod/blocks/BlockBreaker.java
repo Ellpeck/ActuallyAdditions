@@ -34,9 +34,14 @@ public class BlockBreaker extends FullyDirectionalBlock.Container {
         this.isPlacer = isPlacer;
     }
 
+    @Override
+    public boolean hasTileEntity(BlockState state) {
+        return true;
+    }
+
     @Nullable
-    //@Override
-    public TileEntity newBlockEntity(IBlockReader world) {
+    @Override
+    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
         return this.isPlacer
             ? new TileEntityPlacer()
             : new TileEntityBreaker();
@@ -45,7 +50,7 @@ public class BlockBreaker extends FullyDirectionalBlock.Container {
     @Override
     public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (this.tryToggleRedstone(world, pos, player)) {
-            return ActionResultType.PASS;
+            return ActionResultType.CONSUME;
         }
 
         return this.openGui(world, player, pos, TileEntityBreaker.class);

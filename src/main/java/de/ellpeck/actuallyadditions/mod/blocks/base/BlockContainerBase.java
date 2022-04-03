@@ -132,7 +132,7 @@ public abstract class BlockContainerBase extends Block {
         }
     }
 
-    @Override
+    @Override //TODO do we need this?
     public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
         this.neighborsChangedCustom(worldIn, pos);
     }
@@ -140,7 +140,7 @@ public abstract class BlockContainerBase extends Block {
     @Override
     public void onNeighborChange(BlockState state, IWorldReader world, BlockPos pos, BlockPos neighbor) {
         super.onNeighborChange(state, world, pos, neighbor);
-        if (world instanceof World) {
+        if (world instanceof World) { //TODO what?
             this.neighborsChangedCustom((World) world, pos);
         }
     }

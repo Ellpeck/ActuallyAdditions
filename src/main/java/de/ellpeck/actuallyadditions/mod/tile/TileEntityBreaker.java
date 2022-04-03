@@ -29,9 +29,11 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fluids.IFluidBlock;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
@@ -125,9 +127,10 @@ public class TileEntityBreaker extends TileEntityInventoryBase implements INamed
         this.doWork();
     }
 
+    @Nonnull
     @Override
     public ITextComponent getDisplayName() {
-        return StringTextComponent.EMPTY;
+        return new TranslationTextComponent(isPlacer ? "container.actuallyadditions.placer" : "container.actuallyadditions.breaker");
     }
 
     @Nullable

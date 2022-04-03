@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.util;
 
+import com.sun.javafx.geom.Vec3d;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditionsClient;
 import de.ellpeck.actuallyadditions.mod.tile.FilterSettings;
@@ -196,11 +197,12 @@ public final class WorldUtil {
                 if (fake.connection == null) {
                     fake.connection = new NetHandlerSpaghettiServer(fake);
                 }
-                ItemStack heldBefore = fake.getMainHandItem();
+                //ItemStack heldBefore = fake.getMainHandItem();
                 setHandItemWithoutAnnoyingSound(fake, Hand.MAIN_HAND, stack.copy());
-                //fake.gameMode.useItemOn(fake, world, fake.getMainHandItem(), Hand.MAIN_HAND, offsetPos, side.getOpposite(), 0.5F, 0.5F, 0.5F); //TODO
+                BlockRayTraceResult ray = new BlockRayTraceResult(new Vector3d(0.5, 0.5, 0.5), side.getOpposite(), offsetPos, true);
+                fake.gameMode.useItemOn(fake, world, fake.getMainHandItem(), Hand.MAIN_HAND, ray);
                 ItemStack result = fake.getItemInHand(Hand.MAIN_HAND);
-                setHandItemWithoutAnnoyingSound(fake, Hand.MAIN_HAND, heldBefore);
+                //setHandItemWithoutAnnoyingSound(fake, Hand.MAIN_HAND, heldBefore);
                 return result;
             } catch (Exception e) {
                 ActuallyAdditions.LOGGER.error("Something that places Blocks at " + offsetPos.getX() + ", " + offsetPos.getY() + ", " + offsetPos.getZ() + " in World " + world.dimension() + " threw an Exception! Don't let that happen again!", e);

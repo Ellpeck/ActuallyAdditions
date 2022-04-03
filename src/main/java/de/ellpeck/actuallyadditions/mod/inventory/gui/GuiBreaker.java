@@ -15,6 +15,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerBreaker;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBreaker;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
@@ -34,6 +35,13 @@ public class GuiBreaker extends AAScreen<ContainerBreaker> {
         this.breaker = container.breaker;
         this.imageWidth = 176;
         this.imageHeight = 93 + 86;
+    }
+
+    @Override
+    public void init(Minecraft pMinecraft, int pWidth, int pHeight) {
+        super.init(pMinecraft, pWidth, pHeight);
+        titleLabelX = (int) (imageWidth / 2.0f - font.width(title) / 2.0f);
+        titleLabelY = -10;
     }
 
     @Override
