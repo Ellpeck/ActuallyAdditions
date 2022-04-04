@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.util;
 
-import com.sun.javafx.geom.Vec3d;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditionsClient;
 import de.ellpeck.actuallyadditions.mod.tile.FilterSettings;

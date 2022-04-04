@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerBreaker;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
+import de.ellpeck.actuallyadditions.mod.util.NetHandlerSpaghettiServer;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
@@ -31,6 +32,8 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.util.FakePlayer;
+import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.fluids.IFluidBlock;
 
 import javax.annotation.Nonnull;
@@ -99,9 +102,11 @@ public class TileEntityBreaker extends TileEntityInventoryBase implements INamed
 
         if (!this.isPlacer && blockToBreak != Blocks.AIR && !(blockToBreak instanceof IFluidBlock) && stateToBreak.getDestroySpeed(this.level, breakCoords) >= 0.0F) {
             List<ItemStack> drops = Block.getDrops(stateToBreak, (ServerWorld) this.level, breakCoords, this.level.getBlockEntity(breakCoords));
-            float chance = WorldUtil.fireFakeHarvestEventsForDropChance(this, drops, this.level, breakCoords);
-
-            if (chance > 0 && this.level.random.nextFloat() <= chance) {
+            FakePlayer fake = FakePlayerFactory.getMinecraft((ServerWorld) this.level);
+            if (fake.connection == null) {
+                fake.connection = new NetHandlerSpaghettiServer(fake);
+            }
+            if (stateToBreak.canHarvestBlock(this.level, breakCoords, fake)) { //TODO might double check this is right mikey
                 if (StackUtil.canAddAll(this.inv, drops, false)) {
                     this.level.destroyBlock(breakCoords, false);
                     StackUtil.addAll(this.inv, drops, false);
