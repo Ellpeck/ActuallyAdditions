@@ -11,12 +11,14 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
+import de.ellpeck.actuallyadditions.mod.fluids.AATank;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFluidCollector;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -32,8 +34,10 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -45,7 +49,7 @@ import javax.annotation.Nullable;
 public class TileEntityFluidCollector extends TileEntityBase implements ISharingFluidHandler, INamedContainerProvider {
 
     public boolean isPlacer;
-    public final FluidTank tank = new FluidTank(8 * Util.BUCKET) {
+    public final AATank tank = new AATank(8 * FluidAttributes.BUCKET_VOLUME) {
         @Override
         public int fill(FluidStack resource, FluidAction action) {
             if (!TileEntityFluidCollector.this.isPlacer) {
@@ -57,7 +61,7 @@ public class TileEntityFluidCollector extends TileEntityBase implements ISharing
         @Nonnull
         @Override
         public FluidStack drain(int maxDrain, FluidAction action) {
-            if (!TileEntityFluidCollector.this.isPlacer) {
+            if (TileEntityFluidCollector.this.isPlacer) {
                 return FluidStack.EMPTY;
             }
             return super.drain(maxDrain, action);
@@ -66,7 +70,7 @@ public class TileEntityFluidCollector extends TileEntityBase implements ISharing
         @Nonnull
         @Override
         public FluidStack drain(FluidStack resource, FluidAction action) {
-            if (!TileEntityFluidCollector.this.isPlacer) {
+            if (TileEntityFluidCollector.this.isPlacer) {
                 return FluidStack.EMPTY;
             }
             return super.drain(resource, action);
@@ -104,32 +108,22 @@ public class TileEntityFluidCollector extends TileEntityBase implements ISharing
 
         BlockState stateToBreak = this.level.getBlockState(coordsBlock);
         Block blockToBreak = stateToBreak.getBlock();
-        if (!this.isPlacer && Util.BUCKET <= this.tank.getCapacity() - this.tank.getFluidAmount()) {
-            if (blockToBreak instanceof IFluidBlock && ((IFluidBlock) blockToBreak).getFluid() != null) {
-                if (this.tank.fill(new FluidStack(((IFluidBlock) blockToBreak).getFluid(), Util.BUCKET), IFluidHandler.FluidAction.SIMULATE) >= Util.BUCKET) {
-                    this.tank.fill(new FluidStack(((IFluidBlock) blockToBreak).getFluid(), Util.BUCKET), IFluidHandler.FluidAction.EXECUTE);
-                    this.level.setBlockAndUpdate(coordsBlock, Blocks.AIR.defaultBlockState());
-                }
-            } else if (blockToBreak == Blocks.LAVA) {
-                if (this.tank.fill(new FluidStack(Fluids.LAVA, Util.BUCKET), IFluidHandler.FluidAction.SIMULATE) >= Util.BUCKET) {
-                    this.tank.fill(new FluidStack(Fluids.LAVA, Util.BUCKET), IFluidHandler.FluidAction.EXECUTE);
-                    this.level.setBlockAndUpdate(coordsBlock, Blocks.AIR.defaultBlockState());
-                }
-            } else if (blockToBreak == Blocks.WATER) {
-                if (this.tank.fill(new FluidStack(Fluids.WATER, Util.BUCKET), IFluidHandler.FluidAction.SIMULATE) >= Util.BUCKET) {
-                    this.tank.fill(new FluidStack(Fluids.WATER, Util.BUCKET), IFluidHandler.FluidAction.EXECUTE);
+        if (!this.isPlacer && FluidAttributes.BUCKET_VOLUME <= this.tank.getCapacity() - this.tank.getFluidAmount()) {
+            if (blockToBreak instanceof FlowingFluidBlock && stateToBreak.getFluidState().isSource() && ((FlowingFluidBlock) blockToBreak).getFluid() != null) {
+                if (this.tank.fillInternal(new FluidStack(((FlowingFluidBlock) blockToBreak).getFluid(), FluidAttributes.BUCKET_VOLUME), IFluidHandler.FluidAction.SIMULATE) >= FluidAttributes.BUCKET_VOLUME) {
+                    this.tank.fillInternal(new FluidStack(((FlowingFluidBlock) blockToBreak).getFluid(), FluidAttributes.BUCKET_VOLUME), IFluidHandler.FluidAction.EXECUTE);
                     this.level.setBlockAndUpdate(coordsBlock, Blocks.AIR.defaultBlockState());
                 }
             }
         } else if (this.isPlacer && blockToBreak.defaultBlockState().getMaterial().isReplaceable()) {
-            if (this.tank.getFluidAmount() >= Util.BUCKET) {
+            if (this.tank.getFluidAmount() >= FluidAttributes.BUCKET_VOLUME) {
                 FluidStack stack = this.tank.getFluid();
                 Block fluid = stack.getFluid().defaultFluidState().createLegacyBlock().getBlock();
                 if (fluid != null) {
                     BlockPos offsetPos = this.worldPosition.relative(sideToManipulate);
                     boolean placeable = !(blockToBreak instanceof IFluidBlock) && blockToBreak.defaultBlockState().getMaterial().isReplaceable();
                     if (placeable) {
-                        this.tank.drain(Util.BUCKET, IFluidHandler.FluidAction.EXECUTE);
+                        this.tank.drainInternal(FluidAttributes.BUCKET_VOLUME, IFluidHandler.FluidAction.EXECUTE);
                         // TODO: [port] validate this check is still valid.
                         if (this.level.dimensionType().ultraWarm() && fluid.defaultBlockState().getMaterial() == Material.WATER) {
                             this.level.playSound(null, offsetPos, SoundEvents.FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F + (this.level.random.nextFloat() - this.level.random.nextFloat()) * 0.8F);
@@ -221,7 +215,7 @@ public class TileEntityFluidCollector extends TileEntityBase implements ISharing
 
     @Override
     public ITextComponent getDisplayName() {
-        return StringTextComponent.EMPTY;
+        return new TranslationTextComponent(isPlacer ? "container.actuallyadditions.fluidPlacer" : "container.actuallyadditions.fluidCollector");
     }
 
     @Nullable

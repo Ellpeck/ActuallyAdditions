@@ -84,10 +84,10 @@ public final class ActuallyBlocks {
         (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityPlacer::new);
     public static final AABlockReg<BlockDropper, AABlockItem, TileEntityDropper> DROPPER = new AABlockReg<>("dropper", BlockDropper::new,
         (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityDropper::new);
-    public static final AABlockReg<BlockFluidCollector, AABlockItem, TileEntityFluidCollector> FLUID_PLACER = new AABlockReg<>("fluid_placer", () -> new BlockFluidCollector(true),
-        (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityFluidCollector::new);
-    public static final AABlockReg<BlockFluidCollector, AABlockItem, TileEntityFluidPlacer> FLUID_COLLECTOR = new AABlockReg<>("fluid_collector", () -> new BlockFluidCollector(false),
+    public static final AABlockReg<BlockFluidCollector, AABlockItem, TileEntityFluidPlacer> FLUID_PLACER = new AABlockReg<>("fluid_placer", () -> new BlockFluidCollector(true),
         (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityFluidPlacer::new);
+    public static final AABlockReg<BlockFluidCollector, AABlockItem, TileEntityFluidCollector> FLUID_COLLECTOR = new AABlockReg<>("fluid_collector", () -> new BlockFluidCollector(false),
+        (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityFluidCollector::new);
 
     public static final AABlockReg<BlockFarmer, AABlockItem, TileEntityFarmer> FARMER = new AABlockReg<>("farmer", BlockFarmer::new,
         (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityFarmer::new);

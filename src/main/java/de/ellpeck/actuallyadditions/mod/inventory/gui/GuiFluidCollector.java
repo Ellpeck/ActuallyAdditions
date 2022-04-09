@@ -48,12 +48,9 @@ public class GuiFluidCollector extends AAScreen<ContainerFluidCollector> {
     @Override
     public void init() {
         super.init();
-        //this.fluid = new FluidDisplay(this.leftPos + 67, this.topPos + 5, this.collector.tank);
-    }
-
-    @Override
-    public void renderLabels(@Nonnull MatrixStack matrices, int x, int y) {
-        AssetUtil.displayNameString(matrices, this.font, this.imageWidth, -10, this.collector);
+        this.fluid = new FluidDisplay(this.leftPos + 67, this.topPos + 5, this.collector.tank);
+        titleLabelX = (int) (imageWidth / 2.0f - font.width(title) / 2.0f);
+        titleLabelY = -10;
     }
 
     @Override
