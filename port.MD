@@ -1,0 +1,95 @@
+# Remove
+- [ ] Lush caves
+- [x] 11 lens (lens of disruption)
+- [ ] Smiley cloud
+- [ ] Occasional solidified XP drop from mobs
+- [ ] Treasure chests
+- [ ] Composter and bio-mash, biomass, bio coal and fertilizer
+- [ ] Charcoal blocks
+- [ ] Ender pearl blocks
+- [ ] ESDs
+- [ ] Fishing nets
+- [ ] Solar panels
+- [ ] Item repairers
+- [ ] Knife (food can just be crafted normally)
+- [ ] Black lotuses and black dye
+- [ ] Chest to storage crate upgrade (makes little sense with the way they are being changed), keep the other ones though
+- [ ] Ring of liquid banning
+- [ ] Emerald and obsidian armor and tools
+- [ ] Black quartz armor and tools
+- [ ] Crystal armor and tools (why did I ever make this)
+- [ ] Resonant rice (this was an in-joke a long time ago)
+- [ ] Jam villager and jams
+- [ ] Potion rings
+- [ ] Fur balls
+- [ ] The food (except for stuff used elsewhere like the coffee)
+- [ ] The weird rainbow colored item names, except for the crystals which should keep their color-matching names
+
+# Change
+- [ ] Make crystal clusters spawn in amethyst nodes in 1.18, leave unused in 1.16 (same with crystal shards)
+- [ ] Possibly make the bio reactor generate more CF, but with the same mechanics
+- [ ] Improve the UI of the firework box (it's missing the gradient background, and it should also have a texture)
+- [ ] Make fluid laser relays have a reasonable cap (maybe 2048mb per tick or something? Possibly check other mods for reference)
+- [ ] Change "whitelist" and "blacklist" in item filters to "allow" and "deny" or something similar
+- [ ] Change the recipe for the XP solidifier so that it's craftable even with solidified XP removed from mobs
+- [ ] Add off-hand slots to energizer and enervator
+- [ ] Change the recipe of casings (the lava factory ones) to give only 4, and rename them to "Lava Factory Casing"
+- [ ] Make coal generator create half as much CF, we don't want this to be a main power source for people
+- [ ] Make black quartz drop the items directly, unless silk-touched
+- [ ] Make storage crates work as follows, recipes unchanged:
+  - [ ] Lowest tier can hold 8192 of a single item
+  - [ ] Mid-tier can hold 16384 of two items
+  - [ ] Highest tier can hold 32768 of four items
+- [ ] Rename powered furnace to double powered furnace and add a second block which is a single powered furnace, make recipes work similarly to crusher and double crusher
+- [ ] Make greenhouse glass less OP and potentially more difficult to craft
+- [ ] Improve the coffee maker's ui by putting the water meter actually into the ui
+- [ ] Rename phantom boosters to range boosters (since they work for other stuff too)
+- [ ] Make worms use that new forge event/hook to keep the ground watered instead of trying to re-water it every few ticks
+- [ ] Give ender star an enchantment glint
+- [ ] Make miner lens far more expensive to use, mmm power creep
+- [ ] Make coffee beans and seeds be the same item or I might get killed by someone finally
+
+# Keep As Is
+- [ ] Battery box
+- [ ] Item interfaces and item laser system
+- [ ] Farmer
+- [x] Empowerer and display stands
+- [ ] Tiny torch
+- [ ] Shock absorber
+- [ ] Player interface
+- [ ] Vertical digger
+- [ ] Atomic reconstructor
+- [ ] Ranged collector
+- [ ] Breakers, placers and long-range breakers, as well as fluid variants
+- [ ] Leaf-eating generator
+- [ ] Lamps and lamp controller
+- [ ] Lava factory controller
+- [ ] The entire canola system
+- [ ] Phantomfaces and their variants
+- [ ] Feeder
+- [ ] Crusher and double crusher
+- [ ] Heat collectors
+- [ ] Precision dropper
+- [ ] Engineer's goggles
+- [ ] Laser relay modifiers and wrench
+- [ ] Handheld filler
+- [ ] Sacks
+- [ ] Player probe
+- [ ] Item filter
+- [ ] Water bowl
+- [ ] Tiny coal and charcoal
+- [ ] Rice slimeballs
+- [ ] Storage crate keeper
+- [ ] Color, detonation, certain death, killer and disenchanting lenses
+- [ ] Storage crate upgrades, except for the "chest to storage crate" one
+- [ ] Ring of growth
+- [ ] Ring of magnetization
+- [x] Teleport staff
+- [ ] Wings of the Bats and wing items dropped from bats
+- [ ] Drills and drill upgrades
+- [ ] Batteries
+- [ ] Crafting table on a stick
+- [ ] Leaf blowers
+- [ ] The book
+- [x] The Crystal Flux name and rainbow effect
+- [ ] Engineer's village house and engineer villager
