@@ -34,7 +34,7 @@
 - [ ] Change the recipe for the XP solidifier so that it's craftable even with solidified XP removed from mobs
 - [ ] Add off-hand slots to energizer and enervator
 - [ ] Change the recipe of casings (the lava factory ones) to give only 4, and rename them to "Lava Factory Casing"
-- [ ] Make coal generator create half as much CF, we don't want this to be a main power source for people
+- [x] Make coal generator create half as much CF, we don't want this to be a main power source for people( Flanks: already dropped to 20fe/t)
 - [ ] Make black quartz drop the items directly, unless silk-touched
 - [ ] Make storage crates work as follows, recipes unchanged:
   - [ ] Lowest tier can hold 8192 of a single item

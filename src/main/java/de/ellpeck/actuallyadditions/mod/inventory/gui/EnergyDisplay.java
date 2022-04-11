@@ -100,6 +100,6 @@ public class EnergyDisplay extends AbstractGui {
 
     private String getOverlayText() {
         NumberFormat format = NumberFormat.getInstance();
-        return String.format("%s/%s %s", format.format(this.rfReference.getEnergyStored()), format.format(this.rfReference.getMaxEnergyStored()), I18n.get("actuallyadditions.fe"));
+        return String.format("%s/%s %s", format.format(this.rfReference.getEnergyStored()), format.format(this.rfReference.getMaxEnergyStored()), I18n.get("misc.actuallyadditions.energy_name"));
     }
 }

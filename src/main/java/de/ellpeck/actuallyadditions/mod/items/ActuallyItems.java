@@ -166,27 +166,6 @@ public final class ActuallyItems {
     public static final RegistryObject<Item> LEAF_BLOWER = ITEMS.register("leaf_blower", () -> new ItemLeafBlower(false));
     public static final RegistryObject<Item> ADVANCED_LEAF_BLOWER = ITEMS.register("advanced_leaf_blower", () -> new ItemLeafBlower(true));
 
-    public static final RegistryObject<Item> RING_OF_SPEED = ITEMS.register("ring_of_speed", basicItem());
-    public static final RegistryObject<Item> RING_OF_HASTE = ITEMS.register("ring_of_haste", basicItem());
-    public static final RegistryObject<Item> RING_OF_STRENGTH = ITEMS.register("ring_of_strength", basicItem());
-    public static final RegistryObject<Item> RING_OF_JUMP_BOOST = ITEMS.register("ring_of_jump_boost", basicItem());
-    public static final RegistryObject<Item> RING_OF_REGENERATION = ITEMS.register("ring_of_regeneration", basicItem());
-    public static final RegistryObject<Item> RING_OF_RESISTANCE = ITEMS.register("ring_of_resistance", basicItem());
-    public static final RegistryObject<Item> RING_OF_FIRE_RESISTANCE = ITEMS.register("ring_of_fire_resistance", basicItem());
-    public static final RegistryObject<Item> RING_OF_WATER_BREATHING = ITEMS.register("ring_of_water_breathing", basicItem());
-    public static final RegistryObject<Item> RING_OF_INVISIBILITY = ITEMS.register("ring_of_invisibility", basicItem());
-    public static final RegistryObject<Item> RING_OF_NIGHT_VISION = ITEMS.register("ring_of_night_vision", basicItem());
-    public static final RegistryObject<Item> ADVANCED_RING_OF_SPEED = ITEMS.register("advanced_ring_of_speed", basicItem());
-    public static final RegistryObject<Item> ADVANCED_RING_OF_HASTE = ITEMS.register("advanced_ring_of_haste", basicItem());
-    public static final RegistryObject<Item> ADVANCED_RING_OF_STRENGTH = ITEMS.register("advanced_ring_of_strength", basicItem());
-    public static final RegistryObject<Item> ADVANCED_RING_OF_JUMP_BOOST = ITEMS.register("advanced_ring_of_jump_boost", basicItem());
-    public static final RegistryObject<Item> ADVANCED_RING_OF_REGENERATION = ITEMS.register("advanced_ring_of_regeneration", basicItem());
-    public static final RegistryObject<Item> ADVANCED_RING_OF_RESISTANCE = ITEMS.register("advanced_ring_of_resistance", basicItem());
-    public static final RegistryObject<Item> ADVANCED_RING_OF_FIRE_RESISTANCE = ITEMS.register("advanced_ring_of_fire_resistance", basicItem());
-    public static final RegistryObject<Item> ADVANCED_RING_OF_WATER_BREATHING = ITEMS.register("advanced_ring_of_water_breathing", basicItem());
-    public static final RegistryObject<Item> ADVANCED_RING_OF_INVISIBILITY = ITEMS.register("advanced_ring_of_invisibility", basicItem());
-    public static final RegistryObject<Item> ADVANCED_RING_OF_NIGHT_VISION = ITEMS.register("advanced_ring_of_night_vision", basicItem());
-
     public static final RegistryObject<Item> COFFEE_BEANS = ITEMS.register("coffee_beans", ItemCoffeeBean::new);
     public static final RegistryObject<Item> FLAX = ITEMS.register("flax", ItemBase::new);
 
@@ -233,11 +212,6 @@ public final class ActuallyItems {
         CRUSHED_QUARTZ, CRUSHED_COAL, CRUSHED_BLACK_QUARTZ, */
         SOLIDIFIED_EXPERIENCE, LEAF_BLOWER, ADVANCED_LEAF_BLOWER,
         RING_OF_GROWTH, RING_OF_MAGNETIZING,
-        RING_OF_SPEED, RING_OF_HASTE, RING_OF_STRENGTH, RING_OF_JUMP_BOOST,
-        RING_OF_REGENERATION, RING_OF_RESISTANCE, RING_OF_FIRE_RESISTANCE, RING_OF_WATER_BREATHING, RING_OF_INVISIBILITY,
-        RING_OF_NIGHT_VISION, ADVANCED_RING_OF_SPEED, ADVANCED_RING_OF_HASTE, ADVANCED_RING_OF_STRENGTH,
-        ADVANCED_RING_OF_JUMP_BOOST, ADVANCED_RING_OF_REGENERATION, ADVANCED_RING_OF_RESISTANCE, ADVANCED_RING_OF_FIRE_RESISTANCE,
-        ADVANCED_RING_OF_WATER_BREATHING, ADVANCED_RING_OF_INVISIBILITY, ADVANCED_RING_OF_NIGHT_VISION,
         COFFEE_BEANS, RICE_SEEDS, CANOLA_SEEDS, FLAX_SEEDS, COFFEE_SEEDS ,
         WOODEN_AIOT, STONE_AIOT, IRON_AIOT, GOLD_AIOT, DIAMOND_AIOT, NETHERITE_AIOT
     );
