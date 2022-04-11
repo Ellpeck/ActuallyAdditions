@@ -74,7 +74,7 @@ public class GuiOilGenerator extends AAScreen<ContainerOilGenerator> {
         }
 
         if (this.generator.maxBurnTime > 0 && this.generator.currentEnergyProduce > 0) {
-            drawCenteredString(matrices, this.font, this.generator.currentEnergyProduce + " " + I18n.get("actuallyadditions.fet"), this.leftPos + 87, this.topPos + 65, 0xFFFFFF);
+            drawCenteredString(matrices, this.font, this.generator.currentEnergyProduce + " " + I18n.get("misc.actuallyadditions.energy_tick"), this.leftPos + 87, this.topPos + 65, 0xFFFFFF);
             drawCenteredString(matrices, this.font, "for " + this.generator.maxBurnTime + " t", this.leftPos + 87, this.topPos + 75, 0xFFFFFF);
             matrices.pushPose();
             matrices.translate(this.leftPos + 87, this.topPos + 85, 0);
