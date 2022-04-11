@@ -2,7 +2,7 @@
 - [ ] Lush caves
 - [x] 11 lens (lens of disruption)
 - [ ] Smiley cloud
-- [ ] Occasional solidified XP drop from mobs
+- [x] Occasional solidified XP drop from mobs
 - [ ] Treasure chests
 - [ ] Composter and bio-mash, biomass, bio coal and fertilizer
 - [ ] Charcoal blocks
@@ -15,13 +15,13 @@
 - [ ] Black lotuses and black dye
 - [ ] Chest to storage crate upgrade (makes little sense with the way they are being changed), keep the other ones though
 - [ ] Ring of liquid banning
-- [ ] Emerald and obsidian armor and tools
-- [ ] Black quartz armor and tools
-- [ ] Crystal armor and tools (why did I ever make this)
-- [ ] Resonant rice (this was an in-joke a long time ago)
-- [ ] Jam villager and jams
-- [ ] Potion rings
-- [ ] Fur balls
+- [x] Emerald and obsidian armor and tools
+- [x] Black quartz armor and tools
+- [x] Crystal armor and tools (why did I ever make this)
+- [x] Resonant rice (this was an in-joke a long time ago)
+- [x] Jam villager and jams
+- [x] Potion rings
+- [x] Fur balls
 - [ ] The food (except for stuff used elsewhere like the coffee)
 - [ ] The weird rainbow colored item names, except for the crystals which should keep their color-matching names
 

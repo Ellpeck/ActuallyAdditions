@@ -33,23 +33,6 @@ public class ItemSolidifiedExperience extends ItemBase {
 
     public ItemSolidifiedExperience() {
         super();
-
-        // TODO: [port] move this to another place
-        //MinecraftForge.EVENT_BUS.register(this);
-    }
-
-    @SubscribeEvent
-    public void onEntityDropEvent(LivingDropsEvent event) {
-        if (ConfigBoolValues.DO_XP_DROPS.isEnabled()) {
-            if (event.getEntityLiving().level != null && !event.getEntityLiving().level.isClientSide && event.getSource().getEntity() instanceof PlayerEntity && event.getEntityLiving().level.getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT)) {
-                //Drop Solidified XP
-                if (event.getEntityLiving() instanceof CreatureEntity) {
-                    if (event.getEntityLiving().level.random.nextInt(10) <= event.getLootingLevel() * 2) {
-                        event.getDrops().add(new ItemEntity(event.getEntityLiving().level, event.getEntityLiving().getX(), event.getEntityLiving().getY(), event.getEntityLiving().getZ(), new ItemStack(ActuallyItems.SOLIDIFIED_EXPERIENCE.get(), event.getEntityLiving().level.random.nextInt(2 + event.getLootingLevel()) + 1)));
-                    }
-                }
-            }
-        }
     }
 
     @Override

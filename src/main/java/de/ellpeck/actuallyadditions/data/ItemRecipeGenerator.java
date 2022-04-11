@@ -30,8 +30,6 @@ public class ItemRecipeGenerator extends RecipeProvider {
 
     @Override
     protected void buildShapelessRecipes(Consumer<IFinishedRecipe> consumer) {
-
-        generateEquipment(consumer);
         generatePaxels(consumer);
 
         //Goggles
@@ -469,16 +467,6 @@ public class ItemRecipeGenerator extends RecipeProvider {
         //        GameRegistry.addSmelting(new ItemStack(InitItems.itemDust, 1, TheDusts.COAL.ordinal()), new ItemStack(Items.COAL), 1F);
     }
 
-    protected void generateEquipment(Consumer<IFinishedRecipe> consumer) {
-        addToolAndArmorRecipes(consumer, ActuallyItems.BLACK_QUARTZ, ActuallyItems.QUARTZ_PICKAXE, ActuallyItems.QUARTZ_SWORD, ActuallyItems.QUARTZ_AXE, ActuallyItems.QUARTZ_SHOVEL, ActuallyItems.QUARTZ_HOE, ActuallyItems.QUARTZ_HELMET, ActuallyItems.QUARTZ_CHEST, ActuallyItems.QUARTZ_LEGGINGS, ActuallyItems.QUARTZ_BOOTS);
-        addToolAndArmorRecipes(consumer, ActuallyItems.RESTONIA_CRYSTAL, ActuallyItems.RESTONIA_PICKAXE, ActuallyItems.RESTONIA_SWORD, ActuallyItems.RESTONIA_AXE, ActuallyItems.RESTONIA_SHOVEL, ActuallyItems.RESTONIA_HOE, ActuallyItems.RESTONIA_HELMET, ActuallyItems.RESTONIA_CHEST, ActuallyItems.RESTONIA_LEGGINGS, ActuallyItems.RESTONIA_BOOTS);
-        addToolAndArmorRecipes(consumer, ActuallyItems.EMERADIC_CRYSTAL, ActuallyItems.EMERADIC_PICKAXE, ActuallyItems.EMERADIC_SWORD, ActuallyItems.EMERADIC_AXE, ActuallyItems.EMERADIC_SHOVEL, ActuallyItems.EMERADIC_HOE, ActuallyItems.EMERADIC_HELMET, ActuallyItems.EMERADIC_CHEST, ActuallyItems.EMERADIC_LEGGINGS, ActuallyItems.EMERADIC_BOOTS);
-        addToolAndArmorRecipes(consumer, ActuallyItems.ENORI_CRYSTAL, ActuallyItems.ENORI_PICKAXE, ActuallyItems.ENORI_SWORD, ActuallyItems.ENORI_AXE, ActuallyItems.ENORI_SHOVEL, ActuallyItems.ENORI_HOE, ActuallyItems.ENORI_HELMET, ActuallyItems.ENORI_CHEST, ActuallyItems.ENORI_LEGGINGS, ActuallyItems.ENORI_BOOTS);
-        addToolAndArmorRecipes(consumer, ActuallyItems.DIAMATINE_CRYSTAL, ActuallyItems.DIAMATINE_PICKAXE, ActuallyItems.DIAMATINE_SWORD, ActuallyItems.DIAMATINE_AXE, ActuallyItems.DIAMATINE_SHOVEL, ActuallyItems.DIAMATINE_HOE, ActuallyItems.DIAMATINE_HELMET, ActuallyItems.DIAMATINE_CHEST, ActuallyItems.DIAMATINE_LEGGINGS, ActuallyItems.DIAMATINE_BOOTS);
-        addToolAndArmorRecipes(consumer, ActuallyItems.PALIS_CRYSTAL, ActuallyItems.PALIS_PICKAXE, ActuallyItems.PALIS_SWORD, ActuallyItems.PALIS_AXE, ActuallyItems.PALIS_SHOVEL, ActuallyItems.PALIS_HOE, ActuallyItems.PALIS_HELMET, ActuallyItems.PALIS_CHEST, ActuallyItems.PALIS_LEGGINGS, ActuallyItems.PALIS_BOOTS);
-        addToolAndArmorRecipes(consumer, ActuallyItems.VOID_CRYSTAL, ActuallyItems.VOID_PICKAXE, ActuallyItems.VOID_SWORD, ActuallyItems.VOID_AXE, ActuallyItems.VOID_SHOVEL, ActuallyItems.VOID_HOE, ActuallyItems.VOID_HELMET, ActuallyItems.VOID_CHEST, ActuallyItems.VOID_LEGGINGS, ActuallyItems.VOID_BOOTS);
-    }
-
     protected void generatePaxels(Consumer<IFinishedRecipe> consumer) {
         addPaxel(consumer, ActuallyItems.WOODEN_AIOT, Items.WOODEN_AXE, Items.WOODEN_PICKAXE, Items.WOODEN_SWORD, Items.WOODEN_SHOVEL, Items.WOODEN_HOE);
         addPaxel(consumer, ActuallyItems.STONE_AIOT, Items.STONE_AXE, Items.STONE_PICKAXE, Items.STONE_SWORD, Items.STONE_SHOVEL, Items.STONE_HOE);
@@ -486,15 +474,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
         addPaxel(consumer, ActuallyItems.GOLD_AIOT, Items.GOLDEN_AXE, Items.GOLDEN_PICKAXE, Items.GOLDEN_SWORD, Items.GOLDEN_SHOVEL, Items.GOLDEN_HOE);
         addPaxel(consumer, ActuallyItems.DIAMOND_AIOT, Items.DIAMOND_AXE, Items.DIAMOND_PICKAXE, Items.DIAMOND_SWORD, Items.DIAMOND_SHOVEL, Items.DIAMOND_HOE);
         addPaxel(consumer, ActuallyItems.NETHERITE_AIOT, Items.NETHERITE_AXE, Items.NETHERITE_PICKAXE, Items.NETHERITE_SWORD, Items.NETHERITE_SHOVEL, Items.NETHERITE_HOE);
-
-        addPaxel(consumer, ActuallyItems.QUARTZ_AIOT, ActuallyItems.QUARTZ_AXE, ActuallyItems.QUARTZ_PICKAXE, ActuallyItems.QUARTZ_SWORD, ActuallyItems.QUARTZ_SHOVEL, ActuallyItems.QUARTZ_HOE);
-        addPaxel(consumer, ActuallyItems.RESTONIA_AIOT, ActuallyItems.RESTONIA_AXE, ActuallyItems.RESTONIA_PICKAXE, ActuallyItems.RESTONIA_SWORD, ActuallyItems.RESTONIA_SHOVEL, ActuallyItems.RESTONIA_HOE);
-        addPaxel(consumer, ActuallyItems.EMERADIC_AIOT, ActuallyItems.EMERADIC_AXE, ActuallyItems.EMERADIC_PICKAXE, ActuallyItems.EMERADIC_SWORD, ActuallyItems.EMERADIC_SHOVEL, ActuallyItems.EMERADIC_HOE);
-        addPaxel(consumer, ActuallyItems.PALIS_AIOT, ActuallyItems.PALIS_AXE, ActuallyItems.PALIS_PICKAXE, ActuallyItems.PALIS_SWORD, ActuallyItems.PALIS_SHOVEL, ActuallyItems.PALIS_HOE);
-        addPaxel(consumer, ActuallyItems.DIAMATINE_AIOT, ActuallyItems.DIAMATINE_AXE, ActuallyItems.DIAMATINE_PICKAXE, ActuallyItems.DIAMATINE_SWORD, ActuallyItems.DIAMATINE_SHOVEL, ActuallyItems.DIAMATINE_HOE);
-        addPaxel(consumer, ActuallyItems.VOID_AIOT, ActuallyItems.VOID_AXE, ActuallyItems.VOID_PICKAXE, ActuallyItems.VOID_SWORD, ActuallyItems.VOID_SHOVEL, ActuallyItems.VOID_HOE);
-        addPaxel(consumer, ActuallyItems.ENORI_AIOT, ActuallyItems.ENORI_AXE, ActuallyItems.ENORI_PICKAXE, ActuallyItems.ENORI_SWORD, ActuallyItems.ENORI_SHOVEL, ActuallyItems.ENORI_HOE);
-    }
+}
 
     public static void addPaxel(Consumer<IFinishedRecipe> consumer, RegistryObject<Item> output, Item axe, Item pickaxe, Item sword, Item shovel, Item hoe) {
         Recipe.shapeless(output.get())

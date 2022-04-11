@@ -33,7 +33,6 @@ import de.ellpeck.actuallyadditions.mod.misc.DungeonLoot;
 import de.ellpeck.actuallyadditions.mod.misc.apiimpl.LaserRelayConnectionHandler;
 import de.ellpeck.actuallyadditions.mod.misc.apiimpl.MethodHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
-import de.ellpeck.actuallyadditions.mod.recipe.HairyBallHandler;
 import de.ellpeck.actuallyadditions.mod.update.UpdateChecker;
 import de.ellpeck.actuallyadditions.mod.util.ResourceReloader;
 import net.minecraft.entity.EntityClassification;
@@ -135,7 +134,6 @@ public class ActuallyAdditions {
         //AAWorldGen gen = new AAWorldGen();
         ItemCoffee.initIngredients();
         CrusherCrafting.init();
-        HairyBallHandler.init();
         LensRecipeHandler.init();
         LensMining.init();
     }
