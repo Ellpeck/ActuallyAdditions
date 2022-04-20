@@ -5,9 +5,9 @@
 - [x] Occasional solidified XP drop from mobs
 - [ ] Treasure chests
 - [ ] Composter and bio-mash, biomass, bio coal and fertilizer
-- [ ] Charcoal blocks
+- [x] Charcoal blocks
 - [ ] Ender pearl blocks
-- [ ] ESDs
+- [x] ESDs
 - [ ] Fishing nets
 - [ ] Solar panels
 - [ ] Item repairers

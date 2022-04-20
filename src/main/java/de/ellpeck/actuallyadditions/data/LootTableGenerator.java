@@ -142,7 +142,6 @@ public class LootTableGenerator extends LootTableProvider {
             this.dropSelf(ActuallyBlocks.LAMP_BLACK.get());
             this.dropSelf(ActuallyBlocks.LAMP_CONTROLLER.get());
             this.dropSelf(ActuallyBlocks.ENDER_PEARL_BLOCK.get());
-            this.dropSelf(ActuallyBlocks.CHARCOAL_BLOCK.get());
             this.dropSelf(ActuallyBlocks.ENDER_CASING.get());
             this.dropSelf(ActuallyBlocks.IRON_CASING.get());
             //this.dropSelf(ActuallyBlocks.IRON_CASING_SNOW.get());

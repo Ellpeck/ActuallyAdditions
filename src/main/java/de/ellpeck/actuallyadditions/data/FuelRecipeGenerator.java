@@ -39,7 +39,6 @@ public class FuelRecipeGenerator extends RecipeProvider {
         addSolid(consumer, "tiny-coal", ActuallyTags.Items.TINY_COALS, 4000, 200);
         addSolid(consumer, "charcoal", Items.CHARCOAL, 32000, 1600);
         addSolid(consumer, "coal-block", Items.COAL_BLOCK, 320000, 16000);
-        addSolid(consumer, "charcoal-block", ActuallyBlocks.CHARCOAL_BLOCK.getItem(), 320000, 16000);
         addSolid(consumer, "lava", Items.LAVA_BUCKET, 400000, 20000);
 
         consumer.accept(new LiquidFuelRecipe.FinishedRecipe(new ResourceLocation(ActuallyAdditions.MODID, "liquid_fuel/canola_oil"),

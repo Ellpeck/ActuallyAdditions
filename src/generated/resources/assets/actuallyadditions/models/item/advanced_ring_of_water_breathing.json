@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/handheld",
-  "textures": {
-    "layer0": "actuallyadditions:item/advanced_ring_of_water_breathing"
-  }
-}

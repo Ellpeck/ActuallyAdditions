@@ -41,6 +41,7 @@ import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.fml.network.NetworkHooks;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Random;
 
@@ -108,7 +109,7 @@ public abstract class BlockContainerBase extends Block {
     }
 
     @Override
-    public void tick(BlockState state, ServerWorld world, BlockPos pos, Random rand) {
+    public void tick(@Nonnull BlockState state, ServerWorld world, @Nonnull BlockPos pos, @Nonnull Random rand) {
         if (!world.isClientSide) {
             TileEntity tile = world.getBlockEntity(pos);
             if (tile instanceof TileEntityBase) {
@@ -133,7 +134,7 @@ public abstract class BlockContainerBase extends Block {
     }
 
     @Override //TODO do we need this?
-    public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
+    public void neighborChanged(@Nonnull BlockState state, @Nonnull World worldIn, @Nonnull BlockPos pos, @Nonnull Block blockIn, @Nonnull BlockPos fromPos, boolean isMoving) {
         this.neighborsChangedCustom(worldIn, pos);
     }
 
@@ -174,7 +175,7 @@ public abstract class BlockContainerBase extends Block {
     }
 
     @Override
-    public void onPlace(BlockState state, World worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
+    public void onPlace(@Nonnull BlockState state, @Nonnull World worldIn, @Nonnull BlockPos pos, @Nonnull BlockState oldState, boolean isMoving) {
         this.updateRedstoneState(worldIn, pos);
     }
 
@@ -191,7 +192,7 @@ public abstract class BlockContainerBase extends Block {
     }
 
     @Override
-    public void playerWillDestroy(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+    public void playerWillDestroy(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull BlockState state, PlayerEntity player) {
         if (!player.isCreative()) {
             TileEntity tile = world.getBlockEntity(pos);
             if (tile instanceof TileEntityBase && ((TileEntityBase) tile).stopFromDropping) {

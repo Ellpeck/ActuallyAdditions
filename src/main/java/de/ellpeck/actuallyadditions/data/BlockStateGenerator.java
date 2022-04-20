@@ -155,7 +155,6 @@ public class BlockStateGenerator extends BlockStateProvider {
             .partialState().with(CropsBlock.AGE, 7).modelForState().modelFile(models().crop("coffee_4", modLoc("block/coffee_stage_6"))).addModel();
 
 
-        buildCubeAll(ActuallyBlocks.CHARCOAL_BLOCK);
         buildCubeAll(ActuallyBlocks.ENDER_CASING);
         buildCubeAll(ActuallyBlocks.ENDER_PEARL_BLOCK);
         buildCubeAll(ActuallyBlocks.IRON_CASING);

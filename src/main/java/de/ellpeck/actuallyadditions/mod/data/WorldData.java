@@ -49,6 +49,7 @@ public class WorldData extends WorldSavedData {
         return storage;
     }
 
+    //TODO what in the world is this?
     public static void clear() {
         if (data != null) {
             data = null;
