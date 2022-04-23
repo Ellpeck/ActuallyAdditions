@@ -10,7 +10,7 @@
       "item": "actuallyadditions:empowered_diamatine_crystal"
     },
     "E": {
-      "item": "actuallyadditions:ender_pearl_block"
+      "tag": "forge:ender_pearls"
     },
     "S": {
       "item": "actuallyadditions:ender_casing"

@@ -69,7 +69,7 @@
 - [ ] Feeder
 - [ ] Crusher and double crusher
 - [ ] Heat collectors
-- [ ] Precision dropper
+- [x] Precision dropper
 - [ ] Engineer's goggles
 - [ ] Laser relay modifiers and wrench
 - [ ] Handheld filler
@@ -77,7 +77,7 @@
 - [ ] Player probe
 - [ ] Item filter
 - [ ] Water bowl
-- [ ] Tiny coal and charcoal
+- [x] Tiny coal and charcoal
 - [ ] Rice slimeballs
 - [ ] Storage crate keeper
 - [ ] Color, detonation, certain death, killer and disenchanting lenses

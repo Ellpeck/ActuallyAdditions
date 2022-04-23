@@ -14,75 +14,6 @@ package de.ellpeck.actuallyadditions.mod.crafting;
 @Deprecated
 public final class BlockCrafting {
     //
-    //    public static final IRecipe[] RECIPES_LAMPS = new IRecipe[BlockColoredLamp.ALL_LAMP_TYPES.length];
-    //    public static IRecipe recipeSmileyCloud;
-    //    public static IRecipe recipePhantomface;
-    //    public static IRecipe recipeLiquiface;
-    //    public static IRecipe recipeEnergyface;
-    //    public static IRecipe recipePhantomBreaker;
-    //    public static IRecipe recipePhantomPlacer;
-    //    public static IRecipe recipeBreaker;
-    //    public static IRecipe recipePlacer;
-    //    public static IRecipe recipeLiquidPlacer;
-    //    public static IRecipe recipeLiquidCollector;
-    //    public static IRecipe recipeCase;
-    //    public static IRecipe recipeIronCase;
-    //    public static IRecipe recipeEnderCase;
-    //    public static IRecipe recipeEnderPearlBlock;
-    //    public static IRecipe recipeESD;
-    //    public static IRecipe recipeAdvancedESD;
-    //    public static IRecipe recipePhantomBooster;
-    //    public static IRecipe recipeCoffeeMachine;
-    //    public static IRecipe recipeCrusher;
-    //    public static IRecipe recipeDoubleCrusher;
-    //    public static IRecipe recipeFurnace;
-    //    public static IRecipe recipeSolidifier;
-    //    public static IRecipe recipeCasing;
-    //    public static IRecipe recipeGlass;
-    //    public static IRecipe recipeLavaFactory;
-    //    public static IRecipe recipeEnergizer;
-    //    public static IRecipe recipeEnervator;
-    //    public static IRecipe recipeSolar;
-    //    public static IRecipe recipeHeatCollector;
-    //    public static IRecipe recipeCoalGen;
-    //    public static IRecipe recipeOilGen;
-    //    public static IRecipe recipeRepairer;
-    //    public static IRecipe recipeFisher;
-    //    public static IRecipe recipeQuartzBlock;
-    //    public static IRecipe recipeQuartzChiseled;
-    //    public static IRecipe recipeQuartzPillar;
-    //    public static IRecipe recipeBlockChar;
-    //    public static IRecipe recipeFeeder;
-    //    public static IRecipe recipeCompost;
-    //    public static IRecipe recipeCrate;
-    //    public static IRecipe recipeCrateMedium;
-    //    public static IRecipe recipeCrateLarge;
-    //    public static IRecipe recipeFermentingBarrel;
-    //    public static IRecipe recipeCanolaPress;
-    //    public static IRecipe recipePowerer;
-    //    public static IRecipe recipeLeafGen;
-    //    public static IRecipe recipeDirectionalBreaker;
-    //    public static IRecipe recipeDropper;
-    //    public static IRecipe recipeRangedCollector;
-    //    public static IRecipe recipeLaserRelay;
-    //    public static IRecipe recipeLaserRelayAdvanced;
-    //    public static IRecipe recipeLaserRelayExtreme;
-    //    public static IRecipe recipeAtomicReconstructor;
-    //    public static IRecipe recipeMiner;
-    //    public static IRecipe recipeFireworkBox;
-    //    public static IRecipe recipePhantomRedstoneface;
-    //    public static IRecipe recipeLaserRelayItemWhitelist;
-    //    public static IRecipe recipeItemInterface;
-    //    public static IRecipe recipeItemInterfaceHopping;
-    //    public static IRecipe recipePlayerInterface;
-    //    public static IRecipe recipeDisplayStand;
-    //    public static IRecipe recipeShockSuppressor;
-    //    public static IRecipe recipeEmpowerer;
-    //    public static IRecipe[] recipesTinyTorch = new IRecipe[2];
-    //    public static IRecipe recipeBioReactor;
-    //    public static IRecipe recipeFarmer;
-    //    public static IRecipe recipeBatteryBox;
-    //
     //    private static class FireworkIngredient extends Ingredient {
     //
     //        ItemStack firework = new ItemStack(Items.FIREWORKS);
@@ -211,22 +142,6 @@ public final class BlockCrafting {
     //        RecipeHandler.addOreDictRecipe(new ItemStack(InitBlocks.blockXPSolidifier), "XXX", "DCD", "XXX", 'X', new ItemStack(InitItems.itemSolidifiedExperience), 'D', new ItemStack(InitBlocks.blockCrystalEmpowered, 1, TheCrystals.DIAMOND.ordinal()), 'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()));
     //        recipeSolidifier = RecipeUtil.lastIRecipe();
     //
-    //        //Charcoal Block
-    //        RecipeHandler.addShapedRecipe(new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.CHARCOAL_BLOCK.ordinal()), "CCC", "CCC", "CCC", 'C', new ItemStack(Items.COAL, 1, 1));
-    //        recipeBlockChar = RecipeUtil.lastIRecipe();
-    //        RecipeHandler.addShapelessRecipe(new ItemStack(Items.COAL, 9, 1), new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.CHARCOAL_BLOCK.ordinal()));
-    //
-    //        //Wood Casing
-    //        RecipeHandler.addOreDictRecipe(new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.WOOD_CASING.ordinal()), "WSW", "SRS", "WSW", 'W', "plankWood", 'R', "logWood", 'S', ConfigBoolValues.SUPER_DUPER_HARD_MODE.isEnabled() ? new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ENDER_CASING.ordinal()) : "stickWood");
-    //        recipeCase = RecipeUtil.lastIRecipe();
-    //
-    //        //Iron Casing
-    //        RecipeHandler.addOreDictRecipe(new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.IRON_CASING.ordinal()), "WSW", "SQS", "WSW", 'Q', "gemQuartzBlack", 'W', "ingotIron", 'S', ConfigBoolValues.SUPER_DUPER_HARD_MODE.isEnabled() ? new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ENDER_CASING.ordinal()) : "stickWood");
-    //        recipeIronCase = RecipeUtil.lastIRecipe();
-    //
-    //        //Ender Casing
-    //        RecipeHandler.addOreDictRecipe(new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ENDER_CASING.ordinal()), "WSW", "SRS", "WSW", 'W', ConfigBoolValues.SUPER_DUPER_HARD_MODE.isEnabled() ? new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ENDERPEARL_BLOCK.ordinal()) : new ItemStack(Items.ENDER_PEARL), 'R', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.QUARTZ.ordinal()), 'S', ConfigBoolValues.SUPER_DUPER_HARD_MODE.isEnabled() ? new ItemStack(Blocks.DIAMOND_BLOCK) : new ItemStack(InitItems.itemCrystalEmpowered, 1, TheCrystals.DIAMOND.ordinal()));
-    //        recipeEnderCase = RecipeUtil.lastIRecipe();
     //
     //        //Phantom Booster
     //        RecipeHandler.addOreDictRecipe(new ItemStack(InitBlocks.blockPhantomBooster), "RDR", "DCD", "RDR", 'R', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.REDSTONE.ordinal()), 'D', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.DIAMOND.ordinal()), 'C', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ENDER_CASING.ordinal()));

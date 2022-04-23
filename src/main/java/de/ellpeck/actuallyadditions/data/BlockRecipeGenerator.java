@@ -6,6 +6,7 @@ import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import net.minecraft.data.*;
 import net.minecraft.item.Items;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.util.IItemProvider;
 import net.minecraftforge.common.Tags;
 
@@ -176,6 +177,31 @@ public class BlockRecipeGenerator extends RecipeProvider {
 
         // Hopping Item Interface
         Recipe.shapeless(ActuallyBlocks.ITEM_INTERFACE_HOPPING.get()).ingredients(ActuallyBlocks.ITEM_INTERFACE.get()).save(consumer);
+
+        //Wood Casing
+        Recipe.shaped(ActuallyBlocks.WOOD_CASING.getItem())
+            .pattern("WSW", "SRS", "WSW")
+            .define('S', Tags.Items.RODS_WOODEN)
+            .define('W', ItemTags.PLANKS)
+            .define('R', ItemTags.LOGS)
+            .save(consumer);
+
+        //Iron Casing
+        Recipe.shaped(ActuallyBlocks.IRON_CASING.getItem())
+            .pattern("WSW", "SQS", "WSW")
+            .define('Q', ActuallyItems.BLACK_QUARTZ.get())
+            .define('W', Tags.Items.INGOTS_IRON)
+            .define('S', Tags.Items.RODS_WOODEN)
+            .save(consumer);
+
+        //Ender Casing
+        Recipe.shaped(ActuallyBlocks.ENDER_CASING.getItem())
+            .pattern("WSW", "SRS", "WSW")
+            .define('W', Tags.Items.ENDER_PEARLS)
+            .define('R', ActuallyBlocks.BLACK_QUARTZ.getItem())
+            .define('S', ActuallyItems.EMPOWERED_DIAMATINE_CRYSTAL.get())
+            .save(consumer);
+
 
 
     }

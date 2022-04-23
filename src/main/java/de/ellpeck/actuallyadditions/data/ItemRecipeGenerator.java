@@ -229,7 +229,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .pattern(" S ")
             .pattern("SB ")
             .define('F', ActuallyItems.EMPOWERED_DIAMATINE_CRYSTAL.get())
-            .define('E', ActuallyBlocks.ENDER_PEARL_BLOCK.getItem())
+            .define('E', Tags.Items.ENDER_PEARLS)
             .define('S', ActuallyBlocks.ENDER_CASING.getItem())
             .define('B', ActuallyItems.SINGLE_BATTERY.get()).save(consumer);
 
