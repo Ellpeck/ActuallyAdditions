@@ -1,7 +1,6 @@
 # Remove
 - [ ] Lush caves
 - [x] 11 lens (lens of disruption)
-- [ ] Smiley cloud
 - [x] Occasional solidified XP drop from mobs
 - [ ] Treasure chests
 - [ ] Composter and bio-mash, biomass, bio coal and fertilizer
