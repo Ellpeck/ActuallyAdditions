@@ -156,7 +156,6 @@ public class BlockStateGenerator extends BlockStateProvider {
 
 
         buildCubeAll(ActuallyBlocks.ENDER_CASING);
-        buildCubeAll(ActuallyBlocks.ENDER_PEARL_BLOCK);
         buildCubeAll(ActuallyBlocks.IRON_CASING);
         standardBlock(ActuallyBlocks.LAVA_FACTORY_CASING);
         buildCubeAll(ActuallyBlocks.BLACK_QUARTZ_ORE);

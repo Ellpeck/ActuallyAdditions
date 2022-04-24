@@ -6,7 +6,7 @@
 - [ ] Treasure chests
 - [ ] Composter and bio-mash, biomass, bio coal and fertilizer
 - [x] Charcoal blocks
-- [ ] Ender pearl blocks
+- [x] Ender pearl blocks
 - [x] ESDs
 - [ ] Fishing nets
 - [ ] Solar panels
@@ -14,7 +14,7 @@
 - [ ] Knife (food can just be crafted normally)
 - [ ] Black lotuses and black dye
 - [ ] Chest to storage crate upgrade (makes little sense with the way they are being changed), keep the other ones though
-- [ ] Ring of liquid banning
+- [x] Ring of liquid banning
 - [x] Emerald and obsidian armor and tools
 - [x] Black quartz armor and tools
 - [x] Crystal armor and tools (why did I ever make this)

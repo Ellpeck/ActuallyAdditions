@@ -210,8 +210,6 @@ public final class ActuallyBlocks {
 
 
     // Misc building blocks
-    public static final AABlockReg<ActuallyBlock, AABlockItem, ?> ENDER_PEARL_BLOCK = new AABlockReg<>("ender_pearl_block", () -> new ActuallyBlock(miscBlockProperties),
-        (b) -> new AABlockItem(b, defaultBlockItemProperties));
     public static final AABlockReg<ActuallyBlock, AABlockItem, ?> BLACK_QUARTZ_ORE = new AABlockReg<>("black_quartz_ore", () -> new ActuallyBlock(miscBlockProperties),
         (b) -> new AABlockItem(b, defaultBlockItemProperties));
 

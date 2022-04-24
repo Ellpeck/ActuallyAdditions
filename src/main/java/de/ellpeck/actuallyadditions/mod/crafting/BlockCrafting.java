@@ -226,12 +226,7 @@ public final class BlockCrafting {
     //        //Leaf Generator
     //        RecipeHandler.addOreDictRecipe(new ItemStack(InitBlocks.blockLeafGenerator), "IEI", "GLG", "ICI", 'I', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal()), 'G', new ItemStack(InitItems.itemCrystalEmpowered, 1, TheCrystals.REDSTONE.ordinal()), 'E', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.IRON_CASING.ordinal()), 'L', "treeLeaves", 'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()));
     //        recipeLeafGen = RecipeUtil.lastIRecipe();
-    //
-    //        //Enderpearl Block
-    //        RecipeHandler.addOreDictRecipe(new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ENDERPEARL_BLOCK.ordinal()), "EE", "EE", 'E', Items.ENDER_PEARL);
-    //        recipeEnderPearlBlock = RecipeUtil.lastIRecipe();
-    //        RecipeHandler.addShapelessOreDictRecipe(new ItemStack(Items.ENDER_PEARL, 4), new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ENDERPEARL_BLOCK.ordinal()));
-    //
+
     //        //Quartz Block
     //        RecipeHandler.addOreDictRecipe(new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.QUARTZ.ordinal()), "QQ", "QQ", 'Q', "gemQuartzBlack");
     //        recipeQuartzBlock = RecipeUtil.lastIRecipe();
