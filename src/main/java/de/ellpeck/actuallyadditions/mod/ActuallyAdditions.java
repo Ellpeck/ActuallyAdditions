@@ -97,6 +97,7 @@ public class ActuallyAdditions {
         ActuallyBlocks.init(eventBus);
         ActuallyItems.init(eventBus);
         ActuallyRecipes.init(eventBus);
+        AASounds.init(eventBus);
         ActuallyContainers.CONTAINERS.register(eventBus);
         ENTITIES.register(eventBus);
         eventBus.addListener(this::onConfigReload);

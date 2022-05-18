@@ -15,29 +15,26 @@ public class ActuallyAdditionsData {
         DataGenerator generator = event.getGenerator();
         ExistingFileHelper helper = event.getExistingFileHelper();
 
-        if (event.includeClient()) {
-            //            generator.addProvider(new GeneratorBlockStates(generator, helper));
-            //            generator.addProvider(new GeneratorItemModels(generator, helper));
-            //            generator.addProvider(new GeneratorLanguage(generator));
-        }
+        //            generator.addProvider(new GeneratorBlockStates(generator, helper));
+        //            generator.addProvider(new GeneratorItemModels(generator, helper));
+        //            generator.addProvider(new GeneratorLanguage(generator));
+        BlockTagsGenerator generatorBlockTags = new BlockTagsGenerator(generator, helper);
 
-        if (event.includeServer()) {
-            BlockTagsGenerator generatorBlockTags = new BlockTagsGenerator(generator, helper);
+        generator.addProvider(new LootTableGenerator(generator));
+        generator.addProvider(new BlockRecipeGenerator(generator));
+        generator.addProvider(new ItemRecipeGenerator(generator));
+        generator.addProvider(generatorBlockTags);
+        generator.addProvider(new ItemTagsGenerator(generator, generatorBlockTags, helper));
 
-            generator.addProvider(new LootTableGenerator(generator));
-            generator.addProvider(new BlockRecipeGenerator(generator));
-            generator.addProvider(new ItemRecipeGenerator(generator));
-            generator.addProvider(generatorBlockTags);
-            generator.addProvider(new ItemTagsGenerator(generator, generatorBlockTags, helper));
+        generator.addProvider(new BlockStateGenerator(generator, helper));
+        generator.addProvider(new ItemModelGenerator(generator, helper));
 
-            generator.addProvider(new BlockStateGenerator(generator, helper));
-            generator.addProvider(new ItemModelGenerator(generator, helper));
+        generator.addProvider(new LaserRecipeGenerator(generator));
+        generator.addProvider(new EmpoweringRecipeGenerator(generator));
+        generator.addProvider(new CrushingRecipeGenerator(generator));
+        generator.addProvider(new FuelRecipeGenerator(generator));
+        generator.addProvider(new MiscMachineRecipeGenerator(generator));
 
-            generator.addProvider(new LaserRecipeGenerator(generator));
-            generator.addProvider(new EmpoweringRecipeGenerator(generator));
-            generator.addProvider(new CrushingRecipeGenerator(generator));
-            generator.addProvider(new FuelRecipeGenerator(generator));
-            generator.addProvider(new MiscMachineRecipeGenerator(generator));
-        }
+        generator.addProvider(new SoundsGenerator(generator, helper));
     }
 }

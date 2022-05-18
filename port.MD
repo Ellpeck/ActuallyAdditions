@@ -4,7 +4,7 @@
 - [ ] Smiley cloud
 - [x] Occasional solidified XP drop from mobs
 - [ ] Treasure chests
-- [ ] Composter and bio-mash, biomass, bio coal and fertilizer
+- [x] Composter and bio-mash, biomass, bio coal and fertilizer
 - [x] Charcoal blocks
 - [x] Ender pearl blocks
 - [x] ESDs
