@@ -20,6 +20,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.ForgeI18n;
 
+@Deprecated
 public final class StringUtil {
 
     public static final int DECIMAL_COLOR_WHITE = 16777215;
@@ -32,6 +33,7 @@ public final class StringUtil {
     /**
      * Localizes a given String
      */
+    @Deprecated
     @OnlyIn(Dist.CLIENT)
     public static String localize(String text) {
         return I18n.get(text);

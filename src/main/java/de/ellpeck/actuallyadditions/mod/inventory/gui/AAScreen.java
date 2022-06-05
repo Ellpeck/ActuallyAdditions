@@ -36,4 +36,12 @@ public abstract class AAScreen<T extends Container> extends ContainerScreen<T> {
     public void renderLabels(@Nonnull MatrixStack matrices, int x, int y) {
         font.draw(matrices, this.title, titleLabelX, titleLabelY, 0xFFFFFF);
     }
+
+    @Override
+    protected void init() {
+        super.init();
+
+        titleLabelX = (int) (imageWidth / 2.0f - font.width(title) / 2.0f);
+        titleLabelY = -10;
+    }
 }

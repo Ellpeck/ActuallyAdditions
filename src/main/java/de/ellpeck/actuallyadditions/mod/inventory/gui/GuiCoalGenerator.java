@@ -43,8 +43,6 @@ public class GuiCoalGenerator extends AAScreen<ContainerCoalGenerator> {
     public void init() {
         super.init();
         this.energy = new EnergyDisplay(this.leftPos + 42, this.topPos + 5, this.generator.storage);
-        titleLabelX = (int) (imageWidth / 2.0f - font.width(title) / 2.0f);
-        titleLabelY = -10;
     }
 
     @Override

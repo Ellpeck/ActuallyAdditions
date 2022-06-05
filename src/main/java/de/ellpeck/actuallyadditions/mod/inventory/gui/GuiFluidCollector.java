@@ -49,8 +49,6 @@ public class GuiFluidCollector extends AAScreen<ContainerFluidCollector> {
     public void init() {
         super.init();
         this.fluid = new FluidDisplay(this.leftPos + 67, this.topPos + 5, this.collector.tank);
-        titleLabelX = (int) (imageWidth / 2.0f - font.width(title) / 2.0f);
-        titleLabelY = -10;
     }
 
     @Override

@@ -65,8 +65,6 @@ public class GuiFurnaceDouble extends AAScreen<ContainerFurnaceDouble> {
     public void init() {
         super.init();
         this.energy = new EnergyDisplay(this.leftPos + 27, this.topPos + 5, this.tileFurnace.storage);
-        titleLabelX = (int) (imageWidth / 2.0f - font.width(title) / 2.0f);
-        titleLabelY = -10;
         this.buttonAutoSplit = new Buttons.SmallerButton(this.leftPos, this.topPos, new StringTextComponent("S"), (button) -> PacketHandlerHelper.sendButtonPacket(this.tileFurnace, 0));
         buttonAutoSplit.setFGColor(this.tileFurnace.isAutoSplit ? TextFormatting.DARK_GREEN.getColor() : TextFormatting.RED.getColor());
         this.addButton(this.buttonAutoSplit);

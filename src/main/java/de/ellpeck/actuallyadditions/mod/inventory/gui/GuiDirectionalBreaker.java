@@ -46,13 +46,7 @@ public class GuiDirectionalBreaker extends AAScreen<ContainerDirectionalBreaker>
     @Override
     public void render(@Nonnull MatrixStack matrices, int x, int y, float f) {
         super.render(matrices, x, y, f);
-
         this.energy.render(matrices, x, y);
-    }
-
-    @Override
-    public void renderLabels(@Nonnull MatrixStack matrices, int x, int y) {
-        AssetUtil.displayNameString(matrices, this.font, this.imageWidth, -10, this.breaker);
     }
 
     @Override

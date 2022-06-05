@@ -40,8 +40,6 @@ public class GuiBreaker extends AAScreen<ContainerBreaker> {
     @Override
     public void init(Minecraft pMinecraft, int pWidth, int pHeight) {
         super.init(pMinecraft, pWidth, pHeight);
-        titleLabelX = (int) (imageWidth / 2.0f - font.width(title) / 2.0f);
-        titleLabelY = -10;
     }
 
     @Override

@@ -43,9 +43,6 @@ public class GuiCanolaPress extends AAScreen<ContainerCanolaPress> {
         super.init();
         this.energy = new EnergyDisplay(this.leftPos + 42, this.topPos + 5, this.press.storage);
         this.fluid = new FluidDisplay(this.leftPos + 116, this.topPos + 5, this.press.tank);
-
-        titleLabelX = (int) (imageWidth / 2.0f - font.width(title) / 2.0f);
-        titleLabelY = -10;
     }
 
     @Override

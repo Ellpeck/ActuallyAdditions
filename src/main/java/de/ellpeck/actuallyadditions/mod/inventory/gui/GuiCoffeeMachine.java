@@ -14,16 +14,24 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerCoffeeMachine;
+import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityCoffeeMachine;
-import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import de.ellpeck.actuallyadditions.mod.util.StringUtil;
+import de.ellpeck.actuallyadditions.mod.util.*;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.client.gui.GuiUtils;
 
 import javax.annotation.Nonnull;
+import java.util.Arrays;
+import java.util.Collections;
 
 @OnlyIn(Dist.CLIENT)
 public class GuiCoffeeMachine extends AAScreen<ContainerCoffeeMachine> {
@@ -45,20 +53,22 @@ public class GuiCoffeeMachine extends AAScreen<ContainerCoffeeMachine> {
     public void init() {
         super.init();
 
-//        Button buttonOkay = new Button(this.leftPos + 60, this.topPos + 11, 58, 20, StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.ok"));
-//        this.addButton(buttonOkay);
-//
-//        this.energy = new EnergyDisplay(this.leftPos + 16, this.topPos + 5, this.machine.storage);
-//        this.fluid = new FluidDisplay(this.leftPos - 30, this.topPos + 1, this.machine.tank, true, false);
+        this.addButton(new Button(this.leftPos + 60, this.topPos + 11, 58, 20, new TranslationTextComponent("info.actuallyadditions.gui.ok"),
+            (b) -> PacketHandlerHelper.sendButtonPacket(this.machine, 0)));
+
+        this.energy = new EnergyDisplay(this.leftPos + 16, this.topPos + 5, this.machine.storage);
+        this.fluid = new FluidDisplay(this.leftPos - 30, this.topPos + 1, this.machine.tank, true, false);
     }
 
     @Override
     public void render(@Nonnull MatrixStack matrices, int x, int y, float f) {
         super.render(matrices, x, y, f);
+        Minecraft mc = Minecraft.getInstance();
 
-        String text2 = this.machine.coffeeCacheAmount + "/" + TileEntityCoffeeMachine.COFFEE_CACHE_MAX_AMOUNT + " " + StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.coffee");
+        TextComponent text = new TranslationTextComponent("info.actuallyadditions.gui.coffee_amount", this.machine.coffeeCacheAmount, TileEntityCoffeeMachine.COFFEE_CACHE_MAX_AMOUNT);
         if (x >= this.leftPos + 40 && y >= this.topPos + 25 && x <= this.leftPos + 49 && y <= this.topPos + 56) {
-            //this.drawHoveringText(Collections.singletonList(text2), x, y);
+            GuiUtils.drawHoveringText(matrices, Collections.singletonList(text), x, y, mc.getWindow().getWidth(), mc.getWindow().getWidth(), -1, font);
+
         }
 
         this.energy.render(matrices, x, y);
@@ -66,12 +76,7 @@ public class GuiCoffeeMachine extends AAScreen<ContainerCoffeeMachine> {
     }
 
     @Override
-    public void renderLabels(@Nonnull MatrixStack matrices, int x, int y) {
-        AssetUtil.displayNameString(matrices, this.font, this.imageWidth, -10, this.machine);
-    }
-
-    @Override
-    public void renderBg(MatrixStack matrices, float f, int x, int y) {
+    public void renderBg(@Nonnull MatrixStack matrices, float f, int x, int y) {
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 
         this.getMinecraft().getTextureManager().bind(AssetUtil.GUI_INVENTORY_LOCATION);
@@ -96,9 +101,4 @@ public class GuiCoffeeMachine extends AAScreen<ContainerCoffeeMachine> {
         this.energy.draw(matrices);
         this.fluid.draw(matrices);
     }
-
-//    @Override
-//    public void actionPerformed(Button button) {
-//        PacketHandlerHelper.sendButtonPacket(this.machine, button.id);
-//    }
 }

@@ -33,10 +33,12 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
@@ -58,7 +60,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     public final CustomEnergyStorage storage = new CustomEnergyStorage(300000, 250, 0);
     public final LazyOptional<IEnergyStorage> lazyEnergy = LazyOptional.of(() -> this.storage);
 
-    public final FluidTank tank = new FluidTank(4 * Util.BUCKET) {
+    public final FluidTank tank = new FluidTank(4 * FluidAttributes.BUCKET_VOLUME) {
         @Nonnull
         @Override
         public FluidStack drain(int maxDrain, FluidAction action) {
@@ -242,7 +244,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
 
     @Override
     public ITextComponent getDisplayName() {
-        return StringTextComponent.EMPTY;
+        return new TranslationTextComponent("container.actuallyadditions.coffeeMachine");
     }
 
     @Nullable

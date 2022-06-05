@@ -47,8 +47,6 @@ public class GuiOilGenerator extends AAScreen<ContainerOilGenerator> {
         super.init();
         this.energy = new EnergyDisplay(this.leftPos + 42, this.topPos + 5, this.generator.storage);
         this.fluid = new FluidDisplay(this.leftPos + 116, this.topPos + 5, this.generator.tank);
-        titleLabelX = (int) (imageWidth / 2.0f - font.width(title) / 2.0f);
-        titleLabelY = -10;
     }
 
     @Override

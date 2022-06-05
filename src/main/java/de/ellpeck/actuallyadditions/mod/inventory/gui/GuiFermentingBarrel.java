@@ -51,9 +51,6 @@ public class GuiFermentingBarrel extends AAScreen<ContainerFermentingBarrel> {
         super.init();
         this.input = new FluidDisplay(this.leftPos + 60, this.topPos + 5, this.press.tanks.inputTank);
         this.output = new FluidDisplay(this.leftPos + 98, this.topPos + 5, this.press.tanks.outputTank);
-
-        titleLabelX = (int) (imageWidth / 2.0f - font.width(title) / 2.0f);
-        titleLabelY = -10;
     }
 
     @Override

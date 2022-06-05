@@ -47,9 +47,14 @@ public class BlockCoffeeMachine extends DirectionalBlock.Container {
         return super.use(state, world, pos, player, hand, hit);
     }
 
+    @Override
+    public boolean hasTileEntity(BlockState state) {
+        return true;
+    }
+
     @Nullable
-    //@Override
-    public TileEntity newBlockEntity(IBlockReader worldIn) {
+    @Override
+    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
         return new TileEntityCoffeeMachine();
     }
 

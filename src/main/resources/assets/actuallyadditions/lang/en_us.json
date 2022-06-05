@@ -544,6 +544,7 @@
   "info.actuallyadditions.gui.inbound": "INBOUND",
   "info.actuallyadditions.gui.outbound": "OUTBOUND",
   "info.actuallyadditions.gui.coffee": "Coffee",
+  "info.actuallyadditions.gui.coffee_amount": "%d/%d Coffee",
   "info.actuallyadditions.gui.ok": "Ok",
   "info.actuallyadditions.gui.the": "the",
   "info.actuallyadditions.gui.smart": "Smart Whitelist",

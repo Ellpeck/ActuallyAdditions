@@ -44,9 +44,6 @@ public class GuiFarmer extends AAScreen<ContainerFarmer> {
         super.init();
 
         this.energy = new EnergyDisplay(this.leftPos + 33, this.topPos + 6, this.farmer.storage);
-
-        titleLabelX = (int) (imageWidth / 2.0f - font.width(title) / 2.0f);
-        titleLabelY = -10;
     }
 
     @Override
