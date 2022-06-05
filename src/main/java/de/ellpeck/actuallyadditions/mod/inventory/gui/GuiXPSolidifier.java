@@ -82,7 +82,7 @@ public class GuiXPSolidifier extends AAScreen<ContainerXPSolidifier> {
         this.getMinecraft().getTextureManager().bind(RES_LOC);
         this.blit(matrices, this.leftPos, this.topPos, 0, 0, 176, 93);
 
-        drawCenteredString(matrices, this.font, Integer.toString(this.solidifier.amount), this.leftPos + 88, this.topPos + 30, StringUtil.DECIMAL_COLOR_WHITE);
+        drawCenteredString(matrices, this.font, Integer.toString(this.solidifier.amount), this.leftPos + 88, this.topPos + 30, 0xFFFFFF);
     }
 
 //    @Override

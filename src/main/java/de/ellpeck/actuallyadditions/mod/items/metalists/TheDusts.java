@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.items.metalists;
 
-import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.item.Rarity;
 
 @Deprecated
@@ -21,7 +20,7 @@ public enum TheDusts {
     DIAMOND("diamond", 292003, Rarity.RARE),
     EMERALD("emerald", 4319527, Rarity.EPIC),
     LAPIS("lapis", 1849791, Rarity.UNCOMMON),
-    QUARTZ("quartz", StringUtil.DECIMAL_COLOR_WHITE, Rarity.UNCOMMON),
+    QUARTZ("quartz", 0xFFFFFF, Rarity.UNCOMMON),
     COAL("coal", 0, Rarity.UNCOMMON),
     QUARTZ_BLACK("quartz_black", 18, Rarity.RARE);
 

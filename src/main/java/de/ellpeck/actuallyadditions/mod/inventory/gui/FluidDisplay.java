@@ -116,7 +116,7 @@ public class FluidDisplay extends AbstractGui {
         }
 
         if (this.drawTextNextTo) {
-            mc.font.draw(matrices, new StringTextComponent(this.getOverlayText()), barX + 25, barY + 78, StringUtil.DECIMAL_COLOR_WHITE);
+            mc.font.draw(matrices, new StringTextComponent(this.getOverlayText()), barX + 25, barY + 78, 0xFFFFFF);
         }
     }
 

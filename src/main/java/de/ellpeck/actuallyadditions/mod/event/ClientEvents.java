@@ -194,7 +194,7 @@ public class ClientEvents {
                         String strg = String.format("%s: %s", StringUtil.localize("info." + ActuallyAdditions.MODID + ".redstoneMode"), TextFormatting.DARK_RED + StringUtil.localize("info." + ActuallyAdditions.MODID + ".redstoneMode." + (base.isPulseMode
                             ? "pulse"
                             : "deactivation")) + TextFormatting.RESET);
-                        font.drawShadow(event.getMatrixStack(), strg, event.getWindow().getGuiScaledWidth() / 2f + 5, event.getWindow().getGuiScaledHeight() / 2f + 5, StringUtil.DECIMAL_COLOR_WHITE);
+                        font.drawShadow(event.getMatrixStack(), strg, event.getWindow().getGuiScaledWidth() / 2f + 5, event.getWindow().getGuiScaledHeight() / 2f + 5, 0xFFFFFF);
 
                         String expl;
                         if (StackUtil.isValid(stack) && stack.getItem() == CommonConfig.Other.redstoneConfigureItem.asItem()) {
@@ -202,7 +202,7 @@ public class ClientEvents {
                         } else {
                                 expl = TextFormatting.GRAY.toString() + TextFormatting.ITALIC + StringUtil.localizeFormatted("info." + ActuallyAdditions.MODID + ".redstoneMode.invalidItem", StringUtil.localize(CommonConfig.Other.redstoneConfigureItem.asItem().getDescriptionId()));
                         }
-                        font.drawShadow(event.getMatrixStack(), expl, event.getWindow().getGuiScaledWidth() / 2f + 5, event.getWindow().getGuiScaledHeight() / 2f + 15, StringUtil.DECIMAL_COLOR_WHITE);
+                        font.drawShadow(event.getMatrixStack(), expl, event.getWindow().getGuiScaledWidth() / 2f + 5, event.getWindow().getGuiScaledHeight() / 2f + 15, 0xFFFFFF);
                     }
                 }
 

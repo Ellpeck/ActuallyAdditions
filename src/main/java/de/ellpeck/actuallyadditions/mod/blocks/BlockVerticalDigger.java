@@ -27,6 +27,7 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -63,7 +64,7 @@ public class BlockVerticalDigger extends DirectionalBlock.Container implements I
                 : miner.checkY == -1
                 ? "Calculating positions..."
                 : "Mining at " + (miner.getBlockPos().getX() + miner.checkX) + ", " + miner.checkY + ", " + (miner.getBlockPos().getZ() + miner.checkZ) + ".";
-            minecraft.font.drawShadow(matrices, info, resolution.getGuiScaledWidth() / 2f + 5, resolution.getGuiScaledHeight() / 2f - 20, StringUtil.DECIMAL_COLOR_WHITE);
+            minecraft.font.drawShadow(matrices, info, resolution.getGuiScaledWidth() / 2f + 5, resolution.getGuiScaledHeight() / 2f - 20, 0xFFFFFF);
         }
     }
 

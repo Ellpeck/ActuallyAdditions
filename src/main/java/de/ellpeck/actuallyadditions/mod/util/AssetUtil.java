@@ -62,7 +62,7 @@ public final class AssetUtil {
 
     @OnlyIn(Dist.CLIENT)
     public static void displayNameString(MatrixStack matrices, FontRenderer font, int xSize, int yPositionOfMachineText, String text) {
-        font.draw(matrices, text, xSize / 2f - font.width(text) / 2f, yPositionOfMachineText, StringUtil.DECIMAL_COLOR_WHITE);
+        font.draw(matrices, text, xSize / 2f - font.width(text) / 2f, yPositionOfMachineText, 0xFFFFFF);
     }
 
     @OnlyIn(Dist.CLIENT)

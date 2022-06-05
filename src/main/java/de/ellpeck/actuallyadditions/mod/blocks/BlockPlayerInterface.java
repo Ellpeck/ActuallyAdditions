@@ -73,8 +73,8 @@ public class BlockPlayerInterface extends BlockContainerBase implements IHudDisp
                 String name = face.playerName == null
                     ? "Unknown"
                     : face.playerName;
-                minecraft.font.drawShadow(matrices, "Bound to: " + TextFormatting.RED + name, resolution.getGuiScaledWidth() / 2f + 5, resolution.getGuiScaledHeight() / 2f + 5, StringUtil.DECIMAL_COLOR_WHITE);
-                minecraft.font.drawShadow(matrices, "UUID: " + TextFormatting.DARK_GREEN + face.connectedPlayer, resolution.getGuiScaledWidth() / 2f + 5, resolution.getGuiScaledHeight() / 2f + 15, StringUtil.DECIMAL_COLOR_WHITE);
+                minecraft.font.drawShadow(matrices, "Bound to: " + TextFormatting.RED + name, resolution.getGuiScaledWidth() / 2f + 5, resolution.getGuiScaledHeight() / 2f + 5, 0xFFFFFF);
+                minecraft.font.drawShadow(matrices, "UUID: " + TextFormatting.DARK_GREEN + face.connectedPlayer, resolution.getGuiScaledWidth() / 2f + 5, resolution.getGuiScaledHeight() / 2f + 15, 0xFFFFFF);
             }
         }
     }

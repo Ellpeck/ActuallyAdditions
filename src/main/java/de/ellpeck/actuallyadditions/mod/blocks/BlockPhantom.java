@@ -127,22 +127,22 @@ public class BlockPhantom extends BlockContainerBase implements IHudDisplay {
         if (tile != null) {
             if (tile instanceof IPhantomTile) {
                 IPhantomTile phantom = (IPhantomTile) tile;
-                minecraft.font.drawShadow(matrices, TextFormatting.GOLD + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".blockPhantomRange.desc") + ": " + phantom.getRange(), resolution.getGuiScaledWidth() / 2 + 5, resolution.getGuiScaledHeight() / 2 - 40, StringUtil.DECIMAL_COLOR_WHITE);
+                minecraft.font.drawShadow(matrices, TextFormatting.GOLD + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".blockPhantomRange.desc") + ": " + phantom.getRange(), resolution.getGuiScaledWidth() / 2 + 5, resolution.getGuiScaledHeight() / 2 - 40, TextFormatting.WHITE.getColor());
                 if (phantom.hasBoundPosition()) {
                     int distance = MathHelper.ceil(new Vector3d(pos.getX(), pos.getY(), pos.getZ()).distanceTo(new Vector3d(phantom.getBoundPosition().getX(), phantom.getBoundPosition().getY(), phantom.getBoundPosition().getZ())));
                     BlockState state = minecraft.level.getBlockState(phantom.getBoundPosition());
                     Block block = state.getBlock();
                     Item item = Item.byBlock(block);
                     String name = item.getName(new ItemStack(block)).getString();
-                    StringUtil.drawSplitString(minecraft.font, StringUtil.localizeFormatted("tooltip." + ActuallyAdditions.MODID + ".phantom.blockInfo.desc", name, phantom.getBoundPosition().getX(), phantom.getBoundPosition().getY(), phantom.getBoundPosition().getZ(), distance), resolution.getGuiScaledWidth() / 2 + 5, resolution.getGuiScaledHeight() / 2 - 30, 200, StringUtil.DECIMAL_COLOR_WHITE, true);
+                    StringUtil.drawSplitString(minecraft.font, StringUtil.localizeFormatted("tooltip." + ActuallyAdditions.MODID + ".phantom.blockInfo.desc", name, phantom.getBoundPosition().getX(), phantom.getBoundPosition().getY(), phantom.getBoundPosition().getZ(), distance), resolution.getGuiScaledWidth() / 2 + 5, resolution.getGuiScaledHeight() / 2 - 30, 200, 0xFFFFFF, true);
 
                     if (phantom.isBoundThingInRange()) {
-                        StringUtil.drawSplitString(minecraft.font, TextFormatting.DARK_GREEN + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".phantom.connectedRange.desc"), resolution.getGuiScaledWidth() / 2 + 5, resolution.getGuiScaledHeight() / 2 + 25, 200, StringUtil.DECIMAL_COLOR_WHITE, true);
+                        StringUtil.drawSplitString(minecraft.font, TextFormatting.DARK_GREEN + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".phantom.connectedRange.desc"), resolution.getGuiScaledWidth() / 2 + 5, resolution.getGuiScaledHeight() / 2 + 25, 200, 0xFFFFFF, true);
                     } else {
-                        StringUtil.drawSplitString(minecraft.font, TextFormatting.DARK_RED + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".phantom.connectedNoRange.desc"), resolution.getGuiScaledWidth() / 2 + 5, resolution.getGuiScaledHeight() / 2 + 25, 200, StringUtil.DECIMAL_COLOR_WHITE, true);
+                        StringUtil.drawSplitString(minecraft.font, TextFormatting.DARK_RED + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".phantom.connectedNoRange.desc"), resolution.getGuiScaledWidth() / 2 + 5, resolution.getGuiScaledHeight() / 2 + 25, 200, 0xFFFFFF, true);
                     }
                 } else {
-                    minecraft.font.drawShadow(matrices, TextFormatting.RED + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".phantom.notConnected.desc"), resolution.getGuiScaledWidth() / 2 + 5, resolution.getGuiScaledHeight() / 2 + 25, StringUtil.DECIMAL_COLOR_WHITE);
+                    minecraft.font.drawShadow(matrices, TextFormatting.RED + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".phantom.notConnected.desc"), resolution.getGuiScaledWidth() / 2 + 5, resolution.getGuiScaledHeight() / 2 + 25, TextFormatting.WHITE.getColor());
                 }
             }
         }

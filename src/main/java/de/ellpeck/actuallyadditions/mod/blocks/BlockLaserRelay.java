@@ -182,7 +182,7 @@ public class BlockLaserRelay extends FullyDirectionalBlock.Container implements 
                         TileEntityLaserRelay relay = (TileEntityLaserRelay) tile;
 
                         String strg = relay.getExtraDisplayString();
-                        minecraft.font.drawShadow(matrices, strg, resolution.getGuiScaledWidth() / 2f + 5, resolution.getGuiScaledHeight() / 2f + 5, StringUtil.DECIMAL_COLOR_WHITE);
+                        minecraft.font.drawShadow(matrices, strg, resolution.getGuiScaledWidth() / 2f + 5, resolution.getGuiScaledHeight() / 2f + 5, 0xFFFFFF);
 
                         String expl;
                         if (compass) {
@@ -191,7 +191,7 @@ public class BlockLaserRelay extends FullyDirectionalBlock.Container implements 
                             expl = TextFormatting.GRAY.toString() + TextFormatting.ITALIC + StringUtil.localizeFormatted("info." + ActuallyAdditions.MODID + ".laserRelay.mode.noCompasss", StringUtil.localize(CommonConfig.Other.relayConfigureItem.getDescriptionId() + ".name"));
                         }
 
-                        StringUtil.drawSplitString(minecraft.font, expl, resolution.getGuiScaledWidth() / 2 + 5, resolution.getGuiScaledHeight() / 2 + 15, Integer.MAX_VALUE, StringUtil.DECIMAL_COLOR_WHITE, true);
+                        StringUtil.drawSplitString(minecraft.font, expl, resolution.getGuiScaledWidth() / 2 + 5, resolution.getGuiScaledHeight() / 2 + 15, Integer.MAX_VALUE, 0xFFFFFF, true);
                     }
                 }
             }

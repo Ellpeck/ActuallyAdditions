@@ -92,8 +92,8 @@ public class GuiLaserRelayItemWhitelist extends AAScreen<ContainerLaserRelayItem
 
         String s1 = StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.inbound");
         String s2 = StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.outbound");
-        this.font.draw(matrices, s1, 46 - this.font.width(s1) / 2, 80, StringUtil.DECIMAL_COLOR_GRAY_TEXT);
-        this.font.draw(matrices, s2, 131 - this.font.width(s2) / 2, 80, StringUtil.DECIMAL_COLOR_GRAY_TEXT);
+        this.font.draw(matrices, s1, 46 - this.font.width(s1) / 2, 80, 0x404040);
+        this.font.draw(matrices, s2, 131 - this.font.width(s2) / 2, 80, 0x404040);
     }
 
     @Override

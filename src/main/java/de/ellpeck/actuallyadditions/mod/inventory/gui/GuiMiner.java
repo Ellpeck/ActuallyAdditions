@@ -63,7 +63,7 @@ public class GuiMiner extends AAScreen<ContainerMiner> {
         String mining = this.miner.onlyMineOres
             ? "Only Mining Ores"
             : "Mining Everything";
-        this.font.draw(matrices, mining, this.leftPos + this.imageWidth / 2 - this.font.width(mining) / 2, this.topPos + 8, StringUtil.DECIMAL_COLOR_GRAY_TEXT);
+        this.font.draw(matrices, mining, this.leftPos + this.imageWidth / 2 - this.font.width(mining) / 2, this.topPos + 8, 0x404040);
     }
 
 //    @Override

@@ -22,14 +22,6 @@ import net.minecraftforge.fml.ForgeI18n;
 
 @Deprecated
 public final class StringUtil {
-
-    public static final int DECIMAL_COLOR_WHITE = 16777215;
-    public static final int DECIMAL_COLOR_GRAY_TEXT = 4210752;
-
-    public static final String BUGGED_ITEM_NAME = ActuallyAdditions.MODID + ".lolWutHowUDoDis";
-    //TODO: Remove
-    static LanguageMap cancerino;
-
     /**
      * Localizes a given String
      */
@@ -77,15 +69,4 @@ public final class StringUtil {
             font.draw(matrices, text, x, y, color);
         matrices.popPose();
     }
-
-//    static void setupLangMap() {
-//        try {
-//            Method m = LanguageMap.class.getDeclaredMethod("inject", LanguageMap.class, InputStream.class);
-//            m.setAccessible(true);
-//            m.invoke(null, cancerino = new LanguageMap(), ActuallyAdditions.class.getResourceAsStream("/assets/actuallyadditions/lang/en_us.json"));
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            throw new RuntimeException("Actually Additions failed to access LanguageMap.inject.  Report this!");
-//        }
-//    }
 }
