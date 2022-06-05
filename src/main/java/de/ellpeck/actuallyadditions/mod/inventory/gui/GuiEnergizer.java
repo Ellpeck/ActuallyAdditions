@@ -50,11 +50,6 @@ public class GuiEnergizer extends AAScreen<ContainerEnergizer> {
     }
 
     @Override
-    public void renderLabels(@Nonnull MatrixStack matrices, int x, int y) {
-        AssetUtil.displayNameString(matrices, this.font, this.imageWidth, -10, this.energizer);
-    }
-
-    @Override
     public void renderBg(MatrixStack matrices, float f, int x, int y) {
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 

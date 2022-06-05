@@ -73,11 +73,6 @@ public class GuiXPSolidifier extends AAScreen<ContainerXPSolidifier> {
     }
 
     @Override
-    public void renderLabels(@Nonnull MatrixStack matrices, int x, int y) {
-        AssetUtil.displayNameString(matrices, this.font, this.imageWidth, -10, this.solidifier);
-    }
-
-    @Override
     public void renderBg(MatrixStack matrices, float f, int x, int y) {
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 

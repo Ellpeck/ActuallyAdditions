@@ -158,6 +158,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickableTile
     //        return !oldState.getBlock().isAssociatedBlock(newState.getBlock());
     //    }
 
+    @Deprecated
     public String getNameForTranslation() {
         return "removeme";// "container." + ActuallyAdditions.MODID + "." + this.name + ".name";
     }

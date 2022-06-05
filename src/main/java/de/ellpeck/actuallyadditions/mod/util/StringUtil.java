@@ -47,12 +47,6 @@ public final class StringUtil {
         return I18n.get(text, replace);
     }
 
-    @SuppressWarnings("deprecation")
-    //TODO: delete this shit and move ItemPotionRing's getItemStackDisplayName into getUnlocalizedName
-    public static String localizeIllegallyOnTheServerDontUseMePls(String langKey) {
-        return I18n.get(langKey);
-    }
-
     // TODO: Move to official
     @OnlyIn(Dist.CLIENT)
     public static void drawSplitString(FontRenderer renderer, String strg, int x, int y, int width, int color, boolean shadow) {
@@ -94,14 +88,4 @@ public final class StringUtil {
 //            throw new RuntimeException("Actually Additions failed to access LanguageMap.inject.  Report this!");
 //        }
 //    }
-
-    // TODO: This might be wrong
-    public static String badTranslate(String someUnlocAAItemName) {
-//        if (cancerino == null) {
-//            cancerino = new LanguageMap();
-//            setupLangMap();
-//        }
-//        return cancerino.translateKey("item.actuallyadditions." + someUnlocAAItemName + ".name");
-        return ForgeI18n.parseFormat("item.actuallyadditions." + someUnlocAAItemName + ".name");
-    }
 }
