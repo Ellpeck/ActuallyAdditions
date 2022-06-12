@@ -23,9 +23,9 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3i;
 import net.minecraft.world.World;
 
-public class ItemTeleStaff extends ItemEnergy {
+public class ItemTeleportStaff extends ItemEnergy {
 
-    public ItemTeleStaff() {
+    public ItemTeleportStaff() {
         super(250000, 1000);
     }
 

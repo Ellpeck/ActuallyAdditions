@@ -11,24 +11,21 @@
 package de.ellpeck.actuallyadditions.mod.items.base;
 
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
-import de.ellpeck.actuallyadditions.mod.proxy.ClientProxy;
 import de.ellpeck.actuallyadditions.mod.tile.CustomEnergyStorage;
-import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import de.ellpeck.actuallyadditions.mod.util.Lang;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -37,6 +34,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.text.NumberFormat;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public abstract class ItemEnergy extends ItemBase {
 
@@ -54,27 +52,16 @@ public abstract class ItemEnergy extends ItemBase {
         this.transfer = transfer;
     }
 
-    // TODO: [port] make sure this is right
-    @Nullable
-    @Override
-    public CompoundNBT getShareTag(ItemStack stack) {
-        return new CompoundNBT();
-    }
-
-    //    @Override
-    //    public boolean getShareTag() {
-    //        return true;
-    //    }
-
-
     @OnlyIn(Dist.CLIENT)
     @Override
     public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
-        stack.getCapability(CapabilityEnergy.ENERGY, null).ifPresent(storage -> {
-            NumberFormat format = NumberFormat.getInstance();
-            tooltip.add(Lang.trans("misc", "power_long", format.format(storage.getEnergyStored()), format.format(storage.getMaxEnergyStored())));
-        });
+        int energy = 0;
+        if (stack.hasTag() && stack.getTag().contains("Energy")) {
+            energy = stack.getTag().getInt("Energy");
+        }
+        NumberFormat format = NumberFormat.getInstance();
+        tooltip.add(new TranslationTextComponent("misc.actuallyadditions.power_long", format.format(energy), format.format(this.maxPower)));
     }
 
     @Override
@@ -101,18 +88,14 @@ public abstract class ItemEnergy extends ItemBase {
 
     @Override
     public double getDurabilityForDisplay(ItemStack stack) {
-        return stack.getCapability(CapabilityEnergy.ENERGY, null)
-            .map(cap -> {
-                double maxAmount = cap.getMaxEnergyStored();
-                double energyDif = maxAmount - cap.getEnergyStored();
-                return energyDif / maxAmount;
-            })
-            .orElse(super.getDurabilityForDisplay(stack));
+        if (stack.hasTag() && stack.getTag().contains("Energy")) {
+            return 1 - (stack.getTag().getDouble("Energy") / this.maxPower);
+        }
+        return 1;
     }
 
     @Override
     public int getRGBDurabilityForDisplay(ItemStack stack) {
-        //float[] color = MathHelper.hsvToRgb(1, 1, 1);
         //float[] color = AssetUtil.getWheelColor(player.level.getGameTime() % 256);
         //return MathHelper.color(color[0] / 255F, color[1] / 255F, color[2] / 255F);
         return super.getRGBDurabilityForDisplay(stack);
@@ -128,13 +111,9 @@ public abstract class ItemEnergy extends ItemBase {
 
     @Deprecated
     public int receiveEnergyInternal(ItemStack stack, int maxReceive, boolean simulate) {
-        //        if (stack.hasCapability(CapabilityEnergy.ENERGY, null)) {
-        //            IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null);
-        //            if (storage instanceof CustomEnergyStorage) {
-        //                ((CustomEnergyStorage) storage).receiveEnergyInternal(maxReceive, simulate);
-        //            }
-        //        }
-        return 0;
+        return stack.getCapability(CapabilityEnergy.ENERGY)
+            .map(cap -> ((CustomEnergyStorage) cap).receiveEnergyInternal(maxReceive, simulate))
+            .orElse(0);
     }
 
     public int extractEnergyInternal(ItemStack stack, int maxExtract, boolean simulate) {
@@ -147,13 +126,9 @@ public abstract class ItemEnergy extends ItemBase {
 
     @Deprecated
     public int receiveEnergy(ItemStack stack, int maxReceive, boolean simulate) {
-        //        if (stack.hasCapability(CapabilityEnergy.ENERGY, null)) {
-        //            IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null);
-        //            if (storage != null) {
-        //                return storage.receiveEnergy(maxReceive, simulate);
-        //            }
-        //        }
-        return 0;
+        return stack.getCapability(CapabilityEnergy.ENERGY)
+            .map(cap -> cap.receiveEnergy(maxReceive, simulate))
+            .orElse(0);
     }
 
     public int extractEnergy(ItemStack stack, int maxExtract, boolean simulate) {
@@ -179,24 +154,17 @@ public abstract class ItemEnergy extends ItemBase {
         return new EnergyCapabilityProvider(stack, this);
     }
 
-    private static class EnergyCapabilityProvider implements ICapabilityProvider {
+    private static class EnergyCapabilityProvider implements ICapabilitySerializable<CompoundNBT> {
 
         public final CustomEnergyStorage storage;
         private final LazyOptional<CustomEnergyStorage> energyCapability;
 
-        public EnergyCapabilityProvider(ItemStack stack, ItemEnergy item) {
-            this.storage = new CustomEnergyStorage(item.maxPower, item.transfer, item.transfer) {
-                @Override
-                public int getEnergyStored() {
-                    return stack.getOrCreateTag().getInt("Energy");
-                }
+        private final ItemStack stack;
 
-                @Override
-                public void setEnergyStored(int energy) {
-                    stack.getOrCreateTag().putInt("Energy", energy);
-                }
-            };
+        public EnergyCapabilityProvider(ItemStack stack, ItemEnergy item) {
+            this.storage = new CustomEnergyStorage(item.maxPower, item.transfer, item.transfer);
             this.energyCapability = LazyOptional.of(() -> this.storage);
+            this.stack = stack;
         }
 
         @Nonnull
@@ -206,6 +174,20 @@ public abstract class ItemEnergy extends ItemBase {
                 return this.energyCapability.cast();
             }
             return LazyOptional.empty();
+        }
+
+        @Override
+        public CompoundNBT serializeNBT() {
+            if (this.storage.isDirty())
+                stack.getOrCreateTag().putInt("Energy", this.storage.getEnergyStored());
+            this.storage.clearDirty();
+            return new CompoundNBT();
+        }
+
+        @Override
+        public void deserializeNBT(CompoundNBT nbt) {
+            if (stack.getOrCreateTag().contains("Energy"))
+                this.storage.setEnergyStored(stack.getOrCreateTag().getInt("Energy"));
         }
     }
 }

@@ -110,7 +110,7 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
                 this.currentBurnTime--;
                 int produce = currentRecipe.getTotalEnergy() / currentRecipe.getBurnTime();
                 if (produce > 0) {
-                    this.storage.addEnergyRaw(produce);
+                    this.storage.receiveEnergyInternal(produce, false);
                 }
             }
 

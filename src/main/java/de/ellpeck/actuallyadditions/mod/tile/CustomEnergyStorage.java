@@ -14,9 +14,22 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.energy.EnergyStorage;
 
 public class CustomEnergyStorage extends EnergyStorage {
+    boolean dirty = false;
 
     public CustomEnergyStorage(int capacity, int maxReceive, int maxExtract) {
         super(capacity, maxReceive, maxExtract);
+    }
+
+    @Override
+    public int receiveEnergy(int maxReceive, boolean simulate) {
+        dirty = true;
+        return super.receiveEnergy(maxReceive, simulate);
+    }
+
+    @Override
+    public int extractEnergy(int maxExtract, boolean simulate) {
+        dirty = true;
+        return super.extractEnergy(maxExtract, simulate);
     }
 
     public int extractEnergyInternal(int maxExtract, boolean simulate) {
@@ -39,37 +52,12 @@ public class CustomEnergyStorage extends EnergyStorage {
         return toReturn;
     }
 
-    public void addEnergyRaw(int energy) {
-        this.energy = Math.min(this.energy + energy, this.capacity);
+    public boolean isDirty() {
+        return dirty;
     }
 
-    @Override
-    public int receiveEnergy(int maxReceive, boolean simulate) {
-        if (!this.canReceive()) {
-            return 0;
-        }
-        int energy = this.getEnergyStored();
-
-        int energyReceived = Math.min(this.capacity - energy, Math.min(this.maxReceive, maxReceive));
-        if (!simulate) {
-            this.setEnergyStored(energy + energyReceived);
-        }
-
-        return energyReceived;
-    }
-
-    @Override
-    public int extractEnergy(int maxExtract, boolean simulate) {
-        if (!this.canExtract()) {
-            return 0;
-        }
-        int energy = this.getEnergyStored();
-
-        int energyExtracted = Math.min(energy, Math.min(this.maxExtract, maxExtract));
-        if (!simulate) {
-            this.setEnergyStored(energy - energyExtracted);
-        }
-        return energyExtracted;
+    public void clearDirty() {
+        dirty = false;
     }
 
     public void readFromNBT(CompoundNBT compound) {
@@ -82,5 +70,6 @@ public class CustomEnergyStorage extends EnergyStorage {
 
     public void setEnergyStored(int energy) {
         this.energy = energy;
+        this.dirty = false;
     }
 }

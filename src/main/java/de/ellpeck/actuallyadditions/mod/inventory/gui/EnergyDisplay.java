@@ -18,6 +18,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.client.gui.GuiUtils;
@@ -100,6 +101,9 @@ public class EnergyDisplay extends AbstractGui {
 
     private String getOverlayText() {
         NumberFormat format = NumberFormat.getInstance();
-        return String.format("%s/%s %s", format.format(this.rfReference.getEnergyStored()), format.format(this.rfReference.getMaxEnergyStored()), I18n.get("misc.actuallyadditions.energy_name"));
+        return new TranslationTextComponent("misc.actuallyadditions.power_long",
+            format.format(this.rfReference.getEnergyStored()),
+            format.format(this.rfReference.getMaxEnergyStored()))
+            .getString();
     }
 }
