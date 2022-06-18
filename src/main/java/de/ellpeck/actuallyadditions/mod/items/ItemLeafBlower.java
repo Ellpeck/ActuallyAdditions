@@ -27,6 +27,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IForgeShearable;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -39,19 +40,21 @@ public class ItemLeafBlower extends ItemBase implements IDisplayStandItem {
         this.isAdvanced = isAdvanced;
     }
 
+    @Nonnull
     @Override
-    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+    public ActionResult<ItemStack> use(@Nonnull World world, PlayerEntity player, @Nonnull Hand hand) {
         player.startUsingItem(hand);
         return ActionResult.success(player.getItemInHand(hand));
     }
 
+    @Nonnull
     @Override
-    public UseAction getUseAnimation(ItemStack stack) {
+    public UseAction getUseAnimation(@Nonnull ItemStack stack) {
         return UseAction.BOW;
     }
 
     @Override
-    public int getUseDuration(ItemStack stack) {
+    public int getUseDuration(@Nonnull ItemStack stack) {
         return Integer.MAX_VALUE;
     }
 
@@ -107,16 +110,16 @@ public class ItemLeafBlower extends ItemBase implements IDisplayStandItem {
         if (!breakPositions.isEmpty()) {
             Collections.shuffle(breakPositions);
 
-            BlockPos theCoord = breakPositions.get(0);
-            BlockState theState = world.getBlockState(theCoord);
+            BlockPos pos = breakPositions.get(0);
+            BlockState theState = world.getBlockState(pos);
 
-            world.destroyBlock(theCoord, true);
+            world.destroyBlock(pos, true);
             //            theState.getBlock().dropBlockAsItem(world, theCoord, theState, 0);
             //Plays the Breaking Sound
-            world.levelEvent(2001, theCoord, Block.getId(theState));
+            world.levelEvent(2001, pos, Block.getId(theState));
 
             //Deletes the Block
-            world.setBlockAndUpdate(theCoord, Blocks.AIR.defaultBlockState());
+            world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
 
             return true;
         }

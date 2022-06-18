@@ -24,6 +24,8 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
+import javax.annotation.Nonnull;
+
 public class ItemCrafterOnAStick extends ItemBase {
     private static final ITextComponent CONTAINER_TITLE = new TranslationTextComponent("container.crafting");
 
@@ -31,8 +33,9 @@ public class ItemCrafterOnAStick extends ItemBase {
         super(ActuallyItems.defaultNonStacking());
     }
 
+    @Nonnull
     @Override
-    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+    public ActionResult<ItemStack> use(World world, @Nonnull PlayerEntity player, @Nonnull Hand hand) {
         if (!world.isClientSide) {
             NetworkHooks.openGui((ServerPlayerEntity) player, new SimpleNamedContainerProvider((windowId, playerInventory, playerEntity) -> new WorkbenchContainer(windowId, playerInventory), CONTAINER_TITLE));
         }

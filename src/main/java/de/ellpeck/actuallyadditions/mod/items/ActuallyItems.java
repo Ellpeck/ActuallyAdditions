@@ -151,7 +151,6 @@ public final class ActuallyItems {
     public static final RegistryObject<Item> COFFEE = ITEMS.register("coffee", ItemCoffee::new); //TODO flatten
     public static final RegistryObject<Item> PHANTOM_CONNECTOR = ITEMS.register("phantom_connector", ItemPhantomConnector::new);
     //public static final RegistryObject<Item> FOOD = ITEMS.register("food", ItemBase::new); //just... food? //TODO
-    public static final RegistryObject<Item> KNIFE = ITEMS.register("knife", ItemKnife::new);
     public static final RegistryObject<Item> CRAFTER_ON_A_STICK = ITEMS.register("crafter_on_a_stick", ItemCrafterOnAStick::new);
     //public static final RegistryObject<Item> DUST = ITEMS.register("dust", ItemDust::new); //TODO flatten
     public static final RegistryObject<Item> SOLIDIFIED_EXPERIENCE = ITEMS.register("solidified_experience", ItemSolidifiedExperience::new);
@@ -195,13 +194,12 @@ public final class ActuallyItems {
         DRILL_UPGRADE_SPEED, DRILL_UPGRADE_SPEED_II, DRILL_UPGRADE_SPEED_III, DRILL_UPGRADE_SILK_TOUCH,
         DRILL_UPGRADE_FORTUNE, DRILL_UPGRADE_FORTUNE_II, DRILL_UPGRADE_THREE_BY_THREE, DRILL_UPGRADE_FIVE_BY_FIVE, DRILL_UPGRADE_BLOCK_PLACING,
         COFFEE_CUP, PHANTOM_CONNECTOR, RICE,
-        KNIFE, CRAFTER_ON_A_STICK,
+        CRAFTER_ON_A_STICK,
 /*        CRUSHED_IRON, CRUSHED_GOLD, CRUSHED_DIAMOND, CRUSHED_EMERALD, CRUSHED_LAPIS,
         CRUSHED_QUARTZ, CRUSHED_COAL, CRUSHED_BLACK_QUARTZ, */
         SOLIDIFIED_EXPERIENCE, LEAF_BLOWER, ADVANCED_LEAF_BLOWER,
         RING_OF_GROWTH, RING_OF_MAGNETIZING,
-        COFFEE_BEANS, RICE_SEEDS, CANOLA_SEEDS, FLAX_SEEDS, COFFEE_SEEDS ,
-        WOODEN_AIOT, STONE_AIOT, IRON_AIOT, GOLD_AIOT, DIAMOND_AIOT, NETHERITE_AIOT
+        COFFEE_BEANS, RICE_SEEDS, CANOLA_SEEDS, FLAX_SEEDS, COFFEE_SEEDS
     );
 
     private static Supplier<Item> basicItem() {

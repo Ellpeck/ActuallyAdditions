@@ -10,10 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
-import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -25,9 +23,11 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.api.distmarker.OnlyIns;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.IEnergyStorage;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
@@ -43,25 +43,29 @@ public class ItemBattery extends ItemEnergy {
     }
 
     @Override
-    public void inventoryTick(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
+    public void inventoryTick(@Nonnull ItemStack stack, World world, @Nonnull Entity entity, int itemSlot, boolean isSelected) {
         if (!world.isClientSide && entity instanceof PlayerEntity && ItemUtil.isEnabled(stack) && !isSelected) {
             PlayerEntity player = (PlayerEntity) entity;
             for (int i = 0; i < player.inventory.getContainerSize(); i++) {
                 ItemStack slot = player.inventory.getItem(i);
-                if (StackUtil.isValid(slot) && slot.getCount() == 1) {
-                    int extractable = this.extractEnergy(stack, Integer.MAX_VALUE, true);
-                    int received = slot.getCapability(CapabilityEnergy.ENERGY).map(e -> e.receiveEnergy(extractable, false)).orElse(0);
+                if (!slot.isEmpty() && slot.getCount() == 1) {
+                    LazyOptional<IEnergyStorage> energy = slot.getCapability(CapabilityEnergy.ENERGY);
+                    energy.ifPresent(cap -> {
+                        int extractable = this.extractEnergy(stack, Integer.MAX_VALUE, true);
+                        int received = cap.receiveEnergy(extractable, false);
 
-                    if (received > 0) {
-                        this.extractEnergy(stack, received, false);
-                    }
+                        if (received > 0) {
+                            this.extractEnergy(stack, received, false);
+                        }
+                    });
                 }
             }
         }
     }
 
+    @Nonnull
     @Override
-    public ActionResult<ItemStack> use(World worldIn, PlayerEntity player, Hand hand) {
+    public ActionResult<ItemStack> use(World worldIn, @Nonnull PlayerEntity player, @Nonnull Hand hand) {
         if (!worldIn.isClientSide && player.isShiftKeyDown()) {
             ItemUtil.changeEnabled(player, hand);
             return ActionResult.success(player.getItemInHand(hand));
@@ -73,9 +77,9 @@ public class ItemBattery extends ItemEnergy {
     @Override
     public void appendHoverText(ItemStack stack, @Nullable World playerIn, List<ITextComponent> list, ITooltipFlag advanced) {
         super.appendHoverText(stack, playerIn, list, advanced);
-        list.add(new TranslationTextComponent("tooltip." + ActuallyAdditions.MODID + ".battery." + (ItemUtil.isEnabled(stack)
+        list.add(new TranslationTextComponent("tooltip.actuallyadditions.battery." + (ItemUtil.isEnabled(stack)
             ? "discharge"
             : "noDischarge")));
-        list.add(new TranslationTextComponent("tooltip." + ActuallyAdditions.MODID + ".battery.changeMode"));
+        list.add(new TranslationTextComponent("tooltip.actuallyadditions.battery.changeMode"));
     }
 }

@@ -21,6 +21,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public class ItemMagnetRing extends ItemEnergy {
@@ -35,7 +36,7 @@ public class ItemMagnetRing extends ItemEnergy {
     }
 
     @Override
-    public void inventoryTick(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
+    public void inventoryTick(@Nonnull ItemStack stack, @Nonnull World world, @Nonnull Entity entity, int itemSlot, boolean isSelected) {
         if (entity instanceof PlayerEntity && !world.isClientSide && !ItemUtil.isEnabled(stack)) {
             PlayerEntity player = (PlayerEntity) entity;
             if (player.isCreative() || player.isSpectator()) {
@@ -72,8 +73,9 @@ public class ItemMagnetRing extends ItemEnergy {
         }
     }
 
+    @Nonnull
     @Override
-    public ActionResult<ItemStack> use(World worldIn, PlayerEntity player, Hand hand) {
+    public ActionResult<ItemStack> use(World worldIn, @Nonnull PlayerEntity player, @Nonnull Hand hand) {
         if (!worldIn.isClientSide && player.isShiftKeyDown()) {
             ItemUtil.changeEnabled(player, hand);
             return ActionResult.success(player.getItemInHand(hand));
