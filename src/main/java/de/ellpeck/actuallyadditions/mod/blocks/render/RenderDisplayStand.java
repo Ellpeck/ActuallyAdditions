@@ -24,15 +24,17 @@ import net.minecraft.util.Util;
 import net.minecraft.util.math.vector.Quaternion;
 import net.minecraft.util.math.vector.Vector3f;
 
+import javax.annotation.Nonnull;
+
 public class RenderDisplayStand extends TileEntityRenderer<TileEntityDisplayStand> {
     public RenderDisplayStand(TileEntityRendererDispatcher rendererDispatcherIn) {
         super(rendererDispatcherIn);
     }
 
     @Override
-    public void render(TileEntityDisplayStand tile, float partialTicks, MatrixStack matrices, IRenderTypeBuffer buffer, int combinedLightIn, int combinedOverlayIn) {
+    public void render(TileEntityDisplayStand tile, float partialTicks, @Nonnull MatrixStack matrices, @Nonnull IRenderTypeBuffer buffer, int combinedLightIn, int combinedOverlayIn) {
         ItemStack stack = tile.inv.getStackInSlot(0);
-        if (!StackUtil.isValid(stack)) {
+        if (stack.isEmpty()) {
             return;
         }
 

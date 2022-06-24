@@ -123,7 +123,7 @@ public class ActuallyAdditions {
 
         ActuallyAdditionsAPI.methodHandler = new MethodHandler();
         ActuallyAdditionsAPI.connectionHandler = new LaserRelayConnectionHandler();
-        Lenses.init();
+        //Lenses.init();
 //        CompatUtil.registerCraftingTweaks();
         event.enqueueWork(() -> CraftingHelper.register(TargetNBTIngredient.Serializer.NAME, TargetNBTIngredient.SERIALIZER));
 

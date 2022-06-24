@@ -63,29 +63,29 @@ public class BlockAtomicReconstructor extends FullyDirectionalBlock.Container im
         if (!world.isClientSide) {
             TileEntityAtomicReconstructor reconstructor = (TileEntityAtomicReconstructor) world.getBlockEntity(pos);
             if (reconstructor != null) {
-                if (StackUtil.isValid(heldItem)) {
+                if (!heldItem.isEmpty()) {
                     Item item = heldItem.getItem();
-                    if (item instanceof ILensItem && !StackUtil.isValid(reconstructor.inv.getStackInSlot(0))) {
+                    if (item instanceof ILensItem && reconstructor.inv.getStackInSlot(0).isEmpty()) {
                         ItemStack toPut = heldItem.copy();
                         toPut.setCount(1);
                         reconstructor.inv.setStackInSlot(0, toPut);
-                        player.inventory.removeItem(player.inventory.selected, 1);
-                    }
-                    //Shush, don't tell anyone!
-                    else if (CommonConfig.Other.ELEVEN.get() == 11 && item == Items.MUSIC_DISC_11) {
-                        reconstructor.counter++;
-                        reconstructor.setChanged();
+                        if (!player.isCreative()) {
+                            heldItem.shrink(1);
+                        }
+                        return ActionResultType.CONSUME;
                     }
                 } else {
                     ItemStack slot = reconstructor.inv.getStackInSlot(0);
-                    if (StackUtil.isValid(slot)) {
+                    if (!slot.isEmpty() && hand == Hand.MAIN_HAND) {
                         player.setItemInHand(hand, slot.copy());
-                        reconstructor.inv.setStackInSlot(0, StackUtil.getEmpty());
+                        reconstructor.inv.setStackInSlot(0, ItemStack.EMPTY);
+                        return ActionResultType.CONSUME;
                     }
                 }
             }
+            return ActionResultType.FAIL;
         }
-        return ActionResultType.PASS;
+        return ActionResultType.CONSUME;
     }
 
     @Nullable

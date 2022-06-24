@@ -16,12 +16,12 @@ import de.ellpeck.actuallyadditions.api.lens.LensConversion;
 public final class Lenses {
 
     public static void init() {
-        ActuallyAdditionsAPI.lensDefaultConversion = new LensConversion();
-        ActuallyAdditionsAPI.lensDetonation = new LensDetonation();
-        ActuallyAdditionsAPI.lensDeath = new LensDeath();
-        ActuallyAdditionsAPI.lensEvenMoarDeath = new LensKiller();
-        ActuallyAdditionsAPI.lensColor = new LensColor();
-        ActuallyAdditionsAPI.lensDisenchanting = new LensDisenchanting();
-        ActuallyAdditionsAPI.lensMining = new LensMining();
+//        ActuallyAdditionsAPI.lensDefaultConversion = new LensConversion();
+//        ActuallyAdditionsAPI.lensDetonation = new LensDetonation();
+//        ActuallyAdditionsAPI.lensDeath = new LensDeath();
+//        ActuallyAdditionsAPI.lensEvenMoarDeath = new LensKiller();
+//        ActuallyAdditionsAPI.lensColor = new LensColor();
+//        ActuallyAdditionsAPI.lensDisenchanting = new LensDisenchanting();
+//        ActuallyAdditionsAPI.lensMining = new LensMining();
     }
 }

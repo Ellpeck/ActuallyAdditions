@@ -76,7 +76,7 @@ public final class AssetUtil {
 
     @OnlyIn(Dist.CLIENT)
     public static void renderItemInWorld(ItemStack stack, int combinedLight, int combinedOverlay, MatrixStack matrices, IRenderTypeBuffer buffer) {
-        if (StackUtil.isValid(stack)) {
+        if (!stack.isEmpty()) {
             Minecraft.getInstance().getItemRenderer().renderStatic(
                     stack, ItemCameraTransforms.TransformType.FIXED, combinedLight, combinedOverlay, matrices, buffer
             );

@@ -18,6 +18,7 @@ import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.item.ItemStack;
@@ -25,6 +26,9 @@ import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.vector.Quaternion;
+import net.minecraft.util.math.vector.Vector3f;
+
+import javax.annotation.Nonnull;
 
 public class ReconstructorRenderer extends TileEntityRenderer<TileEntityAtomicReconstructor> {
 
@@ -33,62 +37,36 @@ public class ReconstructorRenderer extends TileEntityRenderer<TileEntityAtomicRe
     }
 
     @Override
-    public void render(TileEntityAtomicReconstructor tile, float partialTicks, MatrixStack matrices, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
+    public void render(TileEntityAtomicReconstructor tile, float partialTicks, @Nonnull MatrixStack matrices, @Nonnull IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
         ItemStack stack = tile.inv.getStackInSlot(0);
         //default color 0x1b6dff
-
+        Direction direction = tile.getOrientation();
+        float rot = 360.0f - direction.getOpposite().toYRot(); //Sigh...
+        float pitch = 0;
+        if (direction == Direction.UP) {
+            pitch = 90;
+        } else if (direction == Direction.DOWN) {
+            pitch = -90;
+        }
         if (tile.getProgress() > 0) {
-            Direction direction = tile.getOrientation();
-            float rot = 360.0f - direction.getOpposite().toYRot(); //Sigh...
-            float pitch = 0;
-            if (direction == Direction.UP) {
-                pitch = 90;
-            } else if (direction == Direction.DOWN) {
-                pitch = -90;
-            }
-
             AssetUtil.renderLaser(matrices, buffer, 0, 0, 0, rot, pitch, 5, 0, 0x1b6dff, 0.8f * tile.getProgress(), 0.2f);
             tile.decTTL();
         }
-        if (!StackUtil.isValid(stack) || !(stack.getItem() instanceof ILensItem)) {
+        if (stack.isEmpty() || !(stack.getItem() instanceof ILensItem)) {
             return;
         }
 
         matrices.pushPose();
         matrices.translate(0.5F, 0.5F, 0.5F);
-        matrices.mulPose(new Quaternion(180F, 0.0F, 0.0F, 1.0F));
 
-        BlockState state = tile.getLevel().getBlockState(tile.getBlockPos());
-        int meta = 0; //state.getBlock().getMetaFromState(state); // TODO: [port][fix] this needs to be checking direction not meta
-        if (meta == 0) {
-            matrices.translate(0F, -0.5F, 0F);
-            matrices.mulPose(new Quaternion(90F, 1F, 0F, 0F));
-        }
-        if (meta == 1) {
-            matrices.translate(0F, -1.5F - 0.5F / 16F, 0F);
-            matrices.mulPose(new Quaternion(90F, 1F, 0F, 0F));
-        }
-        if (meta == 2) {
-            matrices.translate(0F, -1F, 0F);
-            matrices.translate(0F, 0F, -0.5F);
-        }
-        if (meta == 3) {
-            matrices.translate(0F, -1F, 0F);
-            matrices.translate(0F, 0F, 0.5F + 0.5F / 16F);
-        }
-        if (meta == 4) {
-            matrices.translate(0F, -1F, 0F);
-            matrices.translate(0.5F + 0.5F / 16F, 0F, 0F);
-            matrices.mulPose(new Quaternion(90F, 0F, 1F, 0F));
-        }
-        if (meta == 5) {
-            matrices.translate(0F, -1F, 0F);
-            matrices.translate(-0.5F, 0F, 0F);
-            matrices.mulPose(new Quaternion(90F, 0F, 1F, 0F));
-        }
+        matrices.mulPose(Vector3f.YP.rotationDegrees(rot));
+        matrices.mulPose(Vector3f.XP.rotationDegrees(pitch));
+
+        matrices.translate(0.0F, 0.0F, -0.5F);
 
         matrices.scale(0.5F, 0.5F, 0.5F);
-        AssetUtil.renderItemInWorld(stack, combinedLight, combinedOverlay, matrices, buffer);
+        int lightColor = WorldRenderer.getLightColor(tile.getLevel(), tile.getPosition().relative(direction));
+        AssetUtil.renderItemInWorld(stack, lightColor, combinedOverlay, matrices, buffer);
 
         matrices.popPose();
     }

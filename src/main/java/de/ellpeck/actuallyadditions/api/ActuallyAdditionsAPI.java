@@ -20,6 +20,7 @@ import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.api.lens.LensConversion;
 import de.ellpeck.actuallyadditions.api.recipe.*;
 import de.ellpeck.actuallyadditions.mod.crafting.*;
+import de.ellpeck.actuallyadditions.mod.items.lens.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.Item;
@@ -99,14 +100,13 @@ public final class ActuallyAdditionsAPI {
 
     //These are getting initialized in Actually Additions' PreInit phase
     //DO NOT CHANGE/OVERRIDE THESE!!
-    public static LensConversion lensDefaultConversion;
-    public static Lens lensDetonation;
-    public static Lens lensDeath;
-    public static Lens lensEvenMoarDeath;
-    public static Lens lensColor;
-    public static Lens lensDisruption;
-    public static Lens lensDisenchanting;
-    public static Lens lensMining;
+    public static final LensConversion lensDefaultConversion = new LensConversion();
+    public static final Lens lensDetonation = new LensDetonation();
+    public static final Lens lensDeath = new LensDeath();
+    public static final Lens lensEvenMoarDeath = new LensKiller();
+    public static final Lens lensColor = new LensColor();
+    public static final Lens lensDisenchanting = new LensDisenchanting();
+    public static final Lens lensMining = new LensMining();
 
     /**
      * Adds an ore with a specific weight to the list of ores that the lens of the miner will generate inside of stone.

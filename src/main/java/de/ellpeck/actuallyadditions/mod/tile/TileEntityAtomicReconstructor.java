@@ -132,9 +132,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
         if (item instanceof ILensItem) {
             return ((ILensItem) item).getLens();
         }
-        return this.counter >= 500
-            ? ActuallyAdditionsAPI.lensDisruption
-            : ActuallyAdditionsAPI.lensDefaultConversion;
+        return ActuallyAdditionsAPI.lensDefaultConversion;
     }
 
     @Override
