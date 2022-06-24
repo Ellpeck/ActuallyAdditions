@@ -7,15 +7,8 @@ import net.minecraftforge.fml.ForgeI18n;
 
 import java.text.NumberFormat;
 
+@Deprecated
 public class Lang {
-    public static TranslationTextComponent trans(String prefix, String suffix, Object... args) {
-        return new TranslationTextComponent(String.format("%s.%s.%s", prefix, ActuallyAdditions.MODID, suffix));
-    }
-
-    public static String transI18n(String prefix, String suffix, Object... args) {
-        return ForgeI18n.parseFormat(String.format("%s.%s.%s", prefix, ActuallyAdditions.MODID, suffix), args);
-    }
-
     /**
      * Cleans up any values into either a short variant {1M / 1M} or a long variant
      * like {1,000,000 / 1,000,000}

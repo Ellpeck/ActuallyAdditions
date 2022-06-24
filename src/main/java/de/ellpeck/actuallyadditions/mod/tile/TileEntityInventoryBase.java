@@ -24,8 +24,6 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemHandlerHelper;
 
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
-
 public abstract class TileEntityInventoryBase extends TileEntityBase {
 
     public final ItemStackHandlerAA inv;
@@ -59,7 +57,7 @@ public abstract class TileEntityInventoryBase extends TileEntityBase {
                 CompoundNBT tagCompound = tagList.getCompound(i);
                 slots.setStackInSlot(i, tagCompound.contains("id")
                     ? ItemStack.of(tagCompound)
-                    : StackUtil.getEmpty());
+                    : ItemStack.EMPTY);
             }
         }
     }

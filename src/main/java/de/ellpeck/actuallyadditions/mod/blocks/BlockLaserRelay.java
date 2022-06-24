@@ -129,7 +129,7 @@ public class BlockLaserRelay extends FullyDirectionalBlock.Container implements 
                 ItemStack inRelay = relay.inv.getStackInSlot(0).copy();
                 if (StackUtil.isValid(inRelay)) {
                     if (!world.isClientSide) {
-                        relay.inv.setStackInSlot(0, StackUtil.getEmpty());
+                        relay.inv.setStackInSlot(0, ItemStack.EMPTY);
 
                         if (!player.inventory.add(inRelay)) {
                             player.spawnAtLocation(inRelay, 0);

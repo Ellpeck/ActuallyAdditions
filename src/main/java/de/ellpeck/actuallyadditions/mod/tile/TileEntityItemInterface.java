@@ -59,7 +59,7 @@ public class TileEntityItemInterface extends TileEntityBase {
                 if (handler != null && handler.isLoaded()) {
                     return handler.handler.getStackInSlot(handler.switchedIndex);
                 }
-                return StackUtil.getEmpty();
+                return ItemStack.EMPTY;
             }
 
             @Override
@@ -90,7 +90,7 @@ public class TileEntityItemInterface extends TileEntityBase {
                         return extracted;
                     }
                 }
-                return StackUtil.getEmpty();
+                return ItemStack.EMPTY;
             }
 
             @Override

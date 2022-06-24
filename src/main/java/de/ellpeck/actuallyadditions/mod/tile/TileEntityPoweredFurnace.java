@@ -10,9 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
-import de.ellpeck.actuallyadditions.mod.crafting.PressingRecipe;
 import de.ellpeck.actuallyadditions.mod.crafting.SingleItem;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFurnaceDouble;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
@@ -24,7 +22,6 @@ import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
@@ -33,9 +30,7 @@ import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
-import net.minecraft.util.datafix.fixes.FurnaceRecipes;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
@@ -73,7 +68,7 @@ public class TileEntityPoweredFurnace extends TileEntityInventoryBase implements
         ItemStack second = inv.getStackInSlot(slot2);
 
         if (StackUtil.isValid(first) || StackUtil.isValid(second)) {
-            ItemStack toSplit = StackUtil.getEmpty();
+            ItemStack toSplit = ItemStack.EMPTY;
             if (!StackUtil.isValid(first) && StackUtil.isValid(second) && second.getCount() > 1) {
                 toSplit = second;
             } else if (!StackUtil.isValid(second) && StackUtil.isValid(first) && first.getCount() > 1) {

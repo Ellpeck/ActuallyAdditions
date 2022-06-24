@@ -22,11 +22,9 @@ import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
 
 import javax.annotation.Nullable;
 
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
 import net.minecraft.util.text.TranslationTextComponent;
 
 public class TileEntityDropper extends TileEntityInventoryBase implements INamedContainerProvider {
@@ -92,7 +90,7 @@ public class TileEntityDropper extends TileEntityInventoryBase implements INamed
                 return slot;
             }
         }
-        return StackUtil.getEmpty();
+        return ItemStack.EMPTY;
     }
 
     @Override

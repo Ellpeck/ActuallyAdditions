@@ -21,6 +21,7 @@ import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Util;
@@ -55,7 +56,7 @@ public class RenderBatteryBox extends TileEntityRenderer<TileEntityBatteryBox> {
             FontRenderer font = Minecraft.getInstance().font;
 
             String energyTotal = Lang.cleanEnergyValues(cap, false);
-            String energyName = Lang.transI18n("misc", "power_name_long");
+            String energyName = I18n.get("misc.actuallyadditions.power_name_long");
 
             for (int i = 0; i < 4; i++) {
                 font.draw(matrices, energyTotal, -font.width(energyTotal) / 2F, 10F, 0xFFFFFF);

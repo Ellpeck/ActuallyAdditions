@@ -74,7 +74,7 @@ public class ContainerCoffeeMachine extends Container {
             //Slots in Inventory to shift from
             if (slot == TileEntityCoffeeMachine.SLOT_OUTPUT) {
                 if (!this.moveItemStackTo(newStack, inventoryStart, hotbarEnd + 1, true)) {
-                    return StackUtil.getEmpty();
+                    return ItemStack.EMPTY;
                 }
                 theSlot.onQuickCraft(newStack, currentStack);
             }
@@ -83,44 +83,44 @@ public class ContainerCoffeeMachine extends Container {
                 //Shift from Inventory
                 if (newStack.getItem() == ActuallyItems.COFFEE_CUP.get()) {
                     if (!this.moveItemStackTo(newStack, TileEntityCoffeeMachine.SLOT_INPUT, TileEntityCoffeeMachine.SLOT_INPUT + 1, false)) {
-                        return StackUtil.getEmpty();
+                        return ItemStack.EMPTY;
                     }
                 } else if (ItemCoffee.getIngredientFromStack(newStack) != null) {
                     if (!this.moveItemStackTo(newStack, 3, 11, false)) {
-                        return StackUtil.getEmpty();
+                        return ItemStack.EMPTY;
                     }
                 } else if (ActuallyTags.Items.COFFEE_BEANS.contains(newStack.getItem())) {
                     if (!this.moveItemStackTo(newStack, TileEntityCoffeeMachine.SLOT_COFFEE_BEANS, TileEntityCoffeeMachine.SLOT_COFFEE_BEANS + 1, false)) {
-                        return StackUtil.getEmpty();
+                        return ItemStack.EMPTY;
                     }
                 }
                 //
 
                 else if (slot >= inventoryStart && slot <= inventoryEnd) {
                     if (!this.moveItemStackTo(newStack, hotbarStart, hotbarEnd + 1, false)) {
-                        return StackUtil.getEmpty();
+                        return ItemStack.EMPTY;
                     }
                 } else if (slot >= inventoryEnd + 1 && slot < hotbarEnd + 1 && !this.moveItemStackTo(newStack, inventoryStart, inventoryEnd + 1, false)) {
-                    return StackUtil.getEmpty();
+                    return ItemStack.EMPTY;
                 }
             } else if (!this.moveItemStackTo(newStack, inventoryStart, hotbarEnd + 1, false)) {
-                return StackUtil.getEmpty();
+                return ItemStack.EMPTY;
             }
 
             if (!StackUtil.isValid(newStack)) {
-                theSlot.set(StackUtil.getEmpty());
+                theSlot.set(ItemStack.EMPTY);
             } else {
                 theSlot.setChanged();
             }
 
             if (newStack.getCount() == currentStack.getCount()) {
-                return StackUtil.getEmpty();
+                return ItemStack.EMPTY;
             }
             theSlot.onTake(player, newStack);
 
             return currentStack;
         }
-        return StackUtil.getEmpty();
+        return ItemStack.EMPTY;
     }
 
     @Override

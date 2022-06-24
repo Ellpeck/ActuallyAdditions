@@ -83,7 +83,7 @@ public class SpecialRenderInit {
                 return new ItemStack(block);
             }
         }
-        return StackUtil.getEmpty();
+        return ItemStack.EMPTY;
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)

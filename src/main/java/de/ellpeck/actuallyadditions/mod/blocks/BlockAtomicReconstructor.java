@@ -37,6 +37,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -99,11 +100,6 @@ public class BlockAtomicReconstructor extends FullyDirectionalBlock.Container im
         return true;
     }
 
-
-    //    public BlockState getBaseConstructorState() {
-    //        return this.stateContainer.getBaseState().with(FACING, Direction.NORTH);
-    //    }
-
     @Override
     @OnlyIn(Dist.CLIENT)
     public void displayHud(MatrixStack matrices, Minecraft minecraft, PlayerEntity player, ItemStack stack, RayTraceResult rayCast, MainWindow resolution) {
@@ -114,28 +110,17 @@ public class BlockAtomicReconstructor extends FullyDirectionalBlock.Container im
         TileEntity tile = minecraft.level.getBlockEntity(((BlockRayTraceResult) rayCast).getBlockPos());
         if (tile instanceof TileEntityAtomicReconstructor) {
             ItemStack slot = ((TileEntityAtomicReconstructor) tile).inv.getStackInSlot(0);
-            ITextComponent strg;
-            if (!StackUtil.isValid(slot)) {
-                strg = Lang.trans("info", "nolens");
+            ITextComponent lens_name;
+            if (slot.isEmpty()) {
+                lens_name = new TranslationTextComponent("info.actuallyadditions.nolens");
             } else {
-                strg = slot.getItem().getName(slot);
+                lens_name = slot.getItem().getName(slot);
 
                 AssetUtil.renderStackToGui(slot, resolution.getGuiScaledWidth() / 2 + 15, resolution.getGuiScaledHeight() / 2 - 19, 1F);
             }
-            minecraft.font.drawShadow(matrices, strg.plainCopy().withStyle(TextFormatting.YELLOW).withStyle(TextFormatting.ITALIC).getString(), resolution.getGuiScaledWidth() / 2 + 35, resolution.getGuiScaledHeight() / 2f - 15, 0xFFFFFF);
+            minecraft.font.drawShadow(matrices, lens_name.plainCopy().withStyle(TextFormatting.YELLOW).withStyle(TextFormatting.ITALIC).getString(), resolution.getGuiScaledWidth() / 2.0f + 35, resolution.getGuiScaledHeight() / 2.0f - 15, 0xFFFFFF);
         }
     }
-
-
-    //    @Override
-    //    public BlockState withRotation(BlockState state, Rotation rot) {
-    //        return state.withProperty(BlockDirectional.FACING, rot.rotate(state.getValue(BlockDirectional.FACING)));
-    //    }
-    //
-    //    @Override
-    //    public BlockState withMirror(BlockState state, Mirror mirror) {
-    //        return this.withRotation(state, mirror.toRotation(state.getValue(BlockDirectional.FACING)));
-    //    }
 
     //    public static class TheItemBlock extends ItemBlockBase {
     //

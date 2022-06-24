@@ -37,14 +37,6 @@ public final class StackUtil {
     }
 
     /**
-     * @return The empty itemstack instance.
-     */
-    @Deprecated
-    public static ItemStack getEmpty() {
-        return ItemStack.EMPTY;
-    }
-
-    /**
      * Checks if a collection of stacks are empty, as {@link Collection#isEmpty()} does not care about empty stacks.
      *
      * @param stacks Some ItemStacks
@@ -237,7 +229,7 @@ public final class StackUtil {
      * This is used for testing the ability to add all itemstacks, and should not be used for anything else.
      */
     public static ItemStackHandlerAA testDummy(ItemStackHandlerAA inv, int slot, int endSlot) {
-        NonNullList<ItemStack> stacks = NonNullList.withSize(endSlot - slot, getEmpty());
+        NonNullList<ItemStack> stacks = NonNullList.withSize(endSlot - slot, ItemStack.EMPTY);
         for (int i = slot; i < endSlot; i++) {
             stacks.set(i - slot, inv.getStackInSlot(i).copy());
         }

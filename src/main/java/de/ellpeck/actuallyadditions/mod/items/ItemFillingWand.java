@@ -11,7 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
-import de.ellpeck.actuallyadditions.mod.util.Lang;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.Block;
@@ -32,6 +31,7 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -56,7 +56,7 @@ public class ItemFillingWand extends ItemEnergy {
                 if (StackUtil.isValid(slot) && slot.sameItem(stack)) {
                     slot.shrink(1);
                     if (!StackUtil.isValid(slot)) {
-                        player.inventory.setItem(i, StackUtil.getEmpty());
+                        player.inventory.setItem(i, ItemStack.EMPTY);
                     }
 
                     return true;
@@ -227,9 +227,9 @@ public class ItemFillingWand extends ItemEnergy {
 
         IFormattableTextComponent display = loadData(stack)
             .map(state -> state.getBlock().getName())
-            .orElse(Lang.trans("tooltip", "item_filling_wand.selectedBlock.none"));
+            .orElse(new TranslationTextComponent("tooltip.actuallyadditions.item_filling_wand.selected_block.none"));
 
-        tooltip.add(Lang.trans("tooltip", "item_filling_wand.selectedBlock", display.getString()));
+        tooltip.add(new TranslationTextComponent("tooltip.actuallyadditions.item_filling_wand.selected_block", display.getString()));
     }
 
     @Override

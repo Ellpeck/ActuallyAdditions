@@ -73,7 +73,7 @@ public final class WorldUtil {
     }
 
     public static ItemStack extractItem(SlotlessableItemHandlerWrapper extractWrapper, int maxExtract, boolean simulate, int slotStart, int slotEnd, FilterSettings filter) {
-        ItemStack extracted = StackUtil.getEmpty();
+        ItemStack extracted = ItemStack.EMPTY;
 
         if (ActuallyAdditions.commonCapsLoaded) {
 /*            Object handler = extractWrapper.getSlotlessHandler();

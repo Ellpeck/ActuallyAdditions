@@ -66,33 +66,33 @@ public class ContainerXPSolidifier extends Container {
             if (slot >= inventoryStart) {
                 if (newStack.getItem() instanceof ItemSolidifiedExperience) {
                     if (!this.moveItemStackTo(newStack, 1, 2, false)) {
-                        return StackUtil.getEmpty();
+                        return ItemStack.EMPTY;
                     }
                 } else if (slot >= inventoryStart && slot <= inventoryEnd) {
                     if (!this.moveItemStackTo(newStack, hotbarStart, hotbarEnd + 1, false)) {
-                        return StackUtil.getEmpty();
+                        return ItemStack.EMPTY;
                     }
                 } else if (slot >= inventoryEnd + 1 && slot < hotbarEnd + 1 && !this.moveItemStackTo(newStack, inventoryStart, inventoryEnd + 1, false)) {
-                    return StackUtil.getEmpty();
+                    return ItemStack.EMPTY;
                 }
             } else if (!this.moveItemStackTo(newStack, inventoryStart, hotbarEnd + 1, false)) {
-                return StackUtil.getEmpty();
+                return ItemStack.EMPTY;
             }
 
             if (!StackUtil.isValid(newStack)) {
-                theSlot.set(StackUtil.getEmpty());
+                theSlot.set(ItemStack.EMPTY);
             } else {
                 theSlot.setChanged();
             }
 
             if (newStack.getCount() == currentStack.getCount()) {
-                return StackUtil.getEmpty();
+                return ItemStack.EMPTY;
             }
             theSlot.onTake(player, newStack);
 
             return currentStack;
         }
-        return StackUtil.getEmpty();
+        return ItemStack.EMPTY;
     }
 
     @Override

@@ -142,7 +142,7 @@ public class DrillItem extends ItemEnergy {
                 }
             }
         }
-        return StackUtil.getEmpty();
+        return ItemStack.EMPTY;
     }
 
     @Override

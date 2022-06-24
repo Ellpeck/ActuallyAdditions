@@ -54,14 +54,14 @@ public class BlockBatteryBox extends BlockContainerBase {
             if (StackUtil.isValid(stack)) {
                 if (stack.getItem() instanceof ItemBattery && !StackUtil.isValid(box.inv.getStackInSlot(0))) {
                     box.inv.setStackInSlot(0, stack.copy());
-                    player.setItemInHand(hand, StackUtil.getEmpty());
+                    player.setItemInHand(hand, ItemStack.EMPTY);
                     return ActionResultType.SUCCESS;
                 }
             } else {
                 ItemStack inSlot = box.inv.getStackInSlot(0);
                 if (StackUtil.isValid(inSlot)) {
                     player.setItemInHand(hand, inSlot.copy());
-                    box.inv.setStackInSlot(0, StackUtil.getEmpty());
+                    box.inv.setStackInSlot(0, ItemStack.EMPTY);
                     return ActionResultType.SUCCESS;
                 }
             }
