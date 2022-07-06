@@ -104,8 +104,8 @@ public class LensDisenchanting extends Lens {
     }
 
     @Override
-    public float[] getColor() {
-        return new float[]{234F / 255F, 173F / 255F, 1.0f};
+    public int getColor() {
+        return 0xEBADFF;
     }
 
     @Override

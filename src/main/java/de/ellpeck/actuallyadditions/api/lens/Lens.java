@@ -33,7 +33,7 @@ public abstract class Lens {
     /**
      * Returns the color in an array of 3 float values that are r, g, b
      */
-    public abstract float[] getColor();
+    public abstract int getColor();
 
     /**
      * Gets the maximum distance the beam goes with this lens

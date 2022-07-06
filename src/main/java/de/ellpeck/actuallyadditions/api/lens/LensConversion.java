@@ -30,8 +30,8 @@ public class LensConversion extends Lens {
     }
 
     @Override
-    public float[] getColor() {
-        return new float[]{27F / 255F, 109F / 255F, 1F};
+    public int getColor() {
+        return 0x1B6FFF;
     }
 
     @Override

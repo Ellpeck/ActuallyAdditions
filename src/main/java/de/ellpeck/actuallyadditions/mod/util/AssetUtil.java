@@ -17,12 +17,10 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.render.RenderTypes;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketServerToClient;
-import de.ellpeck.actuallyadditions.mod.particle.ParticleBeam;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.LightTexture;
@@ -30,7 +28,6 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.particles.IParticleData;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
@@ -41,8 +38,6 @@ import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.network.NetworkRegistry;
-import net.minecraftforge.fml.network.PacketDispatcher;
 import net.minecraftforge.fml.network.PacketDistributor;
 
 public final class AssetUtil {
@@ -212,7 +207,7 @@ public final class AssetUtil {
 //        GlStateManager._popMatrix();
 //    }
 
-    public static void spawnLaserWithTimeServer(World world, double startX, double startY, double startZ, double endX, double endY, double endZ, float[] color, int maxAge, double rotationTime, float size, float alpha) {
+    public static void spawnLaserWithTimeServer(World world, double startX, double startY, double startZ, double endX, double endY, double endZ, int color, int maxAge, double rotationTime, float size, float alpha) {
         if (!world.isClientSide) {
             CompoundNBT data = new CompoundNBT();
             data.putDouble("StartX", startX);
@@ -221,9 +216,7 @@ public final class AssetUtil {
             data.putDouble("EndX", endX);
             data.putDouble("EndY", endY);
             data.putDouble("EndZ", endZ);
-            data.putFloat("Color1", color[0]);
-            data.putFloat("Color2", color[1]);
-            data.putFloat("Color3", color[2]);
+            data.putInt("Color", color);
             data.putDouble("RotationTime", rotationTime);
             data.putFloat("Size", size);
             data.putInt("MaxAge", maxAge);
@@ -233,7 +226,7 @@ public final class AssetUtil {
     }
 
     @OnlyIn(Dist.CLIENT)
-    public static void spawnLaserWithTimeClient(double startX, double startY, double startZ, double endX, double endY, double endZ, float[] color, int maxAge, double rotationTime, float size, float alpha) {
+    public static void spawnLaserWithTimeClient(double startX, double startY, double startZ, double endX, double endY, double endZ, int color, int maxAge, double rotationTime, float size, float alpha) {
         Minecraft mc = Minecraft.getInstance();
         TileEntity tile = mc.level.getBlockEntity(new BlockPos(startX, startY, startZ));
         if(tile instanceof TileEntityAtomicReconstructor)

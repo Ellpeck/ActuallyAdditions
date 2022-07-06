@@ -171,8 +171,8 @@ public class LensMining extends Lens {
     }
 
     @Override
-    public float[] getColor() {
-        return new float[]{76F / 255F, 76F / 255F, 76F / 255F};
+    public int getColor() {
+        return 0x4C4C4C;
     }
 
     @Override

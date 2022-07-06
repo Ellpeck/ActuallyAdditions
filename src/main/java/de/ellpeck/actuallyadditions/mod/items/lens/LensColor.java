@@ -31,20 +31,22 @@ import java.util.Random;
 
 public class LensColor extends Lens {
 
+    //1k to fire, 200 per item
     public static final int ENERGY_USE = 200;
     //Thanks to xdjackiexd for this, as I couldn't be bothered
-    public static final float[][] POSSIBLE_COLORS = {{158F, 43F, 39F}, //Red
-        {234F, 126F, 53F}, //Orange
-        {194F, 181F, 28F}, //Yellow
-        {57F, 186F, 46F}, //Lime Green
-        {54F, 75F, 24F}, //Green
-        {99F, 135F, 210F}, //Light Blue
-        {38F, 113F, 145F}, //Cyan
-        {37F, 49F, 147F}, //Blue
-        {126F, 52F, 191F}, //Purple
-        {190F, 73F, 201F}, //Magenta
-        {217F, 129F, 153F}, //Pink
-        {86F, 51F, 28F}, //Brown
+    public static final int[] POSSIBLE_COLORS = new int[]{
+        0x9E2B27, //Red
+        0xEA7E35, //Orange
+        0xC2B41C, //Yellow
+        0x39BA2E, //Lime Green
+        0x364B18, //Green
+        0x6387D2, //Light Blue
+        0x267191, //Cyan
+        0x253293, //Blue
+        0x7E34BF, //Purple
+        0xBE49C9, //Magenta
+        0xD98199, //Pink
+        0x56331C, //Brown
     };
     private final Random rand = new Random();
 
@@ -96,9 +98,8 @@ public class LensColor extends Lens {
     }
 
     @Override
-    public float[] getColor() {
-        float[] colors = POSSIBLE_COLORS[this.rand.nextInt(POSSIBLE_COLORS.length)];
-        return new float[]{colors[0] / 255F, colors[1] / 255F, colors[2] / 255F};
+    public int getColor() {
+        return POSSIBLE_COLORS[this.rand.nextInt(POSSIBLE_COLORS.length)];
     }
 
     @Override

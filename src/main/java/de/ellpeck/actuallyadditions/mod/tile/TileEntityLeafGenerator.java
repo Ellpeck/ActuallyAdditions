@@ -88,7 +88,7 @@ public class TileEntityLeafGenerator extends TileEntityBase implements ISharingE
 
                             this.storage.receiveEnergyInternal(energyProduced, false);
 
-                            AssetUtil.spawnLaserWithTimeServer(this.level, this.getBlockPos().getX(), this.getBlockPos().getY(), this.getBlockPos().getZ(), theCoord.getX(), theCoord.getY(), theCoord.getZ(), new float[]{62F / 255F, 163F / 255F, 74F / 255F}, 25, 0, 0.075F, 0.8F);
+                            AssetUtil.spawnLaserWithTimeServer(this.level, this.getBlockPos().getX(), this.getBlockPos().getY(), this.getBlockPos().getZ(), theCoord.getX(), theCoord.getY(), theCoord.getZ(), 0x3EA34A, 25, 0, 0.075F, 0.8F);
                         }
                     }
                 } else {

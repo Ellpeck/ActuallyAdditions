@@ -46,8 +46,8 @@ public class LensDeath extends Lens {
     }
 
     @Override
-    public float[] getColor() {
-        return new float[]{188F / 255F, 222F / 255F, 1F};
+    public int getColor() {
+        return 0xBCDEFF;
     }
 
     @Override

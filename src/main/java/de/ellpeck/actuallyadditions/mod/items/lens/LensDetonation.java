@@ -34,8 +34,8 @@ public class LensDetonation extends Lens {
     }
 
     @Override
-    public float[] getColor() {
-        return new float[]{158F / 255F, 43F / 255F, 39F / 255F};
+    public int getColor() {
+        return 0x9E2B27;
     }
 
     @Override

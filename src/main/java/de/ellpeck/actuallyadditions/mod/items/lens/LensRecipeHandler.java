@@ -32,21 +32,6 @@ public final class LensRecipeHandler {
         //        ActuallyAdditionsAPI.addReconstructorLensColorChangeItem(Item.getItemFromBlock(InitBlocks.blockColoredLampOn), changer);
     }
     //
-    //    @Deprecated //Use lens-checking method below.
-    //    public static List<LensConversionRecipe> getRecipesFor(ItemStack input) {
-    //        List<LensConversionRecipe> possibleRecipes = new ArrayList<>();
-    //        for (LensConversionRecipe recipe : ActuallyAdditionsAPI.RECONSTRUCTOR_LENS_CONVERSION_RECIPES)
-    //            if (recipe.getInput().apply(input)) possibleRecipes.add(recipe);
-    //        return possibleRecipes;
-    //    }
-    //
-    //    @Nullable
-    //    public static LensConversionRecipe findMatchingRecipe(ItemStack input, Lens lens) {
-    //        for (LensConversionRecipe recipe : ActuallyAdditionsAPI.RECONSTRUCTOR_LENS_CONVERSION_RECIPES)
-    //            if (recipe.matches(input, lens)) return recipe;
-    //        return null;
-    //    }
-    //
     //    private static Ingredient fromBlock(Block b) {
     //        return Ingredient.fromItems(Item.getItemFromBlock(b));
     //    }
