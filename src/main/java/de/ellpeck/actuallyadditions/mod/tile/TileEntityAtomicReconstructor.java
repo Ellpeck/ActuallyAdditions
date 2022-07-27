@@ -41,6 +41,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     private int oldEnergy;
     private int ttl = 0;
     private int maxAge = 0;
+    private int beamColor = 0x1b6dff;
 
     public TileEntityAtomicReconstructor() {
         super(ActuallyBlocks.ATOMIC_RECONSTRUCTOR.getTileEntityType(), 1);
@@ -62,8 +63,18 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
 
     @Override
     public void resetBeam(int maxAge) {
+        this.resetBeam(maxAge, 0x1b6dff);
+    }
+
+    @Override
+    public void resetBeam(int maxAge, int color) {
         this.ttl = maxAge;
         this.maxAge = maxAge;
+        this.beamColor = color;
+    }
+
+    public int getBeamColor() {
+        return this.beamColor;
     }
 
     public float getProgress(){

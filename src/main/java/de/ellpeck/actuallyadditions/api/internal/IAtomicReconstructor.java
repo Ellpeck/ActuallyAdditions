@@ -26,5 +26,6 @@ public interface IAtomicReconstructor extends IEnergyTile {
     Direction getOrientation();
 
     void resetBeam(int maxAge);
+    void resetBeam(int maxAge, int color);
     int getTTL();
 }

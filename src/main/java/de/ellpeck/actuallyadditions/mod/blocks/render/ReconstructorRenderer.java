@@ -40,6 +40,7 @@ public class ReconstructorRenderer extends TileEntityRenderer<TileEntityAtomicRe
     public void render(TileEntityAtomicReconstructor tile, float partialTicks, @Nonnull MatrixStack matrices, @Nonnull IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
         ItemStack stack = tile.inv.getStackInSlot(0);
         //default color 0x1b6dff
+        int color = tile.getBeamColor();
         Direction direction = tile.getOrientation();
         float rot = 360.0f - direction.getOpposite().toYRot(); //Sigh...
         float pitch = 0;
@@ -49,7 +50,7 @@ public class ReconstructorRenderer extends TileEntityRenderer<TileEntityAtomicRe
             pitch = -90;
         }
         if (tile.getProgress() > 0) {
-            AssetUtil.renderLaser(matrices, buffer, 0, 0, 0, rot, pitch, 5, 0, 0x1b6dff, 0.8f * tile.getProgress(), 0.2f);
+            AssetUtil.renderLaser(matrices, buffer, 0, 0, 0, rot, pitch, 5, 0, color, 0.8f * tile.getProgress(), 0.2f);
             tile.decTTL();
         }
         if (stack.isEmpty() || !(stack.getItem() instanceof ILensItem)) {

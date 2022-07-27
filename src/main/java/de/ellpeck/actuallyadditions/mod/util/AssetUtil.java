@@ -230,7 +230,7 @@ public final class AssetUtil {
         Minecraft mc = Minecraft.getInstance();
         TileEntity tile = mc.level.getBlockEntity(new BlockPos(startX, startY, startZ));
         if(tile instanceof TileEntityAtomicReconstructor)
-            ((TileEntityAtomicReconstructor) tile).resetBeam(maxAge);
+            ((TileEntityAtomicReconstructor) tile).resetBeam(maxAge, color);
 
 
 /*        if (mc.player.distanceToSqr(startX, startY, startZ) <= 64 || mc.player.distanceToSqr(endX, endY, endZ) <= 64) {
@@ -251,6 +251,7 @@ public final class AssetUtil {
         int g = (color >> 8) & 0xFF;
         int b = color & 0xFF;
         int a = (int) (alpha * 255);
+        ActuallyAdditions.LOGGER.info("Laser: " + a);
 
         int lightmap = LightTexture.pack(MAX_LIGHT_X, MAX_LIGHT_Y);
 
