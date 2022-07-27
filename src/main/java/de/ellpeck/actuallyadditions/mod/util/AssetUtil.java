@@ -251,7 +251,6 @@ public final class AssetUtil {
         int g = (color >> 8) & 0xFF;
         int b = color & 0xFF;
         int a = (int) (alpha * 255);
-        ActuallyAdditions.LOGGER.info("Laser: " + a);
 
         int lightmap = LightTexture.pack(MAX_LIGHT_X, MAX_LIGHT_Y);
 
