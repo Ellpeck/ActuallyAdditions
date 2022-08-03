@@ -38,5 +38,8 @@ public class ResourceReloader implements IResourceManagerReloadListener {
 
         ActuallyAdditionsAPI.CONVERSION_LASER_RECIPES.clear();
         ActuallyAdditionsAPI.CONVERSION_LASER_RECIPES.addAll(recipeManager.getAllRecipesFor(ActuallyRecipes.Types.LASER));
+
+        ActuallyAdditionsAPI.COLOR_CHANGE_RECIPES.clear();
+        ActuallyAdditionsAPI.COLOR_CHANGE_RECIPES.addAll(recipeManager.getAllRecipesFor(ActuallyRecipes.Types.COLOR_CHANGE));
     }
 }

@@ -16,6 +16,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Optional;
 
@@ -91,9 +92,8 @@ public class LaserRecipe implements IRecipe<IInventory> {
     }
 
     public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<LaserRecipe> {
-
         @Override
-        public LaserRecipe fromJson(ResourceLocation pRecipeId, JsonObject pJson) {
+        public LaserRecipe fromJson(@Nonnull ResourceLocation pRecipeId, @Nonnull JsonObject pJson) {
             Ingredient ingredient = Ingredient.fromJson(JSONUtils.getAsJsonObject(pJson, "ingredient"));
             int energy = JSONUtils.getAsInt(pJson, "energy");
             JsonObject resultObject = JSONUtils.getAsJsonObject(pJson, "result");
@@ -104,7 +104,7 @@ public class LaserRecipe implements IRecipe<IInventory> {
 
         @Nullable
         @Override
-        public LaserRecipe fromNetwork(ResourceLocation pRecipeId, PacketBuffer pBuffer) {
+        public LaserRecipe fromNetwork(@Nonnull ResourceLocation pRecipeId, @Nonnull PacketBuffer pBuffer) {
             Ingredient ingredient = Ingredient.fromNetwork(pBuffer);
             int energy = pBuffer.readInt();
             ItemStack result = pBuffer.readItem();
@@ -112,7 +112,7 @@ public class LaserRecipe implements IRecipe<IInventory> {
         }
 
         @Override
-        public void toNetwork(PacketBuffer pBuffer, LaserRecipe pRecipe) {
+        public void toNetwork(@Nonnull PacketBuffer pBuffer, LaserRecipe pRecipe) {
             pRecipe.itemIngredient.toNetwork(pBuffer);
             pBuffer.writeInt(pRecipe.energy);
             pBuffer.writeItem(pRecipe.result);

@@ -1,0 +1,9 @@
+{
+  "type": "actuallyadditions:color_change",
+  "ingredient": {
+    "item": "minecraft:pink_wool"
+  },
+  "result": {
+    "item": "minecraft:gray_wool"
+  }
+}
