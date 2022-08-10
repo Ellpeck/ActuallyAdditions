@@ -1,0 +1,9 @@
+{
+  "type": "actuallyadditions:color_change",
+  "ingredient": {
+    "item": "minecraft:green_dye"
+  },
+  "result": {
+    "item": "minecraft:red_dye"
+  }
+}

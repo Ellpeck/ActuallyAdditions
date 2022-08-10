@@ -26,8 +26,6 @@ import de.ellpeck.actuallyadditions.mod.inventory.ActuallyContainers;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.items.ItemCoffee;
 import de.ellpeck.actuallyadditions.mod.items.lens.LensMining;
-import de.ellpeck.actuallyadditions.mod.items.lens.LensRecipeHandler;
-import de.ellpeck.actuallyadditions.mod.items.lens.Lenses;
 import de.ellpeck.actuallyadditions.mod.misc.BannerHelper;
 import de.ellpeck.actuallyadditions.mod.misc.DungeonLoot;
 import de.ellpeck.actuallyadditions.mod.misc.apiimpl.LaserRelayConnectionHandler;
@@ -135,7 +133,6 @@ public class ActuallyAdditions {
         //AAWorldGen gen = new AAWorldGen();
         ItemCoffee.initIngredients();
         CrusherCrafting.init();
-        LensRecipeHandler.init();
         LensMining.init();
     }
 

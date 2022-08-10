@@ -35,6 +35,7 @@ public class ColorChangeGenerator extends RecipeProvider {
         buildGlazedTerracotta(consumer);
         buildCarpet(consumer);
         buildLamps(consumer);
+        buildDye(consumer);
     }
 
     private void buildWool(@Nonnull Consumer<IFinishedRecipe> c) {
@@ -169,6 +170,25 @@ public class ColorChangeGenerator extends RecipeProvider {
         changeColor(c, ActuallyBlocks.LAMP_GREEN.getItem(), ActuallyBlocks.LAMP_BROWN.getItem());
         changeColor(c, ActuallyBlocks.LAMP_RED.getItem(), ActuallyBlocks.LAMP_GREEN.getItem());
         changeColor(c, ActuallyBlocks.LAMP_BLACK.getItem(), ActuallyBlocks.LAMP_RED.getItem());
+    }
+
+    private void buildDye(@Nonnull Consumer<IFinishedRecipe> c) {
+        changeColor(c, Items.WHITE_DYE, Items.BLACK_DYE);
+        changeColor(c, Items.ORANGE_DYE, Items.WHITE_DYE);
+        changeColor(c, Items.MAGENTA_DYE, Items.ORANGE_DYE);
+        changeColor(c, Items.LIGHT_BLUE_DYE, Items.MAGENTA_DYE);
+        changeColor(c, Items.YELLOW_DYE, Items.LIGHT_BLUE_DYE);
+        changeColor(c, Items.LIME_DYE, Items.YELLOW_DYE);
+        changeColor(c, Items.PINK_DYE, Items.LIME_DYE);
+        changeColor(c, Items.GRAY_DYE, Items.PINK_DYE);
+        changeColor(c, Items.LIGHT_GRAY_DYE, Items.GRAY_DYE);
+        changeColor(c, Items.CYAN_DYE, Items.LIGHT_GRAY_DYE);
+        changeColor(c, Items.PURPLE_DYE, Items.CYAN_DYE);
+        changeColor(c, Items.BLUE_DYE, Items.PURPLE_DYE);
+        changeColor(c, Items.BROWN_DYE, Items.BLUE_DYE);
+        changeColor(c, Items.GREEN_DYE, Items.BROWN_DYE);
+        changeColor(c, Items.RED_DYE, Items.GREEN_DYE);
+        changeColor(c, Items.BLACK_DYE, Items.RED_DYE);
     }
 
 

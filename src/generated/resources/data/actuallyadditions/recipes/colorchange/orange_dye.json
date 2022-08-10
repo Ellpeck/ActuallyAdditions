@@ -1,0 +1,9 @@
+{
+  "type": "actuallyadditions:color_change",
+  "ingredient": {
+    "item": "minecraft:white_dye"
+  },
+  "result": {
+    "item": "minecraft:orange_dye"
+  }
+}
