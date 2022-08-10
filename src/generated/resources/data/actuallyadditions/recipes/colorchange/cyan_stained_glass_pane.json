@@ -1,0 +1,9 @@
+{
+  "type": "actuallyadditions:color_change",
+  "ingredient": {
+    "item": "minecraft:light_gray_stained_glass_pane"
+  },
+  "result": {
+    "item": "minecraft:cyan_stained_glass_pane"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "type": "actuallyadditions:color_change",
+  "ingredient": {
+    "item": "minecraft:green_stained_glass_pane"
+  },
+  "result": {
+    "item": "minecraft:red_stained_glass_pane"
+  }
+}

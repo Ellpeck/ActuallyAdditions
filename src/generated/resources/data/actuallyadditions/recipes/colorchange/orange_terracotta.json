@@ -1,0 +1,9 @@
+{
+  "type": "actuallyadditions:color_change",
+  "ingredient": {
+    "item": "minecraft:white_terracotta"
+  },
+  "result": {
+    "item": "minecraft:orange_terracotta"
+  }
+}

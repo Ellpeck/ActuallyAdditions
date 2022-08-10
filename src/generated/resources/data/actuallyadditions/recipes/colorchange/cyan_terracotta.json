@@ -1,0 +1,9 @@
+{
+  "type": "actuallyadditions:color_change",
+  "ingredient": {
+    "item": "minecraft:light_gray_terracotta"
+  },
+  "result": {
+    "item": "minecraft:cyan_terracotta"
+  }
+}

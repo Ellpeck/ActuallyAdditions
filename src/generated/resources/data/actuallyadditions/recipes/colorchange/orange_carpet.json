@@ -1,0 +1,9 @@
+{
+  "type": "actuallyadditions:color_change",
+  "ingredient": {
+    "item": "minecraft:white_carpet"
+  },
+  "result": {
+    "item": "minecraft:orange_carpet"
+  }
+}
