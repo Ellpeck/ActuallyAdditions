@@ -1,6 +1,7 @@
 package de.ellpeck.actuallyadditions.mod.crafting;
 
 import com.google.gson.JsonObject;
+import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -13,11 +14,11 @@ import net.minecraft.util.IItemProvider;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Optional;
 
 public class ColorChangeRecipe implements IRecipe<IInventory> {
     public static final String NAME = "color_change";
@@ -50,6 +51,10 @@ public class ColorChangeRecipe implements IRecipe<IInventory> {
     @Override
     public boolean canCraftInDimensions(int pWidth, int pHeight) {
         return false;
+    }
+
+    public static Optional<ColorChangeRecipe> getRecipeForStack(ItemStack stack) {
+        return ActuallyAdditionsAPI.COLOR_CHANGE_RECIPES.stream().filter(recipe -> recipe.matches(stack)).findFirst();
     }
 
     @Nonnull

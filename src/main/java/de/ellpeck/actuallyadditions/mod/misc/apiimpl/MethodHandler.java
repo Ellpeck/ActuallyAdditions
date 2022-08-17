@@ -162,7 +162,6 @@ public class MethodHandler implements IMethodHandler {
                                 ItemStack output = recipe.get().getResultItem().copy();
                                 if (!output.isEmpty()) {
                                     tile.getWorldObject().levelEvent(2001, pos, Block.getId(state));
-                                    //recipe.transformHook(ItemStack.EMPTY, state, pos, tile); //TODO empty method
                                     if (output.getItem() instanceof BlockItem) {
                                         Block toPlace = Block.byItem(output.getItem());
                                         BlockState state2Place = toPlace.defaultBlockState(); //.getStateForPlacement(tile.getWorldObject(), pos, facing, 0, 0, 0, output.getMetadata(), FakePlayerFactory.getMinecraft((WorldServer) tile.getWorldObject()), Hand.MAIN_HAND); //TODO

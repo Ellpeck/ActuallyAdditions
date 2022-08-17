@@ -44,8 +44,6 @@ public final class ActuallyAdditionsAPI {
     //    public static final List<TreasureChestLoot> TREASURE_CHEST_LOOT = new ArrayList<>();
     //public static final List<LensConversionRecipe> RECONSTRUCTOR_LENS_CONVERSION_RECIPES = new ArrayList<>();
     public static final List<EmpowererRecipe> EMPOWERER_RECIPES = new ArrayList<>();
-    public static final Map<Item, IColorLensChanger> RECONSTRUCTOR_LENS_COLOR_CHANGERS = new HashMap<>();
-
     public static final List<ColorChangeRecipe> COLOR_CHANGE_RECIPES = new ArrayList<>();
     public static final List<SolidFuelRecipe> SOLID_FUEL_RECIPES = new ArrayList<>();
     public static final List<LiquidFuelRecipe> LIQUID_FUEL_RECIPES = new ArrayList<>();
@@ -267,20 +265,6 @@ public final class ActuallyAdditionsAPI {
     public static void addReconstructorLensConversionRecipe(Ingredient input, ItemStack output, int energyUse) {
         //addReconstructorLensConversionRecipe(input, output, energyUse, lensDefaultConversion);
     }
-
-    /**
-     * Adds an item and the way it is modified to the Atomic Reconstructor's color lens.
-     * This also works for blocks, but they have to be in their item form.
-     * The way it is modified is an instance of IColorLensChanger. When modifying the item,
-     * its modifyItem() method will be called with a stack containing the item.
-     *
-     * @param item    The item (or block's item) to add
-     * @param changer The change mechanism
-     */
-    public static void addReconstructorLensColorChangeItem(Item item, IColorLensChanger changer) {
-        RECONSTRUCTOR_LENS_COLOR_CHANGERS.put(item, changer);
-    }
-
     /**
      * Adds an ingredient to the Coffee Machine ingredient list
      *
