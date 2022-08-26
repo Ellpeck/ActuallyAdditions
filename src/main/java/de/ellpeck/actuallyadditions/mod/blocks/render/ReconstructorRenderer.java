@@ -21,6 +21,7 @@ import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
@@ -41,6 +42,7 @@ public class ReconstructorRenderer extends TileEntityRenderer<TileEntityAtomicRe
         ItemStack stack = tile.inv.getStackInSlot(0);
         //default color 0x1b6dff
         int color = tile.getBeamColor();
+        int length = 5;
         Direction direction = tile.getOrientation();
         float rot = 360.0f - direction.getOpposite().toYRot(); //Sigh...
         float pitch = 0;
@@ -49,8 +51,13 @@ public class ReconstructorRenderer extends TileEntityRenderer<TileEntityAtomicRe
         } else if (direction == Direction.DOWN) {
             pitch = -90;
         }
+
+        if (stack.getItem() instanceof ILensItem) {
+            length = ((ILensItem) stack.getItem()).getLens().getDistance();
+        }
+
         if (tile.getProgress() > 0) {
-            AssetUtil.renderLaser(matrices, buffer, 0, 0, 0, rot, pitch, 5, 0, color, 0.8f * tile.getProgress(), 0.2f);
+            AssetUtil.renderLaser(matrices, buffer, 0, 0, 0, rot, pitch, length, 0, color, 0.8f * tile.getProgress(), 0.2f);
             tile.decTTL();
         }
         if (stack.isEmpty() || !(stack.getItem() instanceof ILensItem)) {
