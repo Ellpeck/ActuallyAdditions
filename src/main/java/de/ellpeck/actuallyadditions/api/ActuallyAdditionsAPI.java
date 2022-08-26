@@ -40,9 +40,6 @@ public final class ActuallyAdditionsAPI {
     public static final String API_VERSION = "34";
 
     public static final List<CrushingRecipe> CRUSHER_RECIPES = new ArrayList<>();
-    public static final List<BallOfFurReturn> BALL_OF_FUR_RETURN_ITEMS = new ArrayList<>();
-    //    public static final List<TreasureChestLoot> TREASURE_CHEST_LOOT = new ArrayList<>();
-    //public static final List<LensConversionRecipe> RECONSTRUCTOR_LENS_CONVERSION_RECIPES = new ArrayList<>();
     public static final List<EmpowererRecipe> EMPOWERER_RECIPES = new ArrayList<>();
     public static final List<ColorChangeRecipe> COLOR_CHANGE_RECIPES = new ArrayList<>();
     public static final List<SolidFuelRecipe> SOLID_FUEL_RECIPES = new ArrayList<>();
@@ -176,52 +173,6 @@ public final class ActuallyAdditionsAPI {
     @Deprecated //Use Ingredient
     public static boolean addCrusherRecipes(List<ItemStack> inputs, ItemStack outputOne, int outputOneAmount, ItemStack outputTwo, int outputTwoAmount, int outputTwoChance) {
         return methodHandler.addCrusherRecipes(inputs, outputOne, outputOneAmount, outputTwo, outputTwoAmount, outputTwoChance);
-    }
-    /**
-     * Adds a new conversion recipe to the compost.
-     *
-     * @param input         The itemstack to be input into the compost
-     * @param inputDisplay  The block to display when there is input in the compost
-     * @param output        The itemstack to be output from the compost once conversion finishes
-     * @param outputDisplay The block to display when there is output in the compost
-     */
-    @Deprecated
-    public static void addCompostRecipe(ItemStack input, Block inputDisplay, ItemStack output, Block outputDisplay) {
-        //        COMPOST_RECIPES.add(new CompostRecipe(input, inputDisplay, output, outputDisplay));
-    }
-
-    /**
-     * Adds a new conversion recipe to the compost.
-     *
-     * @param input         The ingredient to be input into the compost
-     * @param inputDisplay  The state to display when there is input in the compost
-     * @param output        The itemstack to be output from the compost once conversion finishes
-     * @param outputDisplay The state to display when there is output in the compost
-     */
-    public static void addCompostRecipe(Ingredient input, BlockState inputDisplay, ItemStack output, BlockState outputDisplay) {
-        //        COMPOST_RECIPES.add(new CompostRecipe(input, inputDisplay, output, outputDisplay));
-    }
-
-    /**
-     * Adds an item to the list of possible items to be returned when right-clicking a Ball Of Fur
-     *
-     * @param stack  The ItemStack to be returned
-     * @param chance The chance (this is from WeightedRandom.Item)
-     */
-    public static void addBallOfFurReturnItem(ItemStack stack, int chance) {
-        BALL_OF_FUR_RETURN_ITEMS.add(new BallOfFurReturn(stack, chance));
-    }
-
-    /**
-     * Adds an item to the list of possible items to be returned when opening a Treasure Chest
-     *
-     * @param stack     The ItemStack to be returned, the stacksize is ignored
-     * @param chance    The chance (this is from WeightedRandom.Item)
-     * @param minAmount The minimum stacksize of the returned stack
-     * @param maxAmount The maximum stacksize of the returned stack
-     */
-    public static void addTreasureChestLoot(ItemStack stack, int chance, int minAmount, int maxAmount) {
-        //        TREASURE_CHEST_LOOT.add(new TreasureChestLoot(stack, chance, minAmount, maxAmount));
     }
 
     public static void addEmpowererRecipe(ResourceLocation id, Ingredient input, ItemStack output, Ingredient modifier1, Ingredient modifier2, Ingredient modifier3, Ingredient modifier4, int energyPerStand, int time, int particleColor) {

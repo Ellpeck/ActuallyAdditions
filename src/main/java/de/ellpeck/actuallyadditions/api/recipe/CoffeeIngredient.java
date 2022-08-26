@@ -15,6 +15,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.potion.EffectInstance;
 
+@Deprecated
 public class CoffeeIngredient {
 
     protected final Ingredient input;

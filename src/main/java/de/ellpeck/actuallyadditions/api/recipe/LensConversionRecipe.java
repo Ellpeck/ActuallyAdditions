@@ -17,6 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.math.BlockPos;
 
+Mi@Deprecated
 public class LensConversionRecipe {
 
     protected final Ingredient input;

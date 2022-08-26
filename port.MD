@@ -3,7 +3,7 @@
 - [x] 11 lens (lens of disruption)
 - [ ] Smiley cloud
 - [x] Occasional solidified XP drop from mobs
-- [ ] Treasure chests
+- [x] Treasure chests
 - [x] Composter and bio-mash, biomass, bio coal and fertilizer
 - [x] Charcoal blocks
 - [x] Ender pearl blocks
@@ -88,7 +88,7 @@
 - [ ] Wings of the Bats and wing items dropped from bats
 - [ ] Drills and drill upgrades
 - [ ] Batteries
-- [ ] Crafting table on a stick
+- [x] Crafting table on a stick
 - [ ] Leaf blowers
 - [ ] The book
 - [x] The Crystal Flux name and rainbow effect

@@ -14,66 +14,6 @@ package de.ellpeck.actuallyadditions.mod.crafting;
 @Deprecated
 public final class ItemCrafting {
     //
-    //    public static final ArrayList<IRecipe> RECIPES_POTION_RINGS = new ArrayList<>();
-    //    public static final ArrayList<IRecipe> RECIPES_DRILL_COLORING = new ArrayList<>();
-    //    public static IRecipe recipePhantomConnector;
-    //    public static IRecipe recipeCoil;
-    //    public static IRecipe recipeCoilAdvanced;
-    //    public static IRecipe recipeBook;
-    //    public static IRecipe recipeTinyCoal;
-    //    public static IRecipe recipeTinyChar;
-    //    public static IRecipe recipeDrill;
-    //    public static IRecipe recipeDrillSpeedI;
-    //    public static IRecipe recipeDrillSpeedII;
-    //    public static IRecipe recipeDrillSpeedIII;
-    //    public static IRecipe recipeDrillFortuneI;
-    //    public static IRecipe recipeDrillFortuneII;
-    //    public static IRecipe recipeDrillSilk;
-    //    public static IRecipe recipeDrillPlacing;
-    //    public static IRecipe recipeDrillThree;
-    //    public static IRecipe recipeDrillFive;
-    //    public static IRecipe recipeBattery;
-    //    public static IRecipe recipeBatteryDouble;
-    //    public static IRecipe recipeBatteryTriple;
-    //    public static IRecipe recipeBatteryQuadruple;
-    //    public static IRecipe recipeBatteryQuintuple;
-    //    public static IRecipe recipeStaff;
-    //    public static IRecipe recipeGrowthRing;
-    //    public static IRecipe recipeMagnetRing;
-    //    public static IRecipe recipeWaterRing;
-    //    public static IRecipe recipeWings;
-    //    public static IRecipe recipeCup;
-    //    public static IRecipe recipeKnifeHandle;
-    //    public static IRecipe recipeKnifeBlade;
-    //    public static IRecipe recipeKnife;
-    //    public static IRecipe recipeRing;
-    //    public static IRecipe recipeDough;
-    //    public static IRecipe recipeRiceDough;
-    //    public static IRecipe recipeLeafBlower;
-    //    public static IRecipe recipeLeafBlowerAdvanced;
-    //    public static IRecipe recipeChestToCrateUpgrade;
-    //    public static IRecipe recipeSmallToMediumCrateUpgrade;
-    //    public static IRecipe recipeMediumToLargeCrateUpgrade;
-    //    public static IRecipe recipeLaserWrench;
-    //    public static IRecipe recipeDrillCore;
-    //    public static IRecipe recipeBlackDye;
-    //    public static IRecipe recipeLens;
-    //    public static IRecipe recipeCrateKeeper;
-    //    public static IRecipe recipeEnderStar;
-    //    public static IRecipe recipeSpawnerChanger;
-    //    public static IRecipe recipeFilter;
-    //    public static IRecipe recipePlayerProbe;
-    //    public static IRecipe recipeDisenchantingLens;
-    //    public static IRecipe recipeMiningLens;
-    //    public static IRecipe recipeBag;
-    //    public static IRecipe recipeVoidBag;
-    //    public static IRecipe recipeLensMoreDeath;
-    //    public static IRecipe recipeFillingWand;
-    //    public static IRecipe recipeLaserUpgradeInvisibility;
-    //    public static IRecipe recipeLaserUpgradeRange;
-    //    public static IRecipe recipeGoggles;
-    //    public static IRecipe recipeGogglesAdvanced;
-    //
     //    public static void init() {
     //
     //        //Advanced Goggles
