@@ -38,6 +38,7 @@ public class CommonConfig {
         public static ForgeConfigSpec.IntValue FARMER_AREA;
         public static ForgeConfigSpec.IntValue RECONSTRUCTOR_POWER;
         public static ForgeConfigSpec.IntValue OIL_GENERATOR_TRANSFER;
+        public static ForgeConfigSpec.IntValue MINER_LENS_ENERGY;
 
         public static void build() {
             BUILDER.comment("Machine Settings").push("machineSettings");
@@ -45,6 +46,7 @@ public class CommonConfig {
             FARMER_AREA = BUILDER.comment("The size of the farmer's farming area.  Default is 9x9, must be an odd number.").defineInRange("farmerArea", 9, 1, Integer.MAX_VALUE);
             RECONSTRUCTOR_POWER = BUILDER.comment("The amount of power the atomic reconstructor can store.").defineInRange("reconstructorPower", 300000, 300000, Integer.MAX_VALUE);
             OIL_GENERATOR_TRANSFER = BUILDER.comment("The amount of power the oil generator can transfer per tick.").defineInRange("oilGeneratorTransfer", 500, 100, Integer.MAX_VALUE);
+            MINER_LENS_ENERGY = BUILDER.comment("The energy use of the Atomic Reconstructor's Mining Lens.").defineInRange("minerLensEnergy", 60000, 1, Integer.MAX_VALUE);
 
             BUILDER.pop();
         }
@@ -67,7 +69,6 @@ public class CommonConfig {
         public static ForgeConfigSpec.BooleanValue TINY_COAL_STUFF;
         public static ForgeConfigSpec.BooleanValue SUPER_DUPER_HARD_MODE;
         public static ForgeConfigSpec.BooleanValue MOST_BLAND_PERSON_EVER;
-        public static ForgeConfigSpec.IntValue ELEVEN;
         public static ForgeConfigSpec.ConfigValue<String> REDSTONECONFIGURATOR;
         public static ForgeConfigSpec.ConfigValue<String> RELAYCONFIGURATOR;
         public static Item redstoneConfigureItem = Items.AIR;
@@ -124,8 +125,6 @@ public class CommonConfig {
 
             MOST_BLAND_PERSON_EVER = BUILDER.comment("If you want to be really boring and lame, you can turn on this setting to disable colored names on Actually Additions items. Because why would you want things to look pretty anyways, right?")
                 .define("noColoredItemNames", false); //TODO is this still needed?
-
-            ELEVEN = BUILDER.comment("11?").defineInRange("whatIs11", 11, 0, 12);
 
             REDSTONECONFIGURATOR = BUILDER.comment("define the item used to configure Redstone Mode").define("redstoneConfigurator", Items.REDSTONE_TORCH.getRegistryName().toString(), obj -> obj instanceof String);
             RELAYCONFIGURATOR = BUILDER.comment("define the item used to configure Direction in laser relays").define("relayConfigurator", Items.COMPASS.getRegistryName().toString(), obj -> obj instanceof String);

@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.api.recipe.WeightedOre;
+import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -112,9 +113,10 @@ public class LensMining extends Lens {
 
     @Override
     public boolean invoke(BlockState hitState, BlockPos hitPos, IAtomicReconstructor tile) {
+        final int energyUse = CommonConfig.Machines.MINER_LENS_ENERGY.get();
         if (!tile.getWorldObject().isEmptyBlock(hitPos)) {
-            if (tile.getEnergy() >= ConfigIntValues.MINING_LENS_USE.getValue()) {
-                int adaptedUse = ConfigIntValues.MINING_LENS_USE.getValue();
+            if (tile.getEnergy() >= energyUse) {
+                int adaptedUse = energyUse;
 
                 List<WeightedOre> ores = null;
                 Block hitBlock = hitState.getBlock();
