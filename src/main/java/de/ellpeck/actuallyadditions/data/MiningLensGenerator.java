@@ -11,13 +11,11 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DirectoryCache;
 import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.data.RecipeProvider;
-import net.minecraft.fluid.Fluids;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.tags.ITag;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.Registry;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -25,8 +23,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.nio.file.Path;
 import java.util.function.Consumer;
 
-public class MiscMachineRecipeGenerator extends RecipeProvider {
-    public MiscMachineRecipeGenerator(DataGenerator pGenerator) {
+public class MiningLensGenerator extends RecipeProvider {
+    public MiningLensGenerator(DataGenerator pGenerator) {
         super(pGenerator);
     }
 
@@ -36,11 +34,7 @@ public class MiscMachineRecipeGenerator extends RecipeProvider {
 
     @Override
     protected void buildShapelessRecipes(Consumer<IFinishedRecipe> consumer) {
-        consumer.accept(new PressingRecipe.FinishedRecipe(folderRecipe("pressing", "canola"),
-            Ingredient.of(ActuallyItems.CANOLA.get()), new FluidStack(InitFluids.CANOLA_OIL.get(), 80)));
-
-        consumer.accept(new FermentingRecipe.FinishedRecipe(folderRecipe("fermenting", "refined_canola"),
-            new FluidStack(InitFluids.CANOLA_OIL.get(), 80), new FluidStack(InitFluids.REFINED_CANOLA_OIL.get(), 80), 100));
+        buildMiningLens(consumer);
     }
 
     private String getItemName(IItemProvider item) {
@@ -49,5 +43,33 @@ public class MiscMachineRecipeGenerator extends RecipeProvider {
 
     private ResourceLocation folderRecipe(String folder, String recipe) {
         return new ResourceLocation(ActuallyAdditions.MODID, folder + "/" + recipe);
+    }
+
+    private void buildStoneOre(Consumer<IFinishedRecipe> consumer, int weight, IItemProvider output) {
+        buildTagOre(consumer, Tags.Items.STONE, "stone", weight, output);
+    }
+    private void buildNetherOre(Consumer<IFinishedRecipe> consumer, int weight, IItemProvider output) {
+        buildTagOre(consumer, Tags.Items.NETHERRACK, "nether", weight, output);
+    }
+
+    private void buildTagOre(Consumer<IFinishedRecipe> consumer, ITag tag, String prefix, int weight, IItemProvider output) {
+        consumer.accept(new MiningLensRecipe.FinishedRecipe(
+                folderRecipe("mininglens", prefix + "_" + getItemName(output)),
+                Ingredient.of(tag),
+                weight,
+                output
+        ));
+    }
+
+    private void buildMiningLens(Consumer<IFinishedRecipe> consumer) {
+        buildStoneOre(consumer, 5000, Items.COAL_ORE);
+        buildStoneOre(consumer, 3000, Items.IRON_ORE);
+        buildStoneOre(consumer, 500, Items.GOLD_ORE);
+        buildNetherOre(consumer, 500, Items.NETHER_GOLD_ORE);
+        buildStoneOre(consumer, 50, Items.DIAMOND_ORE);
+        buildStoneOre(consumer, 250, Items.LAPIS_ORE);
+        buildStoneOre(consumer, 200, Items.REDSTONE_ORE);
+        buildStoneOre(consumer, 30, Items.EMERALD_ORE);
+        buildNetherOre(consumer, 3000, Items.NETHER_QUARTZ_ORE);
     }
 }

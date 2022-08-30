@@ -133,7 +133,7 @@ public class ActuallyAdditions {
         //AAWorldGen gen = new AAWorldGen();
         ItemCoffee.initIngredients();
         CrusherCrafting.init();
-        LensMining.init();
+        //LensMining.init();
     }
 
     private void onConfigReload(ModConfig.ModConfigEvent event) {

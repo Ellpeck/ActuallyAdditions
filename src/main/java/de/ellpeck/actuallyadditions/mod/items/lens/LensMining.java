@@ -28,22 +28,9 @@ import java.util.List;
 
 public class LensMining extends Lens {
 
-    public static void init() { //TODO ohhh boy
-        ActuallyAdditionsAPI.addMiningLensStoneOre("oreCoal", 5000);
-        ActuallyAdditionsAPI.addMiningLensNetherOre("oreNetherCoal", 5000);
-        ActuallyAdditionsAPI.addMiningLensStoneOre("oreIron", 3000);
-        ActuallyAdditionsAPI.addMiningLensNetherOre("oreNetherIron", 3000);
-        ActuallyAdditionsAPI.addMiningLensStoneOre("oreGold", 500);
-        ActuallyAdditionsAPI.addMiningLensNetherOre("oreNetherGold", 500);
-        ActuallyAdditionsAPI.addMiningLensStoneOre("oreDiamond", 50);
-        ActuallyAdditionsAPI.addMiningLensNetherOre("oreNetherDiamond", 50);
-        ActuallyAdditionsAPI.addMiningLensStoneOre("oreLapis", 250);
-        ActuallyAdditionsAPI.addMiningLensNetherOre("oreNetherLapis", 250);
-        ActuallyAdditionsAPI.addMiningLensStoneOre("oreRedstone", 200);
-        ActuallyAdditionsAPI.addMiningLensNetherOre("oreNetherRedstone", 200);
-        ActuallyAdditionsAPI.addMiningLensStoneOre("oreEmerald", 30);
-        ActuallyAdditionsAPI.addMiningLensNetherOre("oreQuartz", 3000);
+    public static void init() {
 
+        //These need to be moved to datagen conditionals if the appropriate mod is loaded.
         ActuallyAdditionsAPI.addMiningLensStoneOre("oreCopper", 2000);
         ActuallyAdditionsAPI.addMiningLensNetherOre("oreNetherCopper", 2000);
         ActuallyAdditionsAPI.addMiningLensStoneOre("oreTin", 1800);
@@ -79,36 +66,8 @@ public class LensMining extends Lens {
         ActuallyAdditionsAPI.addMiningLensStoneOre("oreSalt", 2900);
         ActuallyAdditionsAPI.addMiningLensStoneOre("oreDraconium", 5);
 
-        ActuallyAdditionsAPI.addMiningLensStoneOre("orePoorIron", 3000);
-        ActuallyAdditionsAPI.addMiningLensStoneOre("orePoorGold", 500);
-        ActuallyAdditionsAPI.addMiningLensStoneOre("orePoorCopper", 2000);
-        ActuallyAdditionsAPI.addMiningLensStoneOre("orePoorTin", 1800);
-        ActuallyAdditionsAPI.addMiningLensStoneOre("orePoorLead", 1500);
-        ActuallyAdditionsAPI.addMiningLensStoneOre("orePoorSilver", 1000);
-
         ActuallyAdditionsAPI.addMiningLensNetherOre("oreCobalt", 50);
         ActuallyAdditionsAPI.addMiningLensNetherOre("oreArdite", 50);
-
-        // TODO: fix me
-//        for (String conf : ConfigStringListValues.MINING_LENS_EXTRA_WHITELIST.getValue()) {
-//            if (conf.contains("@")) {
-//                try {
-//                    String[] split = conf.split("@");
-//
-//                    String ore = split[0];
-//                    int weight = Integer.parseInt(split[1]);
-//                    String dim = split[2];
-//
-//                    if ("n".equals(dim)) {
-//                        ActuallyAdditionsAPI.addMiningLensNetherOre(ore, weight);
-//                    } else if ("s".equals(dim)) {
-//                        ActuallyAdditionsAPI.addMiningLensStoneOre(ore, weight);
-//                    }
-//                } catch (Exception e) {
-//                    ActuallyAdditions.LOGGER.warn("A config option appears to be incorrect: The entry " + conf + " can't be parsed!");
-//                }
-//            }
-//        }
     }
 
     @Override

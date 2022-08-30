@@ -1,0 +1,10 @@
+{
+  "type": "actuallyadditions:mining_lens",
+  "ingredient": {
+    "tag": "forge:stone"
+  },
+  "weight": 250,
+  "result": {
+    "item": "minecraft:lapis_ore"
+  }
+}

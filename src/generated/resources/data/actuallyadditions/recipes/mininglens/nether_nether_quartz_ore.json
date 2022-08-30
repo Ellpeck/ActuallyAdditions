@@ -1,0 +1,10 @@
+{
+  "type": "actuallyadditions:mining_lens",
+  "ingredient": {
+    "tag": "forge:netherrack"
+  },
+  "weight": 3000,
+  "result": {
+    "item": "minecraft:nether_quartz_ore"
+  }
+}

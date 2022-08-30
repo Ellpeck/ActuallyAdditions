@@ -1,0 +1,10 @@
+{
+  "type": "actuallyadditions:mining_lens",
+  "ingredient": {
+    "tag": "forge:stone"
+  },
+  "weight": 5000,
+  "result": {
+    "item": "minecraft:coal_ore"
+  }
+}

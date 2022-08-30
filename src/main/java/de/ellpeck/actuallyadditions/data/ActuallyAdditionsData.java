@@ -35,6 +35,7 @@ public class ActuallyAdditionsData {
         generator.addProvider(new CrushingRecipeGenerator(generator));
         generator.addProvider(new FuelRecipeGenerator(generator));
         generator.addProvider(new MiscMachineRecipeGenerator(generator));
+        generator.addProvider(new MiningLensGenerator(generator));
 
         generator.addProvider(new SoundsGenerator(generator, helper));
     }
