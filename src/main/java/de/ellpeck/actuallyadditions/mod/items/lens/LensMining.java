@@ -16,18 +16,25 @@ import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.api.recipe.WeightedOre;
 import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
+import de.ellpeck.actuallyadditions.mod.crafting.MiningLensRecipe;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.NetherrackBlock;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.Tags;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class LensMining extends Lens {
 
+    @Deprecated
     public static void init() {
 
         //These need to be moved to datagen conditionals if the appropriate mod is loaded.
@@ -77,50 +84,36 @@ public class LensMining extends Lens {
             if (tile.getEnergy() >= energyUse) {
                 int adaptedUse = energyUse;
 
-                List<WeightedOre> ores = null;
+                List<MiningLensRecipe> ores = new ArrayList<>();
+
                 Block hitBlock = hitState.getBlock();
-                if (hitBlock.is(Tags.Blocks.STONE)) { //TODO maybe?
+                ItemStack item = new ItemStack(hitBlock.asItem());
+
+                for(MiningLensRecipe r:ActuallyAdditionsAPI.MINING_LENS_RECIPES) {
+                    if (r.matches(item))
+                        ores.add(r);
+                }
+
+
+/*                if (hitBlock.is(Tags.Blocks.STONE)) { //TODO maybe?
                     ores = ActuallyAdditionsAPI.STONE_ORES;
                 } else if (hitBlock instanceof NetherrackBlock) {
                     ores = ActuallyAdditionsAPI.NETHERRACK_ORES;
-                    adaptedUse += 10000;
-                }
+                    adaptedUse += 10000; //TODO uh oh!?
+                }*/
 
-                if (ores != null) {
+                if (!ores.isEmpty()) {
                     int totalWeight = WeightedRandom.getTotalWeight(ores);
-                    ItemStack stack = null;
+                    MiningLensRecipe ore = WeightedRandom.getRandomItem(tile.getWorldObject().random, ores);
 
-                    boolean found = false;
-                    while (!found) {
-                        WeightedOre ore = WeightedRandom.getRandomItem(tile.getWorldObject().random, ores, totalWeight);
-/*                        if (ore != null) {
-                            List<ItemStack> stacks = OreDictionary.getOres(ore.name, false);
-                            if (stacks != null && !stacks.isEmpty()) {
-                                for (ItemStack aStack : stacks) {
-                                    if (StackUtil.isValid(aStack) && !CrusherRecipeRegistry.hasBlacklistedOutput(aStack, ConfigStringListValues.MINING_LENS_BLACKLIST.getValue()) && aStack.getItem() instanceof ItemBlock) {
-                                        if (ConfigBoolValues.MINING_LENS_ADAPTED_USE.isEnabled()) {
-                                            adaptedUse += (totalWeight - ore.weight) % 40000;
-                                        }
+                    ItemStack stack = ore.getResultItem().copy();
 
-                                        stack = aStack;
-                                        found = true;
-                                        break;
-                                    }
-                                }
-                            }
-                        }*/
-                    }
-
-                    if (tile.getEnergy() >= adaptedUse) {
-                        Block block = Block.byItem(stack.getItem());
-/*                        if (block != Blocks.AIR) {
-                            BlockState state = block.getStateForPlacement(tile.getWorldObject(), hitPos, Direction.UP, 0, 0, 0, stack.getMetadata(), FakePlayerFactory.getMinecraft((WorldServer) tile.getWorldObject()), Hand.MAIN_HAND);
-                            tile.getWorldObject().setBlock(hitPos, state, 2);
-
-                            tile.getWorldObject().levelEvent(2001, hitPos, Block.getId(state));
-
-                            tile.extractEnergy(adaptedUse);
-                        }*/
+                    if (stack.getItem() instanceof BlockItem) {
+                        Block toPlace = Block.byItem(stack.getItem());
+                        BlockState state2Place = toPlace.defaultBlockState();
+                        tile.getWorldObject().setBlock(hitPos, state2Place, 2);
+                        tile.getWorldObject().levelEvent(2001, hitPos, Block.getId(state2Place));
+                        tile.extractEnergy(adaptedUse);
                     }
                 }
             }

@@ -47,6 +47,7 @@ public final class ActuallyAdditionsAPI {
     public static final List<PressingRecipe> PRESSING_RECIPES = new ArrayList<>();
     public static final List<FermentingRecipe> FERMENTING_RECIPES = new ArrayList<>();
     public static final List<LaserRecipe> CONVERSION_LASER_RECIPES = new ArrayList<>();
+    public static final List<MiningLensRecipe> MINING_LENS_RECIPES = new ArrayList<>();
 
     /**
      * Farmer behaviors are sorted when first accessed, this will not be done until after loading, but do not add behaviors at runtime.
@@ -59,7 +60,9 @@ public final class ActuallyAdditionsAPI {
     public static final List<IBookletChapter> ALL_CHAPTERS = new ArrayList<>();
     //This is added to automatically, you don't need to add anything to this list
     public static final List<IBookletPage> BOOKLET_PAGES_WITH_ITEM_OR_FLUID_DATA = new ArrayList<>();
+    @Deprecated
     public static final List<WeightedOre> STONE_ORES = new ArrayList<>();
+    @Deprecated
     public static final List<WeightedOre> NETHERRACK_ORES = new ArrayList<>();
 
     /**

@@ -24,13 +24,13 @@ public class MiningLensRecipe extends WeightedRandom.Item implements IRecipe<IIn
 
     private final ResourceLocation id;
     private final Ingredient input;
-    private final int weight;
+    //private final int weight;
     private final ItemStack output;
 
     public MiningLensRecipe(ResourceLocation id, Ingredient input, int weight, ItemStack output) {
         super(weight);
         this.input = input;
-        this.weight = weight;
+        //this.weight = weight;
         this.output = output;
         this.id = id;
     }
@@ -65,7 +65,7 @@ public class MiningLensRecipe extends WeightedRandom.Item implements IRecipe<IIn
 
     @Override
     public ItemStack getResultItem() {
-        return output.copy();
+        return output;
     }
 
     @Override
