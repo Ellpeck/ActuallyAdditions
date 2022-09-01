@@ -23,8 +23,10 @@ import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -54,6 +56,14 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     public static void shootLaser(IAtomicReconstructor tile, World world, double startX, double startY, double startZ, double endX, double endY, double endZ, Lens currentLens) {
         world.playSound(null, startX, startY, startZ, AASounds.RECONSTRUCTOR.get(), SoundCategory.BLOCKS, 0.35F, 1.0F);
         AssetUtil.spawnLaserWithTimeServer(world, startX, startY, startZ, endX, endY, endZ, currentLens.getColor(), 25, 0, 0.2F, 0.8F);
+    }
+
+    @Override
+    public AxisAlignedBB getRenderBoundingBox() {
+        if (getProgress() > 0.0f)
+            return new AxisAlignedBB(getPosition(), getPosition().offset(1,1,1).relative(getBlockState().getValue(BlockStateProperties.FACING), 11));
+        else
+            return super.getRenderBoundingBox();
     }
 
     @Override

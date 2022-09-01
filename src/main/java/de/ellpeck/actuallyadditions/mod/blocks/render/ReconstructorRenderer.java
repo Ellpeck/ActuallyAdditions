@@ -78,4 +78,9 @@ public class ReconstructorRenderer extends TileEntityRenderer<TileEntityAtomicRe
 
         matrices.popPose();
     }
+
+    @Override
+    public boolean shouldRenderOffScreen(TileEntityAtomicReconstructor tile) {
+        return tile.getProgress() > 0.0f;
+    }
 }
