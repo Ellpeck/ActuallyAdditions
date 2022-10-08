@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import de.ellpeck.actuallyadditions.api.lens.ILensItem;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.FullyDirectionalBlock;
 import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
@@ -19,9 +20,11 @@ import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.Lang;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -43,7 +46,10 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.List;
+import java.util.Random;
 
 public class BlockAtomicReconstructor extends FullyDirectionalBlock.Container implements IHudDisplay {
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
@@ -122,32 +128,38 @@ public class BlockAtomicReconstructor extends FullyDirectionalBlock.Container im
         }
     }
 
-    //    public static class TheItemBlock extends ItemBlockBase {
-    //
-    //        private long lastSysTime;
-    //        private int toPick1;
-    //        private int toPick2;
-    //
-    //        public TheItemBlock(Block block) {
-    //            super(block, new Item.Properties().group(ActuallyAdditions.GROUP).setNoRepair());
-    //        }
-    //
-    //        @Override
-    //        public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-    //            long sysTime = System.currentTimeMillis();
-    //
-    //            if (this.lastSysTime + 3000 < sysTime) {
-    //                this.lastSysTime = sysTime;
-    //                if (Minecraft.getInstance().world != null) {
-    //                    this.toPick1 = Minecraft.getInstance().world.rand.nextInt(NAME_FLAVOR_AMOUNTS_1) + 1;
-    //                    this.toPick2 = Minecraft.getInstance().world.rand.nextInt(NAME_FLAVOR_AMOUNTS_2) + 1;
-    //                }
-    //            }
-    //
-    //            String base = "tile." + ActuallyAdditions.MODID + "." + ((BlockAtomicReconstructor) this.block).getBaseName() + ".info.";
-    //            tooltip.add(StringUtil.localize(base + "1." + this.toPick1) + " " + StringUtil.localize(base + "2." + this.toPick2));
-    //        }
-    //    }
+    public static class TheItemBlock extends AABlockItem {
+
+        private long lastSysTime;
+        private int toPick1;
+        private int toPick2;
+        private final Block block;
+
+        public TheItemBlock(Block blockIn) {
+            super(blockIn, ActuallyBlocks.defaultBlockItemProperties);
+            block = blockIn;
+        }
+
+        @OnlyIn(Dist.CLIENT)
+        @Override
+        public void appendHoverText(@Nonnull ItemStack pStack, @Nullable World pLevel, @Nonnull List<ITextComponent> pTooltip, @Nonnull ITooltipFlag pFlag) {
+            super.appendHoverText(pStack, pLevel, pTooltip, pFlag);
+
+            long sysTime = System.currentTimeMillis();
+
+            if (this.lastSysTime + 3000 < sysTime) {
+                this.lastSysTime = sysTime;
+                if (Minecraft.getInstance().level != null) {
+                    Random random = Minecraft.getInstance().level.random;
+                    this.toPick1 = random.nextInt(NAME_FLAVOR_AMOUNTS_1) + 1;
+                    this.toPick2 = random.nextInt(NAME_FLAVOR_AMOUNTS_2) + 1;
+                }
+            }
+
+            String base = block.getDescriptionId() + ".info.";
+            pTooltip.add(new TranslationTextComponent(base + "1." + this.toPick1).append(" ").append(new TranslationTextComponent(base + "2." + this.toPick2)).withStyle(s -> s.withColor(TextFormatting.GRAY)));
+        }
+    }
 
     @Override
     public boolean hasAnalogOutputSignal(BlockState state) {

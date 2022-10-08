@@ -33,7 +33,7 @@ public final class ActuallyBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, ActuallyAdditions.MODID);
     public static final DeferredRegister<TileEntityType<?>> TILES = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, ActuallyAdditions.MODID);
 
-    private static final Item.Properties defaultBlockItemProperties = new Item.Properties().tab(ActuallyAdditions.GROUP).stacksTo(64);
+    public static final Item.Properties defaultBlockItemProperties = new Item.Properties().tab(ActuallyAdditions.GROUP).stacksTo(64);
 
     public static final AbstractBlock.Properties miscBlockProperties = AbstractBlock.Properties.of(Material.STONE).harvestLevel(1).harvestTool(ToolType.PICKAXE).strength(1.5f, 10f);
 
@@ -99,7 +99,7 @@ public final class ActuallyBlocks {
         (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityVerticalDigger::new);
 
     public static final AABlockReg<BlockAtomicReconstructor, AABlockItem, TileEntityAtomicReconstructor> ATOMIC_RECONSTRUCTOR = new AABlockReg<>("atomic_reconstructor", BlockAtomicReconstructor::new,
-        (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityAtomicReconstructor::new);
+            BlockAtomicReconstructor.TheItemBlock::new, TileEntityAtomicReconstructor::new);
     public static final AABlockReg<BlockRangedCollector, AABlockItem, TileEntityRangedCollector> RANGED_COLLECTOR = new AABlockReg<>("ranged_collector", BlockRangedCollector::new,
         (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityRangedCollector::new);
     public static final AABlockReg<BlockLongRangeBreaker, AABlockItem, TileEntityLongRangeBreaker> LONG_RANGE_BREAKER = new AABlockReg<>("long_range_breaker", BlockLongRangeBreaker::new,
