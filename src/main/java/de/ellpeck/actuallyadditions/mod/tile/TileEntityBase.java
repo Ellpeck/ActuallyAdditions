@@ -147,7 +147,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickableTile
             this.stopFromDropping = compound.getBoolean("StopDrop");
         }
 
-        if (this.isRedstoneToggle()) {
+        if (this.isRedstoneToggle() && compound.contains("IsPulseMode")) {
             this.isPulseMode = compound.getBoolean("IsPulseMode");
         }
     }

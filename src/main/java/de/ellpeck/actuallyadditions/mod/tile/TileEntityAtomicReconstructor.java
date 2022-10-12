@@ -121,7 +121,8 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
             this.currentTime = compound.getInt("CurrentTime");
             this.counter = compound.getInt("Counter");
         }
-        this.storage.readFromNBT(compound);
+        if (compound.contains("Energy"))
+            this.storage.readFromNBT(compound);
     }
 
     @Override

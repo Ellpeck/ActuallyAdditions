@@ -17,6 +17,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.loot.*;
 import net.minecraft.loot.conditions.BlockStateProperty;
+import net.minecraft.loot.functions.CopyName;
+import net.minecraft.loot.functions.CopyNbt;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.RegistryObject;
 
@@ -59,7 +61,15 @@ public class LootTableGenerator extends LootTableProvider {
             this.dropSelf(ActuallyBlocks.ITEM_INTERFACE.get());
             this.dropSelf(ActuallyBlocks.FIREWORK_BOX.get());
             this.dropSelf(ActuallyBlocks.VERTICAL_DIGGER.get());
-            this.dropSelf(ActuallyBlocks.ATOMIC_RECONSTRUCTOR.get());
+
+            //this.dropSelf(ActuallyBlocks.ATOMIC_RECONSTRUCTOR.get());
+
+            this.add(ActuallyBlocks.ATOMIC_RECONSTRUCTOR.get(), LootTable.lootTable()
+                    .withPool(applyExplosionCondition(ActuallyBlocks.ATOMIC_RECONSTRUCTOR.get(), LootPool.lootPool().setRolls(ConstantRange.exactly(1)))
+                            .add(ItemLootEntry.lootTableItem(ActuallyBlocks.ATOMIC_RECONSTRUCTOR.get())
+                                    .apply(CopyName.copyName(CopyName.Source.BLOCK_ENTITY)).apply(CopyNbt.copyData(CopyNbt.Source.BLOCK_ENTITY).copy("Energy", "BlockEntityTag.Energy"))
+                                    .apply(CopyNbt.copyData(CopyNbt.Source.BLOCK_ENTITY).copy("IsPulseMode", "BlockEntityTag.IsPulseMode")))));
+
             this.dropSelf(ActuallyBlocks.ENERGIZER.get());
             this.dropSelf(ActuallyBlocks.ENERVATOR.get());
             this.dropSelf(ActuallyBlocks.LAVA_FACTORY_CONTROLLER.get());

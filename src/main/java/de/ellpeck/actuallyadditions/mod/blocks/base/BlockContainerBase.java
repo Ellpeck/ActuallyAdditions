@@ -193,6 +193,7 @@ public abstract class BlockContainerBase extends Block {
 
     @Override
     public void playerWillDestroy(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull BlockState state, PlayerEntity player) {
+        super.playerWillDestroy(world, pos, state, player);
         if (!player.isCreative()) {
             TileEntity tile = world.getBlockEntity(pos);
             if (tile instanceof TileEntityBase && ((TileEntityBase) tile).stopFromDropping) {
@@ -255,11 +256,6 @@ public abstract class BlockContainerBase extends Block {
     //        }
     //    }
 
-
-    @Override
-    public boolean removedByPlayer(BlockState state, World world, BlockPos pos, PlayerEntity player, boolean willHarvest, FluidState fluid) {
-        return willHarvest || super.removedByPlayer(state, world, pos, player, false, fluid);
-    }
 
     // TODO: [port]: eval
 

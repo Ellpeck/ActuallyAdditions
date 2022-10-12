@@ -65,7 +65,7 @@ public class BlockAtomicReconstructor extends FullyDirectionalBlock.Container im
     public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
         ItemStack heldItem = player.getItemInHand(hand);
         if (this.tryToggleRedstone(world, pos, player)) {
-            return ActionResultType.PASS;
+            return ActionResultType.CONSUME;
         }
         if (!world.isClientSide) {
             TileEntityAtomicReconstructor reconstructor = (TileEntityAtomicReconstructor) world.getBlockEntity(pos);
@@ -158,6 +158,15 @@ public class BlockAtomicReconstructor extends FullyDirectionalBlock.Container im
 
             String base = block.getDescriptionId() + ".info.";
             pTooltip.add(new TranslationTextComponent(base + "1." + this.toPick1).append(" ").append(new TranslationTextComponent(base + "2." + this.toPick2)).withStyle(s -> s.withColor(TextFormatting.GRAY)));
+        }
+
+        @Override
+        protected boolean updateCustomBlockEntityTag(BlockPos pPos, World pLevel, @Nullable PlayerEntity pPlayer, ItemStack pStack, BlockState pState) {
+            boolean ret = super.updateCustomBlockEntityTag(pPos, pLevel, pPlayer, pStack, pState);
+
+
+
+            return ret;
         }
     }
 
