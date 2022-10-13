@@ -6,40 +6,40 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "function": "minecraft:copy_name",
-              "source": "block_entity"
-            },
-            {
-              "function": "minecraft:copy_nbt",
-              "source": "block_entity",
-              "ops": [
-                {
-                  "source": "Energy",
-                  "target": "BlockEntityTag.Energy",
-                  "op": "replace"
-                }
-              ]
-            },
-            {
-              "function": "minecraft:copy_nbt",
-              "source": "block_entity",
-              "ops": [
-                {
-                  "source": "IsPulseMode",
-                  "target": "BlockEntityTag.IsPulseMode",
-                  "op": "replace"
-                }
-              ]
-            }
-          ],
           "name": "actuallyadditions:atomic_reconstructor"
         }
       ],
       "conditions": [
         {
           "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "functions": [
+        {
+          "function": "minecraft:copy_name",
+          "source": "block_entity"
+        },
+        {
+          "function": "minecraft:copy_nbt",
+          "source": "block_entity",
+          "ops": [
+            {
+              "source": "Energy",
+              "target": "BlockEntityTag.Energy",
+              "op": "replace"
+            }
+          ]
+        },
+        {
+          "function": "minecraft:copy_nbt",
+          "source": "block_entity",
+          "ops": [
+            {
+              "source": "IsPulseMode",
+              "target": "BlockEntityTag.IsPulseMode",
+              "op": "replace"
+            }
+          ]
         }
       ]
     }

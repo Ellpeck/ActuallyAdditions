@@ -62,13 +62,10 @@ public class LootTableGenerator extends LootTableProvider {
             this.dropSelf(ActuallyBlocks.FIREWORK_BOX.get());
             this.dropSelf(ActuallyBlocks.VERTICAL_DIGGER.get());
 
-            //this.dropSelf(ActuallyBlocks.ATOMIC_RECONSTRUCTOR.get());
-
-            this.add(ActuallyBlocks.ATOMIC_RECONSTRUCTOR.get(), LootTable.lootTable()
-                    .withPool(applyExplosionCondition(ActuallyBlocks.ATOMIC_RECONSTRUCTOR.get(), LootPool.lootPool().setRolls(ConstantRange.exactly(1)))
-                            .add(ItemLootEntry.lootTableItem(ActuallyBlocks.ATOMIC_RECONSTRUCTOR.get())
-                                    .apply(CopyName.copyName(CopyName.Source.BLOCK_ENTITY)).apply(CopyNbt.copyData(CopyNbt.Source.BLOCK_ENTITY).copy("Energy", "BlockEntityTag.Energy"))
-                                    .apply(CopyNbt.copyData(CopyNbt.Source.BLOCK_ENTITY).copy("IsPulseMode", "BlockEntityTag.IsPulseMode")))));
+            dropNBT(ActuallyBlocks.ATOMIC_RECONSTRUCTOR, a ->
+            a.apply(CopyNbt.copyData(CopyNbt.Source.BLOCK_ENTITY).copy("Energy", "BlockEntityTag.Energy"))
+            .apply(CopyNbt.copyData(CopyNbt.Source.BLOCK_ENTITY).copy("IsPulseMode", "BlockEntityTag.IsPulseMode"))
+            );
 
             this.dropSelf(ActuallyBlocks.ENERGIZER.get());
             this.dropSelf(ActuallyBlocks.ENERVATOR.get());
@@ -200,6 +197,15 @@ public class LootTableGenerator extends LootTableProvider {
             add(block.get(), createCropDrops(block.get(), item.get(), seed.get(),
                 BlockStateProperty.hasBlockStateProperties(block.get()).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CropsBlock.AGE, 7))));
 
+        }
+
+        private void dropNBT(Supplier<Block> blockSupplier, Consumer<LootPool.Builder> lootFunctionProvider) {
+            LootPool.Builder lootpool = LootPool.lootPool().setRolls(ConstantRange.exactly(1)).add(ItemLootEntry.lootTableItem(blockSupplier.get()));
+            lootpool.apply(CopyName.copyName(CopyName.Source.BLOCK_ENTITY));
+
+            lootFunctionProvider.accept(lootpool);
+
+            add(blockSupplier.get(), LootTable.lootTable().withPool(applyExplosionCondition(ActuallyBlocks.ATOMIC_RECONSTRUCTOR.get(), lootpool)));
         }
 
 /*        // This isn't quite right :cry: fortune doesn't change it
