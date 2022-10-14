@@ -67,10 +67,10 @@ public final class ActuallyBlocks {
         (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityFermentingBarrel::new);
 
     public static final AABlockReg<BlockOilGenerator, AABlockItem, TileEntityOilGenerator> OIL_GENERATOR = new AABlockReg<>("oil_generator", BlockOilGenerator::new,
-        (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityOilGenerator::new);
+        (b) -> new AABlockItem.BlockEntityEnergyItem(b, defaultBlockItemProperties), TileEntityOilGenerator::new);
 
     public static final AABlockReg<BlockCoalGenerator, AABlockItem, TileEntityCoalGenerator> COAL_GENERATOR = new AABlockReg<>("coal_generator", BlockCoalGenerator::new,
-        (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityCoalGenerator::new);
+        (b) -> new AABlockItem.BlockEntityEnergyItem(b, defaultBlockItemProperties), TileEntityCoalGenerator::new);
 
     public static final AABlockReg<BlockLeafGenerator, AABlockItem, TileEntityLeafGenerator> LEAF_GENERATOR = new AABlockReg<>("leaf_generator", BlockLeafGenerator::new,
         (b) -> new AABlockItem(b, defaultBlockItemProperties) , TileEntityLeafGenerator::new);
@@ -155,7 +155,7 @@ public final class ActuallyBlocks {
     public static final AABlockReg<BlockDisplayStand, AABlockItem, TileEntityEmpowerer> EMPOWERER = new AABlockReg<>("empowerer", () -> new BlockDisplayStand(true),
         (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityEmpowerer::new);
     public static final AABlockReg<BlockDisplayStand, AABlockItem, TileEntityDisplayStand> DISPLAY_STAND = new AABlockReg<>("display_stand", () -> new BlockDisplayStand(false),
-        (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityDisplayStand::new);
+        (b) -> new AABlockItem.BlockEntityEnergyItem(b, defaultBlockItemProperties), TileEntityDisplayStand::new);
 
     // Interface Blocks
     public static final AABlockReg<BlockPlayerInterface, AABlockItem, TileEntityPlayerInterface> PLAYER_INTERFACE = new AABlockReg<>("player_interface", BlockPlayerInterface::new,

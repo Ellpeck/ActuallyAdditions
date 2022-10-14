@@ -29,6 +29,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
@@ -39,6 +40,7 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
@@ -48,6 +50,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.text.NumberFormat;
 import java.util.List;
 import java.util.Random;
 
@@ -158,6 +161,21 @@ public class BlockAtomicReconstructor extends FullyDirectionalBlock.Container im
 
             String base = block.getDescriptionId() + ".info.";
             pTooltip.add(new TranslationTextComponent(base + "1." + this.toPick1).append(" ").append(new TranslationTextComponent(base + "2." + this.toPick2)).withStyle(s -> s.withColor(TextFormatting.GRAY)));
+
+            if (pStack.hasTag() && pStack.getTag().contains("BlockEntityTag")) {
+                CompoundNBT BET = pStack.getTag().getCompound("BlockEntityTag");
+                int energy = 0;
+                if (BET.contains("Energy")) {
+                    energy = BET.getInt("Energy");
+                }
+                NumberFormat format = NumberFormat.getInstance();
+                pTooltip.add(new TranslationTextComponent("misc.actuallyadditions.power_single", format.format(energy)));
+
+                if (BET.contains("IsPulseMode")) {
+                    pTooltip.add(new TranslationTextComponent("info.actuallyadditions.redstoneMode").append(": ")
+                            .append(new TranslationTextComponent(BET.getBoolean("IsPulseMode")?"info.actuallyadditions.redstoneMode.pulse":"info.actuallyadditions.redstoneMode.deactivation").withStyle($ -> $.withColor(TextFormatting.RED))));
+                }
+            }
         }
 
         @Override

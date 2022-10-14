@@ -49,6 +49,15 @@ public class LootTableGenerator extends LootTableProvider {
     public static class Blocks extends BlockLootTables {
         @Override
         protected void addTables() {
+            CopyNbt.Builder copyEnergy = CopyNbt.copyData(CopyNbt.Source.BLOCK_ENTITY).copy("Energy", "BlockEntityTag.Energy");
+            CopyNbt.Builder copyPulseMode = CopyNbt.copyData(CopyNbt.Source.BLOCK_ENTITY).copy("IsPulseMode", "BlockEntityTag.IsPulseMode");
+
+            //Special Drops
+            dropNBT(ActuallyBlocks.ATOMIC_RECONSTRUCTOR, $ -> $.apply(copyEnergy).apply(copyPulseMode));
+            dropKeepEnergy(ActuallyBlocks.DISPLAY_STAND);
+            dropKeepEnergy(ActuallyBlocks.COAL_GENERATOR);
+            dropKeepEnergy(ActuallyBlocks.OIL_GENERATOR);
+
             this.dropSelf(ActuallyBlocks.BATTERY_BOX.get());
             this.dropSelf(ActuallyBlocks.ITEM_INTERFACE_HOPPING.get());
             this.dropSelf(ActuallyBlocks.FARMER.get());
@@ -56,17 +65,10 @@ public class LootTableGenerator extends LootTableProvider {
             this.dropSelf(ActuallyBlocks.EMPOWERER.get());
             this.dropSelf(ActuallyBlocks.TINY_TORCH.get());
             this.dropSelf(ActuallyBlocks.SHOCK_SUPPRESSOR.get());
-            this.dropSelf(ActuallyBlocks.DISPLAY_STAND.get());
             this.dropSelf(ActuallyBlocks.PLAYER_INTERFACE.get());
             this.dropSelf(ActuallyBlocks.ITEM_INTERFACE.get());
             this.dropSelf(ActuallyBlocks.FIREWORK_BOX.get());
             this.dropSelf(ActuallyBlocks.VERTICAL_DIGGER.get());
-
-            dropNBT(ActuallyBlocks.ATOMIC_RECONSTRUCTOR, a ->
-            a.apply(CopyNbt.copyData(CopyNbt.Source.BLOCK_ENTITY).copy("Energy", "BlockEntityTag.Energy"))
-            .apply(CopyNbt.copyData(CopyNbt.Source.BLOCK_ENTITY).copy("IsPulseMode", "BlockEntityTag.IsPulseMode"))
-            );
-
             this.dropSelf(ActuallyBlocks.ENERGIZER.get());
             this.dropSelf(ActuallyBlocks.ENERVATOR.get());
             this.dropSelf(ActuallyBlocks.LAVA_FACTORY_CONTROLLER.get());
@@ -77,8 +79,6 @@ public class LootTableGenerator extends LootTableProvider {
             this.dropSelf(ActuallyBlocks.PHANTOM_ENERGYFACE.get());
             this.dropSelf(ActuallyBlocks.PHANTOM_REDSTONEFACE.get());
             this.dropSelf(ActuallyBlocks.PHANTOM_BREAKER.get());
-            this.dropSelf(ActuallyBlocks.COAL_GENERATOR.get());
-            this.dropSelf(ActuallyBlocks.OIL_GENERATOR.get());
             this.dropSelf(ActuallyBlocks.FERMENTING_BARREL.get());
             this.dropSelf(ActuallyBlocks.FEEDER.get());
             this.dropSelf(ActuallyBlocks.CRUSHER.get());
@@ -201,11 +201,13 @@ public class LootTableGenerator extends LootTableProvider {
 
         private void dropNBT(Supplier<Block> blockSupplier, Consumer<LootPool.Builder> lootFunctionProvider) {
             LootPool.Builder lootpool = LootPool.lootPool().setRolls(ConstantRange.exactly(1)).add(ItemLootEntry.lootTableItem(blockSupplier.get()));
-            lootpool.apply(CopyName.copyName(CopyName.Source.BLOCK_ENTITY));
 
             lootFunctionProvider.accept(lootpool);
 
             add(blockSupplier.get(), LootTable.lootTable().withPool(applyExplosionCondition(ActuallyBlocks.ATOMIC_RECONSTRUCTOR.get(), lootpool)));
+        }
+        private void dropKeepEnergy(Supplier<Block> blockSupplier) {
+            dropNBT(blockSupplier, $ -> $.apply(CopyNbt.copyData(CopyNbt.Source.BLOCK_ENTITY).copy("Energy", "BlockEntityTag.Energy")));
         }
 
 /*        // This isn't quite right :cry: fortune doesn't change it
