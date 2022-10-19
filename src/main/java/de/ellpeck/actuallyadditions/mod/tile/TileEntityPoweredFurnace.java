@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.crafting.SingleItem;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFurnaceDouble;
@@ -24,8 +25,10 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.AbstractCookingRecipe;
+import net.minecraft.item.crafting.FurnaceRecipe;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -67,11 +70,11 @@ public class TileEntityPoweredFurnace extends TileEntityInventoryBase implements
         ItemStack first = inv.getStackInSlot(slot1);
         ItemStack second = inv.getStackInSlot(slot2);
 
-        if (StackUtil.isValid(first) || StackUtil.isValid(second)) {
+        if (!first.isEmpty() || !second.isEmpty()) {
             ItemStack toSplit = ItemStack.EMPTY;
-            if (!StackUtil.isValid(first) && StackUtil.isValid(second) && second.getCount() > 1) {
+            if (first.isEmpty() && !second.isEmpty() && second.getCount() > 1) {
                 toSplit = second;
-            } else if (!StackUtil.isValid(second) && StackUtil.isValid(first) && first.getCount() > 1) {
+            } else if (second.isEmpty() && !first.isEmpty() && first.getCount() > 1) {
                 toSplit = first;
             } else if (ItemUtil.canBeStacked(first, second)) {
                 if (first.getCount() < first.getMaxStackSize() || second.getCount() < second.getMaxStackSize()) {
@@ -82,7 +85,7 @@ public class TileEntityPoweredFurnace extends TileEntityInventoryBase implements
                 }
             }
 
-            if (StackUtil.isValid(toSplit)) {
+            if (!toSplit.isEmpty()) {
                 ItemStack splitFirst = toSplit.copy();
                 ItemStack secondSplit = splitFirst.split(splitFirst.getCount() / 2);
                 inv.setStackInSlot(slot1, splitFirst);
@@ -120,6 +123,7 @@ public class TileEntityPoweredFurnace extends TileEntityInventoryBase implements
             if (this.isAutoSplit) {
                 autoSplit(this.inv, SLOT_INPUT_1, SLOT_INPUT_2);
             }
+            //TODO all this logic needs redone someday
 
             boolean smelted = false;
 
@@ -190,6 +194,10 @@ public class TileEntityPoweredFurnace extends TileEntityInventoryBase implements
         return level.getServer().getRecipeManager().getRecipeFor(IRecipeType.SMELTING, new SingleItem(stack), level).map(AbstractCookingRecipe::getResultItem);
     }
 
+    public Optional<FurnaceRecipe> getRecipeForInput(ItemStack stack) {
+        return level.getServer().getRecipeManager().getRecipeFor(IRecipeType.SMELTING, new SingleItem(stack), level);
+    }
+
     @Override
     public IAcceptor getAcceptor() {
         return (slot, stack, automation) -> !automation || (slot == SLOT_INPUT_1 || slot == SLOT_INPUT_2) && validInput(stack);
@@ -204,10 +212,8 @@ public class TileEntityPoweredFurnace extends TileEntityInventoryBase implements
         ItemStack input = this.inv.getStackInSlot(theInput);
         ItemStack output = this.inv.getStackInSlot(theOutput);
         if (!input.isEmpty()) {
-            ItemStack outputStack = getOutputForInput(input).orElse(ItemStack.EMPTY);
-            if (!output.isEmpty()) {
-                return output.isEmpty() || output.sameItem(outputStack) && output.getCount() <= output.getMaxStackSize() - outputStack.getCount();
-            }
+            Optional<FurnaceRecipe> recipe = getRecipeForInput(input);
+            return recipe.map($ -> output.isEmpty() || output.sameItem($.getResultItem()) &&  output.getCount() <= output.getMaxStackSize() - $.getResultItem().getCount()).orElse(false);
         }
         return false;
     }

@@ -195,14 +195,6 @@ public class TileEntityCrusher extends TileEntityInventoryBase implements IButto
             ItemStack outputOne = recipe.getOutputOne();
             ItemStack outputTwo = recipe.getOutputTwo();
             if (StackUtil.isValid(outputOne)) {
-                /* //TODO
-                if (outputOne.getDamage() == Util.WILDCARD) {
-                    outputOne.setDamage(0);
-                }
-                if (StackUtil.isValid(outputTwo) && outputTwo.getDamage() == Util.WILDCARD) {
-                    outputTwo.setDamage(0);
-                }
-                 */
                 if ((!StackUtil.isValid(this.inv.getStackInSlot(theFirstOutput)) || this.inv.getStackInSlot(theFirstOutput).sameItem(outputOne) && this.inv.getStackInSlot(theFirstOutput).getCount() <= this.inv.getStackInSlot(theFirstOutput).getMaxStackSize() - outputOne.getCount()) && (!StackUtil.isValid(outputTwo) || !StackUtil.isValid(this.inv.getStackInSlot(theSecondOutput)) || this.inv.getStackInSlot(theSecondOutput).sameItem(outputTwo) && this.inv.getStackInSlot(theSecondOutput).getCount() <= this.inv.getStackInSlot(theSecondOutput).getMaxStackSize() - outputTwo.getCount())) {
                     return true;
                 }

@@ -8,7 +8,8 @@ public class SingleItem implements IInventory {
     private final ItemStack itemStack;
 
     public SingleItem(ItemStack itemStack) {
-        this.itemStack = itemStack;
+        this.itemStack = itemStack.copy();
+        this.itemStack.setCount(1);
     }
 
     @Override
