@@ -57,6 +57,9 @@ public class LootTableGenerator extends LootTableProvider {
             dropKeepEnergy(ActuallyBlocks.DISPLAY_STAND);
             dropKeepEnergy(ActuallyBlocks.COAL_GENERATOR);
             dropKeepEnergy(ActuallyBlocks.OIL_GENERATOR);
+            dropKeepEnergy(ActuallyBlocks.CRUSHER);
+            dropKeepEnergy(ActuallyBlocks.CRUSHER_DOUBLE);
+            dropKeepEnergy(ActuallyBlocks.POWERED_FURNACE);
 
             this.dropSelf(ActuallyBlocks.BATTERY_BOX.get());
             this.dropSelf(ActuallyBlocks.ITEM_INTERFACE_HOPPING.get());
@@ -81,9 +84,6 @@ public class LootTableGenerator extends LootTableProvider {
             this.dropSelf(ActuallyBlocks.PHANTOM_BREAKER.get());
             this.dropSelf(ActuallyBlocks.FERMENTING_BARREL.get());
             this.dropSelf(ActuallyBlocks.FEEDER.get());
-            this.dropSelf(ActuallyBlocks.CRUSHER.get());
-            this.dropSelf(ActuallyBlocks.CRUSHER_DOUBLE.get());
-            this.dropSelf(ActuallyBlocks.POWERED_FURNACE.get());
             this.dropSelf(ActuallyBlocks.HEAT_COLLECTOR.get());
             this.dropSelf(ActuallyBlocks.GREENHOUSE_GLASS.get());
             this.dropSelf(ActuallyBlocks.BREAKER.get());

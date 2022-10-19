@@ -46,9 +46,9 @@ public final class ActuallyBlocks {
     // Machines
     public static final AABlockReg<BlockFeeder, AABlockItem, TileEntityFeeder> FEEDER = new AABlockReg<>("feeder", BlockFeeder::new, (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityFeeder::new);
     public static final AABlockReg<BlockCrusher, AABlockItem, TileEntityCrusher> CRUSHER = new AABlockReg<>("crusher", () -> new BlockCrusher(false),
-        (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityCrusher::new);
+        (b) -> new AABlockItem.BlockEntityEnergyItem(b, defaultBlockItemProperties), TileEntityCrusher::new);
     public static final AABlockReg<BlockCrusher, AABlockItem, TileEntityCrusher> CRUSHER_DOUBLE = new AABlockReg<>("crusher_double", () -> new BlockCrusher(false),
-        (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityCrusherDouble::new);
+        (b) -> new AABlockItem.BlockEntityEnergyItem(b, defaultBlockItemProperties), TileEntityCrusherDouble::new);
 
     public static final AABlockReg<BlockEnergizer, AABlockItem, TileEntityEnergizer> ENERGIZER = new AABlockReg<>("energizer", () -> new BlockEnergizer(true),
         (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityEnergizer::new);
@@ -108,7 +108,7 @@ public final class ActuallyBlocks {
     public static final AABlockReg<BlockCoffeeMachine, AABlockItem, TileEntityCoffeeMachine> COFFEE_MACHINE = new AABlockReg<>("coffee_machine", BlockCoffeeMachine::new,
         (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityCoffeeMachine::new);
     public static final AABlockReg<BlockPoweredFurnace, AABlockItem, TileEntityPoweredFurnace> POWERED_FURNACE = new AABlockReg<>("powered_furnace", BlockPoweredFurnace::new,
-        (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityPoweredFurnace::new);
+        (b) -> new AABlockItem.BlockEntityEnergyItem(b, defaultBlockItemProperties), TileEntityPoweredFurnace::new);
 
 
     // Crystal Blocks

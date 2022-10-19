@@ -83,7 +83,7 @@ public class BlockCrusher extends BlockContainerBase {
 
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
-        return defaultBlockState().setValue(HORIZONTAL_FACING, context.getNearestLookingDirection().getOpposite()).setValue(LIT, false);
+        return defaultBlockState().setValue(HORIZONTAL_FACING, context.getHorizontalDirection().getOpposite()).setValue(LIT, false);
     }
 
     @Override
