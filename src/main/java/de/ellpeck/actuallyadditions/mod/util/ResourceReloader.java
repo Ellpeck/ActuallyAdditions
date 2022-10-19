@@ -44,5 +44,8 @@ public class ResourceReloader implements IResourceManagerReloadListener {
 
         ActuallyAdditionsAPI.MINING_LENS_RECIPES.clear();
         ActuallyAdditionsAPI.MINING_LENS_RECIPES.addAll(recipeManager.getAllRecipesFor(ActuallyRecipes.Types.MINING_LENS));
+
+        ActuallyAdditionsAPI.CRUSHER_RECIPES.clear();
+        ActuallyAdditionsAPI.CRUSHER_RECIPES.addAll(recipeManager.getAllRecipesFor(ActuallyRecipes.Types.CRUSHING));
     }
 }

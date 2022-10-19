@@ -121,14 +121,18 @@ public class CrushingRecipe implements IRecipe<IInventory> {
             if (resultList.size() < 1)
                 throw new IllegalStateException(pRecipeId.toString() + ": Recipe must contain at least 1 result item");
 
-            ItemStack output1 = new ItemStack(JSONUtils.getAsItem(resultList.get(0).getAsJsonObject(), "item"));
-            float chance1 = JSONUtils.getAsFloat(resultList.get(0).getAsJsonObject(), "chance");
+            JsonObject result1 = resultList.get(0).getAsJsonObject();
+            int count1 = JSONUtils.getAsInt(result1, "count", 0);
+            ItemStack output1 = new ItemStack(JSONUtils.getAsItem(result1, "item"), count1);
+            float chance1 = JSONUtils.getAsFloat(result1, "chance");
 
             ItemStack output2 = ItemStack.EMPTY;
             float chance2 = 1.0f;
             if (resultList.size() > 1) {
-                output2 = new ItemStack(JSONUtils.getAsItem(resultList.get(1).getAsJsonObject(), "item"));
-                chance2 = JSONUtils.getAsFloat(resultList.get(1).getAsJsonObject(), "chance");
+                JsonObject result2 = resultList.get(1).getAsJsonObject();
+                int count2 = JSONUtils.getAsInt(result2, "count", 0);
+                output2 = new ItemStack(JSONUtils.getAsItem(result2, "item"), count2);
+                chance2 = JSONUtils.getAsFloat(result2, "chance");
             }
 
             return new CrushingRecipe(pRecipeId, ingredient, output1, chance1, output2, chance2);
@@ -182,10 +186,12 @@ public class CrushingRecipe implements IRecipe<IInventory> {
 
             JsonObject result1 = new JsonObject();
             result1.addProperty("item", outputOne.asItem().getRegistryName().toString());
+            result1.addProperty("count", countOne);
             result1.addProperty("chance", outputChance1);
 
             JsonObject result2 = new JsonObject();
             result2.addProperty("item", outputTwo.asItem().getRegistryName().toString());
+            result2.addProperty("count", countTwo);
             result2.addProperty("chance", outputChance2);
 
             JsonArray resultList = new JsonArray();

@@ -6,10 +6,12 @@
   "result": [
     {
       "item": "minecraft:bone_meal",
+      "count": 6,
       "chance": 1.0
     },
     {
       "item": "minecraft:air",
+      "count": 0,
       "chance": 0.0
     }
   ]

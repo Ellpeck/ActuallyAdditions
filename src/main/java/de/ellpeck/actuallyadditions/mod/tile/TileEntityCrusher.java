@@ -10,7 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.mod.AASounds;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.crafting.CrushingRecipe;
 import de.ellpeck.actuallyadditions.mod.inventory.CrusherContainer;
@@ -37,6 +39,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 
 import javax.annotation.Nullable;
+import java.util.Optional;
 
 public class TileEntityCrusher extends TileEntityInventoryBase implements IButtonReactor, INamedContainerProvider {
 
@@ -186,18 +189,21 @@ public class TileEntityCrusher extends TileEntityInventoryBase implements IButto
         return (slot, automation) -> !automation || slot == SLOT_OUTPUT_1_1 || slot == SLOT_OUTPUT_1_2 || slot == SLOT_OUTPUT_2_1 || slot == SLOT_OUTPUT_2_2;
     }
 
+    public static Optional<CrushingRecipe> getRecipeForInput(ItemStack itemStack) {
+        return ActuallyAdditionsAPI.CRUSHER_RECIPES.stream().filter($ -> $.matches(itemStack)).findFirst();
+    }
     public boolean canCrushOn(int theInput, int theFirstOutput, int theSecondOutput) {
-        if (StackUtil.isValid(this.inv.getStackInSlot(theInput))) {
-            CrushingRecipe recipe = null;//CrusherRecipeRegistry.getRecipeFromInput(this.inv.getStackInSlot(theInput)); //TODO
-            if (recipe == null) {
+        ItemStack inputStack = this.inv.getStackInSlot(theInput);
+        if (!inputStack.isEmpty()) {
+            Optional<CrushingRecipe> recipeOpt = getRecipeForInput(inputStack);
+            if (!recipeOpt.isPresent()) {
                 return false;
             }
+            CrushingRecipe recipe = recipeOpt.get();
             ItemStack outputOne = recipe.getOutputOne();
             ItemStack outputTwo = recipe.getOutputTwo();
-            if (StackUtil.isValid(outputOne)) {
-                if ((!StackUtil.isValid(this.inv.getStackInSlot(theFirstOutput)) || this.inv.getStackInSlot(theFirstOutput).sameItem(outputOne) && this.inv.getStackInSlot(theFirstOutput).getCount() <= this.inv.getStackInSlot(theFirstOutput).getMaxStackSize() - outputOne.getCount()) && (!StackUtil.isValid(outputTwo) || !StackUtil.isValid(this.inv.getStackInSlot(theSecondOutput)) || this.inv.getStackInSlot(theSecondOutput).sameItem(outputTwo) && this.inv.getStackInSlot(theSecondOutput).getCount() <= this.inv.getStackInSlot(theSecondOutput).getMaxStackSize() - outputTwo.getCount())) {
-                    return true;
-                }
+            if (!outputOne.isEmpty()) {
+                return (this.inv.getStackInSlot(theFirstOutput).isEmpty() || this.inv.getStackInSlot(theFirstOutput).sameItem(outputOne) && this.inv.getStackInSlot(theFirstOutput).getCount() <= this.inv.getStackInSlot(theFirstOutput).getMaxStackSize() - outputOne.getCount()) && (outputTwo.isEmpty() || this.inv.getStackInSlot(theSecondOutput).isEmpty() || this.inv.getStackInSlot(theSecondOutput).sameItem(outputTwo) && this.inv.getStackInSlot(theSecondOutput).getCount() <= this.inv.getStackInSlot(theSecondOutput).getMaxStackSize() - outputTwo.getCount());
             }
         }
         return false;
@@ -210,18 +216,15 @@ public class TileEntityCrusher extends TileEntityInventoryBase implements IButto
     }
 
     public void finishCrushing(int theInput, int theFirstOutput, int theSecondOutput) {
-        CrushingRecipe recipe = CrusherRecipeRegistry.getRecipeFromInput(this.inv.getStackInSlot(theInput));//TODO
-        if (recipe == null) {
+        Optional<CrushingRecipe> recipeOpt = getRecipeForInput(this.inv.getStackInSlot(theInput));
+        if (!recipeOpt.isPresent()) {
             return;
         }
+        CrushingRecipe recipe = recipeOpt.get();
+
         ItemStack outputOne = recipe.getOutputOne();
-        if (StackUtil.isValid(outputOne)) {
-            /* //TODO
-            if (outputOne.getDamage() == Util.WILDCARD) {
-                outputOne.setDamage(0);
-            }
-            */
-            if (!StackUtil.isValid(this.inv.getStackInSlot(theFirstOutput))) {
+        if (!outputOne.isEmpty()) {
+            if (this.inv.getStackInSlot(theFirstOutput).isEmpty()) {
                 this.inv.setStackInSlot(theFirstOutput, outputOne.copy());
             } else if (this.inv.getStackInSlot(theFirstOutput).getItem() == outputOne.getItem()) {
                 this.inv.setStackInSlot(theFirstOutput, StackUtil.grow(this.inv.getStackInSlot(theFirstOutput), outputOne.getCount()));
@@ -229,15 +232,10 @@ public class TileEntityCrusher extends TileEntityInventoryBase implements IButto
         }
 
         ItemStack outputTwo = recipe.getOutputTwo();
-        if (StackUtil.isValid(outputTwo)) {
-            /* //TODO
-            if (outputTwo.getDamage() == Util.WILDCARD) {
-                outputTwo.setDamage(0);
-            }
-             */
+        if (!outputTwo.isEmpty()) {
             float rand = this.level.random.nextFloat();
             if (rand <= recipe.getSecondChance()) {
-                if (!StackUtil.isValid(this.inv.getStackInSlot(theSecondOutput))) {
+                if (this.inv.getStackInSlot(theSecondOutput).isEmpty()) {
                     this.inv.setStackInSlot(theSecondOutput, outputTwo.copy());
                 } else if (this.inv.getStackInSlot(theSecondOutput).getItem() == outputTwo.getItem()) {
                     this.inv.setStackInSlot(theSecondOutput, StackUtil.grow(this.inv.getStackInSlot(theSecondOutput), outputTwo.getCount()));
