@@ -113,7 +113,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
 
         //Clearing NBT Storage
         Recipe.shapeless(ActuallyItems.LASER_WRENCH.get()).ingredients(ActuallyItems.LASER_WRENCH.get()).name(new ResourceLocation(ActuallyAdditions.MODID, "laser_wrench_nbt")).save(consumer);
-        Recipe.shapeless(ActuallyItems.PHANTOM_CONNECTOR.get()).ingredients(ActuallyItems.PHANTOM_CONNECTOR.get()).save(consumer);
+        Recipe.shapeless(ActuallyItems.PHANTOM_CONNECTOR.get()).ingredients(ActuallyItems.PHANTOM_CONNECTOR.get()).name(new ResourceLocation(ActuallyAdditions.MODID, "phantom_clearing")).save(consumer);
 
         //Disenchanting Lens
         Recipe.shapeless(ActuallyItems.LENS_OF_DISENCHANTING.get())
@@ -205,6 +205,14 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .define('P', Items.PISTON)
             .define('F', Items.FLINT)
             .define('C', ActuallyItems.ADVANCED_COIL.get()).save(consumer);
+
+        //Advanced Leaf Blower
+        Recipe.shaped(ActuallyItems.ADVANCED_LEAF_BLOWER.get()).pattern(" F", "DP", "DC")
+                .define('F', Items.FLINT)
+                .define('D', ActuallyItems.DIAMATINE_CRYSTAL.get())
+                .define('P', Items.PISTON)
+                .define('C', ActuallyItems.ADVANCED_COIL.get())
+                .save(consumer);
 
         //Drill //TODO the rest of the coloring recipes
         Recipe.shaped(ActuallyItems.DRILL_MAIN.get())
@@ -401,11 +409,15 @@ public class ItemRecipeGenerator extends RecipeProvider {
                 .define('O', ActuallyItems.RING.get())
                 .save(consumer);
 
+        //Growth Ring
+        Recipe.shaped(ActuallyItems.RING_OF_GROWTH.get())
+                .pattern("SIS", "IOI", "SIS")
+                .define('S', Tags.Items.SEEDS)
+                .define('I', ActuallyItems.EMPOWERED_ENORI_CRYSTAL.get())
+                .define('O', ActuallyItems.RING.get())
+                .save(consumer);
+
         Recipe.shapeless(ActuallyItems.CRAFTER_ON_A_STICK.get()).requires(Items.CRAFTING_TABLE).requires(ItemTags.SIGNS).save(consumer);
-
-
-
-
 
         ConditionalRecipe.builder()
                 .addCondition(new BoolConfigCondition("tinyCoalStuff"))
@@ -443,33 +455,32 @@ public class ItemRecipeGenerator extends RecipeProvider {
                 .requires(ActuallyItems.RICE.get())
                 .save(consumer);
 
+        //Cup
+        Recipe.shaped(ActuallyItems.EMPTY_CUP.get())
+                .pattern("S S", "SCS", "SSS")
+                .define('S', Tags.Items.STONE)
+                .define('C', ActuallyItems.COFFEE_BEANS.get())
+                .save(consumer);
 
+        //Phantom Connector
+        Recipe.shaped(ActuallyItems.PHANTOM_CONNECTOR.get())
+                .pattern("YE", "EY", "S ")
+                .define('Y', Items.ENDER_EYE)
+                .define('E', Tags.Items.ENDER_PEARLS)
+                .define('S', Tags.Items.RODS_WOODEN)
+                .save(consumer);
 
-        //        //Growth Ring
-        //        RecipeHandler.addOreDictRecipe(new ItemStack(InitItems.itemGrowthRing), "SIS", "IOI", "SIS", 'S', new ItemStack(Items.WHEAT_SEEDS), 'I', new ItemStack(InitItems.itemCrystalEmpowered, 1, TheCrystals.IRON.ordinal()), 'O', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.RING.ordinal()));
-        //        recipeGrowthRing = RecipeUtil.lastIRecipe();
-        //
-        //        //Cup
-        //        RecipeHandler.addOreDictRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.CUP.ordinal()), "S S", "SCS", "SSS", 'S', "stone", 'C', "cropCoffee");
-        //        recipeCup = RecipeUtil.lastIRecipe();
-        //        //Advanced Leaf Blower
-        //        RecipeHandler.addOreDictRecipe(new ItemStack(InitItems.itemLeafBlowerAdvanced), " F", "DP", "DC", 'F', new ItemStack(Items.FLINT), 'D', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.DIAMOND.ordinal()), 'P', new ItemStack(Blocks.PISTON), 'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()));
-        //        recipeLeafBlowerAdvanced = RecipeUtil.lastIRecipe();
-        //
-        //        //Phantom Connector
-        //        RecipeHandler.addOreDictRecipe(new ItemStack(InitItems.itemPhantomConnector), "YE", "EY", "S ", 'Y', Items.ENDER_EYE, 'E', Items.ENDER_PEARL, 'S', "stickWood");
-        //        recipePhantomConnector = RecipeUtil.lastIRecipe();
-        //
-        //        //Player Probe
-        //        RecipeHandler.addOreDictRecipe(new ItemStack(InitItems.itemPlayerProbe), "A A", "AIA", "RHR", 'A', new ItemStack(Blocks.IRON_BARS), 'R', new ItemStack(InitItems.itemCrystalEmpowered, 1, TheCrystals.REDSTONE.ordinal()), 'H', new ItemStack(Items.SKULL, 1, 1), 'I', new ItemStack(Items.IRON_HELMET));
-        //        recipePlayerProbe = RecipeUtil.lastIRecipe();
-        //
+        //Player Probe
+        Recipe.shaped(ActuallyItems.PLAYER_PROBE.get())
+                .pattern("A A", "AIA", "RHR")
+                .define('A', Items.IRON_BARS)
+                .define('R', ActuallyItems.EMPOWERED_RESTONIA_CRYSTAL.get())
+                .define('H', Items.WITHER_SKELETON_SKULL)
+                .define('I', Items.IRON_HELMET)
+                .save(consumer);
+
         //        //Quartz
         //        GameRegistry.addSmelting(new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ORE_QUARTZ.ordinal()), new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()), 1F);
-        //
-        //        //Knife
-        //        RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitItems.itemKnife), new ItemStack(InitItems.itemMisc, 1, TheMiscItems.KNIFE_BLADE.ordinal()), new ItemStack(InitItems.itemMisc, 1, TheMiscItems.KNIFE_HANDLE.ordinal()));
-        //        recipeKnife = RecipeUtil.lastIRecipe();
 
         //        //Ingots from Dusts
         //        GameRegistry.addSmelting(new ItemStack(InitItems.itemDust, 1, TheDusts.IRON.ordinal()), new ItemStack(Items.IRON_INGOT), 1F);

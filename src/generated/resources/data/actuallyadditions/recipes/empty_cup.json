@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "S S",
+    "SCS",
+    "SSS"
+  ],
+  "key": {
+    "S": {
+      "tag": "forge:stone"
+    },
+    "C": {
+      "item": "actuallyadditions:coffee_beans"
+    }
+  },
+  "result": {
+    "item": "actuallyadditions:empty_cup"
+  }
+}

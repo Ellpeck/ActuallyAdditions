@@ -1,10 +1,21 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {
-      "item": "actuallyadditions:phantom_connector"
-    }
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "YE",
+    "EY",
+    "S "
   ],
+  "key": {
+    "Y": {
+      "item": "minecraft:ender_eye"
+    },
+    "E": {
+      "tag": "forge:ender_pearls"
+    },
+    "S": {
+      "tag": "forge:rods/wooden"
+    }
+  },
   "result": {
     "item": "actuallyadditions:phantom_connector"
   }

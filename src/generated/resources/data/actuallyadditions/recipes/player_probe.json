@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "A A",
+    "AIA",
+    "RHR"
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:iron_bars"
+    },
+    "R": {
+      "item": "actuallyadditions:empowered_restonia_crystal"
+    },
+    "H": {
+      "item": "minecraft:wither_skeleton_skull"
+    },
+    "I": {
+      "item": "minecraft:iron_helmet"
+    }
+  },
+  "result": {
+    "item": "actuallyadditions:player_probe"
+  }
+}

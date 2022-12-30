@@ -10,9 +10,9 @@
 - [x] ESDs
 - [ ] Fishing nets
 - [ ] Solar panels
-- [ ] Item repairers
+- [X] Item repairers
 - [x] Knife (food can just be crafted normally)
-- [ ] Black lotuses and black dye
+- [X] Black lotuses and black dye
 - [ ] Chest to storage crate upgrade (makes little sense with the way they are being changed), keep the other ones though
 - [x] Ring of liquid banning
 - [x] Emerald and obsidian armor and tools
