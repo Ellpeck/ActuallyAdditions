@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "actuallyadditions:canola"
+    }
+  ],
+  "result": {
+    "item": "actuallyadditions:canola_seeds"
+  }
+}

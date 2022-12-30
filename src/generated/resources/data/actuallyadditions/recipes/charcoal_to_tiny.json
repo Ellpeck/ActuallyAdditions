@@ -1,0 +1,25 @@
+{
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "config_name": "tinyCoalStuff",
+          "type": "actuallyadditions:bool_config_condition"
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shapeless",
+        "ingredients": [
+          {
+            "item": "minecraft:charcoal"
+          }
+        ],
+        "result": {
+          "item": "actuallyadditions:tiny_charcoal",
+          "count": 8
+        }
+      }
+    }
+  ]
+}

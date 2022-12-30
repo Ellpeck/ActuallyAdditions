@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "RIB",
+    "IOI",
+    "BIR"
+  ],
+  "key": {
+    "R": {
+      "item": "actuallyadditions:restonia_crystal"
+    },
+    "I": {
+      "item": "actuallyadditions:enori_crystal"
+    },
+    "B": {
+      "item": "minecraft:lapis_lazuli"
+    },
+    "O": {
+      "item": "actuallyadditions:ring"
+    }
+  },
+  "result": {
+    "item": "actuallyadditions:ring_of_magnetizing"
+  }
+}

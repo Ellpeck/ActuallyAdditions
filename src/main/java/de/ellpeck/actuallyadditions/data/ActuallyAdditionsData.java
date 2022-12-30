@@ -1,7 +1,9 @@
 package de.ellpeck.actuallyadditions.data;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.config.conditions.BoolConfigCondition;
 import net.minecraft.data.DataGenerator;
+import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -12,6 +14,7 @@ public class ActuallyAdditionsData {
 
     @SubscribeEvent
     public static void runGenerator(GatherDataEvent event) {
+        CraftingHelper.register(BoolConfigCondition.Serializer.INSTANCE);
         DataGenerator generator = event.getGenerator();
         ExistingFileHelper helper = event.getExistingFileHelper();
 

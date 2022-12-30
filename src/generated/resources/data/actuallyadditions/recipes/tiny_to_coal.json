@@ -1,0 +1,29 @@
+{
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "config_name": "tinyCoalStuff",
+          "type": "actuallyadditions:bool_config_condition"
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shaped",
+        "pattern": [
+          "CCC",
+          "C C",
+          "CCC"
+        ],
+        "key": {
+          "C": {
+            "item": "actuallyadditions:tiny_coal"
+          }
+        },
+        "result": {
+          "item": "minecraft:coal"
+        }
+      }
+    }
+  ]
+}

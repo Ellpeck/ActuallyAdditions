@@ -3,6 +3,7 @@ package de.ellpeck.actuallyadditions.data;
 import com.google.gson.JsonObject;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
+import de.ellpeck.actuallyadditions.mod.config.conditions.BoolConfigCondition;
 import de.ellpeck.actuallyadditions.mod.crafting.ActuallyRecipes;
 import de.ellpeck.actuallyadditions.mod.crafting.TargetNBTIngredient;
 import de.ellpeck.actuallyadditions.mod.crafting.WrappedRecipe;
@@ -16,6 +17,7 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.crafting.ConditionalRecipe;
 import net.minecraftforge.common.crafting.NBTIngredient;
 import net.minecraftforge.fml.RegistryObject;
 
@@ -390,31 +392,66 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .define('C', ActuallyItems.ADVANCED_COIL.get())
             .save(WrappedRecipe.Inject(consumer, ActuallyRecipes.KEEP_DATA_SHAPED_RECIPE.get()));
 
+        //Magnet Ring
+        Recipe.shaped(ActuallyItems.RING_OF_MAGNETIZING.get())
+                .pattern("RIB", "IOI", "BIR")
+                .define('R', ActuallyItems.RESTONIA_CRYSTAL.get())
+                .define('I', ActuallyItems.ENORI_CRYSTAL.get())
+                .define('B', Items.LAPIS_LAZULI)
+                .define('O', ActuallyItems.RING.get())
+                .save(consumer);
+
+        Recipe.shapeless(ActuallyItems.CRAFTER_ON_A_STICK.get()).requires(Items.CRAFTING_TABLE).requires(ItemTags.SIGNS).save(consumer);
 
 
-        //
-        //        //Magnet Ring
-        //        RecipeHandler.addOreDictRecipe(new ItemStack(InitItems.itemMagnetRing), "RIB", "IOI", "BIR", 'R', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.REDSTONE.ordinal()), 'I', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal()), 'B', new ItemStack(Items.DYE, 1, 4), 'O', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.RING.ordinal()));
-        //        recipeMagnetRing = RecipeUtil.lastIRecipe();
-        //
+
+
+
+        ConditionalRecipe.builder()
+                .addCondition(new BoolConfigCondition("tinyCoalStuff"))
+                .addRecipe(
+                        Recipe.shapeless(ActuallyItems.TINY_COAL.get(), 8)
+                            .requires(Items.COAL)::save)
+                .generateAdvancement().build(consumer, new ResourceLocation(ActuallyAdditions.MODID, "coal_to_tiny"));
+        ConditionalRecipe.builder()
+                .addCondition(new BoolConfigCondition("tinyCoalStuff"))
+                .addRecipe(
+                        Recipe.shapeless(ActuallyItems.TINY_CHARCOAL.get(), 8)
+                                .requires(Items.CHARCOAL)::save)
+                .generateAdvancement().build(consumer, new ResourceLocation(ActuallyAdditions.MODID, "charcoal_to_tiny"));
+
+        ConditionalRecipe.builder()
+                .addCondition(new BoolConfigCondition("tinyCoalStuff"))
+                .addRecipe(
+                        Recipe.shaped(Items.COAL)
+                            .pattern("CCC", "C C", "CCC").define('C', ActuallyItems.TINY_COAL.get())::save)
+                .generateAdvancement().build(consumer, new ResourceLocation(ActuallyAdditions.MODID, "tiny_to_coal"));
+        ConditionalRecipe.builder()
+                .addCondition(new BoolConfigCondition("tinyCoalStuff"))
+                .addRecipe(
+                        Recipe.shaped(Items.CHARCOAL)
+                                .pattern("CCC", "C C", "CCC").define('C', ActuallyItems.TINY_CHARCOAL.get())::save)
+                .generateAdvancement().build(consumer, new ResourceLocation(ActuallyAdditions.MODID, "tiny_to_charcoal"));
+
+        //Canola Seeds
+        Recipe.shapeless(ActuallyItems.CANOLA_SEEDS.get())
+                .requires(ActuallyItems.CANOLA.get())
+                .save(consumer);
+
+        //Rice Seeds
+        Recipe.shapeless(ActuallyItems.RICE_SEEDS.get())
+                .requires(ActuallyItems.RICE.get())
+                .save(consumer);
+
+
+
         //        //Growth Ring
         //        RecipeHandler.addOreDictRecipe(new ItemStack(InitItems.itemGrowthRing), "SIS", "IOI", "SIS", 'S', new ItemStack(Items.WHEAT_SEEDS), 'I', new ItemStack(InitItems.itemCrystalEmpowered, 1, TheCrystals.IRON.ordinal()), 'O', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.RING.ordinal()));
         //        recipeGrowthRing = RecipeUtil.lastIRecipe();
         //
-        //        //Water Ring
-        //        RecipeHandler.addOreDictRecipe(new ItemStack(InitItems.itemWaterRemovalRing), "BIB", "IOI", "BIB", 'B', new ItemStack(Items.WATER_BUCKET), 'I', new ItemStack(InitItems.itemCrystalEmpowered, 1, TheCrystals.DIAMOND.ordinal()), 'O', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.RING.ordinal()));
-        //        recipeWaterRing = RecipeUtil.lastIRecipe();
-        //
-        //
         //        //Cup
         //        RecipeHandler.addOreDictRecipe(new ItemStack(InitItems.itemMisc, 1, TheMiscItems.CUP.ordinal()), "S S", "SCS", "SSS", 'S', "stone", 'C', "cropCoffee");
         //        recipeCup = RecipeUtil.lastIRecipe();
-        //
-        //        //Resonant Rice
-        //        if (!OreDictionary.getOres("nuggetEnderium", false).isEmpty()) {
-        //            RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitItems.itemResonantRice), new ItemStack(InitItems.itemFoods, 1, TheFoods.RICE.ordinal()), "nuggetEnderium", Items.GUNPOWDER);
-        //        }
-        //
         //        //Advanced Leaf Blower
         //        RecipeHandler.addOreDictRecipe(new ItemStack(InitItems.itemLeafBlowerAdvanced), " F", "DP", "DC", 'F', new ItemStack(Items.FLINT), 'D', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.DIAMOND.ordinal()), 'P', new ItemStack(Blocks.PISTON), 'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()));
         //        recipeLeafBlowerAdvanced = RecipeUtil.lastIRecipe();
@@ -433,29 +470,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
         //        //Knife
         //        RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitItems.itemKnife), new ItemStack(InitItems.itemMisc, 1, TheMiscItems.KNIFE_BLADE.ordinal()), new ItemStack(InitItems.itemMisc, 1, TheMiscItems.KNIFE_HANDLE.ordinal()));
         //        recipeKnife = RecipeUtil.lastIRecipe();
-        //
-        //        //Crafter on a Stick
-        //        RecipeHandler.addShapelessOreDictRecipe(new ItemStack(InitItems.itemCrafterOnAStick), new ItemStack(Blocks.CRAFTING_TABLE), new ItemStack(Items.SIGN));
-        //
-        //        //Tiny Coal
-        //        if (ConfigBoolValues.TINY_COAL_STUFF.isEnabled()) {
-        //            RecipeHandler.addShapelessRecipe(new ItemStack(InitItems.itemMisc, 8, TheMiscItems.TINY_COAL.ordinal()), new ItemStack(Items.COAL));
-        //            recipeTinyCoal = RecipeUtil.lastIRecipe();
-        //            RecipeHandler.addShapelessRecipe(new ItemStack(InitItems.itemMisc, 8, TheMiscItems.TINY_CHAR.ordinal()), new ItemStack(Items.COAL, 1, 1));
-        //            recipeTinyChar = RecipeUtil.lastIRecipe();
-        //            RecipeHandler.addOreDictRecipe(new ItemStack(Items.COAL), "CCC", "C C", "CCC", 'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.TINY_COAL.ordinal()));
-        //            RecipeHandler.addOreDictRecipe(new ItemStack(Items.COAL, 1, 1), "CCC", "C C", "CCC", 'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.TINY_CHAR.ordinal()));
-        //        }
-        //
-        //        //Rice Seeds
-        //        RecipeHandler.addShapelessRecipe(new ItemStack(InitItems.itemRiceSeed), new ItemStack(InitItems.itemFoods, 1, TheFoods.RICE.ordinal()));
-        //
-        //        //Canola Seeds
-        //        RecipeHandler.addShapelessRecipe(new ItemStack(InitItems.itemCanolaSeed), new ItemStack(InitItems.itemMisc, 1, TheMiscItems.CANOLA.ordinal()));
-        //
-        //        //Rings
-        //        initPotionRingRecipes();
-        //
+
         //        //Ingots from Dusts
         //        GameRegistry.addSmelting(new ItemStack(InitItems.itemDust, 1, TheDusts.IRON.ordinal()), new ItemStack(Items.IRON_INGOT), 1F);
         //        GameRegistry.addSmelting(new ItemStack(InitItems.itemDust, 1, TheDusts.GOLD.ordinal()), new ItemStack(Items.GOLD_INGOT), 1F);
