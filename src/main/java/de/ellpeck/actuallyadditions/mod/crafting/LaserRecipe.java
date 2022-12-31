@@ -47,6 +47,10 @@ public class LaserRecipe implements IRecipe<IInventory> {
         return itemIngredient.test(itemStack);
     }
 
+    public Ingredient getInput() {
+        return itemIngredient;
+    }
+
     //nah
     @Override
     public boolean matches(IInventory pInv, World pLevel) {

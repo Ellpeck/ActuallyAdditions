@@ -39,6 +39,7 @@ public class JEIActuallyAdditionsPlugin implements IModPlugin {
         IJeiHelpers helpers = registry.getJeiHelpers();
 
         registry.addRecipeCategories(new FermentingCategory(helpers.getGuiHelper()));
+        registry.addRecipeCategories(new LaserRecipeCategory(helpers.getGuiHelper()));
 
         //registry.addRecipeCategories(new CoffeeMachineRecipeCategory(helpers.getGuiHelper()), new CompostRecipeCategory(helpers.getGuiHelper()), new CrusherRecipeCategory(helpers.getGuiHelper()), new ReconstructorRecipeCategory(helpers.getGuiHelper()), new EmpowererRecipeCategory(helpers.getGuiHelper()), new BookletRecipeCategory(helpers.getGuiHelper()));
     }
@@ -47,6 +48,7 @@ public class JEIActuallyAdditionsPlugin implements IModPlugin {
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registry) {
         registry.addRecipeCatalyst(new ItemStack(ActuallyItems.CRAFTER_ON_A_STICK.get()), VanillaRecipeCategoryUid.CRAFTING);
         registry.addRecipeCatalyst(new ItemStack(ActuallyBlocks.FERMENTING_BARREL.getItem()), FermentingCategory.ID);
+        registry.addRecipeCatalyst(new ItemStack(ActuallyBlocks.ATOMIC_RECONSTRUCTOR.getItem()), LaserRecipeCategory.ID);
 
 //        registry.addRecipeCatalyst(new ItemStack(ActuallyBlocks.blockFurnaceDouble.get()), VanillaRecipeCategoryUid.SMELTING);
 //        registry.addRecipeCatalyst(new ItemStack(ActuallyBlocks.blockGrinder.get()), CrusherRecipeCategory.NAME);
@@ -63,6 +65,7 @@ public class JEIActuallyAdditionsPlugin implements IModPlugin {
         World level = Minecraft.getInstance().level;
 
         registry.addRecipes(level.getRecipeManager().getAllRecipesFor(ActuallyRecipes.Types.FERMENTING), FermentingCategory.ID);
+        registry.addRecipes(level.getRecipeManager().getAllRecipesFor(ActuallyRecipes.Types.LASER), LaserRecipeCategory.ID);
 
 
         //registry.addRecipes(ActuallyAdditionsAPI.BOOKLET_PAGES_WITH_ITEM_OR_FLUID_DATA, BookletRecipeCategory.NAME);
