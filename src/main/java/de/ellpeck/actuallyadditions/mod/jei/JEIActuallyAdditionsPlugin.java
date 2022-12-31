@@ -40,6 +40,7 @@ public class JEIActuallyAdditionsPlugin implements IModPlugin {
 
         registry.addRecipeCategories(new FermentingCategory(helpers.getGuiHelper()));
         registry.addRecipeCategories(new LaserRecipeCategory(helpers.getGuiHelper()));
+        registry.addRecipeCategories(new EmpowererRecipeCategory(helpers.getGuiHelper()));
 
         //registry.addRecipeCategories(new CoffeeMachineRecipeCategory(helpers.getGuiHelper()), new CompostRecipeCategory(helpers.getGuiHelper()), new CrusherRecipeCategory(helpers.getGuiHelper()), new ReconstructorRecipeCategory(helpers.getGuiHelper()), new EmpowererRecipeCategory(helpers.getGuiHelper()), new BookletRecipeCategory(helpers.getGuiHelper()));
     }
@@ -49,6 +50,7 @@ public class JEIActuallyAdditionsPlugin implements IModPlugin {
         registry.addRecipeCatalyst(new ItemStack(ActuallyItems.CRAFTER_ON_A_STICK.get()), VanillaRecipeCategoryUid.CRAFTING);
         registry.addRecipeCatalyst(new ItemStack(ActuallyBlocks.FERMENTING_BARREL.getItem()), FermentingCategory.ID);
         registry.addRecipeCatalyst(new ItemStack(ActuallyBlocks.ATOMIC_RECONSTRUCTOR.getItem()), LaserRecipeCategory.ID);
+        registry.addRecipeCatalyst(new ItemStack(ActuallyBlocks.EMPOWERER.getItem()), EmpowererRecipeCategory.ID);
 
 //        registry.addRecipeCatalyst(new ItemStack(ActuallyBlocks.blockFurnaceDouble.get()), VanillaRecipeCategoryUid.SMELTING);
 //        registry.addRecipeCatalyst(new ItemStack(ActuallyBlocks.blockGrinder.get()), CrusherRecipeCategory.NAME);
@@ -66,14 +68,12 @@ public class JEIActuallyAdditionsPlugin implements IModPlugin {
 
         registry.addRecipes(level.getRecipeManager().getAllRecipesFor(ActuallyRecipes.Types.FERMENTING), FermentingCategory.ID);
         registry.addRecipes(level.getRecipeManager().getAllRecipesFor(ActuallyRecipes.Types.LASER), LaserRecipeCategory.ID);
+        registry.addRecipes(level.getRecipeManager().getAllRecipesFor(ActuallyRecipes.Types.EMPOWERING), EmpowererRecipeCategory.ID);
 
 
         //registry.addRecipes(ActuallyAdditionsAPI.BOOKLET_PAGES_WITH_ITEM_OR_FLUID_DATA, BookletRecipeCategory.NAME);
         //registry.addRecipes(ActuallyAdditionsAPI.COFFEE_MACHINE_INGREDIENTS, CoffeeMachineRecipeCategory.NAME);
         //registry.addRecipes(ActuallyAdditionsAPI.CRUSHER_RECIPES, CrusherRecipeCategory.NAME);
-        //registry.addRecipes(ActuallyAdditionsAPI.RECONSTRUCTOR_LENS_CONVERSION_RECIPES, ReconstructorRecipeCategory.NAME);
-        //registry.addRecipes(ActuallyAdditionsAPI.EMPOWERER_RECIPES, EmpowererRecipeCategory.NAME);
-        //registry.addRecipes(ActuallyAdditionsAPI.COMPOST_RECIPES, CompostRecipeCategory.NAME);
     }
 
 //    @Override
