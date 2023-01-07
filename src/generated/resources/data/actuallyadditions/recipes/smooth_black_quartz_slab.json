@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "QQQ"
+  ],
+  "key": {
+    "Q": {
+      "item": "actuallyadditions:smooth_black_quartz_block"
+    }
+  },
+  "result": {
+    "item": "actuallyadditions:smooth_black_quartz_slab"
+  }
+}

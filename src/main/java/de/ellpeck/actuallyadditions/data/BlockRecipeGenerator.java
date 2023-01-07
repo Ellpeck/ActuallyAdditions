@@ -10,6 +10,7 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.util.IItemProvider;
 import net.minecraftforge.common.Tags;
 
+import javax.annotation.Nonnull;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.function.Consumer;
@@ -20,7 +21,7 @@ public class BlockRecipeGenerator extends RecipeProvider {
     }
 
     @Override
-    protected void buildShapelessRecipes(Consumer<IFinishedRecipe> consumer) {
+    protected void buildShapelessRecipes(@Nonnull Consumer<IFinishedRecipe> consumer) {
         //Battery Box
         Recipe.shapeless(ActuallyBlocks.BATTERY_BOX.getItem()).ingredients(ActuallyBlocks.ENERGIZER.get(), ActuallyBlocks.ENERVATOR.get(), ActuallyItems.BASIC_COIL.get()).save(consumer);
 
@@ -91,6 +92,24 @@ public class BlockRecipeGenerator extends RecipeProvider {
 
         //Black Quartz Stairs
         Recipe.stairs(ActuallyBlocks.BLACK_QUARTZ_STAIR.getItem(), ActuallyBlocks.BLACK_QUARTZ_PILLAR.get(), consumer);
+
+        //Smooth Black Quartz Wall
+        Recipe.wall(ActuallyBlocks.SMOOTH_BLACK_QUARTZ_WALL.getItem(), ActuallyBlocks.SMOOTH_BLACK_QUARTZ.get(), consumer);
+
+        //Smooth Black Quartz Slab
+        Recipe.slab(ActuallyBlocks.SMOOTH_BLACK_QUARTZ_SLAB.getItem(), ActuallyBlocks.SMOOTH_BLACK_QUARTZ.get(), consumer);
+
+        //Smooth Black Quartz Stairs
+        Recipe.stairs(ActuallyBlocks.SMOOTH_BLACK_QUARTZ_STAIR.getItem(), ActuallyBlocks.SMOOTH_BLACK_QUARTZ.get(), consumer);
+
+        //Black Quartz Brick Wall
+        Recipe.wall(ActuallyBlocks.BLACK_QUARTZ_BRICK_WALL.getItem(), ActuallyBlocks.BLACK_QUARTZ_BRICK.get(), consumer);
+
+        //Black Quartz Brick Slab
+        Recipe.slab(ActuallyBlocks.BLACK_QUARTZ_BRICK_SLAB.getItem(), ActuallyBlocks.BLACK_QUARTZ_BRICK.get(), consumer);
+
+        //Black Quartz Brick Stairs
+        Recipe.stairs(ActuallyBlocks.BLACK_QUARTZ_BRICK_STAIR.getItem(), ActuallyBlocks.BLACK_QUARTZ_BRICK.get(), consumer);
 
         //Pillar Black Quartz Wall
         Recipe.wall(ActuallyBlocks.BLACK_QUARTZ_PILLAR_WALL.getItem(), ActuallyBlocks.BLACK_QUARTZ_PILLAR.get(), consumer);
