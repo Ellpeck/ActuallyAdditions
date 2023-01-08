@@ -20,7 +20,9 @@ import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.crafting.ConditionalRecipe;
 import net.minecraftforge.common.crafting.NBTIngredient;
 import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.registries.ForgeRegistries;
 
+import javax.annotation.Nonnull;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.function.Consumer;
@@ -479,6 +481,15 @@ public class ItemRecipeGenerator extends RecipeProvider {
                 .define('I', Items.IRON_HELMET)
                 .save(consumer);
 
+        //Shards
+        addShard(consumer, ActuallyItems.VOID_CRYSTAL_SHARD, ActuallyItems.VOID_CRYSTAL);
+        addShard(consumer, ActuallyItems.ENORI_CRYSTAL_SHARD, ActuallyItems.ENORI_CRYSTAL);
+        addShard(consumer, ActuallyItems.RESTONIA_CRYSTAL_SHARD, ActuallyItems.RESTONIA_CRYSTAL);
+        addShard(consumer, ActuallyItems.PALIS_CRYSTAL_SHARD, ActuallyItems.PALIS_CRYSTAL);
+        addShard(consumer, ActuallyItems.DIAMATINE_CRYSTAL_SHARD, ActuallyItems.DIAMATINE_CRYSTAL);
+        addShard(consumer, ActuallyItems.EMERADIC_CRYSTAL_SHARD, ActuallyItems.EMERADIC_CRYSTAL);
+
+
         //        //Quartz
         //        GameRegistry.addSmelting(new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ORE_QUARTZ.ordinal()), new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()), 1F);
 
@@ -520,6 +531,19 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .requires(shovel.get())
             .requires(hoe.get())
             .save(consumer);
+    }
+
+    public static void decompress(Consumer<IFinishedRecipe> consumer, RegistryObject<Item> output, RegistryObject<Item> input) {
+        ResourceLocation key = ForgeRegistries.ITEMS.getKey(output.get());
+        Recipe.shapeless(output.get(), 9).requires(input.get()).save(consumer, new ResourceLocation(key.getNamespace(), "decompress/" + key.getPath()));
+    }
+    public static void compress(Consumer<IFinishedRecipe> consumer, RegistryObject<Item> output, RegistryObject<Item> input) {
+        ResourceLocation key = ForgeRegistries.ITEMS.getKey(output.get());
+        Recipe.shaped(output.get()).pattern("xxx","xxx", "xxx").define('x', input.get()).save(consumer, new ResourceLocation(key.getNamespace(), "compress/" + key.getPath()));
+    }
+    public static void addShard(Consumer<IFinishedRecipe> consumer, RegistryObject<Item> shard, RegistryObject<Item> crystal) {
+        compress(consumer, crystal, shard);
+        decompress(consumer, shard, crystal);
     }
 
 
@@ -627,13 +651,18 @@ public class ItemRecipeGenerator extends RecipeProvider {
             }
 
             @Override
-            public void save(Consumer<IFinishedRecipe> consumer) {
+            public void save(@Nonnull Consumer<IFinishedRecipe> consumer) {
                 this.unlockedBy("has_book", has(ActuallyItems.ITEM_BOOKLET.get()));
                 if (this.name != null) {
                     this.save(consumer, this.name);
                 } else {
                     super.save(consumer);
                 }
+            }
+            @Override
+            public void save(@Nonnull Consumer<IFinishedRecipe> consumer, @Nonnull ResourceLocation location) {
+                this.unlockedBy("", has(Items.AIR));
+                super.save(consumer, location);
             }
         }
 
@@ -674,9 +703,15 @@ public class ItemRecipeGenerator extends RecipeProvider {
             }
 
             @Override
-            public void save(Consumer<IFinishedRecipe> consumerIn) {
+            public void save(@Nonnull Consumer<IFinishedRecipe> consumerIn) {
                 this.unlockedBy("has_book", has(ActuallyItems.ITEM_BOOKLET.get()));
                 super.save(consumerIn);
+            }
+
+            @Override
+            public void save(@Nonnull Consumer<IFinishedRecipe> consumer, @Nonnull ResourceLocation location) {
+                this.unlockedBy("", has(Items.AIR));
+                super.save(consumer, location);
             }
         }
     }

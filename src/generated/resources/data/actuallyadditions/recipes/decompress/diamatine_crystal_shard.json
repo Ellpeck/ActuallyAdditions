@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "actuallyadditions:diamatine_crystal"
+    }
+  ],
+  "result": {
+    "item": "actuallyadditions:diamatine_crystal_shard",
+    "count": 9
+  }
+}

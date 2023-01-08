@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "xxx",
+    "xxx",
+    "xxx"
+  ],
+  "key": {
+    "x": {
+      "item": "actuallyadditions:palis_crystal_shard"
+    }
+  },
+  "result": {
+    "item": "actuallyadditions:palis_crystal"
+  }
+}
