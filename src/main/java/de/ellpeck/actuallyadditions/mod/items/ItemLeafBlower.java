@@ -69,7 +69,7 @@ public class ItemLeafBlower extends ItemBase implements IDisplayStandItem {
                 //Breaks the Blocks
                 boolean broke = this.breakStuff(world, x, y, z);
                 //Plays a Minecart sounds (It really sounds like a Leaf Blower!)
-                world.playSound(null, x, y, z, SoundEvents.MINECART_RIDING, SoundCategory.PLAYERS, 0.3F, 0.001F);
+                world.playSound(null, x, y, z, SoundEvents.MINECART_RIDING, SoundCategory.PLAYERS, 0.2F, 0.001F);
                 return broke;
             }
         }
@@ -100,7 +100,7 @@ public class ItemLeafBlower extends ItemBase implements IDisplayStandItem {
                     BlockPos pos = new BlockPos(x + reachX, y + reachY, z + reachZ);
                     Block block = world.getBlockState(pos).getBlock();
 
-                    if ((block instanceof BushBlock || block instanceof IForgeShearable) && (this.isAdvanced || block instanceof LeavesBlock)) {
+                    if ((block instanceof BushBlock || block instanceof IForgeShearable) && (this.isAdvanced || !(block instanceof LeavesBlock))) {
                         breakPositions.add(pos);
                     }
                 }
