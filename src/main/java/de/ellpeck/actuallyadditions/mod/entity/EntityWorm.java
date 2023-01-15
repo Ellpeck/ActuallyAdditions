@@ -17,11 +17,13 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
+import net.minecraft.network.play.server.SSpawnObjectPacket;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.IPlantable;
+import net.minecraftforge.fml.network.NetworkHooks;
 
 public class EntityWorm extends Entity {
 
@@ -128,6 +130,6 @@ public class EntityWorm extends Entity {
 
     @Override
     public IPacket<?> getAddEntityPacket() {
-        return null;
+        return NetworkHooks.getEntitySpawningPacket(this);
     }
 }

@@ -23,6 +23,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.vector.Quaternion;
+import net.minecraft.util.math.vector.Vector3f;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -46,30 +47,14 @@ public class RenderWorm extends EntityRenderer<EntityWorm> {
 
         matrix.translate(0, 0.7F, 0);
         double boop = Util.getMillis() / 70D;
-        matrix.mulPose(new Quaternion(-(float) (boop % 360), 0, 1, 0));
-
-//        stack.getDisplayName()
+        matrix.mulPose(Vector3f.YP.rotationDegrees(-(float) (boop % 360)));
+        matrix.translate(0,0,0.4);
         Minecraft.getInstance().getItemRenderer().renderStatic(
                 stack, ItemCameraTransforms.TransformType.FIXED, light, OverlayTexture.NO_OVERLAY, matrix, buffer
         );
 
         matrix.popPose();
     }
-
-//    @Override
-//    public void doRender(EntityWorm entity, double x, double y, double z, float entityYaw, float partialTicks) {
-//        GlStateManager.pushMatrix();
-//        this.bindEntityTexture(entity);
-//        GlStateManager.translate(x, y + 0.7F, z);
-//        double boop = Minecraft.getSystemTime() / 70D;
-//        GlStateManager.rotate(-(float) (boop % 360), 0, 1, 0);
-//        GlStateManager.translate(0, 0, 0.4);
-//
-//        stack.setStackDisplayName(entity.getName());
-//        AssetUtil.renderItemInWorld(stack, combinedLightIn, combinedOverlayIn, matrices, buffer);
-//
-//        GlStateManager.popMatrix();
-//    }
 
     @Override
     public ResourceLocation getTextureLocation(EntityWorm pEntity) {

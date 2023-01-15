@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod;
 
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.blocks.render.*;
+import de.ellpeck.actuallyadditions.mod.entity.EntityWorm;
 import de.ellpeck.actuallyadditions.mod.entity.InitEntities;
 import de.ellpeck.actuallyadditions.mod.entity.RenderWorm;
 import de.ellpeck.actuallyadditions.mod.event.ClientEvents;
@@ -29,6 +30,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 public class ActuallyAdditionsClient {
@@ -60,7 +62,6 @@ public class ActuallyAdditionsClient {
         ScreenManager.register(ActuallyContainers.RANGED_COLLECTOR_CONTAINER.get(), GuiRangedCollector::new);
         ScreenManager.register(ActuallyContainers.XPSOLIDIFIER_CONTAINER.get(), GuiXPSolidifier::new);
         // From old proxy
-        InitEntities.initClient();
         MinecraftForge.EVENT_BUS.register(new ClientEvents());
         MinecraftForge.EVENT_BUS.register(new ClientRegistryHandler());
         MinecraftForge.EVENT_BUS.register(new SpecialRenderInit());
@@ -99,6 +100,8 @@ public class ActuallyAdditionsClient {
         ClientRegistry.bindTileEntityRenderer(ActuallyBlocks.LASER_RELAY_ITEM.getTileEntityType(), RenderLaserRelay::new);
         ClientRegistry.bindTileEntityRenderer(ActuallyBlocks.LASER_RELAY_ITEM_ADVANCED.getTileEntityType(), RenderLaserRelay::new);
         ClientRegistry.bindTileEntityRenderer(ActuallyBlocks.LASER_RELAY_FLUIDS.getTileEntityType(), RenderLaserRelay::new);
+
+        RenderingRegistry.registerEntityRenderingHandler(ActuallyAdditions.ENTITY_WORM.get(), RenderWorm::new);
     }
 
     // TODO: [port] validate that this works
