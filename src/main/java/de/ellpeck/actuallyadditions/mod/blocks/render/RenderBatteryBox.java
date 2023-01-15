@@ -37,7 +37,6 @@ public class RenderBatteryBox extends TileEntityRenderer<TileEntityBatteryBox> {
         super(rendererDispatcherIn);
     }
 
-    // TODO: [port] migrate to matric (see cleanstart) (done partly)
     @Override
     public void render(TileEntityBatteryBox tile, float partialTicks, MatrixStack matrices, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
         ItemStack stack = tile.inv.getStackInSlot(0);
@@ -66,22 +65,6 @@ public class RenderBatteryBox extends TileEntityRenderer<TileEntityBatteryBox> {
                 matrices.translate(-60F, 0F, 60F);
                 matrices.mulPose(Vector3f.YP.rotationDegrees(90));
             }
-            //            TODO: Remove if the above works
-            //            NumberFormat format = NumberFormat.getInstance();
-            //            FontRenderer font = Minecraft.getInstance().fontRenderer;
-            //
-            //            String s = format.format(cap.getEnergyStored()) + "/" + format.format(cap.getMaxEnergyStored());
-            //            float lengthS = -font.getStringWidth(s) / 2F;
-            //            String s2 = I18n.format("actuallyadditions.cflong");
-            //            float lengthS2 = -font.getStringWidth(s2) / 2F;
-            //
-            //            for (int i = 0; i < 4; i++) {
-            //                font.drawString(matrices, s, lengthS, 10F, 0xFFFFFF);
-            //                font.drawString(matrices, s2, lengthS2, 20F, 0xFFFFFF);
-            //
-            //                RenderSystem.translatef(-50F, 0F, 50F);
-            //                RenderSystem.rotatef(90F, 0F, 1F, 0F);
-            //            }
         });
 
         matrices.popPose(); // text rotation

@@ -50,7 +50,7 @@
 - [x] Make coffee beans and seeds be the same item or I might get killed by someone finally
 
 # Keep As Is
-- [ ] Battery box
+- [X] Battery box
 - [ ] Item interfaces and item laser system
 - [ ] Farmer
 - [x] Empowerer and display stands
