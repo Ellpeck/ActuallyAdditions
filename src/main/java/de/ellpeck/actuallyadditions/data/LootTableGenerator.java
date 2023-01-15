@@ -190,7 +190,7 @@ public class LootTableGenerator extends LootTableProvider {
             addCrop(ActuallyBlocks.CANOLA, ActuallyItems.CANOLA, ActuallyItems.CANOLA_SEEDS);
             addCrop(ActuallyBlocks.RICE, ActuallyItems.RICE, ActuallyItems.RICE_SEEDS);
             addCrop(ActuallyBlocks.FLAX, () -> Items.STRING, ActuallyItems.FLAX_SEEDS);
-            addCrop(ActuallyBlocks.COFFEE, ActuallyItems.COFFEE_BEANS, ActuallyItems.COFFEE_SEEDS);
+            addCrop(ActuallyBlocks.COFFEE, ActuallyItems.COFFEE_BEANS, ActuallyItems.COFFEE_BEANS);
         }
 
         private void addCrop(Supplier<Block> block, Supplier<Item> item, Supplier<Item> seed) {

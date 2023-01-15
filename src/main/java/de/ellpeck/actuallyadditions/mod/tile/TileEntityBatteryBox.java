@@ -37,7 +37,7 @@ public class TileEntityBatteryBox extends TileEntityInventoryBase implements ISh
     @Override
     public LazyOptional<IEnergyStorage> getEnergyStorage(Direction facing) {
         ItemStack stack = this.inv.getStackInSlot(0);
-        if (StackUtil.isValid(stack) && stack.getItem() instanceof ItemBattery) {
+        if (stack.getItem() instanceof ItemBattery) {
             return stack.getCapability(CapabilityEnergy.ENERGY, null);
         }
         return LazyOptional.empty();
@@ -51,7 +51,7 @@ public class TileEntityBatteryBox extends TileEntityInventoryBase implements ISh
             LazyOptional<IEnergyStorage> cap = this.getEnergyStorage(null);
             int currStorage = cap.map(storage -> {
                 ItemStack stack = this.inv.getStackInSlot(0);
-                if (StackUtil.isValid(stack) && ItemUtil.isEnabled(stack)) {
+                if (!stack.isEmpty() && ItemUtil.isEnabled(stack)) {
                     if (storage.getEnergyStored() > 0) {
                         List<TileEntityBatteryBox> tiles = new ArrayList<>();
                         this.energyPushOffLoop(this, tiles);
@@ -67,7 +67,7 @@ public class TileEntityBatteryBox extends TileEntityInventoryBase implements ISh
 
                             for (TileEntityBatteryBox tile : tiles) {
                                 ItemStack battery = tile.inv.getStackInSlot(0);
-                                if (StackUtil.isValid(battery) && !ItemUtil.isEnabled(battery)) {
+                                if (!battery.isEmpty() && !ItemUtil.isEnabled(battery)) {
                                     int received = tile.getCapability(CapabilityEnergy.ENERGY, null).map(e -> e.receiveEnergy(maxPer, false)).orElse(0);
                                     storage.extractEnergy(received, false);
 
@@ -108,7 +108,7 @@ public class TileEntityBatteryBox extends TileEntityInventoryBase implements ISh
     @Override
     public void activateOnPulse() {
         ItemStack stack = this.inv.getStackInSlot(0);
-        if (StackUtil.isValid(stack)) {
+        if (!stack.isEmpty()) {
             ItemUtil.changeEnabled(stack);
             this.setChanged();
         }

@@ -45,9 +45,9 @@
 - [ ] Improve the coffee maker's ui by putting the water meter actually into the ui
 - [ ] Rename phantom boosters to range boosters (since they work for other stuff too)
 - [ ] Make worms use that new forge event/hook to keep the ground watered instead of trying to re-water it every few ticks
-- [ ] Give ender star an enchantment glint
+- [x] Give ender star an enchantment glint
 - [ ] Make miner lens far more expensive to use, mmm power creep
-- [ ] Make coffee beans and seeds be the same item or I might get killed by someone finally
+- [x] Make coffee beans and seeds be the same item or I might get killed by someone finally
 
 # Keep As Is
 - [ ] Battery box
@@ -70,7 +70,7 @@
 - [ ] Crusher and double crusher
 - [ ] Heat collectors
 - [x] Precision dropper
-- [ ] Engineer's goggles
+- [x] Engineer's goggles
 - [ ] Laser relay modifiers and wrench
 - [ ] Handheld filler
 - [ ] Sacks
@@ -89,7 +89,7 @@
 - [ ] Drills and drill upgrades
 - [ ] Batteries
 - [x] Crafting table on a stick
-- [ ] Leaf blowers
+- [x] Leaf blowers
 - [ ] The book
 - [x] The Crystal Flux name and rainbow effect
 - [ ] Engineer's village house and engineer villager

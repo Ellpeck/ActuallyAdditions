@@ -25,6 +25,7 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import javax.annotation.Nonnull;
 import java.util.Set;
 import java.util.function.Supplier;
 
@@ -58,7 +59,12 @@ public final class ActuallyItems {
     public static final RegistryObject<Item> BATS_WING = ITEMS.register("bats_wing", ItemBase::new);
     public static final RegistryObject<Item> DRILL_CORE = ITEMS.register("drill_core", ItemBase::new);
     public static final RegistryObject<Item> LENS = ITEMS.register("lens", ItemBase::new);
-    public static final RegistryObject<Item> ENDER_STAR = ITEMS.register("ender_star", ItemBase::new);
+    public static final RegistryObject<Item> ENDER_STAR = ITEMS.register("ender_star", () -> new ItemBase() {
+        @Override
+        public boolean isFoil(@Nonnull ItemStack pStack) {
+            return true;
+        }
+    });
     public static final RegistryObject<Item> CRYSTALLIZED_CANOLA_SEED = ITEMS.register("crystallized_canola_seed", () -> new CanolaSeed(false));
     public static final RegistryObject<Item> EMPOWERED_CANOLA_SEED = ITEMS.register("empowered_canola_seed", () -> new CanolaSeed(true));
 
@@ -156,12 +162,11 @@ public final class ActuallyItems {
     public static final RegistryObject<Item> LEAF_BLOWER = ITEMS.register("leaf_blower", () -> new ItemLeafBlower(false));
     public static final RegistryObject<Item> ADVANCED_LEAF_BLOWER = ITEMS.register("advanced_leaf_blower", () -> new ItemLeafBlower(true));
 
-    public static final RegistryObject<Item> COFFEE_BEANS = ITEMS.register("coffee_beans", ItemCoffeeBean::new);
+    public static final RegistryObject<Item> COFFEE_BEANS = ITEMS.register("coffee_beans", () -> new AABlockItem.AASeedItem(ActuallyBlocks.COFFEE.get(), ActuallyItems.defaultProps()));
 
     public static final RegistryObject<Item> RICE_SEEDS = ITEMS.register("rice_seeds", () -> new AABlockItem.AASeedItem(ActuallyBlocks.RICE.get(), ActuallyItems.defaultProps())); //() -> new ItemSeed("seedRice", ActuallyBlocks.RICE.get(), FOOD.get(), TheFoods.RICE.ordinal()));
     public static final RegistryObject<Item> CANOLA_SEEDS = ITEMS.register("canola_seeds", () -> new AABlockItem.AASeedItem(ActuallyBlocks.CANOLA.get(), ActuallyItems.defaultProps())); //() -> new ItemFoodSeed("seedCanola", ActuallyBlocks.CANOLA, itemMisc, 0, 1, 0.01F, 10).setPotionEffect(new PotionEffect(MobEffects.NAUSEA, 1000, 0), 0.2F));
     public static final RegistryObject<Item> FLAX_SEEDS = ITEMS.register("flax_seeds", () -> new AABlockItem.AASeedItem(ActuallyBlocks.FLAX.get(), ActuallyItems.defaultProps())); //() -> new ItemSeed("seedFlax", ActuallyBlocks.FLAX, Items.STRING, 0));
-    public static final RegistryObject<Item> COFFEE_SEEDS = ITEMS.register("coffee_seeds", () -> new AABlockItem.AASeedItem(ActuallyBlocks.COFFEE.get(), ActuallyItems.defaultProps())); //() -> new ItemSeed("seedCoffeeBeans", ActuallyBlocks.COFFEE, COFFEE_BEANS, 0));
 
     // TOOLS & ARMOR
     public static final RegistryObject<Item> WOODEN_AIOT = ITEMS.register("wooden_aiot", () -> new AllInOneTool(ItemTier.WOOD));
@@ -197,7 +202,7 @@ public final class ActuallyItems {
         CRUSHED_QUARTZ, CRUSHED_COAL, CRUSHED_BLACK_QUARTZ, */
         SOLIDIFIED_EXPERIENCE, LEAF_BLOWER, ADVANCED_LEAF_BLOWER,
         RING_OF_GROWTH, RING_OF_MAGNETIZING,
-        COFFEE_BEANS, RICE_SEEDS, CANOLA_SEEDS, FLAX_SEEDS, COFFEE_SEEDS
+        COFFEE_BEANS, RICE_SEEDS, CANOLA_SEEDS, FLAX_SEEDS
     );
 
     private static Supplier<Item> basicItem() {

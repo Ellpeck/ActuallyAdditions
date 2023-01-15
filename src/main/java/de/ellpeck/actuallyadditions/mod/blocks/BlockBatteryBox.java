@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.items.ItemBattery;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBatteryBox;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityCoalGenerator;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -22,6 +23,8 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
@@ -37,10 +40,19 @@ public class BlockBatteryBox extends BlockContainerBase {
     //    public AxisAlignedBB getBoundingBox(BlockState state, IBlockAccess source, BlockPos pos) {
     //        return BlockSlabs.AABB_BOTTOM_HALF;
     //    }
+    @Override
+    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+        return Shapes.BATBOX_SHAPE;
+    }
+
+    @Override
+    public boolean hasTileEntity(BlockState state) {
+        return true;
+    }
 
     @Nullable
-    //@Override
-    public TileEntity newBlockEntity(IBlockReader worldIn) {
+    @Override
+    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
         return new TileEntityBatteryBox();
     }
 
@@ -51,15 +63,15 @@ public class BlockBatteryBox extends BlockContainerBase {
             TileEntityBatteryBox box = (TileEntityBatteryBox) tile;
             ItemStack stack = player.getItemInHand(hand);
 
-            if (StackUtil.isValid(stack)) {
-                if (stack.getItem() instanceof ItemBattery && !StackUtil.isValid(box.inv.getStackInSlot(0))) {
+            if (!stack.isEmpty()) {
+                if (stack.getItem() instanceof ItemBattery && box.inv.getStackInSlot(0).isEmpty()) {
                     box.inv.setStackInSlot(0, stack.copy());
                     player.setItemInHand(hand, ItemStack.EMPTY);
                     return ActionResultType.SUCCESS;
                 }
             } else {
                 ItemStack inSlot = box.inv.getStackInSlot(0);
-                if (StackUtil.isValid(inSlot)) {
+                if (!inSlot.isEmpty()) {
                     player.setItemInHand(hand, inSlot.copy());
                     box.inv.setStackInSlot(0, ItemStack.EMPTY);
                     return ActionResultType.SUCCESS;

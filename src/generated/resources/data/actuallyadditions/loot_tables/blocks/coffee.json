@@ -22,7 +22,7 @@
             },
             {
               "type": "minecraft:item",
-              "name": "actuallyadditions:coffee_seeds"
+              "name": "actuallyadditions:coffee_beans"
             }
           ]
         }
@@ -44,7 +44,7 @@
               }
             }
           ],
-          "name": "actuallyadditions:coffee_seeds"
+          "name": "actuallyadditions:coffee_beans"
         }
       ],
       "conditions": [

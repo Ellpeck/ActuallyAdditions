@@ -14,6 +14,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.items.ItemBattery;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBatteryBox;
+import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.Lang;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -97,9 +98,7 @@ public class RenderBatteryBox extends TileEntityRenderer<TileEntityBatteryBox> {
         matrices.scale(scale, scale, scale);
 
         try {
-            Minecraft.getInstance().getItemRenderer().renderStatic(
-                stack, ItemCameraTransforms.TransformType.FIXED, combinedLight, combinedOverlay, matrices, buffer
-            );
+            AssetUtil.renderItemInWorld(stack, combinedLight, combinedOverlay, matrices, buffer);
         } catch (Exception e) {
             ActuallyAdditions.LOGGER.error("Something went wrong trying to render an item in a battery box! The item is " + stack.getItem().getRegistryName() + "!", e);
         }
