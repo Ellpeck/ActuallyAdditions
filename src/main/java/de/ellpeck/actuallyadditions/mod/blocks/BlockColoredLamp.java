@@ -68,7 +68,6 @@ public class BlockColoredLamp extends BlockBase {
         builder.add(LIT);
     }
 
-    // TODO: [port][test] validate this rework works
     @Override
     public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
         ItemStack stack = player.getItemInHand(hand);
@@ -101,33 +100,4 @@ public class BlockColoredLamp extends BlockBase {
             ? 15
             : 0;
     }
-
-    // TODO: [port] Add this back correctly
-    //    public static class TheItemBlock extends ItemBlockBase {
-    //
-    //        public TheItemBlock(Block block) {
-    //            super(block);
-    //            this.setHasSubtypes(true);
-    //            this.setMaxDamage(0);
-    //        }
-    //
-    //        @Override
-    //        public String getItemStackDisplayName(ItemStack stack) {
-    //            if (stack.getItemDamage() >= ALL_LAMP_TYPES.length) {
-    //                return StringUtil.BUGGED_ITEM_NAME;
-    //            }
-    //            if (Util.isClient()) {
-    //                return super.getItemStackDisplayName(stack) + (((BlockColoredLamp) this.block).isOn
-    //                    ? " (" + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".onSuffix.desc") + ")"
-    //                    : "");
-    //            } else {
-    //                return super.getItemStackDisplayName(stack);
-    //            }
-    //        }
-    //
-    //        @Override
-    //        public String getTranslationKey(ItemStack stack) {
-    //            return ActuallyBlocks.blockColoredLamp.getTranslationKey() + "_" + ALL_LAMP_TYPES[stack.getItemDamage()].regName;
-    //        }
-    //    }
 }

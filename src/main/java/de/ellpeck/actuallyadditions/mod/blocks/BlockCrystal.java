@@ -29,25 +29,4 @@ public class BlockCrystal extends ActuallyBlock {
             }
         };
     }
-
-    //    public static class TheItemBlock extends ItemBlockBase {
-    //
-    //        public TheItemBlock(Block block) {
-    //            super(block);
-    //            this.setHasSubtypes(true);
-    //            this.setMaxDamage(0);
-    //        }
-    //
-    //        @Override
-    //        public String getTranslationKey(ItemStack stack) {
-    //            return stack.getItemDamage() >= ALL_CRYSTALS.length
-    //                ? StringUtil.BUGGED_ITEM_NAME
-    //                : this.getTranslationKey() + "_" + ALL_CRYSTALS[stack.getItemDamage()].name;
-    //        }
-    //
-    //        @Override
-    //        public boolean hasEffect(ItemStack stack) {
-    //            return this.block instanceof BlockCrystal && ((BlockCrystal) this.block).isEmpowered;
-    //        }
-    //    }
 }

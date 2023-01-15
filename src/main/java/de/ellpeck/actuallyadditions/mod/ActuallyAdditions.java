@@ -83,8 +83,8 @@ public class ActuallyAdditions {
     };
     public static final Logger LOGGER = LogManager.getLogger(NAME);
 
-    public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, "entities");
-    public static final RegistryObject<EntityType<EntityWorm>> ENTITY_WORM = ENTITIES.register("worm", () -> EntityType.Builder.of(EntityWorm::new, EntityClassification.CREATURE).build(MODID + ":worm"));
+    public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, MODID);
+    public static final RegistryObject<EntityType<EntityWorm>> ENTITY_WORM = ENTITIES.register("worm", () -> EntityType.Builder.of(EntityWorm::new, EntityClassification.MISC).build(MODID + ":worm"));
 
     public static boolean commonCapsLoaded;
 
