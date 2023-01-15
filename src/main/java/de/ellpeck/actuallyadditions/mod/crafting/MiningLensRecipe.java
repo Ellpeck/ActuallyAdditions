@@ -52,6 +52,11 @@ public class MiningLensRecipe extends WeightedRandom.Item implements IRecipe<IIn
         return false;
     }
 
+    @Override
+    public boolean isSpecial() {
+        return true;
+    }
+
     @Nonnull
     @Override
     public ItemStack assemble(IInventory pInv) {

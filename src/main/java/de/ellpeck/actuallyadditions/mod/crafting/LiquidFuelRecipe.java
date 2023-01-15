@@ -59,6 +59,11 @@ public class LiquidFuelRecipe implements IRecipe<IInventory> {
         return this.fuel.isFluidEqual(stack);
     }
 
+    @Override
+    public boolean isSpecial() {
+        return true;
+    }
+
     public int getFuelAmount() {
         return this.fuel.getAmount();
     }

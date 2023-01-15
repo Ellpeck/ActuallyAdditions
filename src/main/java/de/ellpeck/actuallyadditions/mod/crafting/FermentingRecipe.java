@@ -80,6 +80,11 @@ public class FermentingRecipe implements IRecipe<IInventory> {
         return false;
     }
 
+    @Override
+    public boolean isSpecial() {
+        return true;
+    }
+
     @Nonnull
     @Override
     public ItemStack assemble(IInventory pInv) {

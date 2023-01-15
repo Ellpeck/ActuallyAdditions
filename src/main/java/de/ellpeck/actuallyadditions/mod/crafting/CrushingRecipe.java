@@ -57,6 +57,11 @@ public class CrushingRecipe implements IRecipe<IInventory> {
     }
 
     @Override
+    public boolean isSpecial() {
+        return true;
+    }
+
+    @Override
     @Nonnull
     public ItemStack assemble(@Nonnull IInventory pInv) {
         return ItemStack.EMPTY;

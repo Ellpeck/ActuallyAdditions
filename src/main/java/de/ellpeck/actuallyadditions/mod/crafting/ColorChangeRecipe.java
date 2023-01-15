@@ -42,6 +42,11 @@ public class ColorChangeRecipe implements IRecipe<IInventory> {
         return input.test(stack);
     }
 
+    @Override
+    public boolean isSpecial() {
+        return true;
+    }
+
     @Nonnull
     @Override
     public ItemStack assemble(@Nonnull IInventory pInv) {

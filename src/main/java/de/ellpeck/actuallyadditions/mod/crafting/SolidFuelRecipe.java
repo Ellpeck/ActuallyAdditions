@@ -46,6 +46,11 @@ public class SolidFuelRecipe implements IRecipe<SingleItem> {
     }
 
     @Override
+    public boolean isSpecial() {
+        return true;
+    }
+
+    @Override
     public ItemStack assemble(SingleItem pInv) {
         return ItemStack.EMPTY;
     }

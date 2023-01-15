@@ -58,6 +58,11 @@ public class LaserRecipe implements IRecipe<IInventory> {
     }
 
     @Override
+    public boolean isSpecial() {
+        return true;
+    }
+
+    @Override
     public ItemStack assemble(IInventory pInv) {
         return result.copy();
     }
