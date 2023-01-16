@@ -149,7 +149,7 @@ public class ActuallyAdditions {
     }
 
     private void clientSetup(FMLClientSetupEvent event) {
-        ActuallyAdditionsClient.setup();
+        ActuallyAdditionsClient.setup(event);
     }
 
     public void serverStarted(FMLServerStartedEvent event) {

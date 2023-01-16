@@ -27,6 +27,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.DistExecutor;
 
 import java.util.List;
 import java.util.Set;
@@ -41,7 +42,8 @@ public class ItemEngineerGoggles extends ItemArmorAA implements IGoggles {
         super(ArmorMaterials.GOGGLES, EquipmentSlotType.HEAD, ActuallyItems.defaultProps().setNoRepair().durability(0));
         this.displayMobs = displayMobs;
 
-        MinecraftForge.EVENT_BUS.register(this);
+        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> MinecraftForge.EVENT_BUS.register(this));
+
     }
 
     public static boolean isWearing(PlayerEntity player) {

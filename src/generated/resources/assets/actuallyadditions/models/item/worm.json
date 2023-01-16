@@ -2,5 +2,13 @@
   "parent": "minecraft:item/handheld",
   "textures": {
     "layer0": "actuallyadditions:item/worm"
-  }
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "actuallyadditions:snail": 1.0
+      },
+      "model": "actuallyadditions:item/snail"
+    }
+  ]
 }

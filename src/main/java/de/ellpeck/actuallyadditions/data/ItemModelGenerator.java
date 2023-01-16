@@ -58,6 +58,16 @@ public class ItemModelGenerator extends ItemModelProvider {
         generateBucket(InitFluids.REFINED_CANOLA_OIL);
         generateBucket(InitFluids.CRYSTALLIZED_OIL);
         generateBucket(InitFluids.EMPOWERED_OIL);
+
+
+        String wormpath = ActuallyItems.WORM.get().getRegistryName().getPath();
+        singleTexture(wormpath, mcLoc("item/handheld"), "layer0", modLoc("item/" + wormpath))
+                .override().predicate(new ResourceLocation(ActuallyAdditions.MODID, "snail"), 1F)
+                .model(singleTexture("snail", mcLoc("item/handheld"), "layer0", modLoc("item/snail"))).end();
+/*        withExistingParent(wormpath, mcLoc("item/handheld"))
+                .texture("layer0", modLoc("item/" + wormpath))
+                .override().predicate(new ResourceLocation(ActuallyAdditions.MODID, "snail"), 1F)
+                .model(getBuilder("snail").parent(getExistingFile(mcLoc("item/handheld"))).texture("layer0", "item/snail")).end();*/
     }
 
     private void generateBucket(FluidAA fluidSupplier) {

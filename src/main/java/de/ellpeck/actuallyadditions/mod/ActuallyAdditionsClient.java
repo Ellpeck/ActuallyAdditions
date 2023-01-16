@@ -19,23 +19,29 @@ import de.ellpeck.actuallyadditions.mod.event.ClientEvents;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.inventory.ActuallyContainers;
 import de.ellpeck.actuallyadditions.mod.inventory.gui.*;
+import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
+import de.ellpeck.actuallyadditions.mod.items.ItemWorm;
 import de.ellpeck.actuallyadditions.mod.misc.special.SpecialRenderInit;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.network.play.ClientPlayNetHandler;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
+import net.minecraft.item.IItemPropertyGetter;
+import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.network.play.client.CPlayerDiggingPacket;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 public class ActuallyAdditionsClient {
 
-    public static void setup() {
+    public static void setup(FMLClientSetupEvent event) {
         ScreenManager.register(ActuallyContainers.BAG_CONTAINER.get(), GuiBag::new);
         ScreenManager.register(ActuallyContainers.BIO_REACTOR_CONTAINER.get(), GuiBioReactor::new);
         ScreenManager.register(ActuallyContainers.BREAKER_CONTAINER.get(), GuiBreaker::new);
@@ -68,7 +74,10 @@ public class ActuallyAdditionsClient {
 
         setupSpecialRenders();
 
-        RenderWorm.fixItemStack();// todo: remove
+        event.enqueueWork(() ->
+        ItemModelsProperties.register(ActuallyItems.WORM.get(), new ResourceLocation(ActuallyAdditions.MODID, "snail"),
+                (stack, world, entity) -> "snail mail".equalsIgnoreCase(stack.getHoverName().getString()) ? 1F : 0F));
+
         setupRenderLayers();
     }
 

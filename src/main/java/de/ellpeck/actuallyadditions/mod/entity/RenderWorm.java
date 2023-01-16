@@ -24,6 +24,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.vector.Quaternion;
 import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -31,26 +32,27 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class RenderWorm extends EntityRenderer<EntityWorm> {
 
-    private static ItemStack stack = ItemStack.EMPTY;
+    private ItemStack stack;
+    private ItemStack snailStack;
 
     public RenderWorm(EntityRendererManager p_i46179_1_) {
         super(p_i46179_1_);
-    }
 
-    public static void fixItemStack() {
         stack = new ItemStack(ActuallyItems.WORM.get());
+        snailStack = new ItemStack(ActuallyItems.WORM.get());
+        snailStack.setHoverName(new StringTextComponent("Snail Mail"));
     }
 
     @Override
     public void render(EntityWorm entity, float partialTicks, float p_225623_3_, MatrixStack matrix, IRenderTypeBuffer buffer, int light) {
+        boolean isSnail = entity.getCustomName().getString().equalsIgnoreCase("snail mail");
         matrix.pushPose();
-
         matrix.translate(0, 0.7F, 0);
         double boop = Util.getMillis() / 70D;
         matrix.mulPose(Vector3f.YP.rotationDegrees(-(float) (boop % 360)));
         matrix.translate(0,0,0.4);
         Minecraft.getInstance().getItemRenderer().renderStatic(
-                stack, ItemCameraTransforms.TransformType.FIXED, light, OverlayTexture.NO_OVERLAY, matrix, buffer
+                isSnail? snailStack:stack, ItemCameraTransforms.TransformType.FIXED, light, OverlayTexture.NO_OVERLAY, matrix, buffer
         );
 
         matrix.popPose();

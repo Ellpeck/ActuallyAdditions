@@ -17,11 +17,16 @@ import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
+import net.minecraft.util.Util;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
 import net.minecraftforge.eventbus.api.Event;
@@ -34,12 +39,6 @@ public class ItemWorm extends ItemBase {
 
     public ItemWorm() {
         super();
-        //MinecraftForge.EVENT_BUS.register(this);
-
-        // TODO: [port] Not sure what this does
-        //        this.addPropertyOverride(new ResourceLocation(ActuallyAdditions.MODID, "snail"), (IItemPropertyGetter) (stack, world, entity) -> "snail mail".equalsIgnoreCase(stack.getDisplayName().getString())
-        //            ? 1F
-        //            : 0F);
     }
 
     @Override
@@ -53,7 +52,7 @@ public class ItemWorm extends ItemBase {
                 if (!context.getLevel().isClientSide) {
                     EntityWorm worm = new EntityWorm(ActuallyAdditions.ENTITY_WORM.get(), context.getLevel());
                     worm.setPos(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
-                    worm.setCustomName(stack.getHoverName()); // TODO: WHAT DOES THIS EVEN DO?
+                    worm.setCustomName(stack.getHoverName());
                     context.getLevel().addFreshEntity(worm);
                     if (!context.getPlayer().isCreative()) {
                         stack.shrink(1);
