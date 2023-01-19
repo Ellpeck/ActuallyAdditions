@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
+import de.ellpeck.actuallyadditions.api.laser.IConnectionPair;
 import de.ellpeck.actuallyadditions.api.laser.Network;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.FullyDirectionalBlock;
@@ -20,9 +21,16 @@ import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
 import de.ellpeck.actuallyadditions.mod.items.ItemEngineerGoggles;
 import de.ellpeck.actuallyadditions.mod.items.ItemLaserRelayUpgrade;
 import de.ellpeck.actuallyadditions.mod.items.ItemLaserWrench;
-import de.ellpeck.actuallyadditions.mod.tile.*;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelay;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayEnergy;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayEnergyAdvanced;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayEnergyExtreme;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayFluids;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayItem;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayItemAdvanced;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
+import io.netty.util.internal.ConcurrentSet;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
@@ -41,6 +49,9 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class BlockLaserRelay extends FullyDirectionalBlock.Container implements IHudDisplay {
@@ -146,8 +157,13 @@ public class BlockLaserRelay extends FullyDirectionalBlock.Container implements 
         return ActionResultType.FAIL;
     }
 
-    //@Override
-    public TileEntity newBlockEntity(IBlockReader world) {
+    @Override
+    public boolean hasTileEntity(BlockState state) {
+        return true;
+    }
+
+    @Override
+    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
         switch (this.type) {
             case ITEM:
                 return new TileEntityLaserRelayItem();
@@ -200,11 +216,27 @@ public class BlockLaserRelay extends FullyDirectionalBlock.Container implements 
 
     @Override
     public void onRemove(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
-        super.onRemove(state, world, pos, newState, isMoving);
-
         if (state != newState) {
+            ConcurrentSet<IConnectionPair> connectionPairs = ActuallyAdditionsAPI.connectionHandler.getConnectionsFor(pos, world);
             ActuallyAdditionsAPI.connectionHandler.removeRelayFromNetwork(pos, world);
+            List<BlockPos> relayPositions = new ArrayList<>();
+            connectionPairs.forEach(pair -> {
+                for (BlockPos pairPos : pair.getPositions()) {
+                    if (!pos.equals(pairPos)) {
+                        relayPositions.add(pairPos);
+                    }
+                }
+            });
+            //Update the connected relays to sync the changes to the client
+            relayPositions.forEach(relayPos -> {
+                TileEntity tile = world.getBlockEntity(relayPos);
+                if(tile instanceof TileEntityLaserRelay) {
+                    TileEntityLaserRelay relay = (TileEntityLaserRelay) tile;
+                    relay.sendUpdate();
+                }
+            });
         }
+        super.onRemove(state, world, pos, newState, isMoving);
     }
     //
     //    @Override
@@ -225,6 +257,19 @@ public class BlockLaserRelay extends FullyDirectionalBlock.Container implements 
 
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        return Shapes.RELAY_SHAPE;
+        switch (state.getValue(FACING)) {
+            case UP:
+                return Shapes.LaserRelayShapes.SHAPE_U;
+            case DOWN:
+                return Shapes.LaserRelayShapes.SHAPE_D;
+            case EAST:
+                return Shapes.LaserRelayShapes.SHAPE_E;
+            case SOUTH:
+                return Shapes.LaserRelayShapes.SHAPE_S;
+            case WEST:
+                return Shapes.LaserRelayShapes.SHAPE_W;
+            default:
+                return Shapes.LaserRelayShapes.SHAPE_N;
+        }
     }
 }

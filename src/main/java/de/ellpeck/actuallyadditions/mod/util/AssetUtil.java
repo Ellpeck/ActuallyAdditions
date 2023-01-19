@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.util;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.render.RenderTypes;
@@ -23,9 +24,14 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
+import net.minecraft.client.renderer.texture.AtlasTexture;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
@@ -38,6 +44,7 @@ import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.fml.network.PacketDistributor;
 
 public final class AssetUtil {
@@ -93,28 +100,29 @@ public final class AssetUtil {
     //    }
 
     @OnlyIn(Dist.CLIENT)
-    public static void renderItemWithoutScrewingWithColors(ItemStack stack) {
-/*        if (StackUtil.isValid(stack)) {
+    public static void renderItemWithoutScrewingWithColors(ItemStack stack, MatrixStack matrices, int combinedOverlay, int combinedLight) {
+        if (StackUtil.isValid(stack)) {
             Minecraft mc = Minecraft.getInstance();
             ItemRenderer renderer = mc.getItemRenderer();
             TextureManager manager = mc.getTextureManager();
+            IRenderTypeBuffer.Impl irendertypebuffer$impl = mc.renderBuffers().bufferSource();
 
-            IBakedModel model = renderer.getItemModelWithOverrides(stack, null, null);
-
-            manager.bind(TextureMap.LOCATION_BLOCKS_TEXTURE);
-            manager.getTexture(TextureMap.LOCATION_BLOCKS_TEXTURE).setBlurMipmap(false, false);
-            GlStateManager._enableRescaleNormal();
-            GlStateManager._enableBlend();
-            GlStateManager._pushMatrix();
-            model = ForgeHooksClient.handleCameraTransforms(model, ItemCameraTransforms.TransformType.FIXED, false);
-            renderer.renderItem(stack, model);
-            GlStateManager.cullFace(GlStateManager.CullFace.BACK);
-            GlStateManager._popMatrix();
-            GlStateManager._disableRescaleNormal();
-            GlStateManager._disableBlend();
-            manager.bind(TextureMap.LOCATION_BLOCKS_TEXTURE);
-            manager.getTexture(TextureMap.LOCATION_BLOCKS_TEXTURE).restoreLastBlurMipmap();
-        }*/
+            IBakedModel model = renderer.getModel(stack, null, null);
+            manager.bind(AtlasTexture.LOCATION_BLOCKS);
+            manager.getTexture(AtlasTexture.LOCATION_BLOCKS).setBlurMipmap(false, false);
+            RenderSystem.enableRescaleNormal();
+            RenderSystem.enableBlend();
+            RenderSystem.pushMatrix();
+            model = ForgeHooksClient.handleCameraTransforms(matrices, model, ItemCameraTransforms.TransformType.FIXED, false);
+            renderer.render(stack, ItemCameraTransforms.TransformType.FIXED, false, matrices, irendertypebuffer$impl,
+                    combinedOverlay, combinedLight, model);
+            RenderSystem.popMatrix();
+            RenderSystem.disableRescaleNormal();
+            RenderSystem.disableBlend();
+            manager.bind(AtlasTexture.LOCATION_BLOCKS);
+            manager.getTexture(AtlasTexture.LOCATION_BLOCKS).restoreLastBlurMipmap();
+            irendertypebuffer$impl.endBatch();
+        }
     }
 
     @OnlyIn(Dist.CLIENT)

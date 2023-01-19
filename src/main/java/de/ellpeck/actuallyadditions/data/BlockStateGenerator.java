@@ -2,7 +2,6 @@ package de.ellpeck.actuallyadditions.data;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
-import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import net.minecraft.block.*;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -72,12 +71,12 @@ public class BlockStateGenerator extends BlockStateProvider {
         buildCubeAll(ActuallyBlocks.EMPOWERED_VOID_CRYSTAL);
         buildCubeAll(ActuallyBlocks.EMPOWERED_EMERADIC_CRYSTAL);
         buildCubeAll(ActuallyBlocks.EMPOWERED_ENORI_CRYSTAL);
-        standardBlock(ActuallyBlocks.LASER_RELAY);
-        standardBlock(ActuallyBlocks.LASER_RELAY_ADVANCED);
-        standardBlock(ActuallyBlocks.LASER_RELAY_EXTREME);
-        standardBlock(ActuallyBlocks.LASER_RELAY_FLUIDS);
-        standardBlock(ActuallyBlocks.LASER_RELAY_ITEM);
-        standardBlock(ActuallyBlocks.LASER_RELAY_ITEM_ADVANCED);
+        fullyDirectionalBlock(ActuallyBlocks.LASER_RELAY);
+        fullyDirectionalBlock(ActuallyBlocks.LASER_RELAY_ADVANCED);
+        fullyDirectionalBlock(ActuallyBlocks.LASER_RELAY_EXTREME);
+        fullyDirectionalBlock(ActuallyBlocks.LASER_RELAY_FLUIDS);
+        fullyDirectionalBlock(ActuallyBlocks.LASER_RELAY_ITEM);
+        fullyDirectionalBlock(ActuallyBlocks.LASER_RELAY_ITEM_ADVANCED);
         standardBlock(ActuallyBlocks.RANGED_COLLECTOR);
         standardBlock(ActuallyBlocks.XP_SOLIDIFIER);
         standardBlock(ActuallyBlocks.ENERGIZER);

@@ -12,22 +12,19 @@ package de.ellpeck.actuallyadditions.mod;
 
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.blocks.render.*;
-import de.ellpeck.actuallyadditions.mod.entity.EntityWorm;
-import de.ellpeck.actuallyadditions.mod.entity.InitEntities;
 import de.ellpeck.actuallyadditions.mod.entity.RenderWorm;
 import de.ellpeck.actuallyadditions.mod.event.ClientEvents;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.inventory.ActuallyContainers;
 import de.ellpeck.actuallyadditions.mod.inventory.gui.*;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
-import de.ellpeck.actuallyadditions.mod.items.ItemWorm;
 import de.ellpeck.actuallyadditions.mod.misc.special.SpecialRenderInit;
+import de.ellpeck.actuallyadditions.mod.particle.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.network.play.ClientPlayNetHandler;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
-import net.minecraft.item.IItemPropertyGetter;
 import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.network.play.client.CPlayerDiggingPacket;
 import net.minecraft.util.ResourceLocation;
@@ -37,7 +34,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 public class ActuallyAdditionsClient {
 
@@ -75,8 +71,8 @@ public class ActuallyAdditionsClient {
         setupSpecialRenders();
 
         event.enqueueWork(() ->
-        ItemModelsProperties.register(ActuallyItems.WORM.get(), new ResourceLocation(ActuallyAdditions.MODID, "snail"),
-                (stack, world, entity) -> "snail mail".equalsIgnoreCase(stack.getHoverName().getString()) ? 1F : 0F));
+                ItemModelsProperties.register(ActuallyItems.WORM.get(), new ResourceLocation(ActuallyAdditions.MODID, "snail"),
+                        (stack, world, entity) -> "snail mail".equalsIgnoreCase(stack.getHoverName().getString()) ? 1F : 0F));
 
         setupRenderLayers();
     }
@@ -111,6 +107,11 @@ public class ActuallyAdditionsClient {
         ClientRegistry.bindTileEntityRenderer(ActuallyBlocks.LASER_RELAY_FLUIDS.getTileEntityType(), RenderLaserRelay::new);
 
         RenderingRegistry.registerEntityRenderingHandler(ActuallyAdditions.ENTITY_WORM.get(), RenderWorm::new);
+    }
+
+    public static void registerParticleFactories() {
+        Minecraft.getInstance().particleEngine.register(ActuallyParticles.LASER_ITEM.get(), ParticleLaserItem.Factory::new);
+        Minecraft.getInstance().particleEngine.register(ActuallyParticles.BEAM.get(), ParticleBeam.Factory::new);
     }
 
     // TODO: [port] validate that this works

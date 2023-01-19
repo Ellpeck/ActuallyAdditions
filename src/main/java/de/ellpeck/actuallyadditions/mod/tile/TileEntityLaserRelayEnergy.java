@@ -15,7 +15,7 @@ import de.ellpeck.actuallyadditions.api.laser.LaserType;
 import de.ellpeck.actuallyadditions.api.laser.Network;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
-import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
+import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import net.minecraft.entity.player.PlayerEntity;
@@ -186,8 +186,8 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay {
 
         if (totalReceiverAmount > 0 && !relaysThatWork.isEmpty()) {
             int amountPer = maxTransfer / totalReceiverAmount <= 0
-                ? maxTransfer / totalReceiverAmount
-                : maxTransfer;
+                ? maxTransfer
+                : maxTransfer / totalReceiverAmount;
 
             for (TileEntityLaserRelayEnergy theRelay : relaysThatWork) {
                 double highestLoss = Math.max(theRelay.getLossPercentage(), this.getLossPercentage());
@@ -231,7 +231,7 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay {
     }
 
     private int calcDeduction(int theoreticalReceived, double highestLoss) {
-        return ConfigBoolValues.LASER_RELAY_LOSS.isEnabled()
+        return CommonConfig.Machines.LASER_RELAY_LOSS.get()
             ? MathHelper.ceil(theoreticalReceived * (highestLoss / 100))
             : 0;
     }
