@@ -21,13 +21,7 @@ import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
 import de.ellpeck.actuallyadditions.mod.items.ItemEngineerGoggles;
 import de.ellpeck.actuallyadditions.mod.items.ItemLaserRelayUpgrade;
 import de.ellpeck.actuallyadditions.mod.items.ItemLaserWrench;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelay;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayEnergy;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayEnergyAdvanced;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayEnergyExtreme;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayFluids;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayItem;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayItemAdvanced;
+import de.ellpeck.actuallyadditions.mod.tile.*;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import io.netty.util.internal.ConcurrentSet;
@@ -35,6 +29,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
@@ -93,6 +88,12 @@ public class BlockLaserRelay extends FullyDirectionalBlock.Container implements 
     //            }
     //        }
     //    }
+
+
+    @Override
+    public BlockState getStateForPlacement(BlockItemUseContext context) {
+        return this.defaultBlockState().setValue(FACING, context.getClickedFace());
+    }
 
     @Override
     public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
