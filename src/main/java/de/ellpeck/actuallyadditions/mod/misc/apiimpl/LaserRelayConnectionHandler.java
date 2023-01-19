@@ -70,13 +70,15 @@ public final class LaserRelayConnectionHandler implements ILaserRelayConnectionH
     @Override
     public ConcurrentSet<IConnectionPair> getConnectionsFor(BlockPos relay, World world) {
         ConcurrentSet<IConnectionPair> allPairs = new ConcurrentSet<>();
-/*        for (Network aNetwork : WorldData.get(world).laserRelayNetworks) {
-            for (IConnectionPair pair : aNetwork.connections) {
-                if (pair.contains(relay)) {
-                    allPairs.add(pair);
+        if(!world.isClientSide) {
+            for (Network aNetwork : WorldData.get(world).laserRelayNetworks) {
+                for (IConnectionPair pair : aNetwork.connections) {
+                    if (pair.contains(relay)) {
+                        allPairs.add(pair);
+                    }
                 }
             }
-        }*/ //TODO ohhh boy
+        } //TODO ohhh boy
         return allPairs;
     }
 
@@ -107,7 +109,7 @@ public final class LaserRelayConnectionHandler implements ILaserRelayConnectionH
      */
     @Override
     public Network getNetworkFor(BlockPos relay, World world) {
-        if (world != null) {
+        if (world != null && !world.isClientSide) {
             for (Network aNetwork : WorldData.get(world).laserRelayNetworks) {
                 for (IConnectionPair pair : aNetwork.connections) {
                     if (pair.contains(relay)) {
@@ -135,7 +137,7 @@ public final class LaserRelayConnectionHandler implements ILaserRelayConnectionH
 
     @Override
     public boolean addConnection(BlockPos firstRelay, BlockPos secondRelay, LaserType type, World world, boolean suppressConnectionRender, boolean removeIfConnected) {
-        if (firstRelay == null || secondRelay == null || firstRelay == secondRelay || firstRelay.equals(secondRelay)) {
+        if (world.isClientSide || firstRelay == null || secondRelay == null || firstRelay == secondRelay || firstRelay.equals(secondRelay)) {
             return false;
         }
         WorldData data = WorldData.get(world);
@@ -184,7 +186,7 @@ public final class LaserRelayConnectionHandler implements ILaserRelayConnectionH
 
     @Override
     public void removeConnection(World world, BlockPos firstRelay, BlockPos secondRelay) {
-        if (world != null && firstRelay != null && secondRelay != null) {
+        if (world != null && !world.isClientSide && firstRelay != null && secondRelay != null) {
             Network network = this.getNetworkFor(firstRelay, world);
 
             if (network != null) {

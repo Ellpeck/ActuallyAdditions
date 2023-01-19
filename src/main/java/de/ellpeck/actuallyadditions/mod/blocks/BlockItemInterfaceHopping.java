@@ -28,7 +28,7 @@ public class BlockItemInterfaceHopping extends BlockItemInterface {
         return Shapes.HOPPING_ITEM_VIEWER_SHAPE;
     }
 
-    @Override
+    //@Override
     public TileEntity newBlockEntity(IBlockReader worldIn) {
         return new TileEntityItemInterfaceHopping();
     }

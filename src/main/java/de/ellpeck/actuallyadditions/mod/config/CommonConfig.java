@@ -39,6 +39,7 @@ public class CommonConfig {
         public static ForgeConfigSpec.IntValue RECONSTRUCTOR_POWER;
         public static ForgeConfigSpec.IntValue OIL_GENERATOR_TRANSFER;
         public static ForgeConfigSpec.IntValue MINER_LENS_ENERGY;
+        public static ForgeConfigSpec.BooleanValue LASER_RELAY_LOSS;
 
         public static void build() {
             BUILDER.comment("Machine Settings").push("machineSettings");
@@ -47,6 +48,7 @@ public class CommonConfig {
             RECONSTRUCTOR_POWER = BUILDER.comment("The amount of power the atomic reconstructor can store.").defineInRange("reconstructorPower", 300000, 300000, Integer.MAX_VALUE);
             OIL_GENERATOR_TRANSFER = BUILDER.comment("The amount of power the oil generator can transfer per tick.").defineInRange("oilGeneratorTransfer", 500, 100, Integer.MAX_VALUE);
             MINER_LENS_ENERGY = BUILDER.comment("The energy use of the Atomic Reconstructor's Mining Lens.").defineInRange("minerLensEnergy", 60000, 1, Integer.MAX_VALUE);
+            LASER_RELAY_LOSS = BUILDER.comment("If Energy Laser Relays should have energy loss.").define("laserRelayLoss", true);
 
             BUILDER.pop();
         }

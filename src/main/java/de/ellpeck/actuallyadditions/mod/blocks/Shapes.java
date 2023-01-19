@@ -135,6 +135,15 @@ public class Shapes {
         .add(15, 1, 0, 16, 15, 1)
         .standardReduceBuild().get();
 
+    static final class LaserRelayShapes {
+        static final VoxelShape SHAPE_U = Stream.of(Block.box(1, 0, 1, 15, 1, 15), Block.box(3, 1, 3, 13, 5, 13), Block.box(7, 4, 7, 9, 10, 9)).reduce((v1, v2) -> VoxelShapes.join(v1, v2, IBooleanFunction.OR)).get();
+        static final VoxelShape SHAPE_D = Stream.of(Block.box(1, 15, 1, 15, 16, 15), Block.box(3, 11, 3, 13, 15, 13), Block.box(7, 6, 7, 9, 12, 9)).reduce((v1, v2) -> VoxelShapes.join(v1, v2, IBooleanFunction.OR)).get();
+        static final VoxelShape SHAPE_N = Stream.of(Block.box(1, 1, 15, 15, 15, 16), Block.box(3, 3, 11, 13, 13, 15), Block.box(7, 7, 6, 9, 9, 12)).reduce((v1, v2) -> VoxelShapes.join(v1, v2, IBooleanFunction.OR)).get();
+        static final VoxelShape SHAPE_E = Stream.of(Block.box(0, 1, 1, 1, 15, 15), Block.box(1, 3, 3, 5, 13, 13), Block.box(4, 7, 7, 10, 9, 9)).reduce((v1, v2) -> VoxelShapes.join(v1, v2, IBooleanFunction.OR)).get();
+        static final VoxelShape SHAPE_S = Stream.of(Block.box(1, 1, 0, 15, 15, 1), Block.box(3, 3, 1, 13, 13, 5), Block.box(7, 7, 4, 9, 9, 10)).reduce((v1, v2) -> VoxelShapes.join(v1, v2, IBooleanFunction.OR)).get();
+        static final VoxelShape SHAPE_W = Stream.of(Block.box(15, 1, 1, 16, 15, 15), Block.box(11, 3, 3, 15, 13, 13), Block.box(6, 7, 7, 12, 9, 9)).reduce((v1, v2) -> VoxelShapes.join(v1, v2, IBooleanFunction.OR)).get();
+    }
+
     public static class ShapeBuilder {
         Stream.Builder<VoxelShape> shapes = Stream.builder();
 

@@ -42,6 +42,8 @@ public abstract class TileEntityLaserRelay extends TileEntityInventoryBase {
     private Network cachedNetwork;
     private int changeAmountAtCaching = -1;
     private int lastRange;
+    // List of connections that are synced to the client for RenderLaserRelay to use
+    private final ConcurrentSet<IConnectionPair> connections = new ConcurrentSet<>();
 
     public TileEntityLaserRelay(TileEntityType<?> tileType, LaserType type) {
         super(tileType, 1);
@@ -55,10 +57,12 @@ public abstract class TileEntityLaserRelay extends TileEntityInventoryBase {
         if (type == NBTType.SYNC) {
             ActuallyAdditionsAPI.connectionHandler.removeRelayFromNetwork(this.worldPosition, this.level);
 
+            this.connections.clear();
             ListNBT list = compound.getList("Connections", 10);
             if (!list.isEmpty()) {
                 for (int i = 0; i < list.size(); i++) {
                     ConnectionPair pair = new ConnectionPair();
+                    this.connections.add(pair);
                     pair.readFromNBT(list.getCompound(i));
                     ActuallyAdditionsAPI.connectionHandler.addConnection(pair.getPositions()[0], pair.getPositions()[1], this.type, this.level, pair.doesSuppressRender());
                 }
@@ -97,6 +101,7 @@ public abstract class TileEntityLaserRelay extends TileEntityInventoryBase {
                 for (IConnectionPair pair : connections) {
                     int distanceSq = (int) pair.getPositions()[0].distSqr(pair.getPositions()[1]);
                     if (distanceSq > range * range) {
+                        this.connections.remove(pair);
                         ActuallyAdditionsAPI.connectionHandler.removeConnection(this.level, pair.getPositions()[0], pair.getPositions()[1]);
                     }
                 }
@@ -184,4 +189,8 @@ public abstract class TileEntityLaserRelay extends TileEntityInventoryBase {
     public abstract String getCompassDisplayString();
 
     public abstract void onCompassAction(PlayerEntity player);
+
+    public ConcurrentSet<IConnectionPair> getConnections() {
+        return connections;
+    }
 }

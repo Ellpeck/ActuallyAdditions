@@ -10,20 +10,29 @@
 
 package de.ellpeck.actuallyadditions.mod.particle;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.particle.IAnimatedSprite;
+import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.IParticleRenderType;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.ActiveRenderInfo;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.item.ItemStack;
+import net.minecraft.particles.IParticleData;
 import net.minecraft.util.Util;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
-import org.lwjgl.opengl.GL14;
+import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.world.LightType;
 
 public class ParticleLaserItem extends Particle {
     private final double otherX;
@@ -56,40 +65,65 @@ public class ParticleLaserItem extends Particle {
         super.remove();
 
         if (this.otherX != 0 || this.otherY != 0 || this.otherZ != 0) {
-            Particle fx = new ParticleLaserItem(this.level, this.otherX, this.otherY, this.otherZ, this.stack, -0.025);
-            Minecraft.getInstance().particleEngine.add(fx);
+            this.level.addParticle(Factory.createData(this.stack, 0, 0, 0),
+                    this.otherX, this.otherY, this.otherZ, 0, -0.025, 0);
         }
     }
 
     @Override
     public void render(IVertexBuilder buffer, ActiveRenderInfo renderInfo, float partialTicks) {
+        Minecraft mc = Minecraft.getInstance();
+        IRenderTypeBuffer.Impl renderBuffer = mc.renderBuffers().bufferSource();
+        Vector3d cam = renderInfo.getPosition();
+
         RenderSystem.pushMatrix();
         RenderHelper.turnBackOn();
+        MatrixStack matrices = new MatrixStack();
+        matrices.pushPose();
 
-        Vector3d cam = renderInfo.getPosition();
-        RenderSystem.translated(this.x - cam.x(), this.y - cam.y(), this.z - cam.z());
-        RenderSystem.scalef(0.3F, 0.3F, 0.3F);
+        matrices.translate(x - cam.x, y - cam.y, z - cam.z);
+        matrices.scale(0.3F, 0.3F, 0.3F);
 
         double boop = Util.getMillis() / 600D;
-        RenderSystem.rotatef((float) (boop * 40D % 360), 0, 1, 0);
+        matrices.mulPose(Vector3f.YP.rotationDegrees((float) (boop * 40D % 360)));
 
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA.value, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA.value, GlStateManager.SourceFactor.ONE.value, GlStateManager.DestFactor.ZERO.value);
+        RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA,
+                GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
 
         float ageRatio = (float) this.age / (float) this.lifetime;
         float color = this.yd < 0
-            ? 1F - ageRatio
-            : ageRatio;
-        GL14.glBlendColor(color, color, color, color);
+                ? 1F - ageRatio
+                : ageRatio;
+        RenderSystem.blendColor(color, color, color, color);
 
-        AssetUtil.renderItemWithoutScrewingWithColors(this.stack);
+        int blockLight = level.getBrightness(LightType.BLOCK, new BlockPos(x, y, z));
+        int skyLight = level.getBrightness(LightType.SKY, new BlockPos(x, y, z));
+        AssetUtil.renderItemWithoutScrewingWithColors(this.stack, matrices, LightTexture.pack(blockLight, skyLight), OverlayTexture.NO_OVERLAY);
 
         RenderHelper.turnOff();
+        matrices.popPose();
         RenderSystem.popMatrix();
+        renderBuffer.endBatch();
     }
 
     @Override
     public IParticleRenderType getRenderType() {
         return IParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
+    }
+
+    public static class Factory implements IParticleFactory<LaserItemParticleData> {
+        public Factory(IAnimatedSprite sprite) {
+
+        }
+
+        @Override
+        public Particle createParticle(LaserItemParticleData data, ClientWorld worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+            return new ParticleLaserItem(worldIn, x, y, z, data.stack, ySpeed, data.outputX, data.outputY, data.outputZ);
+        }
+
+        public static IParticleData createData(ItemStack stack, double outputX, double outputY, double outputZ) {
+            return new LaserItemParticleData(stack, outputX, outputY, outputZ);
+        }
     }
 }

@@ -1,7 +1,30 @@
 {
   "variants": {
-    "": {
+    "facing=down": {
+      "model": "actuallyadditions:block/laser_relay_fluids",
+      "x": 180
+    },
+    "facing=up": {
       "model": "actuallyadditions:block/laser_relay_fluids"
+    },
+    "facing=north": {
+      "model": "actuallyadditions:block/laser_relay_fluids",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "actuallyadditions:block/laser_relay_fluids",
+      "x": 90,
+      "y": 180
+    },
+    "facing=west": {
+      "model": "actuallyadditions:block/laser_relay_fluids",
+      "x": 90,
+      "y": 270
+    },
+    "facing=east": {
+      "model": "actuallyadditions:block/laser_relay_fluids",
+      "x": 90,
+      "y": 90
     }
   }
 }

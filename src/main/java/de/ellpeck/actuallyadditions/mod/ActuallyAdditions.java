@@ -26,12 +26,12 @@ import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.inventory.ActuallyContainers;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.items.ItemCoffee;
-import de.ellpeck.actuallyadditions.mod.items.lens.LensMining;
 import de.ellpeck.actuallyadditions.mod.misc.BannerHelper;
 import de.ellpeck.actuallyadditions.mod.misc.DungeonLoot;
 import de.ellpeck.actuallyadditions.mod.misc.apiimpl.LaserRelayConnectionHandler;
 import de.ellpeck.actuallyadditions.mod.misc.apiimpl.MethodHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
+import de.ellpeck.actuallyadditions.mod.particle.ActuallyParticles;
 import de.ellpeck.actuallyadditions.mod.update.UpdateChecker;
 import de.ellpeck.actuallyadditions.mod.util.ResourceReloader;
 import net.minecraft.entity.EntityClassification;
@@ -43,6 +43,7 @@ import net.minecraft.item.Items;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.event.AddReloadListenerEvent;
@@ -100,6 +101,7 @@ public class ActuallyAdditions {
         ActuallyContainers.CONTAINERS.register(eventBus);
         ENTITIES.register(eventBus);
         eventBus.addListener(this::onConfigReload);
+        ActuallyParticles.init(eventBus);
 
         MinecraftForge.EVENT_BUS.addListener(this::serverStarted);
         MinecraftForge.EVENT_BUS.addListener(this::serverStopped);
@@ -110,6 +112,7 @@ public class ActuallyAdditions {
 
         eventBus.addListener(this::setup);
         eventBus.addListener(this::clientSetup);
+        eventBus.addListener(this::particleFactoryRegister);
         IFarmerBehavior.initBehaviors();
     }
 
@@ -150,6 +153,10 @@ public class ActuallyAdditions {
 
     private void clientSetup(FMLClientSetupEvent event) {
         ActuallyAdditionsClient.setup(event);
+    }
+
+    private void particleFactoryRegister(ParticleFactoryRegisterEvent event) {
+        ActuallyAdditionsClient.registerParticleFactories();
     }
 
     public void serverStarted(FMLServerStartedEvent event) {
