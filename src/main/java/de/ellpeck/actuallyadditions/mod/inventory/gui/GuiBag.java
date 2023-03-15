@@ -34,7 +34,7 @@ public class GuiBag extends AAScreen<ContainerBag> {
         super(container, inventory, title);
         this.imageWidth = 176;
         this.imageHeight = 90 + 86;
-        this.isVoid = container.isVoid;
+        this.isVoid = false; //TODO fix later
         this.container = container;
     }
 
@@ -42,12 +42,12 @@ public class GuiBag extends AAScreen<ContainerBag> {
     public void init() {
         super.init();
 
-//        this.filter = new FilterSettingsGui(this.container.filter, this.leftPos + 138, this.topPos + 10, this.buttons);
+        this.filter = new FilterSettingsGui(this.container.filter, this.leftPos + 138, this.topPos + 10, this.buttons);
 //
 //        this.buttonAutoInsert = new Button(0, this.leftPos - 21, this.topPos + 8, 20, 20, (this.container.autoInsert
 //            ? TextFormatting.DARK_GREEN
 //            : TextFormatting.RED) + "I");
-        this.addButton(this.buttonAutoInsert);
+        //this.addButton(this.buttonAutoInsert);
     }
 
 //    @Override
@@ -79,7 +79,7 @@ public class GuiBag extends AAScreen<ContainerBag> {
     @Override
     public void render(@Nonnull MatrixStack stack, int mouseX, int mouseY, float partialTicks) {
         super.render(stack, mouseX, mouseY, partialTicks);
-        this.filter.drawHover(mouseX, mouseY);
+        this.filter.drawHover(stack, mouseX, mouseY);
 
 /*        if (this.buttonAutoInsert.isMouseOver()) {
             List<String> text = new ArrayList<>();

@@ -82,8 +82,8 @@ public class GuiLaserRelayItemWhitelist extends AAScreen<ContainerLaserRelayItem
 //            this.drawHoveringText(list, x, y);
 //        }
 
-        this.leftFilter.drawHover(x, y);
-        this.rightFilter.drawHover(x, y);
+        this.leftFilter.drawHover(matrices, x, y);
+        this.rightFilter.drawHover(matrices, x, y);
     }
 
     @Override

@@ -35,7 +35,7 @@ import java.util.List;
 public class TileEntityRangedCollector extends TileEntityInventoryBase implements IButtonReactor, INamedContainerProvider {
 
     public static final int RANGE = 6;
-    public FilterSettings filter = new FilterSettings(12, true, true, false, false, 0, -1000);
+    public FilterSettings filter = new FilterSettings(12, true, false, false);
 
     public TileEntityRangedCollector() {
         super(ActuallyBlocks.RANGED_COLLECTOR.getTileEntityType(), 6);
@@ -65,7 +65,7 @@ public class TileEntityRangedCollector extends TileEntityInventoryBase implement
         List<ItemEntity> items = this.level.getEntitiesOfClass(ItemEntity.class, new AxisAlignedBB(this.worldPosition.getX() - RANGE, this.worldPosition.getY() - RANGE, this.worldPosition.getZ() - RANGE, this.worldPosition.getX() + RANGE, this.worldPosition.getY() + RANGE, this.worldPosition.getZ() + RANGE));
         if (!items.isEmpty()) {
             for (ItemEntity item : items) {
-                if (item.isAlive() && !item.hasPickUpDelay() && StackUtil.isValid(item.getItem())) {
+                if (item.isAlive() && !item.hasPickUpDelay() && !item.getItem().isEmpty()) {
                     ItemStack toAdd = item.getItem().copy();
                     if (this.filter.check(toAdd)) {
                         ArrayList<ItemStack> checkList = new ArrayList<>();
@@ -102,8 +102,8 @@ public class TileEntityRangedCollector extends TileEntityInventoryBase implement
 
     @Override
     public void onButtonPressed(int buttonID, PlayerEntity player) {
-        this.filter.onButtonPressed(buttonID);
-    }
+        //this.filter.onButtonPressed(buttonID);
+    } //TODO
 
     @Override
     public ITextComponent getDisplayName() {

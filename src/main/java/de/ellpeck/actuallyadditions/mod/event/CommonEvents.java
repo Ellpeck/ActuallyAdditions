@@ -15,7 +15,6 @@ import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData;
 import de.ellpeck.actuallyadditions.mod.data.WorldData;
-import de.ellpeck.actuallyadditions.mod.inventory.ContainerBag;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.items.DrillItem;
 import de.ellpeck.actuallyadditions.mod.items.ItemBag;
@@ -72,10 +71,10 @@ public class CommonEvents {
                                 boolean changed = false;
 
                                 boolean isVoid = ((ItemBag) invStack.getItem()).isVoid;
-                                ItemStackHandlerAA inv = new ItemStackHandlerAA(ContainerBag.getSlotAmount(isVoid));
+                                ItemStackHandlerAA inv = new ItemStackHandlerAA(28); //TODO whats going on here
                                 DrillItem.loadSlotsFromNBT(inv, invStack);
 
-                                FilterSettings filter = new FilterSettings(4, false, false, false, false, 0, 0);
+                                FilterSettings filter = new FilterSettings(4, false, false, false);
                                 filter.readFromNBT(invStack.getOrCreateTag(), "Filter");
                                 if (filter.check(stack)) {
                                     if (isVoid) {

@@ -12,6 +12,8 @@ package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerBag;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
+import de.ellpeck.actuallyadditions.mod.sack.SackData;
+import de.ellpeck.actuallyadditions.mod.sack.SackManager;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.entity.player.PlayerEntity;
@@ -24,12 +26,11 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 
-import javax.annotation.Nullable;
+import java.util.UUID;
 
 public class ItemBag extends ItemBase {
     public final boolean isVoid;
@@ -46,7 +47,7 @@ public class ItemBag extends ItemBase {
             TileEntity tile = context.getLevel().getBlockEntity(context.getClickedPos());
             if (tile != null) {
                 if (!context.getLevel().isClientSide) {
-                    ItemStackHandlerAA inv = new ItemStackHandlerAA(ContainerBag.getSlotAmount(this.isVoid));
+                    ItemStackHandlerAA inv = new ItemStackHandlerAA(28);
 
                     boolean changed = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, context.getClickedFace())
                         .map(cap -> {
@@ -85,24 +86,41 @@ public class ItemBag extends ItemBase {
 
     @Override
     public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
-        if (!world.isClientSide && hand == Hand.MAIN_HAND) {
-            NetworkHooks.openGui((ServerPlayerEntity) player, new SimpleNamedContainerProvider((windowId, playerInventory, playerEntity) -> new ContainerBag(windowId, playerInventory, playerEntity.getItemInHand(hand), this.isVoid), StringTextComponent.EMPTY));
-            //            player.openGui(ActuallyAdditions.INSTANCE, (this.isVoid
-            //                ? GuiTypes.VOID_BAG
-            //                : GuiTypes.BAG).ordinal(), world, (int) player.posX, (int) player.posY, (int) player.posZ);
+        ItemStack sackStack = player.getItemInHand(hand);
+        if (!world.isClientSide && hand == Hand.MAIN_HAND && sackStack.getItem() instanceof ItemBag && player instanceof ServerPlayerEntity) {
+
+            if (!isVoid) {
+                SackData data = getData(sackStack);
+                if (data == null)
+                    return ActionResult.fail(sackStack);
+
+                UUID uuid = data.getUuid();
+
+                data.updateAccessRecords(player.getName().getString(), System.currentTimeMillis());
+
+
+                NetworkHooks.openGui((ServerPlayerEntity) player, new SimpleNamedContainerProvider((id, inv, entity) ->
+                        new ContainerBag(id, inv, uuid, data.getSpecialHandler()), sackStack.getHoverName()), (buffer -> buffer.writeUUID(uuid)));
+            }
+
+
+/*            NetworkHooks.openGui((ServerPlayerEntity) player,
+                    new SimpleNamedContainerProvider((windowId, playerInventory, playerEntity) ->
+                            new ContainerBag(windowId, playerInventory, playerEntity.getItemInHand(hand), this.isVoid), StringTextComponent.EMPTY));*/
         }
         return ActionResult.pass(player.getItemInHand(hand));
     }
 
-    // TODO: [port] confirm this is correct
-    @Nullable
-    @Override
-    public CompoundNBT getShareTag(ItemStack stack) {
-        return new CompoundNBT();
+    public static SackData getData(ItemStack stack) {
+        if (!(stack.getItem() instanceof ItemBag))
+            return null;
+        UUID uuid;
+        CompoundNBT tag = stack.getOrCreateTag();
+        if (!tag.contains("UUID")) {
+            uuid = UUID.randomUUID();
+            tag.putUUID("UUID", uuid);
+        } else
+            uuid = tag.getUUID("UUID");
+        return SackManager.get().getOrCreateSack(uuid);
     }
-
-    //    @Override
-    //    public CompoundNBT getNBTShareTag(ItemStack stack) {
-    //        return null;
-    //    }
 }

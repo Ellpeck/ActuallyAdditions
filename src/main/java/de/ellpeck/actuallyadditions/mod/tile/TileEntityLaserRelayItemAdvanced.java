@@ -17,7 +17,6 @@ import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotFilter;
 import de.ellpeck.actuallyadditions.mod.items.DrillItem;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
-import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.compat.SlotlessableItemHandlerWrapper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -32,8 +31,8 @@ import javax.annotation.Nullable;
 
 public class TileEntityLaserRelayItemAdvanced extends TileEntityLaserRelayItem implements IButtonReactor, INamedContainerProvider {
 
-    public FilterSettings leftFilter = new FilterSettings(12, true, true, false, false, 0, -1000);
-    public FilterSettings rightFilter = new FilterSettings(12, true, true, false, false, 0, -2000);
+    public FilterSettings leftFilter = new FilterSettings(12, true, false, false);
+    public FilterSettings rightFilter = new FilterSettings(12, true, false, false);
 
     public TileEntityLaserRelayItemAdvanced() {
         super(ActuallyBlocks.LASER_RELAY_ITEM_ADVANCED.getTileEntityType());
@@ -83,7 +82,7 @@ public class TileEntityLaserRelayItemAdvanced extends TileEntityLaserRelayItem i
             handler.getNormalHandler().ifPresent(itemHandler -> {
                 for (int i = 0; i < itemHandler.getSlots(); i++) {
                     ItemStack stack = itemHandler.getStackInSlot(i);
-                    if (StackUtil.isValid(stack)) {
+                    if (!stack.isEmpty()) {
                         this.addWhitelistSmart(output, stack);
                     }
                 }
@@ -98,17 +97,17 @@ public class TileEntityLaserRelayItemAdvanced extends TileEntityLaserRelayItem i
         ItemStack copy = stack.copy();
         copy.setCount(1);
 
-        if (!FilterSettings.check(copy, usedSettings.filterInventory, true, usedSettings.respectMeta, usedSettings.respectNBT, usedSettings.respectMod, usedSettings.respectOredict)) {
+        if (!FilterSettings.check(copy, usedSettings.filterInventory, true, usedSettings.respectNBT, usedSettings.respectMod)) {
             for (int k = 0; k < usedSettings.filterInventory.getSlots(); k++) {
                 ItemStack slot = usedSettings.filterInventory.getStackInSlot(k);
-                if (StackUtil.isValid(slot)) {
+                if (!slot.isEmpty()) {
                     if (SlotFilter.isFilter(slot)) {
                         ItemStackHandlerAA inv = new ItemStackHandlerAA(ContainerFilter.SLOT_AMOUNT);
                         DrillItem.loadSlotsFromNBT(inv, slot);
 
                         boolean did = false;
                         for (int j = 0; j < inv.getSlots(); j++) {
-                            if (!StackUtil.isValid(inv.getStackInSlot(j))) {
+                            if (inv.getStackInSlot(j).isEmpty()) {
                                 inv.setStackInSlot(j, copy);
                                 did = true;
                                 break;
