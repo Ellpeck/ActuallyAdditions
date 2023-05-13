@@ -26,6 +26,7 @@ import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.inventory.ActuallyContainers;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.items.ItemCoffee;
+import de.ellpeck.actuallyadditions.mod.items.ItemWorm;
 import de.ellpeck.actuallyadditions.mod.misc.BannerHelper;
 import de.ellpeck.actuallyadditions.mod.misc.DungeonLoot;
 import de.ellpeck.actuallyadditions.mod.misc.apiimpl.LaserRelayConnectionHandler;
@@ -108,6 +109,7 @@ public class ActuallyAdditions {
         MinecraftForge.EVENT_BUS.register(new CommonEvents());
         MinecraftForge.EVENT_BUS.register(new DungeonLoot());
         MinecraftForge.EVENT_BUS.addListener(ActuallyAdditions::reloadEvent);
+        MinecraftForge.EVENT_BUS.addListener(ItemWorm::onHoe);
         InitFluids.init(eventBus);
 
         eventBus.addListener(this::setup);

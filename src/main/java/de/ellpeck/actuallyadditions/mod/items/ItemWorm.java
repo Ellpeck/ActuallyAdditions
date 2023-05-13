@@ -17,21 +17,14 @@ import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
-import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Util;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
 import net.minecraftforge.eventbus.api.Event;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.util.List;
 
@@ -64,15 +57,14 @@ public class ItemWorm extends ItemBase {
         return super.useOn(context);
     }
 
-    @SubscribeEvent(priority = EventPriority.LOW)
-    public void onHoe(UseHoeEvent event) {
+    public static void onHoe(UseHoeEvent event) {
         if (CommonConfig.Other.WORMS.get() && event.getResult() != Event.Result.DENY) {
             World world = event.getEntity().level;
             if (!world.isClientSide) {
                 BlockPos pos = event.getContext().getClickedPos();
                 if (world.isEmptyBlock(pos.above())) {
                     BlockState state = world.getBlockState(pos);
-                    if (state.getBlock() == Blocks.GRASS && world.random.nextFloat() >= 0.95F) {
+                    if (state.getBlock() == Blocks.GRASS_BLOCK && world.random.nextFloat() >= 0.95F) {
                         ItemStack stack = new ItemStack(ActuallyItems.WORM.get(), world.random.nextInt(2) + 1);
                         ItemEntity item = new ItemEntity(world, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, stack);
                         world.addFreshEntity(item);
