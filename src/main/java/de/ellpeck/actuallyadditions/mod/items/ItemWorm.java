@@ -38,38 +38,40 @@ public class ItemWorm extends ItemBase {
     public ActionResultType useOn(ItemUseContext context) {
         BlockPos pos = context.getClickedPos();
         ItemStack stack = context.getPlayer().getItemInHand(context.getHand());
-        BlockState state = context.getLevel().getBlockState(pos);
-        if (EntityWorm.canWormify(context.getLevel(), context.getClickedPos(), state)) {
-            List<EntityWorm> worms = context.getLevel().getEntitiesOfClass(EntityWorm.class, new AxisAlignedBB(pos.getX() - 1, pos.getY(), pos.getZ() - 1, pos.getX() + 2, pos.getY() + 1, pos.getZ() + 2));
-            if (worms.isEmpty()) {
-                if (!context.getLevel().isClientSide) {
-                    EntityWorm worm = new EntityWorm(ActuallyAdditions.ENTITY_WORM.get(), context.getLevel());
-                    worm.setPos(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
-                    worm.setCustomName(stack.getHoverName());
-                    context.getLevel().addFreshEntity(worm);
-                    if (!context.getPlayer().isCreative()) {
-                        stack.shrink(1);
-                    }
-                }
-                return ActionResultType.SUCCESS;
-            }
-        }
-        return super.useOn(context);
+        World level = context.getLevel();
+        BlockState state = level.getBlockState(pos);
+
+        if (level.isClientSide || !EntityWorm.canWormify(level, context.getClickedPos(), state))
+            return super.useOn(context);
+
+        List<EntityWorm> worms = level.getEntitiesOfClass(EntityWorm.class, new AxisAlignedBB(pos.getX() - 1, pos.getY(), pos.getZ() - 1, pos.getX() + 2, pos.getY() + 1, pos.getZ() + 2));
+        if (!worms.isEmpty())
+            return super.useOn(context);
+
+        EntityWorm worm = new EntityWorm(ActuallyAdditions.ENTITY_WORM.get(), level);
+        worm.setPos(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
+        worm.setCustomName(stack.getHoverName());
+        level.addFreshEntity(worm);
+        if (!context.getPlayer().isCreative())
+            stack.shrink(1);
+
+        return ActionResultType.SUCCESS;
     }
 
     public static void onHoe(UseHoeEvent event) {
-        if (CommonConfig.Other.WORMS.get() && event.getResult() != Event.Result.DENY) {
-            World world = event.getEntity().level;
-            if (!world.isClientSide) {
-                BlockPos pos = event.getContext().getClickedPos();
-                if (world.isEmptyBlock(pos.above())) {
-                    BlockState state = world.getBlockState(pos);
-                    if (state.getBlock() == Blocks.GRASS_BLOCK && world.random.nextFloat() >= 0.95F) {
-                        ItemStack stack = new ItemStack(ActuallyItems.WORM.get(), world.random.nextInt(2) + 1);
-                        ItemEntity item = new ItemEntity(world, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, stack);
-                        world.addFreshEntity(item);
-                    }
-                }
+        World level = event.getEntity().level;
+
+        if (level.isClientSide || !CommonConfig.Other.WORMS.get() || event.getResult() == Event.Result.DENY)
+            return;
+
+        BlockPos pos = event.getContext().getClickedPos();
+        if (level.isEmptyBlock(pos.above())) {
+            BlockState state = level.getBlockState(pos);
+            if (state.getBlock() == Blocks.GRASS_BLOCK && level.random.nextFloat() >= 0.95F) {
+                ItemStack stack = new ItemStack(ActuallyItems.WORM.get(), level.random.nextInt(2) + 1);
+                ItemEntity item = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, stack);
+
+                level.addFreshEntity(item);
             }
         }
     }
