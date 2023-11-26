@@ -17,17 +17,16 @@ import de.ellpeck.actuallyadditions.api.laser.Network;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.FullyDirectionalBlock;
 import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
-import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
 import de.ellpeck.actuallyadditions.mod.items.ItemEngineerGoggles;
 import de.ellpeck.actuallyadditions.mod.items.ItemLaserRelayUpgrade;
 import de.ellpeck.actuallyadditions.mod.items.ItemLaserWrench;
 import de.ellpeck.actuallyadditions.mod.tile.*;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import io.netty.util.internal.ConcurrentSet;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
@@ -65,11 +64,6 @@ public class BlockLaserRelay extends FullyDirectionalBlock.Container implements 
     public BlockLaserRelay(Type type) {
         super(ActuallyBlocks.defaultPickProps(0));
         this.type = type;
-
-        // TODO: [port] add back once I know what it does.
-        //        if (this.type.ordinal() == 0) {
-        //            MinecraftForge.EVENT_BUS.register(this);
-        //        }
     }
 
     //    @SubscribeEvent
@@ -105,7 +99,7 @@ public class BlockLaserRelay extends FullyDirectionalBlock.Container implements 
             if (StackUtil.isValid(stack)) {
                 if (stack.getItem() instanceof ItemLaserWrench) {
                     return ActionResultType.FAIL;
-                } else if (stack.getItem() == ConfigValues.itemCompassConfigurator) {
+                } else if (stack.getItem() == CommonConfig.Other.relayConfigureItem) {
                     if (!world.isClientSide) {
                         relay.onCompassAction(player);
 
@@ -192,7 +186,7 @@ public class BlockLaserRelay extends FullyDirectionalBlock.Container implements 
         if (minecraft.level != null) {
             boolean wearing = ItemEngineerGoggles.isWearing(player);
             if (wearing || StackUtil.isValid(stack)) {
-                boolean compass = stack.getItem() == ConfigValues.itemCompassConfigurator;
+                boolean compass = stack.getItem() == CommonConfig.Other.relayConfigureItem;
                 if (wearing || compass || stack.getItem() instanceof ItemLaserWrench) {
                     TileEntity tile = minecraft.level.getBlockEntity(pos);
                     if (tile instanceof TileEntityLaserRelay) {
@@ -205,10 +199,10 @@ public class BlockLaserRelay extends FullyDirectionalBlock.Container implements 
                         if (compass) {
                             expl = relay.getCompassDisplayString();
                         } else {
-                            expl = TextFormatting.GRAY.toString() + TextFormatting.ITALIC + StringUtil.localizeFormatted("info." + ActuallyAdditions.MODID + ".laserRelay.mode.noCompasss", StringUtil.localize(CommonConfig.Other.relayConfigureItem.getDescriptionId() + ".name"));
+                            expl = TextFormatting.GRAY.toString() + TextFormatting.ITALIC + I18n.get("info." + ActuallyAdditions.MODID + ".laserRelay.mode.noCompasss", I18n.get(CommonConfig.Other.relayConfigureItem.getDescriptionId()));
                         }
 
-                        StringUtil.drawSplitString(minecraft.font, expl, resolution.getGuiScaledWidth() / 2 + 5, resolution.getGuiScaledHeight() / 2 + 15, Integer.MAX_VALUE, 0xFFFFFF, true);
+                        minecraft.font.draw(matrices, expl, resolution.getGuiScaledWidth() / 2f + 5, resolution.getGuiScaledHeight() / 2f + 15, 0xFFFFFF);
                     }
                 }
             }

@@ -72,8 +72,7 @@ public class ItemGrowthRing extends ItemEnergy {
                             BlockPos pos = blocks.get(world.random.nextInt(blocks.size()));
 
                             BlockState state = world.getBlockState(pos);
-                            Block block = state.getBlock();
-                            block.tick(world.getBlockState(pos), (ServerWorld) world, pos, world.random);
+                            state.randomTick((ServerWorld) world, pos, world.random);
 
                             //Show Particles if Metadata changed
                             BlockState newState = world.getBlockState(pos);

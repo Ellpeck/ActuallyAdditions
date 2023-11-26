@@ -200,7 +200,7 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay {
                 }
             }
         }
-
+        //TODO dont send the entire tank at once, gg
         if (totalReceiverAmount > 0 && !relaysThatWork.isEmpty()) {
             int amountPer = stack.getAmount() / totalReceiverAmount <= 0
                 ? stack.getAmount() / totalReceiverAmount

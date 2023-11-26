@@ -48,11 +48,10 @@ public class ItemMagnetRing extends ItemEnergy {
                 List<ItemEntity> items = world.getEntitiesOfClass(ItemEntity.class, new AxisAlignedBB(entity.getX() - range, entity.getY() - range, entity.getZ() - range, entity.getX() + range, entity.getY() + range, entity.getZ() + range));
                 if (!items.isEmpty()) {
                     for (ItemEntity item : items) {
-                        // TODO: [port] check this data is being saved on the time
                         if (item.getPersistentData().getBoolean("PreventRemoteMovement")) {
                             continue;
                         }
-                        if (item.isAlive() && !item.hasPickUpDelay()) {
+                        if (item.isAlive() && !item.hasPickUpDelay()) { // TODO config
                             int energyForItem = 50 * item.getItem().getCount();
 
                             if (this.getEnergyStored(stack) >= energyForItem) {

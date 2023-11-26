@@ -11,23 +11,24 @@
 package de.ellpeck.actuallyadditions.mod.entity;
 
 import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
-import de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer.DefaultFarmerBehavior;
 import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
-import net.minecraft.network.play.server.SSpawnObjectPacket;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.FarmlandWaterManager;
 import net.minecraftforge.common.IPlantable;
+import net.minecraftforge.common.ticket.AABBTicket;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 public class EntityWorm extends Entity {
 
     public int timer;
+    private AABBTicket waterTicket;
 
     public EntityWorm(EntityType<?> type, World world) {
         super(type, world);
@@ -45,6 +46,35 @@ public class EntityWorm extends Entity {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public void remove() {
+        if (waterTicket != null)
+            waterTicket.invalidate();
+
+        super.remove();
+    }
+
+    @Override
+    protected void removeAfterChangingDimensions() {
+        if (waterTicket != null)
+            waterTicket.invalidate();
+
+        super.removeAfterChangingDimensions();
+    }
+
+    @Override
+    public void setPos(double pX, double pY, double pZ) {
+        super.setPos(pX, pY, pZ);
+
+        if (level.isClientSide)
+            return;
+
+        if (waterTicket != null)
+            waterTicket.invalidate();
+
+        waterTicket = FarmlandWaterManager.addAABBTicket(level, new AxisAlignedBB(getX() - 2, getY() - 1.5, getZ() - 2, getX() + 2, getY(), getZ() + 2));
     }
 
     @Override
@@ -68,7 +98,7 @@ public class EntityWorm extends Entity {
                         if (canWormify(this.level, pos, state)) {
                             boolean isFarmland = block instanceof FarmlandBlock;
 
-                            if (!isFarmland || state.getValue(FarmlandBlock.MOISTURE) < 7) {
+/*                            if (!isFarmland || state.getValue(FarmlandBlock.MOISTURE) < 7) {
                                 if (isMiddlePose || this.level.random.nextFloat() >= 0.45F) {
 
                                     if (!isFarmland) {
@@ -81,7 +111,7 @@ public class EntityWorm extends Entity {
                                         this.level.setBlock(pos, state.setValue(FarmlandBlock.MOISTURE, 7), 2);
                                     }
                                 }
-                            }
+                            }*/
 
                             if (isFarmland && this.level.random.nextFloat() >= 0.95F) {
                                 BlockPos plant = pos.above();

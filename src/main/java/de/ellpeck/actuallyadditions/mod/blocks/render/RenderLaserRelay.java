@@ -13,7 +13,7 @@ package de.ellpeck.actuallyadditions.mod.blocks.render;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import de.ellpeck.actuallyadditions.api.laser.IConnectionPair;
 import de.ellpeck.actuallyadditions.api.laser.LaserType;
-import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
+import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.items.ItemEngineerGoggles;
 import de.ellpeck.actuallyadditions.mod.items.ItemLaserWrench;
@@ -64,7 +64,7 @@ public class RenderLaserRelay extends TileEntityRenderer<TileEntityLaserRelay> {
             }
 
             ItemStack hand = player.getMainHandItem();
-            if (hasGoggles || StackUtil.isValid(hand) && (hand.getItem() == ConfigValues.itemCompassConfigurator || hand.getItem() instanceof ItemLaserWrench) || "themattabase".equals(player.getName().getString())) {
+            if (hasGoggles || StackUtil.isValid(hand) && (hand.getItem() == CommonConfig.Other.relayConfigureItem || hand.getItem() instanceof ItemLaserWrench) || "themattabase".equals(player.getName().getString())) {
                 matrices.pushPose();
                 Direction direction = state.hasProperty(BlockStateProperties.FACING) ?
                         state.getValue(BlockStateProperties.FACING) : Direction.UP;
