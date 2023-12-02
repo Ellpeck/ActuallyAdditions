@@ -11,25 +11,13 @@
 package de.ellpeck.actuallyadditions.mod.util;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.platform.GlStateManager;
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.util.text.LanguageMap;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.ForgeI18n;
 
 @Deprecated
 public final class StringUtil {
-    /**
-     * Localizes a given String
-     */
-    @Deprecated
-    @OnlyIn(Dist.CLIENT)
-    public static String localize(String text) {
-        return I18n.get(text);
-    }
 
     /**
      * Localizes a given formatted String with the given Replacements

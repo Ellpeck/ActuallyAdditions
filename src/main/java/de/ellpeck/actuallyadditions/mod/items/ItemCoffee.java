@@ -15,7 +15,7 @@ import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemFoodBase;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
-import de.ellpeck.actuallyadditions.mod.util.StringUtil;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.LivingEntity;
@@ -158,7 +158,7 @@ public class ItemCoffee extends ItemFoodBase {
 
         @Override
         public String getExtraText() {
-            return StringUtil.localize("container.nei." + ActuallyAdditions.MODID + ".coffee.extra.milk");
+            return I18n.get("container.nei." + ActuallyAdditions.MODID + ".coffee.extra.milk");
         }
     }
 }

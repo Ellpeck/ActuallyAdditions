@@ -22,16 +22,12 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.ItemRenderer;
-import net.minecraft.client.renderer.LightTexture;
-import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.texture.AtlasTexture;
-import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureManager;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
@@ -69,7 +65,7 @@ public final class AssetUtil {
 
     @OnlyIn(Dist.CLIENT)
     public static void displayNameString(MatrixStack matrices, FontRenderer font, int xSize, int yPositionOfMachineText, TileEntityBase tile) {
-        displayNameString(matrices, font, xSize, yPositionOfMachineText, StringUtil.localize(tile.getNameForTranslation()));
+        displayNameString(matrices, font, xSize, yPositionOfMachineText, I18n.get(tile.getNameForTranslation()));
     }
 
     //    public static void renderBlockInWorld(Block block, int meta) {

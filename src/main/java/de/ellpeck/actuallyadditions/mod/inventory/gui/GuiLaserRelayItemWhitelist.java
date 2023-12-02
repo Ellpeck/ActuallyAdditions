@@ -16,8 +16,8 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerLaserRelayItemWhitelist;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayItemAdvanced;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.gui.widget.button.Button;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
@@ -90,8 +90,8 @@ public class GuiLaserRelayItemWhitelist extends AAScreen<ContainerLaserRelayItem
     public void renderLabels(@Nonnull MatrixStack matrices, int x, int y) {
         AssetUtil.displayNameString(matrices, this.font, this.imageWidth, -10, this.tile);
 
-        String s1 = StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.inbound");
-        String s2 = StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.outbound");
+        String s1 = I18n.get("info." + ActuallyAdditions.MODID + ".gui.inbound");
+        String s2 = I18n.get("info." + ActuallyAdditions.MODID + ".gui.outbound");
         this.font.draw(matrices, s1, 46 - this.font.width(s1) / 2, 80, 0x404040);
         this.font.draw(matrices, s2, 131 - this.font.width(s2) / 2, 80, 0x404040);
     }

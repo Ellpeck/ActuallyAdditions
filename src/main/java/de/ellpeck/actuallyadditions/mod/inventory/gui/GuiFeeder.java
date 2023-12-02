@@ -16,7 +16,7 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFeeder;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityFeeder;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import de.ellpeck.actuallyadditions.mod.util.StringUtil;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
@@ -42,11 +42,11 @@ public class GuiFeeder extends AAScreen<ContainerFeeder> {
     public void render(@Nonnull MatrixStack matrices, int x, int y, float f) {
         super.render(matrices, x, y, f);
         if (x >= this.leftPos + 69 && y >= this.topPos + 30 && x <= this.leftPos + 69 + 10 && y <= this.topPos + 30 + 10) {
-            String[] array = new String[]{this.tileFeeder.currentAnimalAmount + " " + StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.animals"), this.tileFeeder.currentAnimalAmount >= 2 && this.tileFeeder.currentAnimalAmount < TileEntityFeeder.THRESHOLD
-                ? StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.enoughToBreed")
+            String[] array = new String[]{this.tileFeeder.currentAnimalAmount + " " + I18n.get("info." + ActuallyAdditions.MODID + ".gui.animals"), this.tileFeeder.currentAnimalAmount >= 2 && this.tileFeeder.currentAnimalAmount < TileEntityFeeder.THRESHOLD
+                ? I18n.get("info." + ActuallyAdditions.MODID + ".gui.enoughToBreed")
                 : this.tileFeeder.currentAnimalAmount >= TileEntityFeeder.THRESHOLD
-                    ? StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.tooMany")
-                    : StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.notEnough")};
+                    ? I18n.get("info." + ActuallyAdditions.MODID + ".gui.tooMany")
+                    : I18n.get("info." + ActuallyAdditions.MODID + ".gui.notEnough")};
             //this.drawHoveringText(Arrays.asList(array), x, y);
         }
     }

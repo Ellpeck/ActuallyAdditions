@@ -15,7 +15,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerDrill;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import de.ellpeck.actuallyadditions.mod.util.StringUtil;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
@@ -38,7 +38,7 @@ public class GuiDrill extends AAScreen<ContainerDrill> {
 
     @Override
     public void renderLabels(@Nonnull MatrixStack matrices, int x, int y) {
-        AssetUtil.displayNameString(matrices, this.font, this.imageWidth, -10, StringUtil.localize("container." + ActuallyAdditions.MODID + ".drill.name"));
+        AssetUtil.displayNameString(matrices, this.font, this.imageWidth, -10, I18n.get("container." + ActuallyAdditions.MODID + ".drill.name"));
     }
 
     @Override

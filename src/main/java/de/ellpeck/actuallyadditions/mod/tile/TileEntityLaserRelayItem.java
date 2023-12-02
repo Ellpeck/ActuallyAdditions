@@ -16,9 +16,9 @@ import de.ellpeck.actuallyadditions.api.laser.Network;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityItemInterface.GenericItemHandlerInfo;
-import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import de.ellpeck.actuallyadditions.mod.util.compat.SlotlessableItemHandlerWrapper;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -143,13 +143,13 @@ public class TileEntityLaserRelayItem extends TileEntityLaserRelay {
     @Override
     @OnlyIn(Dist.CLIENT)
     public String getExtraDisplayString() {
-        return StringUtil.localize("info." + ActuallyAdditions.MODID + ".laserRelay.item.extra") + ": " + TextFormatting.DARK_RED + this.getPriority() + TextFormatting.RESET;
+        return I18n.get("info." + ActuallyAdditions.MODID + ".laserRelay.item.extra") + ": " + TextFormatting.DARK_RED + this.getPriority() + TextFormatting.RESET;
     }
 
     @Override
     @OnlyIn(Dist.CLIENT)
     public String getCompassDisplayString() {
-        return TextFormatting.GREEN + StringUtil.localize("info." + ActuallyAdditions.MODID + ".laserRelay.item.display.1") + "\n" + StringUtil.localize("info." + ActuallyAdditions.MODID + ".laserRelay.item.display.2");
+        return TextFormatting.GREEN + I18n.get("info." + ActuallyAdditions.MODID + ".laserRelay.item.display.1") + "\n" + I18n.get("info." + ActuallyAdditions.MODID + ".laserRelay.item.display.2");
     }
 
     @Override
