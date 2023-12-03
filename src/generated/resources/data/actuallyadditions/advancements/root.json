@@ -1,0 +1,28 @@
+{
+  "display": {
+    "icon": {
+      "item": "actuallyadditions:booklet"
+    },
+    "title": {
+      "translate": "achievement.actuallyadditions.openBooklet"
+    },
+    "description": {
+      "translate": "achievement.actuallyadditions.openBooklet.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false,
+    "background": "minecraft:textures/gui/advancements/backgrounds/stone.png"
+  },
+  "criteria": {
+    "right_click": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "right_click"
+    ]
+  ]
+}

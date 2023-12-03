@@ -1,0 +1,35 @@
+{
+  "parent": "actuallyadditions:craft_reconstructor",
+  "display": {
+    "icon": {
+      "item": "actuallyadditions:emeradic_crystal"
+    },
+    "title": {
+      "translate": "achievement.actuallyadditions.makeCrystal"
+    },
+    "description": {
+      "translate": "achievement.actuallyadditions.makeCrystal.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "crystal": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "actuallyadditions:crystals"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "crystal"
+    ]
+  ]
+}

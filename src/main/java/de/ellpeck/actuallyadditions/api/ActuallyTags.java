@@ -10,6 +10,7 @@ public final class ActuallyTags {
         public static final ITag.INamedTag<Item> DRILLS = tag("drills");
         public static final ITag.INamedTag<Item> COFFEE_BEANS = tag("coffee_beans");
         public static final ITag.INamedTag<Item> TINY_COALS = tag("tiny_coals");
+        public static final ITag.INamedTag<Item> CRYSTALS = tag("crystals");
 
         private static ITag.INamedTag<Item> tag(String name) {
             return ItemTags.bind(String.format("%s:%s", ActuallyAdditions.MODID, name));
