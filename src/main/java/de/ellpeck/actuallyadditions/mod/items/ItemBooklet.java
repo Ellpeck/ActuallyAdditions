@@ -15,15 +15,20 @@ import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.IHudDisplay;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
+import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementManager;
+import net.minecraft.advancements.PlayerAdvancements;
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -64,6 +69,15 @@ public class ItemBooklet extends ItemBase implements IHudDisplay {
 
     @Override
     public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+        if (!world.isClientSide) {
+            ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
+            PlayerAdvancements advancements = serverPlayer.getAdvancements();
+            AdvancementManager manager = player.getServer().getAdvancements();
+            Advancement advancement = manager.getAdvancement(new ResourceLocation(ActuallyAdditions.MODID, "root"));
+            if (advancement != null && !advancements.getOrStartProgress(advancement).isDone()) {
+                advancements.award(advancement, "right_click");
+            }
+        }
 //        player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.BOOK.ordinal(), world, (int) player.posX, (int) player.posY, (int) player.posZ);
 //
 //        if (!world.isClientSide) {

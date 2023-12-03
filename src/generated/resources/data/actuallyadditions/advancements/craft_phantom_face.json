@@ -1,0 +1,36 @@
+{
+  "parent": "actuallyadditions:root",
+  "display": {
+    "icon": {
+      "item": "actuallyadditions:phantom_itemface"
+    },
+    "title": {
+      "translate": "achievement.actuallyadditions.craftPhantomface"
+    },
+    "description": {
+      "translate": "achievement.actuallyadditions.craftPhantomface.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false,
+    "background": "minecraft:textures/blocks/stone.png"
+  },
+  "criteria": {
+    "phantom_face": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "actuallyadditions:phantom_itemface"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "phantom_face"
+    ]
+  ]
+}

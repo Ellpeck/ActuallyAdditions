@@ -1,0 +1,35 @@
+{
+  "parent": "actuallyadditions:craft_laser_relay",
+  "display": {
+    "icon": {
+      "item": "actuallyadditions:item_interface"
+    },
+    "title": {
+      "translate": "achievement.actuallyadditions.craftItemInterface"
+    },
+    "description": {
+      "translate": "achievement.actuallyadditions.craftItemInterface.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "item_interface": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "actuallyadditions:item_interface"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "item_interface"
+    ]
+  ]
+}
