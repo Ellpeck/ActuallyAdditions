@@ -10,7 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
-import de.ellpeck.actuallyadditions.mod.inventory.ContainerBag;
+import de.ellpeck.actuallyadditions.mod.inventory.SackContainer;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.sack.SackData;
 import de.ellpeck.actuallyadditions.mod.sack.SackManager;
@@ -32,10 +32,10 @@ import net.minecraftforge.items.CapabilityItemHandler;
 
 import java.util.UUID;
 
-public class ItemBag extends ItemBase {
+public class Sack extends ItemBase {
     public final boolean isVoid;
 
-    public ItemBag(boolean isVoid) {
+    public Sack(boolean isVoid) {
         super(ActuallyItems.defaultProps().stacksTo(1));
         this.isVoid = isVoid;
     }
@@ -87,7 +87,7 @@ public class ItemBag extends ItemBase {
     @Override
     public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
         ItemStack sackStack = player.getItemInHand(hand);
-        if (!world.isClientSide && hand == Hand.MAIN_HAND && sackStack.getItem() instanceof ItemBag && player instanceof ServerPlayerEntity) {
+        if (!world.isClientSide && hand == Hand.MAIN_HAND && sackStack.getItem() instanceof Sack && player instanceof ServerPlayerEntity) {
 
             if (!isVoid) {
                 SackData data = getData(sackStack);
@@ -100,7 +100,7 @@ public class ItemBag extends ItemBase {
 
 
                 NetworkHooks.openGui((ServerPlayerEntity) player, new SimpleNamedContainerProvider((id, inv, entity) ->
-                        new ContainerBag(id, inv, uuid, data.getSpecialHandler()), sackStack.getHoverName()), (buffer -> buffer.writeUUID(uuid)));
+                        new SackContainer(id, inv, uuid, data.getSpecialHandler()), sackStack.getHoverName()), (buffer -> buffer.writeUUID(uuid)));
             }
 
 
@@ -112,7 +112,7 @@ public class ItemBag extends ItemBase {
     }
 
     public static SackData getData(ItemStack stack) {
-        if (!(stack.getItem() instanceof ItemBag))
+        if (!(stack.getItem() instanceof Sack))
             return null;
         UUID uuid;
         CompoundNBT tag = stack.getOrCreateTag();

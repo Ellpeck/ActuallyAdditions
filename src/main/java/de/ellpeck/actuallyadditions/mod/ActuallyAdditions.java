@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
+import de.ellpeck.actuallyadditions.api.ActuallyTags;
 import de.ellpeck.actuallyadditions.api.farmer.IFarmerBehavior;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
@@ -26,7 +27,7 @@ import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.inventory.ActuallyContainers;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.items.ItemCoffee;
-import de.ellpeck.actuallyadditions.mod.items.ItemWorm;
+import de.ellpeck.actuallyadditions.mod.items.Worm;
 import de.ellpeck.actuallyadditions.mod.misc.BannerHelper;
 import de.ellpeck.actuallyadditions.mod.misc.DungeonLoot;
 import de.ellpeck.actuallyadditions.mod.misc.apiimpl.LaserRelayConnectionHandler;
@@ -103,13 +104,14 @@ public class ActuallyAdditions {
         ENTITIES.register(eventBus);
         eventBus.addListener(this::onConfigReload);
         ActuallyParticles.init(eventBus);
+        ActuallyTags.init();
 
         MinecraftForge.EVENT_BUS.addListener(this::serverStarted);
         MinecraftForge.EVENT_BUS.addListener(this::serverStopped);
         MinecraftForge.EVENT_BUS.register(new CommonEvents());
         MinecraftForge.EVENT_BUS.register(new DungeonLoot());
         MinecraftForge.EVENT_BUS.addListener(ActuallyAdditions::reloadEvent);
-        MinecraftForge.EVENT_BUS.addListener(ItemWorm::onHoe);
+        MinecraftForge.EVENT_BUS.addListener(Worm::onHoe);
         InitFluids.init(eventBus);
 
         eventBus.addListener(this::setup);

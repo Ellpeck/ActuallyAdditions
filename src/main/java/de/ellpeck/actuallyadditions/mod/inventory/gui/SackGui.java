@@ -12,7 +12,7 @@ package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-import de.ellpeck.actuallyadditions.mod.inventory.ContainerBag;
+import de.ellpeck.actuallyadditions.mod.inventory.SackContainer;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.entity.player.PlayerInventory;
@@ -21,16 +21,16 @@ import net.minecraft.util.text.ITextComponent;
 
 import javax.annotation.Nonnull;
 
-public class GuiBag extends AAScreen<ContainerBag> {
+public class SackGui extends AAScreen<SackContainer> {
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_bag");
     private static final ResourceLocation RES_LOC_VOID = AssetUtil.getGuiLocation("gui_void_bag");
 
-    private final ContainerBag container;
+    private final SackContainer container;
     private final boolean isVoid;
     private FilterSettingsGui filter;
     private Button buttonAutoInsert;
 
-    public GuiBag(ContainerBag container, PlayerInventory inventory, ITextComponent title) {
+    public SackGui(SackContainer container, PlayerInventory inventory, ITextComponent title) {
         super(container, inventory, title);
         this.imageWidth = 176;
         this.imageHeight = 90 + 86;

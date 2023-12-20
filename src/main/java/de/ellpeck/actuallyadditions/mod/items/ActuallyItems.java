@@ -99,9 +99,9 @@ public final class ActuallyItems {
     public static final RegistryObject<Item> LASER_UPGRADE_RANGE = ITEMS.register("laser_upgrade_range", ItemLaserRelayUpgrade::new);
     public static final RegistryObject<Item> LASER_UPGRADE_INVISIBILITY = ITEMS.register("laser_upgrade_invisibility", ItemLaserRelayUpgrade::new);
     public static final Supplier<Item> HANDHELD_FILLER = ITEMS.register("handheld_filler", ItemFillingWand::new);
-    public static final RegistryObject<Item> TRAVELERS_SACK = ITEMS.register("travelers_sack", () -> new ItemBag(false));
-    public static final RegistryObject<Item> VOID_SACK = ITEMS.register("void_sack", () -> new ItemBag(true));
-    public static final RegistryObject<Item> WORM = ITEMS.register("worm", ItemWorm::new);
+    public static final RegistryObject<Item> TRAVELERS_SACK = ITEMS.register("travelers_sack", () -> new Sack(false));
+    public static final RegistryObject<Item> VOID_SACK = ITEMS.register("void_sack", () -> new Sack(true));
+    public static final RegistryObject<Item> WORM = ITEMS.register("worm", Worm::new);
     public static final RegistryObject<Item> PLAYER_PROBE = ITEMS.register("player_probe", ItemPlayerProbe::new);
     public static final RegistryObject<Item> FILTER = ITEMS.register("filter", ItemFilter::new);
     public static final RegistryObject<Item> WATER_BOWL = ITEMS.register("water_bowl", ItemWaterBowl::new);

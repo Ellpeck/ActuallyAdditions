@@ -10,12 +10,12 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory;
 
+import de.ellpeck.actuallyadditions.api.ActuallyTags;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotDeletion;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotFilter;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotImmovable;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
-import de.ellpeck.actuallyadditions.mod.items.DrillItem;
-import de.ellpeck.actuallyadditions.mod.items.ItemBag;
+import de.ellpeck.actuallyadditions.mod.items.Sack;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.tile.FilterSettings;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
@@ -24,19 +24,16 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.ClickType;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.annotation.Nonnull;
 import java.util.UUID;
 
-public class ContainerBag extends Container implements IButtonReactor {
+public class SackContainer extends Container implements IButtonReactor {
 
     public final FilterSettings filter = new FilterSettings(4, false, false, false);
     private final ItemStackHandlerAA bagInventory;
@@ -46,45 +43,49 @@ public class ContainerBag extends Container implements IButtonReactor {
 
     public static final int SIZE = 28;
 
-    public static ContainerBag fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
-        return new ContainerBag(windowId, inv, data.readUUID(), new ItemStackHandlerAA(28));
+    public static SackContainer fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
+        return new SackContainer(windowId, inv, data.readUUID(), new ItemStackHandlerAA(28));
     }
 
-    public ContainerBag(int windowId, PlayerInventory playerInventory, UUID uuid, ItemStackHandlerAA handler) {
+    public SackContainer(int windowId, PlayerInventory playerInventory, UUID uuid, ItemStackHandlerAA handler) {
         super(ActuallyContainers.BAG_CONTAINER.get(), windowId);
 
         this.inventory = playerInventory;
-        this.bagInventory = handler; //new ItemStackHandlerAA(SIZE, (slot, stack, automation) -> !isBlacklisted(stack), ItemStackHandlerAA.REMOVE_TRUE);
+        this.bagInventory = handler;
 
-        for (int i = 0; i < 4; i++) {
-            this.addSlot(new SlotFilter(this.filter, i, 155, 10 + i * 18));
+        for (int row = 0; row < 4; row++) {
+            this.addSlot(new SlotFilter(this.filter, row, 155, 10 + row * 18));
         }
 
-        if (false) { // isvoid, move to its own container
+        if (false) { // TODO isvoid, move to its own container
             this.addSlot(new SlotDeletion(this.bagInventory, 0, 64, 65) {
                 @Override
                 public boolean mayPlace(ItemStack stack) {
-                    return ContainerBag.this.filter.check(stack);
+                    return SackContainer.this.filter.check(stack);
                 }
             });
         }
 
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 7; j++) {
-                this.addSlot(new SlotItemHandlerUnconditioned(this.bagInventory, j + i * 7, 10 + j * 18, 10 + i * 18) {
+        // Sack inventory
+        for (int row = 0; row < 4; row++) {
+            for (int col = 0; col < 7; col++) {
+                this.addSlot(new SlotItemHandlerUnconditioned(this.bagInventory, col + row * 7, 10 + col * 18, 10 + row * 18) {
                     @Override
                     public boolean mayPlace(ItemStack stack) {
-                        return !isBlacklisted(stack) && ContainerBag.this.filter.check(stack);
+                        return !stack.getItem().is(ActuallyTags.Items.HOLDS_ITEMS) && SackContainer.this.filter.check(stack);
                     }
                 });
             }
         }
 
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 9; j++) {
-                this.addSlot(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 94 + i * 18));
+        // Player Inventory
+        for (int row = 0; row < 3; row++) {
+            for (int col = 0; col < 9; col++) {
+                this.addSlot(new Slot(playerInventory, col + row * 9 + 9, 8 + col * 18, 94 + row * 18));
             }
         }
+
+        // Player Hotbar
         for (int i = 0; i < 9; i++) {
             if (i == playerInventory.selected) {
                 this.addSlot(new SlotImmovable(playerInventory, i, 8 + i * 18, 152));
@@ -94,8 +95,8 @@ public class ContainerBag extends Container implements IButtonReactor {
         }
 
         ItemStack stack = playerInventory.getSelected();
-        if (!stack.isEmpty() && stack.getItem() instanceof ItemBag) {
-            DrillItem.loadSlotsFromNBT(this.bagInventory, playerInventory.getSelected());
+        if (!stack.isEmpty() && stack.getItem() instanceof Sack) {
+            //DrillItem.loadSlotsFromNBT(this.bagInventory, playerInventory.getSelected());
             if (stack.hasTag()) {
                 CompoundNBT compound = stack.getOrCreateTag();
                 this.filter.readFromNBT(compound, "Filter");
@@ -105,7 +106,7 @@ public class ContainerBag extends Container implements IButtonReactor {
     }
 
     @Override
-    public void broadcastChanges() {
+    public void broadcastChanges() { // TODO is this needed anymore?
         super.broadcastChanges();
 
         if (this.filter.needsUpdateSend() || this.autoInsert != this.oldAutoInsert) {
@@ -149,7 +150,7 @@ public class ContainerBag extends Container implements IButtonReactor {
     }
 
     @Override
-    public ItemStack quickMoveStack(PlayerEntity player, int slot) {
+    public ItemStack quickMoveStack(@Nonnull PlayerEntity player, int slot) {
         int inventoryStart = this.bagInventory.getSlots() + 4;
         int inventoryEnd = inventoryStart + 26;
         int hotbarStart = inventoryEnd + 1;
@@ -165,7 +166,7 @@ public class ContainerBag extends Container implements IButtonReactor {
             if (slot >= inventoryStart) {
                 //Shift from Inventory
                 if (!this.filter.check(newStack) || !this.moveItemStackTo(newStack, 4, 32, false)) {
-                    if (slot >= inventoryStart && slot <= inventoryEnd) {
+                    if (slot <= inventoryEnd) {
                         if (!this.moveItemStackTo(newStack, hotbarStart, hotbarEnd + 1, false)) {
                             return ItemStack.EMPTY;
                         }
@@ -209,8 +210,8 @@ public class ContainerBag extends Container implements IButtonReactor {
     @Override
     public void removed(PlayerEntity player) {
         ItemStack stack = this.inventory.getSelected();
-        if (!stack.isEmpty() && stack.getItem() instanceof ItemBag) {
-            DrillItem.writeSlotsToNBT(this.bagInventory, this.inventory.getSelected());
+        if (!stack.isEmpty() && stack.getItem() instanceof Sack) {
+            //DrillItem.writeSlotsToNBT(this.bagInventory, this.inventory.getSelected());
             CompoundNBT compound = stack.getOrCreateTag();
             this.filter.writeToNBT(compound, "Filter");
             compound.putBoolean("AutoInsert", this.autoInsert);
@@ -220,7 +221,7 @@ public class ContainerBag extends Container implements IButtonReactor {
 
     @Override
     public boolean stillValid(PlayerEntity player) {
-        return true; //!this.sack.isEmpty() && player.getMainHandItem() == this.sack; //TODO fix later
+        return true;
     }
 
     @Override
@@ -230,32 +231,5 @@ public class ContainerBag extends Container implements IButtonReactor {
         } else {
             //this.filter.onButtonPressed(buttonID); //TODO
         }
-    }
-
-    private static final List<Pair<Item, Integer>> BLACKLIST = new ArrayList<>();
-
-    private static boolean runOnce = false;
-
-    // TODO: [port] FIX THIS
-    public static boolean isBlacklisted(ItemStack stack) {
-        //TODO replace with modern tagging blocking etc
-        return false;
-/*        if (!runOnce) {
-            runOnce = true;
-            for (String s : ConfigStringListValues.SACK_BLACKLIST.getValue()) {
-                String[] split = s.split("@");
-                Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(split[0]));
-                if (item == null) {
-                    ActuallyAdditions.LOGGER.error("Invalid item in sack blacklist: " + s);
-                    continue;
-                }
-                if (split.length == 1) {
-                    BLACKLIST.add(Pair.of(item, 0));
-                } else if (split.length == 2) {
-                    BLACKLIST.add(Pair.of(item, Integer.parseInt(split[1])));
-                }
-            }
-        }
-        return BLACKLIST.contains(Pair.of(stack.getItem(), 0));*/
     }
 }

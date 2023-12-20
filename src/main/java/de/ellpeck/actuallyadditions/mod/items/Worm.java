@@ -28,9 +28,9 @@ import net.minecraftforge.eventbus.api.Event;
 
 import java.util.List;
 
-public class ItemWorm extends ItemBase {
+public class Worm extends ItemBase {
 
-    public ItemWorm() {
+    public Worm() {
         super();
     }
 

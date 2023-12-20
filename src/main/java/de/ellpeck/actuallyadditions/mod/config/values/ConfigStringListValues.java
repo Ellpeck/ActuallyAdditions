@@ -14,11 +14,6 @@ import de.ellpeck.actuallyadditions.mod.config.ConfigCategories;
 
 public enum ConfigStringListValues {
 
-    CONFIGURE_ITEMS(
-            "Configuration Items",
-            ConfigCategories.OTHER,
-            new String[] { "minecraft:redstone_torch", "minecraft:compass" },
-            "The non-Actually Additions items that are used to configure blocks from the mod. The first one is the Redstone Torch used to configure the Redstone Mode, and the second one is the Compass used to configure Laser Relays. If another mod overrides usage of either one of these items, you can change the registry name of the used items (using blocks is not possible) here."),
     CRUSHER_RECIPE_EXCEPTIONS(
             "Crusher Recipe Exceptions",
             ConfigCategories.OTHER,
@@ -70,11 +65,6 @@ public enum ConfigStringListValues {
             ConfigCategories.OTHER,
             new String[] { "minecraft:villager_golem" },
             "By default, the Spawner Changer allows every living entity to be put into a spawner. If there is one that shouldn't be able to, put its MAPPING NAME here."),
-    SACK_BLACKLIST(
-            "Sack Blacklist",
-            ConfigCategories.OTHER,
-            new String[0],
-            "The items that aren't allowed to be put in the Traveller's Sack. Use REGISTRY NAMES, and if metadata is needed, add it like so: somemod:some_block@3"),
     REPAIR_BLACKLIST(
             "Repair Blacklist",
             ConfigCategories.OTHER,

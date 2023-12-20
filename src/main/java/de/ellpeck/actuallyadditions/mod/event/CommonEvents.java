@@ -17,7 +17,7 @@ import de.ellpeck.actuallyadditions.mod.data.PlayerData;
 import de.ellpeck.actuallyadditions.mod.data.WorldData;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.items.DrillItem;
-import de.ellpeck.actuallyadditions.mod.items.ItemBag;
+import de.ellpeck.actuallyadditions.mod.items.Sack;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.tile.FilterSettings;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
@@ -66,11 +66,11 @@ public class CommonEvents {
                     if (i != player.inventory.selected) {
 
                         ItemStack invStack = player.inventory.getItem(i);
-                        if (StackUtil.isValid(invStack) && invStack.getItem() instanceof ItemBag && invStack.hasTag()) {
+                        if (StackUtil.isValid(invStack) && invStack.getItem() instanceof Sack && invStack.hasTag()) {
                             if (invStack.getOrCreateTag().getBoolean("AutoInsert")) {
                                 boolean changed = false;
 
-                                boolean isVoid = ((ItemBag) invStack.getItem()).isVoid;
+                                boolean isVoid = ((Sack) invStack.getItem()).isVoid;
                                 ItemStackHandlerAA inv = new ItemStackHandlerAA(28); //TODO whats going on here
                                 DrillItem.loadSlotsFromNBT(inv, invStack);
 

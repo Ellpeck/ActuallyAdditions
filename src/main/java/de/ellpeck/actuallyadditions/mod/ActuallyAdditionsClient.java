@@ -19,7 +19,9 @@ import de.ellpeck.actuallyadditions.mod.inventory.ActuallyContainers;
 import de.ellpeck.actuallyadditions.mod.inventory.gui.*;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.misc.special.SpecialRenderInit;
-import de.ellpeck.actuallyadditions.mod.particle.*;
+import de.ellpeck.actuallyadditions.mod.particle.ActuallyParticles;
+import de.ellpeck.actuallyadditions.mod.particle.ParticleBeam;
+import de.ellpeck.actuallyadditions.mod.particle.ParticleLaserItem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.network.play.ClientPlayNetHandler;
@@ -38,7 +40,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 public class ActuallyAdditionsClient {
 
     public static void setup(FMLClientSetupEvent event) {
-        ScreenManager.register(ActuallyContainers.BAG_CONTAINER.get(), GuiBag::new);
+        ScreenManager.register(ActuallyContainers.BAG_CONTAINER.get(), SackGui::new);
         ScreenManager.register(ActuallyContainers.BIO_REACTOR_CONTAINER.get(), GuiBioReactor::new);
         ScreenManager.register(ActuallyContainers.BREAKER_CONTAINER.get(), GuiBreaker::new);
         ScreenManager.register(ActuallyContainers.CANOLA_PRESS_CONTAINER.get(), GuiCanolaPress::new);

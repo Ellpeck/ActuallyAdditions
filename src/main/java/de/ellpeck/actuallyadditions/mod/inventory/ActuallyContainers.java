@@ -10,7 +10,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class ActuallyContainers {
     public static final DeferredRegister<ContainerType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, ActuallyAdditions.MODID);
 
-    public static final RegistryObject<ContainerType<ContainerBag>> BAG_CONTAINER = CONTAINERS.register("bag_container", () -> IForgeContainerType.create(ContainerBag::fromNetwork));
+    public static final RegistryObject<ContainerType<SackContainer>> BAG_CONTAINER = CONTAINERS.register("bag_container", () -> IForgeContainerType.create(SackContainer::fromNetwork));
     public static final RegistryObject<ContainerType<ContainerBioReactor>> BIO_REACTOR_CONTAINER = CONTAINERS.register("bioreactor_container", () -> IForgeContainerType.create(ContainerBioReactor::fromNetwork));
     public static final RegistryObject<ContainerType<ContainerBreaker>> BREAKER_CONTAINER = CONTAINERS.register("breaker_container", () -> IForgeContainerType.create(ContainerBreaker::fromNetwork));
     public static final RegistryObject<ContainerType<ContainerCanolaPress>> CANOLA_PRESS_CONTAINER = CONTAINERS.register("canola_press_container", () -> IForgeContainerType.create(ContainerCanolaPress::fromNetwork));
