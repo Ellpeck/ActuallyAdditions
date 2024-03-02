@@ -10,20 +10,17 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.util.VanillaPacketDispatcher;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
-import net.minecraft.block.BlockState;
-import net.minecraft.client.renderer.texture.ITickable;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -36,23 +33,23 @@ import net.minecraftforge.items.IItemHandler;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public abstract class TileEntityBase extends TileEntity implements ITickableTileEntity {
+public abstract class TileEntityBase extends BlockEntity {
 
     public boolean isRedstonePowered;
     public boolean isPulseMode;
     public boolean stopFromDropping;
     protected int ticksElapsed;
-    protected TileEntity[] tilesAround = new TileEntity[6];
+    protected BlockEntity[] tilesAround = new BlockEntity[6];
     protected boolean hasSavedDataOnChangeOrWorldStart;
 
-    public TileEntityBase(TileEntityType<?> type) {
-        super(type);
+    public TileEntityBase(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+        super(type, pos, state);
     }
 
     @Override
-    public CompoundNBT save(CompoundNBT compound) {
+    protected void saveAdditional(CompoundTag compound) {
+        super.saveAdditional(compound);
         this.writeSyncableNBT(compound, NBTType.SAVE_TILE);
-        return compound;
     }
 
     // TODO: [port] remove if the above is correct
@@ -63,9 +60,10 @@ public abstract class TileEntityBase extends TileEntity implements ITickableTile
     //    }
 
     @Override
-    public void load(BlockState state, CompoundNBT compound) {
+    public void load(CompoundTag compound) {
         this.readSyncableNBT(compound, NBTType.SAVE_TILE);
     }
+
 
     // TODO: [port] remove if the above is correct
     //    @Override
@@ -75,26 +73,26 @@ public abstract class TileEntityBase extends TileEntity implements ITickableTile
 
     @Nullable
     @Override
-    public SUpdateTileEntityPacket getUpdatePacket() {
-        CompoundNBT compound = new CompoundNBT();
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        CompoundTag compound = new CompoundTag();
         this.writeSyncableNBT(compound, NBTType.SYNC);
-        return new SUpdateTileEntityPacket(this.worldPosition, -1, compound);
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     @Override
-    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
         this.readSyncableNBT(pkt.getTag(), NBTType.SYNC);
     }
 
     @Override
-    public final CompoundNBT getUpdateTag() {
-        CompoundNBT compound = new CompoundNBT();
+    public final CompoundTag getUpdateTag() {
+        CompoundTag compound = new CompoundTag();
         this.writeSyncableNBT(compound, NBTType.SYNC);
         return compound;
     }
 
     @Override
-    public void handleUpdateTag(BlockState state, CompoundNBT tag) {
+    public void handleUpdateTag(CompoundTag tag) {
         this.readSyncableNBT(tag, NBTType.SYNC);
     }
 
@@ -116,9 +114,9 @@ public abstract class TileEntityBase extends TileEntity implements ITickableTile
         }*/
     }
 
-    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
         if (type != NBTType.SAVE_BLOCK) {
-            super.save(compound);
+            super.saveAdditional(compound);
         }
 
         if (type == NBTType.SAVE_TILE) {
@@ -134,9 +132,9 @@ public abstract class TileEntityBase extends TileEntity implements ITickableTile
         }
     }
 
-    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void readSyncableNBT(CompoundTag compound, NBTType type) {
         if (type != NBTType.SAVE_BLOCK) {
-            super.load(null, compound); // FIXME: [port] flag as possible crash source
+            super.load(compound); // FIXME: [port] flag as possible crash source
         }
 
         if (type == NBTType.SAVE_TILE) {
@@ -168,12 +166,6 @@ public abstract class TileEntityBase extends TileEntity implements ITickableTile
     //        return new TranslationTextComponent(this.getNameForTranslation());
     //    }
 
-
-    @Override
-    public void tick() {
-        this.updateEntity();
-    }
-
     public int getComparatorStrength() {
         return 0;
     }
@@ -181,61 +173,63 @@ public abstract class TileEntityBase extends TileEntity implements ITickableTile
     private boolean shareEnergy = this instanceof ISharingEnergyProvider;
     private boolean shareFluid = this instanceof ISharingFluidHandler;
 
-    public void updateEntity() {
+    protected void clientTick() {
+        this.ticksElapsed++;
+    }
+
+    protected void serverTick() {
         this.ticksElapsed++;
 
-        if (!this.level.isClientSide) {
-            if (this.shareEnergy) {
-                ISharingEnergyProvider provider = (ISharingEnergyProvider) this;
-                if (provider.doesShareEnergy()) {
-                    int total = provider.getEnergyToSplitShare();
-                    if (total > 0) {
-                        Direction[] sides = provider.getEnergyShareSides();
+        if (this.shareEnergy) {
+            ISharingEnergyProvider provider = (ISharingEnergyProvider) this;
+            if (provider.doesShareEnergy()) {
+                int total = provider.getEnergyToSplitShare();
+                if (total > 0) {
+                    Direction[] sides = provider.getEnergyShareSides();
 
-                        int amount = total / sides.length;
-                        if (amount <= 0) {
-                            amount = total;
-                        }
+                    int amount = total / sides.length;
+                    if (amount <= 0) {
+                        amount = total;
+                    }
 
-                        for (Direction side : sides) {
-                            TileEntity tile = this.tilesAround[side.ordinal()];
-                            if (tile != null && provider.canShareTo(tile)) {
-                                WorldUtil.doEnergyInteraction(this, tile, side, amount);
-                            }
+                    for (Direction side : sides) {
+                        BlockEntity tile = this.tilesAround[side.ordinal()];
+                        if (tile != null && provider.canShareTo(tile)) {
+                            WorldUtil.doEnergyInteraction(this, tile, side, amount);
                         }
                     }
                 }
             }
+        }
 
-            if (this.shareFluid) {
-                ISharingFluidHandler handler = (ISharingFluidHandler) this;
-                if (handler.doesShareFluid()) {
-                    int total = handler.getMaxFluidAmountToSplitShare();
-                    if (total > 0) {
-                        Direction[] sides = handler.getFluidShareSides();
+        if (this.shareFluid) {
+            ISharingFluidHandler handler = (ISharingFluidHandler) this;
+            if (handler.doesShareFluid()) {
+                int total = handler.getMaxFluidAmountToSplitShare();
+                if (total > 0) {
+                    Direction[] sides = handler.getFluidShareSides();
 
-                        int amount = total / sides.length;
-                        if (amount <= 0) {
-                            amount = total;
-                        }
+                    int amount = total / sides.length;
+                    if (amount <= 0) {
+                        amount = total;
+                    }
 
-                        for (Direction side : sides) {
-                            TileEntity tile = this.tilesAround[side.ordinal()];
-                            if (tile != null) {
-                                WorldUtil.doFluidInteraction(this, tile, side, amount);
-                            }
+                    for (Direction side : sides) {
+                        BlockEntity tile = this.tilesAround[side.ordinal()];
+                        if (tile != null) {
+                            WorldUtil.doFluidInteraction(this, tile, side, amount);
                         }
                     }
                 }
             }
+        }
 
-            if (!this.hasSavedDataOnChangeOrWorldStart) {
-                if (this.shouldSaveDataOnChangeOrWorldStart()) {
-                    this.saveDataOnChangeOrWorldStart();
-                }
-
-                this.hasSavedDataOnChangeOrWorldStart = true;
+        if (!this.hasSavedDataOnChangeOrWorldStart) {
+            if (this.shouldSaveDataOnChangeOrWorldStart()) {
+                this.saveDataOnChangeOrWorldStart();
             }
+
+            this.hasSavedDataOnChangeOrWorldStart = true;
         }
     }
 
@@ -257,7 +251,7 @@ public abstract class TileEntityBase extends TileEntity implements ITickableTile
         this.setChanged();
     }
 
-    public boolean canPlayerUse(PlayerEntity player) {
+    public boolean canPlayerUse(Player player) {
         return player.distanceToSqr(this.getBlockPos().getX() + 0.5D, this.worldPosition.getY() + 0.5D, this.worldPosition.getZ() + 0.5D) <= 64 && !this.isRemoved() && this.level.getBlockEntity(this.worldPosition) == this;
     }
 

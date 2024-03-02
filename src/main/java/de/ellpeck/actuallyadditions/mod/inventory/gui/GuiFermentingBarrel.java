@@ -10,14 +10,14 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFermentingBarrel;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityFermentingBarrel;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -32,7 +32,7 @@ public class GuiFermentingBarrel extends AAScreen<ContainerFermentingBarrel> {
     private FluidDisplay input;
     private FluidDisplay output;
 
-    public GuiFermentingBarrel(ContainerFermentingBarrel container, PlayerInventory inventory, ITextComponent title) {
+    public GuiFermentingBarrel(ContainerFermentingBarrel container, Inventory inventory, Component title) {
         super(container, inventory, title);
         this.press = container.barrel;
         this.imageWidth = 176;
@@ -40,7 +40,7 @@ public class GuiFermentingBarrel extends AAScreen<ContainerFermentingBarrel> {
     }
 
     @Override
-    public void render(@Nonnull MatrixStack matrices, int x, int y, float f) {
+    public void render(@Nonnull PoseStack matrices, int x, int y, float f) {
         super.render(matrices, x, y, f);
         this.input.render(matrices, x, y);
         this.output.render(matrices, x, y);
@@ -54,13 +54,13 @@ public class GuiFermentingBarrel extends AAScreen<ContainerFermentingBarrel> {
     }
 
     @Override
-    public void renderBg(MatrixStack matrices, float f, int x, int y) {
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+    public void renderBg(PoseStack matrices, float f, int x, int y) {
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 
-        this.getMinecraft().getTextureManager().bind(AssetUtil.GUI_INVENTORY_LOCATION);
+        RenderSystem.setShaderTexture(0, AssetUtil.GUI_INVENTORY_LOCATION);
         this.blit(matrices, this.leftPos, this.topPos + 93, 0, 0, 176, 86);
 
-        this.getMinecraft().getTextureManager().bind(RES_LOC);
+        RenderSystem.setShaderTexture(0, RES_LOC);
         this.blit(matrices, this.leftPos, this.topPos, 0, 0, 176, 93);
 
         if (this.press.currentProcessTime > 0) {

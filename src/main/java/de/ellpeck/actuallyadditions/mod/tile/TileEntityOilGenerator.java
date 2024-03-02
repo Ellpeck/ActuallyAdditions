@@ -15,16 +15,18 @@ import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import de.ellpeck.actuallyadditions.mod.crafting.LiquidFuelRecipe;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerOilGenerator;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.LazyOptional;
@@ -37,7 +39,7 @@ import net.minecraftforge.fluids.capability.templates.FluidTank;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class TileEntityOilGenerator extends TileEntityBase implements ISharingEnergyProvider, ISharingFluidHandler, INamedContainerProvider {
+public class TileEntityOilGenerator extends TileEntityBase implements ISharingEnergyProvider, ISharingFluidHandler, MenuProvider {
     public final CustomEnergyStorage storage = new CustomEnergyStorage(50000, 0, CommonConfig.Machines.OIL_GENERATOR_TRANSFER.get());
     public final LazyOptional<IEnergyStorage> lazyEnergy = LazyOptional.of(() -> this.storage);
     public final FluidTank tank = new FluidTank(2 * FluidAttributes.BUCKET_VOLUME, fluid -> getRecipeForFluid(fluid) != null) {
@@ -65,8 +67,8 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
     private int lastCompare;
     public int fuelUsage;
 
-    public TileEntityOilGenerator() {
-        super(ActuallyBlocks.OIL_GENERATOR.getTileEntityType());
+    public TileEntityOilGenerator(BlockPos pos, BlockState state) {
+        super(ActuallyBlocks.OIL_GENERATOR.getTileEntityType(), pos, state);
     }
 
     private static LiquidFuelRecipe getRecipeForFluid(FluidStack fluid) {
@@ -94,7 +96,7 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
     }
 
     @Override
-    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
         if (type != NBTType.SAVE_BLOCK) {
             compound.putInt("BurnTime", this.currentBurnTime);
             compound.putInt("CurrentEnergy", this.currentEnergyProduce);
@@ -107,7 +109,7 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
     }
 
     @Override
-    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void readSyncableNBT(CompoundTag compound, NBTType type) {
         if (type != NBTType.SAVE_BLOCK) {
             this.currentBurnTime = compound.getInt("BurnTime");
             this.currentEnergyProduce = compound.getInt("CurrentEnergy");
@@ -119,46 +121,52 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
         super.readSyncableNBT(compound, type);
     }
 
-    @Override
-    public void updateEntity() {
-        super.updateEntity();
-        if (!this.level.isClientSide) {
-            boolean flag = this.currentBurnTime > 0;
+    public static <T extends BlockEntity> void clientTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityOilGenerator tile) {
+            tile.clientTick();
+        }
+    }
 
-            if (this.currentBurnTime > 0 && this.currentEnergyProduce > 0) {
-                this.currentBurnTime--;
+    public static <T extends BlockEntity> void serverTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityOilGenerator tile) {
+            tile.serverTick();
 
-                this.storage.receiveEnergyInternal(this.currentEnergyProduce, false);
-            } else if (!this.isRedstonePowered) {
+            boolean flag = tile.currentBurnTime > 0;
 
-                LiquidFuelRecipe recipe = this.getRecipeForCurrentFluid();
-                if (recipe != null && this.storage.getEnergyStored() < this.storage.getMaxEnergyStored() && this.tank.getFluidAmount() >= recipe.getFuelAmount()) {
-                    fuelUsage = recipe.getFuelAmount();
-                    this.currentEnergyProduce = recipe.getTotalEnergy() / recipe.getBurnTime();
-                    this.maxBurnTime = recipe.getBurnTime();
-                    this.currentBurnTime = this.maxBurnTime;
+            if (tile.currentBurnTime > 0 && tile.currentEnergyProduce > 0) {
+                tile.currentBurnTime--;
 
-                    this.tank.getFluid().shrink(fuelUsage);
+                tile.storage.receiveEnergyInternal(tile.currentEnergyProduce, false);
+            } else if (!tile.isRedstonePowered) {
+
+                LiquidFuelRecipe recipe = tile.getRecipeForCurrentFluid();
+                if (recipe != null && tile.storage.getEnergyStored() < tile.storage.getMaxEnergyStored() && tile.tank.getFluidAmount() >= recipe.getFuelAmount()) {
+                    tile.fuelUsage = recipe.getFuelAmount();
+                    tile.currentEnergyProduce = recipe.getTotalEnergy() / recipe.getBurnTime();
+                    tile.maxBurnTime = recipe.getBurnTime();
+                    tile.currentBurnTime = tile.maxBurnTime;
+
+                    tile.tank.getFluid().shrink(tile.fuelUsage);
                 } else {
-                    this.currentEnergyProduce = 0;
-                    this.currentBurnTime = 0;
-                    this.maxBurnTime = 0;
-                    this.fuelUsage = 0;
+                    tile.currentEnergyProduce = 0;
+                    tile.currentBurnTime = 0;
+                    tile.maxBurnTime = 0;
+                    tile.fuelUsage = 0;
                 }
             }
 
-            if (flag != this.currentBurnTime > 0 || this.lastCompare != this.getComparatorStrength()) {
-                this.lastCompare = this.getComparatorStrength();
+            if (flag != tile.currentBurnTime > 0 || tile.lastCompare != tile.getComparatorStrength()) {
+                tile.lastCompare = tile.getComparatorStrength();
 
-                this.setChanged();
+                tile.setChanged();
             }
 
-            if ((this.storage.getEnergyStored() != this.lastEnergy || this.tank.getFluidAmount() != this.lastTank || this.lastBurnTime != this.currentBurnTime || this.lastEnergyProduce != this.currentEnergyProduce || this.lastMaxBurnTime != this.maxBurnTime) && this.sendUpdateWithInterval()) {
-                this.lastEnergy = this.storage.getEnergyStored();
-                this.lastTank = this.tank.getFluidAmount();
-                this.lastBurnTime = this.currentBurnTime;
-                this.lastEnergyProduce = this.currentEnergyProduce;
-                this.lastMaxBurnTime = this.maxBurnTime;
+            if ((tile.storage.getEnergyStored() != tile.lastEnergy || tile.tank.getFluidAmount() != tile.lastTank || tile.lastBurnTime != tile.currentBurnTime || tile.lastEnergyProduce != tile.currentEnergyProduce || tile.lastMaxBurnTime != tile.maxBurnTime) && tile.sendUpdateWithInterval()) {
+                tile.lastEnergy = tile.storage.getEnergyStored();
+                tile.lastTank = tile.tank.getFluidAmount();
+                tile.lastBurnTime = tile.currentBurnTime;
+                tile.lastEnergyProduce = tile.currentEnergyProduce;
+                tile.lastMaxBurnTime = tile.maxBurnTime;
             }
         }
     }
@@ -205,7 +213,7 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
     }
 
     @Override
-    public boolean canShareTo(TileEntity tile) {
+    public boolean canShareTo(BlockEntity tile) {
         return true;
     }
 
@@ -215,13 +223,13 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
     }
 
     @Override
-    public ITextComponent getDisplayName() {
-        return new TranslationTextComponent("container.actuallyadditions.oilGenerator");
+    public Component getDisplayName() {
+        return new TranslatableComponent("container.actuallyadditions.oilGenerator");
     }
 
     @Nullable
     @Override
-    public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity player) {
+    public AbstractContainerMenu createMenu(int windowId, Inventory playerInventory, Player player) {
         return new ContainerOilGenerator(windowId, playerInventory, this);
     }
 }

@@ -11,9 +11,9 @@
 package de.ellpeck.actuallyadditions.mod.items.metalists;
 
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.Rarity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.Rarity;
 
 @Deprecated
 public enum TheFoods {

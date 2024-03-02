@@ -21,7 +21,9 @@
       "conditions": {
         "items": [
           {
-            "item": "actuallyadditions:phantom_energyface"
+            "items": [
+              "actuallyadditions:phantom_energyface"
+            ]
           }
         ]
       }

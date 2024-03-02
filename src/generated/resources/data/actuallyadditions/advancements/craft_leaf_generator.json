@@ -21,7 +21,9 @@
       "conditions": {
         "items": [
           {
-            "item": "actuallyadditions:leaf_generator"
+            "items": [
+              "actuallyadditions:leaf_generator"
+            ]
           }
         ]
       }

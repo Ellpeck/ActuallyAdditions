@@ -1,0 +1,29 @@
+{
+  "replace": false,
+  "values": [
+    "actuallyadditions:wood_casing",
+    "actuallyadditions:iron_casing",
+    "actuallyadditions:ender_casing",
+    "actuallyadditions:lava_factory_casing",
+    "actuallyadditions:black_quartz_ore",
+    "actuallyadditions:ethetic_green_block",
+    "actuallyadditions:ethetic_white_block",
+    "actuallyadditions:black_quartz_block",
+    "actuallyadditions:black_quartz_pillar_block",
+    "actuallyadditions:chiseled_black_quartz_block",
+    "actuallyadditions:smooth_black_quartz_block",
+    "actuallyadditions:black_quartz_brick_block",
+    "actuallyadditions:enori_crystal_block",
+    "actuallyadditions:restonia_crystal_block",
+    "actuallyadditions:palis_crystal_block",
+    "actuallyadditions:diamatine_crystal_block",
+    "actuallyadditions:void_crystal_block",
+    "actuallyadditions:emeradic_crystal_block",
+    "actuallyadditions:empowered_enori_crystal_block",
+    "actuallyadditions:empowered_restonia_crystal_block",
+    "actuallyadditions:empowered_palis_crystal_block",
+    "actuallyadditions:empowered_diamatine_crystal_block",
+    "actuallyadditions:empowered_void_crystal_block",
+    "actuallyadditions:empowered_emeradic_crystal_block"
+  ]
+}

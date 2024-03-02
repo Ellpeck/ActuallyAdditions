@@ -11,8 +11,12 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 
@@ -30,8 +34,8 @@ public class TileEntityShockSuppressor extends TileEntityBase implements IEnergy
     public final LazyOptional<IEnergyStorage> lazyEnergy = LazyOptional.of(() -> this.storage);
     private int oldEnergy;
 
-    public TileEntityShockSuppressor() {
-        super(ActuallyBlocks.SHOCK_SUPPRESSOR.getTileEntityType());
+    public TileEntityShockSuppressor(BlockPos pos, BlockState state) {
+        super(ActuallyBlocks.SHOCK_SUPPRESSOR.getTileEntityType(), pos, state);
     }
 
     @Override
@@ -52,30 +56,34 @@ public class TileEntityShockSuppressor extends TileEntityBase implements IEnergy
         }
     }
 
+    public static <T extends BlockEntity> void clientTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityShockSuppressor tile) {
+            tile.clientTick();
+        }
+    }
 
-    @Override
-    public void updateEntity() {
-        super.updateEntity();
+    public static <T extends BlockEntity> void serverTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityShockSuppressor tile) {
+            tile.serverTick();
 
-        if (!this.level.isClientSide) {
-            if (!this.isRemoved() && !SUPPRESSORS.contains(this)) {
-                SUPPRESSORS.add(this);
+            if (!tile.isRemoved() && !SUPPRESSORS.contains(tile)) {
+                SUPPRESSORS.add(tile);
             }
 
-            if (this.oldEnergy != this.storage.getEnergyStored() && this.sendUpdateWithInterval()) {
-                this.oldEnergy = this.storage.getEnergyStored();
+            if (tile.oldEnergy != tile.storage.getEnergyStored() && tile.sendUpdateWithInterval()) {
+                tile.oldEnergy = tile.storage.getEnergyStored();
             }
         }
     }
 
     @Override
-    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
         this.storage.writeToNBT(compound);
     }
 
     @Override
-    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void readSyncableNBT(CompoundTag compound, NBTType type) {
         super.readSyncableNBT(compound, type);
         this.storage.readFromNBT(compound);
     }

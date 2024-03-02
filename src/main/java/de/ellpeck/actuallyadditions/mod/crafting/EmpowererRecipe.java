@@ -2,18 +2,18 @@ package de.ellpeck.actuallyadditions.mod.crafting;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import net.minecraft.data.IFinishedRecipe;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.IItemProvider;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import javax.annotation.Nonnull;
@@ -21,7 +21,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EmpowererRecipe implements IRecipe<IInventory> {
+public class EmpowererRecipe implements Recipe<Container> {
     public static String NAME = "empowering";
     private final ResourceLocation id;
     protected final Ingredient input;
@@ -75,7 +75,7 @@ public class EmpowererRecipe implements IRecipe<IInventory> {
     }
 
     @Override
-    public boolean matches(@Nonnull IInventory pInv, @Nonnull World pLevel) {
+    public boolean matches(@Nonnull Container pInv, @Nonnull Level pLevel) {
         return false;
     }
 
@@ -86,7 +86,7 @@ public class EmpowererRecipe implements IRecipe<IInventory> {
 
     @Override
     @Nonnull
-    public ItemStack assemble(@Nonnull IInventory pInv) {
+    public ItemStack assemble(@Nonnull Container pInv) {
         return output.copy();
     }
 
@@ -109,13 +109,13 @@ public class EmpowererRecipe implements IRecipe<IInventory> {
 
     @Override
     @Nonnull
-    public IRecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<?> getSerializer() {
         return ActuallyRecipes.EMPOWERING_RECIPE.get();
     }
 
     @Override
     @Nonnull
-    public IRecipeType<?> getType() {
+    public RecipeType<?> getType() {
         return ActuallyRecipes.Types.EMPOWERING;
     }
 
@@ -155,13 +155,13 @@ public class EmpowererRecipe implements IRecipe<IInventory> {
         return this.particleColor;
     }
 
-    public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<EmpowererRecipe> {
+    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<EmpowererRecipe> {
         @Override
         @Nonnull
         public EmpowererRecipe fromJson(@Nonnull ResourceLocation pRecipeId, @Nonnull JsonObject pJson) {
-            Ingredient base = Ingredient.fromJson(JSONUtils.getAsJsonObject(pJson, "base"));
+            Ingredient base = Ingredient.fromJson(GsonHelper.getAsJsonObject(pJson, "base"));
 
-            JsonArray modifiers = JSONUtils.getAsJsonArray(pJson, "modifiers");
+            JsonArray modifiers = GsonHelper.getAsJsonArray(pJson, "modifiers");
             if (modifiers.size() != 4)
                 throw new IllegalStateException(pRecipeId.toString() + ": Must have exactly 4 modifiers, has: " + modifiers.size());
 
@@ -169,18 +169,18 @@ public class EmpowererRecipe implements IRecipe<IInventory> {
             Ingredient mod2 = Ingredient.fromJson(modifiers.get(1));
             Ingredient mod3 = Ingredient.fromJson(modifiers.get(2));
             Ingredient mod4 = Ingredient.fromJson(modifiers.get(3));
-            int energy = JSONUtils.getAsInt(pJson, "energy");
-            int color = JSONUtils.getAsInt(pJson, "color");
-            int time = JSONUtils.getAsInt(pJson, "time");
-            JsonObject resultObject = JSONUtils.getAsJsonObject(pJson, "result");
-            ItemStack result = new ItemStack(JSONUtils.getAsItem(resultObject, "item"));
+            int energy = GsonHelper.getAsInt(pJson, "energy");
+            int color = GsonHelper.getAsInt(pJson, "color");
+            int time = GsonHelper.getAsInt(pJson, "time");
+            JsonObject resultObject = GsonHelper.getAsJsonObject(pJson, "result");
+            ItemStack result = new ItemStack(GsonHelper.getAsItem(resultObject, "item"));
 
             return new EmpowererRecipe(pRecipeId, result, base, mod1, mod2, mod3, mod4, energy, color, time);
         }
 
         @Nullable
         @Override
-        public EmpowererRecipe fromNetwork(@Nonnull ResourceLocation pRecipeId, PacketBuffer pBuffer) {
+        public EmpowererRecipe fromNetwork(@Nonnull ResourceLocation pRecipeId, FriendlyByteBuf pBuffer) {
             ItemStack result = pBuffer.readItem();
             Ingredient input = Ingredient.fromNetwork(pBuffer);
             Ingredient mod1 = Ingredient.fromNetwork(pBuffer);
@@ -195,7 +195,7 @@ public class EmpowererRecipe implements IRecipe<IInventory> {
         }
 
         @Override
-        public void toNetwork(PacketBuffer pBuffer, EmpowererRecipe pRecipe) {
+        public void toNetwork(FriendlyByteBuf pBuffer, EmpowererRecipe pRecipe) {
             pBuffer.writeItem(pRecipe.output);
             pRecipe.input.toNetwork(pBuffer);
             pRecipe.modifier1.toNetwork(pBuffer);
@@ -208,7 +208,7 @@ public class EmpowererRecipe implements IRecipe<IInventory> {
         }
     }
 
-    public static class FinishedRecipe implements IFinishedRecipe {
+    public static class Result implements FinishedRecipe {
         private final ResourceLocation id;
         private final Ingredient base;
         private final Ingredient mod1;
@@ -218,9 +218,9 @@ public class EmpowererRecipe implements IRecipe<IInventory> {
         private final int energy;
         private final int color;
         private final int time;
-        private final IItemProvider output;
+        private final ItemLike output;
 
-        public FinishedRecipe(ResourceLocation id, IItemProvider output, Ingredient input, Ingredient modifier1, Ingredient modifier2, Ingredient modifier3, Ingredient modifier4, int energyPerStand, int particleColor, int time) {
+        public Result(ResourceLocation id, ItemLike output, Ingredient input, Ingredient modifier1, Ingredient modifier2, Ingredient modifier3, Ingredient modifier4, int energyPerStand, int particleColor, int time) {
             this.id = id;
             this.base = input;
             this.output = output;
@@ -263,7 +263,7 @@ public class EmpowererRecipe implements IRecipe<IInventory> {
 
         @Override
         @Nonnull
-        public IRecipeSerializer<?> getType() {
+        public RecipeSerializer<?> getType() {
             return ActuallyRecipes.EMPOWERING_RECIPE.get();
         }
 

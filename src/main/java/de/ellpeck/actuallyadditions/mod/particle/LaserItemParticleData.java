@@ -4,17 +4,17 @@ import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.particles.IParticleData;
-import net.minecraft.particles.ParticleType;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleType;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Locale;
 
-public class LaserItemParticleData extends ParticleType<LaserItemParticleData> implements IParticleData {
+public class LaserItemParticleData extends ParticleType<LaserItemParticleData> implements ParticleOptions {
     private ParticleType<LaserItemParticleData> type;
     public static final Codec<LaserItemParticleData> CODEC = RecordCodecBuilder.create(instance -> instance.group(
                     ItemStack.CODEC.fieldOf("stack").forGetter(d -> d.stack),
@@ -26,7 +26,7 @@ public class LaserItemParticleData extends ParticleType<LaserItemParticleData> i
     protected final ItemStack stack;
     protected final double outputX, outputY, outputZ;
     @SuppressWarnings("deprecation")
-    static final IParticleData.IDeserializer<LaserItemParticleData> DESERIALIZER = new IParticleData.IDeserializer<LaserItemParticleData>() {
+    static final ParticleOptions.Deserializer<LaserItemParticleData> DESERIALIZER = new ParticleOptions.Deserializer<LaserItemParticleData>() {
 
         @Override
         public LaserItemParticleData fromCommand(ParticleType<LaserItemParticleData> type, StringReader reader) throws CommandSyntaxException {
@@ -45,7 +45,7 @@ public class LaserItemParticleData extends ParticleType<LaserItemParticleData> i
         }
 
         @Override
-        public LaserItemParticleData fromNetwork(ParticleType<LaserItemParticleData> type, PacketBuffer buffer) {
+        public LaserItemParticleData fromNetwork(ParticleType<LaserItemParticleData> type, FriendlyByteBuf buffer) {
             ItemStack stack = buffer.readItem();
             double outputX = buffer.readDouble();
             double outputY = buffer.readDouble();
@@ -74,7 +74,7 @@ public class LaserItemParticleData extends ParticleType<LaserItemParticleData> i
     }
 
     @Override
-    public void writeToNetwork(PacketBuffer buffer) {
+    public void writeToNetwork(FriendlyByteBuf buffer) {
         buffer.writeItemStack(this.stack, true);
         buffer.writeDouble(this.outputX);
         buffer.writeDouble(this.outputY);

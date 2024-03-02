@@ -18,20 +18,29 @@ import de.ellpeck.actuallyadditions.api.internal.IMethodHandler;
 import de.ellpeck.actuallyadditions.api.laser.ILaserRelayConnectionHandler;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.api.lens.LensConversion;
-import de.ellpeck.actuallyadditions.api.recipe.*;
-import de.ellpeck.actuallyadditions.mod.crafting.*;
-import de.ellpeck.actuallyadditions.mod.items.lens.*;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.ResourceLocation;
+import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
+import de.ellpeck.actuallyadditions.api.recipe.WeightedOre;
+import de.ellpeck.actuallyadditions.mod.crafting.ColorChangeRecipe;
+import de.ellpeck.actuallyadditions.mod.crafting.CrushingRecipe;
+import de.ellpeck.actuallyadditions.mod.crafting.EmpowererRecipe;
+import de.ellpeck.actuallyadditions.mod.crafting.FermentingRecipe;
+import de.ellpeck.actuallyadditions.mod.crafting.LaserRecipe;
+import de.ellpeck.actuallyadditions.mod.crafting.LiquidFuelRecipe;
+import de.ellpeck.actuallyadditions.mod.crafting.MiningLensRecipe;
+import de.ellpeck.actuallyadditions.mod.crafting.PressingRecipe;
+import de.ellpeck.actuallyadditions.mod.crafting.SolidFuelRecipe;
+import de.ellpeck.actuallyadditions.mod.items.lens.LensColor;
+import de.ellpeck.actuallyadditions.mod.items.lens.LensDeath;
+import de.ellpeck.actuallyadditions.mod.items.lens.LensDetonation;
+import de.ellpeck.actuallyadditions.mod.items.lens.LensDisenchanting;
+import de.ellpeck.actuallyadditions.mod.items.lens.LensKiller;
+import de.ellpeck.actuallyadditions.mod.items.lens.LensMining;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public final class ActuallyAdditionsAPI {
 

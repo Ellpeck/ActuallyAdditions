@@ -13,24 +13,18 @@ package de.ellpeck.actuallyadditions.mod.items.lens;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
-import de.ellpeck.actuallyadditions.api.recipe.WeightedOre;
 import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
-import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.crafting.MiningLensRecipe;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.NetherrackBlock;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.WeightedRandom;
-import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.common.Tags;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.random.WeightedRandom;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 public class LensMining extends Lens {
 
@@ -104,11 +98,11 @@ public class LensMining extends Lens {
 
                 if (!ores.isEmpty()) {
                     int totalWeight = WeightedRandom.getTotalWeight(ores);
-                    MiningLensRecipe ore = WeightedRandom.getRandomItem(tile.getWorldObject().random, ores);
+                    Optional<MiningLensRecipe> ore = WeightedRandom.getRandomItem(tile.getWorldObject().random, ores);
 
-                    ItemStack stack = ore.getResultItem().copy();
+                    ItemStack stack = ore.map(recipe -> recipe.getResultItem().copy()).orElse(ItemStack.EMPTY);
 
-                    if (stack.getItem() instanceof BlockItem) {
+                    if (!stack.isEmpty() && stack.getItem() instanceof BlockItem) {
                         Block toPlace = Block.byItem(stack.getItem());
                         BlockState state2Place = toPlace.defaultBlockState();
                         tile.getWorldObject().setBlock(hitPos, state2Place, 2);

@@ -14,25 +14,25 @@ import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotFilter;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityRangedCollector;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.ClickType;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.Objects;
 
-public class ContainerRangedCollector extends Container {
+public class ContainerRangedCollector extends AbstractContainerMenu {
 
     public final TileEntityRangedCollector collector;
 
-    public static ContainerRangedCollector fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
+    public static ContainerRangedCollector fromNetwork(int windowId, Inventory inv, FriendlyByteBuf data) {
         return new ContainerRangedCollector(windowId, inv, (TileEntityRangedCollector) Objects.requireNonNull(inv.player.level.getBlockEntity(data.readBlockPos())));
     }
 
-    public ContainerRangedCollector(int windowId, PlayerInventory inventory, TileEntityRangedCollector tile) {
+    public ContainerRangedCollector(int windowId, Inventory inventory, TileEntityRangedCollector tile) {
         super(ActuallyContainers.RANGED_COLLECTOR_CONTAINER.get(), windowId);
         this.collector = tile;
 
@@ -58,7 +58,7 @@ public class ContainerRangedCollector extends Container {
     }
 
     @Override
-    public ItemStack quickMoveStack(PlayerEntity player, int slot) {
+    public ItemStack quickMoveStack(Player player, int slot) {
         int inventoryStart = 18;
         int inventoryEnd = inventoryStart + 26;
         int hotbarStart = inventoryEnd + 1;
@@ -104,16 +104,16 @@ public class ContainerRangedCollector extends Container {
     }
 
     @Override
-    public ItemStack clicked(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player) {
+    public void clicked(int slotId, int dragType, ClickType clickTypeIn, Player player) {
         if (SlotFilter.checkFilter(this, slotId, player)) {
-            return ItemStack.EMPTY;
+            return; //TODO: Check if this is correct, used to return ItemStack.EMPTY
         } else {
-            return super.clicked(slotId, dragType, clickTypeIn, player);
+            super.clicked(slotId, dragType, clickTypeIn, player);
         }
     }
 
     @Override
-    public boolean stillValid(PlayerEntity player) {
+    public boolean stillValid(Player player) {
         return this.collector.canPlayerUse(player);
     }
 }

@@ -21,7 +21,9 @@
       "conditions": {
         "items": [
           {
-            "item": "actuallyadditions:laser_relay"
+            "items": [
+              "actuallyadditions:laser_relay"
+            ]
           }
         ]
       }

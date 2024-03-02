@@ -13,24 +13,24 @@ package de.ellpeck.actuallyadditions.mod.inventory;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityPhantomPlacer;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.Objects;
 
-public class ContainerPhantomPlacer extends Container {
+public class ContainerPhantomPlacer extends AbstractContainerMenu {
 
     public final TileEntityPhantomPlacer placer;
 
-    public static ContainerPhantomPlacer fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
+    public static ContainerPhantomPlacer fromNetwork(int windowId, Inventory inv, FriendlyByteBuf data) {
         return new ContainerPhantomPlacer(windowId, inv, (TileEntityPhantomPlacer) Objects.requireNonNull(inv.player.level.getBlockEntity(data.readBlockPos())));
     }
 
-    public ContainerPhantomPlacer(int windowId, PlayerInventory inventory, TileEntityPhantomPlacer tile) {
+    public ContainerPhantomPlacer(int windowId, Inventory inventory, TileEntityPhantomPlacer tile) {
         super(ActuallyContainers.PHANTOM_PLACER_CONTAINER.get(), windowId);
         this.placer = tile;
 
@@ -51,7 +51,7 @@ public class ContainerPhantomPlacer extends Container {
     }
 
     @Override
-    public ItemStack quickMoveStack(PlayerEntity player, int slot) {
+    public ItemStack quickMoveStack(Player player, int slot) {
         int inventoryStart = 9;
         int inventoryEnd = inventoryStart + 26;
         int hotbarStart = inventoryEnd + 1;
@@ -97,7 +97,7 @@ public class ContainerPhantomPlacer extends Container {
     }
 
     @Override
-    public boolean stillValid(PlayerEntity player) {
+    public boolean stillValid(Player player) {
         return this.placer.canPlayerUse(player);
     }
 }

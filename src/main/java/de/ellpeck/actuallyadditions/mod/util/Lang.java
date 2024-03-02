@@ -1,9 +1,6 @@
 package de.ellpeck.actuallyadditions.mod.util;
 
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.fml.ForgeI18n;
 
 import java.text.NumberFormat;
 

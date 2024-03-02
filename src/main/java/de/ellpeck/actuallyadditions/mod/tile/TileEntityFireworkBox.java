@@ -13,23 +13,27 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFireworkBox;
 import de.ellpeck.actuallyadditions.mod.network.gui.INumberReactor;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.entity.projectile.FireworkRocketEntity;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.DyeColor;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.util.Direction;
-import net.minecraft.util.WeightedRandom;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.util.Mth;
+import net.minecraft.util.random.Weight;
+import net.minecraft.util.random.WeightedEntry;
+import net.minecraft.util.random.WeightedRandom;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.FireworkRocketEntity;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 
@@ -37,7 +41,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisplay, INumberReactor, INamedContainerProvider {
+public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisplay, INumberReactor, MenuProvider {
 
     public static final int USE_PER_SHOT = 500;
     public final CustomEnergyStorage storage = new CustomEnergyStorage(20000, 200, 0);
@@ -57,12 +61,12 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisp
     private int timeUntilNextFirework;
     private int oldEnergy;
 
-    public TileEntityFireworkBox() {
-        super(ActuallyBlocks.FIREWORK_BOX.getTileEntityType());
+    public TileEntityFireworkBox(BlockPos pos, BlockState state) {
+        super(ActuallyBlocks.FIREWORK_BOX.getTileEntityType(), pos, state);
     }
 
     @Override
-    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
         this.storage.writeToNBT(compound);
 
@@ -83,7 +87,7 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisp
     }
 
     @Override
-    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void readSyncableNBT(CompoundTag compound, NBTType type) {
         super.readSyncableNBT(compound, type);
         this.storage.readFromNBT(compound);
 
@@ -104,7 +108,7 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisp
     }
 
     @Override
-    public void onNumberReceived(double number, int id, PlayerEntity player) {
+    public void onNumberReceived(double number, int id, Player player) {
         switch (id) {
             case 0:
                 this.intValuePlay = (int) number;
@@ -147,7 +151,7 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisp
         this.sendUpdate();
     }
 
-    public void spawnFireworks(World world, double x, double y, double z) {
+    public void spawnFireworks(Level world, double x, double y, double z) {
         ItemStack firework = this.makeFirework();
 
         double newX = x + this.getRandomAoe();
@@ -163,21 +167,21 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisp
         if (this.areaOfEffect <= 0) {
             return 0.5;
         } else {
-            return MathHelper.nextDouble(this.level.random, 0, this.areaOfEffect * 2) - this.areaOfEffect;
+            return Mth.nextDouble(this.level.random, 0, this.areaOfEffect * 2) - this.areaOfEffect;
         }
     }
 
     private ItemStack makeFirework() {
-        ListNBT list = new ListNBT();
+        ListTag list = new ListTag();
         for (int i = 0; i < this.getRandomWithPlay(this.chargeAmount); i++) {
             list.add(this.makeFireworkCharge());
         }
 
-        CompoundNBT compound1 = new CompoundNBT();
+        CompoundTag compound1 = new CompoundTag();
         compound1.put("Explosions", list);
         compound1.putByte("Flight", (byte) this.getRandomWithPlay(this.flightTime));
 
-        CompoundNBT compound = new CompoundNBT();
+        CompoundTag compound = new CompoundTag();
         compound.put("Fireworks", compound1);
 
         ItemStack firework = new ItemStack(Items.FIREWORK_ROCKET);
@@ -186,8 +190,8 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisp
         return firework;
     }
 
-    private CompoundNBT makeFireworkCharge() {
-        CompoundNBT compound = new CompoundNBT();
+    private CompoundTag makeFireworkCharge() {
+        CompoundTag compound = new CompoundTag();
 
         if (this.level.random.nextFloat() <= this.trailOrFlickerChance) {
             if (this.level.random.nextFloat() <= this.flickerChance) {
@@ -200,7 +204,7 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisp
         // TODO: [port] Validate this is the correct way to get colors
         int[] colors = new int[this.getRandomWithPlay(this.colorAmount)];
         for (int i = 0; i < colors.length; i++) {
-            colors[i] = DyeColor.values()[this.level.random.nextInt(DyeColor.values().length)].getColorValue();
+            colors[i] = DyeColor.values()[this.level.random.nextInt(DyeColor.values().length)].getFireworkColor();
         }
         compound.putIntArray("Colors", colors);
 
@@ -210,7 +214,7 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisp
     }
 
     private int getRandomWithPlay(int value) {
-        return MathHelper.clamp(MathHelper.nextInt(this.level.random, value - this.intValuePlay, value + this.intValuePlay), 1, 6);
+        return Mth.clamp(Mth.nextInt(this.level.random, value - this.intValuePlay, value + this.intValuePlay), 1, 6);
     }
 
     private int getRandomType() {
@@ -226,28 +230,33 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisp
         if (weight <= 0) {
             return 0;
         } else {
-            return WeightedRandom.getRandomItem(this.level.random, possible, weight).type;
+            return WeightedRandom.getRandomItem(this.level.random, possible, weight).map(weightedFireworkType -> weightedFireworkType.type).orElse(0);
         }
     }
 
-    @Override
-    public void updateEntity() {
-        super.updateEntity();
+    public static <T extends BlockEntity> void clientTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityFireworkBox tile) {
+            tile.clientTick();
+        }
+    }
 
-        if (!this.level.isClientSide) {
-            if (!this.isRedstonePowered && !this.isPulseMode) {
-                if (this.timeUntilNextFirework > 0) {
-                    this.timeUntilNextFirework--;
-                    if (this.timeUntilNextFirework <= 0) {
-                        this.doWork();
+    public static <T extends BlockEntity> void serverTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityFireworkBox tile) {
+            tile.serverTick();
+
+            if (!tile.isRedstonePowered && !tile.isPulseMode) {
+                if (tile.timeUntilNextFirework > 0) {
+                    tile.timeUntilNextFirework--;
+                    if (tile.timeUntilNextFirework <= 0) {
+                        tile.doWork();
                     }
                 } else {
-                    this.timeUntilNextFirework = 100;
+                    tile.timeUntilNextFirework = 100;
                 }
             }
 
-            if (this.oldEnergy != this.storage.getEnergyStored() && this.sendUpdateWithInterval()) {
-                this.oldEnergy = this.storage.getEnergyStored();
+            if (tile.oldEnergy != tile.storage.getEnergyStored() && tile.sendUpdateWithInterval()) {
+                tile.oldEnergy = tile.storage.getEnergyStored();
             }
         }
     }
@@ -286,23 +295,29 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisp
     }
 
     @Override
-    public ITextComponent getDisplayName() {
-        return StringTextComponent.EMPTY;
+    public Component getDisplayName() {
+        return TextComponent.EMPTY;
     }
 
     @Nullable
     @Override
-    public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity p_createMenu_3_) {
+    public AbstractContainerMenu createMenu(int windowId, Inventory playerInventory, Player p_createMenu_3_) {
         return new ContainerFireworkBox(windowId, playerInventory);
     }
 
-    private static class WeightedFireworkType extends WeightedRandom.Item {
+    private static class WeightedFireworkType implements WeightedEntry {
 
         public final int type;
+        public final Weight chance;
 
         public WeightedFireworkType(int type, float chance) {
-            super((int) (chance * 100F));
             this.type = type;
+            this.chance = Weight.of((int) (chance * 100F));
+        }
+
+        @Override
+        public Weight getWeight() {
+            return this.chance;
         }
     }
 }

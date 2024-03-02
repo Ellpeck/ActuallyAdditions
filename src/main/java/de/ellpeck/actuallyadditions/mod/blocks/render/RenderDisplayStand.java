@@ -10,29 +10,26 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks.render;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Vector3f;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityDisplayStand;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Util;
-import net.minecraft.util.math.vector.Quaternion;
-import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.Util;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
 
 import javax.annotation.Nonnull;
 
-public class RenderDisplayStand extends TileEntityRenderer<TileEntityDisplayStand> {
-    public RenderDisplayStand(TileEntityRendererDispatcher rendererDispatcherIn) {
-        super(rendererDispatcherIn);
+public class RenderDisplayStand implements BlockEntityRenderer<TileEntityDisplayStand> {
+    public RenderDisplayStand(BlockEntityRendererProvider.Context context) {
     }
 
     @Override
-    public void render(TileEntityDisplayStand tile, float partialTicks, @Nonnull MatrixStack matrices, @Nonnull IRenderTypeBuffer buffer, int combinedLightIn, int combinedOverlayIn) {
+    public void render(TileEntityDisplayStand tile, float partialTicks, @Nonnull PoseStack matrices, @Nonnull MultiBufferSource buffer, int combinedLightIn, int combinedOverlayIn) {
         ItemStack stack = tile.inv.getStackInSlot(0);
         if (stack.isEmpty()) {
             return;

@@ -1,14 +1,14 @@
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -19,11 +19,11 @@ public class Buttons {
         public final ResourceLocation resLoc = AssetUtil.getGuiLocation("gui_inputter");
         private final boolean smaller;
 
-        public SmallerButton(int x, int y, ITextComponent display, IPressable pressable) {
+        public SmallerButton(int x, int y, Component display, OnPress pressable) {
             this(x, y, display, false, pressable);
         }
 
-        public SmallerButton(int x, int y, ITextComponent display, boolean smaller, IPressable pressable) {
+        public SmallerButton(int x, int y, Component display, boolean smaller, OnPress pressable) {
             super(x, y, 16, smaller
                 ? 12
                 : 16, display, pressable);
@@ -31,10 +31,10 @@ public class Buttons {
         }
 
         @Override
-        public void render(MatrixStack matrixStack, int x, int y, float f) {
+        public void render(PoseStack matrixStack, int x, int y, float f) {
             if (this.visible) {
-                Minecraft.getInstance().getTextureManager().bind(this.resLoc);
-                RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+                RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+                RenderSystem.setShaderTexture(0, this.resLoc);
                 this.isHovered = x >= this.x && y >= this.y && x < this.x + this.width && y < this.y + this.height;
                 int k = this.getYImage(this.isHovered);
                 GlStateManager._enableBlend();
@@ -66,14 +66,14 @@ public class Buttons {
         public final ResourceLocation resLoc = AssetUtil.getGuiLocation("gui_inputter");
 
         public TinyButton(int id, int x, int y) {
-            super(x, y, 8, 8, new StringTextComponent(""), Button::onPress);
+            super(x, y, 8, 8, new TextComponent(""), Button::onPress);
         }
 
         @Override
-        public void render(MatrixStack matrixStack, int x, int y, float f) {
+        public void render(PoseStack matrixStack, int x, int y, float f) {
             if (this.visible) {
-                Minecraft.getInstance().getTextureManager().bind(this.resLoc);
-                RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+                RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+                RenderSystem.setShaderTexture(0, this.resLoc);
                 this.isHovered = x >= this.x && y >= this.y && x < this.x + this.width && y < this.y + this.height;
                 int k = this.getYImage(this.isHovered);
                 GlStateManager._enableBlend();

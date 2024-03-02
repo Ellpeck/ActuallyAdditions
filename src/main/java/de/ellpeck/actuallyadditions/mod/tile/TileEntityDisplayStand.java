@@ -13,16 +13,18 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import de.ellpeck.actuallyadditions.api.misc.IDisplayStandItem;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.block.Block;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
-
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
 
 public class TileEntityDisplayStand extends TileEntityInventoryBase implements IEnergyDisplay {
 
@@ -30,29 +32,34 @@ public class TileEntityDisplayStand extends TileEntityInventoryBase implements I
     public final LazyOptional<IEnergyStorage> lazyEnergy = LazyOptional.of(() -> this.storage);
     private int oldEnergy;
 
-    public TileEntityDisplayStand() {
-        super(ActuallyBlocks.DISPLAY_STAND.getTileEntityType(),  1);
+    public TileEntityDisplayStand(BlockPos pos, BlockState state) {
+        super(ActuallyBlocks.DISPLAY_STAND.getTileEntityType(),  pos, state, 1);
     }
 
-    @Override
-    public void updateEntity() {
-        super.updateEntity();
+    public static <T extends BlockEntity> void clientTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityDisplayStand tile) {
+            tile.clientTick();
+        }
+    }
 
-        if (!this.level.isClientSide) {
-            if (StackUtil.isValid(this.inv.getStackInSlot(0)) && !this.isRedstonePowered) {
-                IDisplayStandItem item = this.convertToDisplayStandItem(this.inv.getStackInSlot(0).getItem());
+    public static <T extends BlockEntity> void serverTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityDisplayStand tile) {
+            tile.serverTick();
+
+            if (StackUtil.isValid(tile.inv.getStackInSlot(0)) && !tile.isRedstonePowered) {
+                IDisplayStandItem item = tile.convertToDisplayStandItem(tile.inv.getStackInSlot(0).getItem());
                 if (item != null) {
-                    int energy = item.getUsePerTick(this.inv.getStackInSlot(0), this, this.ticksElapsed);
-                    if (this.storage.getEnergyStored() >= energy) {
-                        if (item.update(this.inv.getStackInSlot(0), this, this.ticksElapsed)) {
-                            this.storage.extractEnergyInternal(energy, false);
+                    int energy = item.getUsePerTick(tile.inv.getStackInSlot(0), tile, tile.ticksElapsed);
+                    if (tile.storage.getEnergyStored() >= energy) {
+                        if (item.update(tile.inv.getStackInSlot(0), tile, tile.ticksElapsed)) {
+                            tile.storage.extractEnergyInternal(energy, false);
                         }
                     }
                 }
             }
 
-            if (this.oldEnergy != this.storage.getEnergyStored() && this.sendUpdateWithInterval()) {
-                this.oldEnergy = this.storage.getEnergyStored();
+            if (tile.oldEnergy != tile.storage.getEnergyStored() && tile.sendUpdateWithInterval()) {
+                tile.oldEnergy = tile.storage.getEnergyStored();
             }
         }
     }
@@ -63,13 +70,13 @@ public class TileEntityDisplayStand extends TileEntityInventoryBase implements I
     }
 
     @Override
-    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
         this.storage.writeToNBT(compound);
     }
 
     @Override
-    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void readSyncableNBT(CompoundTag compound, NBTType type) {
         super.readSyncableNBT(compound, type);
         this.storage.readFromNBT(compound);
     }

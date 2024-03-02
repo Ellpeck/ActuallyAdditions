@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.crafting.SingleItem;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFurnaceDouble;
@@ -19,23 +18,24 @@ import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
-import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.AbstractCookingRecipe;
-import net.minecraft.item.crafting.FurnaceRecipe;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.Direction;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraftforge.common.util.Constants;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.AbstractCookingRecipe;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.SmeltingRecipe;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 
@@ -43,7 +43,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Optional;
 
-public class TileEntityPoweredFurnace extends TileEntityInventoryBase implements IButtonReactor, INamedContainerProvider {
+public class TileEntityPoweredFurnace extends TileEntityInventoryBase implements IButtonReactor, MenuProvider {
 
     public static final int SLOT_INPUT_1 = 0;
     public static final int SLOT_OUTPUT_1 = 1;
@@ -62,8 +62,8 @@ public class TileEntityPoweredFurnace extends TileEntityInventoryBase implements
     private boolean lastAutoSplit;
     private boolean lastSmelted;
 
-    public TileEntityPoweredFurnace() {
-        super(ActuallyBlocks.POWERED_FURNACE.getTileEntityType(), 4);
+    public TileEntityPoweredFurnace(BlockPos pos, BlockState state) {
+        super(ActuallyBlocks.POWERED_FURNACE.getTileEntityType(), pos, state, 4);
     }
 
     public static void autoSplit(ItemStackHandlerAA inv, int slot1, int slot2) {
@@ -95,7 +95,7 @@ public class TileEntityPoweredFurnace extends TileEntityInventoryBase implements
     }
 
     @Override
-    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
         if (type != NBTType.SAVE_BLOCK) {
             compound.putInt("FirstSmeltTime", this.firstSmeltTime);
@@ -106,7 +106,7 @@ public class TileEntityPoweredFurnace extends TileEntityInventoryBase implements
     }
 
     @Override
-    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void readSyncableNBT(CompoundTag compound, NBTType type) {
         super.readSyncableNBT(compound, type);
         if (type != NBTType.SAVE_BLOCK) {
             this.firstSmeltTime = compound.getInt("FirstSmeltTime");
@@ -116,72 +116,77 @@ public class TileEntityPoweredFurnace extends TileEntityInventoryBase implements
         this.storage.readFromNBT(compound);
     }
 
-    @Override
-    public void updateEntity() {
-        super.updateEntity();
-        if (!this.level.isClientSide) {
-            if (this.isAutoSplit) {
-                autoSplit(this.inv, SLOT_INPUT_1, SLOT_INPUT_2);
+    public static <T extends BlockEntity> void clientTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityPoweredFurnace tile) {
+            tile.clientTick();
+        }
+    }
+
+    public static <T extends BlockEntity> void serverTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityPoweredFurnace tile) {
+            tile.serverTick();
+            
+            if (tile.isAutoSplit) {
+                autoSplit(tile.inv, SLOT_INPUT_1, SLOT_INPUT_2);
             }
-            //TODO all this logic needs redone someday
+            //TODO all tile logic needs redone someday
 
             boolean smelted = false;
 
-            boolean canSmeltOnFirst = this.canSmeltOn(SLOT_INPUT_1, SLOT_OUTPUT_1);
-            boolean canSmeltOnSecond = this.canSmeltOn(SLOT_INPUT_2, SLOT_OUTPUT_2);
+            boolean canSmeltOnFirst = tile.canSmeltOn(SLOT_INPUT_1, SLOT_OUTPUT_1);
+            boolean canSmeltOnSecond = tile.canSmeltOn(SLOT_INPUT_2, SLOT_OUTPUT_2);
 
             if (canSmeltOnFirst) {
-                if (this.storage.getEnergyStored() >= ENERGY_USE) {
-                    this.firstSmeltTime++;
-                    if (this.firstSmeltTime >= SMELT_TIME) {
-                        this.finishBurning(SLOT_INPUT_1, SLOT_OUTPUT_1);
-                        this.firstSmeltTime = 0;
+                if (tile.storage.getEnergyStored() >= ENERGY_USE) {
+                    tile.firstSmeltTime++;
+                    if (tile.firstSmeltTime >= SMELT_TIME) {
+                        tile.finishBurning(SLOT_INPUT_1, SLOT_OUTPUT_1);
+                        tile.firstSmeltTime = 0;
                     }
-                    this.storage.extractEnergyInternal(ENERGY_USE, false);
+                    tile.storage.extractEnergyInternal(ENERGY_USE, false);
                 }
                 smelted = true;
             } else {
-                this.firstSmeltTime = 0;
+                tile.firstSmeltTime = 0;
             }
 
             if (canSmeltOnSecond) {
-                if (this.storage.getEnergyStored() >= ENERGY_USE) {
-                    this.secondSmeltTime++;
-                    if (this.secondSmeltTime >= SMELT_TIME) {
-                        this.finishBurning(SLOT_INPUT_2, SLOT_OUTPUT_2);
-                        this.secondSmeltTime = 0;
+                if (tile.storage.getEnergyStored() >= ENERGY_USE) {
+                    tile.secondSmeltTime++;
+                    if (tile.secondSmeltTime >= SMELT_TIME) {
+                        tile.finishBurning(SLOT_INPUT_2, SLOT_OUTPUT_2);
+                        tile.secondSmeltTime = 0;
                     }
-                    this.storage.extractEnergyInternal(ENERGY_USE, false);
+                    tile.storage.extractEnergyInternal(ENERGY_USE, false);
                 }
                 smelted = true;
             } else {
-                this.secondSmeltTime = 0;
+                tile.secondSmeltTime = 0;
             }
 
-            BlockState currState = this.level.getBlockState(this.getBlockPos());
-            boolean current = currState.getValue(BlockStateProperties.LIT);
+            boolean current = state.getValue(BlockStateProperties.LIT);
             boolean changeTo = current;
-            if (this.lastSmelted != smelted) {
+            if (tile.lastSmelted != smelted) {
                 changeTo = smelted;
             }
-            if (this.isRedstonePowered) {
+            if (tile.isRedstonePowered) {
                 changeTo = true;
             }
-            if (!smelted && !this.isRedstonePowered) {
+            if (!smelted && !tile.isRedstonePowered) {
                 changeTo = false;
             }
 
             if (changeTo != current) {
-                this.level.setBlock(this.worldPosition, currState.setValue(BlockStateProperties.LIT, changeTo), Constants.BlockFlags.DEFAULT);
+                tile.level.setBlock(tile.worldPosition, state.setValue(BlockStateProperties.LIT, changeTo), Block.UPDATE_ALL);
             }
 
-            this.lastSmelted = smelted;
+            tile.lastSmelted = smelted;
 
-            if ((this.lastEnergy != this.storage.getEnergyStored() || this.lastFirstSmelt != this.firstSmeltTime || this.lastSecondSmelt != this.secondSmeltTime || this.isAutoSplit != this.lastAutoSplit) && this.sendUpdateWithInterval()) {
-                this.lastEnergy = this.storage.getEnergyStored();
-                this.lastFirstSmelt = this.firstSmeltTime;
-                this.lastAutoSplit = this.isAutoSplit;
-                this.lastSecondSmelt = this.secondSmeltTime;
+            if ((tile.lastEnergy != tile.storage.getEnergyStored() || tile.lastFirstSmelt != tile.firstSmeltTime || tile.lastSecondSmelt != tile.secondSmeltTime || tile.isAutoSplit != tile.lastAutoSplit) && tile.sendUpdateWithInterval()) {
+                tile.lastEnergy = tile.storage.getEnergyStored();
+                tile.lastFirstSmelt = tile.firstSmeltTime;
+                tile.lastAutoSplit = tile.isAutoSplit;
+                tile.lastSecondSmelt = tile.secondSmeltTime;
             }
         }
     }
@@ -191,11 +196,11 @@ public class TileEntityPoweredFurnace extends TileEntityInventoryBase implements
     }
 
     public Optional<ItemStack> getOutputForInput(ItemStack stack) {
-        return level.getServer().getRecipeManager().getRecipeFor(IRecipeType.SMELTING, new SingleItem(stack), level).map(AbstractCookingRecipe::getResultItem);
+        return level.getServer().getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SingleItem(stack), level).map(AbstractCookingRecipe::getResultItem);
     }
 
-    public Optional<FurnaceRecipe> getRecipeForInput(ItemStack stack) {
-        return level.getServer().getRecipeManager().getRecipeFor(IRecipeType.SMELTING, new SingleItem(stack), level);
+    public Optional<SmeltingRecipe> getRecipeForInput(ItemStack stack) {
+        return level.getServer().getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SingleItem(stack), level);
     }
 
     @Override
@@ -212,7 +217,7 @@ public class TileEntityPoweredFurnace extends TileEntityInventoryBase implements
         ItemStack input = this.inv.getStackInSlot(theInput);
         ItemStack output = this.inv.getStackInSlot(theOutput);
         if (!input.isEmpty()) {
-            Optional<FurnaceRecipe> recipe = getRecipeForInput(input);
+            Optional<SmeltingRecipe> recipe = getRecipeForInput(input);
             return recipe.map($ -> output.isEmpty() || output.sameItem($.getResultItem()) &&  output.getCount() <= output.getMaxStackSize() - $.getResultItem().getCount()).orElse(false);
         }
         return false;
@@ -238,7 +243,7 @@ public class TileEntityPoweredFurnace extends TileEntityInventoryBase implements
     }
 
     @Override
-    public void onButtonPressed(int buttonID, PlayerEntity player) {
+    public void onButtonPressed(int buttonID, Player player) {
         if (buttonID == 0) {
             this.isAutoSplit = !this.isAutoSplit;
             this.setChanged();
@@ -252,13 +257,13 @@ public class TileEntityPoweredFurnace extends TileEntityInventoryBase implements
 
     @Nonnull
     @Override
-    public ITextComponent getDisplayName() {
-        return new TranslationTextComponent("container.actuallyadditions.powered_furnace");
+    public Component getDisplayName() {
+        return new TranslatableComponent("container.actuallyadditions.powered_furnace");
     }
 
     @Nullable
     @Override
-    public Container createMenu(int windowId, @Nonnull PlayerInventory playerInventory, @Nonnull PlayerEntity player) {
+    public AbstractContainerMenu createMenu(int windowId, @Nonnull Inventory playerInventory, @Nonnull Player player) {
         return new ContainerFurnaceDouble(windowId, playerInventory, this);
     }
 }

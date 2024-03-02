@@ -11,10 +11,10 @@
 package de.ellpeck.actuallyadditions.mod.misc.special;
 
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -94,7 +94,7 @@ public class SpecialRenderInit {
             if (SPECIAL_LIST.containsKey(lower)) {
                 RenderSpecial render = SPECIAL_LIST.get(lower);
                 if (render != null) {
-                    render.render(event.getMatrixStack(), event.getBuffers(), event.getLight(), event.getPlayer(), event.getPartialRenderTick());
+                    render.render(event.getPoseStack(), event.getMultiBufferSource(), event.getPackedLight(), event.getPlayer(), event.getPartialTick());
                 }
             }
         }

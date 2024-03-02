@@ -1,27 +1,27 @@
 package de.ellpeck.actuallyadditions.mod.util;
 
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraft.world.chunk.Chunk;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.chunk.LevelChunk;
 
 public final class VanillaPacketDispatcher {
 
     //Don't call from the client.
-    public static void dispatchTEToNearbyPlayers(TileEntity tile) {
-        ServerWorld world = (ServerWorld) tile.getLevel();
-        Chunk chunk = world.getChunk(tile.getBlockPos().getX() >> 4, tile.getBlockPos().getZ() >> 4);
+    public static void dispatchTEToNearbyPlayers(BlockEntity blockEntity) {
+        ServerLevel serverLevel = (ServerLevel) blockEntity.getLevel();
+        LevelChunk chunk = serverLevel.getChunk(blockEntity.getBlockPos().getX() >> 4, blockEntity.getBlockPos().getZ() >> 4);
 
-        world.getChunkSource().chunkMap.getPlayers(chunk.getPos(), false).forEach(e -> {
-            e.connection.send(tile.getUpdatePacket());
+        serverLevel.getChunkSource().chunkMap.getPlayers(chunk.getPos(), false).forEach(e -> {
+            e.connection.send(blockEntity.getUpdatePacket());
         });
     }
 
-    public static void dispatchTEToNearbyPlayers(World world, BlockPos pos) {
-        TileEntity tile = world.getBlockEntity(pos);
-        if (tile != null) {
-            dispatchTEToNearbyPlayers(tile);
+    public static void dispatchTEToNearbyPlayers(Level level, BlockPos pos) {
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        if (blockEntity != null) {
+            dispatchTEToNearbyPlayers(blockEntity);
         }
     }
 }

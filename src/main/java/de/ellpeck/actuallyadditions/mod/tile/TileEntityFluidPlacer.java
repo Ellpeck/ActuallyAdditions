@@ -11,12 +11,28 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class TileEntityFluidPlacer extends TileEntityFluidCollector {
 
-    public TileEntityFluidPlacer() {
-        super(ActuallyBlocks.FLUID_PLACER.getTileEntityType());
+    public TileEntityFluidPlacer(BlockPos pos, BlockState state) {
+        super(ActuallyBlocks.FLUID_PLACER.getTileEntityType(), pos, state);
         this.isPlacer = true;
+    }
+
+    public static <T extends BlockEntity> void clientTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityFluidPlacer tile) {
+            tile.clientTick();
+        }
+    }
+
+    public static <T extends BlockEntity> void serverTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityFluidPlacer tile) {
+            tile.serverTick();
+        }
     }
 
 }

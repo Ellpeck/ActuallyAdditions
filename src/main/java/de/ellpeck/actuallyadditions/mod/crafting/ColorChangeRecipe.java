@@ -2,25 +2,25 @@ package de.ellpeck.actuallyadditions.mod.crafting;
 
 import com.google.gson.JsonObject;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
-import net.minecraft.data.IFinishedRecipe;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.IItemProvider;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Optional;
 
-public class ColorChangeRecipe implements IRecipe<IInventory> {
+public class ColorChangeRecipe implements Recipe<Container> {
     public static final String NAME = "color_change";
 
     private final Ingredient input;
@@ -34,7 +34,7 @@ public class ColorChangeRecipe implements IRecipe<IInventory> {
     }
 
     @Override
-    public boolean matches(@Nonnull IInventory pInv, @Nonnull World pLevel) {
+    public boolean matches(@Nonnull Container pInv, @Nonnull Level pLevel) {
         return input.test(pInv.getItem(0));
     }
 
@@ -49,7 +49,7 @@ public class ColorChangeRecipe implements IRecipe<IInventory> {
 
     @Nonnull
     @Override
-    public ItemStack assemble(@Nonnull IInventory pInv) {
+    public ItemStack assemble(@Nonnull Container pInv) {
         return output.copy();
     }
 
@@ -76,46 +76,46 @@ public class ColorChangeRecipe implements IRecipe<IInventory> {
 
     @Nonnull
     @Override
-    public IRecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<?> getSerializer() {
         return ActuallyRecipes.COLOR_CHANGE_RECIPE.get();
     }
 
     @Override
-    public IRecipeType<?> getType() {
+    public RecipeType<?> getType() {
         return ActuallyRecipes.Types.COLOR_CHANGE;
     }
 
-    public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<ColorChangeRecipe> {
+    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<ColorChangeRecipe> {
         @Override
         public ColorChangeRecipe fromJson(@Nonnull ResourceLocation pRecipeId, @Nonnull JsonObject pJson) {
-            Ingredient ingredient = Ingredient.fromJson(JSONUtils.getAsJsonObject(pJson, "ingredient"));
-            JsonObject resultObject = JSONUtils.getAsJsonObject(pJson, "result");
-            ItemStack result = new ItemStack(JSONUtils.getAsItem(resultObject, "item"));
+            Ingredient ingredient = Ingredient.fromJson(GsonHelper.getAsJsonObject(pJson, "ingredient"));
+            JsonObject resultObject = GsonHelper.getAsJsonObject(pJson, "result");
+            ItemStack result = new ItemStack(GsonHelper.getAsItem(resultObject, "item"));
 
             return new ColorChangeRecipe(pRecipeId, result, ingredient);
         }
 
         @Nullable
         @Override
-        public ColorChangeRecipe fromNetwork(@Nonnull ResourceLocation pRecipeId, @Nonnull PacketBuffer pBuffer) {
+        public ColorChangeRecipe fromNetwork(@Nonnull ResourceLocation pRecipeId, @Nonnull FriendlyByteBuf pBuffer) {
             Ingredient ingredient = Ingredient.fromNetwork(pBuffer);
             ItemStack result = pBuffer.readItem();
             return new ColorChangeRecipe(pRecipeId, result, ingredient);
         }
 
         @Override
-        public void toNetwork(@Nonnull PacketBuffer pBuffer, ColorChangeRecipe pRecipe) {
+        public void toNetwork(@Nonnull FriendlyByteBuf pBuffer, ColorChangeRecipe pRecipe) {
             pRecipe.input.toNetwork(pBuffer);
             pBuffer.writeItem(pRecipe.output);
         }
     }
 
-    public static class FinishedRecipe implements IFinishedRecipe {
+    public static class Result implements FinishedRecipe {
         private final ResourceLocation id;
         private final Ingredient itemIngredient;
-        private final IItemProvider output;
+        private final ItemLike output;
 
-        public FinishedRecipe(ResourceLocation id, Ingredient itemIngredient, IItemProvider output) {
+        public Result(ResourceLocation id, Ingredient itemIngredient, ItemLike output) {
             this.id = id;
             this.itemIngredient = itemIngredient;
             this.output = output;
@@ -137,7 +137,7 @@ public class ColorChangeRecipe implements IRecipe<IInventory> {
         }
 
         @Override
-        public IRecipeSerializer<?> getType() {
+        public RecipeSerializer<?> getType() {
             return ActuallyRecipes.COLOR_CHANGE_RECIPE.get();
         }
 

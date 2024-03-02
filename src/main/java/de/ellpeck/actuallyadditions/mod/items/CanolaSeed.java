@@ -2,13 +2,13 @@ package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.FlowingFluidBlock;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluid;
 
 public class CanolaSeed extends ItemBase {
     public boolean empowered;
@@ -29,8 +29,8 @@ public class CanolaSeed extends ItemBase {
                 BlockState state = entity.level.getBlockState(pos);
                 Block block = state.getBlock();
 
-                if (block instanceof FlowingFluidBlock && state.getFluidState().isSource()) {
-                    Fluid fluid = ((FlowingFluidBlock) block).getFluid();
+                if (block instanceof LiquidBlock && state.getFluidState().isSource()) {
+                    Fluid fluid = ((LiquidBlock) block).getFluid();
                     if (fluid != null && fluid == (empowered
                         ? InitFluids.CRYSTALLIZED_OIL.get()
                         : InitFluids.REFINED_CANOLA_OIL.get())) {

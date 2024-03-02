@@ -17,7 +17,8 @@ apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'maven-publish'
-
+apply from: 'https://raw.githubusercontent.com/SizableShrimp/Forge-Class-Remapper/main/classremapper.gradle'
+apply from: 'https://raw.githubusercontent.com/SizableShrimp/ForgeUpdatesRemapper/main/remapper.gradle'
 version = "$mod_version"
 group = "de.ellpeck.actuallyadditions"
 archivesBaseName = "ActuallyAdditions-$game_version"
@@ -26,7 +27,7 @@ if (System.getenv('BUILD_NUMBER') != null) {
     version += "." + System.getenv('BUILD_NUMBER')
 }
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(8)
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 minecraft {
     mappings channel: 'parchment', version: "${parchment_version}-${game_version}"
@@ -88,8 +89,8 @@ dependencies {
     compileOnly fg.deobf("mezz.jei:jei-${jei_version}:api")
     runtimeOnly fg.deobf("mezz.jei:jei-${jei_version}")
 
-    runtimeOnly fg.deobf("curse.maven:TOP-245211:3319255")
-    runtimeOnly fg.deobf("curse.maven:MEK-268560:3590099")
+    runtimeOnly fg.deobf("curse.maven:the-one-probe-245211:3965688")
+    runtimeOnly fg.deobf("curse.maven:mekanism-268560:3875976")
 }
 
 // not sure if this is still needed

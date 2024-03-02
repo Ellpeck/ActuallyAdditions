@@ -3,19 +3,19 @@ package de.ellpeck.actuallyadditions.mod.crafting;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.tags.ITag;
-import net.minecraft.util.IItemProvider;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.common.crafting.IIngredientSerializer;
 
 import javax.annotation.Nonnull;
 import java.util.stream.Stream;
 
 public class TargetNBTIngredient extends Ingredient {
-    public TargetNBTIngredient(Stream<? extends IItemList> itemLists) {
+    public TargetNBTIngredient(Stream<? extends Value> itemLists) {
         super(itemLists);
     }
 
@@ -25,15 +25,15 @@ public class TargetNBTIngredient extends Ingredient {
         return SERIALIZER;
     }
 
-    public static TargetNBTIngredient of(IItemProvider itemProvider) {
-        return new TargetNBTIngredient(Stream.of(new SingleItemList(new ItemStack(itemProvider))));
+    public static TargetNBTIngredient of(ItemLike itemProvider) {
+        return new TargetNBTIngredient(Stream.of(new ItemValue(new ItemStack(itemProvider))));
     }
     public static TargetNBTIngredient of(ItemStack itemStack) {
-        return new TargetNBTIngredient(Stream.of(new SingleItemList(itemStack)));
+        return new TargetNBTIngredient(Stream.of(new ItemValue(itemStack)));
     }
     @Nonnull
-    public static TargetNBTIngredient of(@Nonnull ITag tag) {
-        return new TargetNBTIngredient(Stream.of(new TagList(tag)));
+    public static TargetNBTIngredient of(@Nonnull TagKey tag) {
+        return new TargetNBTIngredient(Stream.of(new TagValue(tag)));
     }
 
 
@@ -53,8 +53,8 @@ public class TargetNBTIngredient extends Ingredient {
 
         @Override
         @Nonnull
-        public TargetNBTIngredient parse(PacketBuffer buffer) {
-            return new TargetNBTIngredient(Stream.generate(() -> new SingleItemList(buffer.readItem())).limit(buffer.readVarInt()));
+        public TargetNBTIngredient parse(FriendlyByteBuf buffer) {
+            return new TargetNBTIngredient(Stream.generate(() -> new ItemValue(buffer.readItem())).limit(buffer.readVarInt()));
         }
 
         @Override
@@ -64,7 +64,7 @@ public class TargetNBTIngredient extends Ingredient {
         }
 
         @Override
-        public void write(PacketBuffer buffer, TargetNBTIngredient ingredient) {
+        public void write(FriendlyByteBuf buffer, TargetNBTIngredient ingredient) {
             ItemStack[] items = ingredient.getItems();
             buffer.writeVarInt(items.length);
 

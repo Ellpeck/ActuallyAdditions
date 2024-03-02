@@ -10,15 +10,14 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerBreaker;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBreaker;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -30,7 +29,7 @@ public class GuiBreaker extends AAScreen<ContainerBreaker> {
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_breaker");
     private final TileEntityBreaker breaker;
 
-    public GuiBreaker(ContainerBreaker container, PlayerInventory inventory, ITextComponent title) {
+    public GuiBreaker(ContainerBreaker container, Inventory inventory, Component title) {
         super(container, inventory, title);
         this.breaker = container.breaker;
         this.imageWidth = 176;
@@ -38,18 +37,13 @@ public class GuiBreaker extends AAScreen<ContainerBreaker> {
     }
 
     @Override
-    public void init(Minecraft pMinecraft, int pWidth, int pHeight) {
-        super.init(pMinecraft, pWidth, pHeight);
-    }
+    protected void renderBg(@Nonnull PoseStack matrices, float partialTicks, int x, int y) {
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 
-    @Override
-    protected void renderBg(@Nonnull MatrixStack matrices, float partialTicks, int x, int y) {
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-
-        this.getMinecraft().getTextureManager().bind(AssetUtil.GUI_INVENTORY_LOCATION);
+        RenderSystem.setShaderTexture(0, AssetUtil.GUI_INVENTORY_LOCATION);
         this.blit(matrices, this.leftPos, this.topPos + 93, 0, 0, 176, 86);
 
-        this.getMinecraft().getTextureManager().bind(RES_LOC);
+        RenderSystem.setShaderTexture(0, RES_LOC);
         this.blit(matrices, this.leftPos, this.topPos, 0, 0, 176, 93);
     }
 }

@@ -13,35 +13,48 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityEnergizer;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityEnervator;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+
+import javax.annotation.Nullable;
 
 public class BlockEnergizer extends BlockContainerBase {
     private final boolean isEnergizer;
 
     public BlockEnergizer(boolean isEnergizer) {
-        super(ActuallyBlocks.defaultPickProps(0, 2.0F, 10.0F));
+        super(ActuallyBlocks.defaultPickProps(2.0F, 10.0F));
         this.isEnergizer = isEnergizer;
     }
 
-    //@Override
-    public TileEntity newBlockEntity(IBlockReader worldIn) {
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return this.isEnergizer
-            ? new TileEntityEnergizer()
-            : new TileEntityEnervator();
+            ? new TileEntityEnergizer(pos, state)
+            : new TileEntityEnervator(pos, state);
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> entityType) {
+        return this.isEnergizer
+                ? level.isClientSide? TileEntityEnergizer::clientTick : TileEntityEnergizer::serverTick
+                : level.isClientSide? TileEntityEnervator::clientTick : TileEntityEnervator::serverTick;
     }
 
     @Override
-    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (this.isEnergizer) {
             return this.openGui(world, player, pos, TileEntityEnergizer.class);
         } else {
@@ -50,7 +63,7 @@ public class BlockEnergizer extends BlockContainerBase {
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        return Shapes.ENERGIZER_SHAPE;
+    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+        return VoxelShapes.ENERGIZER_SHAPE;
     }
 }

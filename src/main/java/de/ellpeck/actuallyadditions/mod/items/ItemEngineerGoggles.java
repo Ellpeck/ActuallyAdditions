@@ -13,15 +13,14 @@ package de.ellpeck.actuallyadditions.mod.items;
 import de.ellpeck.actuallyadditions.api.misc.IGoggles;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemArmorAA;
 import de.ellpeck.actuallyadditions.mod.material.ArmorMaterials;
-import de.ellpeck.actuallyadditions.mod.proxy.ClientProxy;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import io.netty.util.internal.ConcurrentSet;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
@@ -39,27 +38,27 @@ public class ItemEngineerGoggles extends ItemArmorAA implements IGoggles {
     private final boolean displayMobs;
 
     public ItemEngineerGoggles(boolean displayMobs) {
-        super(ArmorMaterials.GOGGLES, EquipmentSlotType.HEAD, ActuallyItems.defaultProps().setNoRepair().durability(0));
+        super(ArmorMaterials.GOGGLES, EquipmentSlot.HEAD, ActuallyItems.defaultProps().setNoRepair().durability(0));
         this.displayMobs = displayMobs;
 
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> MinecraftForge.EVENT_BUS.register(this));
 
     }
 
-    public static boolean isWearing(PlayerEntity player) {
-        ItemStack face = player.inventory.armor.get(3);
+    public static boolean isWearing(Player player) {
+        ItemStack face = player.getInventory().armor.get(3);
         return StackUtil.isValid(face) && face.getItem() instanceof IGoggles;
     }
 
     @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
     public void onClientTick(TickEvent.ClientTickEvent event) {
-        PlayerEntity player = Minecraft.getInstance().player;
+        Player player = Minecraft.getInstance().player;
         if (player != null && isWearing(player)) {
-            ItemStack face = player.inventory.armor.get(3);
+            ItemStack face = player.getInventory().armor.get(3);
             if (((IGoggles) face.getItem()).displaySpectralMobs()) {
                 double range = 8;
-                AxisAlignedBB aabb = new AxisAlignedBB(player.getX() - range, player.getY() - range, player.getZ() - range, player.getX() + range, player.getY() + range, player.getZ() + range);
+                AABB aabb = new AABB(player.getX() - range, player.getY() - range, player.getZ() - range, player.getX() + range, player.getY() + range, player.getZ() + range);
                 List<Entity> entities = player.level.getEntitiesOfClass(Entity.class, aabb);
                 if (entities != null && !entities.isEmpty()) {
                     this.cachedGlowingEntities.addAll(entities);
@@ -68,11 +67,11 @@ public class ItemEngineerGoggles extends ItemArmorAA implements IGoggles {
                 if (!this.cachedGlowingEntities.isEmpty()) {
                     for (Entity entity : this.cachedGlowingEntities) {
                         if (!entity.isAlive() || entity.distanceToSqr(player.getX(), player.getY(), player.getZ()) > range * range) {
-                            entity.setGlowing(false);
+                            entity.setGlowingTag(false);
 
                             this.cachedGlowingEntities.remove(entity);
                         } else {
-                            entity.setGlowing(true);
+                            entity.setGlowingTag(true);
                         }
                     }
                 }
@@ -84,7 +83,7 @@ public class ItemEngineerGoggles extends ItemArmorAA implements IGoggles {
         if (!this.cachedGlowingEntities.isEmpty()) {
             for (Entity entity : this.cachedGlowingEntities) {
                 if (entity.isAlive()) {
-                    entity.setGlowing(false);
+                    entity.setGlowingTag(false);
                 }
             }
             this.cachedGlowingEntities.clear();

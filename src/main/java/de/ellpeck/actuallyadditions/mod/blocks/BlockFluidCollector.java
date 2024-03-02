@@ -11,28 +11,22 @@
 package de.ellpeck.actuallyadditions.mod.blocks;
 
 import de.ellpeck.actuallyadditions.mod.blocks.base.FullyDirectionalBlock;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityDropper;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityFermentingBarrel;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityFluidCollector;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityFluidPlacer;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.fluids.FluidUtil;
-import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -42,34 +36,37 @@ public class BlockFluidCollector extends FullyDirectionalBlock.Container {
     private final boolean isPlacer;
 
     public BlockFluidCollector(boolean isPlacer) {
-        super(ActuallyBlocks.defaultPickProps(0));
+        super(ActuallyBlocks.defaultPickProps());
         this.isPlacer = isPlacer;
-    }
-
-    @Override
-    public boolean hasTileEntity(BlockState state) {
-        return true;
     }
 
     @Nullable
     @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return this.isPlacer
-            ? new TileEntityFluidPlacer()
-            : new TileEntityFluidCollector();
+            ? new TileEntityFluidPlacer(pos, state)
+            : new TileEntityFluidCollector(pos, state);
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> entityType) {
+        return this.isPlacer
+                ? level.isClientSide? TileEntityFluidPlacer::clientTick : TileEntityFluidPlacer::serverTick
+                : level.isClientSide? TileEntityFluidCollector::clientTick : TileEntityFluidCollector::serverTick;
     }
 
     @Nonnull
     @Override
-    public ActionResultType use(@Nonnull BlockState state, @Nonnull World world, @Nonnull BlockPos pos, @Nonnull PlayerEntity player, @Nonnull Hand handIn, @Nonnull BlockRayTraceResult hit) {
+    public InteractionResult use(@Nonnull BlockState state, @Nonnull Level world, @Nonnull BlockPos pos, @Nonnull Player player, @Nonnull InteractionHand handIn, @Nonnull BlockHitResult hit) {
         if (world.isClientSide)
-            return ActionResultType.SUCCESS;
+            return InteractionResult.SUCCESS;
 
         if (this.tryToggleRedstone(world, pos, player)) {
-            return ActionResultType.CONSUME;
+            return InteractionResult.CONSUME;
         }
         if (FluidUtil.interactWithFluidHandler(player, handIn, world, pos, hit.getDirection())) {
-            return ActionResultType.SUCCESS;
+            return InteractionResult.SUCCESS;
         }
 
         return this.openGui(world, player, pos, TileEntityFluidCollector.class);
@@ -77,20 +74,20 @@ public class BlockFluidCollector extends FullyDirectionalBlock.Container {
 
     @Nonnull
     @Override
-    public VoxelShape getShape(BlockState state, @Nonnull IBlockReader worldIn, @Nonnull BlockPos pos, @Nonnull ISelectionContext context) {
+    public VoxelShape getShape(BlockState state, @Nonnull BlockGetter worldIn, @Nonnull BlockPos pos, @Nonnull CollisionContext context) {
         switch (state.getValue(FACING)) {
             case UP:
-                return Shapes.FluidCollectorShapes.SHAPE_U;
+                return VoxelShapes.FluidCollectorShapes.SHAPE_U;
             case DOWN:
-                return Shapes.FluidCollectorShapes.SHAPE_D;
+                return VoxelShapes.FluidCollectorShapes.SHAPE_D;
             case EAST:
-                return Shapes.FluidCollectorShapes.SHAPE_E;
+                return VoxelShapes.FluidCollectorShapes.SHAPE_E;
             case SOUTH:
-                return Shapes.FluidCollectorShapes.SHAPE_S;
+                return VoxelShapes.FluidCollectorShapes.SHAPE_S;
             case WEST:
-                return Shapes.FluidCollectorShapes.SHAPE_W;
+                return VoxelShapes.FluidCollectorShapes.SHAPE_W;
             default:
-                return Shapes.FluidCollectorShapes.SHAPE_N;
+                return VoxelShapes.FluidCollectorShapes.SHAPE_N;
         }
     }
 }

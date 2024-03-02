@@ -13,10 +13,10 @@ package de.ellpeck.actuallyadditions.mod.items.lens;
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.mod.misc.DamageSources;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 
 import java.util.List;
 
@@ -24,7 +24,7 @@ public class LensDeath extends Lens {
 
     @Override
     public boolean invoke(BlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile) {
-        List<LivingEntity> entities = tile.getWorldObject().getEntitiesOfClass(LivingEntity.class, new AxisAlignedBB(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), hitBlock.getX() + 1, hitBlock.getY() + 1, hitBlock.getZ() + 1));
+        List<LivingEntity> entities = tile.getWorldObject().getEntitiesOfClass(LivingEntity.class, new AABB(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), hitBlock.getX() + 1, hitBlock.getY() + 1, hitBlock.getZ() + 1));
         for (LivingEntity entity : entities) {
             int use = this.getUsePerEntity();
             if (tile.getEnergy() >= use) {
@@ -34,7 +34,7 @@ public class LensDeath extends Lens {
             }
         }
 
-        return !hitState.getBlock().isAir(hitState, tile.getWorldObject(), hitBlock);
+        return !hitState.isAir();
     }
 
     protected void onAttacked(LivingEntity entity, IAtomicReconstructor tile) {

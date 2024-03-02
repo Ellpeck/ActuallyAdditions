@@ -13,24 +13,24 @@ package de.ellpeck.actuallyadditions.mod.inventory;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityFeeder;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.Objects;
 
-public class ContainerFeeder extends Container {
+public class ContainerFeeder extends AbstractContainerMenu {
 
     public final TileEntityFeeder feeder;
 
-    public static ContainerFeeder fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
+    public static ContainerFeeder fromNetwork(int windowId, Inventory inv, FriendlyByteBuf data) {
         return new ContainerFeeder(windowId, inv, (TileEntityFeeder) Objects.requireNonNull(inv.player.level.getBlockEntity(data.readBlockPos())));
     }
 
-    public ContainerFeeder(int windowId, PlayerInventory inventory, TileEntityFeeder tile) {
+    public ContainerFeeder(int windowId, Inventory inventory, TileEntityFeeder tile) {
         super(ActuallyContainers.FEEDER_CONTAINER.get(), windowId);
         this.feeder = tile;
         this.addSlot(new SlotItemHandlerUnconditioned(this.feeder.inv, 0, 80, 45));
@@ -46,7 +46,7 @@ public class ContainerFeeder extends Container {
     }
 
     @Override
-    public ItemStack quickMoveStack(PlayerEntity player, int slot) {
+    public ItemStack quickMoveStack(Player player, int slot) {
         int inventoryStart = 1;
         int inventoryEnd = inventoryStart + 26;
         int hotbarStart = inventoryEnd + 1;
@@ -92,7 +92,7 @@ public class ContainerFeeder extends Container {
     }
 
     @Override
-    public boolean stillValid(PlayerEntity player) {
+    public boolean stillValid(Player player) {
         return this.feeder.canPlayerUse(player);
     }
 }

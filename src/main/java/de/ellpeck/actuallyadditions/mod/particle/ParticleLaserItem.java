@@ -10,29 +10,28 @@
 
 package de.ellpeck.actuallyadditions.mod.particle;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Vector3f;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import net.minecraft.Util;
+import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.IAnimatedSprite;
-import net.minecraft.client.particle.IParticleFactory;
-import net.minecraft.client.particle.IParticleRenderType;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.client.renderer.ActiveRenderInfo;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.particle.ParticleProvider;
+import net.minecraft.client.particle.ParticleRenderType;
+import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.client.renderer.LightTexture;
-import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.item.ItemStack;
-import net.minecraft.particles.IParticleData;
-import net.minecraft.util.Util;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.world.LightType;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.LightLayer;
+import net.minecraft.world.phys.Vec3;
 
 public class ParticleLaserItem extends Particle {
     private final double otherX;
@@ -41,11 +40,11 @@ public class ParticleLaserItem extends Particle {
 
     private final ItemStack stack;
 
-    private ParticleLaserItem(ClientWorld world, double posX, double posY, double posZ, ItemStack stack, double motionY) {
+    private ParticleLaserItem(ClientLevel world, double posX, double posY, double posZ, ItemStack stack, double motionY) {
         this(world, posX, posY, posZ, stack, motionY, 0, 0, 0);
     }
 
-    public ParticleLaserItem(ClientWorld world, double posX, double posY, double posZ, ItemStack stack, double motionY, double otherX, double otherY, double otherZ) {
+    public ParticleLaserItem(ClientLevel world, double posX, double posY, double posZ, ItemStack stack, double motionY, double otherX, double otherY, double otherZ) {
         super(world, posX + (world.random.nextDouble() - 0.5) / 8, posY, posZ + (world.random.nextDouble() - 0.5) / 8);
         this.stack = stack;
         this.otherX = otherX;
@@ -71,14 +70,14 @@ public class ParticleLaserItem extends Particle {
     }
 
     @Override
-    public void render(IVertexBuilder buffer, ActiveRenderInfo renderInfo, float partialTicks) {
+    public void render(VertexConsumer vertexConsumer, Camera renderInfo, float partialTicks) {
         Minecraft mc = Minecraft.getInstance();
-        IRenderTypeBuffer.Impl renderBuffer = mc.renderBuffers().bufferSource();
-        Vector3d cam = renderInfo.getPosition();
+        MultiBufferSource.BufferSource renderBuffer = mc.renderBuffers().bufferSource();
+        Vec3 cam = renderInfo.getPosition();
 
-        RenderSystem.pushMatrix();
-        RenderHelper.turnBackOn();
-        MatrixStack matrices = new MatrixStack();
+//        RenderSystem.pushMatrix();
+//        Lighting.turnBackOn();
+        PoseStack matrices = new PoseStack();
         matrices.pushPose();
 
         matrices.translate(x - cam.x, y - cam.y, z - cam.z);
@@ -87,7 +86,7 @@ public class ParticleLaserItem extends Particle {
         double boop = Util.getMillis() / 600D;
         matrices.mulPose(Vector3f.YP.rotationDegrees((float) (boop * 40D % 360)));
 
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+//        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F); TODO: See if this is needed
         RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA,
                 GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
 
@@ -95,34 +94,34 @@ public class ParticleLaserItem extends Particle {
         float color = this.yd < 0
                 ? 1F - ageRatio
                 : ageRatio;
-        RenderSystem.blendColor(color, color, color, color);
+//        RenderSystem.blendColor(color, color, color, color); TODO: See if this is needed
 
-        int blockLight = level.getBrightness(LightType.BLOCK, new BlockPos(x, y, z));
-        int skyLight = level.getBrightness(LightType.SKY, new BlockPos(x, y, z));
+        int blockLight = level.getBrightness(LightLayer.BLOCK, new BlockPos(x, y, z));
+        int skyLight = level.getBrightness(LightLayer.SKY, new BlockPos(x, y, z));
         AssetUtil.renderItemWithoutScrewingWithColors(this.stack, matrices, LightTexture.pack(blockLight, skyLight), OverlayTexture.NO_OVERLAY);
 
-        RenderHelper.turnOff();
+//        Lighting.turnOff();
         matrices.popPose();
-        RenderSystem.popMatrix();
+//        RenderSystem.popMatrix();
         renderBuffer.endBatch();
     }
 
     @Override
-    public IParticleRenderType getRenderType() {
-        return IParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
+    public ParticleRenderType getRenderType() {
+        return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
     }
 
-    public static class Factory implements IParticleFactory<LaserItemParticleData> {
-        public Factory(IAnimatedSprite sprite) {
+    public static class Factory implements ParticleProvider<LaserItemParticleData> {
+        public Factory(SpriteSet sprite) {
 
         }
 
         @Override
-        public Particle createParticle(LaserItemParticleData data, ClientWorld worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+        public Particle createParticle(LaserItemParticleData data, ClientLevel worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
             return new ParticleLaserItem(worldIn, x, y, z, data.stack, ySpeed, data.outputX, data.outputY, data.outputZ);
         }
 
-        public static IParticleData createData(ItemStack stack, double outputX, double outputY, double outputZ) {
+        public static ParticleOptions createData(ItemStack stack, double outputX, double outputY, double outputZ) {
             return new LaserItemParticleData(stack, outputX, outputY, outputZ);
         }
     }

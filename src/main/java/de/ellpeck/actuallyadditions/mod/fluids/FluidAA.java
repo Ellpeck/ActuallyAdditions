@@ -13,19 +13,19 @@ package de.ellpeck.actuallyadditions.mod.fluids;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.FlowingFluidBlock;
-import net.minecraft.block.material.Material;
-import net.minecraft.fluid.FlowingFluid;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.item.BucketItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.BucketItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.material.FlowingFluid;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Material;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.ForgeFlowingFluid;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.registries.RegistryObject;
 
 import java.util.function.Supplier;
 
@@ -33,7 +33,7 @@ public class FluidAA implements Supplier<Fluid> {
     private String name;
     private RegistryObject<ForgeFlowingFluid> source;
     private RegistryObject<ForgeFlowingFluid> flowing;
-    private RegistryObject<FlowingFluidBlock> fluidBlock;
+    private RegistryObject<LiquidBlock> fluidBlock;
     private RegistryObject<Item> bucket;
 
     public String getName() {
@@ -45,11 +45,11 @@ public class FluidAA implements Supplier<Fluid> {
         ForgeFlowingFluid.Properties props = makeProperties(textureName, () -> fluidBlock.get(), () -> source.get(), () -> flowing.get(), () -> bucket.get());
         source = InitFluids.FLUIDS.register(name, () ->  new ForgeFlowingFluid.Source(props));
         flowing = InitFluids.FLUIDS.register(name + "_flowing", () -> new ForgeFlowingFluid.Flowing(props));
-        fluidBlock = ActuallyBlocks.BLOCKS.register(name, () -> new FlowingFluidBlock(source, AbstractBlock.Properties.of(Material.WATER)));
+        fluidBlock = ActuallyBlocks.BLOCKS.register(name, () -> new LiquidBlock(source, BlockBehaviour.Properties.of(Material.WATER)));
         bucket = ActuallyItems.ITEMS.register(name + "_bucket", () -> new BucketItem(source, new Item.Properties().craftRemainder(Items.BUCKET).tab(ActuallyAdditions.GROUP).stacksTo(1)));
     }
 
-    public static ForgeFlowingFluid.Properties makeProperties(String texture, Supplier<FlowingFluidBlock> blockSupplier, Supplier<ForgeFlowingFluid> stillSupplier, Supplier<ForgeFlowingFluid> flowingSupplier, Supplier<Item> bucketSupplier) {
+    public static ForgeFlowingFluid.Properties makeProperties(String texture, Supplier<LiquidBlock> blockSupplier, Supplier<ForgeFlowingFluid> stillSupplier, Supplier<ForgeFlowingFluid> flowingSupplier, Supplier<Item> bucketSupplier) {
         return new ForgeFlowingFluid.Properties(stillSupplier, flowingSupplier, FluidAttributes.builder(new ResourceLocation(ActuallyAdditions.MODID,texture + "_still"), new ResourceLocation(ActuallyAdditions.MODID, texture + "_flowing"))).bucket(bucketSupplier).block(blockSupplier);
     }
 

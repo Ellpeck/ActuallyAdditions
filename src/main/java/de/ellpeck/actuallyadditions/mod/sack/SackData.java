@@ -1,7 +1,7 @@
 package de.ellpeck.actuallyadditions.mod.sack;
 
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
@@ -54,7 +54,7 @@ public class SackData {
         optional = LazyOptional.of(() -> inventory);
     }
 
-    public SackData(UUID uuid, CompoundNBT incoming) {
+    public SackData(UUID uuid, CompoundTag incoming) {
         this.uuid = uuid;
 
         inventory = new ItemStackHandlerAA(SIZE){
@@ -78,7 +78,7 @@ public class SackData {
         return uuid;
     }
 
-    public static Optional<SackData> fromNBT(CompoundNBT nbt) {
+    public static Optional<SackData> fromNBT(CompoundTag nbt) {
         if (nbt.contains("UUID")) {
             UUID uuid = nbt.getUUID("UUID");
             return Optional.of(new SackData(uuid, nbt));
@@ -86,8 +86,8 @@ public class SackData {
         return Optional.empty();
     }
 
-    public CompoundNBT toNBT() {
-        CompoundNBT nbt = new CompoundNBT();
+    public CompoundTag toNBT() {
+        CompoundTag nbt = new CompoundTag();
 
         nbt.putUUID("UUID", uuid);
 
@@ -98,7 +98,7 @@ public class SackData {
         return nbt;
     }
 
-    public static class Metadata implements INBTSerializable<CompoundNBT> {
+    public static class Metadata implements INBTSerializable<CompoundTag> {
         private String firstAccessedPlayer = "";
 
         private long firstAccessedTime = 0;
@@ -129,8 +129,8 @@ public class SackData {
         }
 
         @Override
-        public CompoundNBT serializeNBT() {
-            CompoundNBT nbt = new CompoundNBT();
+        public CompoundTag serializeNBT() {
+            CompoundTag nbt = new CompoundTag();
 
             nbt.putString("firstPlayer", firstAccessedPlayer);
             nbt.putLong("firstTime", firstAccessedTime);
@@ -141,7 +141,7 @@ public class SackData {
         }
 
         @Override
-        public void deserializeNBT(CompoundNBT nbt) {
+        public void deserializeNBT(CompoundTag nbt) {
             firstAccessedPlayer = nbt.getString("firstPlayer");
             firstAccessedTime = nbt.getLong("firstTime");
             lastAccessedPlayer = nbt.getString("lastPlayer");

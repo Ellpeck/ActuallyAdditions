@@ -10,15 +10,15 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFilter;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -29,25 +29,25 @@ public class GuiFilter extends AAScreen<ContainerFilter> {
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_filter");
 
-    public GuiFilter(ContainerFilter container, PlayerInventory inventory, ITextComponent title) {
+    public GuiFilter(ContainerFilter container, Inventory inventory, Component title) {
         super(container, inventory, title);
         this.imageWidth = 176;
         this.imageHeight = 90 + 86;
     }
 
     @Override
-    public void renderLabels(@Nonnull MatrixStack matrices, int x, int y) {
+    public void renderLabels(@Nonnull PoseStack matrices, int x, int y) {
         AssetUtil.displayNameString(matrices, this.font, this.imageWidth, -10, I18n.get("container." + ActuallyAdditions.MODID + ".filter.name"));
     }
 
     @Override
-    public void renderBg(MatrixStack matrices, float f, int x, int y) {
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+    public void renderBg(PoseStack matrices, float f, int x, int y) {
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 
-        this.getMinecraft().getTextureManager().bind(AssetUtil.GUI_INVENTORY_LOCATION);
+        RenderSystem.setShaderTexture(0, AssetUtil.GUI_INVENTORY_LOCATION);
         this.blit(matrices, this.leftPos, this.topPos + 90, 0, 0, 176, 86);
 
-        this.getMinecraft().getTextureManager().bind(RES_LOC);
+        RenderSystem.setShaderTexture(0, RES_LOC);
         this.blit(matrices, this.leftPos, this.topPos, 0, 0, 176, 90);
     }
 }

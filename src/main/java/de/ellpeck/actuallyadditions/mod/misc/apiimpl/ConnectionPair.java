@@ -12,8 +12,8 @@ package de.ellpeck.actuallyadditions.mod.misc.apiimpl;
 
 import de.ellpeck.actuallyadditions.api.laser.IConnectionPair;
 import de.ellpeck.actuallyadditions.api.laser.LaserType;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 
 public class ConnectionPair implements IConnectionPair {
 
@@ -33,7 +33,7 @@ public class ConnectionPair implements IConnectionPair {
     }
 
     @Override
-    public void readFromNBT(CompoundNBT compound) {
+    public void readFromNBT(CompoundTag compound) {
         if (compound != null) {
             for (int i = 0; i < this.positions.length; i++) {
                 int anX = compound.getInt("x" + i);
@@ -85,7 +85,7 @@ public class ConnectionPair implements IConnectionPair {
     }
 
     @Override
-    public void writeToNBT(CompoundNBT compound) {
+    public void writeToNBT(CompoundTag compound) {
         for (int i = 0; i < this.positions.length; i++) {
             BlockPos relay = this.positions[i];
             compound.putInt("x" + i, relay.getX());

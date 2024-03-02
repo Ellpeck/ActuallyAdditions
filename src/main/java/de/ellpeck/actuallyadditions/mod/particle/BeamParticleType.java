@@ -1,7 +1,7 @@
 package de.ellpeck.actuallyadditions.mod.particle;
 
 import com.mojang.serialization.Codec;
-import net.minecraft.particles.ParticleType;
+import net.minecraft.core.particles.ParticleType;
 
 public class BeamParticleType extends ParticleType<BeamParticleData> {
     public BeamParticleType() {

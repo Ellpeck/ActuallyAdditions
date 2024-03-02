@@ -10,22 +10,19 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.client.gui.GuiUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import net.minecraft.client.gui.widget.button.Button.IPressable;
 
 @OnlyIn(Dist.CLIENT)
 public class TexturedButton extends Button {
@@ -35,12 +32,12 @@ public class TexturedButton extends Button {
     public int texturePosX;
     public int texturePosY;
 
-    public TexturedButton(ResourceLocation resLoc, int x, int y, int texturePosX, int texturePosY, int width, int height, IPressable pressable) {
+    public TexturedButton(ResourceLocation resLoc, int x, int y, int texturePosX, int texturePosY, int width, int height, OnPress pressable) {
         this(resLoc, x, y, texturePosX, texturePosY, width, height, new ArrayList<>(), pressable);
     }
 
-    public TexturedButton(ResourceLocation resLoc, int x, int y, int texturePosX, int texturePosY, int width, int height, List<String> hoverTextList, IPressable pressable) {
-        super(x, y, width, height, StringTextComponent.EMPTY, pressable);
+    public TexturedButton(ResourceLocation resLoc, int x, int y, int texturePosX, int texturePosY, int width, int height, List<String> hoverTextList, OnPress pressable) {
+        super(x, y, width, height, TextComponent.EMPTY, pressable);
         this.texturePosX = texturePosX;
         this.texturePosY = texturePosY;
         this.resLoc = resLoc;
@@ -48,10 +45,10 @@ public class TexturedButton extends Button {
     }
 
     @Override
-    public void render(MatrixStack matrices, int mouseX, int mouseY, float partialTicks) {
+    public void render(PoseStack matrices, int mouseX, int mouseY, float partialTicks) {
         if (this.visible) {
-            Minecraft.getInstance().getTextureManager().bind(this.resLoc);
-            RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+            RenderSystem.setShaderTexture(0, this.resLoc);
             this.isHovered = mouseX >= this.x && mouseY >= this.y && this.x < this.x + this.width && this.y < this.y + this.height;
             int k = this.isHovered
                 ? 1
@@ -65,10 +62,11 @@ public class TexturedButton extends Button {
         }
     }
 
-    public void drawHover(MatrixStack matrices, int x, int y) {
+    public void drawHover(PoseStack matrices, int x, int y) {
         if (this.isMouseOver(x, y)) {
             Minecraft mc = Minecraft.getInstance();
-            GuiUtils.drawHoveringText(matrices, this.textList.stream().map(StringTextComponent::new).collect(Collectors.toList()), x, y, mc.screen.width, mc.screen.height, -1, mc.font);
+            if(mc.screen != null)
+                mc.screen.renderComponentTooltip(matrices, this.textList.stream().map(TextComponent::new).collect(Collectors.toList()), x, y, mc.font); //TODO: Check if this is correct, used to call GuiUtils.drawHoveringText
         }
     }
 }

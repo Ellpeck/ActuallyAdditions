@@ -10,35 +10,33 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks.render;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Vector3f;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.items.ItemBattery;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBatteryBox;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.Lang;
+import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.model.ItemCameraTransforms;
-import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Util;
-import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.energy.CapabilityEnergy;
 
 @OnlyIn(Dist.CLIENT)
-public class RenderBatteryBox extends TileEntityRenderer<TileEntityBatteryBox> {
-    public RenderBatteryBox(TileEntityRendererDispatcher rendererDispatcherIn) {
-        super(rendererDispatcherIn);
+public class RenderBatteryBox implements BlockEntityRenderer<TileEntityBatteryBox> {
+    public RenderBatteryBox(BlockEntityRendererProvider.Context context) {
     }
 
     @Override
-    public void render(TileEntityBatteryBox tile, float partialTicks, MatrixStack matrices, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
+    public void render(TileEntityBatteryBox tile, float partialTicks, PoseStack matrices, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
         ItemStack stack = tile.inv.getStackInSlot(0);
         if (stack.isEmpty() || !(stack.getItem() instanceof ItemBattery)) {
             return;
@@ -53,7 +51,7 @@ public class RenderBatteryBox extends TileEntityRenderer<TileEntityBatteryBox> {
         matrices.translate(0F, 0F, -60F);
 
         stack.getCapability(CapabilityEnergy.ENERGY).ifPresent(cap -> {
-            FontRenderer font = Minecraft.getInstance().font;
+            Font font = Minecraft.getInstance().font;
 
             String energyTotal = Lang.cleanEnergyValues(cap, false);
             String energyName = I18n.get("misc.actuallyadditions.power_name_long");

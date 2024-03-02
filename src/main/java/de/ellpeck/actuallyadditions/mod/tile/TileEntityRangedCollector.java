@@ -15,41 +15,45 @@ import de.ellpeck.actuallyadditions.mod.inventory.ContainerRangedCollector;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TileEntityRangedCollector extends TileEntityInventoryBase implements IButtonReactor, INamedContainerProvider {
+public class TileEntityRangedCollector extends TileEntityInventoryBase implements IButtonReactor, MenuProvider {
 
     public static final int RANGE = 6;
     public FilterSettings filter = new FilterSettings(12, true, false, false);
 
-    public TileEntityRangedCollector() {
-        super(ActuallyBlocks.RANGED_COLLECTOR.getTileEntityType(), 6);
+    public TileEntityRangedCollector(BlockPos pos, BlockState state) {
+        super(ActuallyBlocks.RANGED_COLLECTOR.getTileEntityType(), pos, state, 6);
     }
 
     @Override
-    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
 
         this.filter.writeToNBT(compound, "Filter");
     }
 
     @Override
-    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void readSyncableNBT(CompoundTag compound, NBTType type) {
         super.readSyncableNBT(compound, type);
 
         this.filter.readFromNBT(compound, "Filter");
@@ -62,7 +66,7 @@ public class TileEntityRangedCollector extends TileEntityInventoryBase implement
 
     @Override
     public void activateOnPulse() {
-        List<ItemEntity> items = this.level.getEntitiesOfClass(ItemEntity.class, new AxisAlignedBB(this.worldPosition.getX() - RANGE, this.worldPosition.getY() - RANGE, this.worldPosition.getZ() - RANGE, this.worldPosition.getX() + RANGE, this.worldPosition.getY() + RANGE, this.worldPosition.getZ() + RANGE));
+        List<ItemEntity> items = this.level.getEntitiesOfClass(ItemEntity.class, new AABB(this.worldPosition.getX() - RANGE, this.worldPosition.getY() - RANGE, this.worldPosition.getZ() - RANGE, this.worldPosition.getX() + RANGE, this.worldPosition.getY() + RANGE, this.worldPosition.getZ() + RANGE));
         if (!items.isEmpty()) {
             for (ItemEntity item : items) {
                 if (item.isAlive() && !item.hasPickUpDelay() && !item.getItem().isEmpty()) {
@@ -72,8 +76,8 @@ public class TileEntityRangedCollector extends TileEntityInventoryBase implement
                         checkList.add(toAdd);
                         if (StackUtil.canAddAll(this.inv, checkList, false)) {
                             StackUtil.addAll(this.inv, checkList, false);
-                            ((ServerWorld) this.level).sendParticles(ParticleTypes.CLOUD, item.getX(), item.getY() + 0.45F, item.getZ(), 5, 0, 0, 0, 0.03D);
-                            item.remove();
+                            ((ServerLevel) this.level).sendParticles(ParticleTypes.CLOUD, item.getX(), item.getY() + 0.45F, item.getZ(), 5, 0, 0, 0, 0.03D);
+                            item.discard();
                         }
                     }
                 }
@@ -81,16 +85,22 @@ public class TileEntityRangedCollector extends TileEntityInventoryBase implement
         }
     }
 
-    @Override
-    public void updateEntity() {
-        super.updateEntity();
-        if (!this.level.isClientSide) {
-            if (!this.isRedstonePowered && !this.isPulseMode) {
-                this.activateOnPulse();
+    public static <T extends BlockEntity> void clientTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityRangedCollector tile) {
+            tile.clientTick();
+        }
+    }
+
+    public static <T extends BlockEntity> void serverTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityRangedCollector tile) {
+            tile.serverTick();
+
+            if (!tile.isRedstonePowered && !tile.isPulseMode) {
+                tile.activateOnPulse();
             }
 
-            if (this.filter.needsUpdateSend() && this.sendUpdateWithInterval()) {
-                this.filter.updateLasts();
+            if (tile.filter.needsUpdateSend() && tile.sendUpdateWithInterval()) {
+                tile.filter.updateLasts();
             }
         }
     }
@@ -101,18 +111,18 @@ public class TileEntityRangedCollector extends TileEntityInventoryBase implement
     }
 
     @Override
-    public void onButtonPressed(int buttonID, PlayerEntity player) {
+    public void onButtonPressed(int buttonID, Player player) {
         //this.filter.onButtonPressed(buttonID);
     } //TODO
 
     @Override
-    public ITextComponent getDisplayName() {
-        return StringTextComponent.EMPTY;
+    public Component getDisplayName() {
+        return TextComponent.EMPTY;
     }
 
     @Nullable
     @Override
-    public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity player) {
+    public AbstractContainerMenu createMenu(int windowId, Inventory playerInventory, Player player) {
         return new ContainerRangedCollector(windowId, playerInventory, this);
     }
 }

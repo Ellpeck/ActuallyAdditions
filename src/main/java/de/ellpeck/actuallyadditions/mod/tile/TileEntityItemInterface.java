@@ -17,21 +17,27 @@ import de.ellpeck.actuallyadditions.mod.network.PacketServerToClient;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import de.ellpeck.actuallyadditions.mod.util.compat.SlotlessableItemHandlerWrapper;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class TileEntityItemInterface extends TileEntityBase {
 
@@ -44,8 +50,8 @@ public class TileEntityItemInterface extends TileEntityBase {
     private int lastNetworkChangeAmount = -1;
     private int slotCount;
 
-    public TileEntityItemInterface(TileEntityType<?> type) {
-        super(type);
+    public TileEntityItemInterface(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+        super(type, pos, state);
 
         IItemHandler normalHandler = new IItemHandler() {
             @Override
@@ -118,8 +124,20 @@ public class TileEntityItemInterface extends TileEntityBase {
         this.itemHandler = new SlotlessableItemHandlerWrapper(this.lazyHandlers, slotlessHandler);
     }
 
-    public TileEntityItemInterface() {
-        this(ActuallyBlocks.ITEM_INTERFACE.getTileEntityType());
+    public TileEntityItemInterface(BlockPos pos, BlockState state) {
+        this(ActuallyBlocks.ITEM_INTERFACE.getTileEntityType(), pos, state);
+    }
+
+    public static <T extends BlockEntity> void clientTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityItemInterface tile) {
+            tile.clientTick();
+        }
+    }
+
+    public static <T extends BlockEntity> void serverTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityItemInterface tile) {
+            tile.serverTick();
+        }
     }
 
     @Override
@@ -155,7 +173,7 @@ public class TileEntityItemInterface extends TileEntityBase {
 
     public void doItemParticle(ItemStack stack, BlockPos input, BlockPos output) {
         if (!this.level.isClientSide) {
-            CompoundNBT compound = new CompoundNBT();
+            CompoundTag compound = new CompoundTag();
             stack.save(compound);
 
             compound.putDouble("InX", input.getX());
@@ -167,10 +185,10 @@ public class TileEntityItemInterface extends TileEntityBase {
             compound.putDouble("OutZ", output.getZ());
 
             int rangeSq = 16 * 16;
-            for (PlayerEntity player : this.level.players()) {
-                if (player instanceof ServerPlayerEntity) {
+            for (Player player : this.level.players()) {
+                if (player instanceof ServerPlayer) {
                     if (player.distanceToSqr(input.getX(), input.getY(), input.getZ()) <= rangeSq || player.distanceToSqr(output.getX(), output.getY(), output.getZ()) <= rangeSq) {
-                        PacketHandler.sendTo(new PacketServerToClient(compound, PacketHandler.LASER_PARTICLE_HANDLER), (ServerPlayerEntity) player);
+                        PacketHandler.sendTo(new PacketServerToClient(compound, PacketHandler.LASER_PARTICLE_HANDLER), (ServerPlayer) player);
                     }
                 }
             }
@@ -256,7 +274,7 @@ public class TileEntityItemInterface extends TileEntityBase {
                 BlockPos pos = this.getBlockPos().relative(side);
 
                 if (this.level.isLoaded(pos)) {
-                    TileEntity tile = this.level.getBlockEntity(pos);
+                    BlockEntity tile = this.level.getBlockEntity(pos);
 
                     if (tile instanceof TileEntityLaserRelayItem) {
                         if (tileFound != null) {

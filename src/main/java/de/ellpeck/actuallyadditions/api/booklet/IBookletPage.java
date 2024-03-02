@@ -11,8 +11,8 @@
 package de.ellpeck.actuallyadditions.api.booklet;
 
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
-import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.item.ItemStack;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fluids.FluidStack;

@@ -14,25 +14,25 @@ import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityDropper;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.Objects;
 
-public class ContainerDropper extends Container {
+public class ContainerDropper extends AbstractContainerMenu {
 
     public final TileEntityDropper dropper;
-    PlayerEntity player;
+    Player player;
 
-    public static ContainerDropper fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
+    public static ContainerDropper fromNetwork(int windowId, Inventory inv, FriendlyByteBuf data) {
         return new ContainerDropper(windowId, inv, (TileEntityDropper) Objects.requireNonNull(inv.player.level.getBlockEntity(data.readBlockPos())));
     }
 
-    public ContainerDropper(int windowId, PlayerInventory inventory, TileEntityDropper tile) {
+    public ContainerDropper(int windowId, Inventory inventory, TileEntityDropper tile) {
         super(ActuallyContainers.DROPPER_CONTAINER.get(), windowId);
         this.dropper = tile;
         this.player = inventory.player;
@@ -54,7 +54,7 @@ public class ContainerDropper extends Container {
     }
 
     @Override
-    public ItemStack quickMoveStack(PlayerEntity player, int slot) {
+    public ItemStack quickMoveStack(Player player, int slot) {
         int inventoryStart = 9;
         int inventoryEnd = inventoryStart + 26;
         int hotbarStart = inventoryEnd + 1;
@@ -100,12 +100,12 @@ public class ContainerDropper extends Container {
     }
 
     @Override
-    public boolean stillValid(PlayerEntity player) {
+    public boolean stillValid(Player player) {
         return this.dropper.canPlayerUse(player);
     }
 
     @Override
-    public void removed(PlayerEntity playerIn) {
+    public void removed(Player playerIn) {
         super.removed(playerIn);
         if (!this.player.isSpectator()) {
             this.dropper.getLevel().updateNeighborsAt(this.dropper.getBlockPos(), ActuallyBlocks.DROPPER.get());

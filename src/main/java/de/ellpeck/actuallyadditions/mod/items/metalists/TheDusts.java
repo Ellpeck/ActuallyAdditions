@@ -10,7 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.items.metalists;
 
-import net.minecraft.item.Rarity;
+import net.minecraft.world.item.Rarity;
 
 @Deprecated
 public enum TheDusts {

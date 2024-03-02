@@ -12,9 +12,11 @@ package de.ellpeck.actuallyadditions.mod.crafting;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntListValues;
-import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
-import de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer.*;
+import de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer.CactusFarmerBehavior;
+import de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer.DefaultFarmerBehavior;
+import de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer.MelonPumpkinFarmerBehavior;
+import de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer.NetherWartFarmerBehavior;
+import de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer.ReedFarmerBehavior;
 
 // TODO: [port] MOVE TO DATA_GENERATOR
 @Deprecated

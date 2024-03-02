@@ -14,15 +14,15 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import de.ellpeck.actuallyadditions.mod.entity.EntityWorm;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
 import net.minecraftforge.eventbus.api.Event;
 
@@ -35,16 +35,16 @@ public class Worm extends ItemBase {
     }
 
     @Override
-    public ActionResultType useOn(ItemUseContext context) {
+    public InteractionResult useOn(UseOnContext context) {
         BlockPos pos = context.getClickedPos();
         ItemStack stack = context.getPlayer().getItemInHand(context.getHand());
-        World level = context.getLevel();
+        Level level = context.getLevel();
         BlockState state = level.getBlockState(pos);
 
         if (level.isClientSide || !EntityWorm.canWormify(level, context.getClickedPos(), state))
             return super.useOn(context);
 
-        List<EntityWorm> worms = level.getEntitiesOfClass(EntityWorm.class, new AxisAlignedBB(pos.getX() - 1, pos.getY(), pos.getZ() - 1, pos.getX() + 2, pos.getY() + 1, pos.getZ() + 2));
+        List<EntityWorm> worms = level.getEntitiesOfClass(EntityWorm.class, new AABB(pos.getX() - 1, pos.getY(), pos.getZ() - 1, pos.getX() + 2, pos.getY() + 1, pos.getZ() + 2));
         if (!worms.isEmpty())
             return super.useOn(context);
 
@@ -55,11 +55,11 @@ public class Worm extends ItemBase {
         if (!context.getPlayer().isCreative())
             stack.shrink(1);
 
-        return ActionResultType.SUCCESS;
+        return InteractionResult.SUCCESS;
     }
 
     public static void onHoe(UseHoeEvent event) {
-        World level = event.getEntity().level;
+        Level level = event.getEntity().level;
 
         if (level.isClientSide || !CommonConfig.Other.WORMS.get() || event.getResult() == Event.Result.DENY)
             return;

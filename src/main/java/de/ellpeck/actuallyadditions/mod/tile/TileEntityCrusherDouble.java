@@ -11,12 +11,27 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class TileEntityCrusherDouble extends TileEntityCrusher {
 
-    public TileEntityCrusherDouble() {
-        super(ActuallyBlocks.CRUSHER_DOUBLE.getTileEntityType(),  6);
+    public TileEntityCrusherDouble(BlockPos pos, BlockState state) {
+        super(ActuallyBlocks.CRUSHER_DOUBLE.getTileEntityType(),  pos, state, 6);
         this.isDouble = true;
     }
 
+    public static <T extends BlockEntity> void clientTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityCrusherDouble tile) {
+            tile.clientTick();
+        }
+    }
+
+    public static <T extends BlockEntity> void serverTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityCrusherDouble tile) {
+            tile.serverTick();
+        }
+    }
 }

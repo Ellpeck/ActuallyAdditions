@@ -14,21 +14,21 @@ import de.ellpeck.actuallyadditions.api.tile.IPhantomTile;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.RegistryKey;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -41,17 +41,17 @@ public class ItemPhantomConnector extends ItemBase {
         super(ActuallyItems.defaultNonStacking());
     }
 
-    public static RegistryKey<World> getStoredWorld(ItemStack stack) {
-        CompoundNBT tag = stack.getOrCreateTag();
+    public static ResourceKey<Level> getStoredWorld(ItemStack stack) {
+        CompoundTag tag = stack.getOrCreateTag();
         if (!tag.contains("WorldOfTileStored")) {
             return null;
         }
 
-        return RegistryKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(tag.getString("WorldOfTileStored")));
+        return ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(tag.getString("WorldOfTileStored")));
     }
 
     public static BlockPos getStoredPosition(ItemStack stack) {
-        CompoundNBT tag = stack.getOrCreateTag();
+        CompoundTag tag = stack.getOrCreateTag();
         int x = tag.getInt("XCoordOfTileStored");
         int y = tag.getInt("YCoordOfTileStored");
         int z = tag.getInt("ZCoordOfTileStored");
@@ -63,14 +63,14 @@ public class ItemPhantomConnector extends ItemBase {
     }
 
     public static void clearStorage(ItemStack stack, String... keys) {
-        CompoundNBT compound = stack.getOrCreateTag();
+        CompoundTag compound = stack.getOrCreateTag();
         for (String key : keys) {
             compound.remove(key);
         }
     }
 
-    public static void storeConnection(ItemStack stack, int x, int y, int z, World world) {
-        CompoundNBT tag = stack.getOrCreateTag();
+    public static void storeConnection(ItemStack stack, int x, int y, int z, Level world) {
+        CompoundTag tag = stack.getOrCreateTag();
 
         tag.putInt("XCoordOfTileStored", x);
         tag.putInt("YCoordOfTileStored", y);
@@ -79,12 +79,12 @@ public class ItemPhantomConnector extends ItemBase {
     }
 
     @Override
-    public ActionResultType useOn(ItemUseContext context) {
+    public InteractionResult useOn(UseOnContext context) {
         ItemStack stack = context.getPlayer().getItemInHand(context.getHand());
         if (!context.getLevel().isClientSide) {
             //Passing Data to Phantoms
             BlockPos pos = context.getClickedPos();
-            TileEntity tile = context.getLevel().getBlockEntity(pos);
+            BlockEntity tile = context.getLevel().getBlockEntity(pos);
             if (tile != null) {
                 //Passing to Phantom
                 if (tile instanceof IPhantomTile) {
@@ -95,35 +95,35 @@ public class ItemPhantomConnector extends ItemBase {
                             ((TileEntityBase) tile).sendUpdate();
                         }
                         clearStorage(stack, "XCoordOfTileStored", "YCoordOfTileStored", "ZCoordOfTileStored", "WorldOfTileStored");
-                        context.getPlayer().displayClientMessage(new TranslationTextComponent("tooltip." + ActuallyAdditions.MODID + ".phantom.connected.desc"), true);
-                        return ActionResultType.SUCCESS;
+                        context.getPlayer().displayClientMessage(new TranslatableComponent("tooltip." + ActuallyAdditions.MODID + ".phantom.connected.desc"), true);
+                        return InteractionResult.SUCCESS;
                     }
-                    return ActionResultType.FAIL;
+                    return InteractionResult.FAIL;
                 }
             }
             //Storing Connections
             storeConnection(stack, pos.getX(), pos.getY(), pos.getZ(), context.getLevel());
-            context.getPlayer().displayClientMessage(new TranslationTextComponent("tooltip." + ActuallyAdditions.MODID + ".phantom.stored.desc"), true);
+            context.getPlayer().displayClientMessage(new TranslatableComponent("tooltip." + ActuallyAdditions.MODID + ".phantom.stored.desc"), true);
         }
-        return ActionResultType.SUCCESS;
+        return InteractionResult.SUCCESS;
     }
 
     @Nullable
     @Override
-    public CompoundNBT getShareTag(ItemStack stack) {
-        return new CompoundNBT();
+    public CompoundTag getShareTag(ItemStack stack) {
+        return new CompoundTag();
     }
 
     @OnlyIn(Dist.CLIENT)
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable World playerIn, List<ITextComponent> list, ITooltipFlag advanced) {
+    public void appendHoverText(ItemStack stack, @Nullable Level playerIn, List<Component> list, TooltipFlag advanced) {
         BlockPos coords = getStoredPosition(stack);
         if (coords != null) {
-            list.add(new TranslationTextComponent("tooltip." + ActuallyAdditions.MODID + ".boundTo.desc").append(":"));
-            list.add(new StringTextComponent("X: " + coords.getX()));
-            list.add(new StringTextComponent("Y: " + coords.getY()));
-            list.add(new StringTextComponent("Z: " + coords.getZ()));
-            list.add(new TranslationTextComponent("tooltip." + ActuallyAdditions.MODID + ".clearStorage.desc").withStyle(TextFormatting.ITALIC));
+            list.add(new TranslatableComponent("tooltip." + ActuallyAdditions.MODID + ".boundTo.desc").append(":"));
+            list.add(new TextComponent("X: " + coords.getX()));
+            list.add(new TextComponent("Y: " + coords.getY()));
+            list.add(new TextComponent("Z: " + coords.getZ()));
+            list.add(new TranslatableComponent("tooltip." + ActuallyAdditions.MODID + ".clearStorage.desc").withStyle(ChatFormatting.ITALIC));
         }
     }
 }

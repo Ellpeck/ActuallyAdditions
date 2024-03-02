@@ -21,7 +21,9 @@
       "conditions": {
         "items": [
           {
-            "item": "actuallyadditions:coffee_machine"
+            "items": [
+              "actuallyadditions:coffee_machine"
+            ]
           }
         ]
       }

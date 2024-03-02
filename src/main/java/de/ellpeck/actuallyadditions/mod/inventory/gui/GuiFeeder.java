@@ -10,16 +10,16 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFeeder;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityFeeder;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -31,7 +31,7 @@ public class GuiFeeder extends AAScreen<ContainerFeeder> {
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_feeder");
     public final TileEntityFeeder tileFeeder;
 
-    public GuiFeeder(ContainerFeeder container, PlayerInventory inventory, ITextComponent title) {
+    public GuiFeeder(ContainerFeeder container, Inventory inventory, Component title) {
         super(container, inventory, title);
         this.tileFeeder = container.feeder;
         this.imageWidth = 176;
@@ -39,7 +39,7 @@ public class GuiFeeder extends AAScreen<ContainerFeeder> {
     }
 
     @Override
-    public void render(@Nonnull MatrixStack matrices, int x, int y, float f) {
+    public void render(@Nonnull PoseStack matrices, int x, int y, float f) {
         super.render(matrices, x, y, f);
         if (x >= this.leftPos + 69 && y >= this.topPos + 30 && x <= this.leftPos + 69 + 10 && y <= this.topPos + 30 + 10) {
             String[] array = new String[]{this.tileFeeder.currentAnimalAmount + " " + I18n.get("info." + ActuallyAdditions.MODID + ".gui.animals"), this.tileFeeder.currentAnimalAmount >= 2 && this.tileFeeder.currentAnimalAmount < TileEntityFeeder.THRESHOLD
@@ -52,11 +52,12 @@ public class GuiFeeder extends AAScreen<ContainerFeeder> {
     }
 
     @Override
-    public void renderBg(MatrixStack matrices, float f, int x, int y) {
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.getMinecraft().getTextureManager().bind(AssetUtil.GUI_INVENTORY_LOCATION);
+    public void renderBg(PoseStack matrices, float f, int x, int y) {
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+
+        RenderSystem.setShaderTexture(0, AssetUtil.GUI_INVENTORY_LOCATION);
         this.blit(matrices, this.leftPos, this.topPos + 70, 0, 0, 176, 86);
-        this.getMinecraft().getTextureManager().bind(RES_LOC);
+        RenderSystem.setShaderTexture(0, RES_LOC);
         this.blit(matrices, this.leftPos, this.topPos, 0, 0, 176, 70);
 
         if (this.tileFeeder.currentTimer > 0) {

@@ -16,26 +16,26 @@ import de.ellpeck.actuallyadditions.mod.items.DrillItem;
 import de.ellpeck.actuallyadditions.mod.items.ItemDrillUpgrade;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.ClickType;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 
-public class ContainerDrill extends Container {
+public class ContainerDrill extends AbstractContainerMenu {
 
     public static final int SLOT_AMOUNT = 5;
 
     private final ItemStackHandlerAA drillInventory = new ItemStackHandlerAA(SLOT_AMOUNT);
-    private final PlayerInventory inventory;
+    private final Inventory inventory;
 
-    public static ContainerDrill fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
+    public static ContainerDrill fromNetwork(int windowId, Inventory inv, FriendlyByteBuf data) {
         return new ContainerDrill(windowId, inv);
     }
 
-    public ContainerDrill(int windowId, PlayerInventory inventory) {
+    public ContainerDrill(int windowId, Inventory inventory) {
         super(ActuallyContainers.DRILL_CONTAINER.get(), windowId);
         this.inventory = inventory;
 
@@ -68,7 +68,7 @@ public class ContainerDrill extends Container {
     }
 
     @Override
-    public ItemStack quickMoveStack(PlayerEntity player, int slot) {
+    public ItemStack quickMoveStack(Player player, int slot) {
         int inventoryStart = 5;
         int inventoryEnd = inventoryStart + 26;
         int hotbarStart = inventoryEnd + 1;
@@ -118,16 +118,16 @@ public class ContainerDrill extends Container {
     }
 
     @Override
-    public ItemStack clicked(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player) {
+    public void clicked(int slotId, int dragType, ClickType clickTypeIn, Player player) {
         if (clickTypeIn == ClickType.SWAP && dragType == this.inventory.selected) {
-            return ItemStack.EMPTY;
+            return; //TODO: Check if this is correct, used to return ItemStack.EMPTY
         } else {
-            return super.clicked(slotId, dragType, clickTypeIn, player);
+            super.clicked(slotId, dragType, clickTypeIn, player);
         }
     }
 
     @Override
-    public void removed(PlayerEntity player) {
+    public void removed(Player player) {
         ItemStack stack = this.inventory.getSelected();
         if (StackUtil.isValid(stack) && stack.getItem() instanceof DrillItem) {
             DrillItem.writeSlotsToNBT(this.drillInventory, this.inventory.getSelected());
@@ -136,7 +136,7 @@ public class ContainerDrill extends Container {
     }
 
     @Override
-    public boolean stillValid(PlayerEntity player) {
+    public boolean stillValid(Player player) {
         return true;
     }
 }

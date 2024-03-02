@@ -7,17 +7,18 @@ import de.ellpeck.actuallyadditions.mod.crafting.EmpowererRecipe;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.Crystals;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.DirectoryCache;
-import net.minecraft.data.IFinishedRecipe;
-import net.minecraft.data.RecipeProvider;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.tags.ITag;
+import net.minecraft.data.HashCache;
+import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.util.IItemProvider;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.tags.Tag;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.common.Tags;
 
 import java.nio.file.Path;
@@ -31,11 +32,11 @@ public class EmpoweringRecipeGenerator extends RecipeProvider {
     }
 
     @Override
-    protected void saveAdvancement(DirectoryCache pCache, JsonObject pAdvancementJson, Path pPath) {
+    protected void saveAdvancement(HashCache pCache, JsonObject pAdvancementJson, Path pPath) {
     }
 
     @Override
-    protected void buildShapelessRecipes(Consumer<IFinishedRecipe> consumer) {
+    protected void buildCraftingRecipes(Consumer<FinishedRecipe> consumer) {
         EmpoweringBuilder.builder(ActuallyItems.EMPOWERED_RESTONIA_CRYSTAL.get(), ActuallyItems.RESTONIA_CRYSTAL.get(), 5000, 50, Crystals.REDSTONE.conversionColorParticles)
                 .addModifier(Tags.Items.DYES_RED)
                 .addModifier(Items.NETHER_BRICK)
@@ -118,7 +119,7 @@ public class EmpoweringRecipeGenerator extends RecipeProvider {
         private final int color;
         private final List<Ingredient> modifiers = new ArrayList<>();
 
-        public EmpoweringBuilder(IItemProvider resultIn, Ingredient baseIn, int energyIn, int timeIn, int colorIn) {
+        public EmpoweringBuilder(ItemLike resultIn, Ingredient baseIn, int energyIn, int timeIn, int colorIn) {
             result = resultIn.asItem();
             base = baseIn;
             energy = energyIn;
@@ -126,11 +127,11 @@ public class EmpoweringRecipeGenerator extends RecipeProvider {
             color = colorIn;
         }
 
-        public static EmpoweringBuilder builder(IItemProvider resultIn, IItemProvider base, int energyIn, int timeIn, int colorIn) {
+        public static EmpoweringBuilder builder(ItemLike resultIn, ItemLike base, int energyIn, int timeIn, int colorIn) {
             return new EmpoweringBuilder(resultIn, Ingredient.of(base), energyIn, timeIn, colorIn);
         }
 
-        public EmpoweringBuilder addModifier(IItemProvider input) {
+        public EmpoweringBuilder addModifier(ItemLike input) {
             if (modifiers.size() >= 4)
                 throw new IllegalStateException("too many modifiers for empowering recipe, input: " + input.asItem().getRegistryName());
             modifiers.add(Ingredient.of(input));
@@ -144,24 +145,24 @@ public class EmpoweringRecipeGenerator extends RecipeProvider {
             return this;
         }
 
-        public EmpoweringBuilder addModifier(ITag<Item> input) {
+        public EmpoweringBuilder addModifier(TagKey<Item> input) {
             if (modifiers.size() >= 4)
                 throw new IllegalStateException("too many modifiers for empowering recipe, input: " + input.toString());
             modifiers.add(Ingredient.of(input));
             return this;
         }
 
-        public void save(Consumer<IFinishedRecipe> consumer, ResourceLocation name) {
+        public void save(Consumer<FinishedRecipe> consumer, ResourceLocation name) {
             if (modifiers.size() != 4)
                 throw new IllegalStateException("invalid modifier count: " + modifiers.size() + ", recipe: " + name.toString());
-            consumer.accept(new EmpowererRecipe.FinishedRecipe(name, result, base, modifiers.get(0), modifiers.get(1), modifiers.get(2), modifiers.get(3), energy, color, time));
+            consumer.accept(new EmpowererRecipe.Result(name, result, base, modifiers.get(0), modifiers.get(1), modifiers.get(2), modifiers.get(3), energy, color, time));
         }
 
-        public void save(Consumer<IFinishedRecipe> consumer, String name) {
+        public void save(Consumer<FinishedRecipe> consumer, String name) {
             ResourceLocation res = new ResourceLocation(ActuallyAdditions.MODID, "empowering/" + name);
             if (modifiers.size() != 4)
                 throw new IllegalStateException("invalid modifier count: " + modifiers.size() + ", recipe: " + res);
-            consumer.accept(new EmpowererRecipe.FinishedRecipe(res, result, base, modifiers.get(0), modifiers.get(1), modifiers.get(2), modifiers.get(3), energy, color, time));
+            consumer.accept(new EmpowererRecipe.Result(res, result, base, modifiers.get(0), modifiers.get(1), modifiers.get(2), modifiers.get(3), energy, color, time));
         }
     }
 }

@@ -10,9 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.util;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.resources.I18n;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.resources.language.I18n;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -29,7 +29,7 @@ public final class StringUtil {
 
     // TODO: Move to official
     @OnlyIn(Dist.CLIENT)
-    public static void drawSplitString(FontRenderer renderer, String strg, int x, int y, int width, int color, boolean shadow) {
+    public static void drawSplitString(Font renderer, String strg, int x, int y, int width, int color, boolean shadow) {
 //        ResourcePackList <- holds the correct way
 //        List<String> list = renderer.listFormattedStringToWidth(strg, width);
 //        for (int i = 0; i < list.size(); i++) {
@@ -47,7 +47,7 @@ public final class StringUtil {
 //    }
 
     @OnlyIn(Dist.CLIENT)
-    public static void renderScaledString(MatrixStack matrices, FontRenderer font, String text, float x, float y, int color, boolean shadow, float scale) {
+    public static void renderScaledString(PoseStack matrices, Font font, String text, float x, float y, int color, boolean shadow, float scale) {
         matrices.pushPose();
         matrices.translate(x, y, 0);
         matrices.scale(scale, scale, 1.0F);

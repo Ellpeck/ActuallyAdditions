@@ -17,15 +17,17 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.LazyOptional;
@@ -40,12 +42,12 @@ import java.util.concurrent.ConcurrentHashMap;
 public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay {
 
     public static final int CAP = 1000;
-    public final ConcurrentHashMap<Direction, TileEntity> receiversAround = new ConcurrentHashMap<>();
+    public final ConcurrentHashMap<Direction, BlockEntity> receiversAround = new ConcurrentHashMap<>();
     private final IEnergyStorage[] energyStorages = new IEnergyStorage[6];
     private Mode mode = Mode.BOTH;
 
-    public TileEntityLaserRelayEnergy(TileEntityType<?> type) {
-        super(type, LaserType.ENERGY);
+    public TileEntityLaserRelayEnergy(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+        super(type, pos, state, LaserType.ENERGY);
 
         for (int i = 0; i < this.energyStorages.length; i++) {
             Direction facing = Direction.values()[i];
@@ -83,8 +85,20 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay {
         }
     }
 
-    public TileEntityLaserRelayEnergy() {
-        this(ActuallyBlocks.LASER_RELAY.getTileEntityType());
+    public TileEntityLaserRelayEnergy(BlockPos pos, BlockState state) {
+        this(ActuallyBlocks.LASER_RELAY.getTileEntityType(), pos, state);
+    }
+
+    public static <T extends BlockEntity> void clientTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityLaserRelayEnergy tile) {
+            tile.clientTick();
+        }
+    }
+
+    public static <T extends BlockEntity> void serverTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityLaserRelayEnergy tile) {
+            tile.serverTick();
+        }
     }
 
     private int transmitEnergy(Direction from, int maxTransmit, boolean simulate) {
@@ -113,19 +127,19 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay {
 
     @Override
     public void saveDataOnChangeOrWorldStart() {
-        Map<Direction, TileEntity> old = new HashMap<>(this.receiversAround);
+        Map<Direction, BlockEntity> old = new HashMap<>(this.receiversAround);
         boolean change = false;
 
         this.receiversAround.clear();
         for (Direction side : Direction.values()) {
             BlockPos pos = this.getBlockPos().relative(side);
             if (this.level.hasChunkAt(pos)) {
-                TileEntity tile = this.level.getBlockEntity(pos);
+                BlockEntity tile = this.level.getBlockEntity(pos);
                 if (tile != null && !(tile instanceof TileEntityLaserRelay)) {
                     if (tile.getCapability(CapabilityEnergy.ENERGY, side.getOpposite()).isPresent()) {
                         this.receiversAround.put(side, tile);
 
-                        TileEntity oldTile = old.get(side);
+                        BlockEntity oldTile = old.get(side);
                         if (oldTile == null || !tile.equals(oldTile)) {
                             change = true;
                         }
@@ -154,7 +168,7 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay {
             for (BlockPos relay : pair.getPositions()) {
                 if (relay != null && this.level.hasChunkAt(relay) && !alreadyChecked.contains(relay)) {
                     alreadyChecked.add(relay);
-                    TileEntity relayTile = this.level.getBlockEntity(relay);
+                    BlockEntity relayTile = this.level.getBlockEntity(relay);
                     if (relayTile instanceof TileEntityLaserRelayEnergy) {
                         TileEntityLaserRelayEnergy theRelay = (TileEntityLaserRelayEnergy) relayTile;
                         if (theRelay.mode != Mode.INPUT_ONLY) {
@@ -162,7 +176,7 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay {
 
                             for (Direction facing : theRelay.receiversAround.keySet()) {
                                 if (theRelay != this || facing != from) {
-                                    TileEntity tile = theRelay.receiversAround.get(facing);
+                                    BlockEntity tile = theRelay.receiversAround.get(facing);
 
                                     Direction opp = facing.getOpposite();
                                     if (tile != null) {
@@ -192,11 +206,11 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay {
             for (TileEntityLaserRelayEnergy theRelay : relaysThatWork) {
                 double highestLoss = Math.max(theRelay.getLossPercentage(), this.getLossPercentage());
                 int lowestCap = Math.min(theRelay.getEnergyCap(), this.getEnergyCap());
-                for (Map.Entry<Direction, TileEntity> receiver : theRelay.receiversAround.entrySet()) {
+                for (Map.Entry<Direction, BlockEntity> receiver : theRelay.receiversAround.entrySet()) {
                     if (receiver != null) {
                         Direction side = receiver.getKey();
                         Direction opp = side.getOpposite();
-                        TileEntity tile = receiver.getValue();
+                        BlockEntity tile = receiver.getValue();
                         if (!alreadyChecked.contains(tile.getBlockPos())) {
                             alreadyChecked.add(tile.getBlockPos());
                             if (theRelay != this || side != from) {
@@ -232,7 +246,7 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay {
 
     private int calcDeduction(int theoreticalReceived, double highestLoss) {
         return CommonConfig.Machines.LASER_RELAY_LOSS.get()
-            ? MathHelper.ceil(theoreticalReceived * (highestLoss / 100))
+            ? Mth.ceil(theoreticalReceived * (highestLoss / 100))
             : 0;
     }
 
@@ -247,22 +261,22 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay {
     @Override
     @OnlyIn(Dist.CLIENT)
     public String getExtraDisplayString() {
-        return I18n.get("info." + ActuallyAdditions.MODID + ".laserRelay.energy.extra") + ": " + TextFormatting.DARK_RED + I18n.get(this.mode.name) + TextFormatting.RESET;
+        return I18n.get("info." + ActuallyAdditions.MODID + ".laserRelay.energy.extra") + ": " + ChatFormatting.DARK_RED + I18n.get(this.mode.name) + ChatFormatting.RESET;
     }
 
     @Override
     @OnlyIn(Dist.CLIENT)
     public String getCompassDisplayString() {
-        return TextFormatting.GREEN + I18n.get("info." + ActuallyAdditions.MODID + ".laserRelay.energy.display");
+        return ChatFormatting.GREEN + I18n.get("info." + ActuallyAdditions.MODID + ".laserRelay.energy.display");
     }
 
     @Override
-    public void onCompassAction(PlayerEntity player) {
+    public void onCompassAction(Player player) {
         this.mode = this.mode.getNext();
     }
 
     @Override
-    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
 
         if (type != NBTType.SAVE_BLOCK) {
@@ -271,7 +285,7 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay {
     }
 
     @Override
-    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void readSyncableNBT(CompoundTag compound, NBTType type) {
         super.readSyncableNBT(compound, type);
 
         if (type != NBTType.SAVE_BLOCK) {

@@ -12,17 +12,17 @@ package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.GrassBlock;
-import net.minecraft.block.IGrowable;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.BonemealableBlock;
+import net.minecraft.world.level.block.GrassBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.IPlantable;
 
 import java.util.ArrayList;
@@ -35,12 +35,12 @@ public class ItemGrowthRing extends ItemEnergy {
     }
 
     @Override
-    public void inventoryTick(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
-        if (!(entity instanceof PlayerEntity) || world.isClientSide || entity.isShiftKeyDown()) {
+    public void inventoryTick(ItemStack stack, Level world, Entity entity, int itemSlot, boolean isSelected) {
+        if (!(entity instanceof Player) || world.isClientSide || entity.isShiftKeyDown()) {
             return;
         }
 
-        PlayerEntity player = (PlayerEntity) entity;
+        Player player = (Player) entity;
         ItemStack equipped = player.getMainHandItem();
 
         int energyUse = 300;
@@ -53,12 +53,12 @@ public class ItemGrowthRing extends ItemEnergy {
                 for (int x = -range; x < range + 1; x++) {
                     for (int z = -range; z < range + 1; z++) {
                         for (int y = -range; y < range + 1; y++) {
-                            int theX = MathHelper.floor(player.getX() + x);
-                            int theY = MathHelper.floor(player.getY() + y);
-                            int theZ = MathHelper.floor(player.getZ() + z);
+                            int theX = Mth.floor(player.getX() + x);
+                            int theY = Mth.floor(player.getY() + y);
+                            int theZ = Mth.floor(player.getZ() + z);
                             BlockPos posInQuestion = new BlockPos(theX, theY, theZ);
                             Block theBlock = world.getBlockState(posInQuestion).getBlock();
-                            if ((theBlock instanceof IGrowable || theBlock instanceof IPlantable) && !(theBlock instanceof GrassBlock)) {
+                            if ((theBlock instanceof BonemealableBlock || theBlock instanceof IPlantable) && !(theBlock instanceof GrassBlock)) {
                                 blocks.add(posInQuestion);
                             }
                         }
@@ -72,7 +72,7 @@ public class ItemGrowthRing extends ItemEnergy {
                             BlockPos pos = blocks.get(world.random.nextInt(blocks.size()));
 
                             BlockState state = world.getBlockState(pos);
-                            state.randomTick((ServerWorld) world, pos, world.random);
+                            state.randomTick((ServerLevel) world, pos, world.random);
 
                             //Show Particles if Metadata changed
                             BlockState newState = world.getBlockState(pos);

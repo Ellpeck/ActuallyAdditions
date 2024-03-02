@@ -19,22 +19,26 @@ import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Tiers;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.TierSortingRegistry;
 import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -43,7 +47,7 @@ import net.minecraftforge.fluids.IFluidBlock;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class TileEntityVerticalDigger extends TileEntityInventoryBase implements IButtonReactor, IEnergyDisplay, INamedContainerProvider {
+public class TileEntityVerticalDigger extends TileEntityInventoryBase implements IButtonReactor, IEnergyDisplay, MenuProvider {
 
     public static final int ENERGY_USE_PER_BLOCK = 650;
     public static final int DEFAULT_RANGE = 2;
@@ -58,12 +62,12 @@ public class TileEntityVerticalDigger extends TileEntityInventoryBase implements
     private int oldCheckY;
     private int oldCheckZ;
 
-    public TileEntityVerticalDigger() {
-        super(ActuallyBlocks.VERTICAL_DIGGER.getTileEntityType(), 9);
+    public TileEntityVerticalDigger(BlockPos pos, BlockState state) {
+        super(ActuallyBlocks.VERTICAL_DIGGER.getTileEntityType(), pos, state, 9);
     }
 
     @Override
-    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
         this.storage.writeToNBT(compound);
         if (type != NBTType.SAVE_BLOCK) {
@@ -77,7 +81,7 @@ public class TileEntityVerticalDigger extends TileEntityInventoryBase implements
     }
 
     @Override
-    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void readSyncableNBT(CompoundTag compound, NBTType type) {
         super.readSyncableNBT(compound, type);
         this.storage.readFromNBT(compound);
         if (type != NBTType.SAVE_BLOCK) {
@@ -88,29 +92,34 @@ public class TileEntityVerticalDigger extends TileEntityInventoryBase implements
         this.onlyMineOres = compound.getBoolean("OnlyOres");
     }
 
-    @Override
-    public void updateEntity() {
-        super.updateEntity();
-        if (!this.level.isClientSide) {
+    public static <T extends BlockEntity> void clientTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityVerticalDigger tile) {
+            tile.clientTick();
+        }
+    }
 
-            if (!this.isRedstonePowered && this.ticksElapsed % 5 == 0) {
-                if (this.checkY != 0) {
-                    int range = TileEntityPhantomface.upgradeRange(DEFAULT_RANGE, this.level, this.worldPosition);
-                    if (this.checkY < 0) {
-                        this.checkY = this.worldPosition.getY() - 1;
-                        this.checkX = -range;
-                        this.checkZ = -range;
+    public static <T extends BlockEntity> void serverTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityVerticalDigger tile) {
+            tile.serverTick();
+
+            if (!tile.isRedstonePowered && tile.ticksElapsed % 5 == 0) {
+                if (tile.checkY != 0) {
+                    int range = TileEntityPhantomface.upgradeRange(DEFAULT_RANGE, level, pos);
+                    if (tile.checkY < 0) {
+                        tile.checkY = tile.worldPosition.getY() - 1;
+                        tile.checkX = -range;
+                        tile.checkZ = -range;
                     }
 
-                    if (this.checkY > 0) {
-                        if (this.mine()) {
-                            this.checkX++;
-                            if (this.checkX > range) {
-                                this.checkX = -range;
-                                this.checkZ++;
-                                if (this.checkZ > range) {
-                                    this.checkZ = -range;
-                                    this.checkY--;
+                    if (tile.checkY > 0) {
+                        if (tile.mine()) {
+                            tile.checkX++;
+                            if (tile.checkX > range) {
+                                tile.checkX = -range;
+                                tile.checkZ++;
+                                if (tile.checkZ > range) {
+                                    tile.checkZ = -range;
+                                    tile.checkY--;
                                 }
                             }
                         }
@@ -118,11 +127,11 @@ public class TileEntityVerticalDigger extends TileEntityInventoryBase implements
                 }
             }
 
-            if ((this.oldEnergy != this.storage.getEnergyStored() || this.oldCheckX != this.checkX || this.oldCheckY != this.checkY || this.oldCheckZ != this.checkZ) && this.sendUpdateWithInterval()) {
-                this.oldEnergy = this.storage.getEnergyStored();
-                this.oldCheckX = this.checkX;
-                this.oldCheckY = this.checkY;
-                this.oldCheckZ = this.checkZ;
+            if ((tile.oldEnergy != tile.storage.getEnergyStored() || tile.oldCheckX != tile.checkX || tile.oldCheckY != tile.checkY || tile.oldCheckZ != tile.checkZ) && tile.sendUpdateWithInterval()) {
+                tile.oldEnergy = tile.storage.getEnergyStored();
+                tile.oldCheckX = tile.checkX;
+                tile.oldCheckY = tile.checkY;
+                tile.oldCheckZ = tile.checkZ;
             }
         }
     }
@@ -136,15 +145,16 @@ public class TileEntityVerticalDigger extends TileEntityInventoryBase implements
 
             BlockState state = this.level.getBlockState(pos);
             Block block = state.getBlock();
-            ItemStack stack = block.getPickBlock(state, new BlockRayTraceResult(new Vector3d(0, 0, 0), Direction.DOWN, pos, false), this.level, pos, FakePlayerFactory.getMinecraft((ServerWorld) this.level));
-            if (!block.isAir(this.level.getBlockState(pos), this.level, pos)) {
-                if (block.getHarvestLevel(this.level.getBlockState(pos)) <= DrillItem.HARVEST_LEVEL && state.getDestroySpeed(this.level, pos) >= 0F && !(block instanceof IFluidBlock) && this.isMinable(block, stack)) {
-                    List<ItemStack> drops = Block.getDrops(state, (ServerWorld) this.level, pos, this.level.getBlockEntity(pos));
+            ItemStack stack = block.getCloneItemStack(state, new BlockHitResult(new Vec3(0, 0, 0), Direction.DOWN, pos, false), this.level, pos, FakePlayerFactory.getMinecraft((ServerLevel) this.level));
+            if (!state.isAir()) {
+                //block.getHarvestLevel(state) <= DrillItem.HARVEST_LEVEL
+                if (TierSortingRegistry.isCorrectTierForDrops(Tiers.NETHERITE, state) && state.getDestroySpeed(this.level, pos) >= 0F && !(block instanceof IFluidBlock) && this.isMinable(block, stack)) {
+                    List<ItemStack> drops = Block.getDrops(state, (ServerLevel) this.level, pos, this.level.getBlockEntity(pos));
                     float chance = WorldUtil.fireFakeHarvestEventsForDropChance(this, drops, this.level, pos);
 
                     if (chance > 0 && this.level.random.nextFloat() <= chance) {
                         if (StackUtil.canAddAll(this.inv, drops, false)) {
-                            this.level.levelEvent(2001, pos, Block.getId(this.level.getBlockState(pos)));
+                            this.level.levelEvent(2001, pos, Block.getId(state));
                             this.level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
 
                             StackUtil.addAll(this.inv, drops, false);
@@ -218,7 +228,7 @@ public class TileEntityVerticalDigger extends TileEntityInventoryBase implements
     }
 
     @Override
-    public void onButtonPressed(int buttonID, PlayerEntity player) {
+    public void onButtonPressed(int buttonID, Player player) {
         if (buttonID == 0) {
             this.onlyMineOres = !this.onlyMineOres;
             this.sendUpdate();
@@ -245,13 +255,13 @@ public class TileEntityVerticalDigger extends TileEntityInventoryBase implements
     }
 
     @Override
-    public ITextComponent getDisplayName() {
-        return StringTextComponent.EMPTY;
+    public Component getDisplayName() {
+        return TextComponent.EMPTY;
     }
 
     @Nullable
     @Override
-    public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity player) {
+    public AbstractContainerMenu createMenu(int windowId, Inventory playerInventory, Player player) {
         return new ContainerMiner(windowId, playerInventory, this);
     }
 }

@@ -12,19 +12,23 @@ package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.api.misc.IDisplayStandItem;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
-import net.minecraft.block.*;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.UseAction;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.BushBlock;
+import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.IForgeShearable;
 
 import javax.annotation.Nonnull;
@@ -42,15 +46,15 @@ public class ItemLeafBlower extends ItemBase implements IDisplayStandItem {
 
     @Nonnull
     @Override
-    public ActionResult<ItemStack> use(@Nonnull World world, PlayerEntity player, @Nonnull Hand hand) {
+    public InteractionResultHolder<ItemStack> use(@Nonnull Level world, Player player, @Nonnull InteractionHand hand) {
         player.startUsingItem(hand);
-        return ActionResult.success(player.getItemInHand(hand));
+        return InteractionResultHolder.success(player.getItemInHand(hand));
     }
 
     @Nonnull
     @Override
-    public UseAction getUseAnimation(@Nonnull ItemStack stack) {
-        return UseAction.BOW;
+    public UseAnim getUseAnimation(@Nonnull ItemStack stack) {
+        return UseAnim.BOW;
     }
 
     @Override
@@ -60,16 +64,16 @@ public class ItemLeafBlower extends ItemBase implements IDisplayStandItem {
 
     @Override
     public void onUsingTick(ItemStack stack, LivingEntity player, int count) {
-        this.doUpdate(player.level, MathHelper.floor(player.getX()), MathHelper.floor(player.getY()), MathHelper.floor(player.getZ()), count, stack);
+        this.doUpdate(player.level, Mth.floor(player.getX()), Mth.floor(player.getY()), Mth.floor(player.getZ()), count, stack);
     }
 
-    private boolean doUpdate(World world, int x, int y, int z, int time, ItemStack stack) {
+    private boolean doUpdate(Level world, int x, int y, int z, int time, ItemStack stack) {
         if (!world.isClientSide) {
             if (time <= this.getUseDuration(stack) && (this.isAdvanced || time % 3 == 0)) {
                 //Breaks the Blocks
                 boolean broke = this.breakStuff(world, x, y, z);
                 //Plays a Minecart sounds (It really sounds like a Leaf Blower!)
-                world.playSound(null, x, y, z, SoundEvents.MINECART_RIDING, SoundCategory.PLAYERS, 0.2F, 0.001F);
+                world.playSound(null, x, y, z, SoundEvents.MINECART_RIDING, SoundSource.PLAYERS, 0.2F, 0.001F);
                 return broke;
             }
         }
@@ -84,7 +88,7 @@ public class ItemLeafBlower extends ItemBase implements IDisplayStandItem {
      * @param y     The Y Position of the Player
      * @param z     The Z Position of the Player
      */
-    public boolean breakStuff(World world, int x, int y, int z) {
+    public boolean breakStuff(Level world, int x, int y, int z) {
         ArrayList<BlockPos> breakPositions = new ArrayList<>();
 
         int rangeSides = 5;
@@ -127,12 +131,12 @@ public class ItemLeafBlower extends ItemBase implements IDisplayStandItem {
     }
 
     @Override
-    public boolean update(ItemStack stack, TileEntity tile, int elapsedTicks) {
+    public boolean update(ItemStack stack, BlockEntity tile, int elapsedTicks) {
         return this.doUpdate(tile.getLevel(), tile.getBlockPos().getX(), tile.getBlockPos().getY(), tile.getBlockPos().getZ(), elapsedTicks, stack);
     }
 
     @Override
-    public int getUsePerTick(ItemStack stack, TileEntity tile, int elapsedTicks) {
+    public int getUsePerTick(ItemStack stack, BlockEntity tile, int elapsedTicks) {
         return 60;
     }
 }

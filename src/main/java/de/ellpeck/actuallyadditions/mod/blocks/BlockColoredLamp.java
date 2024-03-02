@@ -12,29 +12,25 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBase;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.material.Material;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.DyeColor;
-import net.minecraft.item.DyeItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
-import net.minecraftforge.common.ToolType;
-import net.minecraftforge.common.util.Constants;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.DyeItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.phys.BlockHitResult;
 
 import java.util.HashMap;
 import java.util.function.Supplier;
-
-import net.minecraft.block.AbstractBlock.Properties;
 
 public class BlockColoredLamp extends BlockBase {
     private static final HashMap<DyeColor, Supplier<Block>> COLOR_TO_LAMP = new HashMap<DyeColor, Supplier<Block>>() {{
@@ -59,35 +55,35 @@ public class BlockColoredLamp extends BlockBase {
     private static final BooleanProperty LIT = BlockStateProperties.LIT;
 
     public BlockColoredLamp() {
-        super(Properties.of(Material.BUILDABLE_GLASS).strength(0.5F, 3.0F).harvestTool(ToolType.PICKAXE).harvestLevel(0));
+        super(Properties.of(Material.BUILDABLE_GLASS).strength(0.5F, 3.0F).requiresCorrectToolForDrops());
         this.registerDefaultState(this.stateDefinition.any().setValue(LIT, false));
     }
 
     @Override
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(LIT);
     }
 
     @Override
-    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         ItemStack stack = player.getItemInHand(hand);
         //Turning On
-        if (hand == Hand.MAIN_HAND && stack.isEmpty()) {
-            world.setBlock(pos, this.defaultBlockState().setValue(LIT, !state.getValue(LIT)), Constants.BlockFlags.NO_RERENDER);
-            return ActionResultType.PASS;
+        if (hand == InteractionHand.MAIN_HAND && stack.isEmpty()) {
+            world.setBlock(pos, this.defaultBlockState().setValue(LIT, !state.getValue(LIT)), Block.UPDATE_INVISIBLE);
+            return InteractionResult.PASS;
         }
 
         if (StackUtil.isValid(stack) && stack.getItem() instanceof DyeItem) {
             DyeColor color = DyeColor.getColor(stack);
             if (color == null) {
-                return ActionResultType.FAIL;
+                return InteractionResult.FAIL;
             }
 
             Block newColor = COLOR_TO_LAMP.get(color).get();
             if (!world.isClientSide) {
                 world.setBlock(pos, newColor.defaultBlockState().setValue(LIT, state.getValue(LIT)), 2);
                 if (!player.isCreative()) {
-                    player.inventory.removeItem(player.inventory.selected, 1);
+                    player.getInventory().removeItem(player.getInventory().selected, 1);
                 }
             }
         }
@@ -95,7 +91,7 @@ public class BlockColoredLamp extends BlockBase {
     }
 
     @Override
-    public int getLightValue(BlockState state, IBlockReader world, BlockPos pos) {
+    public int getLightEmission(BlockState state, BlockGetter level, BlockPos pos) {
         return state.getValue(LIT)
             ? 15
             : 0;

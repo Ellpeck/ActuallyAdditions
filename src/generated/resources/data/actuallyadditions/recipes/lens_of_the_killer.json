@@ -8,7 +8,10 @@
       "item": "actuallyadditions:lens_of_certain_death"
     },
     {
-      "item": "minecraft:enchanted_book"
+      "type": "forge:nbt",
+      "item": "minecraft:enchanted_book",
+      "count": 1,
+      "nbt": "{Enchantments:[{id:\"minecraft:sharpness\",lvl:5s}]}"
     }
   ],
   "result": {

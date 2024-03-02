@@ -14,6 +14,6 @@ import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBase;
 
 public class BlockGeneric extends BlockBase {
     public BlockGeneric() {
-        super(ActuallyBlocks.defaultPickProps(0));
+        super(ActuallyBlocks.defaultPickProps());
     }
 }

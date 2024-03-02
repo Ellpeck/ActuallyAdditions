@@ -15,26 +15,26 @@ import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotImmovable;
 import de.ellpeck.actuallyadditions.mod.items.DrillItem;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.ClickType;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 
-public class ContainerFilter extends Container {
+public class ContainerFilter extends AbstractContainerMenu {
 
     public static final int SLOT_AMOUNT = 24;
 
     private final ItemStackHandlerAA filterInventory = new ItemStackHandlerAA(SLOT_AMOUNT);
-    private final PlayerInventory inventory;
+    private final Inventory inventory;
 
-    public static ContainerFilter fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
+    public static ContainerFilter fromNetwork(int windowId, Inventory inv, FriendlyByteBuf data) {
         return new ContainerFilter(windowId, inv);
     }
 
-    public ContainerFilter(int windowId, PlayerInventory inventory) {
+    public ContainerFilter(int windowId, Inventory inventory) {
         super(ActuallyContainers.FILTER_CONTAINER.get(), windowId);
         this.inventory = inventory;
 
@@ -64,7 +64,7 @@ public class ContainerFilter extends Container {
     }
 
     @Override
-    public ItemStack quickMoveStack(PlayerEntity player, int slot) {
+    public ItemStack quickMoveStack(Player player, int slot) {
         int inventoryStart = SLOT_AMOUNT;
         int inventoryEnd = inventoryStart + 26;
         int hotbarStart = inventoryEnd + 1;
@@ -108,18 +108,18 @@ public class ContainerFilter extends Container {
     }
 
     @Override
-    public ItemStack clicked(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player) {
+    public void clicked(int slotId, int dragType, ClickType clickTypeIn, Player player) {
         if (SlotFilter.checkFilter(this, slotId, player)) {
-            return ItemStack.EMPTY;
+            return; //TODO: Check if this is correct, used to return ItemStack.EMPTY
         } else if (clickTypeIn == ClickType.SWAP && dragType == this.inventory.selected) {
-            return ItemStack.EMPTY;
+            return; //TODO: Check if this is correct, used to return ItemStack.EMPTY
         } else {
-            return super.clicked(slotId, dragType, clickTypeIn, player);
+            super.clicked(slotId, dragType, clickTypeIn, player);
         }
     }
 
     @Override
-    public void removed(PlayerEntity player) {
+    public void removed(Player player) {
         ItemStack stack = this.inventory.getSelected();
         if (SlotFilter.isFilter(stack)) {
             DrillItem.writeSlotsToNBT(this.filterInventory, this.inventory.getSelected());
@@ -128,7 +128,7 @@ public class ContainerFilter extends Container {
     }
 
     @Override
-    public boolean stillValid(PlayerEntity player) {
+    public boolean stillValid(Player player) {
         return true;
     }
 }

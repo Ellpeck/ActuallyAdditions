@@ -11,11 +11,10 @@
 package de.ellpeck.actuallyadditions.mod.update;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
@@ -44,13 +43,13 @@ public class UpdateChecker {
     @SubscribeEvent(receiveCanceled = true)
     public void onTick(TickEvent.ClientTickEvent event) {
         if (Minecraft.getInstance().player != null) {
-            PlayerEntity player = Minecraft.getInstance().player;
+            Player player = Minecraft.getInstance().player;
             if (UpdateChecker.checkFailed) {
-                player.displayClientMessage(ITextComponent.Serializer.fromJson(I18n.get("info." + ActuallyAdditions.MODID + ".update.failed")), false);
+                player.displayClientMessage(Component.Serializer.fromJson(I18n.get("info." + ActuallyAdditions.MODID + ".update.failed")), false);
             } else if (UpdateChecker.needsUpdateNotify) {
-                player.displayClientMessage(ITextComponent.Serializer.fromJson(I18n.get("info." + ActuallyAdditions.MODID + ".update.generic")), false);
-                player.displayClientMessage(ITextComponent.Serializer.fromJson(I18n.get("info." + ActuallyAdditions.MODID + ".update.versionCompare", ActuallyAdditions.VERSION, UpdateChecker.updateVersionString)), false);
-                player.displayClientMessage(ITextComponent.Serializer.fromJson(I18n.get("info." + ActuallyAdditions.MODID + ".update.buttons", UpdateChecker.CHANGELOG_LINK, UpdateChecker.DOWNLOAD_LINK)), false);
+                player.displayClientMessage(Component.Serializer.fromJson(I18n.get("info." + ActuallyAdditions.MODID + ".update.generic")), false);
+                player.displayClientMessage(Component.Serializer.fromJson(I18n.get("info." + ActuallyAdditions.MODID + ".update.versionCompare", ActuallyAdditions.VERSION, UpdateChecker.updateVersionString)), false);
+                player.displayClientMessage(Component.Serializer.fromJson(I18n.get("info." + ActuallyAdditions.MODID + ".update.buttons", UpdateChecker.CHANGELOG_LINK, UpdateChecker.DOWNLOAD_LINK)), false);
             }
             if (threadFinished) {
                 MinecraftForge.EVENT_BUS.unregister(this);

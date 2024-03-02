@@ -13,20 +13,20 @@ package de.ellpeck.actuallyadditions.mod.inventory;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotOutput;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityCrusher;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.Objects;
 
-public class CrusherContainer extends Container {
+public class CrusherContainer extends AbstractContainerMenu {
     public final TileEntityCrusher tileGrinder;
     public final boolean isDouble;
 
-    public CrusherContainer(int windowId, PlayerInventory inventory, TileEntityCrusher tile) {
+    public CrusherContainer(int windowId, Inventory inventory, TileEntityCrusher tile) {
         super(ActuallyContainers.GRINDER_CONTAINER.get(), windowId);
         this.tileGrinder = tile;
         this.isDouble = tile.isDouble;
@@ -56,12 +56,12 @@ public class CrusherContainer extends Container {
         }
     }
 
-    public static CrusherContainer fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
+    public static CrusherContainer fromNetwork(int windowId, Inventory inv, FriendlyByteBuf data) {
         return new CrusherContainer(windowId, inv, (TileEntityCrusher) Objects.requireNonNull(inv.player.level.getBlockEntity(data.readBlockPos())));
     }
 
     @Override
-    public ItemStack quickMoveStack(PlayerEntity player, int slot) {
+    public ItemStack quickMoveStack(Player player, int slot) {
         /*
         int inventoryStart = this.isDouble
                 ? 6
@@ -129,7 +129,7 @@ public class CrusherContainer extends Container {
     }
 
     @Override
-    public boolean stillValid(PlayerEntity player) {
+    public boolean stillValid(Player player) {
         return this.tileGrinder.canPlayerUse(player);
     }
 }

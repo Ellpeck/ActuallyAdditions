@@ -10,10 +10,14 @@
 
 package de.ellpeck.actuallyadditions.mod.util;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.BufferBuilder;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.Tesselator;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Matrix4f;
+import com.mojang.math.Vector3f;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.render.RenderTypes;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
@@ -21,27 +25,27 @@ import de.ellpeck.actuallyadditions.mod.network.PacketServerToClient;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.renderer.*;
-import net.minecraft.client.renderer.model.IBakedModel;
-import net.minecraft.client.renderer.model.ItemCameraTransforms;
-import net.minecraft.client.renderer.texture.AtlasTexture;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.renderer.LightTexture;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.block.model.ItemTransforms;
+import net.minecraft.client.renderer.entity.ItemRenderer;
+import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Matrix4f;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.world.World;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.ForgeHooksClient;
-import net.minecraftforge.fml.network.PacketDistributor;
+import net.minecraftforge.network.PacketDistributor;
 
 public final class AssetUtil {
 
@@ -59,12 +63,12 @@ public final class AssetUtil {
     }
 
     @OnlyIn(Dist.CLIENT)
-    public static void displayNameString(MatrixStack matrices, FontRenderer font, int xSize, int yPositionOfMachineText, String text) {
+    public static void displayNameString(PoseStack matrices, Font font, int xSize, int yPositionOfMachineText, String text) {
         font.draw(matrices, text, xSize / 2f - font.width(text) / 2f, yPositionOfMachineText, 0xFFFFFF);
     }
 
     @OnlyIn(Dist.CLIENT)
-    public static void displayNameString(MatrixStack matrices, FontRenderer font, int xSize, int yPositionOfMachineText, TileEntityBase tile) {
+    public static void displayNameString(PoseStack matrices, Font font, int xSize, int yPositionOfMachineText, TileEntityBase tile) {
         displayNameString(matrices, font, xSize, yPositionOfMachineText, I18n.get(tile.getNameForTranslation()));
     }
 
@@ -73,10 +77,10 @@ public final class AssetUtil {
     //    }
 
     @OnlyIn(Dist.CLIENT)
-    public static void renderItemInWorld(ItemStack stack, int combinedLight, int combinedOverlay, MatrixStack matrices, IRenderTypeBuffer buffer) {
+    public static void renderItemInWorld(ItemStack stack, int combinedLight, int combinedOverlay, PoseStack matrices, MultiBufferSource buffer) {
         if (!stack.isEmpty()) {
             Minecraft.getInstance().getItemRenderer().renderStatic(
-                    stack, ItemCameraTransforms.TransformType.FIXED, combinedLight, combinedOverlay, matrices, buffer
+                    stack, ItemTransforms.TransformType.FIXED, combinedLight, combinedOverlay, matrices, buffer, 0
             );
         }
     }
@@ -96,28 +100,30 @@ public final class AssetUtil {
     //    }
 
     @OnlyIn(Dist.CLIENT)
-    public static void renderItemWithoutScrewingWithColors(ItemStack stack, MatrixStack matrices, int combinedOverlay, int combinedLight) {
+    public static void renderItemWithoutScrewingWithColors(ItemStack stack, PoseStack matrices, int combinedOverlay, int combinedLight) {
         if (StackUtil.isValid(stack)) {
             Minecraft mc = Minecraft.getInstance();
             ItemRenderer renderer = mc.getItemRenderer();
             TextureManager manager = mc.getTextureManager();
-            IRenderTypeBuffer.Impl irendertypebuffer$impl = mc.renderBuffers().bufferSource();
+            MultiBufferSource.BufferSource bufferSource = mc.renderBuffers().bufferSource();
 
-            IBakedModel model = renderer.getModel(stack, null, null);
-            manager.bind(AtlasTexture.LOCATION_BLOCKS);
-            manager.getTexture(AtlasTexture.LOCATION_BLOCKS).setBlurMipmap(false, false);
-            RenderSystem.enableRescaleNormal();
+            BakedModel model = renderer.getModel(stack, null, null, 0);
+            manager.bindForSetup(TextureAtlas.LOCATION_BLOCKS); //bind
+            manager.getTexture(TextureAtlas.LOCATION_BLOCKS).setBlurMipmap(false, false);
+//            RenderSystem.enableRescaleNormal();
             RenderSystem.enableBlend();
-            RenderSystem.pushMatrix();
-            model = ForgeHooksClient.handleCameraTransforms(matrices, model, ItemCameraTransforms.TransformType.FIXED, false);
-            renderer.render(stack, ItemCameraTransforms.TransformType.FIXED, false, matrices, irendertypebuffer$impl,
+//            RenderSystem.pushMatrix();
+            matrices.pushPose();
+            model = ForgeHooksClient.handleCameraTransforms(matrices, model, ItemTransforms.TransformType.FIXED, false);
+            renderer.render(stack, ItemTransforms.TransformType.FIXED, false, matrices, bufferSource,
                     combinedOverlay, combinedLight, model);
-            RenderSystem.popMatrix();
-            RenderSystem.disableRescaleNormal();
+//            RenderSystem.popMatrix();
+            matrices.popPose();
+//            RenderSystem.disableRescaleNormal();
             RenderSystem.disableBlend();
-            manager.bind(AtlasTexture.LOCATION_BLOCKS);
-            manager.getTexture(AtlasTexture.LOCATION_BLOCKS).restoreLastBlurMipmap();
-            irendertypebuffer$impl.endBatch();
+            manager.bindForSetup(TextureAtlas.LOCATION_BLOCKS); //bind
+            manager.getTexture(TextureAtlas.LOCATION_BLOCKS).restoreLastBlurMipmap();
+            bufferSource.endBatch();
         }
     }
 
@@ -211,9 +217,9 @@ public final class AssetUtil {
 //        GlStateManager._popMatrix();
 //    }
 
-    public static void spawnLaserWithTimeServer(World world, double startX, double startY, double startZ, double endX, double endY, double endZ, int color, int maxAge, double rotationTime, float size, float alpha) {
+    public static void spawnLaserWithTimeServer(Level world, double startX, double startY, double startZ, double endX, double endY, double endZ, int color, int maxAge, double rotationTime, float size, float alpha) {
         if (!world.isClientSide) {
-            CompoundNBT data = new CompoundNBT();
+            CompoundTag data = new CompoundTag();
             data.putDouble("StartX", startX);
             data.putDouble("StartY", startY);
             data.putDouble("StartZ", startZ);
@@ -232,7 +238,7 @@ public final class AssetUtil {
     @OnlyIn(Dist.CLIENT)
     public static void spawnLaserWithTimeClient(double startX, double startY, double startZ, double endX, double endY, double endZ, int color, int maxAge, double rotationTime, float size, float alpha) {
         Minecraft mc = Minecraft.getInstance();
-        TileEntity tile = mc.level.getBlockEntity(new BlockPos(startX, startY, startZ));
+        BlockEntity tile = mc.level.getBlockEntity(new BlockPos(startX, startY, startZ));
         if(tile instanceof TileEntityAtomicReconstructor)
             ((TileEntityAtomicReconstructor) tile).resetBeam(maxAge, color);
 
@@ -249,8 +255,8 @@ public final class AssetUtil {
     }*/
 
     @OnlyIn(Dist.CLIENT)
-    public static void renderLaser(MatrixStack matrixStack, IRenderTypeBuffer buffer, float offX, float offY, float offZ, float yaw, float pitch, float length, float rotationTime, int color, float alpha, float beamWidth) {
-        World world = Minecraft.getInstance().level;
+    public static void renderLaser(PoseStack matrixStack, MultiBufferSource buffer, float offX, float offY, float offZ, float yaw, float pitch, float length, float rotationTime, int color, float alpha, float beamWidth) {
+        Level world = Minecraft.getInstance().level;
         int r = (color >> 16) & 0xFF;
         int g = (color >> 8) & 0xFF;
         int b = color & 0xFF;
@@ -260,7 +266,7 @@ public final class AssetUtil {
 
         float roll = rotationTime > 0.0f ? 360.0f * (world.getGameTime() % rotationTime / rotationTime) : 0.0f;
 
-        IVertexBuilder builder = buffer.getBuffer(RenderTypes.LASER);
+        VertexConsumer builder = buffer.getBuffer(RenderTypes.LASER);
         matrixStack.pushPose();
         matrixStack.translate(0.5f, 0.5f, 0.5f);
         matrixStack.translate(offX, offY, offZ);
@@ -300,8 +306,8 @@ public final class AssetUtil {
         matrixStack.popPose();
     }
 
-    public static void renderLaser(MatrixStack matrixStack, IRenderTypeBuffer buffer, Vector3d startOffset, Vector3d endOffset, float rotationTime, int color, float alpha, float beamWidth) {
-        Vector3d combined = endOffset.subtract(startOffset);
+    public static void renderLaser(PoseStack matrixStack, MultiBufferSource buffer, Vec3 startOffset, Vec3 endOffset, float rotationTime, int color, float alpha, float beamWidth) {
+        Vec3 combined = endOffset.subtract(startOffset);
 
         double pitch = Math.toDegrees(Math.atan2(combined.y, Math.sqrt(combined.x * combined.x + combined.z * combined.z)));
         double yaw = Math.toDegrees(Math.atan2(-combined.z, combined.x));
@@ -314,17 +320,17 @@ public final class AssetUtil {
     //I can't do rendering code. Ever.
     @OnlyIn(Dist.CLIENT)
     public static void renderLaser(double firstX, double firstY, double firstZ, double secondX, double secondY, double secondZ, double rotationTime, float alpha, double beamWidth, float[] color) {
-        Tessellator tessy = Tessellator.getInstance();
+        Tesselator tessy = Tesselator.getInstance();
         BufferBuilder render = tessy.getBuilder();
-        World world = Minecraft.getInstance().level;
+        Level world = Minecraft.getInstance().level;
 
         float r = color[0];
         float g = color[1];
         float b = color[2];
 
-        Vector3d vec1 = new Vector3d(firstX, firstY, firstZ);
-        Vector3d vec2 = new Vector3d(secondX, secondY, secondZ);
-        Vector3d combinedVec = vec2.subtract(vec1);
+        Vec3 vec1 = new Vec3(firstX, firstY, firstZ);
+        Vec3 vec2 = new Vec3(secondX, secondY, secondZ);
+        Vec3 combinedVec = vec2.subtract(vec1);
 
         double rot = rotationTime > 0
                 ? 360D * (world.getGameTime() % rotationTime / rotationTime)
@@ -334,7 +340,7 @@ public final class AssetUtil {
 
         double length = combinedVec.length();
 
-        GlStateManager._pushMatrix();
+//        GlStateManager._pushMatrix();
 
 /*        GlStateManager._disableLighting();
         GlStateManager._enableBlend();
@@ -425,19 +431,19 @@ public final class AssetUtil {
         //GlStateManager._alphaFunc(func, ref);
         //GlStateManager._blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
         GlStateManager._disableBlend();
-        GlStateManager._enableLighting();
-        GlStateManager._popMatrix();
+//        GlStateManager._enableLighting();
+//        GlStateManager._popMatrix();
     }
 
     @OnlyIn(Dist.CLIENT)
-    public static void renderTextInWorld(MatrixStack matrixStack, double offsetX, double offsetY, double offsetZ, NonNullList<String> text, int color) {
+    public static void renderTextInWorld(PoseStack matrixStack, double offsetX, double offsetY, double offsetZ, NonNullList<String> text, int color) {
         matrixStack.pushPose();
         matrixStack.translate(offsetX,offsetY,offsetZ);
         matrixStack.scale(-1, -1, 1);
-        matrixStack.mulPose(Vector3f.YP.rotationDegrees(Minecraft.getInstance().cameraEntity.yRot));
+        matrixStack.mulPose(Vector3f.YP.rotationDegrees(Minecraft.getInstance().cameraEntity.getYRot()));
         matrixStack.scale(0.01F, 0.01F, 0.01F);
 
-        FontRenderer font = Minecraft.getInstance().font;
+        Font font = Minecraft.getInstance().font;
 
         int y = 0;
         for (String s : text) {

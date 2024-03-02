@@ -11,13 +11,13 @@
 package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.world.World;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 
 public class ItemDrillUpgrade extends ItemBase {
 
@@ -29,7 +29,7 @@ public class ItemDrillUpgrade extends ItemBase {
     }
 
     public static int getSlotToPlaceFrom(ItemStack stack) {
-        CompoundNBT compound = stack.getTag();
+        CompoundTag compound = stack.getTag();
         if (compound != null) {
             return compound.getInt("SlotToPlaceFrom") - 1;
         }
@@ -37,17 +37,17 @@ public class ItemDrillUpgrade extends ItemBase {
     }
 
     @Override
-    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+    public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         if (!world.isClientSide && this.type == UpgradeType.PLACER) {
-            this.setSlotToPlaceFrom(stack, player.inventory.selected);
-            return new ActionResult<>(ActionResultType.SUCCESS, stack);
+            this.setSlotToPlaceFrom(stack, player.getInventory().selected);
+            return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
         }
-        return new ActionResult<>(ActionResultType.FAIL, stack);
+        return new InteractionResultHolder<>(InteractionResult.FAIL, stack);
     }
 
     public void setSlotToPlaceFrom(ItemStack stack, int slot) {
-        CompoundNBT compound = stack.getOrCreateTag();
+        CompoundTag compound = stack.getOrCreateTag();
         compound.putInt("SlotToPlaceFrom", slot + 1);
 
         stack.setTag(compound);

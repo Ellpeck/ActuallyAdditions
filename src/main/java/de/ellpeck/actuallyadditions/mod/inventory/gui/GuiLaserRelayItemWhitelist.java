@@ -10,17 +10,17 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerLaserRelayItemWhitelist;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayItemAdvanced;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -38,7 +38,7 @@ public class GuiLaserRelayItemWhitelist extends AAScreen<ContainerLaserRelayItem
     private Button buttonSmartWhitelistLeft;
     private Button buttonSmartWhitelistRight;
 
-    public GuiLaserRelayItemWhitelist(ContainerLaserRelayItemWhitelist container, PlayerInventory inventory, ITextComponent title) {
+    public GuiLaserRelayItemWhitelist(ContainerLaserRelayItemWhitelist container, Inventory inventory, Component title) {
         super(container, inventory, title);
         this.tile = container.tile;
         this.imageWidth = 176;
@@ -46,8 +46,8 @@ public class GuiLaserRelayItemWhitelist extends AAScreen<ContainerLaserRelayItem
     }
 
     @Override
-    public void tick() {
-        super.tick();
+    public void containerTick() {
+        super.containerTick();
 
         this.leftFilter.tick();
         this.rightFilter.tick();
@@ -72,7 +72,7 @@ public class GuiLaserRelayItemWhitelist extends AAScreen<ContainerLaserRelayItem
 //    }
 
     @Override
-    public void render(@Nonnull MatrixStack matrices, int x, int y, float f) {
+    public void render(@Nonnull PoseStack matrices, int x, int y, float f) {
         super.render(matrices, x, y, f);
 //
 //        if (this.buttonSmartWhitelistLeft.isMouseOver() || this.buttonSmartWhitelistRight.isMouseOver()) {
@@ -87,7 +87,7 @@ public class GuiLaserRelayItemWhitelist extends AAScreen<ContainerLaserRelayItem
     }
 
     @Override
-    public void renderLabels(@Nonnull MatrixStack matrices, int x, int y) {
+    public void renderLabels(@Nonnull PoseStack matrices, int x, int y) {
         AssetUtil.displayNameString(matrices, this.font, this.imageWidth, -10, this.tile);
 
         String s1 = I18n.get("info." + ActuallyAdditions.MODID + ".gui.inbound");
@@ -97,13 +97,13 @@ public class GuiLaserRelayItemWhitelist extends AAScreen<ContainerLaserRelayItem
     }
 
     @Override
-    public void renderBg(MatrixStack matrices, float f, int x, int y) {
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+    public void renderBg(PoseStack matrices, float f, int x, int y) {
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 
-        this.getMinecraft().getTextureManager().bind(AssetUtil.GUI_INVENTORY_LOCATION);
+        RenderSystem.setShaderTexture(0, AssetUtil.GUI_INVENTORY_LOCATION);
         this.blit(matrices, this.leftPos, this.topPos + 93, 0, 0, 176, 86);
 
-        this.getMinecraft().getTextureManager().bind(RES_LOC);
+        RenderSystem.setShaderTexture(0, RES_LOC);
         this.blit(matrices, this.leftPos, this.topPos, 0, 0, 176, 93);
 
     }

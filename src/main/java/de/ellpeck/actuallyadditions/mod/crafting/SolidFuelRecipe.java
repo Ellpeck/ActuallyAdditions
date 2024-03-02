@@ -1,20 +1,20 @@
 package de.ellpeck.actuallyadditions.mod.crafting;
 
 import com.google.gson.JsonObject;
-import net.minecraft.data.IFinishedRecipe;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import javax.annotation.Nullable;
 
-public class SolidFuelRecipe implements IRecipe<SingleItem> {
+public class SolidFuelRecipe implements Recipe<SingleItem> {
     public static String NAME = "solid_fuel";
     private Ingredient itemIngredient;
     private int burnTime;
@@ -37,7 +37,7 @@ public class SolidFuelRecipe implements IRecipe<SingleItem> {
     }
 
     @Override
-    public boolean matches(SingleItem pInv, World pLevel) {
+    public boolean matches(SingleItem pInv, Level pLevel) {
         return itemIngredient.test(pInv.getItem());
     }
 
@@ -71,16 +71,16 @@ public class SolidFuelRecipe implements IRecipe<SingleItem> {
     }
 
     @Override
-    public IRecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<?> getSerializer() {
         return ActuallyRecipes.SOLID_FUEL_RECIPE.get();
     }
 
     @Override
-    public IRecipeType<?> getType() {
+    public RecipeType<?> getType() {
         return ActuallyRecipes.Types.SOLID_FUEL;
     }
 
-    public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<SolidFuelRecipe> {
+    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<SolidFuelRecipe> {
         @Override
         public SolidFuelRecipe fromJson(ResourceLocation pId, JsonObject pJson) {
             Ingredient itemIngredient = Ingredient.fromJson(pJson.get("item"));
@@ -90,7 +90,7 @@ public class SolidFuelRecipe implements IRecipe<SingleItem> {
         }
 
         @Override
-        public SolidFuelRecipe fromNetwork(ResourceLocation pId, PacketBuffer pBuffer) {
+        public SolidFuelRecipe fromNetwork(ResourceLocation pId, FriendlyByteBuf pBuffer) {
             Ingredient itemIngredient = Ingredient.fromNetwork(pBuffer);
             int totalEnergy = pBuffer.readInt();
             int burnTime = pBuffer.readInt();
@@ -98,20 +98,20 @@ public class SolidFuelRecipe implements IRecipe<SingleItem> {
         }
 
         @Override
-        public void toNetwork(PacketBuffer pBuffer, SolidFuelRecipe pRecipe) {
+        public void toNetwork(FriendlyByteBuf pBuffer, SolidFuelRecipe pRecipe) {
             pRecipe.itemIngredient.toNetwork(pBuffer);
             pBuffer.writeInt(pRecipe.totalEnergy);
             pBuffer.writeInt(pRecipe.burnTime);
         }
     }
 
-    public static class FinishedRecipe implements IFinishedRecipe {
+    public static class Result implements FinishedRecipe {
         private Ingredient itemIngredient;
         private int burnTime;
         private int totalEnergy;
         private ResourceLocation id;
 
-        public FinishedRecipe(ResourceLocation id, Ingredient itemIngredient, int totalEnergy, int burnTime) {
+        public Result(ResourceLocation id, Ingredient itemIngredient, int totalEnergy, int burnTime) {
             this.itemIngredient = itemIngredient;
             this.burnTime = burnTime;
             this.totalEnergy = totalEnergy;
@@ -131,7 +131,7 @@ public class SolidFuelRecipe implements IRecipe<SingleItem> {
         }
 
         @Override
-        public IRecipeSerializer<?> getType() {
+        public RecipeSerializer<?> getType() {
             return ActuallyRecipes.SOLID_FUEL_RECIPE.get();
         }
 

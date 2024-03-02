@@ -13,23 +13,24 @@ package de.ellpeck.actuallyadditions.mod.items.base;
 import de.ellpeck.actuallyadditions.api.misc.IDisableableItem;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.block.Block;
-import net.minecraft.item.IItemTier;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ToolItem;
-import net.minecraft.tags.ITag;
+import net.minecraft.tags.Tag;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.DiggerItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.level.block.Block;
 
 import java.util.Set;
 
-public class ItemToolAA extends ToolItem implements IDisableableItem {
+public class ItemToolAA extends DiggerItem implements IDisableableItem {
 
     private final String name;
     private final ItemStack repairItem;
-    private final ITag<Item> repairTag;
+    private final TagKey<Item> repairTag;
     private final boolean disabled;
 
-    public ItemToolAA(float p_i48512_1_, float p_i48512_2_, IItemTier p_i48512_3_, Set<Block> p_i48512_4_, Properties p_i48512_5_, String name, ItemStack repairItem, ITag<Item> repairTag) {
+    public ItemToolAA(float p_i48512_1_, float p_i48512_2_, Tier p_i48512_3_, TagKey<Block> p_i48512_4_, Properties p_i48512_5_, String name, ItemStack repairItem, TagKey<Item> repairTag) {
         super(p_i48512_1_, p_i48512_2_, p_i48512_3_, p_i48512_4_, p_i48512_5_);
 
         this.name = name;
@@ -63,7 +64,7 @@ public class ItemToolAA extends ToolItem implements IDisableableItem {
         if (StackUtil.isValid(this.repairItem)) {
             return ItemUtil.areItemsEqual(this.repairItem, stack, false);
         } else if (this.repairTag != null) {
-            return repairTag.contains(stack.getItem());
+            return stack.is(repairTag);
         }
         return false;
     }

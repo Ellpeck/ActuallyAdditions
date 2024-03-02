@@ -21,7 +21,9 @@
       "conditions": {
         "items": [
           {
-            "item": "actuallyadditions:atomic_reconstructor"
+            "items": [
+              "actuallyadditions:atomic_reconstructor"
+            ]
           }
         ]
       }

@@ -10,7 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks.render;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Vector3f;
 import de.ellpeck.actuallyadditions.api.laser.IConnectionPair;
 import de.ellpeck.actuallyadditions.api.laser.LaserType;
 import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
@@ -21,40 +22,38 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelay;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import io.netty.util.internal.ConcurrentSet;
-import net.minecraft.block.BlockState;
+import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.Util;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.phys.Vec3;
 
-public class RenderLaserRelay extends TileEntityRenderer<TileEntityLaserRelay> {
+public class RenderLaserRelay implements BlockEntityRenderer<TileEntityLaserRelay> {
 
     private static final int COLOR = 16711680;
     private static final int COLOR_ITEM = 31760;
     private static final int COLOR_FLUIDS = 25030;
     private static final int COLOR_INFRARED = 13743087;
 
-    public RenderLaserRelay(TileEntityRendererDispatcher rendererDispatcherIn) {
-        super(rendererDispatcherIn);
+    public RenderLaserRelay(BlockEntityRendererProvider.Context context) {
     }
 
     @Override
-    public void render(TileEntityLaserRelay tile, float partialTicks, MatrixStack matrices, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
+    public void render(TileEntityLaserRelay tile, float partialTicks, PoseStack matrices, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
         TileEntityLaserRelay relay = tile;
         BlockState state = tile.getBlockState();
         boolean hasInvis = false;
 
-        PlayerEntity player = Minecraft.getInstance().player;
+        Player player = Minecraft.getInstance().player;
         boolean hasGoggles = ItemEngineerGoggles.isWearing(player);
 
         ItemStack upgrade = relay.inv.getStackInSlot(0);
@@ -89,7 +88,7 @@ public class RenderLaserRelay extends TileEntityRenderer<TileEntityLaserRelay> {
                     BlockPos first = tile.getBlockPos();
                     BlockPos second = pair.getPositions()[1];
 
-                    TileEntity secondTile = tile.getLevel().getBlockEntity(second);
+                    BlockEntity secondTile = tile.getLevel().getBlockEntity(second);
                     if (secondTile instanceof TileEntityLaserRelay) {
                         ItemStack secondUpgrade = ((TileEntityLaserRelay) secondTile).inv.getStackInSlot(0);
                         boolean otherInvis = StackUtil.isValid(secondUpgrade) && secondUpgrade.getItem() == ActuallyItems.LASER_UPGRADE_INVISIBILITY.get();
@@ -107,8 +106,8 @@ public class RenderLaserRelay extends TileEntityRenderer<TileEntityLaserRelay> {
                             matrices.pushPose();
 
                             AssetUtil.renderLaser(matrices, buffer,
-                                    new Vector3d(offsetStart.getX(), offsetStart.getY(), offsetStart.getZ()),
-                                    new Vector3d(offsetEnd.getX(), offsetEnd.getY(), offsetEnd.getZ()),
+                                    new Vec3(offsetStart.getX(), offsetStart.getY(), offsetStart.getZ()),
+                                    new Vec3(offsetEnd.getX(), offsetEnd.getY(), offsetEnd.getZ()),
                                     120, color,
                                     hasInvis && otherInvis
                                             ? 0.1F

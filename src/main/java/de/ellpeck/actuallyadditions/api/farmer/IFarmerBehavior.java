@@ -12,11 +12,15 @@ package de.ellpeck.actuallyadditions.api.farmer;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.internal.IFarmer;
-import de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer.*;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer.CactusFarmerBehavior;
+import de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer.DefaultFarmerBehavior;
+import de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer.MelonPumpkinFarmerBehavior;
+import de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer.NetherWartFarmerBehavior;
+import de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer.ReedFarmerBehavior;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 
 public interface IFarmerBehavior {
 
@@ -31,7 +35,7 @@ public interface IFarmerBehavior {
      * @param farmer The Farmer doing this action. Can be used to query and extract energy and add items to the slots
      * @return If planting was successful
      */
-    FarmerResult tryPlantSeed(ItemStack seed, World world, BlockPos pos, IFarmer farmer);
+    FarmerResult tryPlantSeed(ItemStack seed, Level world, BlockPos pos, IFarmer farmer);
 
     /**
      * Try to harvest a plant with this behavior
@@ -41,7 +45,7 @@ public interface IFarmerBehavior {
      * @param farmer The Farmer doing this action. Can be used to query and extract energy and add items to the slots
      * @return If harvesting was successful
      */
-    FarmerResult tryHarvestPlant(ServerWorld world, BlockPos pos, IFarmer farmer);
+    FarmerResult tryHarvestPlant(ServerLevel world, BlockPos pos, IFarmer farmer);
 
     int getPriority();
 

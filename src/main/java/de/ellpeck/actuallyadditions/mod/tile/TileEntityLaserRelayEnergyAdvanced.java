@@ -11,13 +11,29 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class TileEntityLaserRelayEnergyAdvanced extends TileEntityLaserRelayEnergy {
 
     public static final int CAP = 10000;
 
-    public TileEntityLaserRelayEnergyAdvanced() {
-        super(ActuallyBlocks.LASER_RELAY_ADVANCED.getTileEntityType());
+    public TileEntityLaserRelayEnergyAdvanced(BlockPos pos, BlockState state) {
+        super(ActuallyBlocks.LASER_RELAY_ADVANCED.getTileEntityType(), pos, state);
+    }
+
+    public static <T extends BlockEntity> void clientTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityLaserRelayEnergyAdvanced tile) {
+            tile.clientTick();
+        }
+    }
+
+    public static <T extends BlockEntity> void serverTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityLaserRelayEnergyAdvanced tile) {
+            tile.serverTick();
+        }
     }
 
     @Override

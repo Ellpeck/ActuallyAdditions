@@ -22,7 +22,9 @@
       "conditions": {
         "items": [
           {
-            "item": "actuallyadditions:phantom_itemface"
+            "items": [
+              "actuallyadditions:phantom_itemface"
+            ]
           }
         ]
       }

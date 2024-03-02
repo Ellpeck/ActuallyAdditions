@@ -23,13 +23,13 @@ import de.ellpeck.actuallyadditions.mod.tile.FilterSettings;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.monster.SpiderEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.monster.Spider;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -57,15 +57,15 @@ public class CommonEvents {
             return;
         }
 
-        PlayerEntity player = event.getPlayer();
+        Player player = event.getPlayer();
         ItemEntity item = event.getItem();
         if (item != null && item.isAlive()) {
             ItemStack stack = item.getItem();
             if (StackUtil.isValid(stack)) {
-                for (int i = 0; i < player.inventory.getContainerSize(); i++) {
-                    if (i != player.inventory.selected) {
+                for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
+                    if (i != player.getInventory().selected) {
 
-                        ItemStack invStack = player.inventory.getItem(i);
+                        ItemStack invStack = player.getInventory().getItem(i);
                         if (StackUtil.isValid(invStack) && invStack.getItem() instanceof Sack && invStack.hasTag()) {
                             if (invStack.getOrCreateTag().getBoolean("AutoInsert")) {
                                 boolean changed = false;
@@ -141,9 +141,9 @@ public class CommonEvents {
     //TODO this isnt how this should be done im pretty sure...
     @SubscribeEvent
     public void onEntityDropEvent(LivingDropsEvent event) {
-        if (event.getEntityLiving().level != null && !event.getEntityLiving().level.isClientSide && event.getSource().getEntity() instanceof PlayerEntity) {
+        if (event.getEntityLiving().level != null && !event.getEntityLiving().level.isClientSide && event.getSource().getEntity() instanceof Player) {
             //Drop Cobwebs from Spiders
-            if (ConfigBoolValues.DO_SPIDER_DROPS.isEnabled() && event.getEntityLiving() instanceof SpiderEntity) {
+            if (ConfigBoolValues.DO_SPIDER_DROPS.isEnabled() && event.getEntityLiving() instanceof Spider) {
                 if (event.getEntityLiving().level.random.nextInt(20) <= event.getLootingLevel() * 2) {
                     event.getDrops().add(new ItemEntity(event.getEntityLiving().level, event.getEntityLiving().getX(), event.getEntityLiving().getY(), event.getEntityLiving().getZ(), new ItemStack(Blocks.COBWEB, event.getEntityLiving().level.random.nextInt(2 + event.getLootingLevel()) + 1)));
                 }
@@ -153,8 +153,8 @@ public class CommonEvents {
 
     @SubscribeEvent
     public void onLogInEvent(PlayerEvent.PlayerLoggedInEvent event) {
-        if (!event.getPlayer().level.isClientSide && event.getPlayer() instanceof ServerPlayerEntity) {
-            ServerPlayerEntity player = (ServerPlayerEntity) event.getPlayer();
+        if (!event.getPlayer().level.isClientSide && event.getPlayer() instanceof ServerPlayer) {
+            ServerPlayer player = (ServerPlayer) event.getPlayer();
             PacketHandlerHelper.syncPlayerData(player, true);
             ActuallyAdditions.LOGGER.info("Sending Player Data to player " + player.getName() + " with UUID " + player.getUUID() + ".");
         }

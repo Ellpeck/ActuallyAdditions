@@ -11,12 +11,12 @@
 package de.ellpeck.actuallyadditions.mod.items.base;
 
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockPlant;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class ItemFoodSeed /*extends ItemSeedFood */{ //TODO what is this?!
 
@@ -43,7 +43,7 @@ public class ItemFoodSeed /*extends ItemSeedFood */{ //TODO what is this?!
     }
 
     //@Override
-    public BlockState getPlant(IBlockReader world, BlockPos pos) {
+    public BlockState getPlant(BlockGetter world, BlockPos pos) {
         return this.plant.defaultBlockState();
     }
 }

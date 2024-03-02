@@ -1,15 +1,14 @@
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import net.minecraft.block.Block;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.BlockNamedItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemNameBlockItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 
 import javax.annotation.Nullable;
 import java.text.NumberFormat;
@@ -20,7 +19,7 @@ public class AABlockItem extends BlockItem {
         super(blockIn, builder);
     }
 
-    public static class AASeedItem extends BlockNamedItem {
+    public static class AASeedItem extends ItemNameBlockItem {
         public AASeedItem(Block block, Properties properties) {
             super(block, properties);
         }
@@ -37,17 +36,17 @@ public class AABlockItem extends BlockItem {
         }
 
         @Override
-        public void appendHoverText(ItemStack pStack, @Nullable World pLevel, List<ITextComponent> pTooltip, ITooltipFlag pFlag) {
+        public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltip, TooltipFlag pFlag) {
             super.appendHoverText(pStack, pLevel, pTooltip, pFlag);
 
             if (pStack.hasTag() && pStack.getTag().contains("BlockEntityTag")) {
-                CompoundNBT BET = pStack.getTag().getCompound("BlockEntityTag");
+                CompoundTag BET = pStack.getTag().getCompound("BlockEntityTag");
                 int energy = 0;
                 if (BET.contains("Energy")) {
                     energy = BET.getInt("Energy");
                 }
                 NumberFormat format = NumberFormat.getInstance();
-                pTooltip.add(new TranslationTextComponent("misc.actuallyadditions.power_single", format.format(energy)));
+                pTooltip.add(new TranslatableComponent("misc.actuallyadditions.power_single", format.format(energy)));
             }
         }
     }

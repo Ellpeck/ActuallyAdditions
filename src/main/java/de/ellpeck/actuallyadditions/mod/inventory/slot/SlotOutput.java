@@ -11,7 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.inventory.slot;
 
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 
 public class SlotOutput extends SlotItemHandlerUnconditioned {
 

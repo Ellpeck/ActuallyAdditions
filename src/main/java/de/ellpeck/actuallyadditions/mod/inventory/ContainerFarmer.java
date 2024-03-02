@@ -13,24 +13,24 @@ package de.ellpeck.actuallyadditions.mod.inventory;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityFarmer;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.Objects;
 
-public class ContainerFarmer extends Container {
+public class ContainerFarmer extends AbstractContainerMenu {
 
     public final TileEntityFarmer farmer;
 
-    public static ContainerFarmer fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
+    public static ContainerFarmer fromNetwork(int windowId, Inventory inv, FriendlyByteBuf data) {
         return new ContainerFarmer(windowId, inv, (TileEntityFarmer) Objects.requireNonNull(inv.player.level.getBlockEntity(data.readBlockPos())));
     }
 
-    public ContainerFarmer(int windowId, PlayerInventory inventory, TileEntityFarmer tile) {
+    public ContainerFarmer(int windowId, Inventory inventory, TileEntityFarmer tile) {
         super(ActuallyContainers.FARMER_CONTAINER.get(), windowId);
         this.farmer = tile;
 
@@ -56,7 +56,7 @@ public class ContainerFarmer extends Container {
     }
 
     @Override
-    public ItemStack quickMoveStack(PlayerEntity player, int slot) {
+    public ItemStack quickMoveStack(Player player, int slot) {
         int inventoryStart = 12;
         int inventoryEnd = inventoryStart + 26;
         int hotbarStart = inventoryEnd + 1;
@@ -102,7 +102,7 @@ public class ContainerFarmer extends Container {
     }
 
     @Override
-    public boolean stillValid(PlayerEntity player) {
+    public boolean stillValid(Player player) {
         return this.farmer.canPlayerUse(player);
     }
 }

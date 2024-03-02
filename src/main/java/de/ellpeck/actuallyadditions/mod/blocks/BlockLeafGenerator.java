@@ -12,40 +12,49 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 
 import de.ellpeck.actuallyadditions.mod.blocks.base.DirectionalBlock;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityLeafGenerator;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraftforge.common.ToolType;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
-import net.minecraft.block.AbstractBlock.Properties;
+import javax.annotation.Nullable;
 
 public class BlockLeafGenerator extends DirectionalBlock.Container {
 
     public BlockLeafGenerator() {
-        super(Properties.of(Material.METAL).strength(5.0F, 10.0F).harvestTool(ToolType.PICKAXE).harvestLevel(0).strength(5.0F, 10.0F).sound(SoundType.METAL));
+        super(Properties.of(Material.METAL).strength(5.0F, 10.0F).requiresCorrectToolForDrops().strength(5.0F, 10.0F).sound(SoundType.METAL));
     }
 
-    //@Override
-    public TileEntity newBlockEntity(IBlockReader worldIn) {
-        return new TileEntityLeafGenerator();
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new TileEntityLeafGenerator(pos, state);
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> entityType) {
+        return level.isClientSide? TileEntityLeafGenerator::clientTick : TileEntityLeafGenerator::serverTick;
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         switch (state.getValue(FACING)) {
             case EAST:
-                return Shapes.LeafGeneratorShapes.SHAPE_E;
+                return VoxelShapes.LeafGeneratorShapes.SHAPE_E;
             case SOUTH:
-                return Shapes.LeafGeneratorShapes.SHAPE_S;
+                return VoxelShapes.LeafGeneratorShapes.SHAPE_S;
             case WEST:
-                return Shapes.LeafGeneratorShapes.SHAPE_W;
+                return VoxelShapes.LeafGeneratorShapes.SHAPE_W;
             default:
-                return Shapes.LeafGeneratorShapes.SHAPE_N;
+                return VoxelShapes.LeafGeneratorShapes.SHAPE_N;
         }
     }
 }

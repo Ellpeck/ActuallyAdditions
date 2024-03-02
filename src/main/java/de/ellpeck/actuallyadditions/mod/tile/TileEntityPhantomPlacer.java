@@ -19,26 +19,29 @@ import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements IPhantomTile, IButtonReactor, INamedContainerProvider {
+public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements IPhantomTile, IButtonReactor, MenuProvider {
 
     public static final int RANGE = 3;
     public BlockPos boundPosition;
@@ -48,17 +51,17 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
     public int side;
     private int oldRange;
 
-    public TileEntityPhantomPlacer(TileEntityType<?> type, int slots) {
-        super(type, slots);
+    public TileEntityPhantomPlacer(BlockEntityType<?> type, BlockPos pos, BlockState state, int slots) {
+        super(type, pos, state, slots);
     }
 
-    public TileEntityPhantomPlacer() {
-        super(ActuallyBlocks.PHANTOM_PLACER.getTileEntityType(), 9);
+    public TileEntityPhantomPlacer(BlockPos pos, BlockState state) {
+        super(ActuallyBlocks.PHANTOM_PLACER.getTileEntityType(), pos, state, 9);
         this.isBreaker = false;
     }
 
     @Override
-    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
         if (type != NBTType.SAVE_BLOCK) {
             compound.putInt("Range", this.range);
@@ -74,7 +77,7 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void readSyncableNBT(CompoundTag compound, NBTType type) {
         super.readSyncableNBT(compound, type);
         if (type != NBTType.SAVE_BLOCK) {
             int x = compound.getInt("xOfTileStored");
@@ -91,37 +94,43 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
         }
     }
 
-    @Override
-    public void updateEntity() {
-        super.updateEntity();
-        if (!this.level.isClientSide) {
-            this.range = TileEntityPhantomface.upgradeRange(RANGE, this.level, this.worldPosition);
+    public static <T extends BlockEntity> void clientTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityPhantomPlacer tile) {
+            tile.clientTick();
 
-            if (!this.hasBoundPosition()) {
-                this.boundPosition = null;
+            if (tile.boundPosition != null) {
+                tile.renderParticles();
+            }
+        }
+    }
+
+    public static <T extends BlockEntity> void serverTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityPhantomPlacer tile) {
+            tile.serverTick();
+
+            tile.range = TileEntityPhantomface.upgradeRange(RANGE, tile.level, tile.worldPosition);
+
+            if (!tile.hasBoundPosition()) {
+                tile.boundPosition = null;
             }
 
-            if (this.isBoundThingInRange()) {
-                if (!this.isRedstonePowered && !this.isPulseMode) {
-                    if (this.currentTime > 0) {
-                        this.currentTime--;
-                        if (this.currentTime <= 0) {
-                            this.doWork();
+            if (tile.isBoundThingInRange()) {
+                if (!tile.isRedstonePowered && !tile.isPulseMode) {
+                    if (tile.currentTime > 0) {
+                        tile.currentTime--;
+                        if (tile.currentTime <= 0) {
+                            tile.doWork();
                         }
                     } else {
-                        this.currentTime = 30;
+                        tile.currentTime = 30;
                     }
                 }
             }
 
-            if (this.oldRange != this.range) {
-                this.oldRange = this.range;
+            if (tile.oldRange != tile.range) {
+                tile.oldRange = tile.range;
 
-                this.sendUpdate();
-            }
-        } else {
-            if (this.boundPosition != null) {
-                this.renderParticles();
+                tile.sendUpdate();
             }
         }
     }
@@ -144,7 +153,7 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
             if (this.isBreaker) {
                 Block blockToBreak = this.level.getBlockState(this.boundPosition).getBlock();
                 if (blockToBreak != null && this.level.getBlockState(this.boundPosition).getDestroySpeed(this.level, this.boundPosition) > -1.0F) {
-                    List<ItemStack> drops = Block.getDrops(this.level.getBlockState(this.boundPosition), (ServerWorld) this.level, this.worldPosition, this.level.getBlockEntity(this.worldPosition));
+                    List<ItemStack> drops = Block.getDrops(this.level.getBlockState(this.boundPosition), (ServerLevel) this.level, this.worldPosition, this.level.getBlockEntity(this.worldPosition));
 
                     if (StackUtil.canAddAll(this.inv, drops, false)) {
                         this.level.levelEvent(2001, this.boundPosition, Block.getId(this.level.getBlockState(this.boundPosition)));
@@ -218,7 +227,7 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public void onButtonPressed(int buttonID, PlayerEntity player) {
+    public void onButtonPressed(int buttonID, Player player) {
         if (this.side + 1 >= Direction.values().length) {
             this.side = 0;
         } else {
@@ -229,13 +238,13 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public ITextComponent getDisplayName() {
-        return StringTextComponent.EMPTY;
+    public Component getDisplayName() {
+        return TextComponent.EMPTY;
     }
 
     @Nullable
     @Override
-    public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity player) {
+    public AbstractContainerMenu createMenu(int windowId, Inventory playerInventory, Player player) {
         return new ContainerPhantomPlacer(windowId, playerInventory, this);
     }
 }

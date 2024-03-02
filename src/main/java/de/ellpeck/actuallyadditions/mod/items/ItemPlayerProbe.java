@@ -14,19 +14,19 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityPlayerInterface;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -42,38 +42,38 @@ public class ItemPlayerProbe extends ItemBase {
 
     // TODO: [port] might be the wrong event
     @Override
-    public void inventoryTick(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
+    public void inventoryTick(ItemStack stack, Level world, Entity entity, int itemSlot, boolean isSelected) {
         if (!world.isClientSide) {
-            CompoundNBT compound = stack.getOrCreateTag();
+            CompoundTag compound = stack.getOrCreateTag();
             if (compound.contains("UUIDMost")) {
                 UUID id = compound.getUUID("UUID");
-                PlayerEntity player = world.getPlayerByUUID(id);
+                Player player = world.getPlayerByUUID(id);
                 if (player != null) {
                     if (player.isShiftKeyDown()) {
                         ItemPhantomConnector.clearStorage(stack, "UUIDLeast", "UUIDMost", "Name");
-                        ((PlayerEntity) entity).displayClientMessage(new TranslationTextComponent("tooltip." + ActuallyAdditions.MODID + ".playerProbe.disconnect.1"), false);
-                        player.displayClientMessage(new TranslationTextComponent("tooltip." + ActuallyAdditions.MODID + ".playerProbe.notice"), false);
+                        ((Player) entity).displayClientMessage(new TranslatableComponent("tooltip." + ActuallyAdditions.MODID + ".playerProbe.disconnect.1"), false);
+                        player.displayClientMessage(new TranslatableComponent("tooltip." + ActuallyAdditions.MODID + ".playerProbe.notice"), false);
                         //TheAchievements.GET_UNPROBED.get(player);
                     }
                 } else {
                     ItemPhantomConnector.clearStorage(stack, "UUIDLeast", "UUIDMost", "Name");
-                    ((PlayerEntity) entity).displayClientMessage(new TranslationTextComponent("tooltip." + ActuallyAdditions.MODID + ".playerProbe.disconnect.2"), false);
+                    ((Player) entity).displayClientMessage(new TranslatableComponent("tooltip." + ActuallyAdditions.MODID + ".playerProbe.disconnect.2"), false);
                 }
             }
         }
     }
 
     @Override
-    public ActionResultType useOn(ItemUseContext context) {
-        PlayerEntity player = context.getPlayer();
+    public InteractionResult useOn(UseOnContext context) {
+        Player player = context.getPlayer();
         if (player == null) {
-            return ActionResultType.FAIL;
+            return InteractionResult.FAIL;
         }
 
         ItemStack stack = player.getItemInHand(context.getHand());
-        TileEntity tile = context.getLevel().getBlockEntity(context.getClickedPos());
+        BlockEntity tile = context.getLevel().getBlockEntity(context.getClickedPos());
         if (tile instanceof TileEntityPlayerInterface) {
-            CompoundNBT compound = stack.getOrCreateTag();
+            CompoundTag compound = stack.getOrCreateTag();
             if (compound.contains("UUIDMost")) {
                 if (!context.getLevel().isClientSide) {
                     TileEntityPlayerInterface face = (TileEntityPlayerInterface) tile;
@@ -84,38 +84,38 @@ public class ItemPlayerProbe extends ItemBase {
 
                     ItemPhantomConnector.clearStorage(stack, "UUIDLeast", "UUIDMost", "Name");
                 }
-                return ActionResultType.SUCCESS;
+                return InteractionResult.SUCCESS;
             }
         }
-        return ActionResultType.FAIL;
+        return InteractionResult.FAIL;
     }
 
     @Override
-    public ActionResultType interactLivingEntity(ItemStack aStack, PlayerEntity player, LivingEntity entity, Hand hand) {
+    public InteractionResult interactLivingEntity(ItemStack aStack, Player player, LivingEntity entity, InteractionHand hand) {
         if (!player.level.isClientSide) {
             ItemStack stack = player.getMainHandItem();
             if (StackUtil.isValid(stack) && stack.getItem() == this) {
-                if (entity instanceof PlayerEntity) {
-                    PlayerEntity playerHit = (PlayerEntity) entity;
+                if (entity instanceof Player) {
+                    Player playerHit = (Player) entity;
 
                     if (!playerHit.isShiftKeyDown()) {
-                        CompoundNBT compound = stack.getOrCreateTag();
+                        CompoundTag compound = stack.getOrCreateTag();
                         compound.putString("Name", playerHit.getName().getString());
                         compound.putUUID("UUID", playerHit.getUUID());
-                        return ActionResultType.SUCCESS;
+                        return InteractionResult.SUCCESS;
                     }
                 }
             }
         }
-        return ActionResultType.FAIL;
+        return InteractionResult.FAIL;
     }
 
     @OnlyIn(Dist.CLIENT)
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable World playerIn, List<ITextComponent> tooltip, ITooltipFlag advanced) {
+    public void appendHoverText(ItemStack stack, @Nullable Level playerIn, List<Component> tooltip, TooltipFlag advanced) {
         if (stack.getOrCreateTag().contains("Name")) {
             String name = stack.getOrCreateTag().getString("Name");
-            tooltip.add(new TranslationTextComponent("tooltip." + ActuallyAdditions.MODID + ".playerProbe.probing").append(": " + name));
+            tooltip.add(new TranslatableComponent("tooltip." + ActuallyAdditions.MODID + ".playerProbe.probing").append(": " + name));
         }
     }
 }

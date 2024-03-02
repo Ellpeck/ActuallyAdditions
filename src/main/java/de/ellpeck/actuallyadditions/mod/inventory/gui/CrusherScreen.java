@@ -10,19 +10,19 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 import de.ellpeck.actuallyadditions.mod.inventory.CrusherContainer;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityCrusher;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -39,7 +39,7 @@ public class CrusherScreen extends AAScreen<CrusherContainer> {
 
     private Button buttonAutoSplit;
 
-    public CrusherScreen(CrusherContainer container, PlayerInventory inventory, ITextComponent title) {
+    public CrusherScreen(CrusherContainer container, Inventory inventory, Component title) {
         super(container, inventory, title);
         this.tileGrinder = container.tileGrinder;
         this.isDouble = container.isDouble;
@@ -55,8 +55,8 @@ public class CrusherScreen extends AAScreen<CrusherContainer> {
             : 42), this.topPos + 5, this.tileGrinder.storage);
 
         if (this.isDouble) {
-            this.buttonAutoSplit = new Buttons.SmallerButton( this.leftPos - 10, this.topPos, new StringTextComponent("S"), (button) -> actionPerformed(0));
-            this.addButton(this.buttonAutoSplit);
+            this.buttonAutoSplit = new Buttons.SmallerButton( this.leftPos - 10, this.topPos, new TextComponent("S"), (button) -> actionPerformed(0));
+            this.addRenderableWidget(this.buttonAutoSplit);
         }
 
         titleLabelX = (int) (imageWidth / 2.0f - font.width(title) / 2.0f);
@@ -70,35 +70,35 @@ public class CrusherScreen extends AAScreen<CrusherContainer> {
     }
 
     @Override
-    public void tick() {
-        super.tick();
+    public void containerTick() {
+        super.containerTick();
 
         if (this.isDouble) {
-            this.buttonAutoSplit.setMessage(new StringTextComponent("S").withStyle(this.tileGrinder.isAutoSplit
-                ? TextFormatting.DARK_GREEN
-                : TextFormatting.RED));
+            this.buttonAutoSplit.setMessage(new TextComponent("S").withStyle(this.tileGrinder.isAutoSplit
+                ? ChatFormatting.DARK_GREEN
+                : ChatFormatting.RED));
         }
     }
 
     @Override
-    public void render(@Nonnull MatrixStack matrixStack, int x, int y, float f) {
+    public void render(@Nonnull PoseStack matrixStack, int x, int y, float f) {
         super.render(matrixStack, x, y, f);
         this.energy.render(matrixStack, x, y);
 
         if (this.isDouble && this.buttonAutoSplit.isMouseOver(x,y)) {
 
-            drawString(matrixStack, font, new TranslationTextComponent("info.actuallyadditions.gui.autosplititems." + (tileGrinder.isAutoSplit?"on":"off")).withStyle(TextFormatting.BOLD), x , y, 0xffffff);
+            drawString(matrixStack, font, new TranslatableComponent("info.actuallyadditions.gui.autosplititems." + (tileGrinder.isAutoSplit?"on":"off")).withStyle(ChatFormatting.BOLD), x , y, 0xffffff);
         }
     }
 
     @Override
-    public void renderBg(MatrixStack matrices, float f, int x, int y) {
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+    public void renderBg(PoseStack matrices, float f, int x, int y) {
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 
-        this.getMinecraft().getTextureManager().bind(AssetUtil.GUI_INVENTORY_LOCATION);
+        RenderSystem.setShaderTexture(0, AssetUtil.GUI_INVENTORY_LOCATION);
         this.blit(matrices, this.leftPos, this.topPos + 93, 0, 0, 176, 86);
 
-        this.getMinecraft().getTextureManager().bind(this.isDouble
+        RenderSystem.setShaderTexture(0, this.isDouble
             ? RES_LOC_DOUBLE
             : RES_LOC);
         this.blit(matrices, this.leftPos, this.topPos, 0, 0, 176, 93);
@@ -121,7 +121,7 @@ public class CrusherScreen extends AAScreen<CrusherContainer> {
 
     public static class CrusherDoubleScreen extends CrusherScreen {
 
-        public CrusherDoubleScreen(CrusherContainer crusherContainer, PlayerInventory inventory, ITextComponent tile) {
+        public CrusherDoubleScreen(CrusherContainer crusherContainer, Inventory inventory, Component tile) {
             super(crusherContainer, inventory, tile);
         }
     }

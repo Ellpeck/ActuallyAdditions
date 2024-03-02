@@ -11,33 +11,39 @@
 package de.ellpeck.actuallyadditions.mod.entity;
 
 import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
-import net.minecraft.block.*;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.IPacket;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.BonemealableBlock;
+import net.minecraft.world.level.block.BushBlock;
+import net.minecraft.world.level.block.FarmBlock;
+import net.minecraft.world.level.block.GrassBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.FarmlandWaterManager;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.ticket.AABBTicket;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.network.NetworkHooks;
 
 public class EntityWorm extends Entity {
 
     public int timer;
     private AABBTicket waterTicket;
 
-    public EntityWorm(EntityType<?> type, World world) {
+    public EntityWorm(EntityType<?> type, Level world) {
         super(type, world);
-        this.setBoundingBox(new AxisAlignedBB(0, 0, 0, 0, 0, 0));
+        this.setBoundingBox(new AABB(0, 0, 0, 0, 0, 0));
     }
 
-    public static boolean canWormify(World world, BlockPos pos, BlockState state) {
+    public static boolean canWormify(Level world, BlockPos pos, BlockState state) {
         Block block = state.getBlock();
-        boolean rightBlock = block instanceof FarmlandBlock || block == Blocks.DIRT || block instanceof GrassBlock;
+        boolean rightBlock = block instanceof FarmBlock || block == Blocks.DIRT || block instanceof GrassBlock;
         if (rightBlock) {
             BlockPos posUp = pos.above();
             BlockState stateUp = world.getBlockState(posUp);
@@ -49,11 +55,11 @@ public class EntityWorm extends Entity {
     }
 
     @Override
-    public void remove() {
+    public void remove(RemovalReason reason) {
         if (waterTicket != null)
             waterTicket.invalidate();
 
-        super.remove();
+        super.remove(reason);
     }
 
     @Override
@@ -74,7 +80,7 @@ public class EntityWorm extends Entity {
         if (waterTicket != null)
             waterTicket.invalidate();
 
-        waterTicket = FarmlandWaterManager.addAABBTicket(level, new AxisAlignedBB(getX() - 2, getY() - 1.5, getZ() - 2, getX() + 2, getY(), getZ() + 2));
+        waterTicket = FarmlandWaterManager.addAABBTicket(level, new AABB(getX() - 2, getY() - 1.5, getZ() - 2, getX() + 2, getY(), getZ() + 2));
     }
 
     @Override
@@ -96,7 +102,7 @@ public class EntityWorm extends Entity {
                         boolean isMiddlePose = x == 0 && z == 0;
 
                         if (canWormify(this.level, pos, state)) {
-                            boolean isFarmland = block instanceof FarmlandBlock;
+                            boolean isFarmland = block instanceof FarmBlock;
 
 /*                            if (!isFarmland || state.getValue(FarmlandBlock.MOISTURE) < 7) {
                                 if (isMiddlePose || this.level.random.nextFloat() >= 0.45F) {
@@ -119,8 +125,8 @@ public class EntityWorm extends Entity {
                                     BlockState plantState = this.level.getBlockState(plant);
                                     Block plantBlock = plantState.getBlock();
 
-                                    if ((plantBlock instanceof IGrowable || plantBlock instanceof IPlantable) && !(plantBlock instanceof GrassBlock)) {
-                                        plantBlock.randomTick(plantState, (ServerWorld) this.level, plant, this.level.random);
+                                    if ((plantBlock instanceof BonemealableBlock || plantBlock instanceof IPlantable) && !(plantBlock instanceof GrassBlock)) {
+                                        plantBlock.randomTick(plantState, (ServerLevel) this.level, plant, this.level.random);
 
                                         BlockState newState = this.level.getBlockState(plant);
                                         if (newState != plantState) {
@@ -149,17 +155,17 @@ public class EntityWorm extends Entity {
     }
 
     @Override
-    protected void readAdditionalSaveData(CompoundNBT compound) {
+    protected void readAdditionalSaveData(CompoundTag compound) {
         this.timer = compound.getInt("Timer");
     }
 
     @Override
-    protected void addAdditionalSaveData(CompoundNBT compound) {
+    protected void addAdditionalSaveData(CompoundTag compound) {
         compound.putInt("Timer", this.timer);
     }
 
     @Override
-    public IPacket<?> getAddEntityPacket() {
+    public Packet<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 }

@@ -21,20 +21,21 @@ import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 
@@ -43,7 +44,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer, INamedContainerProvider {
+public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer, MenuProvider {
 
     private static final List<IFarmerBehavior> SORTED_FARMER_BEHAVIORS = new ArrayList<>();
     public final CustomEnergyStorage storage = new CustomEnergyStorage(100000, 1000, 0);
@@ -54,12 +55,12 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
 
     private int lastEnergy;
 
-    public TileEntityFarmer() {
-        super(ActuallyBlocks.FARMER.getTileEntityType(), 12);
+    public TileEntityFarmer(BlockPos pos, BlockState state) {
+        super(ActuallyBlocks.FARMER.getTileEntityType(), pos, state, 12);
     }
 
     @Override
-    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
         if (type != NBTType.SAVE_BLOCK) {
             compound.putInt("WaitTime", this.waitTime);
         }
@@ -72,7 +73,7 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
     }
 
     @Override
-    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void readSyncableNBT(CompoundTag compound, NBTType type) {
         if (type != NBTType.SAVE_BLOCK) {
             this.waitTime = compound.getInt("WaitTime");
         }
@@ -84,43 +85,48 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
         super.readSyncableNBT(compound, type);
     }
 
-    @Override
-    public void updateEntity() {
-        super.updateEntity();
-        if (!this.level.isClientSide) {
-            if (!this.isRedstonePowered && this.storage.getEnergyStored() > 0) {
-                if (this.waitTime > 0) {
-                    this.waitTime--;
+    public static <T extends BlockEntity> void clientTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityFarmer tile) {
+            tile.clientTick();
+        }
+    }
 
-                    if (this.waitTime <= 0) {
+    public static <T extends BlockEntity> void serverTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityFarmer tile) {
+            tile.serverTick();
+
+            if (!tile.isRedstonePowered && tile.storage.getEnergyStored() > 0) {
+                if (tile.waitTime > 0) {
+                    tile.waitTime--;
+
+                    if (tile.waitTime <= 0) {
                         int area = CommonConfig.Machines.FARMER_AREA.get();
                         if (area % 2 == 0) {
                             area++;
                         }
                         int radius = area / 2;
 
-                        BlockState state = this.level.getBlockState(this.worldPosition);
-                        BlockPos center = this.worldPosition.relative(state.getValue(BlockStateProperties.HORIZONTAL_FACING), radius + 1);
+                        BlockPos center = pos.relative(state.getValue(BlockStateProperties.HORIZONTAL_FACING), radius + 1);
 
-                        BlockPos query = center.offset(this.checkX, 0, this.checkY);
-                        this.checkBehaviors(query);
+                        BlockPos query = center.offset(tile.checkX, 0, tile.checkY);
+                        tile.checkBehaviors(query);
 
-                        this.checkX++;
-                        if (this.checkX > radius) {
-                            this.checkX = -radius;
-                            this.checkY++;
-                            if (this.checkY > radius) {
-                                this.checkY = -radius;
+                        tile.checkX++;
+                        if (tile.checkX > radius) {
+                            tile.checkX = -radius;
+                            tile.checkY++;
+                            if (tile.checkY > radius) {
+                                tile.checkY = -radius;
                             }
                         }
                     }
                 } else {
-                    this.waitTime = 5;
+                    tile.waitTime = 5;
                 }
             }
 
-            if (this.lastEnergy != this.storage.getEnergyStored() && this.sendUpdateWithInterval()) {
-                this.lastEnergy = this.storage.getEnergyStored();
+            if (tile.lastEnergy != tile.storage.getEnergyStored() && tile.sendUpdateWithInterval()) {
+                tile.lastEnergy = tile.storage.getEnergyStored();
             }
         }
     }
@@ -140,7 +146,7 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
         }
 
         for (IFarmerBehavior behavior : SORTED_FARMER_BEHAVIORS) {
-            FarmerResult harvestResult = behavior.tryHarvestPlant((ServerWorld) level, query, this);
+            FarmerResult harvestResult = behavior.tryHarvestPlant((ServerLevel) level, query, this);
             if (harvestResult == FarmerResult.STOP_PROCESSING) {
                 return;
             }
@@ -203,7 +209,7 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
     }
 
     @Override
-    public World getWorldObject() {
+    public Level getWorldObject() {
         return this.level;
     }
 
@@ -238,13 +244,13 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
     }
 
     @Override
-    public ITextComponent getDisplayName() {
-        return new TranslationTextComponent("container.actuallyadditions.farmer");
+    public Component getDisplayName() {
+        return new TranslatableComponent("container.actuallyadditions.farmer");
     }
 
     @Nullable
     @Override
-    public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity p_createMenu_3_) {
+    public AbstractContainerMenu createMenu(int windowId, Inventory playerInventory, Player p_createMenu_3_) {
         return new ContainerFarmer(windowId, playerInventory, this);
     }
 }

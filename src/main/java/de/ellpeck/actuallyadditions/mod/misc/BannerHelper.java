@@ -12,7 +12,7 @@ package de.ellpeck.actuallyadditions.mod.misc;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 
 public final class BannerHelper {
 

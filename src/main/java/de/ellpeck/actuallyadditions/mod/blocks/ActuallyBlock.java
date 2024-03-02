@@ -1,11 +1,11 @@
 package de.ellpeck.actuallyadditions.mod.blocks;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.SlabBlock;
-import net.minecraft.block.StairsBlock;
-import net.minecraft.item.Item;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.StairBlock;
+import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.function.Supplier;
 
@@ -30,7 +30,7 @@ public class ActuallyBlock extends Block implements IActuallyBlock {
         return new Item.Properties().tab(ActuallyAdditions.GROUP);
     }
 
-    public static class Stairs extends StairsBlock implements IActuallyBlock {
+    public static class Stairs extends StairBlock implements IActuallyBlock {
         public Stairs(Supplier<BlockState> state, Properties properties) {
             super(state, properties);
         }

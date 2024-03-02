@@ -16,22 +16,23 @@ import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.NetHandlerSpaghettiServer;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.fluids.IFluidBlock;
@@ -40,24 +41,22 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
-
-public class TileEntityBreaker extends TileEntityInventoryBase implements INamedContainerProvider {
+public class TileEntityBreaker extends TileEntityInventoryBase implements MenuProvider {
 
     public boolean isPlacer;
     private int currentTime;
 
-    public TileEntityBreaker(TileEntityType<?> type, int slots) {
-        super(type, slots);
+    public TileEntityBreaker(BlockEntityType<?> type, BlockPos pos, BlockState state, int slots) {
+        super(type, pos, state, slots);
     }
 
-    public TileEntityBreaker() {
-        super(ActuallyBlocks.BREAKER.getTileEntityType(), 9);
+    public TileEntityBreaker(BlockPos pos, BlockState state) {
+        super(ActuallyBlocks.BREAKER.getTileEntityType(), pos, state, 9);
         this.isPlacer = false;
     }
 
     @Override
-    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
         if (type != NBTType.SAVE_BLOCK) {
             compound.putInt("CurrentTime", this.currentTime);
@@ -65,25 +64,31 @@ public class TileEntityBreaker extends TileEntityInventoryBase implements INamed
     }
 
     @Override
-    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void readSyncableNBT(CompoundTag compound, NBTType type) {
         super.readSyncableNBT(compound, type);
         if (type != NBTType.SAVE_BLOCK) {
             this.currentTime = compound.getInt("CurrentTime");
         }
     }
 
-    @Override
-    public void updateEntity() {
-        super.updateEntity();
-        if (!this.level.isClientSide) {
-            if (!this.isRedstonePowered && !this.isPulseMode) {
-                if (this.currentTime > 0) {
-                    this.currentTime--;
-                    if (this.currentTime <= 0) {
-                        this.doWork();
+    public static <T extends BlockEntity> void clientTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityBreaker tile) {
+            tile.clientTick();
+        }
+    }
+
+    public static <T extends BlockEntity> void serverTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityBreaker tile) {
+            tile.serverTick();
+
+            if (!tile.isRedstonePowered && !tile.isPulseMode) {
+                if (tile.currentTime > 0) {
+                    tile.currentTime--;
+                    if (tile.currentTime <= 0) {
+                        tile.doWork();
                     }
                 } else {
-                    this.currentTime = 15;
+                    tile.currentTime = 15;
                 }
             }
         }
@@ -101,8 +106,8 @@ public class TileEntityBreaker extends TileEntityInventoryBase implements INamed
         Block blockToBreak = stateToBreak.getBlock();
 
         if (!this.isPlacer && blockToBreak != Blocks.AIR && !(blockToBreak instanceof IFluidBlock) && stateToBreak.getDestroySpeed(this.level, breakCoords) >= 0.0F) {
-            List<ItemStack> drops = Block.getDrops(stateToBreak, (ServerWorld) this.level, breakCoords, this.level.getBlockEntity(breakCoords));
-            FakePlayer fake = FakePlayerFactory.getMinecraft((ServerWorld) this.level);
+            List<ItemStack> drops = Block.getDrops(stateToBreak, (ServerLevel) this.level, breakCoords, this.level.getBlockEntity(breakCoords));
+            FakePlayer fake = FakePlayerFactory.getMinecraft((ServerLevel) this.level);
             if (fake.connection == null) {
                 fake.connection = new NetHandlerSpaghettiServer(fake);
             }
@@ -134,13 +139,13 @@ public class TileEntityBreaker extends TileEntityInventoryBase implements INamed
 
     @Nonnull
     @Override
-    public ITextComponent getDisplayName() {
-        return new TranslationTextComponent(isPlacer ? "container.actuallyadditions.placer" : "container.actuallyadditions.breaker");
+    public Component getDisplayName() {
+        return new TranslatableComponent(isPlacer ? "container.actuallyadditions.placer" : "container.actuallyadditions.breaker");
     }
 
     @Nullable
     @Override
-    public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity playerEntity) {
+    public AbstractContainerMenu createMenu(int windowId, Inventory playerInventory, Player playerEntity) {
         return new ContainerBreaker(windowId, playerInventory, this);
     }
 }

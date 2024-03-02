@@ -10,12 +10,12 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.slot;
 
-import javax.annotation.Nonnull;
-
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.SlotItemHandler;
+
+import javax.annotation.Nonnull;
 
 public class SlotItemHandlerUnconditioned extends SlotItemHandler {
 
@@ -64,7 +64,7 @@ public class SlotItemHandlerUnconditioned extends SlotItemHandler {
     }
 
     @Override
-    public boolean mayPickup(PlayerEntity playerIn) {
+    public boolean mayPickup(Player playerIn) {
         return !this.inv.extractItem(this.getSlotIndex(), 1, true, false).isEmpty();
     }
 

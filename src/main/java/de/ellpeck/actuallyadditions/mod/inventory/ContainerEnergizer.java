@@ -14,29 +14,29 @@ import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditio
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotOutput;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityEnergizer;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.energy.CapabilityEnergy;
 
 import java.util.Objects;
 
-public class ContainerEnergizer extends Container {
+public class ContainerEnergizer extends AbstractContainerMenu {
 
-    public static final EquipmentSlotType[] VALID_EQUIPMENT_SLOTS = new EquipmentSlotType[]{EquipmentSlotType.HEAD, EquipmentSlotType.CHEST, EquipmentSlotType.LEGS, EquipmentSlotType.FEET};
+    public static final EquipmentSlot[] VALID_EQUIPMENT_SLOTS = new EquipmentSlot[]{EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET};
     public final TileEntityEnergizer energizer;
 
-    public static ContainerEnergizer fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
+    public static ContainerEnergizer fromNetwork(int windowId, Inventory inv, FriendlyByteBuf data) {
         return new ContainerEnergizer(windowId, inv, (TileEntityEnergizer) Objects.requireNonNull(inv.player.level.getBlockEntity(data.readBlockPos())));
     }
 
-    public ContainerEnergizer(int windowId, PlayerInventory inventory, TileEntityEnergizer tile) {
+    public ContainerEnergizer(int windowId, Inventory inventory, TileEntityEnergizer tile) {
         super(ActuallyContainers.ENERGIZER_CONTAINER.get(), windowId);
         this.energizer = tile;
 
@@ -58,7 +58,7 @@ public class ContainerEnergizer extends Container {
         }
 
         for (int k = 0; k < 4; ++k) {
-            EquipmentSlotType slot = VALID_EQUIPMENT_SLOTS[k];
+            EquipmentSlot slot = VALID_EQUIPMENT_SLOTS[k];
             this.addSlot(new Slot(inventory, 36 + 3 - k, 102, 19 + k * 18) {
                 @Override
                 public int getMaxStackSize() {
@@ -71,7 +71,7 @@ public class ContainerEnergizer extends Container {
                 }
 
                 @Override
-                public boolean mayPickup(PlayerEntity player) {
+                public boolean mayPickup(Player player) {
                     ItemStack itemstack = this.getItem();
                     return (itemstack.isEmpty() || player.isCreative() || !EnchantmentHelper.hasBindingCurse(itemstack)) && super.mayPickup(player);
                 }
@@ -88,7 +88,7 @@ public class ContainerEnergizer extends Container {
     }
 
     @Override
-    public ItemStack quickMoveStack(PlayerEntity player, int slot) {
+    public ItemStack quickMoveStack(Player player, int slot) {
         int inventoryStart = 2;
         int inventoryEnd = inventoryStart + 26;
         int hotbarStart = inventoryEnd + 1;
@@ -145,7 +145,7 @@ public class ContainerEnergizer extends Container {
     }
 
     @Override
-    public boolean stillValid(PlayerEntity player) {
+    public boolean stillValid(Player player) {
         return this.energizer.canPlayerUse(player);
     }
 }

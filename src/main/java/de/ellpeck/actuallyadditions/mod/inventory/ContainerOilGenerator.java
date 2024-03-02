@@ -12,24 +12,24 @@ package de.ellpeck.actuallyadditions.mod.inventory;
 
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityOilGenerator;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.Objects;
 
-public class ContainerOilGenerator extends Container {
+public class ContainerOilGenerator extends AbstractContainerMenu {
 
     public final TileEntityOilGenerator generator;
 
-    public static ContainerOilGenerator fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
+    public static ContainerOilGenerator fromNetwork(int windowId, Inventory inv, FriendlyByteBuf data) {
         return new ContainerOilGenerator(windowId, inv, (TileEntityOilGenerator) Objects.requireNonNull(inv.player.level.getBlockEntity(data.readBlockPos())));
     }
 
-    public ContainerOilGenerator(int windowId, PlayerInventory inventory, TileEntityOilGenerator tile) {
+    public ContainerOilGenerator(int windowId, Inventory inventory, TileEntityOilGenerator tile) {
         super(ActuallyContainers.OIL_GENERATOR_CONTAINER.get(), windowId);
         this.generator = tile;
 
@@ -44,7 +44,7 @@ public class ContainerOilGenerator extends Container {
     }
 
     @Override
-    public ItemStack quickMoveStack(PlayerEntity player, int slot) {
+    public ItemStack quickMoveStack(Player player, int slot) {
         int inventoryStart = 0;
         int inventoryEnd = inventoryStart + 26;
         int hotbarStart = inventoryEnd + 1;
@@ -86,7 +86,7 @@ public class ContainerOilGenerator extends Container {
     }
 
     @Override
-    public boolean stillValid(PlayerEntity player) {
+    public boolean stillValid(Player player) {
         return this.generator.canPlayerUse(player);
     }
 }

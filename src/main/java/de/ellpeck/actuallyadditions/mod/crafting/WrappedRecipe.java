@@ -1,27 +1,27 @@
 package de.ellpeck.actuallyadditions.mod.crafting;
 
 import com.google.gson.JsonObject;
-import net.minecraft.data.IFinishedRecipe;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.crafting.RecipeSerializer;
 
 import javax.annotation.Nullable;
 import java.util.function.Consumer;
 
-public class WrappedRecipe implements IFinishedRecipe {
-    IFinishedRecipe inner;
-    IRecipeSerializer<?> serializerOverride;
+public class WrappedRecipe implements FinishedRecipe {
+    FinishedRecipe inner;
+    RecipeSerializer<?> serializerOverride;
 
-    public WrappedRecipe(IFinishedRecipe innerIn) {
+    public WrappedRecipe(FinishedRecipe innerIn) {
         inner = innerIn;
     }
 
-    public WrappedRecipe(IFinishedRecipe innerIn, IRecipeSerializer<?> serializerOverrideIn) {
+    public WrappedRecipe(FinishedRecipe innerIn, RecipeSerializer<?> serializerOverrideIn) {
         inner = innerIn;
         serializerOverride = serializerOverrideIn;
     }
 
-    public static Consumer<IFinishedRecipe> Inject(Consumer<IFinishedRecipe> consumer, IRecipeSerializer<?> serializer) {
+    public static Consumer<FinishedRecipe> Inject(Consumer<FinishedRecipe> consumer, RecipeSerializer<?> serializer) {
         return iFinishedRecipe -> consumer.accept(new WrappedRecipe(iFinishedRecipe, serializer));
     }
 
@@ -48,7 +48,7 @@ public class WrappedRecipe implements IFinishedRecipe {
     }
 
     @Override
-    public IRecipeSerializer<?> getType () {
+    public RecipeSerializer<?> getType () {
         return serializerOverride != null? serializerOverride:inner.getType();
     }
 

@@ -10,27 +10,23 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import com.mojang.blaze3d.vertex.PoseStack;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerCoffeeMachine;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityCoffeeMachine;
-import de.ellpeck.actuallyadditions.mod.util.*;
+import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.network.chat.BaseComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.client.gui.GuiUtils;
 
 import javax.annotation.Nonnull;
-import java.util.Arrays;
 import java.util.Collections;
 
 @OnlyIn(Dist.CLIENT)
@@ -42,7 +38,7 @@ public class GuiCoffeeMachine extends AAScreen<ContainerCoffeeMachine> {
     private EnergyDisplay energy;
     private FluidDisplay fluid;
 
-    public GuiCoffeeMachine(ContainerCoffeeMachine container, PlayerInventory inventory, ITextComponent title) {
+    public GuiCoffeeMachine(ContainerCoffeeMachine container, Inventory inventory, Component title) {
         super(container, inventory, title);
         this.machine = container.machine;
         this.imageWidth = 176;
@@ -53,22 +49,21 @@ public class GuiCoffeeMachine extends AAScreen<ContainerCoffeeMachine> {
     public void init() {
         super.init();
 
-        this.addButton(new Button(this.leftPos + 60, this.topPos + 11, 58, 20, new TranslationTextComponent("info.actuallyadditions.gui.ok"),
-            (b) -> PacketHandlerHelper.sendButtonPacket(this.machine, 0)));
+        this.addRenderableWidget(new Button(this.leftPos + 60, this.topPos + 11, 58, 20, new TranslatableComponent("info.actuallyadditions.gui.ok"),
+                (b) -> PacketHandlerHelper.sendButtonPacket(this.machine, 0)));
 
         this.energy = new EnergyDisplay(this.leftPos + 16, this.topPos + 5, this.machine.storage);
         this.fluid = new FluidDisplay(this.leftPos - 30, this.topPos + 1, this.machine.tank, true, false);
     }
 
     @Override
-    public void render(@Nonnull MatrixStack matrices, int x, int y, float f) {
+    public void render(@Nonnull PoseStack matrices, int x, int y, float f) {
         super.render(matrices, x, y, f);
         Minecraft mc = Minecraft.getInstance();
 
-        TextComponent text = new TranslationTextComponent("info.actuallyadditions.gui.coffee_amount", this.machine.coffeeCacheAmount, TileEntityCoffeeMachine.COFFEE_CACHE_MAX_AMOUNT);
+        BaseComponent text = new TranslatableComponent("info.actuallyadditions.gui.coffee_amount", this.machine.coffeeCacheAmount, TileEntityCoffeeMachine.COFFEE_CACHE_MAX_AMOUNT);
         if (x >= this.leftPos + 40 && y >= this.topPos + 25 && x <= this.leftPos + 49 && y <= this.topPos + 56) {
-            GuiUtils.drawHoveringText(matrices, Collections.singletonList(text), x, y, mc.getWindow().getWidth(), mc.getWindow().getWidth(), -1, font);
-
+            renderComponentTooltip(matrices, Collections.singletonList(text), x, y, font);
         }
 
         this.energy.render(matrices, x, y);
@@ -76,13 +71,13 @@ public class GuiCoffeeMachine extends AAScreen<ContainerCoffeeMachine> {
     }
 
     @Override
-    public void renderBg(@Nonnull MatrixStack matrices, float f, int x, int y) {
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+    public void renderBg(@Nonnull PoseStack matrices, float f, int x, int y) {
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 
-        this.getMinecraft().getTextureManager().bind(AssetUtil.GUI_INVENTORY_LOCATION);
+        RenderSystem.setShaderTexture(0, AssetUtil.GUI_INVENTORY_LOCATION);
         this.blit(matrices, this.leftPos, this.topPos + 93, 0, 0, 176, 86);
 
-        this.getMinecraft().getTextureManager().bind(RES_LOC);
+        RenderSystem.setShaderTexture(0, RES_LOC);
         this.blit(matrices, this.leftPos, this.topPos, 0, 0, 176, 93);
 
         if (this.machine.coffeeCacheAmount > 0) {

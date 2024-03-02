@@ -14,10 +14,12 @@ import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.items.ItemBattery;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
-import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -30,8 +32,8 @@ public class TileEntityBatteryBox extends TileEntityInventoryBase implements ISh
     private int lastEnergyStored;
     private int lastCompare;
 
-    public TileEntityBatteryBox() {
-        super(ActuallyBlocks.BATTERY_BOX.getTileEntityType(),  1);
+    public TileEntityBatteryBox(BlockPos pos, BlockState state) {
+        super(ActuallyBlocks.BATTERY_BOX.getTileEntityType(),  pos, state, 1);
     }
 
     @Override
@@ -43,18 +45,23 @@ public class TileEntityBatteryBox extends TileEntityInventoryBase implements ISh
         return LazyOptional.empty();
     }
 
-    @Override
-    public void updateEntity() {
-        super.updateEntity();
+    public static <T extends BlockEntity> void clientTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityBatteryBox tile) {
+            tile.clientTick();
+        }
+    }
 
-        if (!this.level.isClientSide) {
-            LazyOptional<IEnergyStorage> cap = this.getEnergyStorage(null);
+    public static <T extends BlockEntity> void serverTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityBatteryBox tile) {
+            tile.serverTick();
+
+            LazyOptional<IEnergyStorage> cap = tile.getEnergyStorage(null);
             int currStorage = cap.map(storage -> {
-                ItemStack stack = this.inv.getStackInSlot(0);
+                ItemStack stack = tile.inv.getStackInSlot(0);
                 if (!stack.isEmpty() && ItemUtil.isEnabled(stack)) {
                     if (storage.getEnergyStored() > 0) {
                         List<TileEntityBatteryBox> tiles = new ArrayList<>();
-                        this.energyPushOffLoop(this, tiles);
+                        tile.energyPushOffLoop(tile, tiles);
 
                         if (!tiles.isEmpty()) {
                             int amount = tiles.size();
@@ -65,10 +72,10 @@ public class TileEntityBatteryBox extends TileEntityInventoryBase implements ISh
                             }
                             int maxPer = storage.extractEnergy(energyPer, true);
 
-                            for (TileEntityBatteryBox tile : tiles) {
-                                ItemStack battery = tile.inv.getStackInSlot(0);
+                            for (TileEntityBatteryBox te : tiles) {
+                                ItemStack battery = te.inv.getStackInSlot(0);
                                 if (!battery.isEmpty() && !ItemUtil.isEnabled(battery)) {
-                                    int received = tile.getCapability(CapabilityEnergy.ENERGY, null).map(e -> e.receiveEnergy(maxPer, false)).orElse(0);
+                                    int received = te.getCapability(CapabilityEnergy.ENERGY, null).map(e -> e.receiveEnergy(maxPer, false)).orElse(0);
                                     storage.extractEnergy(received, false);
 
                                     if (storage.getEnergyStored() <= 0) {
@@ -82,15 +89,22 @@ public class TileEntityBatteryBox extends TileEntityInventoryBase implements ISh
                 return storage.getEnergyStored();
             }).orElse(0);
 
-            if (this.lastCompare != this.getComparatorStrength()) {
-                this.lastCompare = this.getComparatorStrength();
-                this.setChanged();
+            if (tile.lastCompare != tile.getComparatorStrength()) {
+                tile.lastCompare = tile.getComparatorStrength();
+                tile.setChanged();
             }
 
-            if (this.lastEnergyStored != currStorage && this.sendUpdateWithInterval()) {
-                this.lastEnergyStored = currStorage;
+            if (tile.lastEnergyStored != currStorage && tile.sendUpdateWithInterval()) {
+                tile.lastEnergyStored = currStorage;
             }
         }
+    }
+
+    @Override
+    public void serverTick() {
+        super.serverTick();
+
+
     }
 
     @Override
@@ -119,7 +133,7 @@ public class TileEntityBatteryBox extends TileEntityInventoryBase implements ISh
             return;
         }
 
-        for (TileEntity tile : startTile.tilesAround) {
+        for (BlockEntity tile : startTile.tilesAround) {
             if (tile instanceof TileEntityBatteryBox) {
                 TileEntityBatteryBox box = (TileEntityBatteryBox) tile;
                 if (!pushOffTo.contains(box)) {
@@ -159,7 +173,7 @@ public class TileEntityBatteryBox extends TileEntityInventoryBase implements ISh
     }
 
     @Override
-    public boolean canShareTo(TileEntity tile) {
+    public boolean canShareTo(BlockEntity tile) {
         return !(tile instanceof TileEntityBatteryBox);
     }
 }

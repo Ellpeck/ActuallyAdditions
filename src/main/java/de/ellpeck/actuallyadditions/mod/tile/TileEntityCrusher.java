@@ -12,36 +12,36 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.mod.AASounds;
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.crafting.CrushingRecipe;
 import de.ellpeck.actuallyadditions.mod.inventory.CrusherContainer;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
-import de.ellpeck.actuallyadditions.mod.recipe.CrusherRecipeRegistry;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
 
-public class TileEntityCrusher extends TileEntityInventoryBase implements IButtonReactor, INamedContainerProvider {
+public class TileEntityCrusher extends TileEntityInventoryBase implements IButtonReactor, MenuProvider {
 
     public static final int SLOT_INPUT_1 = 0;
     public static final int SLOT_OUTPUT_1_1 = 1;
@@ -62,17 +62,17 @@ public class TileEntityCrusher extends TileEntityInventoryBase implements IButto
     private boolean lastAutoSplit;
     private boolean lastCrushed;
 
-    public TileEntityCrusher(TileEntityType<?> type, int slots) {
-        super(type, slots);
+    public TileEntityCrusher(BlockEntityType<?> type, BlockPos pos, BlockState state, int slots) {
+        super(type, pos, state, slots);
     }
 
-    public TileEntityCrusher() {
-        super(ActuallyBlocks.CRUSHER.getTileEntityType(), 3);
+    public TileEntityCrusher(BlockPos pos, BlockState state) {
+        super(ActuallyBlocks.CRUSHER.getTileEntityType(), pos, state, 3);
         this.isDouble = false;
     }
 
     @Override
-    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
         if (type != NBTType.SAVE_BLOCK) {
             compound.putInt("FirstCrushTime", this.firstCrushTime);
             compound.putInt("SecondCrushTime", this.secondCrushTime);
@@ -83,7 +83,7 @@ public class TileEntityCrusher extends TileEntityInventoryBase implements IButto
     }
 
     @Override
-    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void readSyncableNBT(CompoundTag compound, NBTType type) {
         if (type != NBTType.SAVE_BLOCK) {
             this.firstCrushTime = compound.getInt("FirstCrushTime");
             this.secondCrushTime = compound.getInt("SecondCrushTime");
@@ -93,88 +93,93 @@ public class TileEntityCrusher extends TileEntityInventoryBase implements IButto
         super.readSyncableNBT(compound, type);
     }
 
-    @Override
-    public void updateEntity() {
-        super.updateEntity();
-        if (!this.level.isClientSide) {
-            if (this.isDouble && this.isAutoSplit) {
-                TileEntityPoweredFurnace.autoSplit(this.inv, SLOT_INPUT_1, SLOT_INPUT_2);
+    public static <T extends BlockEntity> void clientTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityCrusher tile) {
+            tile.clientTick();
+        }
+    }
+
+    public static <T extends BlockEntity> void serverTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityCrusher tile) {
+            tile.serverTick();
+
+            if (tile.isDouble && tile.isAutoSplit) {
+                TileEntityPoweredFurnace.autoSplit(tile.inv, SLOT_INPUT_1, SLOT_INPUT_2);
             }
 
             boolean crushed = false;
 
-            boolean canCrushOnFirst = this.canCrushOn(SLOT_INPUT_1, SLOT_OUTPUT_1_1, SLOT_OUTPUT_1_2);
+            boolean canCrushOnFirst = tile.canCrushOn(SLOT_INPUT_1, SLOT_OUTPUT_1_1, SLOT_OUTPUT_1_2);
             boolean canCrushOnSecond = false;
-            if (this.isDouble) {
-                canCrushOnSecond = this.canCrushOn(SLOT_INPUT_2, SLOT_OUTPUT_2_1, SLOT_OUTPUT_2_2);
+            if (tile.isDouble) {
+                canCrushOnSecond = tile.canCrushOn(SLOT_INPUT_2, SLOT_OUTPUT_2_1, SLOT_OUTPUT_2_2);
             }
 
             boolean shouldPlaySound = false;
 
             if (canCrushOnFirst) {
-                if (this.storage.getEnergyStored() >= ENERGY_USE) {
-                    if (this.firstCrushTime % 20 == 0) {
+                if (tile.storage.getEnergyStored() >= ENERGY_USE) {
+                    if (tile.firstCrushTime % 20 == 0) {
                         shouldPlaySound = true;
                     }
-                    this.firstCrushTime++;
-                    if (this.firstCrushTime >= this.getMaxCrushTime()) {
-                        this.finishCrushing(SLOT_INPUT_1, SLOT_OUTPUT_1_1, SLOT_OUTPUT_1_2);
-                        this.firstCrushTime = 0;
+                    tile.firstCrushTime++;
+                    if (tile.firstCrushTime >= tile.getMaxCrushTime()) {
+                        tile.finishCrushing(SLOT_INPUT_1, SLOT_OUTPUT_1_1, SLOT_OUTPUT_1_2);
+                        tile.firstCrushTime = 0;
                     }
-                    this.storage.extractEnergyInternal(ENERGY_USE, false);
+                    tile.storage.extractEnergyInternal(ENERGY_USE, false);
                 }
-                crushed = this.storage.getEnergyStored() >= ENERGY_USE;
+                crushed = tile.storage.getEnergyStored() >= ENERGY_USE;
             } else {
-                this.firstCrushTime = 0;
+                tile.firstCrushTime = 0;
             }
 
-            if (this.isDouble) {
+            if (tile.isDouble) {
                 if (canCrushOnSecond) {
-                    if (this.storage.getEnergyStored() >= ENERGY_USE) {
-                        if (this.secondCrushTime % 20 == 0) {
+                    if (tile.storage.getEnergyStored() >= ENERGY_USE) {
+                        if (tile.secondCrushTime % 20 == 0) {
                             shouldPlaySound = true;
                         }
-                        this.secondCrushTime++;
-                        if (this.secondCrushTime >= this.getMaxCrushTime()) {
-                            this.finishCrushing(SLOT_INPUT_2, SLOT_OUTPUT_2_1, SLOT_OUTPUT_2_2);
-                            this.secondCrushTime = 0;
+                        tile.secondCrushTime++;
+                        if (tile.secondCrushTime >= tile.getMaxCrushTime()) {
+                            tile.finishCrushing(SLOT_INPUT_2, SLOT_OUTPUT_2_1, SLOT_OUTPUT_2_2);
+                            tile.secondCrushTime = 0;
                         }
-                        this.storage.extractEnergyInternal(ENERGY_USE, false);
+                        tile.storage.extractEnergyInternal(ENERGY_USE, false);
                     }
-                    crushed = this.storage.getEnergyStored() >= ENERGY_USE;
+                    crushed = tile.storage.getEnergyStored() >= ENERGY_USE;
                 } else {
-                    this.secondCrushTime = 0;
+                    tile.secondCrushTime = 0;
                 }
             }
 
-            BlockState currState = this.level.getBlockState(this.worldPosition);
-            boolean current = currState.getValue(BlockStateProperties.LIT);
+            boolean current = state.getValue(BlockStateProperties.LIT);
             boolean changeTo = current;
-            if (this.lastCrushed != crushed) {
+            if (tile.lastCrushed != crushed) {
                 changeTo = crushed;
             }
-            if (this.isRedstonePowered) {
+            if (tile.isRedstonePowered) {
                 changeTo = true;
             }
-            if (!crushed && !this.isRedstonePowered) {
+            if (!crushed && !tile.isRedstonePowered) {
                 changeTo = false;
             }
 
             if (changeTo != current) {
-                this.level.setBlockAndUpdate(this.worldPosition, currState.setValue(BlockStateProperties.LIT, changeTo));
+                level.setBlockAndUpdate(pos, state.setValue(BlockStateProperties.LIT, changeTo));
             }
 
-            this.lastCrushed = crushed;
+            tile.lastCrushed = crushed;
 
-            if ((this.lastEnergy != this.storage.getEnergyStored() || this.lastFirstCrush != this.firstCrushTime || this.lastSecondCrush != this.secondCrushTime || this.isAutoSplit != this.lastAutoSplit) && this.sendUpdateWithInterval()) {
-                this.lastEnergy = this.storage.getEnergyStored();
-                this.lastFirstCrush = this.firstCrushTime;
-                this.lastSecondCrush = this.secondCrushTime;
-                this.lastAutoSplit = this.isAutoSplit;
+            if ((tile.lastEnergy != tile.storage.getEnergyStored() || tile.lastFirstCrush != tile.firstCrushTime || tile.lastSecondCrush != tile.secondCrushTime || tile.isAutoSplit != tile.lastAutoSplit) && tile.sendUpdateWithInterval()) {
+                tile.lastEnergy = tile.storage.getEnergyStored();
+                tile.lastFirstCrush = tile.firstCrushTime;
+                tile.lastSecondCrush = tile.secondCrushTime;
+                tile.lastAutoSplit = tile.isAutoSplit;
             }
 
             if (shouldPlaySound) {
-                this.level.playSound(null, this.worldPosition.getX(), this.worldPosition.getY(), this.worldPosition.getZ(), AASounds.CRUSHER.get(), SoundCategory.BLOCKS, 0.025F, 1.0F);
+                level.playSound(null, pos.getX(), pos.getY(), pos.getZ(), AASounds.CRUSHER.get(), SoundSource.BLOCKS, 0.025F, 1.0F);
             }
         }
     }
@@ -259,7 +264,7 @@ public class TileEntityCrusher extends TileEntityInventoryBase implements IButto
     }
 
     @Override
-    public void onButtonPressed(int buttonID, PlayerEntity player) {
+    public void onButtonPressed(int buttonID, Player player) {
         if (buttonID == 0) {
             this.isAutoSplit = !this.isAutoSplit;
             this.setChanged();
@@ -272,13 +277,13 @@ public class TileEntityCrusher extends TileEntityInventoryBase implements IButto
     }
 
     @Override
-    public ITextComponent getDisplayName() {
-        return new TranslationTextComponent("container.actuallyadditions.crusher");
+    public Component getDisplayName() {
+        return new TranslatableComponent("container.actuallyadditions.crusher");
     }
 
     @Nullable
     @Override
-    public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity player) {
+    public AbstractContainerMenu createMenu(int windowId, Inventory playerInventory, Player player) {
         return new CrusherContainer(windowId, playerInventory, this);
     }
 }

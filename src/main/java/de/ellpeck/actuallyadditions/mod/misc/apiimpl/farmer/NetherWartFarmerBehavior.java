@@ -13,21 +13,20 @@ package de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer;
 import de.ellpeck.actuallyadditions.api.farmer.FarmerResult;
 import de.ellpeck.actuallyadditions.api.farmer.IFarmerBehavior;
 import de.ellpeck.actuallyadditions.api.internal.IFarmer;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.NetherWartBlock;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootParameters;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.Direction;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.NetherWartBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.IPlantable;
 
 import java.util.List;
@@ -35,7 +34,7 @@ import java.util.List;
 public class NetherWartFarmerBehavior implements IFarmerBehavior {
 
     @Override
-    public FarmerResult tryPlantSeed(ItemStack seed, World world, BlockPos pos, IFarmer farmer) {
+    public FarmerResult tryPlantSeed(ItemStack seed, Level world, BlockPos pos, IFarmer farmer) {
         int use = 500;
         if (farmer.getEnergy() >= use) {
             if (seed.getItem() == Items.NETHER_WART) {
@@ -51,15 +50,15 @@ public class NetherWartFarmerBehavior implements IFarmerBehavior {
     }
 
     @Override
-    public FarmerResult tryHarvestPlant(ServerWorld world, BlockPos pos, IFarmer farmer) {
+    public FarmerResult tryHarvestPlant(ServerLevel world, BlockPos pos, IFarmer farmer) {
         int use = 500;
         if (farmer.getEnergy() >= use) {
             BlockState state = world.getBlockState(pos);
             if (state.getBlock() instanceof NetherWartBlock) {
                 if (state.getValue(BlockStateProperties.AGE_3) >= 3) {
                     List<ItemStack> drops = state.getDrops(new LootContext.Builder(world)
-                        .withParameter(LootParameters.ORIGIN, new Vector3d(pos.getX(), pos.getY(), pos.getZ()))
-                        .withParameter(LootParameters.TOOL, ItemStack.EMPTY));
+                        .withParameter(LootContextParams.ORIGIN, new Vec3(pos.getX(), pos.getY(), pos.getZ()))
+                        .withParameter(LootContextParams.TOOL, ItemStack.EMPTY));
                     if (!drops.isEmpty()) {
                         boolean toInput = farmer.canAddToSeeds(drops);
                         if (toInput || farmer.canAddToOutput(drops)) {

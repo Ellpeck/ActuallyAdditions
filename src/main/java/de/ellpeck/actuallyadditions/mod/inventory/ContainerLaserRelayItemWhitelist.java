@@ -13,21 +13,21 @@ package de.ellpeck.actuallyadditions.mod.inventory;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotFilter;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayItemAdvanced;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.ClickType;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.Objects;
 
-public class ContainerLaserRelayItemWhitelist extends Container {
+public class ContainerLaserRelayItemWhitelist extends AbstractContainerMenu {
 
     public final TileEntityLaserRelayItemAdvanced tile;
 
-    public ContainerLaserRelayItemWhitelist(int windowId, PlayerInventory inventory, TileEntityLaserRelayItemAdvanced tile) {
+    public ContainerLaserRelayItemWhitelist(int windowId, Inventory inventory, TileEntityLaserRelayItemAdvanced tile) {
         super(ActuallyContainers.LASER_RELAY_ITEM_WHITELIST_CONTAINER.get(), windowId);
         this.tile = tile;
 
@@ -51,12 +51,12 @@ public class ContainerLaserRelayItemWhitelist extends Container {
         }
     }
 
-    public static ContainerLaserRelayItemWhitelist fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
+    public static ContainerLaserRelayItemWhitelist fromNetwork(int windowId, Inventory inv, FriendlyByteBuf data) {
         return new ContainerLaserRelayItemWhitelist(windowId, inv, (TileEntityLaserRelayItemAdvanced) Objects.requireNonNull(inv.player.level.getBlockEntity(data.readBlockPos())));
     }
 
     @Override
-    public ItemStack quickMoveStack(PlayerEntity player, int slot) {
+    public ItemStack quickMoveStack(Player player, int slot) {
         int inventoryStart = 24;
         int inventoryEnd = inventoryStart + 26;
         int hotbarStart = inventoryEnd + 1;
@@ -98,16 +98,16 @@ public class ContainerLaserRelayItemWhitelist extends Container {
     }
 
     @Override
-    public ItemStack clicked(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player) {
+    public void clicked(int slotId, int dragType, ClickType clickTypeIn, Player player) {
         if (SlotFilter.checkFilter(this, slotId, player)) {
-            return ItemStack.EMPTY;
+            return; //TODO: Check if this is correct, used to return ItemStack.EMPTY
         } else {
-            return super.clicked(slotId, dragType, clickTypeIn, player);
+            super.clicked(slotId, dragType, clickTypeIn, player);
         }
     }
 
     @Override
-    public boolean stillValid(PlayerEntity player) {
+    public boolean stillValid(Player player) {
         return this.tile.canPlayerUse(player);
     }
 }

@@ -15,16 +15,16 @@ import de.ellpeck.actuallyadditions.mod.data.PlayerData;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.passive.BatEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.SwordItem;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ambient.Bat;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.SwordItem;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -48,49 +48,49 @@ public class ItemWingsOfTheBats extends ItemBase {
      *
      * @return The Wings
      */
-    public static ItemStack getWingItem(PlayerEntity player) {
-        for (int i = 0; i < player.inventory.getContainerSize(); i++) {
-            if (StackUtil.isValid(player.inventory.getItem(i)) && player.inventory.getItem(i).getItem() instanceof ItemWingsOfTheBats) {
-                return player.inventory.getItem(i);
+    public static ItemStack getWingItem(Player player) {
+        for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
+            if (StackUtil.isValid(player.getInventory().getItem(i)) && player.getInventory().getItem(i).getItem() instanceof ItemWingsOfTheBats) {
+                return player.getInventory().getItem(i);
             }
         }
         return ItemStack.EMPTY;
     }
 
     @Override
-    public boolean showDurabilityBar(ItemStack stack) {
+    public boolean isBarVisible(ItemStack stack) {
         return true;
     }
 
     @Override
-    public double getDurabilityForDisplay(ItemStack stack) {
+    public int getBarWidth(ItemStack stack) {
 /*        PlayerEntity player = ClientProxy.getCurrentPlayer();
         if (player != null) {
 //            PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(player);
             double diff = MAX_FLY_TIME - 1;//data.batWingsFlyTime; // TODO: fix me
             return 1 - diff / MAX_FLY_TIME;
         }*/ //TODO
-        return super.getDurabilityForDisplay(stack);
+        return super.getBarWidth(stack);
     }
 
     @Override
-    public int getRGBDurabilityForDisplay(ItemStack stack) {
+    public int getBarColor(ItemStack stack) {
 /*        PlayerEntity player = ClientProxy.getCurrentPlayer();
         if (player != null) {
 //            PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(player);
             int curr = 1;//data.batWingsFlyTime; // TODO: fix me
             return MathHelper.hsvToRgb(Math.max(0.0F, 1 - (float) curr / MAX_FLY_TIME) / 3.0F, 1.0F, 1.0F);
         }*/
-        return super.getRGBDurabilityForDisplay(stack);
+        return super.getBarColor(stack);
     }
 
     @SubscribeEvent
     public void onEntityDropEvent(LivingDropsEvent event) {
         Entity source = event.getSource().getEntity();
 
-        if (event.getEntityLiving().level != null && !event.getEntityLiving().level.isClientSide && source instanceof PlayerEntity) {
+        if (event.getEntityLiving().level != null && !event.getEntityLiving().level.isClientSide && source instanceof Player) {
             //Drop Wings from Bats
-            if (ConfigBoolValues.DO_BAT_DROPS.isEnabled() && event.getEntityLiving() instanceof BatEntity) {
+            if (ConfigBoolValues.DO_BAT_DROPS.isEnabled() && event.getEntityLiving() instanceof Bat) {
                 int looting = event.getLootingLevel();
 
                 Iterable<ItemStack> equip = source.getHandSlots();
@@ -112,8 +112,8 @@ public class ItemWingsOfTheBats extends ItemBase {
 
     @SubscribeEvent
     public void livingUpdateEvent(LivingEvent.LivingUpdateEvent event) {
-        if (event.getEntityLiving() instanceof PlayerEntity) {
-            PlayerEntity player = (PlayerEntity) event.getEntityLiving();
+        if (event.getEntityLiving() instanceof Player) {
+            Player player = (Player) event.getEntityLiving();
 
             if (false &&!player.isCreative() && !player.isSpectator()) { //TODO disabled for now.
                 PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(player);
@@ -134,9 +134,9 @@ public class ItemWingsOfTheBats extends ItemBase {
                         }
                     } else {
                         if (wingsEquipped && data.batWingsFlyTime < MAX_FLY_TIME) {
-                            player.abilities.mayfly = true;
+                            player.getAbilities().mayfly = true;
 
-                            if (player.abilities.flying) {
+                            if (player.getAbilities().flying) {
                                 data.batWingsFlyTime++;
 
                                 if (player.level.getLevelData().getGameTime() % 10 == 0) {
@@ -150,16 +150,16 @@ public class ItemWingsOfTheBats extends ItemBase {
                             data.shouldDisableBatWings = true;
                             shouldSend = true;
 
-                            player.abilities.mayfly = false;
-                            player.abilities.flying = false;
-                            player.abilities.invulnerable = false;
+                            player.getAbilities().mayfly = false;
+                            player.getAbilities().flying = false;
+                            player.getAbilities().invulnerable = false;
                         }
                     }
 
                     if (tryDeduct && data.batWingsFlyTime > 0) {
                         int deductTime = 0;
 
-                        if (!player.abilities.flying) {
+                        if (!player.getAbilities().flying) {
                             deductTime = 2;
                         } else {
                             BlockPos pos = new BlockPos(player.getX(), player.getY() + player.getBbHeight(), player.getZ());
@@ -184,13 +184,13 @@ public class ItemWingsOfTheBats extends ItemBase {
                     }
                 } else {
                     if (data.hasBatWings) {
-                        player.abilities.mayfly = true;
+                        player.getAbilities().mayfly = true;
                     } else if (data.shouldDisableBatWings) { //so that other modded flying won't be disabled
                         data.shouldDisableBatWings = false;
 
-                        player.abilities.mayfly = false;
-                        player.abilities.flying = false;
-                        player.abilities.invulnerable = false;
+                        player.getAbilities().mayfly = false;
+                        player.getAbilities().flying = false;
+                        player.getAbilities().invulnerable = false;
                     }
                 }
             }

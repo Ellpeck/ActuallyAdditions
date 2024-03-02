@@ -1,8 +1,8 @@
 package de.ellpeck.actuallyadditions.mod;
 
-import net.minecraft.client.renderer.model.ModelResourceLocation;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.item.ItemStack;
+import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

@@ -4,10 +4,15 @@ import com.google.gson.JsonObject;
 import de.ellpeck.actuallyadditions.api.ActuallyTags;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
-import net.minecraft.data.*;
-import net.minecraft.item.Items;
+import net.minecraft.data.DataGenerator;
+import net.minecraft.data.HashCache;
+import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.util.IItemProvider;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.common.Tags;
 
 import javax.annotation.Nonnull;
@@ -21,7 +26,7 @@ public class BlockRecipeGenerator extends RecipeProvider {
     }
 
     @Override
-    protected void buildShapelessRecipes(@Nonnull Consumer<IFinishedRecipe> consumer) {
+    protected void buildCraftingRecipes(@Nonnull Consumer<FinishedRecipe> consumer) {
         //Battery Box
         Recipe.shapeless(ActuallyBlocks.BATTERY_BOX.getItem()).ingredients(ActuallyBlocks.ENERGIZER.get(), ActuallyBlocks.ENERVATOR.get(), ActuallyItems.BASIC_COIL.get()).save(consumer);
 
@@ -226,66 +231,66 @@ public class BlockRecipeGenerator extends RecipeProvider {
     }
 
     @Override
-    protected void saveAdvancement(DirectoryCache p_208310_1_, JsonObject p_208310_2_, Path p_208310_3_) {
+    protected void saveAdvancement(HashCache p_208310_1_, JsonObject p_208310_2_, Path p_208310_3_) {
         //Nope... maybe later...
     }
 
     public static class Recipe {
-        public static Shapeless shapeless(IItemProvider result) {
+        public static Shapeless shapeless(ItemLike result) {
             return new Shapeless(result);
         }
 
-        public static Shapeless shapeless(IItemProvider result, int count) {
+        public static Shapeless shapeless(ItemLike result, int count) {
             return new Shapeless(result, count);
         }
 
-        public static Shaped shaped(IItemProvider result) {
+        public static Shaped shaped(ItemLike result) {
             return new Shaped(result);
         }
 
-        public static Shaped shaped(IItemProvider result, int count) {
+        public static Shaped shaped(ItemLike result, int count) {
             return new Shaped(result, count);
         }
 
-        public static void stairs(IItemProvider result, IItemProvider resource, Consumer<IFinishedRecipe> consumer) {
+        public static void stairs(ItemLike result, ItemLike resource, Consumer<FinishedRecipe> consumer) {
             Recipe.shaped(result).patternSingleKey('Q', resource, "Q  ", "QQ ", "QQQ").save(consumer);
         }
 
-        public static void wall(IItemProvider result, IItemProvider resource, Consumer<IFinishedRecipe> consumer) {
+        public static void wall(ItemLike result, ItemLike resource, Consumer<FinishedRecipe> consumer) {
             Recipe.shaped(result).patternSingleKey('Q', resource, "QQQ", "QQQ").save(consumer);
         }
 
-        public static void slab(IItemProvider result, IItemProvider resource, Consumer<IFinishedRecipe> consumer) {
+        public static void slab(ItemLike result, ItemLike resource, Consumer<FinishedRecipe> consumer) {
             Recipe.shaped(result).patternSingleKey('Q', resource, "QQQ").save(consumer);
         }
 
         private static class Shapeless extends ShapelessRecipeBuilder {
-            public Shapeless(IItemProvider result) {
+            public Shapeless(ItemLike result) {
                 this(result, 1);
             }
 
-            public Shapeless(IItemProvider result, int countIn) {
+            public Shapeless(ItemLike result, int countIn) {
                 super(result, countIn);
             }
 
-            public Shapeless ingredients(IItemProvider... ingredients) {
+            public Shapeless ingredients(ItemLike... ingredients) {
                 Arrays.asList(ingredients).forEach(this::requires);
                 return this;
             }
 
             @Override
-            public void save(Consumer<IFinishedRecipe> consumer) {
+            public void save(Consumer<FinishedRecipe> consumer) {
                 this.unlockedBy("has_book", has(ActuallyItems.ITEM_BOOKLET.get()));
                 super.save(consumer);
             }
         }
 
         private static class Shaped extends ShapedRecipeBuilder {
-            public Shaped(IItemProvider resultIn) {
+            public Shaped(ItemLike resultIn) {
                 this(resultIn, 1);
             }
 
-            public Shaped(IItemProvider resultIn, int countIn) {
+            public Shaped(ItemLike resultIn, int countIn) {
                 super(resultIn, countIn);
             }
 
@@ -302,7 +307,7 @@ public class BlockRecipeGenerator extends RecipeProvider {
                 return this;
             }
 
-            public Shaped patternSingleKey(char key, IItemProvider resource, String... lines) {
+            public Shaped patternSingleKey(char key, ItemLike resource, String... lines) {
                 this.define(key, resource);
                 for (String line : lines) {
                     this.pattern(line);
@@ -312,7 +317,7 @@ public class BlockRecipeGenerator extends RecipeProvider {
             }
 
             @Override
-            public void save(Consumer<IFinishedRecipe> consumerIn) {
+            public void save(Consumer<FinishedRecipe> consumerIn) {
                 this.unlockedBy("has_book", has(ActuallyItems.ITEM_BOOKLET.get()));
                 super.save(consumerIn);
             }

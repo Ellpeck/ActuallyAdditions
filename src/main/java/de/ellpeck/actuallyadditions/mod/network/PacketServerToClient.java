@@ -11,30 +11,30 @@
 package de.ellpeck.actuallyadditions.mod.network;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
 
 public class PacketServerToClient {
 
-    private CompoundNBT data;
+    private CompoundTag data;
     private IDataHandler handler;
 
     public PacketServerToClient() {
 
     }
 
-    public PacketServerToClient(CompoundNBT data, IDataHandler handler) {
+    public PacketServerToClient(CompoundTag data, IDataHandler handler) {
         this.data = data;
         this.handler = handler;
     }
 
-    public static PacketServerToClient fromBytes(final PacketBuffer buffer) {
+    public static PacketServerToClient fromBytes(final FriendlyByteBuf buffer) {
         try {
-            CompoundNBT data = buffer.readNbt();
+            CompoundTag data = buffer.readNbt();
 
             int handlerId = buffer.readInt();
             if (handlerId >= 0 && handlerId < PacketHandler.DATA_HANDLERS.size()) {
@@ -46,7 +46,7 @@ public class PacketServerToClient {
         return new PacketServerToClient();
     }
 
-    public static void toBytes(final PacketServerToClient message, PacketBuffer buffer) {
+    public static void toBytes(final PacketServerToClient message, FriendlyByteBuf buffer) {
         buffer.writeNbt(message.data);
         buffer.writeInt(PacketHandler.DATA_HANDLERS.indexOf(message.handler));
     }

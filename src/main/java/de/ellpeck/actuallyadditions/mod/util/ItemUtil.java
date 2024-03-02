@@ -10,13 +10,13 @@
 
 package de.ellpeck.actuallyadditions.mod.util;
 
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Map;
@@ -82,7 +82,7 @@ public final class ItemUtil {
         return stack.getOrCreateTag().getBoolean("IsEnabled");
     }
 
-    public static void changeEnabled(PlayerEntity player, Hand hand) {
+    public static void changeEnabled(Player player, InteractionHand hand) {
         changeEnabled(player.getItemInHand(hand));
     }
 

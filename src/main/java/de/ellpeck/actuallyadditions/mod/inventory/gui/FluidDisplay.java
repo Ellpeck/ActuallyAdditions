@@ -10,29 +10,28 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.AbstractGui;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.templates.FluidTank;
-import net.minecraftforge.fml.client.gui.GuiUtils;
 
 import javax.annotation.Nonnull;
 import java.text.NumberFormat;
 import java.util.Collections;
 
 @OnlyIn(Dist.CLIENT)
-public class FluidDisplay extends AbstractGui {
+public class FluidDisplay extends GuiComponent {
 
     private IFluidTank fluidReference;
     private Fluid oldFluid;
@@ -74,9 +73,10 @@ public class FluidDisplay extends AbstractGui {
         this.drawTextNextTo = drawTextNextTo;
     }
 
-    public void draw(MatrixStack matrices) {
+    public void draw(PoseStack matrices) {
         Minecraft mc = Minecraft.getInstance();
-        mc.getTextureManager().bind(AssetUtil.GUI_INVENTORY_LOCATION);
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShaderTexture(0, AssetUtil.GUI_INVENTORY_LOCATION); //bind?
 
         int barX = this.x;
         int barY = this.y;
@@ -101,33 +101,34 @@ public class FluidDisplay extends AbstractGui {
         }
 
         if (stack != null && fluid != null && this.resLoc != null) {
-            mc.getTextureManager().bind(this.resLoc);
+            RenderSystem.setShaderTexture(0, this.resLoc);
 
-            GlStateManager._pushMatrix();
+//            GlStateManager._pushMatrix();
             GlStateManager._enableBlend();
-            GlStateManager._disableAlphaTest();
+//            GlStateManager._disableAlphaTest();
             GlStateManager._blendFuncSeparate(770, 771, 1, 0);
             int i = this.fluidReference.getFluid().getAmount() * 83 / this.fluidReference.getCapacity();
-            this.blit(matrices, barX + 1, barY + 84 - i, 0, 0, 16, i, 16, 512);
+            blit(matrices, barX + 1, barY + 84 - i, 0, 0, 16, i, 16, 512);
             //drawModalRectWithCustomSizedTexture(barX + 1, barY + 84 - i, 36, 172, 16, i, 16, 512);
             GlStateManager._disableBlend();
-            GlStateManager._enableAlphaTest();
-            GlStateManager._popMatrix();
+//            GlStateManager._enableAlphaTest();
+//            GlStateManager._popMatrix();
         }
 
         if (this.drawTextNextTo) {
-            mc.font.draw(matrices, new StringTextComponent(this.getOverlayText()), barX + 25, barY + 78, 0xFFFFFF);
+            mc.font.draw(matrices, new TextComponent(this.getOverlayText()), barX + 25, barY + 78, 0xFFFFFF);
         }
     }
 
-    public void render(MatrixStack matrices, int mouseX, int mouseY) {
+    public void render(PoseStack matrices, int mouseX, int mouseY) {
         if (mouseX >= this.x && mouseY >= this.y && mouseX < this.x + (this.outline
             ? 26
             : 18) && mouseY < this.y + (this.outline
             ? 93
             : 85)) {
             Minecraft mc = Minecraft.getInstance();
-            GuiUtils.drawHoveringText(matrices, Collections.singletonList(new StringTextComponent(this.getOverlayText())), mouseX, mouseY, mc.getWindow().getWidth(), mc.getWindow().getHeight(), -1, mc.font);
+            if(mc.screen != null)
+                mc.screen.renderComponentTooltip(matrices, Collections.singletonList(new TextComponent(this.getOverlayText())), mouseX, mouseY, mc.font); //TODO: Check if this is correct, used to call GuiUtils.drawHoveringText
         }
     }
 

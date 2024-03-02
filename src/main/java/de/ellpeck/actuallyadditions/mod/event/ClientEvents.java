@@ -10,7 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.event;
 
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.IHudDisplay;
 import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
@@ -19,18 +20,18 @@ import de.ellpeck.actuallyadditions.mod.inventory.gui.EnergyDisplay;
 import de.ellpeck.actuallyadditions.mod.tile.IEnergyDisplay;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.block.Block;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -41,8 +42,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 @OnlyIn(Dist.CLIENT)
 public class ClientEvents {
 
-    private static final ITextComponent ADVANCED_INFO_TEXT_PRE = new StringTextComponent("  -").withStyle(TextFormatting.DARK_GRAY);
-    private static final ITextComponent ADVANCED_INFO_HEADER_PRE = new StringTextComponent("  -").withStyle(TextFormatting.GRAY);
+    private static final Component ADVANCED_INFO_TEXT_PRE = new TextComponent("  -").withStyle(ChatFormatting.DARK_GRAY);
+    private static final Component ADVANCED_INFO_HEADER_PRE = new TextComponent("  -").withStyle(ChatFormatting.GRAY);
 
     private static EnergyDisplay energyDisplay;
 
@@ -163,45 +164,46 @@ public class ClientEvents {
     public void onGameOverlay(RenderGameOverlayEvent.Post event) {
         Minecraft minecraft = Minecraft.getInstance();
         if (event.getType() == RenderGameOverlayEvent.ElementType.ALL && minecraft.screen == null) {
-            PlayerEntity player = minecraft.player;
+            PoseStack matrices = event.getMatrixStack();
+            Player player = minecraft.player;
             if (player == null) {
                 return;
             }
 
-            RayTraceResult posHit = minecraft.hitResult;
-            FontRenderer font = minecraft.font;
+            HitResult posHit = minecraft.hitResult;
+            Font font = minecraft.font;
             ItemStack stack = player.getMainHandItem();
 
             if (StackUtil.isValid(stack)) {
                 if (stack.getItem() instanceof IHudDisplay) {
-                    ((IHudDisplay) stack.getItem()).displayHud(event.getMatrixStack(), minecraft, player, stack, posHit, event.getWindow());
+                    ((IHudDisplay) stack.getItem()).displayHud(matrices, minecraft, player, stack, posHit, event.getWindow());
                 }
             }
 
-            if (posHit != null && posHit.getType() == RayTraceResult.Type.BLOCK) {
-                BlockRayTraceResult rayCast = (BlockRayTraceResult) posHit;
+            if (posHit != null && posHit.getType() == HitResult.Type.BLOCK) {
+                BlockHitResult rayCast = (BlockHitResult) posHit;
                 Block blockHit = minecraft.level.getBlockState(rayCast.getBlockPos()).getBlock();
-                TileEntity tileHit = minecraft.level.getBlockEntity(rayCast.getBlockPos());
+                BlockEntity tileHit = minecraft.level.getBlockEntity(rayCast.getBlockPos());
 
                 if (blockHit instanceof IHudDisplay) {
-                    ((IHudDisplay) blockHit).displayHud(event.getMatrixStack(), minecraft, player, stack, posHit, event.getWindow());
+                    ((IHudDisplay) blockHit).displayHud(matrices, minecraft, player, stack, posHit, event.getWindow());
                 }
 
                 if (tileHit instanceof TileEntityBase) {
                     TileEntityBase base = (TileEntityBase) tileHit;
                     if (base.isRedstoneToggle()) {
-                        String strg = String.format("%s: %s", I18n.get("info." + ActuallyAdditions.MODID + ".redstoneMode"), TextFormatting.DARK_RED + I18n.get("info." + ActuallyAdditions.MODID + ".redstoneMode." + (base.isPulseMode
+                        String strg = String.format("%s: %s", I18n.get("info." + ActuallyAdditions.MODID + ".redstoneMode"), ChatFormatting.DARK_RED + I18n.get("info." + ActuallyAdditions.MODID + ".redstoneMode." + (base.isPulseMode
                             ? "pulse"
-                            : "deactivation")) + TextFormatting.RESET);
-                        font.drawShadow(event.getMatrixStack(), strg, event.getWindow().getGuiScaledWidth() / 2f + 5, event.getWindow().getGuiScaledHeight() / 2f + 5, 0xFFFFFF);
+                            : "deactivation")) + ChatFormatting.RESET);
+                        font.drawShadow(matrices, strg, event.getWindow().getGuiScaledWidth() / 2f + 5, event.getWindow().getGuiScaledHeight() / 2f + 5, 0xFFFFFF);
 
                         String expl;
                         if (!stack.isEmpty() && stack.getItem() == CommonConfig.Other.redstoneConfigureItem) {
-                            expl = TextFormatting.GREEN + I18n.get("info." + ActuallyAdditions.MODID + ".redstoneMode.validItem");
+                            expl = ChatFormatting.GREEN + I18n.get("info." + ActuallyAdditions.MODID + ".redstoneMode.validItem");
                         } else {
-                                expl = TextFormatting.GRAY.toString() + TextFormatting.ITALIC + I18n.get("info." + ActuallyAdditions.MODID + ".redstoneMode.invalidItem", I18n.get(CommonConfig.Other.redstoneConfigureItem.asItem().getDescriptionId()));
+                                expl = ChatFormatting.GRAY.toString() + ChatFormatting.ITALIC + I18n.get("info." + ActuallyAdditions.MODID + ".redstoneMode.invalidItem", I18n.get(CommonConfig.Other.redstoneConfigureItem.asItem().getDescriptionId()));
                         }
-                        font.drawShadow(event.getMatrixStack(), expl, event.getWindow().getGuiScaledWidth() / 2f + 5, event.getWindow().getGuiScaledHeight() / 2f + 15, 0xFFFFFF);
+                        font.drawShadow(matrices, expl, event.getWindow().getGuiScaledWidth() / 2f + 5, event.getWindow().getGuiScaledHeight() / 2f + 15, 0xFFFFFF);
                     }
                 }
 
@@ -213,10 +215,11 @@ public class ClientEvents {
                         }
                         energyDisplay.setData(2, event.getWindow().getGuiScaledHeight() - 96, display.getEnergyStorage(), true, true);
 
-                        GlStateManager._pushMatrix();
-                        GlStateManager._color4f(1F, 1F, 1F, 1F);
-                        energyDisplay.draw(event.getMatrixStack());
-                        GlStateManager._popMatrix();
+                        matrices.pushPose();
+//                        GlStateManager._color4f(1F, 1F, 1F, 1F);
+                        RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
+                        energyDisplay.draw(matrices);
+                        matrices.popPose();
                     }
                 }
             }

@@ -14,24 +14,21 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.crafting.ActuallyRecipes;
 import de.ellpeck.actuallyadditions.mod.crafting.EmpowererRecipe;
-import de.ellpeck.actuallyadditions.mod.crafting.SolidFuelRecipe;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
-import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.server.ServerLifecycleHooks;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
-
-import net.minecraftforge.fml.server.ServerLifecycleHooks;
 
 public class TileEntityEmpowerer extends TileEntityInventoryBase {
 
@@ -43,8 +40,8 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase {
         return this.currentRecipe;
     }
 
-    public TileEntityEmpowerer() {
-        super(ActuallyBlocks.EMPOWERER.getTileEntityType(), 1);
+    public TileEntityEmpowerer(BlockPos pos, BlockState state) {
+        super(ActuallyBlocks.EMPOWERER.getTileEntityType(), pos, state, 1);
     }
 
     public static boolean isPossibleInput(ItemStack stack) {
@@ -66,16 +63,21 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase {
         return null;
     }
 
-    @Override
-    public void updateEntity() {
-        super.updateEntity();
+    public static <T extends BlockEntity> void clientTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityEmpowerer tile) {
+            tile.clientTick();
+        }
+    }
 
-        if (!this.level.isClientSide) {
-            TileEntityDisplayStand[] stands = this.getNearbyStands();
+    public static <T extends BlockEntity> void serverTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityEmpowerer tile) {
+            tile.serverTick();
+
+            TileEntityDisplayStand[] stands = tile.getNearbyStands();
             if (stands != null) {
-                EmpowererRecipe recipe = findMatchingRecipe(this.inv.getStackInSlot(0), stands[0].getStack(), stands[1].getStack(), stands[2].getStack(), stands[3].getStack());
+                EmpowererRecipe recipe = findMatchingRecipe(tile.inv.getStackInSlot(0), stands[0].getStack(), stands[1].getStack(), stands[2].getStack(), stands[3].getStack());
                 if (recipe != null) {
-                    currentRecipe = recipe;
+                    tile.currentRecipe = recipe;
 
                     boolean hasPower = true;
 
@@ -87,8 +89,8 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase {
 
                     if (hasPower) {
 
-                        this.processTime++;
-                        boolean done = this.processTime >= recipe.getTime();
+                        tile.processTime++;
+                        boolean done = tile.processTime >= recipe.getTime();
 
                         for (TileEntityDisplayStand stand : stands) {
                             stand.storage.extractEnergyInternal(recipe.getEnergyPerStand() / recipe.getTime(), false);
@@ -99,28 +101,28 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase {
                             }
                         }
 
-                        if (this.processTime % 5 == 0 && this.level instanceof ServerWorld) {
-                            ((ServerWorld) this.level).sendParticles(ParticleTypes.FIREWORK, this.worldPosition.getX() + 0.5, this.worldPosition.getY() + 1.1, this.worldPosition.getZ() + 0.5, 2, 0, 0, 0, 0.1D);
+                        if (tile.processTime % 5 == 0 && level instanceof ServerLevel) {
+                            ((ServerLevel) level).sendParticles(ParticleTypes.FIREWORK, pos.getX() + 0.5, pos.getY() + 1.1, pos.getZ() + 0.5, 2, 0, 0, 0, 0.1D);
                         }
 
                         if (done) {
-                            ((ServerWorld) this.level).sendParticles(ParticleTypes.END_ROD, this.worldPosition.getX() + 0.5, this.worldPosition.getY() + 1.1, this.worldPosition.getZ() + 0.5, 100, 0, 0, 0, 0.25D);
+                            ((ServerLevel) level).sendParticles(ParticleTypes.END_ROD, pos.getX() + 0.5, pos.getY() + 1.1, pos.getZ() + 0.5, 100, 0, 0, 0, 0.25D);
 
-                            this.inv.setStackInSlot(0, recipe.getOutput().copy());
-                            this.setChanged();
+                            tile.inv.setStackInSlot(0, recipe.getOutput().copy());
+                            tile.setChanged();
 
-                            this.processTime = 0;
-                            this.currentRecipe = null;
+                            tile.processTime = 0;
+                            tile.currentRecipe = null;
                         }
                     }
                 } else {
-                    this.processTime = 0;
-                    this.currentRecipe = null;
+                    tile.processTime = 0;
+                    tile.currentRecipe = null;
                 }
 
-                if (this.lastRecipe != this.currentRecipe) {
-                    this.lastRecipe = this.currentRecipe;
-                    this.sendUpdate();
+                if (tile.lastRecipe != tile.currentRecipe) {
+                    tile.lastRecipe = tile.currentRecipe;
+                    tile.sendUpdate();
                 }
             }
         }
@@ -132,7 +134,7 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase {
         for (int i = 0; i <= 3; i++) {
             Direction facing = Direction.from2DDataValue(i);
             BlockPos offset = this.worldPosition.relative(facing, 3);
-            TileEntity tile = this.level.getBlockEntity(offset);
+            BlockEntity tile = this.level.getBlockEntity(offset);
             if (tile instanceof TileEntityDisplayStand) {
                 stands[i] = (TileEntityDisplayStand) tile;
             } else {
@@ -144,7 +146,7 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase {
     }
 
     @Override
-    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
         if (type == NBTType.SAVE_TILE) {
             compound.putInt("ProcessTime", this.processTime);
@@ -158,7 +160,7 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase {
     }
 
     @Override
-    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void readSyncableNBT(CompoundTag compound, NBTType type) {
         super.readSyncableNBT(compound, type);
         if (type == NBTType.SAVE_TILE) {
             this.processTime = compound.getInt("ProcessTime");

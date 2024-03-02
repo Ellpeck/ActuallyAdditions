@@ -10,25 +10,23 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
-import com.google.common.collect.ImmutableSet;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import net.minecraft.item.IItemTier;
-import net.minecraft.item.ToolItem;
-import net.minecraftforge.common.ToolType;
+import net.minecraft.world.item.DiggerItem;
+import net.minecraft.world.item.Tier;
 
-public class ItemPickaxeAA extends ToolItem {
-    private final IItemTier tier;
-    public ItemPickaxeAA(IItemTier tier) {
+public class ItemPickaxeAA extends DiggerItem {
+    private final Tier tier;
+    public ItemPickaxeAA(Tier tier) {
         super(
             4.0f,
             -2f,
             tier,
-            ImmutableSet.of(),
-            new Properties()
-                .addToolType(ToolType.AXE, tier.getLevel())
-                .addToolType(ToolType.HOE, tier.getLevel())
-                .addToolType(ToolType.SHOVEL, tier.getLevel())
-                .addToolType(ToolType.PICKAXE, tier.getLevel())
+                null, //Feed block tags here
+                new Properties()
+//                .addToolType(ToolType.AXE, tier.getLevel())
+//                .addToolType(ToolType.HOE, tier.getLevel())
+//                .addToolType(ToolType.SHOVEL, tier.getLevel())
+//                .addToolType(ToolType.PICKAXE, tier.getLevel())
                 .durability(tier.getUses() * 4)
                 .tab(ActuallyAdditions.GROUP)
         );

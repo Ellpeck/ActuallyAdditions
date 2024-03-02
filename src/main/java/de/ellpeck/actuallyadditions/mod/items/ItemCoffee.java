@@ -15,17 +15,17 @@ import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemFoodBase;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.ModList;
@@ -83,7 +83,7 @@ public class ItemCoffee extends ItemFoodBase {
     }
 
     //@Override
-    public ItemStack onItemUseFinish(ItemStack stack, World world, LivingEntity player) {
+    public ItemStack onItemUseFinish(ItemStack stack, Level world, LivingEntity player) {
         ItemStack theStack = stack.copy();
         super.finishUsingItem(stack, world, player);
         applyPotionEffectsFromStack(stack, player);
@@ -103,13 +103,13 @@ public class ItemCoffee extends ItemFoodBase {
 
     @Nullable
     @Override
-    public CompoundNBT getShareTag(ItemStack stack) {
+    public CompoundTag getShareTag(ItemStack stack) {
         return super.getShareTag(stack);
     }
 
     @OnlyIn(Dist.CLIENT)
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable World playerIn, List<ITextComponent> tooltip, ITooltipFlag advanced) {
+    public void appendHoverText(ItemStack stack, @Nullable Level playerIn, List<Component> tooltip, TooltipFlag advanced) {
         //PotionEffect[] effects = ActuallyAdditionsAPI.methodHandler.getEffectsFromStack(stack);
         //if (effects != null) {
         //    for (PotionEffect effect : effects) {

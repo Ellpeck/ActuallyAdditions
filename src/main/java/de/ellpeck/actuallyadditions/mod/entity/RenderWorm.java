@@ -10,21 +10,20 @@
 
 package de.ellpeck.actuallyadditions.mod.entity;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Vector3f;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
+import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.client.renderer.model.ItemCameraTransforms;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.inventory.container.PlayerContainer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Util;
-import net.minecraft.util.math.vector.Quaternion;
-import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.inventory.InventoryMenu;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -35,16 +34,16 @@ public class RenderWorm extends EntityRenderer<EntityWorm> {
     private ItemStack stack;
     private ItemStack snailStack;
 
-    public RenderWorm(EntityRendererManager p_i46179_1_) {
-        super(p_i46179_1_);
+    public RenderWorm(EntityRendererProvider.Context context) {
+        super(context);
 
         stack = new ItemStack(ActuallyItems.WORM.get());
         snailStack = new ItemStack(ActuallyItems.WORM.get());
-        snailStack.setHoverName(new StringTextComponent("Snail Mail"));
+        snailStack.setHoverName(new TextComponent("Snail Mail"));
     }
 
     @Override
-    public void render(EntityWorm entity, float partialTicks, float p_225623_3_, MatrixStack matrix, IRenderTypeBuffer buffer, int light) {
+    public void render(EntityWorm entity, float partialTicks, float p_225623_3_, PoseStack matrix, MultiBufferSource buffer, int light) {
         boolean isSnail = entity.getCustomName().getString().equalsIgnoreCase("snail mail");
         matrix.pushPose();
         matrix.translate(0, 0.7F, 0);
@@ -52,7 +51,7 @@ public class RenderWorm extends EntityRenderer<EntityWorm> {
         matrix.mulPose(Vector3f.YP.rotationDegrees(-(float) (boop % 360)));
         matrix.translate(0,0,0.4);
         Minecraft.getInstance().getItemRenderer().renderStatic(
-                isSnail? snailStack:stack, ItemCameraTransforms.TransformType.FIXED, light, OverlayTexture.NO_OVERLAY, matrix, buffer
+                isSnail? snailStack:stack, ItemTransforms.TransformType.FIXED, light, OverlayTexture.NO_OVERLAY, matrix, buffer, 0
         );
 
         matrix.popPose();
@@ -60,6 +59,6 @@ public class RenderWorm extends EntityRenderer<EntityWorm> {
 
     @Override
     public ResourceLocation getTextureLocation(EntityWorm pEntity) {
-        return PlayerContainer.BLOCK_ATLAS;
+        return InventoryMenu.BLOCK_ATLAS;
     }
 }

@@ -11,21 +11,20 @@
 package de.ellpeck.actuallyadditions.mod.items.base;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import net.minecraft.item.HoeItem;
-import net.minecraft.item.IItemTier;
-import net.minecraftforge.common.ToolType;
+import net.minecraft.world.item.HoeItem;
+import net.minecraft.world.item.Tier;
 
 public class ItemHoeAA extends HoeItem {
-    private IItemTier tier;
-    public ItemHoeAA(IItemTier tier) {
+    private Tier tier;
+    public ItemHoeAA(Tier tier) {
         super(tier,
             4,
             -2f,
             new Properties()
-                .addToolType(ToolType.AXE, tier.getLevel())
-                .addToolType(ToolType.HOE, tier.getLevel())
-                .addToolType(ToolType.SHOVEL, tier.getLevel())
-                .addToolType(ToolType.PICKAXE, tier.getLevel())
+//                .addToolType(ToolType.AXE, tier.getLevel())
+//                .addToolType(ToolType.HOE, tier.getLevel())
+//                .addToolType(ToolType.SHOVEL, tier.getLevel())
+//                .addToolType(ToolType.PICKAXE, tier.getLevel())
                 .durability(tier.getUses() * 4)
                 .tab(ActuallyAdditions.GROUP)
         );

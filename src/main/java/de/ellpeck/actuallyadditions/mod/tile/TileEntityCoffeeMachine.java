@@ -21,19 +21,21 @@ import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import de.ellpeck.actuallyadditions.mod.util.Util;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Direction;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.LazyOptional;
@@ -46,7 +48,7 @@ import net.minecraftforge.fluids.capability.templates.FluidTank;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements INamedContainerProvider, IButtonReactor, ISharingFluidHandler {
+public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements MenuProvider, IButtonReactor, ISharingFluidHandler {
 
     public static final int SLOT_COFFEE_BEANS = 0;
     public static final int SLOT_INPUT = 1;
@@ -87,8 +89,8 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     private int lastCoffeeAmount;
     private int lastBrewTime;
 
-    public TileEntityCoffeeMachine() {
-        super(ActuallyBlocks.COFFEE_MACHINE.getTileEntityType(), 11);
+    public TileEntityCoffeeMachine(BlockPos pos, BlockState state) {
+        super(ActuallyBlocks.COFFEE_MACHINE.getTileEntityType(), pos, state, 11);
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -112,7 +114,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
         this.storage.writeToNBT(compound);
         this.tank.writeToNBT(compound);
@@ -123,7 +125,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void readSyncableNBT(CompoundTag compound, NBTType type) {
         super.readSyncableNBT(compound, type);
         this.storage.readFromNBT(compound);
         this.tank.readFromNBT(compound);
@@ -133,28 +135,34 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
         }
     }
 
-    @Override
-    public void updateEntity() {
-        super.updateEntity();
-        if (!this.level.isClientSide) {
-            this.storeCoffee();
+    public static <T extends BlockEntity> void clientTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityCoffeeMachine tile) {
+            tile.clientTick();
+        }
+    }
 
-            if (this.brewTime > 0 || this.isRedstonePowered) {
-                this.brew();
+    public static <T extends BlockEntity> void serverTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityCoffeeMachine tile) {
+            tile.serverTick();
+
+            tile.storeCoffee();
+
+            if (tile.brewTime > 0 || tile.isRedstonePowered) {
+                tile.brew();
             }
 
-            if ((this.coffeeCacheAmount != this.lastCoffeeAmount || this.storage.getEnergyStored() != this.lastEnergy || this.tank.getFluidAmount() != this.lastTank || this.brewTime != this.lastBrewTime) && this.sendUpdateWithInterval()) {
-                this.lastCoffeeAmount = this.coffeeCacheAmount;
-                this.lastEnergy = this.storage.getEnergyStored();
-                this.lastTank = this.tank.getFluidAmount();
-                this.lastBrewTime = this.brewTime;
+            if ((tile.coffeeCacheAmount != tile.lastCoffeeAmount || tile.storage.getEnergyStored() != tile.lastEnergy || tile.tank.getFluidAmount() != tile.lastTank || tile.brewTime != tile.lastBrewTime) && tile.sendUpdateWithInterval()) {
+                tile.lastCoffeeAmount = tile.coffeeCacheAmount;
+                tile.lastEnergy = tile.storage.getEnergyStored();
+                tile.lastTank = tile.tank.getFluidAmount();
+                tile.lastBrewTime = tile.brewTime;
             }
         }
     }
 
     @Override
     public IAcceptor getAcceptor() {
-        return (slot, stack, automation) -> !automation || slot >= 3 && ItemCoffee.getIngredientFromStack(stack) != null || slot == SLOT_COFFEE_BEANS && ActuallyTags.Items.COFFEE_BEANS.contains(stack.getItem()) || slot == SLOT_INPUT && stack.getItem() == ActuallyItems.COFFEE_CUP.get();
+        return (slot, stack, automation) -> !automation || slot >= 3 && ItemCoffee.getIngredientFromStack(stack) != null || slot == SLOT_COFFEE_BEANS && stack.is(ActuallyTags.Items.COFFEE_BEANS) || slot == SLOT_INPUT && stack.getItem() == ActuallyItems.COFFEE_CUP.get();
     }
 
     @Override
@@ -163,7 +171,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     }
 
     public void storeCoffee() {
-        if (StackUtil.isValid(this.inv.getStackInSlot(SLOT_COFFEE_BEANS)) && ActuallyTags.Items.COFFEE_BEANS.contains(this.inv.getStackInSlot(SLOT_COFFEE_BEANS).getItem())) {
+        if (StackUtil.isValid(this.inv.getStackInSlot(SLOT_COFFEE_BEANS)) && this.inv.getStackInSlot(SLOT_COFFEE_BEANS).is(ActuallyTags.Items.COFFEE_BEANS)) {
             int toAdd = 2;
             if (toAdd <= COFFEE_CACHE_MAX_AMOUNT - this.coffeeCacheAmount) {
                 this.inv.setStackInSlot(SLOT_COFFEE_BEANS, StackUtil.shrink(this.inv.getStackInSlot(SLOT_COFFEE_BEANS), 1));
@@ -181,7 +189,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
         if (StackUtil.isValid(input) && input.getItem() == ActuallyItems.COFFEE_CUP.get() && !StackUtil.isValid(this.inv.getStackInSlot(SLOT_OUTPUT)) && this.coffeeCacheAmount >= CACHE_USE && this.tank.getFluid().getFluid() == Fluids.WATER && this.tank.getFluidAmount() >= WATER_USE) {
             if (this.storage.getEnergyStored() >= ENERGY_USED) {
                 if (this.brewTime % 30 == 0) {
-                    this.level.playSound(null, this.getBlockPos().getX(), this.getBlockPos().getY(), this.getBlockPos().getZ(), AASounds.COFFEE_MACHINE.get(), SoundCategory.BLOCKS, 0.1F, 1.0F);
+                    this.level.playSound(null, this.getBlockPos().getX(), this.getBlockPos().getY(), this.getBlockPos().getZ(), AASounds.COFFEE_MACHINE.get(), SoundSource.BLOCKS, 0.1F, 1.0F);
                 }
 
                 this.brewTime++;
@@ -211,7 +219,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public void onButtonPressed(int buttonID, PlayerEntity player) {
+    public void onButtonPressed(int buttonID, Player player) {
         if (buttonID == 0 && this.brewTime <= 0) {
             this.brew();
         }
@@ -243,13 +251,13 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public ITextComponent getDisplayName() {
-        return new TranslationTextComponent("container.actuallyadditions.coffeeMachine");
+    public Component getDisplayName() {
+        return new TranslatableComponent("container.actuallyadditions.coffeeMachine");
     }
 
     @Nullable
     @Override
-    public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity player) {
+    public AbstractContainerMenu createMenu(int windowId, Inventory playerInventory, Player player) {
         return new ContainerCoffeeMachine(windowId, playerInventory, this);
     }
 }

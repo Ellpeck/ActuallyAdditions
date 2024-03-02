@@ -11,11 +11,11 @@
 package de.ellpeck.actuallyadditions.mod.data;
 
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.nbt.StringNBT;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.StringTag;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.player.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,8 +24,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public final class PlayerData {
 
-    public static PlayerSave getDataFromPlayer(PlayerEntity player) {
-        WorldData worldData = WorldData.get((ServerWorld) player.getCommandSenderWorld());
+    public static PlayerSave getDataFromPlayer(Player player) {
+        WorldData worldData = WorldData.get((ServerLevel) player.getCommandSenderWorld());
         ConcurrentHashMap<UUID, PlayerSave> data = worldData.playerSaveData;
         UUID id = player.getUUID();
 
@@ -63,17 +63,17 @@ public final class PlayerData {
             this.id = id;
         }
 
-        public void readFromNBT(CompoundNBT compound, boolean savingToFile) {
+        public void readFromNBT(CompoundTag compound, boolean savingToFile) {
             this.bookGottenAlready = compound.getBoolean("BookGotten");
             this.didBookTutorial = compound.getBoolean("DidTutorial");
 
             this.hasBatWings = compound.getBoolean("HasBatWings");
             this.batWingsFlyTime = compound.getInt("BatWingsFlyTime");
 
-            ListNBT bookmarks = compound.getList("Bookmarks", 8);
+            ListTag bookmarks = compound.getList("Bookmarks", 8);
             this.loadBookmarks(bookmarks);
 
-            ListNBT trials = compound.getList("Trials", 8);
+            ListTag trials = compound.getList("Trials", 8);
             this.loadTrials(trials);
 
             if (!savingToFile) {
@@ -81,7 +81,7 @@ public final class PlayerData {
             }
         }
 
-        public void writeToNBT(CompoundNBT compound, boolean savingToFile) {
+        public void writeToNBT(CompoundTag compound, boolean savingToFile) {
             compound.putBoolean("BookGotten", this.bookGottenAlready);
             compound.putBoolean("DidTutorial", this.didBookTutorial);
 
@@ -96,17 +96,17 @@ public final class PlayerData {
             }
         }
 
-        public ListNBT saveBookmarks() {
-            ListNBT bookmarks = new ListNBT();
+        public ListTag saveBookmarks() {
+            ListTag bookmarks = new ListTag();
             for (IBookletPage bookmark : this.bookmarks) {
-                bookmarks.add(StringNBT.valueOf(bookmark == null
+                bookmarks.add(StringTag.valueOf(bookmark == null
                     ? ""
                     : bookmark.getIdentifier()));
             }
             return bookmarks;
         }
 
-        public void loadBookmarks(ListNBT bookmarks) {
+        public void loadBookmarks(ListTag bookmarks) {
             for (int i = 0; i < bookmarks.size(); i++) {
                 String strg = bookmarks.getString(i);
                 if (!strg.isEmpty()) {
@@ -118,15 +118,15 @@ public final class PlayerData {
             }
         }
 
-        public ListNBT saveTrials() {
-            ListNBT trials = new ListNBT();
+        public ListTag saveTrials() {
+            ListTag trials = new ListTag();
             for (String trial : this.completedTrials) {
-                trials.add(StringNBT.valueOf(trial));
+                trials.add(StringTag.valueOf(trial));
             }
             return trials;
         }
 
-        public void loadTrials(ListNBT trials) {
+        public void loadTrials(ListTag trials) {
             this.completedTrials.clear();
 
             for (int i = 0; i < trials.size(); i++) {

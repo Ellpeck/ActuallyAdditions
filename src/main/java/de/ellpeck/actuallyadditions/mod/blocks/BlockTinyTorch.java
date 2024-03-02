@@ -11,23 +11,19 @@
 package de.ellpeck.actuallyadditions.mod.blocks;
 
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBase;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.util.math.AxisAlignedBB;
-
-//Copied from BlockTorch.
-//I have no idea what all of this means.
-import net.minecraft.block.AbstractBlock.Properties;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.phys.AABB;
 
 public class BlockTinyTorch extends BlockBase {
 
     //Thanks to xdjackiexd for these.
     //Man, I hate numbers.
-    private static final AxisAlignedBB STANDING_AABB = new AxisAlignedBB(0.4375D, 0.0D, 0.4375D, 0.5625D, 0.3125D, 0.5625D);
-    private static final AxisAlignedBB TORCH_NORTH_AABB = new AxisAlignedBB(0.4375D, 0.25D, 0.8125D, 0.5625D, 0.5625D, 1.0D);
-    private static final AxisAlignedBB TORCH_SOUTH_AABB = new AxisAlignedBB(0.4375D, 0.25D, 0.0D, 0.5625D, 0.5625D, 0.1875D);
-    private static final AxisAlignedBB TORCH_WEST_AABB = new AxisAlignedBB(0.8125D, 0.25D, 0.4375D, 1.0D, 0.5625D, 0.5625D);
-    private static final AxisAlignedBB TORCH_EAST_AABB = new AxisAlignedBB(0.0D, 0.25D, 0.4375D, 0.1875D, 0.5625D, 0.5625D);
+    private static final AABB STANDING_AABB = new AABB(0.4375D, 0.0D, 0.4375D, 0.5625D, 0.3125D, 0.5625D);
+    private static final AABB TORCH_NORTH_AABB = new AABB(0.4375D, 0.25D, 0.8125D, 0.5625D, 0.5625D, 1.0D);
+    private static final AABB TORCH_SOUTH_AABB = new AABB(0.4375D, 0.25D, 0.0D, 0.5625D, 0.5625D, 0.1875D);
+    private static final AABB TORCH_WEST_AABB = new AABB(0.8125D, 0.25D, 0.4375D, 1.0D, 0.5625D, 0.5625D);
+    private static final AABB TORCH_EAST_AABB = new AABB(0.0D, 0.25D, 0.4375D, 0.1875D, 0.5625D, 0.5625D);
 
     public BlockTinyTorch() {
         super(Properties.of(Material.DECORATION).sound(SoundType.WOOD).strength(0.0F, 0.8F));

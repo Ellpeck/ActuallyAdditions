@@ -21,7 +21,9 @@
       "conditions": {
         "items": [
           {
-            "item": "actuallyadditions:coal_generator"
+            "items": [
+              "actuallyadditions:coal_generator"
+            ]
           }
         ]
       }

@@ -11,10 +11,10 @@
 package de.ellpeck.actuallyadditions.api.internal;
 
 import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
-import net.minecraft.block.BlockState;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.List;
 
@@ -27,13 +27,13 @@ public interface IMethodHandler {
 
     boolean addEffectToStack(ItemStack stack, CoffeeIngredient ingredient);
 
-    EffectInstance getSameEffectFromStack(ItemStack stack, EffectInstance effect);
+    MobEffectInstance getSameEffectFromStack(ItemStack stack, MobEffectInstance effect);
 
-    void addEffectProperties(ItemStack stack, EffectInstance effect, boolean addDur, boolean addAmp);
+    void addEffectProperties(ItemStack stack, MobEffectInstance effect, boolean addDur, boolean addAmp);
 
-    void addEffectToStack(ItemStack stack, EffectInstance effect);
+    void addEffectToStack(ItemStack stack, MobEffectInstance effect);
 
-    EffectInstance[] getEffectsFromStack(ItemStack stack);
+    MobEffectInstance[] getEffectsFromStack(ItemStack stack);
 
     boolean invokeConversionLens(BlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile);
 

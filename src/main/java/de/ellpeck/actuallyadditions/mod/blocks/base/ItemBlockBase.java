@@ -10,9 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks.base;
 
-import net.minecraft.block.Block;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
 
 public class ItemBlockBase extends BlockItem {
     public ItemBlockBase(Block block, Item.Properties properties) {

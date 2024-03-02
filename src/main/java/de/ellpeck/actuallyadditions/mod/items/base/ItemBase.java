@@ -11,9 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.items.base;
 
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
-import net.minecraft.item.Item;
-
-import net.minecraft.item.Item.Properties;
+import net.minecraft.world.item.Item;
 
 public class ItemBase extends Item {
     public ItemBase(Properties props) {

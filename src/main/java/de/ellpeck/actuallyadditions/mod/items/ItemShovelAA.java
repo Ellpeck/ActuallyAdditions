@@ -12,12 +12,17 @@ package de.ellpeck.actuallyadditions.mod.items;
 
 import com.google.common.collect.Sets;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemToolAA;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.item.*;
-import net.minecraft.tags.ITag;
-import net.minecraft.util.ActionResultType;
+import net.minecraft.tags.Tag;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nonnull;
 import java.util.Collections;
@@ -25,9 +30,9 @@ import java.util.Set;
 
 public class ItemShovelAA extends ItemToolAA {
 
-    private static final Set<Block> EFFECTIVE_ON = Sets.newHashSet(Blocks.CLAY, Blocks.DIRT, Blocks.FARMLAND, Blocks.GRASS, Blocks.GRAVEL, Blocks.MYCELIUM, Blocks.SAND, Blocks.SNOW, Blocks.SNOW_BLOCK, Blocks.SOUL_SAND, Blocks.GRASS_PATH);
+    private static final Set<Block> EFFECTIVE_ON = Sets.newHashSet(Blocks.CLAY, Blocks.DIRT, Blocks.FARMLAND, Blocks.GRASS, Blocks.GRAVEL, Blocks.MYCELIUM, Blocks.SAND, Blocks.SNOW, Blocks.SNOW_BLOCK, Blocks.SOUL_SAND, Blocks.DIRT_PATH);
 
-    public ItemShovelAA(float p_i48512_1_, float p_i48512_2_, IItemTier p_i48512_3_, Set<Block> p_i48512_4_, Properties p_i48512_5_, String name, ItemStack repairItem, ITag<Item> repairTag) {
+    public ItemShovelAA(float p_i48512_1_, float p_i48512_2_, Tier p_i48512_3_, TagKey<Block> p_i48512_4_, Properties p_i48512_5_, String name, ItemStack repairItem, TagKey<Item> repairTag) {
         super(p_i48512_1_, p_i48512_2_, p_i48512_3_, p_i48512_4_, p_i48512_5_, name, repairItem, repairTag);
     }
 
@@ -44,7 +49,7 @@ public class ItemShovelAA extends ItemToolAA {
 
     @Nonnull
     @Override
-    public ActionResultType useOn(ItemUseContext useContext) {
+    public InteractionResult useOn(UseOnContext useContext) {
         return Items.IRON_SHOVEL.useOn(useContext);
     }
 

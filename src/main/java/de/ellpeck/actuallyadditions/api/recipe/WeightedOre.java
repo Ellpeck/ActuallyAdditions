@@ -10,14 +10,21 @@
 
 package de.ellpeck.actuallyadditions.api.recipe;
 
-import net.minecraft.util.WeightedRandom;
+import net.minecraft.util.random.Weight;
+import net.minecraft.util.random.WeightedEntry;
 
-public class WeightedOre extends WeightedRandom.Item {
+public class WeightedOre implements WeightedEntry {
 
     public final String name;
+    public final Weight weight;
 
     public WeightedOre(String name, int weight) {
-        super(weight);
+        this.weight = Weight.of(weight);
         this.name = name;
+    }
+
+    @Override
+    public Weight getWeight() {
+        return this.weight;
     }
 }

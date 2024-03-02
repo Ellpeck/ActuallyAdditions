@@ -10,9 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.items.metalists;
 
-import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.StringRepresentable;
 
-public enum Crystals implements IStringSerializable {
+public enum Crystals implements StringRepresentable {
     REDSTONE("red", 0xFF2F21, 0x9e2b27),
     LAPIS("blue", 0x5171FF, 0x253293),
     DIAMOND("light_blue", 0x35F1FF, 0x6387d2),

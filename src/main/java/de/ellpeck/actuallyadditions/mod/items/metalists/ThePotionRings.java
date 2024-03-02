@@ -10,19 +10,19 @@
 
 package de.ellpeck.actuallyadditions.mod.items.metalists;
 
-import net.minecraft.block.Blocks;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.Rarity;
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.Effects;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.Rarity;
+import net.minecraft.world.level.block.Blocks;
 
 @Deprecated
 public enum ThePotionRings {
 
     SPEED(
         8171462,
-        Effects.MOVEMENT_SPEED,
+        MobEffects.MOVEMENT_SPEED,
         0,
         1,
         10,
@@ -32,7 +32,7 @@ public enum ThePotionRings {
     ),
     HASTE(
         14270531,
-        Effects.DIG_SPEED,
+        MobEffects.DIG_SPEED,
         0,
         1,
         10,
@@ -42,7 +42,7 @@ public enum ThePotionRings {
     ),
     STRENGTH(
         9643043,
-        Effects.DAMAGE_BOOST,
+        MobEffects.DAMAGE_BOOST,
         0,
         1,
         10,
@@ -52,7 +52,7 @@ public enum ThePotionRings {
     ),
     JUMP_BOOST(
         7889559,
-        Effects.JUMP,
+        MobEffects.JUMP,
         0,
         1,
         10,
@@ -62,7 +62,7 @@ public enum ThePotionRings {
     ),
     REGEN(
         13458603,
-        Effects.REGENERATION,
+        MobEffects.REGENERATION,
         0,
         1,
         50,
@@ -72,7 +72,7 @@ public enum ThePotionRings {
     ),
     RESISTANCE(
         10044730,
-        Effects.DAMAGE_RESISTANCE,
+        MobEffects.DAMAGE_RESISTANCE,
         0,
         1,
         10,
@@ -82,7 +82,7 @@ public enum ThePotionRings {
     ),
     FIRE_RESISTANCE(
         14981690,
-        Effects.FIRE_RESISTANCE,
+        MobEffects.FIRE_RESISTANCE,
         0,
         0,
         10,
@@ -92,7 +92,7 @@ public enum ThePotionRings {
     ),
     WATER_BREATHING(
         3035801,
-        Effects.WATER_BREATHING,
+        MobEffects.WATER_BREATHING,
         0,
         0,
         10,
@@ -102,7 +102,7 @@ public enum ThePotionRings {
     ),
     INVISIBILITY(
         8356754,
-        Effects.INVISIBILITY,
+        MobEffects.INVISIBILITY,
         0,
         0,
         10,
@@ -112,7 +112,7 @@ public enum ThePotionRings {
     ),
     NIGHT_VISION(
         2039713,
-        Effects.NIGHT_VISION,
+        MobEffects.NIGHT_VISION,
         0,
         0,
         300,
@@ -124,14 +124,14 @@ public enum ThePotionRings {
     public final String name;
     public final int color;
     public final Rarity rarity;
-    public final Effect effect;
+    public final MobEffect effect;
     public final int normalAmplifier;
     public final int advancedAmplifier;
     public final int activeTime;
     public final boolean needsWaitBeforeActivating;
     public final ItemStack craftingItem;
 
-    ThePotionRings(int color, Effect effect, int normalAmplifier, int advancedAmplifier, int activeTime, boolean needsWaitBeforeActivating, Rarity rarity, ItemStack craftingItem) {
+    ThePotionRings(int color, MobEffect effect, int normalAmplifier, int advancedAmplifier, int activeTime, boolean needsWaitBeforeActivating, Rarity rarity, ItemStack craftingItem) {
         this.name = effect.getDisplayName().getString();
         this.color = color;
         this.rarity = rarity;

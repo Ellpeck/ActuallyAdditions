@@ -14,18 +14,18 @@ import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.block.BlockState;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentData;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.item.EnchantedBookItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.EnchantedBookItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.EnchantmentInstance;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 
 import java.util.List;
 import java.util.Map;
@@ -37,7 +37,7 @@ public class LensDisenchanting extends Lens {
     @Override
     public boolean invoke(BlockState hitState, BlockPos hitBlock, IAtomicReconstructor tile) {
         if (tile.getEnergy() >= ENERGY_USE) {
-            List<ItemEntity> items = tile.getWorldObject().getEntitiesOfClass(ItemEntity.class, new AxisAlignedBB(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), hitBlock.getX() + 1, hitBlock.getY() + 1, hitBlock.getZ() + 1));
+            List<ItemEntity> items = tile.getWorldObject().getEntitiesOfClass(ItemEntity.class, new AABB(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), hitBlock.getX() + 1, hitBlock.getY() + 1, hitBlock.getZ() + 1));
             if (items != null && !items.isEmpty()) {
                 ItemEntity book = null;
                 ItemEntity toDisenchant = null;
@@ -84,12 +84,12 @@ public class LensDisenchanting extends Lens {
                         }
 
                         ItemUtil.removeEnchantment(newDisenchantStack, enchant);
-                        EnchantedBookItem.addEnchantment(newBookStack, new EnchantmentData(enchant, level));
+                        EnchantedBookItem.addEnchantment(newBookStack, new EnchantmentInstance(enchant, level));
 
                         ItemEntity disenchanted = new ItemEntity(toDisenchant.getCommandSenderWorld(), toDisenchant.getX(), toDisenchant.getY(), toDisenchant.getZ(), newDisenchantStack);
                         ItemEntity newBook = new ItemEntity(book.getCommandSenderWorld(), book.getX(), book.getY(), book.getZ(), newBookStack);
-                        toDisenchant.remove();
-                        book.remove();
+                        toDisenchant.discard();
+                        book.discard();
                         tile.getWorldObject().addFreshEntity(newBook);
                         tile.getWorldObject().addFreshEntity(disenchanted);
 
