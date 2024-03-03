@@ -13,11 +13,13 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.registries.VanillaRegistries;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraftforge.common.crafting.CraftingHelper;
+import net.minecraftforge.common.data.DatapackBuiltinEntriesProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 @Mod.EventBusSubscriber(modid = ActuallyAdditions.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -56,6 +58,9 @@ public class ActuallyAdditionsData {
         generator.addProvider(true, new MiningLensGenerator(packOutput));
 
         generator.addProvider(true, new SoundsGenerator(packOutput, helper));
+
+        generator.addProvider(event.includeServer(), new DatapackBuiltinEntriesProvider(
+                packOutput, lookupProvider, Set.of(ActuallyAdditions.MODID)));
     }
 
     private static HolderLookup.Provider getProvider() {
