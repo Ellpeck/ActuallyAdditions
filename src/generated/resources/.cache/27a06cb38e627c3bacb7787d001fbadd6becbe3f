@@ -1,4 +1,4 @@
-// 1.20.1	2024-03-03T00:40:33.018052	Block States: actuallyadditions
+// 1.20.1	2024-03-03T20:34:33.9679563	Block States: actuallyadditions
 23a6aa86c3f14e6a61fc8b17b65063f1995c8592 assets/actuallyadditions/blockstates/atomic_reconstructor.json
 88f479927d1abdf16e24a0950ccffa86b5af8b3f assets/actuallyadditions/blockstates/battery_box.json
 5c96fc287e63f5bdd31864bdab698ce34817fd9d assets/actuallyadditions/blockstates/black_quartz_block.json
@@ -113,7 +113,7 @@ b3d5e4a006bd2a2126ed81803a4cd7dc976542ae assets/actuallyadditions/blockstates/sh
 c34fa31f1f9888dac79b210d8e78e818c6ce7d8c assets/actuallyadditions/blockstates/smooth_black_quartz_slab.json
 c2f07f07d6dc0c8134e92e81f41eef9f9c2a1f18 assets/actuallyadditions/blockstates/smooth_black_quartz_stair.json
 c04bbda2945960887da98121afe3b170abe3006f assets/actuallyadditions/blockstates/smooth_black_quartz_wall.json
-c355c87874ca6b88b8bda48903cc1989808352da assets/actuallyadditions/blockstates/tiny_torch.json
+c38128c6f6b0e4cc38f74e923736a8536d0b2456 assets/actuallyadditions/blockstates/tiny_torch.json
 93868ba257844c7b666ce600799fcc0c89ca8dd9 assets/actuallyadditions/blockstates/vertical_digger.json
 08797aa1d132142e78947b38bb1ce0e9e6260450 assets/actuallyadditions/blockstates/void_crystal_block.json
 6072c1955309c670d75f3bdf9076ca7fafe7b5fd assets/actuallyadditions/blockstates/void_crystal_cluster.json

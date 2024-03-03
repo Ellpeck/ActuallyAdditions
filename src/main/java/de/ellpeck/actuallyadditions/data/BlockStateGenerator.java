@@ -2,6 +2,8 @@ package de.ellpeck.actuallyadditions.data;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
+import de.ellpeck.actuallyadditions.mod.blocks.BlockTinyTorch;
+import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
@@ -58,7 +60,7 @@ public class BlockStateGenerator extends BlockStateProvider {
         standardBlock(ActuallyBlocks.BATTERY_BOX);
         standardBlock(ActuallyBlocks.ITEM_INTERFACE_HOPPING);
         standardBlock(ActuallyBlocks.EMPOWERER);
-        standardBlock(ActuallyBlocks.TINY_TORCH);
+        tinyTorchBlock(ActuallyBlocks.TINY_TORCH);
         standardBlock(ActuallyBlocks.SHOCK_SUPPRESSOR);
         standardBlock(ActuallyBlocks.DISPLAY_STAND);
         standardBlock(ActuallyBlocks.PLAYER_INTERFACE);
@@ -236,8 +238,8 @@ public class BlockStateGenerator extends BlockStateProvider {
 
     private void fullyDirectionalBlock(Supplier<Block> block) {
         ResourceLocation name =  ForgeRegistries.BLOCKS.getKey(block.get());
-        ModelFile model = new ModelFile.UncheckedModelFile(modLoc("block/" + name.toString().split(":")[1]));
-        ModelFile verModel = new ModelFile.UncheckedModelFile(modLoc("block/" + name.toString().split(":")[1] + "_ver"));
+        ModelFile model = new ModelFile.UncheckedModelFile(modLoc("block/" + name.getPath()));
+        ModelFile verModel = new ModelFile.UncheckedModelFile(modLoc("block/" + name.getPath() + "_ver"));
 
         assert name != null;
         directionalBlock(block.get(), model);
@@ -245,9 +247,29 @@ public class BlockStateGenerator extends BlockStateProvider {
 
     private void horizontallyDirectionalBlock(Supplier<Block> block) {
         ResourceLocation name =  ForgeRegistries.BLOCKS.getKey(block.get());
-        ModelFile model = new ModelFile.UncheckedModelFile(modLoc("block/" + name.toString().split(":")[1]));
+        ModelFile model = new ModelFile.UncheckedModelFile(modLoc("block/" + name.getPath()));
 
         assert name != null;
         horizontalBlock(block.get(), model);
+    }
+
+    private void tinyTorchBlock(Supplier<Block> block) {
+        assert block.get() instanceof BlockTinyTorch;
+        ResourceLocation name =  ForgeRegistries.BLOCKS.getKey(block.get());
+        ModelFile model = new ModelFile.UncheckedModelFile(modLoc("block/" + name.getPath()));
+        ModelFile wallModel = new ModelFile.UncheckedModelFile(modLoc("block/" + name.getPath() + "_wall"));
+
+        assert name != null;
+        getVariantBuilder(block.get())
+                .partialState().with(BlockTinyTorch.FACING, Direction.UP)
+                .modelForState().modelFile(model).addModel()
+                .partialState().with(BlockTinyTorch.FACING, Direction.EAST)
+                .modelForState().modelFile(wallModel).addModel()
+                .partialState().with(BlockTinyTorch.FACING, Direction.NORTH)
+                .modelForState().modelFile(wallModel).rotationY(270).addModel()
+                .partialState().with(BlockTinyTorch.FACING, Direction.SOUTH)
+                .modelForState().modelFile(wallModel).rotationY(90).addModel()
+                .partialState().with(BlockTinyTorch.FACING, Direction.WEST)
+                .modelForState().modelFile(wallModel).rotationY(180).addModel();
     }
 }

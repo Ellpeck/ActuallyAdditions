@@ -1,4 +1,4 @@
-// 1.20.1	2024-03-03T00:40:33.0195512	Item Models: actuallyadditions
+// 1.20.1	2024-03-03T20:47:45.1476512	Item Models: actuallyadditions
 1966de13838437bc6035f3649976a44797cf5144 assets/actuallyadditions/models/item/advanced_coil.json
 24594fc68e66011dc2d7b79b92c94b387e710318 assets/actuallyadditions/models/item/advanced_leaf_blower.json
 ba2d814e269cdef72e1045f200b3c20ed6961517 assets/actuallyadditions/models/item/atomic_reconstructor.json
@@ -211,7 +211,7 @@ f4f238229a72372ad2d6fd862a5f2b7789196f01 assets/actuallyadditions/models/item/st
 0f91c0cf92a346bccd1142ac7b6ab37bee7822e5 assets/actuallyadditions/models/item/teleport_staff.json
 86863a1c74a9bebd1ea7524e0ad3435f4e83cafb assets/actuallyadditions/models/item/tiny_charcoal.json
 3b23a8a33dbe5fd8f965a8d76dbd181e7a52ca78 assets/actuallyadditions/models/item/tiny_coal.json
-7d7f92fd44743414cc193cec9880c05530c597e0 assets/actuallyadditions/models/item/tiny_torch.json
+cf9fefdbd60278e5c0eb3858789c1305037f517d assets/actuallyadditions/models/item/tiny_torch.json
 37c33ee537ada74f1ba2bfe2b53ae42677be1dc9 assets/actuallyadditions/models/item/travelers_sack.json
 3ac4b97ae2690d645087d6872d39d7f35070b947 assets/actuallyadditions/models/item/triple_battery.json
 a2d656d1974443483eb69de4d8a738a6d02ea32a assets/actuallyadditions/models/item/vertical_digger.json

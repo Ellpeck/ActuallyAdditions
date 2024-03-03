@@ -1,6 +1,7 @@
 package de.ellpeck.actuallyadditions.mod.blocks;
 
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -143,6 +144,14 @@ public class VoxelShapes {
         static final VoxelShape SHAPE_E = Stream.of(Block.box(0, 1, 1, 1, 15, 15), Block.box(1, 3, 3, 5, 13, 13), Block.box(4, 7, 7, 10, 9, 9)).reduce((v1, v2) -> Shapes.join(v1, v2, BooleanOp.OR)).get();
         static final VoxelShape SHAPE_S = Stream.of(Block.box(1, 1, 0, 15, 15, 1), Block.box(3, 3, 1, 13, 13, 5), Block.box(7, 7, 4, 9, 9, 10)).reduce((v1, v2) -> Shapes.join(v1, v2, BooleanOp.OR)).get();
         static final VoxelShape SHAPE_W = Stream.of(Block.box(15, 1, 1, 16, 15, 15), Block.box(11, 3, 3, 15, 13, 13), Block.box(6, 7, 7, 12, 9, 9)).reduce((v1, v2) -> Shapes.join(v1, v2, BooleanOp.OR)).get();
+    }
+
+    static final class TinyTorchShapes {
+        static final VoxelShape STANDING_AABB = Block.box(7, 0, 7, 9, 5, 9);
+        static final VoxelShape TORCH_NORTH_AABB = Block.box(7, 4, 13, 9, 9, 16);
+        static final VoxelShape TORCH_SOUTH_AABB = Block.box(7, 4, 0, 9, 9, 3);
+        static final VoxelShape TORCH_WEST_AABB = Block.box(13, 4, 7, 16, 9, 9);
+        static final VoxelShape TORCH_EAST_AABB = Block.box(0, 4, 7, 3, 9, 9);
     }
 
     public static class ShapeBuilder {

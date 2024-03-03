@@ -1,7 +1,22 @@
 {
   "variants": {
-    "": {
+    "facing=east": {
+      "model": "actuallyadditions:block/tiny_torch_wall"
+    },
+    "facing=north": {
+      "model": "actuallyadditions:block/tiny_torch_wall",
+      "y": 270
+    },
+    "facing=south": {
+      "model": "actuallyadditions:block/tiny_torch_wall",
+      "y": 90
+    },
+    "facing=up": {
       "model": "actuallyadditions:block/tiny_torch"
+    },
+    "facing=west": {
+      "model": "actuallyadditions:block/tiny_torch_wall",
+      "y": 180
     }
   }
 }

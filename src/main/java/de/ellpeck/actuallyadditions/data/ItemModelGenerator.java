@@ -49,7 +49,8 @@ public class ItemModelGenerator extends ItemModelProvider {
             ActuallyBlocks.CANOLA.get(),
             ActuallyBlocks.RICE.get(),
             ActuallyBlocks.FLAX.get(),
-            ActuallyBlocks.COFFEE.get()
+            ActuallyBlocks.COFFEE.get(),
+            ActuallyBlocks.TINY_TORCH.get()
         );
 
         // Blocks
@@ -69,6 +70,9 @@ public class ItemModelGenerator extends ItemModelProvider {
                 .texture("layer0", modLoc("item/" + wormpath))
                 .override().predicate(new ResourceLocation(ActuallyAdditions.MODID, "snail"), 1F)
                 .model(getBuilder("snail").parent(getExistingFile(mcLoc("item/handheld"))).texture("layer0", "item/snail")).end();*/
+
+        String torchPath = ForgeRegistries.ITEMS.getKey(ActuallyBlocks.TINY_TORCH.getItem()).getPath();
+        singleTexture(torchPath, mcLoc("item/generated"), "layer0", modLoc("block/" + torchPath));
     }
 
     private void generateBucket(FluidAA fluidSupplier) {
