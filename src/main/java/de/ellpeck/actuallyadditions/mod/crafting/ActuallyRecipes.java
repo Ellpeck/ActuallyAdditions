@@ -9,9 +9,11 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 public class ActuallyRecipes {
+    public static final DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(ForgeRegistries.RECIPE_TYPES, ActuallyAdditions.MODID);
     public static final DeferredRegister<RecipeSerializer<?>> SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, ActuallyAdditions.MODID);
 
     public static void init(IEventBus bus) {
+        RECIPE_TYPES.register(bus);
         SERIALIZERS.register(bus);
     }
 
@@ -29,14 +31,14 @@ public class ActuallyRecipes {
 
 
     public static class Types {
-        public static final RecipeType<LaserRecipe> LASER = RecipeType.register(ActuallyAdditions.MODID + ":laser");
-        public static final RecipeType<EmpowererRecipe> EMPOWERING = RecipeType.register(ActuallyAdditions.MODID + ":empower");
-        public static final RecipeType<CrushingRecipe> CRUSHING = RecipeType.register(ActuallyAdditions.MODID + ":crushing");
-        public static final RecipeType<SolidFuelRecipe> SOLID_FUEL = RecipeType.register(ActuallyAdditions.MODID + ":solid_fuel");
-        public static final RecipeType<LiquidFuelRecipe> LIQUID_FUEL = RecipeType.register(ActuallyAdditions.MODID + ":liquid_fuel");
-        public static final RecipeType<PressingRecipe> PRESSING = RecipeType.register(ActuallyAdditions.MODID + ":pressing");
-        public static final RecipeType<FermentingRecipe> FERMENTING = RecipeType.register(ActuallyAdditions.MODID + ":fermenting");
-        public static final RecipeType<ColorChangeRecipe> COLOR_CHANGE = RecipeType.register(ActuallyAdditions.MODID + ":color_change");
-        public static final RecipeType<MiningLensRecipe> MINING_LENS = RecipeType.register(ActuallyAdditions.MODID + ":mining_lens");
+        public static final RegistryObject<RecipeType<LaserRecipe>> LASER = RECIPE_TYPES.register("laser", () -> new RecipeType<>() {});
+        public static final RegistryObject<RecipeType<EmpowererRecipe>> EMPOWERING = RECIPE_TYPES.register("empower", () -> new RecipeType<>() {});
+        public static final RegistryObject<RecipeType<CrushingRecipe>> CRUSHING = RECIPE_TYPES.register("crushing", () -> new RecipeType<>() {});
+        public static final RegistryObject<RecipeType<SolidFuelRecipe>> SOLID_FUEL = RECIPE_TYPES.register("solid_fuel", () -> new RecipeType<>() {});
+        public static final RegistryObject<RecipeType<LiquidFuelRecipe>> LIQUID_FUEL = RECIPE_TYPES.register("liquid_fuel", () -> new RecipeType<>() {});
+        public static final RegistryObject<RecipeType<PressingRecipe>> PRESSING = RECIPE_TYPES.register("pressing", () -> new RecipeType<>() {});
+        public static final RegistryObject<RecipeType<FermentingRecipe>> FERMENTING = RECIPE_TYPES.register("fermenting", () -> new RecipeType<>() {});
+        public static final RegistryObject<RecipeType<ColorChangeRecipe>> COLOR_CHANGE = RECIPE_TYPES.register("color_change", () -> new RecipeType<>() {});
+        public static final RegistryObject<RecipeType<MiningLensRecipe>> MINING_LENS = RECIPE_TYPES.register("mining_lens", () -> new RecipeType<>() {});
     }
 }

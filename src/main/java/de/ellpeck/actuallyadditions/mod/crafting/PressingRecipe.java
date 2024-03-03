@@ -74,7 +74,7 @@ public class PressingRecipe implements Recipe<Container> {
 
     @Override
     public RecipeType<?> getType() {
-        return ActuallyRecipes.Types.PRESSING;
+        return ActuallyRecipes.Types.PRESSING.get();
     }
 
     public static class Serializer implements RecipeSerializer<PressingRecipe> {

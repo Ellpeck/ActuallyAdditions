@@ -103,7 +103,7 @@ public class LiquidFuelRecipe implements Recipe<Container> {
     @Nonnull
     @Override
     public RecipeType<?> getType() {
-        return ActuallyRecipes.Types.LIQUID_FUEL;
+        return ActuallyRecipes.Types.LIQUID_FUEL.get();
     }
 
     public static class Serializer implements RecipeSerializer<LiquidFuelRecipe> {

@@ -117,7 +117,7 @@ public class FermentingRecipe implements Recipe<Container> {
     @Nonnull
     @Override
     public RecipeType<?> getType() {
-        return ActuallyRecipes.Types.FERMENTING;
+        return ActuallyRecipes.Types.FERMENTING.get();
     }
 
     public static class Serializer implements RecipeSerializer<FermentingRecipe> {

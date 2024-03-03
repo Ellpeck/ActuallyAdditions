@@ -45,7 +45,7 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase {
     }
 
     public static boolean isPossibleInput(ItemStack stack) {
-        for (EmpowererRecipe r : ServerLifecycleHooks.getCurrentServer().getRecipeManager().getAllRecipesFor(ActuallyRecipes.Types.EMPOWERING)) {
+        for (EmpowererRecipe r : ServerLifecycleHooks.getCurrentServer().getRecipeManager().getAllRecipesFor(ActuallyRecipes.Types.EMPOWERING.get())) {
             if (r.getInput().test(stack)) {
                 return true;
             }
@@ -55,7 +55,7 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase {
 
     @Nullable
     public static EmpowererRecipe findMatchingRecipe(ItemStack base, ItemStack stand1, ItemStack stand2, ItemStack stand3, ItemStack stand4) {
-        for (EmpowererRecipe r : ServerLifecycleHooks.getCurrentServer().getRecipeManager().getAllRecipesFor(ActuallyRecipes.Types.EMPOWERING)) {
+        for (EmpowererRecipe r : ServerLifecycleHooks.getCurrentServer().getRecipeManager().getAllRecipesFor(ActuallyRecipes.Types.EMPOWERING.get())) {
             if (r.matches(base, stand1, stand2, stand3, stand4)) {
                 return r;
             }

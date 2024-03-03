@@ -90,7 +90,7 @@ public class LaserRecipe implements Recipe<Container> {
 
     @Override
     public RecipeType<?> getType() {
-        return ActuallyRecipes.Types.LASER;
+        return ActuallyRecipes.Types.LASER.get();
     }
 
     public static Optional<LaserRecipe> getRecipeForStack(ItemStack stack) {

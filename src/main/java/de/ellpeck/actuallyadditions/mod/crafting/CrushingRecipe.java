@@ -94,7 +94,7 @@ public class CrushingRecipe implements Recipe<Container> {
     @Override
     @Nonnull
     public RecipeType<?> getType() {
-        return ActuallyRecipes.Types.CRUSHING;
+        return ActuallyRecipes.Types.CRUSHING.get();
     }
 
     public ItemStack getOutputOne() {

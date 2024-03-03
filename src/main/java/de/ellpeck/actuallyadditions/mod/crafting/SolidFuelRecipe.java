@@ -77,7 +77,7 @@ public class SolidFuelRecipe implements Recipe<SingleItem> {
 
     @Override
     public RecipeType<?> getType() {
-        return ActuallyRecipes.Types.SOLID_FUEL;
+        return ActuallyRecipes.Types.SOLID_FUEL.get();
     }
 
     public static class Serializer implements RecipeSerializer<SolidFuelRecipe> {

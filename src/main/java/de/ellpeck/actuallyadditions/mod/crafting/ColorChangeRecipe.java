@@ -83,7 +83,7 @@ public class ColorChangeRecipe implements Recipe<Container> {
 
     @Override
     public RecipeType<?> getType() {
-        return ActuallyRecipes.Types.COLOR_CHANGE;
+        return ActuallyRecipes.Types.COLOR_CHANGE.get();
     }
 
     public static class Serializer implements RecipeSerializer<ColorChangeRecipe> {

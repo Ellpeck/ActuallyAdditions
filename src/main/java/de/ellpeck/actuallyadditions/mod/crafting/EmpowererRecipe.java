@@ -117,7 +117,7 @@ public class EmpowererRecipe implements Recipe<Container> {
     @Override
     @Nonnull
     public RecipeType<?> getType() {
-        return ActuallyRecipes.Types.EMPOWERING;
+        return ActuallyRecipes.Types.EMPOWERING.get();
     }
 
     public Ingredient getInput() {

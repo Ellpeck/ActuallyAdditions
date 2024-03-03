@@ -89,7 +89,7 @@ public class MiningLensRecipe implements Recipe<Container>, WeightedEntry {
 
     @Override
     public RecipeType<?> getType() {
-        return ActuallyRecipes.Types.MINING_LENS;
+        return ActuallyRecipes.Types.MINING_LENS.get();
     }
 
     public static class Serializer implements RecipeSerializer<MiningLensRecipe> {
