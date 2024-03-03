@@ -33,8 +33,6 @@ public class ActuallyAdditionsData {
         CompletableFuture<HolderLookup.Provider> lookupProvider = CompletableFuture.supplyAsync(ActuallyAdditionsData::getProvider);
         ExistingFileHelper helper = event.getExistingFileHelper();
 
-        //            generator.addProvider(new GeneratorBlockStates(generator, helper));
-        //            generator.addProvider(new GeneratorItemModels(generator, helper));
         //            generator.addProvider(new GeneratorLanguage(generator));
         BlockTagsGenerator generatorBlockTags = new BlockTagsGenerator(packOutput, lookupProvider, helper);
 
