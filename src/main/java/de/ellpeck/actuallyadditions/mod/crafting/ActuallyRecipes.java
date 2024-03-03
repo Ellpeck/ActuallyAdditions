@@ -9,12 +9,11 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 public class ActuallyRecipes {
-    public static final DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(ForgeRegistries.RECIPE_TYPES, ActuallyAdditions.MODID);
     public static final DeferredRegister<RecipeSerializer<?>> SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, ActuallyAdditions.MODID);
 
     public static void init(IEventBus bus) {
-        RECIPE_TYPES.register(bus);
         SERIALIZERS.register(bus);
+        Types.RECIPE_TYPES.register(bus);
     }
 
     public static final RegistryObject<RecipeSerializer<?>> KEEP_DATA_SHAPED_RECIPE = SERIALIZERS.register(RecipeKeepDataShaped.NAME, RecipeKeepDataShaped.Serializer::new);
@@ -31,6 +30,8 @@ public class ActuallyRecipes {
 
 
     public static class Types {
+        public static final DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(ForgeRegistries.RECIPE_TYPES, ActuallyAdditions.MODID);
+        
         public static final RegistryObject<RecipeType<LaserRecipe>> LASER = RECIPE_TYPES.register("laser", () -> new RecipeType<>() {});
         public static final RegistryObject<RecipeType<EmpowererRecipe>> EMPOWERING = RECIPE_TYPES.register("empower", () -> new RecipeType<>() {});
         public static final RegistryObject<RecipeType<CrushingRecipe>> CRUSHING = RECIPE_TYPES.register("crushing", () -> new RecipeType<>() {});
