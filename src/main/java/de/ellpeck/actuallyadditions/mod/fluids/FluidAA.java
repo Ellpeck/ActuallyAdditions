@@ -56,8 +56,8 @@ public class FluidAA implements Supplier<Fluid> {
 
     public FluidAA(String fluidName, String textureName) {
         this.name = fluidName;
-        this.stillTexture = new ResourceLocation(ActuallyAdditions.MODID,textureName + "_still");
-        this.flowingTexture = new ResourceLocation(ActuallyAdditions.MODID,textureName + "_flowing");
+        this.stillTexture = new ResourceLocation(ActuallyAdditions.MODID, "block/" + textureName + "_still");
+        this.flowingTexture = new ResourceLocation(ActuallyAdditions.MODID, "block/" + textureName + "_flowing");
         this.fluidType = InitFluids.FLUID_TYPES.register(name, () -> new FluidType(createTypeProperties()) {
             @Override
             public void initializeClient(Consumer<IClientFluidTypeExtensions> consumer) {
