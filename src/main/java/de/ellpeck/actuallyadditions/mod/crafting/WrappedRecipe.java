@@ -1,27 +1,28 @@
 package de.ellpeck.actuallyadditions.mod.crafting;
 
 import com.google.gson.JsonObject;
-import net.minecraft.data.IFinishedRecipe;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 import java.util.function.Consumer;
 
-public class WrappedRecipe implements IFinishedRecipe {
-    IFinishedRecipe inner;
-    IRecipeSerializer<?> serializerOverride;
+public class WrappedRecipe implements FinishedRecipe {
+    FinishedRecipe inner;
+    RecipeSerializer<?> serializerOverride;
 
-    public WrappedRecipe(IFinishedRecipe innerIn) {
+    public WrappedRecipe(FinishedRecipe innerIn) {
         inner = innerIn;
     }
 
-    public WrappedRecipe(IFinishedRecipe innerIn, IRecipeSerializer<?> serializerOverrideIn) {
+    public WrappedRecipe(FinishedRecipe innerIn, RecipeSerializer<?> serializerOverrideIn) {
         inner = innerIn;
         serializerOverride = serializerOverrideIn;
     }
 
-    public static Consumer<IFinishedRecipe> Inject(Consumer<IFinishedRecipe> consumer, IRecipeSerializer<?> serializer) {
+    public static Consumer<FinishedRecipe> Inject(Consumer<FinishedRecipe> consumer, RecipeSerializer<?> serializer) {
         return iFinishedRecipe -> consumer.accept(new WrappedRecipe(iFinishedRecipe, serializer));
     }
 
@@ -35,9 +36,9 @@ public class WrappedRecipe implements IFinishedRecipe {
         JsonObject jsonObject = new JsonObject();
 
         if (serializerOverride != null)
-            jsonObject.addProperty("type", serializerOverride.getRegistryName().toString());
+            jsonObject.addProperty("type", ForgeRegistries.RECIPE_SERIALIZERS.getKey(serializerOverride).toString());
         else
-            jsonObject.addProperty("type", inner.getType().getRegistryName().toString());
+            jsonObject.addProperty("type", ForgeRegistries.RECIPE_SERIALIZERS.getKey(inner.getType()).toString());
         serializeRecipeData(jsonObject);
         return jsonObject;
     }
@@ -48,7 +49,7 @@ public class WrappedRecipe implements IFinishedRecipe {
     }
 
     @Override
-    public IRecipeSerializer<?> getType () {
+    public RecipeSerializer<?> getType () {
         return serializerOverride != null? serializerOverride:inner.getType();
     }
 

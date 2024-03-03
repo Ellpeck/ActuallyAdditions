@@ -1,39 +1,46 @@
 package de.ellpeck.actuallyadditions.mod.items;
 
-import com.google.common.collect.ImmutableSet;
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.api.ActuallyTags;
 import de.ellpeck.actuallyadditions.mod.items.base.IActuallyItem;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.item.*;
-import net.minecraft.util.ActionResultType;
-import net.minecraftforge.common.ToolType;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.item.DiggerItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraftforge.common.ToolAction;
+import net.minecraftforge.common.ToolActions;
 
-public class AllInOneTool extends ToolItem implements IActuallyItem {
-    private final IItemTier tier;
+public class AllInOneTool extends DiggerItem implements IActuallyItem {
+    private final Tier tier;
 
-    public AllInOneTool(IItemTier tier) {
+    public AllInOneTool(Tier tier) {
         super(
             4.0f,
             -2f,
             tier,
-            ImmutableSet.of(),
+                ActuallyTags.Blocks.MINEABLE_WITH_AIO,
             new Properties()
-                .addToolType(ToolType.AXE, tier.getLevel())
-                .addToolType(ToolType.HOE, tier.getLevel())
-                .addToolType(ToolType.SHOVEL, tier.getLevel())
-                .addToolType(ToolType.PICKAXE, tier.getLevel())
                 .durability(tier.getUses() * 4)
-                .tab(ActuallyAdditions.GROUP)
+                
         );
 
         this.tier = tier;
     }
 
     @Override
-    public ActionResultType useOn(ItemUseContext context) {
+    public boolean canPerformAction(ItemStack stack, ToolAction toolAction) {
+        if (toolAction == ToolActions.AXE_DIG || toolAction == ToolActions.HOE_DIG || toolAction == ToolActions.PICKAXE_DIG || toolAction == ToolActions.SHOVEL_DIG)
+            return true;
+        return super.canPerformAction(stack, toolAction);
+    }
+
+    @Override
+    public InteractionResult useOn(UseOnContext context) {
         // How, no idea, possible, most likely :cry:
         if (context.getPlayer() == null) {
-            return ActionResultType.FAIL;
+            return InteractionResult.FAIL;
         }
 
         // Player not sneaking? Act as a Hoe to the block, else, Act as a shovel

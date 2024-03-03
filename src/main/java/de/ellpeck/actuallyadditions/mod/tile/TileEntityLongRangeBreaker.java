@@ -15,27 +15,28 @@ import de.ellpeck.actuallyadditions.mod.inventory.ContainerDirectionalBreaker;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class TileEntityLongRangeBreaker extends TileEntityInventoryBase implements INamedContainerProvider {
+public class TileEntityLongRangeBreaker extends TileEntityInventoryBase implements MenuProvider {
 
     public static final int RANGE = 8;
     public static final int ENERGY_USE = 5;
@@ -44,12 +45,12 @@ public class TileEntityLongRangeBreaker extends TileEntityInventoryBase implemen
     private int lastEnergy;
     private int currentTime;
 
-    public TileEntityLongRangeBreaker() {
-        super(ActuallyBlocks.LONG_RANGE_BREAKER.getTileEntityType(), 9);
+    public TileEntityLongRangeBreaker(BlockPos pos, BlockState state) {
+        super(ActuallyBlocks.LONG_RANGE_BREAKER.getTileEntityType(), pos, state, 9);
     }
 
     @Override
-    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
         this.storage.writeToNBT(compound);
         if (type != NBTType.SAVE_BLOCK) {
@@ -58,7 +59,7 @@ public class TileEntityLongRangeBreaker extends TileEntityInventoryBase implemen
     }
 
     @Override
-    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void readSyncableNBT(CompoundTag compound, NBTType type) {
         super.readSyncableNBT(compound, type);
         this.storage.readFromNBT(compound);
         if (type != NBTType.SAVE_BLOCK) {
@@ -66,23 +67,29 @@ public class TileEntityLongRangeBreaker extends TileEntityInventoryBase implemen
         }
     }
 
-    @Override
-    public void updateEntity() {
-        super.updateEntity();
-        if (!this.level.isClientSide) {
-            if (!this.isRedstonePowered && !this.isPulseMode) {
-                if (this.currentTime > 0) {
-                    this.currentTime--;
-                    if (this.currentTime <= 0) {
-                        this.doWork();
+    public static <T extends BlockEntity> void clientTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityLongRangeBreaker tile) {
+            tile.clientTick();
+        }
+    }
+
+    public static <T extends BlockEntity> void serverTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityLongRangeBreaker tile) {
+            tile.serverTick();
+
+            if (!tile.isRedstonePowered && !tile.isPulseMode) {
+                if (tile.currentTime > 0) {
+                    tile.currentTime--;
+                    if (tile.currentTime <= 0) {
+                        tile.doWork();
                     }
                 } else {
-                    this.currentTime = 15;
+                    tile.currentTime = 15;
                 }
             }
 
-            if (this.storage.getEnergyStored() != this.lastEnergy && this.sendUpdateWithInterval()) {
-                this.lastEnergy = this.storage.getEnergyStored();
+            if (tile.storage.getEnergyStored() != tile.lastEnergy && tile.sendUpdateWithInterval()) {
+                tile.lastEnergy = tile.storage.getEnergyStored();
             }
         }
     }
@@ -97,7 +104,7 @@ public class TileEntityLongRangeBreaker extends TileEntityInventoryBase implemen
                 BlockState breakState = this.level.getBlockState(coordsBlock);
                 Block blockToBreak = breakState.getBlock();
                 if (blockToBreak != null && !this.level.isEmptyBlock(coordsBlock) && this.level.getBlockState(coordsBlock).getDestroySpeed(this.level, coordsBlock) > -1.0F) {
-                    List<ItemStack> drops = Block.getDrops(breakState, (ServerWorld) this.level, coordsBlock, this.level.getBlockEntity(coordsBlock));
+                    List<ItemStack> drops = Block.getDrops(breakState, (ServerLevel) this.level, coordsBlock, this.level.getBlockEntity(coordsBlock));
                     float chance = WorldUtil.fireFakeHarvestEventsForDropChance(this, drops, this.level, coordsBlock);
 
                     if (chance > 0 && this.level.random.nextFloat() <= chance) {
@@ -139,13 +146,13 @@ public class TileEntityLongRangeBreaker extends TileEntityInventoryBase implemen
     }
 
     @Override
-    public ITextComponent getDisplayName() {
-        return StringTextComponent.EMPTY;
+    public Component getDisplayName() {
+        return Component.empty();
     }
 
     @Nullable
     @Override
-    public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity playerEntity) {
+    public AbstractContainerMenu createMenu(int windowId, Inventory playerInventory, Player playerEntity) {
         return new ContainerDirectionalBreaker(windowId, playerInventory, this);
     }
 }

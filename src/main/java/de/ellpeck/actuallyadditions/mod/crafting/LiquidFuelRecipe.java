@@ -2,26 +2,25 @@ package de.ellpeck.actuallyadditions.mod.crafting;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import net.minecraft.data.IFinishedRecipe;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class LiquidFuelRecipe implements IRecipe<IInventory> {
+public class LiquidFuelRecipe implements Recipe<Container> {
     public static String NAME = "liquid_fuel";
     private FluidStack fuel;
     private int burnTime;
@@ -51,7 +50,7 @@ public class LiquidFuelRecipe implements IRecipe<IInventory> {
     }
 
     @Override
-    public boolean matches(@Nonnull IInventory pInv,@Nonnull World pLevel) {
+    public boolean matches(@Nonnull Container pInv,@Nonnull Level pLevel) {
         return false;
     }
 
@@ -74,7 +73,7 @@ public class LiquidFuelRecipe implements IRecipe<IInventory> {
 
     @Nonnull
     @Override
-    public ItemStack assemble(@Nonnull IInventory pInv) {
+    public ItemStack assemble(Container pInv, RegistryAccess pRegistryAccess) {
         return ItemStack.EMPTY;
     }
 
@@ -85,7 +84,7 @@ public class LiquidFuelRecipe implements IRecipe<IInventory> {
 
     @Nonnull
     @Override
-    public ItemStack getResultItem() {
+    public ItemStack getResultItem(RegistryAccess pRegistryAccess) {
         return ItemStack.EMPTY;
     }
 
@@ -97,27 +96,27 @@ public class LiquidFuelRecipe implements IRecipe<IInventory> {
 
     @Nonnull
     @Override
-    public IRecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<?> getSerializer() {
         return ActuallyRecipes.LIQUID_FUEL_RECIPE.get();
     }
 
     @Nonnull
     @Override
-    public IRecipeType<?> getType() {
+    public RecipeType<?> getType() {
         return ActuallyRecipes.Types.LIQUID_FUEL;
     }
 
-    public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<LiquidFuelRecipe> {
+    public static class Serializer implements RecipeSerializer<LiquidFuelRecipe> {
         @Nonnull
         @Override
         public LiquidFuelRecipe fromJson(@Nonnull ResourceLocation pId, JsonObject pJson) {
             JsonObject ingredient = pJson.getAsJsonObject("ingredient");
 
-            ResourceLocation fluidRes = new ResourceLocation(JSONUtils.getAsString(ingredient, "fluid"));
+            ResourceLocation fluidRes = new ResourceLocation(GsonHelper.getAsString(ingredient, "fluid"));
             Fluid fluid = ForgeRegistries.FLUIDS.getValue(fluidRes);
             if (fluid == null)
                 throw new JsonParseException("Unknown fluid '" + fluidRes + "'");
-            int inputAmount = JSONUtils.getAsInt(ingredient, "amount", 50);
+            int inputAmount = GsonHelper.getAsInt(ingredient, "amount", 50);
             FluidStack input = new FluidStack(fluid, inputAmount);
 
             JsonObject result = pJson.getAsJsonObject("result");
@@ -127,7 +126,7 @@ public class LiquidFuelRecipe implements IRecipe<IInventory> {
         }
 
         @Override
-        public LiquidFuelRecipe fromNetwork(@Nonnull ResourceLocation pId, @Nonnull PacketBuffer pBuffer) {
+        public LiquidFuelRecipe fromNetwork(@Nonnull ResourceLocation pId, @Nonnull FriendlyByteBuf pBuffer) {
             ResourceLocation inputRes = new ResourceLocation(pBuffer.readUtf());
             int inputAmount = pBuffer.readInt();
             Fluid inputFluid = ForgeRegistries.FLUIDS.getValue(inputRes);
@@ -141,21 +140,21 @@ public class LiquidFuelRecipe implements IRecipe<IInventory> {
         }
 
         @Override
-        public void toNetwork(@Nonnull PacketBuffer pBuffer, LiquidFuelRecipe pRecipe) {
-            pBuffer.writeUtf(pRecipe.fuel.getFluid().getRegistryName().toString());
+        public void toNetwork(@Nonnull FriendlyByteBuf pBuffer, LiquidFuelRecipe pRecipe) {
+            pBuffer.writeUtf(ForgeRegistries.FLUIDS.getKey(pRecipe.fuel.getFluid()).toString());
             pBuffer.writeInt(pRecipe.fuel.getAmount());
             pBuffer.writeInt(pRecipe.totalEnergy);
             pBuffer.writeInt(pRecipe.burnTime);
         }
     }
 
-    public static class FinishedRecipe implements IFinishedRecipe {
+    public static class Result implements FinishedRecipe {
         private FluidStack fuel;
         private int burnTime;
         private int totalEnergy;
         private ResourceLocation id;
 
-        public FinishedRecipe(ResourceLocation id, FluidStack fuel, int totalEnergy, int burnTime) {
+        public Result(ResourceLocation id, FluidStack fuel, int totalEnergy, int burnTime) {
             this.fuel = fuel;
             this.burnTime = burnTime;
             this.totalEnergy = totalEnergy;
@@ -165,7 +164,7 @@ public class LiquidFuelRecipe implements IRecipe<IInventory> {
         @Override
         public void serializeRecipeData(JsonObject pJson) {
             JsonObject ingredient = new JsonObject();
-            ingredient.addProperty("fluid", fuel.getFluid().getRegistryName().toString());
+            ingredient.addProperty("fluid", ForgeRegistries.FLUIDS.getKey(fuel.getFluid()).toString());
             ingredient.addProperty("amount", fuel.getAmount());
 
             JsonObject result = new JsonObject();
@@ -184,7 +183,7 @@ public class LiquidFuelRecipe implements IRecipe<IInventory> {
 
         @Nonnull
         @Override
-        public IRecipeSerializer<?> getType() {
+        public RecipeSerializer<?> getType() {
             return ActuallyRecipes.LIQUID_FUEL_RECIPE.get();
         }
 

@@ -10,7 +10,7 @@
 
 package de.ellpeck.actuallyadditions.api.tile;
 
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
 
 /**
  * Extending this will cause a TileEntity to be able to be connected via a Phantom Connector

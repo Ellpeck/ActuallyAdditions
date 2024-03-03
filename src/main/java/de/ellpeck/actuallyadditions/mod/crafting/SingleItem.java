@@ -1,10 +1,10 @@
 package de.ellpeck.actuallyadditions.mod.crafting;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.Container;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 
-public class SingleItem implements IInventory {
+public class SingleItem implements Container {
     private final ItemStack itemStack;
 
     public SingleItem(ItemStack itemStack) {
@@ -52,7 +52,7 @@ public class SingleItem implements IInventory {
     }
 
     @Override
-    public boolean stillValid(PlayerEntity pPlayer) {
+    public boolean stillValid(Player pPlayer) {
         return false;
     }
 

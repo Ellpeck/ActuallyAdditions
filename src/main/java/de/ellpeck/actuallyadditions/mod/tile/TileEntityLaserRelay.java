@@ -18,19 +18,19 @@ import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.misc.apiimpl.ConnectionPair;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import io.netty.util.internal.ConcurrentSet;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
-
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
 
 public abstract class TileEntityLaserRelay extends TileEntityInventoryBase {
 
@@ -45,20 +45,20 @@ public abstract class TileEntityLaserRelay extends TileEntityInventoryBase {
     // List of connections that are synced to the client for RenderLaserRelay to use
     private final ConcurrentSet<IConnectionPair> connections = new ConcurrentSet<>();
 
-    public TileEntityLaserRelay(TileEntityType<?> tileType, LaserType type) {
-        super(tileType, 1);
+    public TileEntityLaserRelay(BlockEntityType<?> tileType, BlockPos pos, BlockState state, LaserType type) {
+        super(tileType, pos, state,1);
         this.type = type;
     }
 
     @Override
-    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void readSyncableNBT(CompoundTag compound, NBTType type) {
         super.readSyncableNBT(compound, type);
 
         if (type == NBTType.SYNC) {
             ActuallyAdditionsAPI.connectionHandler.removeRelayFromNetwork(this.worldPosition, this.level);
 
             this.connections.clear();
-            ListNBT list = compound.getList("Connections", 10);
+            ListTag list = compound.getList("Connections", 10);
             if (!list.isEmpty()) {
                 for (int i = 0; i < list.size(); i++) {
                     ConnectionPair pair = new ConnectionPair();
@@ -71,16 +71,16 @@ public abstract class TileEntityLaserRelay extends TileEntityInventoryBase {
     }
 
     @Override
-    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
 
         if (type == NBTType.SYNC) {
-            ListNBT list = new ListNBT();
+            ListTag list = new ListTag();
 
             ConcurrentSet<IConnectionPair> connections = ActuallyAdditionsAPI.connectionHandler.getConnectionsFor(this.worldPosition, this.level);
             if (connections != null && !connections.isEmpty()) {
                 for (IConnectionPair pair : connections) {
-                    CompoundNBT tag = new CompoundNBT();
+                    CompoundTag tag = new CompoundTag();
                     pair.writeToNBT(tag);
                     list.add(tag);
                 }
@@ -91,9 +91,28 @@ public abstract class TileEntityLaserRelay extends TileEntityInventoryBase {
     }
 
     @Override
-    public void updateEntity() {
-        super.updateEntity();
+    protected void clientTick() {
+        super.clientTick();
+        int range = this.getMaxRange();
+        if (this.lastRange != range) {
+            ConcurrentSet<IConnectionPair> connections = ActuallyAdditionsAPI.connectionHandler.getConnectionsFor(this.worldPosition, this.level);
+            if (connections != null && !connections.isEmpty()) {
+                for (IConnectionPair pair : connections) {
+                    int distanceSq = (int) pair.getPositions()[0].distSqr(pair.getPositions()[1]);
+                    if (distanceSq > range * range) {
+                        this.connections.remove(pair);
+                        ActuallyAdditionsAPI.connectionHandler.removeConnection(this.level, pair.getPositions()[0], pair.getPositions()[1]);
+                    }
+                }
+            }
 
+            this.lastRange = range;
+        }
+    }
+
+    @Override
+    protected void serverTick() {
+        super.serverTick();
         int range = this.getMaxRange();
         if (this.lastRange != range) {
             ConcurrentSet<IConnectionPair> connections = ActuallyAdditionsAPI.connectionHandler.getConnectionsFor(this.worldPosition, this.level);
@@ -159,7 +178,7 @@ public abstract class TileEntityLaserRelay extends TileEntityInventoryBase {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public AxisAlignedBB getRenderBoundingBox() {
+    public AABB getRenderBoundingBox() {
         return INFINITE_EXTENT_AABB;
     }
 
@@ -188,7 +207,7 @@ public abstract class TileEntityLaserRelay extends TileEntityInventoryBase {
     @OnlyIn(Dist.CLIENT)
     public abstract String getCompassDisplayString();
 
-    public abstract void onCompassAction(PlayerEntity player);
+    public abstract void onCompassAction(Player player);
 
     public ConcurrentSet<IConnectionPair> getConnections() {
         return connections;

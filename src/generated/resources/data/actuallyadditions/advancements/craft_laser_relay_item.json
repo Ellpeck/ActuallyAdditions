@@ -1,35 +1,38 @@
 {
   "parent": "actuallyadditions:craft_laser_relay",
+  "criteria": {
+    "laser_relay_item": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "actuallyadditions:laser_relay_item"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
   "display": {
-    "icon": {
-      "item": "actuallyadditions:laser_relay_item"
-    },
-    "title": {
-      "translate": "achievement.actuallyadditions.craftLaserRelayItem"
-    },
+    "announce_to_chat": true,
     "description": {
       "translate": "achievement.actuallyadditions.craftLaserRelayItem.desc"
     },
     "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "actuallyadditions:laser_relay_item"
+    },
     "show_toast": true,
-    "announce_to_chat": true,
-    "hidden": false
-  },
-  "criteria": {
-    "laser_relay_item": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {
-        "items": [
-          {
-            "item": "actuallyadditions:laser_relay_item"
-          }
-        ]
-      }
+    "title": {
+      "translate": "achievement.actuallyadditions.craftLaserRelayItem"
     }
   },
   "requirements": [
     [
       "laser_relay_item"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

@@ -12,7 +12,7 @@ package de.ellpeck.actuallyadditions.mod.recipe;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.mod.crafting.CrushingRecipe;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 
 public final class CrusherRecipeRegistry {
     //

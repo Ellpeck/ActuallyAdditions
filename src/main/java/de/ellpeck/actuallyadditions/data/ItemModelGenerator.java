@@ -6,23 +6,24 @@ import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.fluids.FluidAA;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
-import net.minecraft.block.Block;
-import net.minecraft.block.WallBlock;
-import net.minecraft.data.DataGenerator;
-import net.minecraft.item.Item;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.data.PackOutput;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.WallBlock;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
-import net.minecraftforge.client.model.generators.loaders.DynamicBucketModelBuilder;
+import net.minecraftforge.client.model.generators.loaders.DynamicFluidContainerModelBuilder;
 import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 import java.util.Set;
 import java.util.function.Supplier;
 
 public class ItemModelGenerator extends ItemModelProvider {
-    public ItemModelGenerator(DataGenerator generator, ExistingFileHelper existingFileHelper) {
-        super(generator, ActuallyAdditions.MODID, existingFileHelper);
+    public ItemModelGenerator(PackOutput packOutput, ExistingFileHelper existingFileHelper) {
+        super(packOutput, ActuallyAdditions.MODID, existingFileHelper);
     }
 
     @Override
@@ -60,7 +61,7 @@ public class ItemModelGenerator extends ItemModelProvider {
         generateBucket(InitFluids.EMPOWERED_OIL);
 
 
-        String wormpath = ActuallyItems.WORM.get().getRegistryName().getPath();
+        String wormpath = ActuallyItems.WORM.getId().getPath();
         singleTexture(wormpath, mcLoc("item/handheld"), "layer0", modLoc("item/" + wormpath))
                 .override().predicate(new ResourceLocation(ActuallyAdditions.MODID, "snail"), 1F)
                 .model(singleTexture("snail", mcLoc("item/handheld"), "layer0", modLoc("item/snail"))).end();
@@ -71,12 +72,12 @@ public class ItemModelGenerator extends ItemModelProvider {
     }
 
     private void generateBucket(FluidAA fluidSupplier) {
-        withExistingParent(fluidSupplier.getBucket().getRegistryName().getPath(), "forge:item/bucket")
-            .customLoader((builder, template) -> DynamicBucketModelBuilder.begin(builder, template).fluid(fluidSupplier.get()));
+        withExistingParent(ForgeRegistries.ITEMS.getKey(fluidSupplier.getBucket()).getPath(), "forge:item/bucket")
+            .customLoader((builder, template) -> DynamicFluidContainerModelBuilder.begin(builder, template).fluid(fluidSupplier.get()));
     }
 
     private void registerBlockModel(RegistryObject<Block> block) {
-        String path = block.get().getRegistryName().getPath();
+        String path = block.getId().getPath();
         if (block.get() instanceof WallBlock) {
             String name = path;
             path = "block/" + path.replace("_wall", "_block");
@@ -88,7 +89,7 @@ public class ItemModelGenerator extends ItemModelProvider {
     }
 
     private void simpleItem(Supplier<Item> item) {
-        String path = item.get().getRegistryName().getPath();
+        String path = ForgeRegistries.ITEMS.getKey(item.get()).getPath();
         singleTexture(path, mcLoc("item/handheld"), "layer0", modLoc("item/" + path));
     }
 }

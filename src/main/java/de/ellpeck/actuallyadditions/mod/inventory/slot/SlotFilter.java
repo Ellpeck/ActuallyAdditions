@@ -14,10 +14,10 @@ import de.ellpeck.actuallyadditions.mod.items.ItemFilter;
 import de.ellpeck.actuallyadditions.mod.tile.FilterSettings;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 
 public class SlotFilter extends SlotItemHandlerUnconditioned {
 
@@ -29,7 +29,7 @@ public class SlotFilter extends SlotItemHandlerUnconditioned {
         this(inv.filterInventory, slot, x, y);
     }
 
-    public static boolean checkFilter(Container container, int slotId, PlayerEntity player) {
+    public static boolean checkFilter(AbstractContainerMenu container, int slotId, Player player) {
         if (slotId >= 0 && slotId < container.slots.size()) {
             Slot slot = container.getSlot(slotId);
             if (slot instanceof SlotFilter) {
@@ -44,13 +44,13 @@ public class SlotFilter extends SlotItemHandlerUnconditioned {
         return StackUtil.isValid(stack) && stack.getItem() instanceof ItemFilter;
     }
 
-    private void slotClick(PlayerEntity player) {
-        ItemStack heldStack = player.inventory.getCarried();
+    private void slotClick(Player player) {
+        ItemStack heldStack = player.getInventory().getSelected();
         ItemStack stackInSlot = this.getItem();
 
         if (StackUtil.isValid(stackInSlot) && !StackUtil.isValid(heldStack)) {
             if (isFilter(stackInSlot)) {
-                player.inventory.setCarried(stackInSlot);
+                player.getInventory().setPickedItem(stackInSlot);
             }
 
             this.set(ItemStack.EMPTY);
@@ -78,7 +78,7 @@ public class SlotFilter extends SlotItemHandlerUnconditioned {
     }
 
     @Override
-    public boolean mayPickup(PlayerEntity player) {
+    public boolean mayPickup(Player player) {
         return false;
     }
 }

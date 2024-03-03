@@ -4,8 +4,10 @@
       "model": "actuallyadditions:block/lamp_controller",
       "x": 180
     },
-    "facing=up": {
-      "model": "actuallyadditions:block/lamp_controller"
+    "facing=east": {
+      "model": "actuallyadditions:block/lamp_controller",
+      "x": 90,
+      "y": 90
     },
     "facing=north": {
       "model": "actuallyadditions:block/lamp_controller",
@@ -16,15 +18,13 @@
       "x": 90,
       "y": 180
     },
+    "facing=up": {
+      "model": "actuallyadditions:block/lamp_controller"
+    },
     "facing=west": {
       "model": "actuallyadditions:block/lamp_controller",
       "x": 90,
       "y": 270
-    },
-    "facing=east": {
-      "model": "actuallyadditions:block/lamp_controller",
-      "x": 90,
-      "y": 90
     }
   }
 }

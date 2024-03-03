@@ -1,16 +1,18 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "xxx",
-    "xxx",
-    "xxx"
-  ],
+  "category": "misc",
   "key": {
     "x": {
       "item": "actuallyadditions:void_crystal_shard"
     }
   },
+  "pattern": [
+    "xxx",
+    "xxx",
+    "xxx"
+  ],
   "result": {
     "item": "actuallyadditions:void_crystal"
-  }
+  },
+  "show_notification": true
 }

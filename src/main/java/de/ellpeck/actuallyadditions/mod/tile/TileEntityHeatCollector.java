@@ -12,15 +12,16 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.MagmaBlock;
-import net.minecraft.block.material.Material;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.MagmaBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 
@@ -35,12 +36,12 @@ public class TileEntityHeatCollector extends TileEntityBase implements ISharingE
     private int oldEnergy;
     private int disappearTime;
 
-    public TileEntityHeatCollector() {
-        super(ActuallyBlocks.HEAT_COLLECTOR.getTileEntityType());
+    public TileEntityHeatCollector(BlockPos pos, BlockState state) {
+        super(ActuallyBlocks.HEAT_COLLECTOR.getTileEntityType(), pos, state);
     }
 
     @Override
-    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
 
         this.storage.writeToNBT(compound);
@@ -50,7 +51,7 @@ public class TileEntityHeatCollector extends TileEntityBase implements ISharingE
     }
 
     @Override
-    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void readSyncableNBT(CompoundTag compound, NBTType type) {
         super.readSyncableNBT(compound, type);
 
         this.storage.readFromNBT(compound);
@@ -59,39 +60,45 @@ public class TileEntityHeatCollector extends TileEntityBase implements ISharingE
         }
     }
 
-    @Override
-    public void updateEntity() {
-        super.updateEntity();
-        if (!this.level.isClientSide) {
+    public static <T extends BlockEntity> void clientTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityHeatCollector tile) {
+            tile.clientTick();
+        }
+    }
+
+    public static <T extends BlockEntity> void serverTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityHeatCollector tile) {
+            tile.serverTick();
+
             ArrayList<Integer> blocksAround = new ArrayList<>();
-            if (ENERGY_PRODUCE <= this.storage.getMaxEnergyStored() - this.storage.getEnergyStored()) {
+            if (ENERGY_PRODUCE <= tile.storage.getMaxEnergyStored() - tile.storage.getEnergyStored()) {
                 for (int i = 1; i <= 5; i++) {
-                    BlockPos coords = this.worldPosition.relative(WorldUtil.getDirectionBySidesInOrder(i));
-                    BlockState state = this.level.getBlockState(coords);
-                    Block block = state.getBlock();
-                    if (block != null && this.level.getBlockState(coords).getMaterial() == Material.LAVA || this.level.getBlockState(coords).getBlock() instanceof MagmaBlock) {
+                    BlockPos coords = pos.relative(WorldUtil.getDirectionBySidesInOrder(i));
+                    BlockState relativeState = level.getBlockState(coords);
+                    Block block = relativeState.getBlock();
+                    if (block != null && level.getFluidState(coords).is(FluidTags.LAVA) || level.getBlockState(coords).getBlock() instanceof MagmaBlock) {
                         blocksAround.add(i);
                     }
                 }
 
                 if (blocksAround.size() >= BLOCKS_NEEDED) {
-                    this.storage.receiveEnergyInternal(ENERGY_PRODUCE, false);
-                    this.setChanged();
+                    tile.storage.receiveEnergyInternal(ENERGY_PRODUCE, false);
+                    tile.setChanged();
 
-                    this.disappearTime++;
-                    if (this.disappearTime >= 1000) {
-                        this.disappearTime = 0;
+                    tile.disappearTime++;
+                    if (tile.disappearTime >= 1000) {
+                        tile.disappearTime = 0;
 
-                        if (this.level.random.nextInt(200) == 0) {
-                            int randomSide = blocksAround.get(this.level.random.nextInt(blocksAround.size()));
-                            this.level.setBlockAndUpdate(this.worldPosition.relative(WorldUtil.getDirectionBySidesInOrder(randomSide)), Blocks.AIR.defaultBlockState());
+                        if (level.random.nextInt(200) == 0) {
+                            int randomSide = blocksAround.get(level.random.nextInt(blocksAround.size()));
+                            level.setBlockAndUpdate(pos.relative(WorldUtil.getDirectionBySidesInOrder(randomSide)), Blocks.AIR.defaultBlockState());
                         }
                     }
                 }
             }
 
-            if (this.oldEnergy != this.storage.getEnergyStored() && this.sendUpdateWithInterval()) {
-                this.oldEnergy = this.storage.getEnergyStored();
+            if (tile.oldEnergy != tile.storage.getEnergyStored() && tile.sendUpdateWithInterval()) {
+                tile.oldEnergy = tile.storage.getEnergyStored();
             }
         }
     }
@@ -122,7 +129,7 @@ public class TileEntityHeatCollector extends TileEntityBase implements ISharingE
     }
 
     @Override
-    public boolean canShareTo(TileEntity tile) {
+    public boolean canShareTo(BlockEntity tile) {
         return true;
     }
 

@@ -4,13 +4,13 @@ import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.particles.IParticleData;
-import net.minecraft.particles.ParticleType;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleType;
+import net.minecraft.network.FriendlyByteBuf;
 
 import java.util.Locale;
 
-public class BeamParticleData extends ParticleType<BeamParticleData> implements IParticleData {
+public class BeamParticleData extends ParticleType<BeamParticleData> implements ParticleOptions {
 	private ParticleType<BeamParticleData> type;
 	public static final Codec<BeamParticleData> CODEC = RecordCodecBuilder.create(instance -> instance.group(
 					Codec.DOUBLE.fieldOf("endX").forGetter(d -> d.endX),
@@ -32,7 +32,7 @@ public class BeamParticleData extends ParticleType<BeamParticleData> implements 
 	protected final double rotationTime;
 	protected final float size;
 	@SuppressWarnings("deprecation")
-	static final IDeserializer<BeamParticleData> DESERIALIZER = new IDeserializer<BeamParticleData>() {
+	static final Deserializer<BeamParticleData> DESERIALIZER = new Deserializer<BeamParticleData>() {
 
 		@Override
 		public BeamParticleData fromCommand(ParticleType<BeamParticleData> type, StringReader reader) throws CommandSyntaxException {
@@ -60,7 +60,7 @@ public class BeamParticleData extends ParticleType<BeamParticleData> implements 
 		}
 
 		@Override
-		public BeamParticleData fromNetwork(ParticleType<BeamParticleData> type, PacketBuffer buffer) {
+		public BeamParticleData fromNetwork(ParticleType<BeamParticleData> type, FriendlyByteBuf buffer) {
 			double endX = buffer.readDouble();
 			double endY = buffer.readDouble();
 			double endZ = buffer.readDouble();
@@ -109,7 +109,7 @@ public class BeamParticleData extends ParticleType<BeamParticleData> implements 
 	}
 
 	@Override
-	public void writeToNetwork(PacketBuffer buffer) {
+	public void writeToNetwork(FriendlyByteBuf buffer) {
 		buffer.writeDouble(this.endX);
 		buffer.writeDouble(this.endY);
 		buffer.writeDouble(this.endZ);

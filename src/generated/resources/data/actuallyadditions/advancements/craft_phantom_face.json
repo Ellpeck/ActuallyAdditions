@@ -1,36 +1,39 @@
 {
   "parent": "actuallyadditions:root",
+  "criteria": {
+    "phantom_face": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "actuallyadditions:phantom_itemface"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
   "display": {
-    "icon": {
-      "item": "actuallyadditions:phantom_itemface"
-    },
-    "title": {
-      "translate": "achievement.actuallyadditions.craftPhantomface"
-    },
+    "announce_to_chat": true,
+    "background": "minecraft:textures/blocks/stone.png",
     "description": {
       "translate": "achievement.actuallyadditions.craftPhantomface.desc"
     },
     "frame": "task",
-    "show_toast": true,
-    "announce_to_chat": true,
     "hidden": false,
-    "background": "minecraft:textures/blocks/stone.png"
-  },
-  "criteria": {
-    "phantom_face": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {
-        "items": [
-          {
-            "item": "actuallyadditions:phantom_itemface"
-          }
-        ]
-      }
+    "icon": {
+      "item": "actuallyadditions:phantom_itemface"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "achievement.actuallyadditions.craftPhantomface"
     }
   },
   "requirements": [
     [
       "phantom_face"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

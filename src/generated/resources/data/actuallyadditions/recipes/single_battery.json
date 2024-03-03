@@ -1,22 +1,24 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "actuallyadditions:advanced_coil"
+    },
+    "I": {
+      "item": "actuallyadditions:enori_crystal"
+    },
+    "R": {
+      "item": "actuallyadditions:restonia_crystal"
+    }
+  },
   "pattern": [
     " R ",
     "ICI",
     "III"
   ],
-  "key": {
-    "R": {
-      "item": "actuallyadditions:restonia_crystal"
-    },
-    "I": {
-      "item": "actuallyadditions:enori_crystal"
-    },
-    "C": {
-      "item": "actuallyadditions:advanced_coil"
-    }
-  },
   "result": {
     "item": "actuallyadditions:single_battery"
-  }
+  },
+  "show_notification": true
 }

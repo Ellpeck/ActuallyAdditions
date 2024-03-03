@@ -1,14 +1,16 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "QQQ"
-  ],
+  "category": "misc",
   "key": {
     "Q": {
       "item": "actuallyadditions:black_quartz_pillar_block"
     }
   },
+  "pattern": [
+    "QQQ"
+  ],
   "result": {
     "item": "actuallyadditions:black_quartz_pillar_slab"
-  }
+  },
+  "show_notification": true
 }

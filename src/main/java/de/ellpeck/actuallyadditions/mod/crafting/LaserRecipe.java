@@ -2,26 +2,27 @@ package de.ellpeck.actuallyadditions.mod.crafting;
 
 import com.google.gson.JsonObject;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
-import net.minecraft.data.IFinishedRecipe;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.IItemProvider;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
-import net.minecraftforge.registries.ForgeRegistryEntry;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Optional;
 
 
-public class LaserRecipe implements IRecipe<IInventory> {
+public class LaserRecipe implements Recipe<Container> {
     public static String NAME = "laser";
     private ItemStack result;
     private Ingredient itemIngredient;
@@ -53,7 +54,7 @@ public class LaserRecipe implements IRecipe<IInventory> {
 
     //nah
     @Override
-    public boolean matches(IInventory pInv, World pLevel) {
+    public boolean matches(Container pInv, Level pLevel) {
         return false;
     }
 
@@ -63,7 +64,7 @@ public class LaserRecipe implements IRecipe<IInventory> {
     }
 
     @Override
-    public ItemStack assemble(IInventory pInv) {
+    public ItemStack assemble(Container pInv, RegistryAccess pRegistryAccess) {
         return result.copy();
     }
 
@@ -73,7 +74,7 @@ public class LaserRecipe implements IRecipe<IInventory> {
     }
 
     @Override
-    public ItemStack getResultItem() {
+    public ItemStack getResultItem(RegistryAccess pRegistryAccess) {
         return result;
     }
 
@@ -83,12 +84,12 @@ public class LaserRecipe implements IRecipe<IInventory> {
     }
 
     @Override
-    public IRecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<?> getSerializer() {
         return ActuallyRecipes.LASER_RECIPE.get();
     }
 
     @Override
-    public IRecipeType<?> getType() {
+    public RecipeType<?> getType() {
         return ActuallyRecipes.Types.LASER;
     }
 
@@ -100,20 +101,20 @@ public class LaserRecipe implements IRecipe<IInventory> {
         return getRecipeForStack(stack).isPresent();
     }
 
-    public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<LaserRecipe> {
+    public static class Serializer implements RecipeSerializer<LaserRecipe> {
         @Override
         public LaserRecipe fromJson(@Nonnull ResourceLocation pRecipeId, @Nonnull JsonObject pJson) {
-            Ingredient ingredient = Ingredient.fromJson(JSONUtils.getAsJsonObject(pJson, "ingredient"));
-            int energy = JSONUtils.getAsInt(pJson, "energy");
-            JsonObject resultObject = JSONUtils.getAsJsonObject(pJson, "result");
-            ItemStack result = new ItemStack(JSONUtils.getAsItem(resultObject, "item"));
+            Ingredient ingredient = Ingredient.fromJson(GsonHelper.getAsJsonObject(pJson, "ingredient"));
+            int energy = GsonHelper.getAsInt(pJson, "energy");
+            JsonObject resultObject = GsonHelper.getAsJsonObject(pJson, "result");
+            ItemStack result = new ItemStack(GsonHelper.getAsItem(resultObject, "item"));
 
             return new LaserRecipe(pRecipeId, result, ingredient, energy);
         }
 
         @Nullable
         @Override
-        public LaserRecipe fromNetwork(@Nonnull ResourceLocation pRecipeId, @Nonnull PacketBuffer pBuffer) {
+        public LaserRecipe fromNetwork(@Nonnull ResourceLocation pRecipeId, @Nonnull FriendlyByteBuf pBuffer) {
             Ingredient ingredient = Ingredient.fromNetwork(pBuffer);
             int energy = pBuffer.readInt();
             ItemStack result = pBuffer.readItem();
@@ -121,20 +122,20 @@ public class LaserRecipe implements IRecipe<IInventory> {
         }
 
         @Override
-        public void toNetwork(@Nonnull PacketBuffer pBuffer, LaserRecipe pRecipe) {
+        public void toNetwork(@Nonnull FriendlyByteBuf pBuffer, LaserRecipe pRecipe) {
             pRecipe.itemIngredient.toNetwork(pBuffer);
             pBuffer.writeInt(pRecipe.energy);
             pBuffer.writeItem(pRecipe.result);
         }
     }
 
-    public static class FinishedRecipe implements IFinishedRecipe {
+    public static class Result implements FinishedRecipe {
         private ResourceLocation id;
         private Ingredient itemIngredient;
         private int energy;
-        private IItemProvider output;
+        private ItemLike output;
 
-        public FinishedRecipe(ResourceLocation id, Ingredient itemIngredient, int energy, IItemProvider output) {
+        public Result(ResourceLocation id, Ingredient itemIngredient, int energy, ItemLike output) {
             this.id = id;
             this.itemIngredient = itemIngredient;
             this.energy = energy;
@@ -147,7 +148,7 @@ public class LaserRecipe implements IRecipe<IInventory> {
             pJson.addProperty("energy", energy);
 
             JsonObject resultObject = new JsonObject();
-            resultObject.addProperty("item", output.asItem().getRegistryName().toString());
+            resultObject.addProperty("item", ForgeRegistries.ITEMS.getKey(output.asItem()).toString());
 
             pJson.add("result", resultObject);
         }
@@ -158,7 +159,7 @@ public class LaserRecipe implements IRecipe<IInventory> {
         }
 
         @Override
-        public IRecipeSerializer<?> getType() {
+        public RecipeSerializer<?> getType() {
             return ActuallyRecipes.LASER_RECIPE.get();
         }
 

@@ -11,23 +11,23 @@
 package de.ellpeck.actuallyadditions.api.recipe;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.potion.EffectInstance;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 
 @Deprecated
 public class CoffeeIngredient {
 
     protected final Ingredient input;
     protected final int maxAmplifier;
-    protected EffectInstance[] effects;
+    protected MobEffectInstance[] effects;
 
     @Deprecated
-    public CoffeeIngredient(ItemStack input, EffectInstance[] effects, int maxAmplifier) {
+    public CoffeeIngredient(ItemStack input, MobEffectInstance[] effects, int maxAmplifier) {
         this(Ingredient.of(input), maxAmplifier, effects);
     }
 
-    public CoffeeIngredient(Ingredient input, int maxAmplifier, EffectInstance... effects) {
+    public CoffeeIngredient(Ingredient input, int maxAmplifier, MobEffectInstance... effects) {
         this.input = input;
         this.effects = effects;
         this.maxAmplifier = maxAmplifier;
@@ -41,7 +41,7 @@ public class CoffeeIngredient {
         return this.input;
     }
 
-    public EffectInstance[] getEffects() {
+    public MobEffectInstance[] getEffects() {
         return this.effects;
     }
 

@@ -1,16 +1,9 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "IPI",
-    "DCD",
-    " B "
-  ],
+  "category": "misc",
   "key": {
-    "I": {
-      "item": "actuallyadditions:empowered_enori_crystal"
-    },
-    "P": {
-      "item": "actuallyadditions:palis_crystal"
+    "B": {
+      "item": "actuallyadditions:triple_battery"
     },
     "C": {
       "item": "actuallyadditions:advanced_coil"
@@ -18,11 +11,20 @@
     "D": {
       "item": "actuallyadditions:diamatine_crystal"
     },
-    "B": {
-      "item": "actuallyadditions:triple_battery"
+    "I": {
+      "item": "actuallyadditions:empowered_enori_crystal"
+    },
+    "P": {
+      "item": "actuallyadditions:palis_crystal"
     }
   },
+  "pattern": [
+    "IPI",
+    "DCD",
+    " B "
+  ],
   "result": {
     "item": "actuallyadditions:handheld_filler"
-  }
+  },
+  "show_notification": true
 }

@@ -4,7 +4,7 @@
     "item": "actuallyadditions:canola"
   },
   "result": {
-    "fluid": "actuallyadditions:canola_oil",
-    "amount": 80
+    "amount": 80,
+    "fluid": "actuallyadditions:canola_oil"
   }
 }

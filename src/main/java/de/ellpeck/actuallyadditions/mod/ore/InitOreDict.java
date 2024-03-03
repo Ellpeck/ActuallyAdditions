@@ -11,10 +11,10 @@
 package de.ellpeck.actuallyadditions.mod.ore;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Block;
 
 // TODO: [port][change] migrate to TAGS
 @Deprecated

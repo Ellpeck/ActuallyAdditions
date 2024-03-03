@@ -1,56 +1,61 @@
 package de.ellpeck.actuallyadditions.data;
 
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
-import com.mojang.datafixers.util.Pair;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
-import net.minecraft.advancements.criterion.StatePropertiesPredicate;
-import net.minecraft.block.Block;
-import net.minecraft.block.CropsBlock;
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.LootTableProvider;
-import net.minecraft.data.loot.BlockLootTables;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
-import net.minecraft.loot.*;
-import net.minecraft.loot.conditions.BlockStateProperty;
-import net.minecraft.loot.functions.CopyName;
-import net.minecraft.loot.functions.CopyNbt;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraft.advancements.critereon.StatePropertiesPredicate;
+import net.minecraft.data.PackOutput;
+import net.minecraft.data.loot.BlockLootSubProvider;
+import net.minecraft.data.loot.LootTableProvider;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.flag.FeatureFlags;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.CropBlock;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.ValidationContext;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.functions.CopyNbtFunction;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
+import net.minecraft.world.level.storage.loot.providers.nbt.ContextNbtProvider;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraftforge.registries.RegistryObject;
 
 import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class LootTableGenerator extends LootTableProvider {
-    public LootTableGenerator(DataGenerator p_i50789_1_) {
-        super(p_i50789_1_);
-    }
-    @Nonnull
-    @Override
-    protected List<Pair<Supplier<Consumer<BiConsumer<ResourceLocation, LootTable.Builder>>>, LootParameterSet>> getTables() {
-        return ImmutableList.of(Pair.of(Blocks::new, LootParameterSets.BLOCK));
+    public LootTableGenerator(PackOutput packOutput) {
+        super(packOutput, Set.of(), List.of(
+                new SubProviderEntry(Blocks::new, LootContextParamSets.BLOCK)
+        ));
     }
 
     @Override
-    protected void validate(Map<ResourceLocation, LootTable> map, @Nonnull ValidationTracker validationtracker) {
-        map.forEach((name, table) -> LootTableManager.validate(validationtracker, name, table));
+    protected void validate(Map<ResourceLocation, LootTable> map, @Nonnull ValidationContext validationtracker) {
+        map.forEach((name, table) -> table.validate(validationtracker));
     }
 
-    public static class Blocks extends BlockLootTables {
+    public static class Blocks extends BlockLootSubProvider {
+
+        protected Blocks() {
+            super(Set.of(), FeatureFlags.REGISTRY.allFlags());
+        }
+
         @Override
-        protected void addTables() {
-            CopyNbt.Builder copyEnergy = CopyNbt.copyData(CopyNbt.Source.BLOCK_ENTITY).copy("Energy", "BlockEntityTag.Energy");
-            CopyNbt.Builder copyPulseMode = CopyNbt.copyData(CopyNbt.Source.BLOCK_ENTITY).copy("IsPulseMode", "BlockEntityTag.IsPulseMode");
+        protected void generate() {
+            CopyNbtFunction.Builder copyEnergy = CopyNbtFunction.copyData(ContextNbtProvider.BLOCK_ENTITY).copy("Energy", "BlockEntityTag.Energy");
+            CopyNbtFunction.Builder copyPulseMode = CopyNbtFunction.copyData(ContextNbtProvider.BLOCK_ENTITY).copy("IsPulseMode", "BlockEntityTag.IsPulseMode");
 
             //Special Drops
             dropNBT(ActuallyBlocks.ATOMIC_RECONSTRUCTOR, $ -> $.apply(copyEnergy).apply(copyPulseMode));
@@ -195,19 +200,19 @@ public class LootTableGenerator extends LootTableProvider {
 
         private void addCrop(Supplier<Block> block, Supplier<Item> item, Supplier<Item> seed) {
             add(block.get(), createCropDrops(block.get(), item.get(), seed.get(),
-                BlockStateProperty.hasBlockStateProperties(block.get()).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CropsBlock.AGE, 7))));
+                LootItemBlockStatePropertyCondition.hasBlockStateProperties(block.get()).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CropBlock.AGE, 7))));
 
         }
 
         private void dropNBT(Supplier<Block> blockSupplier, Consumer<LootPool.Builder> lootFunctionProvider) {
-            LootPool.Builder lootpool = LootPool.lootPool().setRolls(ConstantRange.exactly(1)).add(ItemLootEntry.lootTableItem(blockSupplier.get()));
+            LootPool.Builder lootpool = LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(blockSupplier.get()));
 
             lootFunctionProvider.accept(lootpool);
 
             add(blockSupplier.get(), LootTable.lootTable().withPool(applyExplosionCondition(ActuallyBlocks.ATOMIC_RECONSTRUCTOR.get(), lootpool)));
         }
         private void dropKeepEnergy(Supplier<Block> blockSupplier) {
-            dropNBT(blockSupplier, $ -> $.apply(CopyNbt.copyData(CopyNbt.Source.BLOCK_ENTITY).copy("Energy", "BlockEntityTag.Energy")));
+            dropNBT(blockSupplier, $ -> $.apply(CopyNbtFunction.copyData(ContextNbtProvider.BLOCK_ENTITY).copy("Energy", "BlockEntityTag.Energy")));
         }
 
 /*        // This isn't quite right :cry: fortune doesn't change it

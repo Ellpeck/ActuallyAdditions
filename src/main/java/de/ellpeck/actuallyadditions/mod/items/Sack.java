@@ -16,19 +16,19 @@ import de.ellpeck.actuallyadditions.mod.sack.SackData;
 import de.ellpeck.actuallyadditions.mod.sack.SackManager;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.container.SimpleNamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkHooks;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.SimpleMenuProvider;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.network.NetworkHooks;
 
 import java.util.UUID;
 
@@ -41,15 +41,15 @@ public class Sack extends ItemBase {
     }
 
     @Override
-    public ActionResultType useOn(ItemUseContext context) {
+    public InteractionResult useOn(UseOnContext context) {
         ItemStack stack = context.getPlayer().getItemInHand(context.getHand());
         if (!this.isVoid) {
-            TileEntity tile = context.getLevel().getBlockEntity(context.getClickedPos());
+            BlockEntity tile = context.getLevel().getBlockEntity(context.getClickedPos());
             if (tile != null) {
                 if (!context.getLevel().isClientSide) {
                     ItemStackHandlerAA inv = new ItemStackHandlerAA(28);
 
-                    boolean changed = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, context.getClickedFace())
+                    boolean changed = tile.getCapability(ForgeCapabilities.ITEM_HANDLER, context.getClickedFace())
                         .map(cap -> {
                             boolean localChanged = false;
                             DrillItem.loadSlotsFromNBT(inv, stack);
@@ -78,44 +78,44 @@ public class Sack extends ItemBase {
                         DrillItem.writeSlotsToNBT(inv, stack);
                     }
                 }
-                return ActionResultType.SUCCESS;
+                return InteractionResult.SUCCESS;
             }
         }
-        return ActionResultType.PASS;
+        return InteractionResult.PASS;
     }
 
     @Override
-    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+    public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
         ItemStack sackStack = player.getItemInHand(hand);
-        if (!world.isClientSide && hand == Hand.MAIN_HAND && sackStack.getItem() instanceof Sack && player instanceof ServerPlayerEntity) {
+        if (!world.isClientSide && hand == InteractionHand.MAIN_HAND && sackStack.getItem() instanceof Sack && player instanceof ServerPlayer) {
 
             if (!isVoid) {
                 SackData data = getData(sackStack);
                 if (data == null)
-                    return ActionResult.fail(sackStack);
+                    return InteractionResultHolder.fail(sackStack);
 
                 UUID uuid = data.getUuid();
 
                 data.updateAccessRecords(player.getName().getString(), System.currentTimeMillis());
 
 
-                NetworkHooks.openGui((ServerPlayerEntity) player, new SimpleNamedContainerProvider((id, inv, entity) ->
+                NetworkHooks.openScreen((ServerPlayer) player, new SimpleMenuProvider((id, inv, entity) ->
                         new SackContainer(id, inv, uuid, data.getSpecialHandler()), sackStack.getHoverName()), (buffer -> buffer.writeUUID(uuid)));
             }
 
 
 /*            NetworkHooks.openGui((ServerPlayerEntity) player,
                     new SimpleNamedContainerProvider((windowId, playerInventory, playerEntity) ->
-                            new ContainerBag(windowId, playerInventory, playerEntity.getItemInHand(hand), this.isVoid), StringTextComponent.EMPTY));*/
+                            new ContainerBag(windowId, playerInventory, playerEntity.getItemInHand(hand), this.isVoid), StringComponent.empty()));*/
         }
-        return ActionResult.pass(player.getItemInHand(hand));
+        return InteractionResultHolder.pass(player.getItemInHand(hand));
     }
 
     public static SackData getData(ItemStack stack) {
         if (!(stack.getItem() instanceof Sack))
             return null;
         UUID uuid;
-        CompoundNBT tag = stack.getOrCreateTag();
+        CompoundTag tag = stack.getOrCreateTag();
         if (!tag.contains("UUID")) {
             uuid = UUID.randomUUID();
             tag.putUUID("UUID", uuid);

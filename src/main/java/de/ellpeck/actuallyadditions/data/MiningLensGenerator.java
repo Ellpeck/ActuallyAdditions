@@ -3,52 +3,59 @@ package de.ellpeck.actuallyadditions.data;
 import com.google.gson.JsonObject;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.crafting.MiningLensRecipe;
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.DirectoryCache;
-import net.minecraft.data.IFinishedRecipe;
-import net.minecraft.data.RecipeProvider;
-import net.minecraft.item.Items;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.tags.ITag;
-import net.minecraft.util.IItemProvider;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.data.CachedOutput;
+import net.minecraft.data.PackOutput;
+import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.common.Tags;
-import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.Nullable;
 
-import java.nio.file.Path;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 public class MiningLensGenerator extends RecipeProvider {
-    public MiningLensGenerator(DataGenerator pGenerator) {
-        super(pGenerator);
+    public MiningLensGenerator(PackOutput packOutput) {
+        super(packOutput);
     }
 
     @Override
-    protected void saveAdvancement(DirectoryCache pCache, JsonObject pAdvancementJson, Path pPath) {
+    public String getName() {
+        return "Mining Lens " + super.getName();
     }
 
     @Override
-    protected void buildShapelessRecipes(Consumer<IFinishedRecipe> consumer) {
+    protected @Nullable CompletableFuture<?> saveAdvancement(CachedOutput output, FinishedRecipe finishedRecipe, JsonObject advancementJson) {
+        return null; //Nope...
+    }
+
+    @Override
+    protected void buildRecipes(Consumer<FinishedRecipe> consumer) {
         buildMiningLens(consumer);
     }
 
-    private String getItemName(IItemProvider item) {
-        return ForgeRegistries.ITEMS.getKey(item.asItem()).getPath();
-    }
+//    private String getItemName(ItemLike item) {
+//        return ForgeRegistries.ITEMS.getKey(item.asItem()).getPath();
+//    }
 
     private ResourceLocation folderRecipe(String folder, String recipe) {
         return new ResourceLocation(ActuallyAdditions.MODID, folder + "/" + recipe);
     }
 
-    private void buildStoneOre(Consumer<IFinishedRecipe> consumer, int weight, IItemProvider output) {
+    private void buildStoneOre(Consumer<FinishedRecipe> consumer, int weight, ItemLike output) {
         buildTagOre(consumer, Tags.Items.STONE, "stone", weight, output);
     }
-    private void buildNetherOre(Consumer<IFinishedRecipe> consumer, int weight, IItemProvider output) {
+    private void buildNetherOre(Consumer<FinishedRecipe> consumer, int weight, ItemLike output) {
         buildTagOre(consumer, Tags.Items.NETHERRACK, "nether", weight, output);
     }
 
-    private void buildTagOre(Consumer<IFinishedRecipe> consumer, ITag tag, String prefix, int weight, IItemProvider output) {
-        consumer.accept(new MiningLensRecipe.FinishedRecipe(
+    private void buildTagOre(Consumer<FinishedRecipe> consumer, TagKey<Item> tag, String prefix, int weight, ItemLike output) {
+        consumer.accept(new MiningLensRecipe.Result(
                 folderRecipe("mininglens", prefix + "_" + getItemName(output)),
                 Ingredient.of(tag),
                 weight,
@@ -56,7 +63,7 @@ public class MiningLensGenerator extends RecipeProvider {
         ));
     }
 
-    private void buildMiningLens(Consumer<IFinishedRecipe> consumer) {
+    private void buildMiningLens(Consumer<FinishedRecipe> consumer) {
         buildStoneOre(consumer, 5000, Items.COAL_ORE);
         buildStoneOre(consumer, 3000, Items.IRON_ORE);
         buildStoneOre(consumer, 500, Items.GOLD_ORE);

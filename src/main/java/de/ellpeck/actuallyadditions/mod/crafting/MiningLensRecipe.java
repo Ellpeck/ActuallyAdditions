@@ -1,42 +1,46 @@
 package de.ellpeck.actuallyadditions.mod.crafting;
 
 import com.google.gson.JsonObject;
-import net.minecraft.data.IFinishedRecipe;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.IItemProvider;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.WeightedRandom;
-import net.minecraft.world.World;
-import net.minecraftforge.registries.ForgeRegistryEntry;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.util.random.Weight;
+import net.minecraft.util.random.WeightedEntry;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class MiningLensRecipe extends WeightedRandom.Item implements IRecipe<IInventory> {
+public class MiningLensRecipe implements Recipe<Container>, WeightedEntry {
     public static final String NAME = "mining_lens";
 
     private final ResourceLocation id;
+    private final int weight;
     private final Ingredient input;
     //private final int weight;
     private final ItemStack output;
 
     public MiningLensRecipe(ResourceLocation id, Ingredient input, int weight, ItemStack output) {
-        super(weight);
+        super();
+        this.weight = weight;
         this.input = input;
         //this.weight = weight;
         this.output = output;
         this.id = id;
     }
 
-    public int getWeight() {
-        return weight;
+    public Weight getWeight() {
+        return Weight.of(weight);
     }
 
     public Ingredient getInput() {
@@ -48,7 +52,7 @@ public class MiningLensRecipe extends WeightedRandom.Item implements IRecipe<IIn
     }
 
     @Override
-    public boolean matches(IInventory pInv, World pLevel) {
+    public boolean matches(Container pInv, Level pLevel) {
         return false;
     }
 
@@ -59,7 +63,7 @@ public class MiningLensRecipe extends WeightedRandom.Item implements IRecipe<IIn
 
     @Nonnull
     @Override
-    public ItemStack assemble(IInventory pInv) {
+    public ItemStack assemble(Container pInv, RegistryAccess pRegistryAccess) {
         return ItemStack.EMPTY;
     }
 
@@ -69,7 +73,7 @@ public class MiningLensRecipe extends WeightedRandom.Item implements IRecipe<IIn
     }
 
     @Override
-    public ItemStack getResultItem() {
+    public ItemStack getResultItem(RegistryAccess pRegistryAccess) {
         return output;
     }
 
@@ -79,29 +83,29 @@ public class MiningLensRecipe extends WeightedRandom.Item implements IRecipe<IIn
     }
 
     @Override
-    public IRecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<?> getSerializer() {
         return ActuallyRecipes.MINING_LENS_RECIPE.get();
     }
 
     @Override
-    public IRecipeType<?> getType() {
+    public RecipeType<?> getType() {
         return ActuallyRecipes.Types.MINING_LENS;
     }
 
-    public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<MiningLensRecipe> {
+    public static class Serializer implements RecipeSerializer<MiningLensRecipe> {
         @Override
         public MiningLensRecipe fromJson(@Nonnull ResourceLocation pRecipeId, @Nonnull JsonObject pJson) {
-            Ingredient ingredient = Ingredient.fromJson(JSONUtils.getAsJsonObject(pJson, "ingredient"));
-            int weight = JSONUtils.getAsInt(pJson, "weight");
-            JsonObject resultObject = JSONUtils.getAsJsonObject(pJson, "result");
-            ItemStack result = new ItemStack(JSONUtils.getAsItem(resultObject, "item"));
+            Ingredient ingredient = Ingredient.fromJson(GsonHelper.getAsJsonObject(pJson, "ingredient"));
+            int weight = GsonHelper.getAsInt(pJson, "weight");
+            JsonObject resultObject = GsonHelper.getAsJsonObject(pJson, "result");
+            ItemStack result = new ItemStack(GsonHelper.getAsItem(resultObject, "item"));
 
             return new MiningLensRecipe(pRecipeId, ingredient, weight, result);
         }
 
         @Nullable
         @Override
-        public MiningLensRecipe fromNetwork(@Nonnull ResourceLocation pRecipeId, @Nonnull PacketBuffer pBuffer) {
+        public MiningLensRecipe fromNetwork(@Nonnull ResourceLocation pRecipeId, @Nonnull FriendlyByteBuf pBuffer) {
             Ingredient ingredient = Ingredient.fromNetwork(pBuffer);
             int weight = pBuffer.readInt();
             ItemStack result = pBuffer.readItem();
@@ -109,20 +113,20 @@ public class MiningLensRecipe extends WeightedRandom.Item implements IRecipe<IIn
         }
 
         @Override
-        public void toNetwork(@Nonnull PacketBuffer pBuffer, MiningLensRecipe pRecipe) {
+        public void toNetwork(@Nonnull FriendlyByteBuf pBuffer, MiningLensRecipe pRecipe) {
             pRecipe.input.toNetwork(pBuffer);
             pBuffer.writeInt(pRecipe.weight);
             pBuffer.writeItem(pRecipe.output);
         }
     }
 
-    public static class FinishedRecipe implements IFinishedRecipe {
+    public static class Result implements FinishedRecipe {
         private final ResourceLocation id;
         private final Ingredient itemIngredient;
         private final int weight;
-        private final IItemProvider output;
+        private final ItemLike output;
 
-        public FinishedRecipe(ResourceLocation id, Ingredient itemIngredient, int weight, IItemProvider output) {
+        public Result(ResourceLocation id, Ingredient itemIngredient, int weight, ItemLike output) {
             this.id = id;
             this.itemIngredient = itemIngredient;
             this.weight = weight;
@@ -135,7 +139,7 @@ public class MiningLensRecipe extends WeightedRandom.Item implements IRecipe<IIn
             pJson.addProperty("weight", weight);
 
             JsonObject resultObject = new JsonObject();
-            resultObject.addProperty("item", output.asItem().getRegistryName().toString());
+            resultObject.addProperty("item", ForgeRegistries.ITEMS.getKey(output.asItem()).toString());
 
             pJson.add("result", resultObject);
         }
@@ -146,7 +150,7 @@ public class MiningLensRecipe extends WeightedRandom.Item implements IRecipe<IIn
         }
 
         @Override
-        public IRecipeSerializer<?> getType() {
+        public RecipeSerializer<?> getType() {
             return ActuallyRecipes.MINING_LENS_RECIPE.get();
         }
 

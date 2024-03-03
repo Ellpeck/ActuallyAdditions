@@ -13,27 +13,30 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFeeder;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.passive.horse.HorseEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.util.Mth;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.horse.Horse;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Optional;
 
-public class TileEntityFeeder extends TileEntityInventoryBase implements INamedContainerProvider {
+public class TileEntityFeeder extends TileEntityInventoryBase implements MenuProvider {
 
     public static final int THRESHOLD = 30;
     private static final int TIME = 100;
@@ -42,8 +45,8 @@ public class TileEntityFeeder extends TileEntityInventoryBase implements INamedC
     private int lastAnimalAmount;
     private int lastTimer;
 
-    public TileEntityFeeder() {
-        super(ActuallyBlocks.FEEDER.getTileEntityType(), 1);
+    public TileEntityFeeder(BlockPos pos, BlockState state) {
+        super(ActuallyBlocks.FEEDER.getTileEntityType(), pos, state,1);
     }
 
     public int getCurrentTimerToScale(int i) {
@@ -51,7 +54,7 @@ public class TileEntityFeeder extends TileEntityInventoryBase implements INamedC
     }
 
     @Override
-    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
         compound.putInt("Timer", this.currentTimer);
         if (type == NBTType.SYNC) {
@@ -60,7 +63,7 @@ public class TileEntityFeeder extends TileEntityInventoryBase implements INamedC
     }
 
     @Override
-    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void readSyncableNBT(CompoundTag compound, NBTType type) {
         super.readSyncableNBT(compound, type);
         this.currentTimer = compound.getInt("Timer");
         if (type == NBTType.SYNC) {
@@ -68,31 +71,37 @@ public class TileEntityFeeder extends TileEntityInventoryBase implements INamedC
         }
     }
 
-    @Override
-    public void updateEntity() {
-        super.updateEntity();
-        this.currentTimer = MathHelper.clamp(++this.currentTimer, 0, 100);
-        if (this.level.isClientSide) {
-            return;
+    public static <T extends BlockEntity> void clientTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityFeeder tile) {
+            tile.clientTick();
+            tile.currentTimer = Mth.clamp(++tile.currentTimer, 0, 100);
         }
-        int range = 5;
-        ItemStack stack = this.inv.getStackInSlot(0);
-        if (!stack.isEmpty() && this.currentTimer >= TIME) {
-            List<AnimalEntity> animals = this.level.getEntitiesOfClass(AnimalEntity.class, new AxisAlignedBB(this.worldPosition.getX() - range, this.worldPosition.getY() - range, this.worldPosition.getZ() - range, this.worldPosition.getX() + range, this.worldPosition.getY() + range, this.worldPosition.getZ() + range));
-            this.currentAnimalAmount = animals.size();
-            if (this.currentAnimalAmount >= 2 && this.currentAnimalAmount < THRESHOLD) {
-                Optional<AnimalEntity> opt = animals.stream().filter((e) -> canBeFed(stack, e)).findAny();
-                if (opt.isPresent()) {
-                    feedAnimal(opt.get());
-                    stack.shrink(1);
-                    this.currentTimer = 0;
-                    this.setChanged();
+    }
+
+    public static <T extends BlockEntity> void serverTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityFeeder tile) {
+            tile.serverTick();
+            tile.currentTimer = Mth.clamp(++tile.currentTimer, 0, 100);
+
+            int range = 5;
+            ItemStack stack = tile.inv.getStackInSlot(0);
+            if (!stack.isEmpty() && tile.currentTimer >= TIME) {
+                List<Animal> animals = level.getEntitiesOfClass(Animal.class, new AABB(tile.worldPosition.getX() - range, tile.worldPosition.getY() - range, tile.worldPosition.getZ() - range, tile.worldPosition.getX() + range, tile.worldPosition.getY() + range, tile.worldPosition.getZ() + range));
+                tile.currentAnimalAmount = animals.size();
+                if (tile.currentAnimalAmount >= 2 && tile.currentAnimalAmount < THRESHOLD) {
+                    Optional<Animal> opt = animals.stream().filter((e) -> canBeFed(stack, e)).findAny();
+                    if (opt.isPresent()) {
+                        feedAnimal(opt.get());
+                        stack.shrink(1);
+                        tile.currentTimer = 0;
+                        tile.setChanged();
+                    }
                 }
             }
-        }
-        if ((this.lastAnimalAmount != this.currentAnimalAmount || this.lastTimer != this.currentTimer) && this.sendUpdateWithInterval()) {
-            this.lastAnimalAmount = this.currentAnimalAmount;
-            this.lastTimer = this.currentTimer;
+            if ((tile.lastAnimalAmount != tile.currentAnimalAmount || tile.lastTimer != tile.currentTimer) && tile.sendUpdateWithInterval()) {
+                tile.lastAnimalAmount = tile.currentAnimalAmount;
+                tile.lastTimer = tile.currentTimer;
+            }
         }
     }
 
@@ -101,18 +110,18 @@ public class TileEntityFeeder extends TileEntityInventoryBase implements INamedC
         return (slot, automation) -> !automation;
     }
 
-    private static void feedAnimal(AnimalEntity animal) {
+    private static void feedAnimal(Animal animal) {
         animal.setInLove(null);
         for (int i = 0; i < 7; i++) {
-            double d = animal.level.random.nextGaussian() * 0.02D;
-            double d1 = animal.level.random.nextGaussian() * 0.02D;
-            double d2 = animal.level.random.nextGaussian() * 0.02D;
-            animal.level.addParticle(ParticleTypes.HEART, animal.getX() + animal.level.random.nextFloat() * animal.getBbWidth() * 2.0F - animal.getBbWidth(), animal.getY() + 0.5D + animal.level.random.nextFloat() * animal.getBbHeight(), animal.getZ() + animal.level.random.nextFloat() * animal.getBbWidth() * 2.0F - animal.getBbWidth(), d, d1, d2);
+            double d = animal.level().random.nextGaussian() * 0.02D;
+            double d1 = animal.level().random.nextGaussian() * 0.02D;
+            double d2 = animal.level().random.nextGaussian() * 0.02D;
+            animal.level().addParticle(ParticleTypes.HEART, animal.getX() + animal.level().random.nextFloat() * animal.getBbWidth() * 2.0F - animal.getBbWidth(), animal.getY() + 0.5D + animal.level().random.nextFloat() * animal.getBbHeight(), animal.getZ() + animal.level().random.nextFloat() * animal.getBbWidth() * 2.0F - animal.getBbWidth(), d, d1, d2);
         }
     }
 
-    private static boolean canBeFed(ItemStack stack, AnimalEntity animal) {
-        if (animal instanceof HorseEntity && ((HorseEntity) animal).isTamed()) {
+    private static boolean canBeFed(ItemStack stack, Animal animal) {
+        if (animal instanceof Horse && ((Horse) animal).isTamed()) {
             Item item = stack.getItem();
             return animal.getAge() == 0 && !animal.isInLove() && (item == Items.GOLDEN_APPLE || item == Items.GOLDEN_CARROT);
         }
@@ -120,13 +129,13 @@ public class TileEntityFeeder extends TileEntityInventoryBase implements INamedC
     }
 
     @Override
-    public ITextComponent getDisplayName() {
-        return StringTextComponent.EMPTY;
+    public Component getDisplayName() {
+        return Component.empty();
     }
 
     @Nullable
     @Override
-    public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity p_createMenu_3_) {
+    public AbstractContainerMenu createMenu(int windowId, Inventory playerInventory, Player p_createMenu_3_) {
         return new ContainerFeeder(windowId, playerInventory, this);
     }
 }

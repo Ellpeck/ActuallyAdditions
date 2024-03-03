@@ -15,17 +15,17 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData.PlayerSave;
 import de.ellpeck.actuallyadditions.mod.misc.apiimpl.LaserRelayConnectionHandler;
 import io.netty.util.internal.ConcurrentSet;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
-import net.minecraft.world.storage.WorldSavedData;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.saveddata.SavedData;
 
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 // TODO: [port] validate this still works
-public class WorldData extends WorldSavedData {
+public class WorldData extends SavedData {
 
     public static final String DATA_TAG = ActuallyAdditions.MODID + "data";
     public static final String SAVE_NAME = ActuallyAdditions.MODID + "_worldsave";
@@ -34,19 +34,11 @@ public class WorldData extends WorldSavedData {
     public final ConcurrentHashMap<UUID, PlayerSave> playerSaveData = new ConcurrentHashMap<>();
 
     public WorldData() {
-        super(SAVE_NAME);
+        super();
     }
 
-    public static WorldData get(World world) {
-        WorldData storage = ((ServerWorld) world).getDataStorage().get(WorldData::new, SAVE_NAME);
-
-        if (storage == null) {
-            storage = new WorldData();
-            storage.setDirty();
-            ((ServerWorld) world).getDataStorage().set(storage);
-        }
-
-        return storage;
+    public static WorldData get(Level level) {
+        return ((ServerLevel) level).getDataStorage().computeIfAbsent(WorldData::load, WorldData::new, SAVE_NAME);
     }
 
     //TODO what in the world is this?
@@ -57,45 +49,46 @@ public class WorldData extends WorldSavedData {
         }
     }
 
-    @Override
-    public void load(CompoundNBT compound) {
-        this.laserRelayNetworks.clear();
-        ListNBT networkList = compound.getList("Networks", 10);
+    public static WorldData load(CompoundTag compound) {
+        WorldData worldData = new WorldData();
+        worldData.laserRelayNetworks.clear();
+        ListTag networkList = compound.getList("Networks", 10);
         for (int i = 0; i < networkList.size(); i++) {
             Network network = LaserRelayConnectionHandler.readNetworkFromNBT(networkList.getCompound(i));
-            this.laserRelayNetworks.add(network);
+            worldData.laserRelayNetworks.add(network);
         }
 
-        this.playerSaveData.clear();
-        ListNBT playerList = compound.getList("PlayerData", 10);
+        worldData.playerSaveData.clear();
+        ListTag playerList = compound.getList("PlayerData", 10);
         for (int i = 0; i < playerList.size(); i++) {
-            CompoundNBT player = playerList.getCompound(i);
+            CompoundTag player = playerList.getCompound(i);
 
             UUID id = player.getUUID("UUID");
-            CompoundNBT data = player.getCompound("Data");
+            CompoundTag data = player.getCompound("Data");
 
             PlayerSave save = new PlayerSave(id);
             save.readFromNBT(data, true);
-            this.playerSaveData.put(id, save);
+            worldData.playerSaveData.put(id, save);
         }
+        return worldData;
     }
 
     @Override
-    public CompoundNBT save(CompoundNBT compound) {
+    public CompoundTag save(CompoundTag compound) {
         //Laser World Data
-        ListNBT networkList = new ListNBT();
+        ListTag networkList = new ListTag();
         for (Network network : this.laserRelayNetworks) {
             networkList.add(LaserRelayConnectionHandler.writeNetworkToNBT(network));
         }
         compound.put("Networks", networkList);
 
         //Player Data
-        ListNBT playerList = new ListNBT();
+        ListTag playerList = new ListTag();
         for (PlayerSave save : this.playerSaveData.values()) {
-            CompoundNBT player = new CompoundNBT();
+            CompoundTag player = new CompoundTag();
             player.putUUID("UUID", save.id);
 
-            CompoundNBT data = new CompoundNBT();
+            CompoundTag data = new CompoundTag();
             save.writeToNBT(data, true);
             player.put("Data", data);
 

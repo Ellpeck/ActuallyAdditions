@@ -1,12 +1,13 @@
 {
   "type": "minecraft:crafting_shapeless",
+  "category": "misc",
   "ingredients": [
     {
       "item": "actuallyadditions:enori_crystal"
     }
   ],
   "result": {
-    "item": "actuallyadditions:enori_crystal_shard",
-    "count": 9
+    "count": 9,
+    "item": "actuallyadditions:enori_crystal_shard"
   }
 }

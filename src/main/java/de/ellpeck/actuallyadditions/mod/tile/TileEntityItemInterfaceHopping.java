@@ -15,18 +15,19 @@ import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import de.ellpeck.actuallyadditions.mod.util.compat.SlotlessableItemHandlerWrapper;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.EntityPredicates;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.entity.EntitySelector;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.phys.AABB;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
 import java.util.List;
@@ -36,60 +37,67 @@ public class TileEntityItemInterfaceHopping extends TileEntityItemInterface {
     private SlotlessableItemHandlerWrapper handlerToPullFrom;
     private SlotlessableItemHandlerWrapper handlerToPushTo;
 
-    public TileEntityItemInterfaceHopping() {
-        super(ActuallyBlocks.ITEM_INTERFACE_HOPPING.getTileEntityType());
+    public TileEntityItemInterfaceHopping(BlockPos pos, BlockState state) {
+        super(ActuallyBlocks.ITEM_INTERFACE_HOPPING.getTileEntityType(), pos, state);
     }
 
-    @Override
-    public void updateEntity() {
-        super.updateEntity();
+    public static <T extends BlockEntity> void clientTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityItemInterfaceHopping tile) {
+            tile.clientTick();
+        }
+    }
 
-        // TODO: [port] validate this is the correct way to get total game time getGameTime
-        if (!this.level.isClientSide && this.level.getLevelData().getGameTime() % 10 == 0) {
-            if (this.handlerToPullFrom != null) {
-                WorldUtil.doItemInteraction(this.handlerToPullFrom, this.itemHandler, 4);
-            } else {
-                if (this.level.getLevelData().getGameTime() % 20 == 0) {
-                    //TODO hmm?
-                    AxisAlignedBB axisAlignedBB = new AxisAlignedBB(this.getBlockPos().getX(), this.getBlockPos().getY() + 0.5, this.getBlockPos().getZ(), this.getBlockPos().getX() + 1, this.getBlockPos().getY() + 2, this.getBlockPos().getZ() + 1);
-                    List<ItemEntity> items = this.level.getEntities(EntityType.ITEM, axisAlignedBB, EntityPredicates.ENTITY_STILL_ALIVE);
-                    if (items != null && !items.isEmpty()) {
-                        for (ItemEntity item : items) {
-                            if (item != null && item.isAlive()) {
-                                if (ActuallyAdditions.commonCapsLoaded) {
-                                    Object slotless = this.itemHandler.getSlotlessHandler();
-                                    // TODO: [port] add back?
-                                    //                                    if (slotless instanceof ISlotlessItemHandler) {
-                                    //                                        ItemStack left = ((ISlotlessItemHandler) slotless).insertItem(item.getItem(), false);
-                                    //                                        item.setItem(left);
-                                    //
-                                    //                                        if (!StackUtil.isValid(left)) {
-                                    //                                            item.remove();
-                                    //                                            continue;
-                                    //                                        }
-                                    //                                    }
-                                }
+    public static <T extends BlockEntity> void serverTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityItemInterfaceHopping tile) {
+            tile.serverTick();
 
-                                LazyOptional<IItemHandler> handler = this.itemHandler.getNormalHandler();
-                                handler.ifPresent(cap -> {
-                                    for (int i = 0; i < cap.getSlots(); i++) {
-                                        ItemStack left = cap.insertItem(i, item.getItem(), false);
-                                        item.setItem(left);
-
-                                        if (!StackUtil.isValid(left)) {
-                                            item.remove();
-                                            break;
-                                        }
+            // TODO: [port] validate tile is the correct way to get total game time getGameTime
+            if (level.getLevelData().getGameTime() % 10 == 0) {
+                if (tile.handlerToPullFrom != null) {
+                    WorldUtil.doItemInteraction(tile.handlerToPullFrom, tile.itemHandler, 4);
+                } else {
+                    if (level.getLevelData().getGameTime() % 20 == 0) {
+                        //TODO hmm?
+                        AABB axisAlignedBB = new AABB(pos.getX(), pos.getY() + 0.5, pos.getZ(), pos.getX() + 1, pos.getY() + 2, pos.getZ() + 1);
+                        List<ItemEntity> items = level.getEntities(EntityType.ITEM, axisAlignedBB, EntitySelector.ENTITY_STILL_ALIVE);
+                        if (items != null && !items.isEmpty()) {
+                            for (ItemEntity item : items) {
+                                if (item != null && item.isAlive()) {
+                                    if (ActuallyAdditions.commonCapsLoaded) {
+                                        Object slotless = tile.itemHandler.getSlotlessHandler();
+                                        // TODO: [port] add back?
+                                        //                                    if (slotless instanceof ISlotlessItemHandler) {
+                                        //                                        ItemStack left = ((ISlotlessItemHandler) slotless).insertItem(item.getItem(), false);
+                                        //                                        item.setItem(left);
+                                        //
+                                        //                                        if (!StackUtil.isValid(left)) {
+                                        //                                            item.remove();
+                                        //                                            continue;
+                                        //                                        }
+                                        //                                    }
                                     }
-                                });
+
+                                    LazyOptional<IItemHandler> handler = tile.itemHandler.getNormalHandler();
+                                    handler.ifPresent(cap -> {
+                                        for (int i = 0; i < cap.getSlots(); i++) {
+                                            ItemStack left = cap.insertItem(i, item.getItem(), false);
+                                            item.setItem(left);
+
+                                            if (!StackUtil.isValid(left)) {
+                                                item.discard();
+                                                break;
+                                            }
+                                        }
+                                    });
+                                }
                             }
                         }
                     }
                 }
-            }
 
-            if (this.handlerToPushTo != null) {
-                WorldUtil.doItemInteraction(this.itemHandler, this.handlerToPushTo, 4);
+                if (tile.handlerToPushTo != null) {
+                    WorldUtil.doItemInteraction(tile.itemHandler, tile.handlerToPushTo, 4);
+                }
             }
         }
     }
@@ -101,9 +109,9 @@ public class TileEntityItemInterfaceHopping extends TileEntityItemInterface {
         this.handlerToPullFrom = null;
         this.handlerToPushTo = null;
 
-        TileEntity from = this.level.getBlockEntity(this.getBlockPos().relative(Direction.UP));
+        BlockEntity from = this.level.getBlockEntity(this.getBlockPos().relative(Direction.UP));
         if (from != null && !(from instanceof TileEntityItemInterface)) {
-            LazyOptional<IItemHandler> normal = from.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.DOWN);
+            LazyOptional<IItemHandler> normal = from.getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.DOWN);
 
             Object slotless = null;
             // TODO: [port] add back
@@ -122,9 +130,9 @@ public class TileEntityItemInterfaceHopping extends TileEntityItemInterface {
 
         BlockPos toPos = this.getBlockPos().relative(facing);
         if (this.level.isLoaded(toPos)) {
-            TileEntity to = this.level.getBlockEntity(toPos);
+            BlockEntity to = this.level.getBlockEntity(toPos);
             if (to != null && !(to instanceof TileEntityItemInterface)) {
-                LazyOptional<IItemHandler> normal = to.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing.getOpposite());
+                LazyOptional<IItemHandler> normal = to.getCapability(ForgeCapabilities.ITEM_HANDLER, facing.getOpposite());
 
                 Object slotless = null;
                 //                TODO: [port] Add back

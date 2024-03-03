@@ -12,17 +12,67 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.AACrops;
-import de.ellpeck.actuallyadditions.mod.blocks.base.BlockPlant;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.Crystals;
-import de.ellpeck.actuallyadditions.mod.tile.*;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityBatteryBox;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityBioReactor;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityBreaker;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityCanolaPress;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityCoalGenerator;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityCoffeeMachine;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityCrusher;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityCrusherDouble;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityDisplayStand;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityDropper;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityEmpowerer;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityEnergizer;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityEnervator;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityFarmer;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityFeeder;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityFermentingBarrel;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityFireworkBox;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityFluidCollector;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityFluidPlacer;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityHeatCollector;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityItemInterface;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityItemInterfaceHopping;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayEnergy;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayEnergyAdvanced;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayEnergyExtreme;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayFluids;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayItem;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayItemAdvanced;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityLavaFactoryController;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityLeafGenerator;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityLongRangeBreaker;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityOilGenerator;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityPhantomBooster;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityPhantomBreaker;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityPhantomEnergyface;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityPhantomItemface;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityPhantomLiquiface;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityPhantomPlacer;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityPhantomRedstoneface;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityPlacer;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityPlayerInterface;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityPoweredFurnace;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityRangedCollector;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityShockSuppressor;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityVerticalDigger;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityXPSolidifier;
 import de.ellpeck.actuallyadditions.registration.AABlockReg;
-import net.minecraft.block.*;
-import net.minecraft.block.material.Material;
-import net.minecraft.item.Item;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.IItemProvider;
-import net.minecraftforge.common.ToolType;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.StairBlock;
+import net.minecraft.world.level.block.WallBlock;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -31,11 +81,11 @@ import java.util.function.Supplier;
 
 public final class ActuallyBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, ActuallyAdditions.MODID);
-    public static final DeferredRegister<TileEntityType<?>> TILES = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, ActuallyAdditions.MODID);
+    public static final DeferredRegister<BlockEntityType<?>> TILES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, ActuallyAdditions.MODID);
 
-    public static final Item.Properties defaultBlockItemProperties = new Item.Properties().tab(ActuallyAdditions.GROUP).stacksTo(64);
+    public static final Item.Properties defaultBlockItemProperties = new Item.Properties().stacksTo(64);
 
-    public static final AbstractBlock.Properties miscBlockProperties = AbstractBlock.Properties.of(Material.STONE).harvestLevel(1).harvestTool(ToolType.PICKAXE).strength(1.5f, 10f);
+    public static final BlockBehaviour.Properties miscBlockProperties = BlockBehaviour.Properties.copy(Blocks.STONE).requiresCorrectToolForDrops().strength(1.5f, 10f);
 
     // Casings
     public static final AABlockReg<ActuallyBlock, AABlockItem, ?> WOOD_CASING = new AABlockReg<>("wood_casing", () -> new ActuallyBlock(miscBlockProperties), ActuallyBlock::createBlockItem);
@@ -52,8 +102,8 @@ public final class ActuallyBlocks {
 
     public static final AABlockReg<BlockEnergizer, AABlockItem, TileEntityEnergizer> ENERGIZER = new AABlockReg<>("energizer", () -> new BlockEnergizer(true),
         (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityEnergizer::new);
-    public static final AABlockReg<BlockEnergizer, AABlockItem, TileEntityEnergizer> ENERVATOR = new AABlockReg<>("enervator", () -> new BlockEnergizer(false),
-        (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityEnergizer::new);
+    public static final AABlockReg<BlockEnergizer, AABlockItem, TileEntityEnervator> ENERVATOR = new AABlockReg<>("enervator", () -> new BlockEnergizer(false),
+        (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityEnervator::new);
 
     public static final AABlockReg<BlockLavaFactoryController, AABlockItem, TileEntityLavaFactoryController> LAVA_FACTORY_CONTROLLER
         = new AABlockReg<>("lava_factory_controller", BlockLavaFactoryController::new, (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityLavaFactoryController::new);
@@ -224,32 +274,32 @@ public final class ActuallyBlocks {
     public static final AABlockReg<ActuallyBlock, AABlockItem, ?> BLACK_QUARTZ_BRICK = new AABlockReg<>("black_quartz_brick_block", () -> new ActuallyBlock(miscBlockProperties), (b) -> new AABlockItem(b, defaultBlockItemProperties));
 
     //Walls
-    public static final AABlockReg<WallBlock, AABlockItem, ?> ETHETIC_GREEN_WALL = new AABlockReg<>("ethetic_green_wall", () -> new WallBlock(AbstractBlock.Properties.copy(ETHETIC_GREEN_BLOCK.get())), (b) -> new AABlockItem(b, defaultBlockItemProperties));
-    public static final AABlockReg<WallBlock, AABlockItem, ?> ETHETIC_WHITE_WALL = new AABlockReg<>("ethetic_white_wall", () -> new WallBlock(AbstractBlock.Properties.copy(ETHETIC_WHITE_BLOCK.get())), (b) -> new AABlockItem(b, defaultBlockItemProperties));
-    public static final AABlockReg<WallBlock, AABlockItem, ?> BLACK_QUARTZ_WALL = new AABlockReg<>("black_quartz_wall", () -> new WallBlock(AbstractBlock.Properties.copy(BLACK_QUARTZ.get())), (b) -> new AABlockItem(b, defaultBlockItemProperties));
-    public static final AABlockReg<WallBlock, AABlockItem, ?> CHISELED_BLACK_QUARTZ_WALL = new AABlockReg<>("chiseled_black_quartz_wall", () -> new WallBlock(AbstractBlock.Properties.copy(CHISELED_BLACK_QUARTZ.get())), (b) -> new AABlockItem(b, defaultBlockItemProperties));
-    public static final AABlockReg<WallBlock, AABlockItem, ?> SMOOTH_BLACK_QUARTZ_WALL = new AABlockReg<>("smooth_black_quartz_wall", () -> new WallBlock(AbstractBlock.Properties.copy(CHISELED_BLACK_QUARTZ.get())), (b) -> new AABlockItem(b, defaultBlockItemProperties));
-    public static final AABlockReg<WallBlock, AABlockItem, ?> BLACK_QUARTZ_BRICK_WALL = new AABlockReg<>("black_quartz_brick_wall", () -> new WallBlock(AbstractBlock.Properties.copy(CHISELED_BLACK_QUARTZ.get())), (b) -> new AABlockItem(b, defaultBlockItemProperties));
-    public static final AABlockReg<WallBlock, AABlockItem, ?> BLACK_QUARTZ_PILLAR_WALL = new AABlockReg<>("black_quartz_pillar_wall", () -> new WallBlock(AbstractBlock.Properties.copy(BLACK_QUARTZ_PILLAR.get())), (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<WallBlock, AABlockItem, ?> ETHETIC_GREEN_WALL = new AABlockReg<>("ethetic_green_wall", () -> new WallBlock(BlockBehaviour.Properties.copy(ETHETIC_GREEN_BLOCK.get())), (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<WallBlock, AABlockItem, ?> ETHETIC_WHITE_WALL = new AABlockReg<>("ethetic_white_wall", () -> new WallBlock(BlockBehaviour.Properties.copy(ETHETIC_WHITE_BLOCK.get())), (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<WallBlock, AABlockItem, ?> BLACK_QUARTZ_WALL = new AABlockReg<>("black_quartz_wall", () -> new WallBlock(BlockBehaviour.Properties.copy(BLACK_QUARTZ.get())), (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<WallBlock, AABlockItem, ?> CHISELED_BLACK_QUARTZ_WALL = new AABlockReg<>("chiseled_black_quartz_wall", () -> new WallBlock(BlockBehaviour.Properties.copy(CHISELED_BLACK_QUARTZ.get())), (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<WallBlock, AABlockItem, ?> SMOOTH_BLACK_QUARTZ_WALL = new AABlockReg<>("smooth_black_quartz_wall", () -> new WallBlock(BlockBehaviour.Properties.copy(CHISELED_BLACK_QUARTZ.get())), (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<WallBlock, AABlockItem, ?> BLACK_QUARTZ_BRICK_WALL = new AABlockReg<>("black_quartz_brick_wall", () -> new WallBlock(BlockBehaviour.Properties.copy(CHISELED_BLACK_QUARTZ.get())), (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<WallBlock, AABlockItem, ?> BLACK_QUARTZ_PILLAR_WALL = new AABlockReg<>("black_quartz_pillar_wall", () -> new WallBlock(BlockBehaviour.Properties.copy(BLACK_QUARTZ_PILLAR.get())), (b) -> new AABlockItem(b, defaultBlockItemProperties));
 
     //Slabs
-    public static final AABlockReg<SlabBlock, AABlockItem, ?> ETHETIC_GREEN_SLAB = new AABlockReg<>("ethetic_green_slab", () -> new SlabBlock(AbstractBlock.Properties.copy(ETHETIC_GREEN_BLOCK.get())), (b) -> new AABlockItem(b, defaultBlockItemProperties));
-    public static final AABlockReg<SlabBlock, AABlockItem, ?> ETHETIC_WHITE_SLAB = new AABlockReg<>("ethetic_white_slab", () -> new SlabBlock(AbstractBlock.Properties.copy(ETHETIC_WHITE_BLOCK.get())), (b) -> new AABlockItem(b, defaultBlockItemProperties));
-    public static final AABlockReg<SlabBlock, AABlockItem, ?> BLACK_QUARTZ_SLAB = new AABlockReg<>("black_quartz_slab", () -> new SlabBlock(AbstractBlock.Properties.copy(BLACK_QUARTZ.get())), (b) -> new AABlockItem(b, defaultBlockItemProperties));
-    public static final AABlockReg<SlabBlock, AABlockItem, ?> CHISELED_BLACK_QUARTZ_SLAB = new AABlockReg<>("chiseled_black_quartz_slab", () -> new SlabBlock(AbstractBlock.Properties.copy(CHISELED_BLACK_QUARTZ.get())), (b) -> new AABlockItem(b, defaultBlockItemProperties));
-    public static final AABlockReg<SlabBlock, AABlockItem, ?> BLACK_QUARTZ_PILLAR_SLAB = new AABlockReg<>("black_quartz_pillar_slab", () -> new SlabBlock(AbstractBlock.Properties.copy(BLACK_QUARTZ_PILLAR.get())), (b) -> new AABlockItem(b, defaultBlockItemProperties));
-    public static final AABlockReg<SlabBlock, AABlockItem, ?> SMOOTH_BLACK_QUARTZ_SLAB = new AABlockReg<>("smooth_black_quartz_slab", () -> new SlabBlock(AbstractBlock.Properties.copy(BLACK_QUARTZ_PILLAR.get())), (b) -> new AABlockItem(b, defaultBlockItemProperties));
-    public static final AABlockReg<SlabBlock, AABlockItem, ?> BLACK_QUARTZ_BRICK_SLAB = new AABlockReg<>("black_quartz_brick_slab", () -> new SlabBlock(AbstractBlock.Properties.copy(BLACK_QUARTZ_PILLAR.get())), (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<SlabBlock, AABlockItem, ?> ETHETIC_GREEN_SLAB = new AABlockReg<>("ethetic_green_slab", () -> new SlabBlock(BlockBehaviour.Properties.copy(ETHETIC_GREEN_BLOCK.get())), (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<SlabBlock, AABlockItem, ?> ETHETIC_WHITE_SLAB = new AABlockReg<>("ethetic_white_slab", () -> new SlabBlock(BlockBehaviour.Properties.copy(ETHETIC_WHITE_BLOCK.get())), (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<SlabBlock, AABlockItem, ?> BLACK_QUARTZ_SLAB = new AABlockReg<>("black_quartz_slab", () -> new SlabBlock(BlockBehaviour.Properties.copy(BLACK_QUARTZ.get())), (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<SlabBlock, AABlockItem, ?> CHISELED_BLACK_QUARTZ_SLAB = new AABlockReg<>("chiseled_black_quartz_slab", () -> new SlabBlock(BlockBehaviour.Properties.copy(CHISELED_BLACK_QUARTZ.get())), (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<SlabBlock, AABlockItem, ?> BLACK_QUARTZ_PILLAR_SLAB = new AABlockReg<>("black_quartz_pillar_slab", () -> new SlabBlock(BlockBehaviour.Properties.copy(BLACK_QUARTZ_PILLAR.get())), (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<SlabBlock, AABlockItem, ?> SMOOTH_BLACK_QUARTZ_SLAB = new AABlockReg<>("smooth_black_quartz_slab", () -> new SlabBlock(BlockBehaviour.Properties.copy(BLACK_QUARTZ_PILLAR.get())), (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<SlabBlock, AABlockItem, ?> BLACK_QUARTZ_BRICK_SLAB = new AABlockReg<>("black_quartz_brick_slab", () -> new SlabBlock(BlockBehaviour.Properties.copy(BLACK_QUARTZ_PILLAR.get())), (b) -> new AABlockItem(b, defaultBlockItemProperties));
 
 
     //Stairs
-    public static final AABlockReg<StairsBlock, AABlockItem, ?> ETHETIC_GREEN_STAIRS = new AABlockReg<>("ethetic_green_stairs", () -> new StairsBlock(() -> ETHETIC_GREEN_BLOCK.get().defaultBlockState(), AbstractBlock.Properties.copy(ETHETIC_GREEN_BLOCK.get())), (b) -> new AABlockItem(b, defaultBlockItemProperties));
-    public static final AABlockReg<StairsBlock, AABlockItem, ?> ETHETIC_WHITE_STAIRS = new AABlockReg<>("ethetic_white_stairs", () -> new StairsBlock(() -> ETHETIC_WHITE_BLOCK.get().defaultBlockState(), AbstractBlock.Properties.copy(ETHETIC_WHITE_BLOCK.get())), (b) -> new AABlockItem(b, defaultBlockItemProperties));
-    public static final AABlockReg<StairsBlock, AABlockItem, ?> BLACK_QUARTZ_STAIR = new AABlockReg<>("black_quartz_stair", () -> new StairsBlock(() -> BLACK_QUARTZ.get().defaultBlockState(), AbstractBlock.Properties.copy(BLACK_QUARTZ.get())), (b) -> new AABlockItem(b, defaultBlockItemProperties));
-    public static final AABlockReg<StairsBlock, AABlockItem, ?> CHISELED_BLACK_QUARTZ_STAIR = new AABlockReg<>("chiseled_black_quartz_stair", () -> new StairsBlock(() -> CHISELED_BLACK_QUARTZ.get().defaultBlockState(), AbstractBlock.Properties.copy(CHISELED_BLACK_QUARTZ.get())), (b) -> new AABlockItem(b, defaultBlockItemProperties));
-    public static final AABlockReg<StairsBlock, AABlockItem, ?> BLACK_QUARTZ_PILLAR_STAIR = new AABlockReg<>("black_quartz_pillar_stair", () -> new StairsBlock(() -> BLACK_QUARTZ_PILLAR.get().defaultBlockState(), AbstractBlock.Properties.copy(BLACK_QUARTZ_PILLAR.get())), (b) -> new AABlockItem(b, defaultBlockItemProperties));
-    public static final AABlockReg<StairsBlock, AABlockItem, ?> SMOOTH_BLACK_QUARTZ_STAIR = new AABlockReg<>("smooth_black_quartz_stair", () -> new StairsBlock(() -> BLACK_QUARTZ_PILLAR.get().defaultBlockState(), AbstractBlock.Properties.copy(BLACK_QUARTZ_PILLAR.get())), (b) -> new AABlockItem(b, defaultBlockItemProperties));
-    public static final AABlockReg<StairsBlock, AABlockItem, ?> BLACK_QUARTZ_BRICK_STAIR = new AABlockReg<>("black_quartz_brick_stair", () -> new StairsBlock(() -> BLACK_QUARTZ_PILLAR.get().defaultBlockState(), AbstractBlock.Properties.copy(BLACK_QUARTZ_PILLAR.get())), (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<StairBlock, AABlockItem, ?> ETHETIC_GREEN_STAIRS = new AABlockReg<>("ethetic_green_stairs", () -> new StairBlock(() -> ETHETIC_GREEN_BLOCK.get().defaultBlockState(), BlockBehaviour.Properties.copy(ETHETIC_GREEN_BLOCK.get())), (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<StairBlock, AABlockItem, ?> ETHETIC_WHITE_STAIRS = new AABlockReg<>("ethetic_white_stairs", () -> new StairBlock(() -> ETHETIC_WHITE_BLOCK.get().defaultBlockState(), BlockBehaviour.Properties.copy(ETHETIC_WHITE_BLOCK.get())), (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<StairBlock, AABlockItem, ?> BLACK_QUARTZ_STAIR = new AABlockReg<>("black_quartz_stair", () -> new StairBlock(() -> BLACK_QUARTZ.get().defaultBlockState(), BlockBehaviour.Properties.copy(BLACK_QUARTZ.get())), (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<StairBlock, AABlockItem, ?> CHISELED_BLACK_QUARTZ_STAIR = new AABlockReg<>("chiseled_black_quartz_stair", () -> new StairBlock(() -> CHISELED_BLACK_QUARTZ.get().defaultBlockState(), BlockBehaviour.Properties.copy(CHISELED_BLACK_QUARTZ.get())), (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<StairBlock, AABlockItem, ?> BLACK_QUARTZ_PILLAR_STAIR = new AABlockReg<>("black_quartz_pillar_stair", () -> new StairBlock(() -> BLACK_QUARTZ_PILLAR.get().defaultBlockState(), BlockBehaviour.Properties.copy(BLACK_QUARTZ_PILLAR.get())), (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<StairBlock, AABlockItem, ?> SMOOTH_BLACK_QUARTZ_STAIR = new AABlockReg<>("smooth_black_quartz_stair", () -> new StairBlock(() -> BLACK_QUARTZ_PILLAR.get().defaultBlockState(), BlockBehaviour.Properties.copy(BLACK_QUARTZ_PILLAR.get())), (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<StairBlock, AABlockItem, ?> BLACK_QUARTZ_BRICK_STAIR = new AABlockReg<>("black_quartz_brick_stair", () -> new StairBlock(() -> BLACK_QUARTZ_PILLAR.get().defaultBlockState(), BlockBehaviour.Properties.copy(BLACK_QUARTZ_PILLAR.get())), (b) -> new AABlockItem(b, defaultBlockItemProperties));
 
 
 
@@ -267,16 +317,16 @@ public final class ActuallyBlocks {
     public static final AABlockReg<BlockGreenhouseGlass, AABlockItem, ?> GREENHOUSE_GLASS = new AABlockReg<>("greenhouse_glass", BlockGreenhouseGlass::new,
         (b) -> new AABlockItem(b, defaultBlockItemProperties));
 
-    public static AbstractBlock.Properties defaultPickProps(int harvestLevel, float hardness, float resistance) {
-        return AbstractBlock.Properties.of(Material.STONE).harvestLevel(harvestLevel).harvestTool(ToolType.PICKAXE).strength(hardness, resistance).sound(SoundType.STONE);
+    public static BlockBehaviour.Properties defaultPickProps(float hardness, float resistance) {
+        return BlockBehaviour.Properties.copy(Blocks.STONE).requiresCorrectToolForDrops().strength(hardness, resistance).sound(SoundType.STONE);
     }
 
-    public static AbstractBlock.Properties defaultPickProps(int harvestLevel) {
-        return AbstractBlock.Properties.of(Material.STONE).harvestLevel(harvestLevel).harvestTool(ToolType.PICKAXE).strength(1.5F, 10.0F).sound(SoundType.STONE);
+    public static BlockBehaviour.Properties defaultPickProps() {
+        return BlockBehaviour.Properties.copy(Blocks.STONE).requiresCorrectToolForDrops().strength(1.5F, 10.0F).sound(SoundType.STONE);
     }
 
-    public static AbstractBlock.Properties defaultCropProps() {
-        return AbstractBlock.Properties.of(Material.PLANT).noCollission().randomTicks().instabreak().sound(SoundType.CROP);
+    public static BlockBehaviour.Properties defaultCropProps() {
+        return BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).noCollission().randomTicks().instabreak().sound(SoundType.CROP);
     }
 
     public static void init(IEventBus evt) {

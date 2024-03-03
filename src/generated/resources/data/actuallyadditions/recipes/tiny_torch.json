@@ -1,9 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "C",
-    "S"
-  ],
+  "category": "misc",
   "key": {
     "C": {
       "tag": "actuallyadditions:tiny_coals"
@@ -12,8 +9,13 @@
       "tag": "forge:rods/wooden"
     }
   },
+  "pattern": [
+    "C",
+    "S"
+  ],
   "result": {
-    "item": "actuallyadditions:tiny_torch",
-    "count": 2
-  }
+    "count": 2,
+    "item": "actuallyadditions:tiny_torch"
+  },
+  "show_notification": true
 }

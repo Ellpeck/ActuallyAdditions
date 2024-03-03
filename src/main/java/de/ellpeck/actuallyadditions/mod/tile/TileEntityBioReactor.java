@@ -15,20 +15,22 @@ import de.ellpeck.actuallyadditions.mod.inventory.ContainerBioReactor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.block.Block;
-import net.minecraft.block.IGrowable;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.BonemealableBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -37,9 +39,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
-
-public class TileEntityBioReactor extends TileEntityInventoryBase implements INamedContainerProvider, ISharingEnergyProvider {
+public class TileEntityBioReactor extends TileEntityInventoryBase implements MenuProvider, ISharingEnergyProvider {
 
     public final CustomEnergyStorage storage = new CustomEnergyStorage(200000, 0, 800);
     public final LazyOptional<IEnergyStorage> lazyEnergy = LazyOptional.of(() -> this.storage);
@@ -51,8 +51,8 @@ public class TileEntityBioReactor extends TileEntityInventoryBase implements INa
     private int lastBurnTime;
     private int lastProducePerTick;
 
-    public TileEntityBioReactor() {
-        super(ActuallyBlocks.BIOREACTOR.getTileEntityType(),  8);
+    public TileEntityBioReactor(BlockPos pos, BlockState state) {
+        super(ActuallyBlocks.BIOREACTOR.getTileEntityType(),  pos, state, 8);
     }
 
     public static boolean isValidItem(ItemStack stack) {
@@ -68,59 +68,66 @@ public class TileEntityBioReactor extends TileEntityInventoryBase implements INa
     }
 
     private static boolean isValid(Object o) {
-        return o instanceof IPlantable || o instanceof IGrowable;
+        return o instanceof IPlantable || o instanceof BonemealableBlock;
     }
 
-    @Override
-    public void updateEntity() {
-        super.updateEntity();
+    public static <T extends BlockEntity> void clientTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityBioReactor tile) {
+            tile.clientTick();
+        }
+    }
 
-        if (this.burnTime <= 0) {
-            List<Item> types = null;
+    public static <T extends BlockEntity> void serverTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityBioReactor tile) {
+            tile.serverTick();
 
-            if (!this.isRedstonePowered && this.storage.getEnergyStored() < this.storage.getMaxEnergyStored()) {
-                for (int i = 0; i < this.inv.getSlots(); i++) {
-                    ItemStack stack = this.inv.getStackInSlot(i);
-                    if (StackUtil.isValid(stack)) {
-                        Item item = stack.getItem();
-                        if (isValidItem(stack) && (types == null || !types.contains(item))) {
-                            if (types == null) {
-                                types = new ArrayList<>();
+            if (tile.burnTime <= 0) {
+                List<Item> types = null;
+
+                if (!tile.isRedstonePowered && tile.storage.getEnergyStored() < tile.storage.getMaxEnergyStored()) {
+                    for (int i = 0; i < tile.inv.getSlots(); i++) {
+                        ItemStack stack = tile.inv.getStackInSlot(i);
+                        if (StackUtil.isValid(stack)) {
+                            Item item = stack.getItem();
+                            if (isValidItem(stack) && (types == null || !types.contains(item))) {
+                                if (types == null) {
+                                    types = new ArrayList<>();
+                                }
+                                types.add(item);
+
+                                tile.inv.setStackInSlot(i, StackUtil.shrink(stack, 1));
                             }
-                            types.add(item);
-
-                            this.inv.setStackInSlot(i, StackUtil.shrink(stack, 1));
                         }
                     }
+
+                    tile.setChanged();
                 }
 
-                this.setChanged();
-            }
+                if (types != null && !types.isEmpty()) {
+                    int amount = types.size();
+                    tile.producePerTick = (int) Math.pow(amount * 2, 2);
 
-            if (types != null && !types.isEmpty()) {
-                int amount = types.size();
-                this.producePerTick = (int) Math.pow(amount * 2, 2);
-
-                this.maxBurnTime = 200 - (int) Math.pow(1.8, amount);
-                this.burnTime = this.maxBurnTime;
+                    tile.maxBurnTime = 200 - (int) Math.pow(1.8, amount);
+                    tile.burnTime = tile.maxBurnTime;
+                } else {
+                    tile.burnTime = 0;
+                    tile.maxBurnTime = 0;
+                    tile.producePerTick = 0;
+                }
             } else {
-                this.burnTime = 0;
-                this.maxBurnTime = 0;
-                this.producePerTick = 0;
+                tile.burnTime--;
+                tile.storage.receiveEnergyInternal(tile.producePerTick, false);
             }
-        } else {
-            this.burnTime--;
-            this.storage.receiveEnergyInternal(this.producePerTick, false);
-        }
 
-        if ((this.lastBurnTime != this.burnTime || this.lastProducePerTick != this.producePerTick) && this.sendUpdateWithInterval()) {
-            this.lastBurnTime = this.burnTime;
-            this.lastProducePerTick = this.producePerTick;
+            if ((tile.lastBurnTime != tile.burnTime || tile.lastProducePerTick != tile.producePerTick) && tile.sendUpdateWithInterval()) {
+                tile.lastBurnTime = tile.burnTime;
+                tile.lastProducePerTick = tile.producePerTick;
+            }
         }
     }
 
     @Override
-    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
 
         this.storage.writeToNBT(compound);
@@ -130,7 +137,7 @@ public class TileEntityBioReactor extends TileEntityInventoryBase implements INa
     }
 
     @Override
-    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void readSyncableNBT(CompoundTag compound, NBTType type) {
         super.readSyncableNBT(compound, type);
 
         this.storage.readFromNBT(compound);
@@ -165,7 +172,7 @@ public class TileEntityBioReactor extends TileEntityInventoryBase implements INa
     }
 
     @Override
-    public boolean canShareTo(TileEntity tile) {
+    public boolean canShareTo(BlockEntity tile) {
         return true;
     }
 
@@ -181,13 +188,13 @@ public class TileEntityBioReactor extends TileEntityInventoryBase implements INa
     }
 
     @Override
-    public ITextComponent getDisplayName() {
-        return StringTextComponent.EMPTY;
+    public Component getDisplayName() {
+        return Component.empty();
     }
 
     @Nullable
     @Override
-    public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity playerEntity) {
+    public AbstractContainerMenu createMenu(int windowId, Inventory playerInventory, Player playerEntity) {
         return new ContainerBioReactor(windowId, playerInventory, this);
     }
 }

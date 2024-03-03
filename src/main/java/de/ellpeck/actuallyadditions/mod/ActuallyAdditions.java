@@ -36,31 +36,30 @@ import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.particle.ActuallyParticles;
 import de.ellpeck.actuallyadditions.mod.update.UpdateChecker;
 import de.ellpeck.actuallyadditions.mod.util.ResourceReloader;
-import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.EntityType;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
+import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.event.AddReloadListenerEvent;
+import net.minecraftforge.event.server.ServerStartedEvent;
+import net.minecraftforge.event.server.ServerStoppedEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.event.server.FMLServerStartedEvent;
-import net.minecraftforge.fml.event.server.FMLServerStoppedEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -77,17 +76,10 @@ public class ActuallyAdditions {
     public static final String GUIFACTORY = "de.ellpeck.actuallyadditions.mod.config.GuiFactory";
     public static final String DEPS = "required:forge@[14.23.5.2836,);before:craftingtweaks;after:fastbench@[1.3.2,)";
 
-    public static final ItemGroup GROUP = new ItemGroup(MODID) {
-        @OnlyIn(Dist.CLIENT)
-        @Override
-        public ItemStack makeIcon() {
-            return new ItemStack(ActuallyItems.ITEM_BOOKLET.get());
-        }
-    };
     public static final Logger LOGGER = LogManager.getLogger(NAME);
 
-    public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, MODID);
-    public static final RegistryObject<EntityType<EntityWorm>> ENTITY_WORM = ENTITIES.register("worm", () -> EntityType.Builder.of(EntityWorm::new, EntityClassification.MISC).build(MODID + ":worm"));
+    public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, MODID);
+    public static final RegistryObject<EntityType<EntityWorm>> ENTITY_WORM = ENTITIES.register("worm", () -> EntityType.Builder.of(EntityWorm::new, MobCategory.MISC).build(MODID + ":worm"));
 
     public static boolean commonCapsLoaded;
 
@@ -98,6 +90,7 @@ public class ActuallyAdditions {
 
         ActuallyBlocks.init(eventBus);
         ActuallyItems.init(eventBus);
+        ActuallyTabs.init(eventBus);
         ActuallyRecipes.init(eventBus);
         AASounds.init(eventBus);
         ActuallyContainers.CONTAINERS.register(eventBus);
@@ -115,13 +108,17 @@ public class ActuallyAdditions {
         InitFluids.init(eventBus);
 
         eventBus.addListener(this::setup);
-        eventBus.addListener(this::clientSetup);
-        eventBus.addListener(this::particleFactoryRegister);
+
+        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
+            eventBus.addListener(this::clientSetup);
+            eventBus.addListener(ActuallyAdditionsClient::setupSpecialRenders);
+            eventBus.addListener(this::particleFactoryRegister);
+        });
         IFarmerBehavior.initBehaviors();
     }
 
     private static void reloadEvent(AddReloadListenerEvent event) {
-        event.addListener(new ResourceReloader(event.getDataPackRegistries()));
+        event.addListener(new ResourceReloader(event.getServerResources()));
     }
 
     private void setup(FMLCommonSetupEvent event) {
@@ -148,7 +145,7 @@ public class ActuallyAdditions {
         //LensMining.init();
     }
 
-    private void onConfigReload(ModConfig.ModConfigEvent event) {
+    private void onConfigReload(ModConfigEvent event) {
         Item item1 = ForgeRegistries.ITEMS.getValue(new ResourceLocation(CommonConfig.Other.REDSTONECONFIGURATOR.get()));
         Item item2 = ForgeRegistries.ITEMS.getValue(new ResourceLocation(CommonConfig.Other.RELAYCONFIGURATOR.get()));
         CommonConfig.Other.redstoneConfigureItem = item1 != null?item1: Items.AIR;
@@ -159,11 +156,11 @@ public class ActuallyAdditions {
         ActuallyAdditionsClient.setup(event);
     }
 
-    private void particleFactoryRegister(ParticleFactoryRegisterEvent event) {
+    private void particleFactoryRegister(RegisterParticleProvidersEvent event) {
         ActuallyAdditionsClient.registerParticleFactories();
     }
 
-    public void serverStarted(FMLServerStartedEvent event) {
+    public void serverStarted(ServerStartedEvent event) {
         // TODO: [port] check if this is needed
 
         //        if (event.getServer() != null) {
@@ -174,7 +171,7 @@ public class ActuallyAdditions {
         //        }
     }
 
-    public void serverStopped(FMLServerStoppedEvent event) {
+    public void serverStopped(ServerStoppedEvent event) {
         // TODO: [port] check if this is needed
         WorldData.clear();
     }

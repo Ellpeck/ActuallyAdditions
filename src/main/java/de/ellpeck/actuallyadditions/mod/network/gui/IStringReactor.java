@@ -10,7 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.network.gui;
 
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 
 public interface IStringReactor {
 
@@ -21,5 +21,5 @@ public interface IStringReactor {
      * @param textID The ID (meaning the place in the GUI) of the text typed in
      * @param player The Player doing it
      */
-    void onTextReceived(String text, int textID, PlayerEntity player);
+    void onTextReceived(String text, int textID, Player player);
 }

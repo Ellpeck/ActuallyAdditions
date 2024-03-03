@@ -3,8 +3,8 @@
   "ingredient": {
     "tag": "forge:stone"
   },
-  "weight": 200,
   "result": {
     "item": "minecraft:redstone_ore"
-  }
+  },
+  "weight": 200
 }

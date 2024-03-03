@@ -1,9 +1,9 @@
 {
   "type": "actuallyadditions:laser",
+  "energy": 5000,
   "ingredient": {
     "item": "actuallyadditions:lens"
   },
-  "energy": 5000,
   "result": {
     "item": "actuallyadditions:lens_of_color"
   }

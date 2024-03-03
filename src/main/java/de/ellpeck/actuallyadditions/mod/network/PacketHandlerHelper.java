@@ -15,20 +15,20 @@ import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData.PlayerSave;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.network.PacketDistributor;
+import net.minecraftforge.network.PacketDistributor;
 
 public final class PacketHandlerHelper {
 
     @OnlyIn(Dist.CLIENT)
-    public static void sendButtonPacket(TileEntity tile, int buttonId) {
-        CompoundNBT compound = new CompoundNBT();
+    public static void sendButtonPacket(BlockEntity tile, int buttonId) {
+        CompoundTag compound = new CompoundTag();
         BlockPos pos = tile.getBlockPos();
         compound.putInt("X", pos.getX());
         compound.putInt("Y", pos.getY());
@@ -39,28 +39,28 @@ public final class PacketHandlerHelper {
         PacketHandler.THE_NETWORK.sendToServer(new PacketClientToServer(compound, PacketHandler.GUI_BUTTON_TO_TILE_HANDLER));
     }
 
-    public static void syncPlayerData(PlayerEntity player, boolean log) {
-        CompoundNBT compound = new CompoundNBT();
+    public static void syncPlayerData(Player player, boolean log) {
+        CompoundTag compound = new CompoundTag();
         compound.putBoolean("Log", log);
 
-        CompoundNBT data = new CompoundNBT();
+        CompoundTag data = new CompoundTag();
         PlayerData.getDataFromPlayer(player).writeToNBT(data, false);
         compound.put("Data", data);
 
-        if (player instanceof ServerPlayerEntity) {
-            PacketHandler.THE_NETWORK.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketServerToClient(compound, PacketHandler.SYNC_PLAYER_DATA));
+        if (player instanceof ServerPlayer) {
+            PacketHandler.THE_NETWORK.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) player), new PacketServerToClient(compound, PacketHandler.SYNC_PLAYER_DATA));
         }
     }
 
     @OnlyIn(Dist.CLIENT)
     public static void sendPlayerDataToServer(boolean log, int type) {
-        CompoundNBT compound = new CompoundNBT();
+        CompoundTag compound = new CompoundTag();
         compound.putBoolean("Log", log);
         compound.putInt("Type", type);
 
-        PlayerEntity player = Minecraft.getInstance().player;
+        Player player = Minecraft.getInstance().player;
         if (player != null) {
-            compound.putString("World", player.level.dimension().getRegistryName().toString());
+            compound.putString("World", player.level().dimension().location().toString());
             compound.putUUID("UUID", player.getUUID());
 
             PlayerSave data = PlayerData.getDataFromPlayer(player);
@@ -89,12 +89,12 @@ public final class PacketHandlerHelper {
     }
 
     @OnlyIn(Dist.CLIENT)
-    public static void sendNumberPacket(TileEntity tile, double number, int id) {
-        CompoundNBT compound = new CompoundNBT();
+    public static void sendNumberPacket(BlockEntity tile, double number, int id) {
+        CompoundTag compound = new CompoundTag();
         compound.putInt("X", tile.getBlockPos().getX());
         compound.putInt("Y", tile.getBlockPos().getY());
         compound.putInt("Z", tile.getBlockPos().getZ());
-        compound.putString("WorldID", tile.getLevel().dimension().getRegistryName().toString());
+        compound.putString("WorldID", tile.getLevel().dimension().location().toString());
         compound.putInt("PlayerID", Minecraft.getInstance().player.getId());
         compound.putInt("NumberID", id);
         compound.putDouble("Number", number);

@@ -15,72 +15,81 @@ import de.ellpeck.actuallyadditions.mod.inventory.ContainerEnergizer;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Direction;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
 import javax.annotation.Nullable;
 
-public class TileEntityEnergizer extends TileEntityInventoryBase implements INamedContainerProvider {
+public class TileEntityEnergizer extends TileEntityInventoryBase implements MenuProvider {
 
     public final CustomEnergyStorage storage = new CustomEnergyStorage(50000, 1000, 0);
     public final LazyOptional<IEnergyStorage> lazyEnergy = LazyOptional.of(() -> this.storage);
     private int lastEnergy;
 
-    public TileEntityEnergizer() {
-        super(ActuallyBlocks.ENERGIZER.getTileEntityType(), 2);
+    public TileEntityEnergizer(BlockPos pos, BlockState state) {
+        super(ActuallyBlocks.ENERGIZER.getTileEntityType(), pos, state, 2);
     }
 
     @Override
-    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
         this.storage.writeToNBT(compound);
         super.writeSyncableNBT(compound, type);
     }
 
     @Override
-    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void readSyncableNBT(CompoundTag compound, NBTType type) {
         this.storage.readFromNBT(compound);
         super.readSyncableNBT(compound, type);
     }
 
-    @Override
-    public void updateEntity() {
-        super.updateEntity();
-        if (!this.level.isClientSide) {
-            if (StackUtil.isValid(this.inv.getStackInSlot(0)) && !StackUtil.isValid(this.inv.getStackInSlot(1))) {
-                if (this.storage.getEnergyStored() > 0) {
-                    int received = this.inv.getStackInSlot(0).getCapability(CapabilityEnergy.ENERGY, null).map(cap -> cap.receiveEnergy(this.storage.getEnergyStored(), false)).orElse(0);
-                    boolean canTakeUp = this.inv.getStackInSlot(0).getCapability(CapabilityEnergy.ENERGY, null).map(cap -> cap.getEnergyStored() >= cap.getMaxEnergyStored()).orElse(false);
+    public static <T extends BlockEntity> void clientTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityEnergizer tile) {
+            tile.clientTick();
+        }
+    }
+
+    public static <T extends BlockEntity> void serverTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityEnergizer tile) {
+            tile.serverTick();
+
+            if (StackUtil.isValid(tile.inv.getStackInSlot(0)) && !StackUtil.isValid(tile.inv.getStackInSlot(1))) {
+                if (tile.storage.getEnergyStored() > 0) {
+                    int received = tile.inv.getStackInSlot(0).getCapability(ForgeCapabilities.ENERGY, null).map(cap -> cap.receiveEnergy(tile.storage.getEnergyStored(), false)).orElse(0);
+                    boolean canTakeUp = tile.inv.getStackInSlot(0).getCapability(ForgeCapabilities.ENERGY, null).map(cap -> cap.getEnergyStored() >= cap.getMaxEnergyStored()).orElse(false);
 
                     if (received > 0) {
-                        this.storage.extractEnergyInternal(received, false);
+                        tile.storage.extractEnergyInternal(received, false);
                     }
 
                     if (canTakeUp) {
-                        this.inv.setStackInSlot(1, this.inv.getStackInSlot(0).copy());
-                        this.inv.setStackInSlot(0, StackUtil.shrink(this.inv.getStackInSlot(0), 1));
+                        tile.inv.setStackInSlot(1, tile.inv.getStackInSlot(0).copy());
+                        tile.inv.setStackInSlot(0, StackUtil.shrink(tile.inv.getStackInSlot(0), 1));
                     }
                 }
             }
 
-            if (this.lastEnergy != this.storage.getEnergyStored() && this.sendUpdateWithInterval()) {
-                this.lastEnergy = this.storage.getEnergyStored();
+            if (tile.lastEnergy != tile.storage.getEnergyStored() && tile.sendUpdateWithInterval()) {
+                tile.lastEnergy = tile.storage.getEnergyStored();
             }
         }
     }
 
     @Override
     public IAcceptor getAcceptor() {
-        return (slot, stack, automation) -> !automation || slot == 0 && stack.getCapability(CapabilityEnergy.ENERGY, null).isPresent();
+        return (slot, stack, automation) -> !automation || slot == 0 && stack.getCapability(ForgeCapabilities.ENERGY, null).isPresent();
     }
 
     @Override
@@ -98,13 +107,13 @@ public class TileEntityEnergizer extends TileEntityInventoryBase implements INam
     }
 
     @Override
-    public ITextComponent getDisplayName() {
-        return StringTextComponent.EMPTY;
+    public Component getDisplayName() {
+        return Component.empty();
     }
 
     @Nullable
     @Override
-    public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity playerEntity) {
+    public AbstractContainerMenu createMenu(int windowId, Inventory playerInventory, Player playerEntity) {
         return new ContainerEnergizer(windowId, playerInventory, this);
     }
 }

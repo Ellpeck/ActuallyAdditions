@@ -10,47 +10,59 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.platform.Window;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.DirectionalBlock;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityLavaFactoryController;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import net.minecraft.block.BlockState;
-import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+
+import javax.annotation.Nullable;
 
 
 public class BlockLavaFactoryController extends DirectionalBlock.Container implements IHudDisplay {
 
     public BlockLavaFactoryController() {
-        super(ActuallyBlocks.defaultPickProps(0, 4.5F, 20.0F));
+        super(ActuallyBlocks.defaultPickProps(4.5F, 20.0F));
     }
 
-    //@Override
-    public TileEntity newBlockEntity(IBlockReader worldIn) {
-        return new TileEntityLavaFactoryController();
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new TileEntityLavaFactoryController(pos, state);
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> entityType) {
+        return level.isClientSide? TileEntityLavaFactoryController::clientTick : TileEntityLavaFactoryController::serverTick;
     }
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void displayHud(MatrixStack matrices, Minecraft minecraft, PlayerEntity player, ItemStack stack, RayTraceResult rayCast, MainWindow resolution) {
-        if (!(rayCast instanceof BlockRayTraceResult)) {
+    public void displayHud(GuiGraphics guiGraphics, Minecraft minecraft, Player player, ItemStack stack, HitResult rayCast, Window resolution) {
+        if (!(rayCast instanceof BlockHitResult)) {
             return;
         }
 
-        TileEntityLavaFactoryController factory = (TileEntityLavaFactoryController) minecraft.level.getBlockEntity(((BlockRayTraceResult) rayCast).getBlockPos());
+        TileEntityLavaFactoryController factory = (TileEntityLavaFactoryController) minecraft.level.getBlockEntity(((BlockHitResult) rayCast).getBlockPos());
         if (factory != null) {
             int state = factory.isMultiblock();
             if (state == TileEntityLavaFactoryController.NOT_MULTI) {
@@ -62,16 +74,16 @@ public class BlockLavaFactoryController extends DirectionalBlock.Container imple
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         switch (state.getValue(FACING)) {
             case EAST:
-                return Shapes.LavaFactoryShapes.SHAPE_E;
+                return VoxelShapes.LavaFactoryShapes.SHAPE_E;
             case SOUTH:
-                return Shapes.LavaFactoryShapes.SHAPE_S;
+                return VoxelShapes.LavaFactoryShapes.SHAPE_S;
             case WEST:
-                return Shapes.LavaFactoryShapes.SHAPE_W;
+                return VoxelShapes.LavaFactoryShapes.SHAPE_W;
             default:
-                return Shapes.LavaFactoryShapes.SHAPE_N;
+                return VoxelShapes.LavaFactoryShapes.SHAPE_N;
         }
     }
 }

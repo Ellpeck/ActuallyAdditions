@@ -13,24 +13,24 @@ package de.ellpeck.actuallyadditions.mod.inventory;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBreaker;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.Objects;
 
-public class ContainerBreaker extends Container {
+public class ContainerBreaker extends AbstractContainerMenu {
 
     public final TileEntityBreaker breaker;
 
-    public static ContainerBreaker fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
-        return new ContainerBreaker(windowId, inv, (TileEntityBreaker) Objects.requireNonNull(inv.player.level.getBlockEntity(data.readBlockPos())));
+    public static ContainerBreaker fromNetwork(int windowId, Inventory inv, FriendlyByteBuf data) {
+        return new ContainerBreaker(windowId, inv, (TileEntityBreaker) Objects.requireNonNull(inv.player.level().getBlockEntity(data.readBlockPos())));
     }
 
-    public ContainerBreaker(int windowId, PlayerInventory inventory, TileEntityBreaker tile) {
+    public ContainerBreaker(int windowId, Inventory inventory, TileEntityBreaker tile) {
         super(ActuallyContainers.BREAKER_CONTAINER.get(), windowId);
 
         this.breaker = tile;
@@ -52,7 +52,7 @@ public class ContainerBreaker extends Container {
     }
 
     @Override
-    public ItemStack quickMoveStack(PlayerEntity player, int slot) {
+    public ItemStack quickMoveStack(Player player, int slot) {
         int inventoryStart = 9;
         int inventoryEnd = inventoryStart + 26;
         int hotbarStart = inventoryEnd + 1;
@@ -98,7 +98,7 @@ public class ContainerBreaker extends Container {
     }
 
     @Override
-    public boolean stillValid(PlayerEntity player) {
+    public boolean stillValid(Player player) {
         return this.breaker.canPlayerUse(player);
     }
 }

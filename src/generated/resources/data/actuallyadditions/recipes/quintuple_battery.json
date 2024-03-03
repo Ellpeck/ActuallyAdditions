@@ -1,23 +1,25 @@
 {
   "type": "actuallyadditions:copy_nbt",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "actuallyadditions:advanced_coil"
+    },
+    "I": {
+      "item": "actuallyadditions:empowered_diamatine_crystal"
+    },
+    "R": {
+      "type": "actuallyadditions:nbt_target",
+      "item": "actuallyadditions:quadruple_battery"
+    }
+  },
   "pattern": [
     " R ",
     "ICI",
     "III"
   ],
-  "key": {
-    "R": {
-      "item": "actuallyadditions:quadruple_battery",
-      "type": "actuallyadditions:nbt_target"
-    },
-    "I": {
-      "item": "actuallyadditions:empowered_diamatine_crystal"
-    },
-    "C": {
-      "item": "actuallyadditions:advanced_coil"
-    }
-  },
   "result": {
     "item": "actuallyadditions:quintuple_battery"
-  }
+  },
+  "show_notification": true
 }

@@ -1,15 +1,12 @@
 package de.ellpeck.actuallyadditions.mod.blocks.render;
 
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.renderer.RenderState;
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import com.mojang.blaze3d.vertex.VertexFormat;
+import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.client.renderer.vertex.VertexFormat;
-import org.lwjgl.opengl.GL11;
 
 public class RenderTypes extends RenderType {
-    public RenderTypes(String NameIn, VertexFormat FormatIn, int GLMode, int BufferSize, boolean useDelegate, boolean needsSorting, Runnable setupTask, Runnable ClearTask) {
+    public RenderTypes(String NameIn, VertexFormat FormatIn, VertexFormat.Mode GLMode, int BufferSize, boolean useDelegate, boolean needsSorting, Runnable setupTask, Runnable ClearTask) {
         super(NameIn, FormatIn, GLMode, BufferSize, useDelegate, needsSorting, setupTask, ClearTask);
     }
 
@@ -20,14 +17,14 @@ public class RenderTypes extends RenderType {
             .setTextureState(NO_TEXTURE)
             .setOutputState(RenderType.OUTLINE_TARGET)
             .createCompositeState(true));*/
-    public static final RenderType LASER = create("actuallyadditions:laser", DefaultVertexFormats.POSITION_COLOR_LIGHTMAP,
-    GL11.GL_QUADS, 256, false, true,
-    RenderType.State.builder()
+    public static final RenderType LASER = create("actuallyadditions:laser", DefaultVertexFormat.POSITION_COLOR_LIGHTMAP,
+    VertexFormat.Mode.QUADS, 256, false, true,
+    RenderType.CompositeState.builder()
         .setTransparencyState(ADDITIVE_TRANSPARENCY)
         .setTextureState(NO_TEXTURE)
         .setOutputState(RenderType.TRANSLUCENT_TARGET)
-        .setLightmapState(RenderState.LIGHTMAP)
-        .setAlphaState(RenderState.DEFAULT_ALPHA)
-        .setCullState(RenderState.NO_CULL)
+        .setLightmapState(RenderStateShard.LIGHTMAP)
+//        .setAlphaState(RenderStateShard.DEFAULT_ALPHA)
+        .setCullState(RenderStateShard.NO_CULL)
         .createCompositeState(true));
 }

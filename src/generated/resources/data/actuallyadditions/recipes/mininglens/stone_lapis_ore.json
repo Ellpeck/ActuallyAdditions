@@ -3,8 +3,8 @@
   "ingredient": {
     "tag": "forge:stone"
   },
-  "weight": 250,
   "result": {
     "item": "minecraft:lapis_ore"
-  }
+  },
+  "weight": 250
 }

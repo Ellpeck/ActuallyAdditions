@@ -10,13 +10,13 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 
 public class BlockCrystal extends ActuallyBlock {
     private final boolean isEmpowered;
 
     public BlockCrystal(boolean isEmpowered) {
-        super(ActuallyBlocks.defaultPickProps(1));
+        super(ActuallyBlocks.defaultPickProps());
         this.isEmpowered = isEmpowered;
     }
 

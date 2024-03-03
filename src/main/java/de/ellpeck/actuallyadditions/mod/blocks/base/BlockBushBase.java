@@ -10,10 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks.base;
 
-import net.minecraft.block.BushBlock;
-import net.minecraft.block.SoundType;
-
-import net.minecraft.block.AbstractBlock.Properties;
+import net.minecraft.world.level.block.BushBlock;
+import net.minecraft.world.level.block.SoundType;
 
 public class BlockBushBase extends BushBlock {
     public BlockBushBase(Properties properties) {

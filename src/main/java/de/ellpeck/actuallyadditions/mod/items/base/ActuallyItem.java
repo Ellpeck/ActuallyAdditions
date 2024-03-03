@@ -1,7 +1,6 @@
 package de.ellpeck.actuallyadditions.mod.items.base;
 
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import net.minecraft.item.Item;
+import net.minecraft.world.item.Item;
 
 /**
  * I'm using a custom class here as I'm sure we'll need a unified way of declaring rules
@@ -13,6 +12,6 @@ public abstract class ActuallyItem extends Item implements IActuallyItem {
     }
 
     protected static Properties baseProps() {
-        return new Properties().tab(ActuallyAdditions.GROUP);
+        return new Properties();
     }
 }

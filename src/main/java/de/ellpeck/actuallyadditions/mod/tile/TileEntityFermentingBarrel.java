@@ -14,19 +14,22 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.crafting.FermentingRecipe;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFermentingBarrel;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Direction;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 
@@ -34,7 +37,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Optional;
 
-public class TileEntityFermentingBarrel extends TileEntityBase implements ISharingFluidHandler, INamedContainerProvider {
+public class TileEntityFermentingBarrel extends TileEntityBase implements ISharingFluidHandler, MenuProvider {
     public final FermentingBarrelMultiTank tanks = new FermentingBarrelMultiTank();
     public final LazyOptional<IFluidHandler> fluidOptional = LazyOptional.of(()->tanks);
 
@@ -45,12 +48,12 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
     private int lastCompare;
     private FermentingRecipe currentRecipe;
 
-    public TileEntityFermentingBarrel() {
-        super(ActuallyBlocks.FERMENTING_BARREL.getTileEntityType());
+    public TileEntityFermentingBarrel(BlockPos pos, BlockState state) {
+        super(ActuallyBlocks.FERMENTING_BARREL.getTileEntityType(), pos, state);
     }
 
     @Override
-    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
         compound.putInt("ProcessTime", this.currentProcessTime);
         compound.put("tanks", tanks.writeNBT());
         if (currentRecipe != null)
@@ -59,7 +62,7 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
     }
 
     @Override
-    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void readSyncableNBT(CompoundTag compound, NBTType type) {
         this.currentProcessTime = compound.getInt("ProcessTime");
         if (compound.contains("tanks")) {
             tanks.readNBT(compound.getCompound("tanks"));
@@ -70,45 +73,50 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
         super.readSyncableNBT(compound, type);
     }
 
-    @Override
-    public void updateEntity() {
-        super.updateEntity();
-        if (this.level.isClientSide)
-            return;
+    public static <T extends BlockEntity> void clientTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityFermentingBarrel tile) {
+            tile.clientTick();
+        }
+    }
 
-        if (currentRecipe == null) {
-            //No recipe currently selected, check for one every 20 ticks
-            if (ticksElapsed % 20 == 0)
-                this.currentRecipe = ActuallyAdditionsAPI.FERMENTING_RECIPES.stream().filter(recipe -> recipe.matches(this.tanks.getFluidInTank(0), this.tanks.getFluidInTank(1))).findFirst().orElse(null);
-        } else {
-            if (this.tanks.getFluidInTank(0).getAmount() >= currentRecipe.getInput().getAmount() &&
-                this.tanks.getFluidInTank(0).getFluid().isSame(currentRecipe.getInput().getFluid()) &&
-                (this.tanks.getFluidInTank(1).getFluid().isSame(currentRecipe.getOutput().getFluid()) || tanks.getFluidInTank(1).isEmpty()) &&
-                currentRecipe.getOutput().getAmount() <= this.tanks.getTankCapacity(1) - this.tanks.getFluidInTank(1).getAmount()) {
+    public static <T extends BlockEntity> void serverTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityFermentingBarrel tile) {
+            tile.serverTick();
 
-                this.currentProcessTime++;
-                if (this.currentProcessTime >= currentRecipe.getTime()) {
-                    this.currentProcessTime = 0;
-
-                    this.tanks.outputTank.fill(currentRecipe.getOutput().copy(), IFluidHandler.FluidAction.EXECUTE);
-                    this.tanks.inputTank.getFluid().shrink(currentRecipe.getInput().getAmount());
-                }
+            if (tile.currentRecipe == null) {
+                //No recipe currently selected, check for one every 20 ticks
+                if (tile.ticksElapsed % 20 == 0)
+                    tile.currentRecipe = ActuallyAdditionsAPI.FERMENTING_RECIPES.stream().filter(recipe -> recipe.matches(tile.tanks.getFluidInTank(0), tile.tanks.getFluidInTank(1))).findFirst().orElse(null);
             } else {
-                this.currentProcessTime = 0;
-                currentRecipe = null;
+                if (tile.tanks.getFluidInTank(0).getAmount() >= tile.currentRecipe.getInput().getAmount() &&
+                        tile.tanks.getFluidInTank(0).getFluid().isSame(tile.currentRecipe.getInput().getFluid()) &&
+                        (tile.tanks.getFluidInTank(1).getFluid().isSame(tile.currentRecipe.getOutput().getFluid()) || tile.tanks.getFluidInTank(1).isEmpty()) &&
+                        tile.currentRecipe.getOutput().getAmount() <= tile.tanks.getTankCapacity(1) - tile.tanks.getFluidInTank(1).getAmount()) {
+
+                    tile.currentProcessTime++;
+                    if (tile.currentProcessTime >= tile.currentRecipe.getTime()) {
+                        tile.currentProcessTime = 0;
+
+                        tile.tanks.outputTank.fill(tile.currentRecipe.getOutput().copy(), IFluidHandler.FluidAction.EXECUTE);
+                        tile.tanks.inputTank.getFluid().shrink(tile.currentRecipe.getInput().getAmount());
+                    }
+                } else {
+                    tile.currentProcessTime = 0;
+                    tile.currentRecipe = null;
+                }
             }
-        }
-        int compare = this.getComparatorStrength();
-        if (compare != this.lastCompare) {
-            this.lastCompare = compare;
+            int compare = tile.getComparatorStrength();
+            if (compare != tile.lastCompare) {
+                tile.lastCompare = compare;
 
-            this.setChanged();
-        }
+                tile.setChanged();
+            }
 
-        if ((this.tanks.getFluidInTank(0).getAmount() != this.lastInput || this.tanks.getFluidInTank(1).getAmount() != this.lastOutput || this.currentProcessTime != this.lastProcessTime) && this.sendUpdateWithInterval()) {
-            this.lastProcessTime = this.currentProcessTime;
-            this.lastInput = this.tanks.getFluidInTank(0).getAmount();
-            this.lastOutput = this.tanks.getFluidInTank(1).getAmount();
+            if ((tile.tanks.getFluidInTank(0).getAmount() != tile.lastInput || tile.tanks.getFluidInTank(1).getAmount() != tile.lastOutput || tile.currentProcessTime != tile.lastProcessTime) && tile.sendUpdateWithInterval()) {
+                tile.lastProcessTime = tile.currentProcessTime;
+                tile.lastInput = tile.tanks.getFluidInTank(0).getAmount();
+                tile.lastOutput = tile.tanks.getFluidInTank(1).getAmount();
+            }
         }
     }
 
@@ -158,13 +166,13 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
 
     @Nonnull
     @Override
-    public ITextComponent getDisplayName() {
-        return new TranslationTextComponent("container.actuallyadditions.fermenting_barrel");
+    public Component getDisplayName() {
+        return Component.translatable("container.actuallyadditions.fermenting_barrel");
     }
 
     @Nullable
     @Override
-    public Container createMenu(int windowId, @Nonnull PlayerInventory playerInventory, @Nonnull PlayerEntity p_createMenu_3_) {
+    public AbstractContainerMenu createMenu(int windowId, @Nonnull Inventory playerInventory, @Nonnull Player p_createMenu_3_) {
         return new ContainerFermentingBarrel(windowId, playerInventory, this);
     }
 
@@ -179,7 +187,7 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
 
     public static class FermentingBarrelMultiTank implements IFluidHandler {
 
-        private final int capacity = FluidAttributes.BUCKET_VOLUME * 2;
+        private final int capacity = FluidType.BUCKET_VOLUME * 2;
         public FluidTank inputTank = new FluidTank(capacity);
         public FluidTank outputTank = new FluidTank(capacity);
 
@@ -239,19 +247,19 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
             }
         }
 
-        public CompoundNBT writeNBT() {
-            CompoundNBT inputNBT = new CompoundNBT();
+        public CompoundTag writeNBT() {
+            CompoundTag inputNBT = new CompoundTag();
             inputTank.writeToNBT(inputNBT);
-            CompoundNBT outputNBT = new CompoundNBT();
+            CompoundTag outputNBT = new CompoundTag();
             outputTank.writeToNBT(outputNBT);
 
-            CompoundNBT nbt = new CompoundNBT();
+            CompoundTag nbt = new CompoundTag();
             nbt.put("inputTank", inputNBT);
             nbt.put("outputTank", outputNBT);
             return nbt;
         }
 
-        public void readNBT(CompoundNBT nbt) {
+        public void readNBT(CompoundTag nbt) {
             inputTank.readFromNBT(nbt.getCompound("inputTank"));
             outputTank.readFromNBT(nbt.getCompound("outputTank"));
         }

@@ -6,7 +6,7 @@
 //import java.util.List;
 //
 //import javax.annotation.Nullable;
-//import javax.vecmath.Vector3f;
+//import javax.vecmath.Axis;
 //
 //import com.google.common.collect.ImmutableList;
 //import com.google.common.collect.ImmutableMap;
@@ -30,7 +30,7 @@
 //    public CompostModel(BlockState flowerState, float height) {
 //        this.display = Minecraft.getInstance().getBlockRendererDispatcher().getModelForState(flowerState);
 //
-//        TRSRTransformation transform = TRSRTransformation.blockCenterToCorner(new TRSRTransformation(new Vector3f(0, -.218F, 0), null, new Vector3f(0.75F, height / 1.81F, 0.75F), null));
+//        TRSRTransformation transform = TRSRTransformation.blockCenterToCorner(new TRSRTransformation(new Axis(0, -.218F, 0), null, new Axis(0.75F, height / 1.81F, 0.75F), null));
 //
 //        ImmutableList.Builder<BakedQuad> builder;
 //        EnumMap<Direction, ImmutableList<BakedQuad>> faces = new EnumMap<>(Direction.class);

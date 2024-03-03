@@ -1,5 +1,5 @@
 {
   "parent": "forge:item/bucket",
-  "loader": "forge:bucket",
-  "fluid": "actuallyadditions:crystallized_oil"
+  "fluid": "actuallyadditions:crystallized_oil",
+  "loader": "forge:fluid_container"
 }

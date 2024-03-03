@@ -10,18 +10,16 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerDropper;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityDropper;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-
-import javax.annotation.Nonnull;
 
 
 @OnlyIn(Dist.CLIENT)
@@ -30,7 +28,7 @@ public class GuiDropper extends AAScreen<ContainerDropper> {
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_breaker");
     private final TileEntityDropper dropper;
 
-    public GuiDropper(ContainerDropper container, PlayerInventory inventory, ITextComponent title) {
+    public GuiDropper(ContainerDropper container, Inventory inventory, Component title) {
         super(container, inventory, title);
         this.dropper = container.dropper;
         this.imageWidth = 176;
@@ -45,13 +43,11 @@ public class GuiDropper extends AAScreen<ContainerDropper> {
     }
 
     @Override
-    public void renderBg(MatrixStack matrices, float f, int x, int y) {
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+    public void renderBg(GuiGraphics guiGraphics, float f, int x, int y) {
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 
-        this.getMinecraft().getTextureManager().bind(AssetUtil.GUI_INVENTORY_LOCATION);
-        this.blit(matrices, this.leftPos, this.topPos + 93, 0, 0, 176, 86);
+        guiGraphics.blit(AssetUtil.GUI_INVENTORY_LOCATION, this.leftPos, this.topPos + 93, 0, 0, 176, 86);
 
-        this.getMinecraft().getTextureManager().bind(RES_LOC);
-        this.blit(matrices, this.leftPos, this.topPos, 0, 0, 176, 93);
+        guiGraphics.blit(RES_LOC, this.leftPos, this.topPos, 0, 0, 176, 93);
     }
 }

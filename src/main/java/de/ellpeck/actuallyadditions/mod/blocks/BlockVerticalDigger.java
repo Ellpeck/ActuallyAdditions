@@ -10,77 +10,85 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.platform.Window;
 import de.ellpeck.actuallyadditions.mod.blocks.base.DirectionalBlock;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityVerticalDigger;
-import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import net.minecraft.block.BlockState;
-import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+
+import javax.annotation.Nullable;
 
 
 public class BlockVerticalDigger extends DirectionalBlock.Container implements IHudDisplay {
 
     public BlockVerticalDigger() {
-        super(ActuallyBlocks.defaultPickProps(0, 8F, 30F));
+        super(ActuallyBlocks.defaultPickProps(8F, 30F));
     }
 
     @Override
-    public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
         return this.openGui(worldIn, player, pos, TileEntityVerticalDigger.class);
     }
 
-    //@Override
-    public TileEntity newBlockEntity(IBlockReader world) {
-        return new TileEntityVerticalDigger();
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new TileEntityVerticalDigger(pos, state);
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> entityType) {
+        return level.isClientSide? TileEntityVerticalDigger::clientTick : TileEntityVerticalDigger::serverTick;
     }
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void displayHud(MatrixStack matrices, Minecraft minecraft, PlayerEntity player, ItemStack stack, RayTraceResult rayCast, MainWindow resolution) {
-        if (!(rayCast instanceof BlockRayTraceResult)) {
+    public void displayHud(GuiGraphics guiGraphics, Minecraft minecraft, Player player, ItemStack stack, HitResult rayCast, Window resolution) {
+        if (!(rayCast instanceof BlockHitResult)) {
             return;
         }
-        TileEntity tile = minecraft.level.getBlockEntity(((BlockRayTraceResult) rayCast).getBlockPos());
-        if (tile instanceof TileEntityVerticalDigger) {
-            TileEntityVerticalDigger miner = (TileEntityVerticalDigger) tile;
-            String info = miner.checkY == 0
+        BlockEntity tile = minecraft.level.getBlockEntity(((BlockHitResult) rayCast).getBlockPos());
+        if (tile instanceof TileEntityVerticalDigger miner) {
+	        String info = miner.checkY == 0
                 ? "Done Mining!"
                 : miner.checkY == -1
                 ? "Calculating positions..."
                 : "Mining at " + (miner.getBlockPos().getX() + miner.checkX) + ", " + miner.checkY + ", " + (miner.getBlockPos().getZ() + miner.checkZ) + ".";
-            minecraft.font.drawShadow(matrices, info, resolution.getGuiScaledWidth() / 2f + 5, resolution.getGuiScaledHeight() / 2f - 20, 0xFFFFFF);
+            guiGraphics.drawString(minecraft.font, info, (int) (resolution.getGuiScaledWidth() / 2f + 5), (int) (resolution.getGuiScaledHeight() / 2f - 20), 0xFFFFFF);
         }
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         switch (state.getValue(FACING)) {
             case NORTH:
-                return Shapes.MinerShapes.SHAPE_N;
+                return VoxelShapes.MinerShapes.SHAPE_N;
             case EAST:
-                return Shapes.MinerShapes.SHAPE_E;
+                return VoxelShapes.MinerShapes.SHAPE_E;
             case SOUTH:
-                return Shapes.MinerShapes.SHAPE_S;
+                return VoxelShapes.MinerShapes.SHAPE_S;
             case WEST:
-                return Shapes.MinerShapes.SHAPE_W;
+                return VoxelShapes.MinerShapes.SHAPE_W;
             default:
-                return Shapes.MinerShapes.SHAPE_N;
+                return VoxelShapes.MinerShapes.SHAPE_N;
         }
     }
 }

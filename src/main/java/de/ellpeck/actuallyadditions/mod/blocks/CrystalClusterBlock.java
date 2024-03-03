@@ -12,20 +12,19 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 
 import de.ellpeck.actuallyadditions.mod.blocks.base.FullyDirectionalBlock;
 import de.ellpeck.actuallyadditions.mod.items.metalists.Crystals;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.state.DirectionProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.IBooleanFunction;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
+import net.minecraft.world.phys.shapes.BooleanOp;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.stream.Stream;
 
@@ -43,10 +42,11 @@ public class CrystalClusterBlock extends FullyDirectionalBlock {
         Block.box(3, 0, 9, 4, 2, 10), Block.box(2, 0, 8, 4, 1, 10),
         Block.box(5, 0, 11, 7, 2, 13), Block.box(7, 0, 11, 11, 1, 13),
         Block.box(10, 0, 9, 13, 1, 11), Block.box(11, 0, 7, 12, 3, 9)
-    ).reduce((v1, v2) -> VoxelShapes.join(v1, v2, IBooleanFunction.OR) ).get();
+    ).reduce((v1, v2) -> Shapes.join(v1, v2, BooleanOp.OR) ).get();
 
     public CrystalClusterBlock(Crystals crystal) {
-        super(Block.Properties.of(Material.GLASS)
+        super(Block.Properties.of()
+            .instrument(NoteBlockInstrument.HAT)
             .lightLevel((e) -> 7)
             .sound(SoundType.GLASS)
             .noOcclusion()
@@ -59,7 +59,7 @@ public class CrystalClusterBlock extends FullyDirectionalBlock {
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         return CRYSTAL_SHAPE;
     }
 }

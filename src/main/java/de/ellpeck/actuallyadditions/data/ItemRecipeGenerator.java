@@ -8,32 +8,44 @@ import de.ellpeck.actuallyadditions.mod.crafting.ActuallyRecipes;
 import de.ellpeck.actuallyadditions.mod.crafting.TargetNBTIngredient;
 import de.ellpeck.actuallyadditions.mod.crafting.WrappedRecipe;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
-import net.minecraft.data.*;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.data.CachedOutput;
+import net.minecraft.data.PackOutput;
+import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.data.recipes.ShapelessRecipeBuilder;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.util.IItemProvider;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.crafting.ConditionalRecipe;
-import net.minecraftforge.common.crafting.NBTIngredient;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.common.crafting.StrictNBTIngredient;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
+import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
-import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 public class ItemRecipeGenerator extends RecipeProvider {
-    public ItemRecipeGenerator(DataGenerator generatorIn) {
-        super(generatorIn);
+    public ItemRecipeGenerator(PackOutput packOutput) {
+        super(packOutput);
     }
 
     @Override
-    protected void buildShapelessRecipes(Consumer<IFinishedRecipe> consumer) {
+    public String getName() {
+        return "Item " + super.getName();
+    }
+
+    @Override
+    protected void buildRecipes(Consumer<FinishedRecipe> consumer) {
         generatePaxels(consumer);
 
         //Goggles
@@ -144,7 +156,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
         Recipe.shapeless(ActuallyItems.LENS_OF_THE_KILLER.get())
             .requires(Items.DIAMOND_SWORD)
             .requires(ActuallyItems.LENS_OF_CERTAIN_DEATH.get())
-            .requires(NBTIngredient.of(enchantedBook)).save(consumer);
+            .requires(StrictNBTIngredient.of(enchantedBook)).save(consumer);
 
 
         //Filter
@@ -504,7 +516,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
         //        GameRegistry.addSmelting(new ItemStack(InitItems.itemDust, 1, TheDusts.COAL.ordinal()), new ItemStack(Items.COAL), 1F);
     }
 
-    protected void generatePaxels(Consumer<IFinishedRecipe> consumer) {
+    protected void generatePaxels(Consumer<FinishedRecipe> consumer) {
         addPaxel(consumer, ActuallyItems.WOODEN_AIOT, Items.WOODEN_AXE, Items.WOODEN_PICKAXE, Items.WOODEN_SWORD, Items.WOODEN_SHOVEL, Items.WOODEN_HOE);
         addPaxel(consumer, ActuallyItems.STONE_AIOT, Items.STONE_AXE, Items.STONE_PICKAXE, Items.STONE_SWORD, Items.STONE_SHOVEL, Items.STONE_HOE);
         addPaxel(consumer, ActuallyItems.IRON_AIOT, Items.IRON_AXE, Items.IRON_PICKAXE, Items.IRON_SWORD, Items.IRON_SHOVEL, Items.IRON_HOE);
@@ -513,7 +525,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
         addPaxel(consumer, ActuallyItems.NETHERITE_AIOT, Items.NETHERITE_AXE, Items.NETHERITE_PICKAXE, Items.NETHERITE_SWORD, Items.NETHERITE_SHOVEL, Items.NETHERITE_HOE);
 }
 
-    public static void addPaxel(Consumer<IFinishedRecipe> consumer, RegistryObject<Item> output, Item axe, Item pickaxe, Item sword, Item shovel, Item hoe) {
+    public static void addPaxel(Consumer<FinishedRecipe> consumer, RegistryObject<Item> output, Item axe, Item pickaxe, Item sword, Item shovel, Item hoe) {
         Recipe.shapeless(output.get())
             .requires(axe)
             .requires(pickaxe)
@@ -523,7 +535,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .save(consumer);
     }
 
-    public static void addPaxel(Consumer<IFinishedRecipe> consumer, RegistryObject<Item> output, RegistryObject<Item> axe, RegistryObject<Item> pickaxe, RegistryObject<Item> sword, RegistryObject<Item> shovel, RegistryObject<Item> hoe) {
+    public static void addPaxel(Consumer<FinishedRecipe> consumer, RegistryObject<Item> output, RegistryObject<Item> axe, RegistryObject<Item> pickaxe, RegistryObject<Item> sword, RegistryObject<Item> shovel, RegistryObject<Item> hoe) {
         Recipe.shapeless(output.get())
             .requires(axe.get())
             .requires(pickaxe.get())
@@ -533,26 +545,25 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .save(consumer);
     }
 
-    public static void decompress(Consumer<IFinishedRecipe> consumer, RegistryObject<Item> output, RegistryObject<Item> input) {
+    public static void decompress(Consumer<FinishedRecipe> consumer, RegistryObject<Item> output, RegistryObject<Item> input) {
         ResourceLocation key = ForgeRegistries.ITEMS.getKey(output.get());
         Recipe.shapeless(output.get(), 9).requires(input.get()).save(consumer, new ResourceLocation(key.getNamespace(), "decompress/" + key.getPath()));
     }
-    public static void compress(Consumer<IFinishedRecipe> consumer, RegistryObject<Item> output, RegistryObject<Item> input) {
+    public static void compress(Consumer<FinishedRecipe> consumer, RegistryObject<Item> output, RegistryObject<Item> input) {
         ResourceLocation key = ForgeRegistries.ITEMS.getKey(output.get());
         Recipe.shaped(output.get()).pattern("xxx","xxx", "xxx").define('x', input.get()).save(consumer, new ResourceLocation(key.getNamespace(), "compress/" + key.getPath()));
     }
-    public static void addShard(Consumer<IFinishedRecipe> consumer, RegistryObject<Item> shard, RegistryObject<Item> crystal) {
+    public static void addShard(Consumer<FinishedRecipe> consumer, RegistryObject<Item> shard, RegistryObject<Item> crystal) {
         compress(consumer, crystal, shard);
         decompress(consumer, shard, crystal);
     }
 
-
     @Override
-    protected void saveAdvancement(DirectoryCache cache, JsonObject cache2, Path advancementJson) {
-        //Nope...
+    protected @Nullable CompletableFuture<?> saveAdvancement(CachedOutput output, FinishedRecipe finishedRecipe, JsonObject advancementJson) {
+        return null; //Nope...
     }
 
-    public static void addToolAndArmorRecipes(Consumer<IFinishedRecipe> consumer, RegistryObject<Item> base, RegistryObject<Item> pickaxe, RegistryObject<Item> sword, RegistryObject<Item> axe, RegistryObject<Item> shovel, RegistryObject<Item> hoe, RegistryObject<Item> helm, RegistryObject<Item> chest, RegistryObject<Item> pants, RegistryObject<Item> boots) {
+    public static void addToolAndArmorRecipes(Consumer<FinishedRecipe> consumer, RegistryObject<Item> base, RegistryObject<Item> pickaxe, RegistryObject<Item> sword, RegistryObject<Item> axe, RegistryObject<Item> shovel, RegistryObject<Item> hoe, RegistryObject<Item> helm, RegistryObject<Item> chest, RegistryObject<Item> pants, RegistryObject<Item> boots) {
         //Pickaxe
         Recipe.shaped(pickaxe.get())
             .pattern("EEE", " S ", " S ")
@@ -614,33 +625,33 @@ public class ItemRecipeGenerator extends RecipeProvider {
     }
 
     public static class Recipe {
-        public static ItemRecipeGenerator.Recipe.Shapeless shapeless(IItemProvider result) {
+        public static ItemRecipeGenerator.Recipe.Shapeless shapeless(ItemLike result) {
             return new ItemRecipeGenerator.Recipe.Shapeless(result);
         }
 
-        public static ItemRecipeGenerator.Recipe.Shapeless shapeless(IItemProvider result, int count) {
+        public static ItemRecipeGenerator.Recipe.Shapeless shapeless(ItemLike result, int count) {
             return new ItemRecipeGenerator.Recipe.Shapeless(result, count);
         }
 
-        public static ItemRecipeGenerator.Recipe.Shaped shaped(IItemProvider result) {
+        public static ItemRecipeGenerator.Recipe.Shaped shaped(ItemLike result) {
             return new ItemRecipeGenerator.Recipe.Shaped(result);
         }
 
-        public static ItemRecipeGenerator.Recipe.Shaped shaped(IItemProvider result, int count) {
+        public static ItemRecipeGenerator.Recipe.Shaped shaped(ItemLike result, int count) {
             return new ItemRecipeGenerator.Recipe.Shaped(result, count);
         }
 
         private static class Shapeless extends ShapelessRecipeBuilder {
             private ResourceLocation name;
-            public Shapeless(IItemProvider result) {
+            public Shapeless(ItemLike result) {
                 this(result, 1);
             }
 
-            public Shapeless(IItemProvider result, int countIn) {
-                super(result, countIn);
+            public Shapeless(ItemLike result, int countIn) {
+                super(RecipeCategory.MISC, result, countIn);
             }
 
-            public ItemRecipeGenerator.Recipe.Shapeless ingredients(IItemProvider... ingredients) {
+            public ItemRecipeGenerator.Recipe.Shapeless ingredients(ItemLike... ingredients) {
                 Arrays.asList(ingredients).forEach(this::requires);
                 return this;
             }
@@ -651,7 +662,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
             }
 
             @Override
-            public void save(@Nonnull Consumer<IFinishedRecipe> consumer) {
+            public void save(@Nonnull Consumer<FinishedRecipe> consumer) {
                 this.unlockedBy("has_book", has(ActuallyItems.ITEM_BOOKLET.get()));
                 if (this.name != null) {
                     this.save(consumer, this.name);
@@ -660,19 +671,19 @@ public class ItemRecipeGenerator extends RecipeProvider {
                 }
             }
             @Override
-            public void save(@Nonnull Consumer<IFinishedRecipe> consumer, @Nonnull ResourceLocation location) {
+            public void save(@Nonnull Consumer<FinishedRecipe> consumer, @Nonnull ResourceLocation location) {
                 this.unlockedBy("", has(Items.AIR));
                 super.save(consumer, location);
             }
         }
 
         private static class Shaped extends ShapedRecipeBuilder {
-            public Shaped(IItemProvider resultIn) {
+            public Shaped(ItemLike resultIn) {
                 this(resultIn, 1);
             }
 
-            public Shaped(IItemProvider resultIn, int countIn) {
-                super(resultIn, countIn);
+            public Shaped(ItemLike resultIn, int countIn) {
+                super(RecipeCategory.MISC, resultIn, countIn);
             }
 
             public ItemRecipeGenerator.Recipe.Shaped pattern(String line1, String line2, String line3) {
@@ -688,7 +699,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
                 return this;
             }
 
-            public ItemRecipeGenerator.Recipe.Shaped patternSingleKey(char key, IItemProvider resource, String... lines) {
+            public ItemRecipeGenerator.Recipe.Shaped patternSingleKey(char key, ItemLike resource, String... lines) {
                 this.define(key, resource);
                 for (String line : lines) {
                     this.pattern(line);
@@ -703,13 +714,13 @@ public class ItemRecipeGenerator extends RecipeProvider {
             }
 
             @Override
-            public void save(@Nonnull Consumer<IFinishedRecipe> consumerIn) {
+            public void save(@Nonnull Consumer<FinishedRecipe> consumerIn) {
                 this.unlockedBy("has_book", has(ActuallyItems.ITEM_BOOKLET.get()));
                 super.save(consumerIn);
             }
 
             @Override
-            public void save(@Nonnull Consumer<IFinishedRecipe> consumer, @Nonnull ResourceLocation location) {
+            public void save(@Nonnull Consumer<FinishedRecipe> consumer, @Nonnull ResourceLocation location) {
                 this.unlockedBy("", has(Items.AIR));
                 super.save(consumer, location);
             }

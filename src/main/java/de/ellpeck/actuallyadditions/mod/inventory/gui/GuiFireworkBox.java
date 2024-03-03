@@ -10,22 +10,22 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFireworkBox;
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
-import net.minecraft.client.gui.widget.AbstractSlider;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.AbstractSliderButton;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 // TODO: FIX ME
 @OnlyIn(Dist.CLIENT)
-public class GuiFireworkBox extends ContainerScreen<ContainerFireworkBox> {
+public class GuiFireworkBox extends AbstractContainerScreen<ContainerFireworkBox> {
 
     //    private final TileEntityFireworkBox tile;
 
-    public GuiFireworkBox(ContainerFireworkBox screenContainer, PlayerInventory inv, ITextComponent titleIn) {
+    public GuiFireworkBox(ContainerFireworkBox screenContainer, Inventory inv, Component titleIn) {
         super(screenContainer, inv, titleIn);
         //        this.tile = tile.;
         this.imageWidth = 300;
@@ -53,7 +53,7 @@ public class GuiFireworkBox extends ContainerScreen<ContainerFireworkBox> {
     }
 
     @Override
-    protected void renderBg(MatrixStack matrixStack, float partialTicks, int x, int y) {
+    protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int x, int y) {
 
     }
 
@@ -90,8 +90,8 @@ public class GuiFireworkBox extends ContainerScreen<ContainerFireworkBox> {
     //    }
 
     // TODO: FIX
-    private static class CustomSlider extends AbstractSlider {
-        public CustomSlider(int x, int y, int width, int height, ITextComponent message, double defaultValue) {
+    private static class CustomSlider extends AbstractSliderButton {
+        public CustomSlider(int x, int y, int width, int height, Component message, double defaultValue) {
             super(x, y, width, height, message, defaultValue);
         }
 

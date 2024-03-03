@@ -13,17 +13,32 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class TileEntityPlacer extends TileEntityBreaker {
 
-    public TileEntityPlacer() {
-        super(ActuallyBlocks.PLACER.getTileEntityType(), 9);
-        this.isPlacer = true;
-    }
+	public TileEntityPlacer(BlockPos pos, BlockState state) {
+		super(ActuallyBlocks.PLACER.getTileEntityType(), pos, state, 9);
+		this.isPlacer = true;
+	}
 
-    @Override
-    public IAcceptor getAcceptor() {
-        return ItemStackHandlerAA.ACCEPT_TRUE;
-    }
+	@Override
+	public IAcceptor getAcceptor() {
+		return ItemStackHandlerAA.ACCEPT_TRUE;
+	}
 
+	public static <T extends BlockEntity> void clientTick(Level level, BlockPos pos, BlockState state, T t) {
+		if (t instanceof TileEntityPlacer tile) {
+			tile.clientTick();
+		}
+	}
+
+	public static <T extends BlockEntity> void serverTick(Level level, BlockPos pos, BlockState state, T t) {
+		if (t instanceof TileEntityPlacer tile) {
+			tile.serverTick();
+		}
+	}
 }

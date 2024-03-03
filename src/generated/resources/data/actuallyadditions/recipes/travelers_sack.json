@@ -1,25 +1,27 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "SLS",
-    "SCS",
-    "LVL"
-  ],
+  "category": "misc",
   "key": {
-    "S": {
-      "tag": "forge:string"
+    "C": {
+      "tag": "forge:chests/wooden"
     },
     "L": {
       "tag": "forge:leather"
     },
-    "C": {
-      "tag": "forge:chests/wooden"
+    "S": {
+      "tag": "forge:string"
     },
     "V": {
       "item": "actuallyadditions:void_crystal_block"
     }
   },
+  "pattern": [
+    "SLS",
+    "SCS",
+    "LVL"
+  ],
   "result": {
     "item": "actuallyadditions:travelers_sack"
-  }
+  },
+  "show_notification": true
 }

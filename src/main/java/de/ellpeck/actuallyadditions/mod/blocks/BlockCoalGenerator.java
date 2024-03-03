@@ -12,42 +12,45 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 
 import de.ellpeck.actuallyadditions.mod.blocks.base.DirectionalBlock;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityCoalGenerator;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 import javax.annotation.Nullable;
-import java.util.Random;
 
 public class BlockCoalGenerator extends DirectionalBlock.Container {
     public BlockCoalGenerator() {
-        super(ActuallyBlocks.defaultPickProps(0).randomTicks());
-    }
-
-    @Override
-    public boolean hasTileEntity(BlockState state) {
-        return true;
+        super(ActuallyBlocks.defaultPickProps().randomTicks());
     }
 
     @Nullable
     @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return new TileEntityCoalGenerator();
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new TileEntityCoalGenerator(pos, state);
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> entityType) {
+        return level.isClientSide? TileEntityCoalGenerator::clientTick : TileEntityCoalGenerator::serverTick;
     }
 
     @Override
-    public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        TileEntity tile = world.getBlockEntity(pos);
+    public void randomTick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
+        BlockEntity tile = world.getBlockEntity(pos);
         if (tile instanceof TileEntityCoalGenerator) {
             if (((TileEntityCoalGenerator) tile).currentBurnTime > 0) {
                 for (int i = 0; i < 5; i++) {
@@ -58,21 +61,21 @@ public class BlockCoalGenerator extends DirectionalBlock.Container {
     }
 
     @Override
-    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         return this.openGui(world, player, pos, TileEntityCoalGenerator.class);
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         switch (state.getValue(FACING)) {
             case EAST:
-                return Shapes.CoalGeneratorShapes.EAST;
+                return VoxelShapes.CoalGeneratorShapes.EAST;
             case SOUTH:
-                return Shapes.CoalGeneratorShapes.SOUTH;
+                return VoxelShapes.CoalGeneratorShapes.SOUTH;
             case WEST:
-                return Shapes.CoalGeneratorShapes.WEST;
+                return VoxelShapes.CoalGeneratorShapes.WEST;
             default:
-                return Shapes.CoalGeneratorShapes.NORTH;
+                return VoxelShapes.CoalGeneratorShapes.NORTH;
         }
     }
 }

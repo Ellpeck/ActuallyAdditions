@@ -63,7 +63,7 @@
 //    private float largeFontSize;
 //
 //    public GuiBooklet(Screen previousScreen, GuiBookletBase parentPage) {
-//        super(StringTextComponent.EMPTY);
+//        super(StringComponent.empty());
 //
 //        this.previousScreen = previousScreen;
 //        this.parentPage = parentPage;
@@ -115,7 +115,7 @@
 //        }
 //
 //        if (this.hasSearchBar()) {
-//            this.searchField = new TextFieldWidget(this.font, this.guiLeft + this.xSize + 2, this.guiTop + this.ySize - 40 + 2, 64, 12, StringTextComponent.EMPTY);
+//            this.searchField = new TextFieldWidget(this.font, this.guiLeft + this.xSize + 2, this.guiTop + this.ySize - 40 + 2, 64, 12, StringComponent.empty());
 //            this.searchField.setMaxLength(50);
 //            this.searchField.setBordered(false);
 //            this.children.add(this.searchField);
@@ -179,7 +179,7 @@
 //
 //        if (this.hasSearchBar()) {
 //            this.getMinecraft().getTextureManager().bind(RES_LOC_GADGETS);
-//            this.blit(matrices, this.guiLeft + this.xSize, this.guiTop + this.ySize - 40, 188, 0, 68, 14);
+//            guiGraphics.blit(matrices, this.guiLeft + this.xSize, this.guiTop + this.ySize - 40, 188, 0, 68, 14);
 //
 //            //            boolean unicodeBefore = this.font.getUnicodeFlag();
 //            //            this.font.setUnicodeFlag(true);

@@ -3,8 +3,8 @@
   "ingredient": {
     "tag": "forge:stone"
   },
-  "weight": 500,
   "result": {
     "item": "minecraft:gold_ore"
-  }
+  },
+  "weight": 500
 }

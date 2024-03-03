@@ -1,8 +1,8 @@
 {
   "type": "actuallyadditions:solid_fuel",
+  "burn_time": 20000,
   "item": {
     "item": "minecraft:lava_bucket"
   },
-  "total_energy": 400000,
-  "burn_time": 20000
+  "total_energy": 400000
 }

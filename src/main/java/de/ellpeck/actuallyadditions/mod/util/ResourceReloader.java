@@ -3,23 +3,20 @@ package de.ellpeck.actuallyadditions.mod.util;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.mod.crafting.ActuallyRecipes;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.item.crafting.RecipeManager;
-import net.minecraft.resources.DataPackRegistries;
-import net.minecraft.resources.IResourceManager;
-import net.minecraft.resources.IResourceManagerReloadListener;
-
-import java.util.List;
+import net.minecraft.server.ReloadableServerResources;
+import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
+import net.minecraft.world.item.crafting.RecipeManager;
 
 @SuppressWarnings("deprecation")
-public class ResourceReloader implements IResourceManagerReloadListener {
-    private final DataPackRegistries data;
-    public ResourceReloader(DataPackRegistries dataPackRegistries) {
+public class ResourceReloader implements ResourceManagerReloadListener {
+    private final ReloadableServerResources data;
+    public ResourceReloader(ReloadableServerResources dataPackRegistries) {
         data = dataPackRegistries;
     }
 
     @Override
-    public void onResourceManagerReload(IResourceManager pResourceManager) {
+    public void onResourceManagerReload(ResourceManager pResourceManager) {
         RecipeManager recipeManager = data.getRecipeManager();
         ActuallyAdditionsAPI.EMPOWERER_RECIPES.clear();
         ActuallyAdditionsAPI.EMPOWERER_RECIPES.addAll(recipeManager.getAllRecipesFor(ActuallyRecipes.Types.EMPOWERING));

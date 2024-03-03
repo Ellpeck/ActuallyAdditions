@@ -14,9 +14,10 @@ import de.ellpeck.actuallyadditions.mod.inventory.ContainerFilter;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotFilter;
 import de.ellpeck.actuallyadditions.mod.items.DrillItem;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class FilterSettings {
     public final ItemStackHandlerAA filterInventory;
@@ -68,7 +69,7 @@ public class FilterSettings {
     private static boolean areEqualEnough(ItemStack first, ItemStack second, boolean nbt, boolean mod) {
         Item firstItem = first.getItem();
         Item secondItem = second.getItem();
-        if (mod && firstItem.getRegistryName().getNamespace().equals(secondItem.getRegistryName().getNamespace())) {
+        if (mod && ForgeRegistries.ITEMS.getKey(firstItem).getNamespace().equals(ForgeRegistries.ITEMS.getKey(secondItem).getNamespace())) {
             return true;
         }
 
@@ -76,15 +77,15 @@ public class FilterSettings {
             return false;
         }
 
-        boolean nbtFine = !nbt || ItemStack.tagMatches(first, second);
+        boolean nbtFine = !nbt || ItemStack.isSameItemSameTags(first, second);
         if (nbtFine) {
             return true;
         }
         return false;
     }
 
-    public void writeToNBT(CompoundNBT tag, String name) {
-        CompoundNBT compound = new CompoundNBT();
+    public void writeToNBT(CompoundTag tag, String name) {
+        CompoundTag compound = new CompoundTag();
         compound.putBoolean("Whitelist", this.isWhitelist);
         compound.putBoolean("NBT", this.respectNBT);
         compound.putBoolean("Mod", this.respectMod);
@@ -92,8 +93,8 @@ public class FilterSettings {
         tag.put(name, compound);
     }
 
-    public void readFromNBT(CompoundNBT tag, String name) {
-        CompoundNBT compound = tag.getCompound(name);
+    public void readFromNBT(CompoundTag tag, String name) {
+        CompoundTag compound = tag.getCompound(name);
         this.isWhitelist = compound.getBoolean("Whitelist");
         this.respectNBT = compound.getBoolean("NBT");
         this.respectMod = compound.getBoolean("Mod");

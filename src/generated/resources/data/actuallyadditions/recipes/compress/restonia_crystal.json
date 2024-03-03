@@ -1,16 +1,18 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "xxx",
-    "xxx",
-    "xxx"
-  ],
+  "category": "misc",
   "key": {
     "x": {
       "item": "actuallyadditions:restonia_crystal_shard"
     }
   },
+  "pattern": [
+    "xxx",
+    "xxx",
+    "xxx"
+  ],
   "result": {
     "item": "actuallyadditions:restonia_crystal"
-  }
+  },
+  "show_notification": true
 }

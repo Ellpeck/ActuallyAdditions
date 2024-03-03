@@ -1,6 +1,6 @@
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import net.minecraft.item.Item;
+import net.minecraft.world.item.Item;
 
 public interface IActuallyBlock {
     /**

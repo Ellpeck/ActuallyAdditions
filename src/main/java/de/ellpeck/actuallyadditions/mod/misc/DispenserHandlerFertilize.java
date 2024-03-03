@@ -10,19 +10,19 @@
 
 package de.ellpeck.actuallyadditions.mod.misc;
 
-import net.minecraft.dispenser.DefaultDispenseItemBehavior;
-import net.minecraft.dispenser.IBlockSource;
-import net.minecraft.item.BoneMealItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockSource;
+import net.minecraft.core.Direction;
+import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
+import net.minecraft.world.item.BoneMealItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
 // TODO: [port][note] might not be needed anymore
 public class DispenserHandlerFertilize extends DefaultDispenseItemBehavior {
 
     @Override
-    public ItemStack execute(IBlockSource source, ItemStack stack) {
+    public ItemStack execute(BlockSource source, ItemStack stack) {
         Direction facing = source.getBlockState().getValue(BlockStateProperties.FACING);
         BlockPos pos = source.getPos().relative(facing);
 

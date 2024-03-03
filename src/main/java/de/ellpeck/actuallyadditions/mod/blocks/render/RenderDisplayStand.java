@@ -10,29 +10,27 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks.render;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Axis;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityDisplayStand;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Util;
-import net.minecraft.util.math.vector.Quaternion;
-import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.Util;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 
-public class RenderDisplayStand extends TileEntityRenderer<TileEntityDisplayStand> {
-    public RenderDisplayStand(TileEntityRendererDispatcher rendererDispatcherIn) {
-        super(rendererDispatcherIn);
+public class RenderDisplayStand implements BlockEntityRenderer<TileEntityDisplayStand> {
+    public RenderDisplayStand(BlockEntityRendererProvider.Context context) {
     }
 
     @Override
-    public void render(TileEntityDisplayStand tile, float partialTicks, @Nonnull MatrixStack matrices, @Nonnull IRenderTypeBuffer buffer, int combinedLightIn, int combinedOverlayIn) {
+    public void render(TileEntityDisplayStand tile, float partialTicks, @Nonnull PoseStack matrices, @Nonnull MultiBufferSource buffer, int combinedLightIn, int combinedOverlayIn) {
         ItemStack stack = tile.inv.getStackInSlot(0);
         if (stack.isEmpty()) {
             return;
@@ -43,7 +41,7 @@ public class RenderDisplayStand extends TileEntityRenderer<TileEntityDisplayStan
 
         float boop = Util.getMillis() / 800F;
         matrices.translate(0D, Math.sin(boop % (2 * Math.PI)) * 0.065, 0D);
-        matrices.mulPose(Vector3f.YP.rotationDegrees(boop * 40F % 360.0F));
+        matrices.mulPose(Axis.YP.rotationDegrees(boop * 40F % 360.0F));
 
         float scale = stack.getItem() instanceof BlockItem
             ? 0.85F
@@ -52,7 +50,7 @@ public class RenderDisplayStand extends TileEntityRenderer<TileEntityDisplayStan
         try {
             AssetUtil.renderItemInWorld(stack, combinedLightIn, combinedOverlayIn, matrices, buffer);
         } catch (Exception e) {
-            ActuallyAdditions.LOGGER.error("Something went wrong trying to render an item in a display stand! The item is " + stack.getItem().getRegistryName() + "!", e);
+            ActuallyAdditions.LOGGER.error("Something went wrong trying to render an item in a display stand! The item is " + ForgeRegistries.ITEMS.getKey(stack.getItem()) + "!", e);
         }
 
         matrices.popPose();

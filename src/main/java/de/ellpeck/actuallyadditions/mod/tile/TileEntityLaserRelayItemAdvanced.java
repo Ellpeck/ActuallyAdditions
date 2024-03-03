@@ -18,24 +18,44 @@ import de.ellpeck.actuallyadditions.mod.items.DrillItem;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
 import de.ellpeck.actuallyadditions.mod.util.compat.SlotlessableItemHandlerWrapper;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
 
-public class TileEntityLaserRelayItemAdvanced extends TileEntityLaserRelayItem implements IButtonReactor, INamedContainerProvider {
+public class TileEntityLaserRelayItemAdvanced extends TileEntityLaserRelayItem implements IButtonReactor, MenuProvider {
 
     public FilterSettings leftFilter = new FilterSettings(12, true, false, false);
     public FilterSettings rightFilter = new FilterSettings(12, true, false, false);
 
-    public TileEntityLaserRelayItemAdvanced() {
-        super(ActuallyBlocks.LASER_RELAY_ITEM_ADVANCED.getTileEntityType());
+    public TileEntityLaserRelayItemAdvanced(BlockPos pos, BlockState state) {
+        super(ActuallyBlocks.LASER_RELAY_ITEM_ADVANCED.getTileEntityType(), pos, state);
+    }
+
+    public static <T extends BlockEntity> void clientTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityLaserRelayItemAdvanced tile) {
+            tile.clientTick();
+        }
+    }
+
+    public static <T extends BlockEntity> void serverTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityLaserRelayItemAdvanced tile) {
+            tile.serverTick();
+
+            if ((tile.leftFilter.needsUpdateSend() || tile.rightFilter.needsUpdateSend()) && tile.sendUpdateWithInterval()) {
+                tile.leftFilter.updateLasts();
+                tile.rightFilter.updateLasts();
+            }
+        }
     }
 
     @Override
@@ -51,7 +71,7 @@ public class TileEntityLaserRelayItemAdvanced extends TileEntityLaserRelayItem i
     }
 
     @Override
-    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
 
         this.leftFilter.writeToNBT(compound, "LeftFilter");
@@ -59,7 +79,7 @@ public class TileEntityLaserRelayItemAdvanced extends TileEntityLaserRelayItem i
     }
 
     @Override
-    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void readSyncableNBT(CompoundTag compound, NBTType type) {
         super.readSyncableNBT(compound, type);
 
         this.leftFilter.readFromNBT(compound, "LeftFilter");
@@ -67,7 +87,7 @@ public class TileEntityLaserRelayItemAdvanced extends TileEntityLaserRelayItem i
     }
 
     @Override
-    public void onButtonPressed(int buttonID, PlayerEntity player) {
+    public void onButtonPressed(int buttonID, Player player) {
         this.leftFilter.onButtonPressed(buttonID);
         this.rightFilter.onButtonPressed(buttonID);
         if (buttonID == 2) {
@@ -128,25 +148,13 @@ public class TileEntityLaserRelayItemAdvanced extends TileEntityLaserRelayItem i
     }
 
     @Override
-    public void updateEntity() {
-        super.updateEntity();
-
-        if (!this.level.isClientSide) {
-            if ((this.leftFilter.needsUpdateSend() || this.rightFilter.needsUpdateSend()) && this.sendUpdateWithInterval()) {
-                this.leftFilter.updateLasts();
-                this.rightFilter.updateLasts();
-            }
-        }
-    }
-
-    @Override
-    public ITextComponent getDisplayName() {
-        return StringTextComponent.EMPTY;
+    public Component getDisplayName() {
+        return Component.empty();
     }
 
     @Nullable
     @Override
-    public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity player) {
+    public AbstractContainerMenu createMenu(int windowId, Inventory playerInventory, Player player) {
         return new ContainerLaserRelayItemWhitelist(windowId, playerInventory, this);
     }
 }

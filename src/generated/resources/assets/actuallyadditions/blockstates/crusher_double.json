@@ -1,9 +1,24 @@
 {
   "variants": {
+    "facing=east,lit=false": {
+      "model": "actuallyadditions:block/crusher_double",
+      "y": 90
+    },
+    "facing=east,lit=true": {
+      "model": "actuallyadditions:block/crusher_double",
+      "y": 90
+    },
     "facing=north,lit=false": {
       "model": "actuallyadditions:block/crusher_double"
     },
+    "facing=north,lit=true": {
+      "model": "actuallyadditions:block/crusher_double"
+    },
     "facing=south,lit=false": {
+      "model": "actuallyadditions:block/crusher_double",
+      "y": 180
+    },
+    "facing=south,lit=true": {
       "model": "actuallyadditions:block/crusher_double",
       "y": 180
     },
@@ -11,24 +26,9 @@
       "model": "actuallyadditions:block/crusher_double",
       "y": 270
     },
-    "facing=east,lit=false": {
-      "model": "actuallyadditions:block/crusher_double",
-      "y": 90
-    },
-    "facing=north,lit=true": {
-      "model": "actuallyadditions:block/crusher_double"
-    },
-    "facing=south,lit=true": {
-      "model": "actuallyadditions:block/crusher_double",
-      "y": 180
-    },
     "facing=west,lit=true": {
       "model": "actuallyadditions:block/crusher_double",
       "y": 270
-    },
-    "facing=east,lit=true": {
-      "model": "actuallyadditions:block/crusher_double",
-      "y": 90
     }
   }
 }

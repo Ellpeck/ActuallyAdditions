@@ -13,26 +13,25 @@ package de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer;
 import de.ellpeck.actuallyadditions.api.farmer.FarmerResult;
 import de.ellpeck.actuallyadditions.api.farmer.IFarmerBehavior;
 import de.ellpeck.actuallyadditions.api.internal.IFarmer;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootParameters;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 
 public class CactusFarmerBehavior implements IFarmerBehavior {
 
     @Override
-    public FarmerResult tryPlantSeed(ItemStack seed, World world, BlockPos pos, IFarmer farmer) {
+    public FarmerResult tryPlantSeed(ItemStack seed, Level world, BlockPos pos, IFarmer farmer) {
         int use = 250;
         if (farmer.getEnergy() >= use) {
             Item item = seed.getItem();
@@ -55,26 +54,26 @@ public class CactusFarmerBehavior implements IFarmerBehavior {
     }
 
     @Override
-    public FarmerResult tryHarvestPlant(ServerWorld world, BlockPos pos, IFarmer farmer) {
+    public FarmerResult tryHarvestPlant(ServerLevel serverLevel, BlockPos pos, IFarmer farmer) {
         int use = 250;
         if (farmer.getEnergy() >= use) {
-            BlockState state = world.getBlockState(pos);
+            BlockState state = serverLevel.getBlockState(pos);
             if (state.getBlock() == Blocks.CACTUS) {
                 FarmerResult result = FarmerResult.STOP_PROCESSING;
 
                 for (int i = 2; i >= 1; i--) {
                     if (farmer.getEnergy() >= use) {
                         BlockPos up = pos.above(i);
-                        BlockState upState = world.getBlockState(up);
+                        BlockState upState = serverLevel.getBlockState(up);
                         if (upState.getBlock() == Blocks.CACTUS) {
-                            List<ItemStack> drops = state.getDrops(new LootContext.Builder(world)
-                                .withParameter(LootParameters.ORIGIN, new Vector3d(pos.getX(), pos.getY(), pos.getZ()))
-                                .withParameter(LootParameters.TOOL, ItemStack.EMPTY));
+                            List<ItemStack> drops = state.getDrops((new LootParams.Builder(serverLevel))
+                                    .withParameter(LootContextParams.ORIGIN, new Vec3(pos.getX(), pos.getY(), pos.getZ()))
+                                    .withParameter(LootContextParams.TOOL, ItemStack.EMPTY));
 
                             if (!drops.isEmpty()) {
                                 if (farmer.canAddToOutput(drops)) {
-                                    world.levelEvent(2001, up, Block.getId(upState));
-                                    world.setBlockAndUpdate(up, Blocks.AIR.defaultBlockState());
+                                    serverLevel.levelEvent(2001, up, Block.getId(upState));
+                                    serverLevel.setBlockAndUpdate(up, Blocks.AIR.defaultBlockState());
 
                                     farmer.extractEnergy(use);
                                     farmer.addToOutput(drops);

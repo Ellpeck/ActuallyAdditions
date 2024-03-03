@@ -17,24 +17,24 @@ import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.items.ItemCoffee;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityCoffeeMachine;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.Objects;
 
-public class ContainerCoffeeMachine extends Container {
+public class ContainerCoffeeMachine extends AbstractContainerMenu {
 
     public final TileEntityCoffeeMachine machine;
 
-    public static ContainerCoffeeMachine fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
-        return new ContainerCoffeeMachine(windowId, inv, (TileEntityCoffeeMachine) Objects.requireNonNull(inv.player.level.getBlockEntity(data.readBlockPos())));
+    public static ContainerCoffeeMachine fromNetwork(int windowId, Inventory inv, FriendlyByteBuf data) {
+        return new ContainerCoffeeMachine(windowId, inv, (TileEntityCoffeeMachine) Objects.requireNonNull(inv.player.level().getBlockEntity(data.readBlockPos())));
     }
 
-    public ContainerCoffeeMachine(int windowId, PlayerInventory inventory, TileEntityCoffeeMachine tile) {
+    public ContainerCoffeeMachine(int windowId, Inventory inventory, TileEntityCoffeeMachine tile) {
         super(ActuallyContainers.COFFEE_MACHINE_CONTAINER.get(), windowId);
         this.machine = tile;
 
@@ -59,7 +59,7 @@ public class ContainerCoffeeMachine extends Container {
     }
 
     @Override
-    public ItemStack quickMoveStack(PlayerEntity player, int slot) {
+    public ItemStack quickMoveStack(Player player, int slot) {
         int inventoryStart = 11;
         int inventoryEnd = inventoryStart + 26;
         int hotbarStart = inventoryEnd + 1;
@@ -89,7 +89,7 @@ public class ContainerCoffeeMachine extends Container {
                     if (!this.moveItemStackTo(newStack, 3, 11, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (ActuallyTags.Items.COFFEE_BEANS.contains(newStack.getItem())) {
+                } else if (newStack.is(ActuallyTags.Items.COFFEE_BEANS)) {
                     if (!this.moveItemStackTo(newStack, TileEntityCoffeeMachine.SLOT_COFFEE_BEANS, TileEntityCoffeeMachine.SLOT_COFFEE_BEANS + 1, false)) {
                         return ItemStack.EMPTY;
                     }
@@ -124,7 +124,7 @@ public class ContainerCoffeeMachine extends Container {
     }
 
     @Override
-    public boolean stillValid(PlayerEntity player) {
+    public boolean stillValid(Player player) {
         return this.machine.canPlayerUse(player);
     }
 }

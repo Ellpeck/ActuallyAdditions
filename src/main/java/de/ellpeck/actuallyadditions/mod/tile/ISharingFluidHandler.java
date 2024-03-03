@@ -10,7 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import net.minecraft.util.Direction;
+import net.minecraft.core.Direction;
 
 public interface ISharingFluidHandler {
 

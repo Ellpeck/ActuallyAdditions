@@ -1,7 +1,7 @@
 package de.ellpeck.actuallyadditions.mod.config;
 
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 import java.util.ArrayList;
@@ -128,8 +128,8 @@ public class CommonConfig {
             MOST_BLAND_PERSON_EVER = BUILDER.comment("If you want to be really boring and lame, you can turn on this setting to disable colored names on Actually Additions items. Because why would you want things to look pretty anyways, right?")
                 .define("noColoredItemNames", false); //TODO is this still needed?
 
-            REDSTONECONFIGURATOR = BUILDER.comment("define the item used to configure Redstone Mode").define("redstoneConfigurator", Items.REDSTONE_TORCH.getRegistryName().toString(), obj -> obj instanceof String);
-            RELAYCONFIGURATOR = BUILDER.comment("define the item used to configure Direction in laser relays").define("relayConfigurator", Items.COMPASS.getRegistryName().toString(), obj -> obj instanceof String);
+            REDSTONECONFIGURATOR = BUILDER.comment("define the item used to configure Redstone Mode").define("redstoneConfigurator", "minecraft:redstone_torch", obj -> obj instanceof String);
+            RELAYCONFIGURATOR = BUILDER.comment("define the item used to configure Direction in laser relays").define("relayConfigurator", "minecraft:compass", obj -> obj instanceof String);
 
             BUILDER.pop();
         }

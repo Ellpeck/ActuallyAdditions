@@ -1,19 +1,21 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "minecraft:potion"
+    },
+    "R": {
+      "item": "actuallyadditions:rice_dough"
+    }
+  },
   "pattern": [
     " R ",
     "RBR",
     " R "
   ],
-  "key": {
-    "R": {
-      "item": "actuallyadditions:rice_dough"
-    },
-    "B": {
-      "item": "minecraft:potion"
-    }
-  },
   "result": {
     "item": "actuallyadditions:rice_slimeball"
-  }
+  },
+  "show_notification": true
 }

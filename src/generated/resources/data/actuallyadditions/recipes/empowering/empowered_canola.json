@@ -3,6 +3,8 @@
   "base": {
     "item": "actuallyadditions:crystallized_canola_seed"
   },
+  "color": 16735052,
+  "energy": 1000,
   "modifiers": [
     {
       "item": "actuallyadditions:canola_seeds"
@@ -17,10 +19,8 @@
       "item": "actuallyadditions:canola_seeds"
     }
   ],
-  "energy": 1000,
-  "time": 30,
-  "color": 16735052,
   "result": {
     "item": "actuallyadditions:empowered_canola_seed"
-  }
+  },
+  "time": 30
 }

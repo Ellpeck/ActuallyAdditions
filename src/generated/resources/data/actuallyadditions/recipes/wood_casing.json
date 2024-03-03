@@ -1,22 +1,24 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "WSW",
-    "SRS",
-    "WSW"
-  ],
+  "category": "misc",
   "key": {
+    "R": {
+      "tag": "minecraft:logs"
+    },
     "S": {
       "tag": "forge:rods/wooden"
     },
     "W": {
       "tag": "minecraft:planks"
-    },
-    "R": {
-      "tag": "minecraft:logs"
     }
   },
+  "pattern": [
+    "WSW",
+    "SRS",
+    "WSW"
+  ],
   "result": {
     "item": "actuallyadditions:wood_casing"
-  }
+  },
+  "show_notification": true
 }

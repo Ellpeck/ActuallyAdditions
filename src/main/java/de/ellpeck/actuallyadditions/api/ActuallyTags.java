@@ -1,28 +1,51 @@
 package de.ellpeck.actuallyadditions.api;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import net.minecraft.item.Item;
-import net.minecraft.tags.ITag;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
 
 public final class ActuallyTags {
     public static final void init() {
         // lol
         Items.touch();
+        Blocks.touch();
     }
     public static class Items {
         public static void touch() {
             // load the stupid tags
         }
-        public static final ITag.INamedTag<Item> DRILLS = tag("drills");
-        public static final ITag.INamedTag<Item> COFFEE_BEANS = tag("coffee_beans");
-        public static final ITag.INamedTag<Item> TINY_COALS = tag("tiny_coals");
-        public static final ITag.INamedTag<Item> HOLDS_ITEMS = ItemTags.createOptional(new ResourceLocation("forge", "holds_items"));
-        public static final ITag.INamedTag<Item> CRYSTALS = tag("crystals");
+        public static final TagKey<Item> DRILLS = tag("drills");
+        public static final TagKey<Item> COFFEE_BEANS = tag("coffee_beans");
+        public static final TagKey<Item> TINY_COALS = tag("tiny_coals");
+        public static final TagKey<Item> HOLDS_ITEMS = ItemTags.create(new ResourceLocation("forge", "holds_items"));
+        public static final TagKey<Item> CRYSTALS = tag("crystals");
 
-        private static ITag.INamedTag<Item> tag(String name) {
-            return ItemTags.bind(String.format("%s:%s", ActuallyAdditions.MODID, name));
+        private static TagKey<Item> tag(String name) {
+            return TagKey.create(Registries.ITEM, new ResourceLocation(ActuallyAdditions.MODID, name));
+        }
+    }
+
+    public static class Blocks {
+        public static void touch() {
+            // load the stupid tags
+        }
+
+        public static final TagKey<Block> MINEABLE_WITH_DRILL = tag("mineable/drill");
+        public static final TagKey<Block> MINEABLE_WITH_AIO = tag("mineable/aio");
+        public static final TagKey<Block> NEEDS_BLACK_QUARTZ_TOOL = tag("needs_black_quartz_tool");
+        public static final TagKey<Block> NEEDS_RESTONIA_TOOL = tag("needs_restonia_tool");
+        public static final TagKey<Block> NEEDS_PALIS_TOOL = tag("needs_palis_tool");
+        public static final TagKey<Block> NEEDS_DIAMATINE_TOOL = tag("needs_diamatine_tool");
+        public static final TagKey<Block> NEEDS_VOID_TOOL = tag("needs_void_tool");
+        public static final TagKey<Block> NEEDS_EMERADIC_TOOL = tag("needs_emeradic_tool");
+        public static final TagKey<Block> NEEDS_ENORI_TOOL = tag("needs_enori_tool");
+
+        private static TagKey<Block> tag(String name) {
+            return TagKey.create(Registries.BLOCK, new ResourceLocation(ActuallyAdditions.MODID, name));
         }
     }
 }

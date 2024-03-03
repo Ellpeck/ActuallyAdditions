@@ -3,26 +3,26 @@ package de.ellpeck.actuallyadditions.mod.crafting;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import de.ellpeck.actuallyadditions.mod.inventory.gui.FluidDisplay;
-import net.minecraft.data.IFinishedRecipe;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Optional;
 
-public class FermentingRecipe implements IRecipe<IInventory> {
+public class FermentingRecipe implements Recipe<Container> {
     public static final String NAME = "fermenting";
     private final ResourceLocation ID;
     private final FluidStack input;
@@ -76,7 +76,7 @@ public class FermentingRecipe implements IRecipe<IInventory> {
     }
 
     @Override
-    public boolean matches(IInventory pInv, World pLevel) {
+    public boolean matches(Container pInv, Level pLevel) {
         return false;
     }
 
@@ -87,7 +87,7 @@ public class FermentingRecipe implements IRecipe<IInventory> {
 
     @Nonnull
     @Override
-    public ItemStack assemble(IInventory pInv) {
+    public ItemStack assemble(Container pInv, RegistryAccess pRegistryAccess) {
         return ItemStack.EMPTY;
     }
 
@@ -98,7 +98,7 @@ public class FermentingRecipe implements IRecipe<IInventory> {
 
     @Nonnull
     @Override
-    public ItemStack getResultItem() {
+    public ItemStack getResultItem(RegistryAccess pRegistryAccess) {
         return ItemStack.EMPTY;
     }
 
@@ -110,45 +110,45 @@ public class FermentingRecipe implements IRecipe<IInventory> {
 
     @Nonnull
     @Override
-    public IRecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<?> getSerializer() {
         return ActuallyRecipes.FERMENTING_RECIPE.get();
     }
 
     @Nonnull
     @Override
-    public IRecipeType<?> getType() {
+    public RecipeType<?> getType() {
         return ActuallyRecipes.Types.FERMENTING;
     }
 
-    public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<FermentingRecipe> {
+    public static class Serializer implements RecipeSerializer<FermentingRecipe> {
         @Nonnull
         @Override
         public FermentingRecipe fromJson(@Nonnull ResourceLocation pRecipeId, @Nonnull JsonObject pJson) {
             JsonObject ingredient = pJson.getAsJsonObject("ingredient");
 
-            ResourceLocation fluidRes = new ResourceLocation(JSONUtils.getAsString(ingredient, "fluid"));
+            ResourceLocation fluidRes = new ResourceLocation(GsonHelper.getAsString(ingredient, "fluid"));
             Fluid fluid = ForgeRegistries.FLUIDS.getValue(fluidRes);
             if (fluid == null)
                 throw new JsonParseException("Unknown fluid '" + fluidRes + "'");
-            int inputAmount = JSONUtils.getAsInt(ingredient, "amount", 80);
+            int inputAmount = GsonHelper.getAsInt(ingredient, "amount", 80);
             FluidStack input = new FluidStack(fluid, inputAmount);
 
             JsonObject result = pJson.getAsJsonObject("result");
-            ResourceLocation fluidOutputRes = new ResourceLocation(JSONUtils.getAsString(result, "fluid"));
-            int outputAmount = JSONUtils.getAsInt(result, "amount");
+            ResourceLocation fluidOutputRes = new ResourceLocation(GsonHelper.getAsString(result, "fluid"));
+            int outputAmount = GsonHelper.getAsInt(result, "amount");
             Fluid fluidOutput = ForgeRegistries.FLUIDS.getValue(fluidOutputRes);
             if(fluidOutput == null)
                 throw new JsonParseException("Unknown fluid '" + fluidRes + "'");
             FluidStack output = new FluidStack(fluidOutput, outputAmount);
 
-            int time = JSONUtils.getAsInt(pJson, "time", 100);
+            int time = GsonHelper.getAsInt(pJson, "time", 100);
 
             return new FermentingRecipe(pRecipeId, input, output, time);
         }
 
         @Nullable
         @Override
-        public FermentingRecipe fromNetwork(@Nonnull ResourceLocation pRecipeId, @Nonnull PacketBuffer pBuffer) {
+        public FermentingRecipe fromNetwork(@Nonnull ResourceLocation pRecipeId, @Nonnull FriendlyByteBuf pBuffer) {
             ResourceLocation inputRes = new ResourceLocation(pBuffer.readUtf());
             int inputAmount = pBuffer.readInt();
             Fluid inputFluid = ForgeRegistries.FLUIDS.getValue(inputRes);
@@ -169,21 +169,21 @@ public class FermentingRecipe implements IRecipe<IInventory> {
         }
 
         @Override
-        public void toNetwork(@Nonnull PacketBuffer pBuffer, @Nonnull FermentingRecipe pRecipe) {
-            pBuffer.writeUtf(pRecipe.input.getFluid().getRegistryName().toString());
+        public void toNetwork(@Nonnull FriendlyByteBuf pBuffer, @Nonnull FermentingRecipe pRecipe) {
+            pBuffer.writeUtf(ForgeRegistries.FLUIDS.getKey(pRecipe.input.getFluid()).toString());
             pBuffer.writeInt(pRecipe.input.getAmount());
-            pBuffer.writeUtf(pRecipe.output.getFluid().getRegistryName().toString());
+            pBuffer.writeUtf(ForgeRegistries.FLUIDS.getKey(pRecipe.output.getFluid()).toString());
             pBuffer.writeInt(pRecipe.output.getAmount());
             pBuffer.writeInt(pRecipe.time);
         }
     }
-    public static class FinishedRecipe implements IFinishedRecipe {
+    public static class Result implements FinishedRecipe {
         private final ResourceLocation ID;
         private final FluidStack input;
         private final FluidStack output;
         private final int time;
 
-        public FinishedRecipe(ResourceLocation ID, FluidStack input, FluidStack output, int timeIn) {
+        public Result(ResourceLocation ID, FluidStack input, FluidStack output, int timeIn) {
             this.ID = ID;
             this.input = input;
             this.output = output;
@@ -193,11 +193,11 @@ public class FermentingRecipe implements IRecipe<IInventory> {
         @Override
         public void serializeRecipeData(JsonObject pJson) {
             JsonObject ingredient = new JsonObject();
-            ingredient.addProperty("fluid", input.getFluid().getRegistryName().toString());
+            ingredient.addProperty("fluid", ForgeRegistries.FLUIDS.getKey(input.getFluid()).toString());
             ingredient.addProperty("amount", input.getAmount());
 
             JsonObject result = new JsonObject();
-            result.addProperty("fluid", output.getFluid().getRegistryName().toString());
+            result.addProperty("fluid", ForgeRegistries.FLUIDS.getKey(output.getFluid()).toString());
             result.addProperty("amount", output.getAmount());
 
             pJson.add("ingredient", ingredient);
@@ -211,7 +211,7 @@ public class FermentingRecipe implements IRecipe<IInventory> {
         }
 
         @Override
-        public IRecipeSerializer<?> getType() {
+        public RecipeSerializer<?> getType() {
             return ActuallyRecipes.FERMENTING_RECIPE.get();
         }
 

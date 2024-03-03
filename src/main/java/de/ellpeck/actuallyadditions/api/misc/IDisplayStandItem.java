@@ -10,12 +10,12 @@
 
 package de.ellpeck.actuallyadditions.api.misc;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
 
 public interface IDisplayStandItem {
 
-    boolean update(ItemStack stack, TileEntity tile, int elapsedTicks);
+    boolean update(ItemStack stack, BlockEntity tile, int elapsedTicks);
 
-    int getUsePerTick(ItemStack stack, TileEntity tile, int elapsedTicks);
+    int getUsePerTick(ItemStack stack, BlockEntity tile, int elapsedTicks);
 }

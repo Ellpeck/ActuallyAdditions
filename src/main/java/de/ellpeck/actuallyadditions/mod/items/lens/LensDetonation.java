@@ -12,10 +12,10 @@ package de.ellpeck.actuallyadditions.mod.items.lens;
 
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.Explosion;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class LensDetonation extends Lens {
 
@@ -23,9 +23,9 @@ public class LensDetonation extends Lens {
 
     @Override
     public boolean invoke(BlockState state, BlockPos hitBlock, IAtomicReconstructor tile) {
-        if (hitBlock != null && !state.getBlock().isAir(state, tile.getWorldObject(), hitBlock)) {
+        if (hitBlock != null && !state.isAir()) {
             if (tile.getEnergy() >= ENERGY_USE) {
-                tile.getWorldObject().explode(null, hitBlock.getX() + 0.5, hitBlock.getY() + 0.5, hitBlock.getZ() + 0.5, 10F, true, Explosion.Mode.NONE); // TODO: [port][test] make sure this is the right explosion mode
+                tile.getWorldObject().explode(null, hitBlock.getX() + 0.5, hitBlock.getY() + 0.5, hitBlock.getZ() + 0.5, 10F, true, Level.ExplosionInteraction.NONE); // TODO: [port][test] make sure this is the right explosion mode
                 tile.extractEnergy(ENERGY_USE);
             }
             return true;

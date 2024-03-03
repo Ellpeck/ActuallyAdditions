@@ -14,44 +14,42 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.crafting.PressingRecipe;
 import de.ellpeck.actuallyadditions.mod.crafting.SingleItem;
-import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.fluids.OutputOnlyFluidTank;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerCanolaPress;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import de.ellpeck.actuallyadditions.mod.util.Util;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Direction;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.IFluidTank;
+import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.templates.FluidTank;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
 
-public class TileEntityCanolaPress extends TileEntityInventoryBase implements INamedContainerProvider, ISharingFluidHandler {
+public class TileEntityCanolaPress extends TileEntityInventoryBase implements MenuProvider, ISharingFluidHandler {
 
     public static final int ENERGY_USE = 35;
     private static final int TIME = 30;
     public final CustomEnergyStorage storage = new CustomEnergyStorage(40000, 100, 0);
     public final LazyOptional<IEnergyStorage> lazyEnergy = LazyOptional.of(() -> this.storage);
 
-    public final OutputOnlyFluidTank tank = new OutputOnlyFluidTank(2 * FluidAttributes.BUCKET_VOLUME);
+    public final OutputOnlyFluidTank tank = new OutputOnlyFluidTank(2 * FluidType.BUCKET_VOLUME);
     public final LazyOptional<IFluidHandler> lazyFluid = LazyOptional.of(() -> this.tank);
 
     public int currentProcessTime;
@@ -59,8 +57,8 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IN
     private int lastTankAmount;
     private int lastProcessTime;
 
-    public TileEntityCanolaPress() {
-        super(ActuallyBlocks.CANOLA_PRESS.getTileEntityType(), 1);
+    public TileEntityCanolaPress(BlockPos pos, BlockState state) {
+        super(ActuallyBlocks.CANOLA_PRESS.getTileEntityType(), pos, state, 1);
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -79,7 +77,7 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IN
     }
 
     @Override
-    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
         if (type != NBTType.SAVE_BLOCK) {
             compound.putInt("ProcessTime", this.currentProcessTime);
         }
@@ -89,7 +87,7 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IN
     }
 
     @Override
-    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void readSyncableNBT(CompoundTag compound, NBTType type) {
         if (type != NBTType.SAVE_BLOCK) {
             this.currentProcessTime = compound.getInt("ProcessTime");
         }
@@ -98,34 +96,40 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IN
         super.readSyncableNBT(compound, type);
     }
 
-    @Override
-    public void updateEntity() {
-        super.updateEntity();
-        if (!this.level.isClientSide) {
-            Optional<PressingRecipe> recipe = getRecipeForInput(this.inv.getStackInSlot(0));
-            recipe.ifPresent(r -> {
-                if ((r.getOutput().isFluidEqual(this.tank.getFluid()) || this.tank.isEmpty()) && r.getOutput().getAmount() <= this.tank.getCapacity() - this.tank.getFluidAmount()) {
-                    if (this.storage.getEnergyStored() >= ENERGY_USE) {
-                        this.currentProcessTime++;
-                        this.storage.extractEnergyInternal(ENERGY_USE, false);
-                        if (this.currentProcessTime >= TIME) {
-                            this.currentProcessTime = 0;
+    public static <T extends BlockEntity> void clientTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityCanolaPress tile) {
+            tile.clientTick();
+        }
+    }
 
-                            this.inv.setStackInSlot(0, StackUtil.shrink(this.inv.getStackInSlot(0), 1));
+    public static <T extends BlockEntity> void serverTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityCanolaPress tile) {
+            tile.serverTick();
+
+            Optional<PressingRecipe> recipe = getRecipeForInput(tile.inv.getStackInSlot(0));
+            recipe.ifPresent(r -> {
+                if ((r.getOutput().isFluidEqual(tile.tank.getFluid()) || tile.tank.isEmpty()) && r.getOutput().getAmount() <= tile.tank.getCapacity() - tile.tank.getFluidAmount()) {
+                    if (tile.storage.getEnergyStored() >= ENERGY_USE) {
+                        tile.currentProcessTime++;
+                        tile.storage.extractEnergyInternal(ENERGY_USE, false);
+                        if (tile.currentProcessTime >= TIME) {
+                            tile.currentProcessTime = 0;
+
+                            tile.inv.setStackInSlot(0, StackUtil.shrink(tile.inv.getStackInSlot(0), 1));
                             FluidStack produced = r.getOutput().copy();
-                            this.tank.fillInternal(produced, IFluidHandler.FluidAction.EXECUTE);
-                            this.setChanged();
+                            tile.tank.fillInternal(produced, IFluidHandler.FluidAction.EXECUTE);
+                            tile.setChanged();
                         }
                     }
                 }
             });
             if (!recipe.isPresent())
-                this.currentProcessTime = 0;
+                tile.currentProcessTime = 0;
 
-            if ((this.storage.getEnergyStored() != this.lastEnergyStored || this.tank.getFluidAmount() != this.lastTankAmount | this.currentProcessTime != this.lastProcessTime) && this.sendUpdateWithInterval()) {
-                this.lastEnergyStored = this.storage.getEnergyStored();
-                this.lastProcessTime = this.currentProcessTime;
-                this.lastTankAmount = this.tank.getFluidAmount();
+            if ((tile.storage.getEnergyStored() != tile.lastEnergyStored || tile.tank.getFluidAmount() != tile.lastTankAmount | tile.currentProcessTime != tile.lastProcessTime) && tile.sendUpdateWithInterval()) {
+                tile.lastEnergyStored = tile.storage.getEnergyStored();
+                tile.lastProcessTime = tile.currentProcessTime;
+                tile.lastTankAmount = tile.tank.getFluidAmount();
             }
         }
     }
@@ -174,13 +178,13 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements IN
     }
 
     @Override
-    public ITextComponent getDisplayName() {
-        return new TranslationTextComponent("container.actuallyadditions.canola_press");
+    public Component getDisplayName() {
+        return Component.translatable("container.actuallyadditions.canola_press");
     }
 
     @Nullable
     @Override
-    public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity playerEntity) {
+    public AbstractContainerMenu createMenu(int windowId, Inventory playerInventory, Player playerEntity) {
         return new ContainerCanolaPress(windowId, playerInventory, this);
     }
 }

@@ -10,13 +10,13 @@
 
 package de.ellpeck.actuallyadditions.mod.util;
 
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Map;
@@ -48,7 +48,7 @@ public final class ItemUtil {
 
     @Deprecated
     public static boolean areItemsEqual(ItemStack stack1, ItemStack stack2, boolean checkWildcard) {
-        return stack1.sameItem(stack2);
+        return ItemStack.isSameItem(stack1,stack2);
         //return StackUtil.isValid(stack1) && StackUtil.isValid(stack2) && (stack1.isItemEqual(stack2) || checkWildcard && stack1.getItem() == stack2.getItem() && (stack1.getItemDamage() == Util.WILDCARD || stack2.getItemDamage() == Util.WILDCARD));
     }
 
@@ -75,14 +75,14 @@ public final class ItemUtil {
     }
 
     public static boolean canBeStacked(ItemStack stack1, ItemStack stack2) {
-        return ItemStack.isSame(stack1, stack2) && ItemStack.tagMatches(stack1, stack2);
+        return ItemStack.isSameItemSameTags(stack1, stack2);
     }
 
     public static boolean isEnabled(ItemStack stack) {
         return stack.getOrCreateTag().getBoolean("IsEnabled");
     }
 
-    public static void changeEnabled(PlayerEntity player, Hand hand) {
+    public static void changeEnabled(Player player, InteractionHand hand) {
         changeEnabled(player.getItemInHand(hand));
     }
 

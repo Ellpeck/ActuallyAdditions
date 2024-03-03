@@ -14,36 +14,34 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditionsClient;
 import de.ellpeck.actuallyadditions.mod.tile.FilterSettings;
 import de.ellpeck.actuallyadditions.mod.util.compat.SlotlessableItemHandlerWrapper;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.material.Material;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.event.world.BlockEvent.BreakEvent;
+import net.minecraftforge.event.level.BlockEvent.BreakEvent;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
 import java.util.ArrayList;
@@ -115,13 +113,13 @@ public final class WorldUtil {
         return extracted;
     }
 
-    public static void doEnergyInteraction(TileEntity tileFrom, TileEntity tileTo, Direction sideTo, int maxTransfer) {
+    public static void doEnergyInteraction(BlockEntity tileFrom, BlockEntity tileTo, Direction sideTo, int maxTransfer) {
         if (maxTransfer > 0) {
             Direction opp = sideTo == null
                 ? null
                 : sideTo.getOpposite();
-            LazyOptional<IEnergyStorage> handlerFrom = tileFrom.getCapability(CapabilityEnergy.ENERGY, sideTo);
-            LazyOptional<IEnergyStorage> handlerTo = tileTo.getCapability(CapabilityEnergy.ENERGY, opp);
+            LazyOptional<IEnergyStorage> handlerFrom = tileFrom.getCapability(ForgeCapabilities.ENERGY, sideTo);
+            LazyOptional<IEnergyStorage> handlerTo = tileTo.getCapability(ForgeCapabilities.ENERGY, opp);
             handlerFrom.ifPresent((from) -> {
                 handlerTo.ifPresent((to) -> {
                     int drain = from.extractEnergy(maxTransfer, true);
@@ -134,10 +132,10 @@ public final class WorldUtil {
         }
     }
 
-    public static void doFluidInteraction(TileEntity tileFrom, TileEntity tileTo, Direction sideTo, int maxTransfer) {
+    public static void doFluidInteraction(BlockEntity tileFrom, BlockEntity tileTo, Direction sideTo, int maxTransfer) {
         if (maxTransfer > 0) {
-            LazyOptional<IFluidHandler> optionalFrom = tileFrom.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, sideTo);
-            LazyOptional<IFluidHandler> optionalTo = tileTo.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, sideTo.getOpposite());
+            LazyOptional<IFluidHandler> optionalFrom = tileFrom.getCapability(ForgeCapabilities.FLUID_HANDLER, sideTo);
+            LazyOptional<IFluidHandler> optionalTo = tileTo.getCapability(ForgeCapabilities.FLUID_HANDLER, sideTo.getOpposite());
             optionalFrom.ifPresent((from) -> {
                 optionalTo.ifPresent((to) -> {
                     FluidStack drain = from.drain(maxTransfer, IFluidHandler.FluidAction.SIMULATE);
@@ -155,12 +153,12 @@ public final class WorldUtil {
      *
      * @param positions The Positions, an array of {x, y, z} arrays containing Positions
      * @param block     The Block
-     * @param world     The World
+     * @param level     The World
      * @return Is every block present?
      */
-    public static boolean hasBlocksInPlacesGiven(BlockPos[] positions, Block block, World world) {
+    public static boolean hasBlocksInPlacesGiven(BlockPos[] positions, Block block, Level level) {
         for (BlockPos pos : positions) {
-            BlockState state = world.getBlockState(pos);
+            BlockState state = level.getBlockState(pos);
             if (!(state.getBlock() == block)) {
                 return false;
             }
@@ -168,16 +166,16 @@ public final class WorldUtil {
         return true;
     }
 
-    public static ItemStack useItemAtSide(Direction side, World world, BlockPos pos, ItemStack stack) {
-        if (world instanceof ServerWorld && StackUtil.isValid(stack) && pos != null) {
+    public static ItemStack useItemAtSide(Direction side, Level level, BlockPos pos, ItemStack stack) {
+        if (level instanceof ServerLevel && StackUtil.isValid(stack) && pos != null) {
             BlockPos offsetPos = pos.relative(side);
-            BlockState state = world.getBlockState(offsetPos);
+            BlockState state = level.getBlockState(offsetPos);
             Block block = state.getBlock();
             boolean replaceable = false; //= block.canBeReplaced(world, offsetPos); //TODO
 
             //Redstone
             if (replaceable && stack.getItem() == Items.REDSTONE) {
-                world.setBlock(offsetPos, Blocks.REDSTONE_WIRE.defaultBlockState(), 2);
+                level.setBlock(offsetPos, Blocks.REDSTONE_WIRE.defaultBlockState(), 2);
                 return StackUtil.shrink(stack, 1);
             }
 
@@ -192,31 +190,31 @@ public final class WorldUtil {
 
             //Everything else
             try {
-                FakePlayer fake = FakePlayerFactory.getMinecraft((ServerWorld) world);
+                FakePlayer fake = FakePlayerFactory.getMinecraft((ServerLevel) level);
                 if (fake.connection == null) {
                     fake.connection = new NetHandlerSpaghettiServer(fake);
                 }
                 //ItemStack heldBefore = fake.getMainHandItem();
-                setHandItemWithoutAnnoyingSound(fake, Hand.MAIN_HAND, stack.copy());
-                BlockRayTraceResult ray = new BlockRayTraceResult(new Vector3d(0.5, 0.5, 0.5), side.getOpposite(), offsetPos, true);
-                fake.gameMode.useItemOn(fake, world, fake.getMainHandItem(), Hand.MAIN_HAND, ray);
-                ItemStack result = fake.getItemInHand(Hand.MAIN_HAND);
+                setHandItemWithoutAnnoyingSound(fake, InteractionHand.MAIN_HAND, stack.copy());
+                BlockHitResult ray = new BlockHitResult(new Vec3(0.5, 0.5, 0.5), side.getOpposite(), offsetPos, true);
+                fake.gameMode.useItemOn(fake, level, fake.getMainHandItem(), InteractionHand.MAIN_HAND, ray);
+                ItemStack result = fake.getItemInHand(InteractionHand.MAIN_HAND);
                 //setHandItemWithoutAnnoyingSound(fake, Hand.MAIN_HAND, heldBefore);
                 return result;
             } catch (Exception e) {
-                ActuallyAdditions.LOGGER.error("Something that places Blocks at " + offsetPos.getX() + ", " + offsetPos.getY() + ", " + offsetPos.getZ() + " in World " + world.dimension() + " threw an Exception! Don't let that happen again!", e);
+                ActuallyAdditions.LOGGER.error("Something that places Blocks at " + offsetPos.getX() + ", " + offsetPos.getY() + ", " + offsetPos.getZ() + " in World " + level.dimension() + " threw an Exception! Don't let that happen again!", e);
             }
         }
         return stack;
     }
 
-    public static boolean dropItemAtSide(Direction side, World world, BlockPos pos, ItemStack stack) {
+    public static boolean dropItemAtSide(Direction side, Level level, BlockPos pos, ItemStack stack) {
         BlockPos coords = pos.relative(side);
-        if (world.hasChunkAt(coords)) {
-            ItemEntity item = new ItemEntity(world, coords.getX() + 0.5, coords.getY() + 0.5, coords.getZ() + 0.5, stack);
+        if (level.hasChunkAt(coords)) {
+            ItemEntity item = new ItemEntity(level, coords.getX() + 0.5, coords.getY() + 0.5, coords.getZ() + 0.5, stack);
             item.setDeltaMovement(0,0,0);
 
-            return world.addFreshEntity(item);
+            return level.addFreshEntity(item);
         }
         return false;
     }
@@ -242,64 +240,64 @@ public final class WorldUtil {
         return state.getValue(BlockStateProperties.FACING);
     }
 
-    public static ArrayList<Material> getMaterialsAround(World world, BlockPos pos) {
-        ArrayList<Material> blocks = new ArrayList<>();
-        blocks.add(world.getBlockState(pos.relative(Direction.NORTH)).getMaterial());
-        blocks.add(world.getBlockState(pos.relative(Direction.EAST)).getMaterial());
-        blocks.add(world.getBlockState(pos.relative(Direction.SOUTH)).getMaterial());
-        blocks.add(world.getBlockState(pos.relative(Direction.WEST)).getMaterial());
+    public static ArrayList<BlockState> getStatesAround(Level level, BlockPos pos) {
+        ArrayList<BlockState> blocks = new ArrayList<>();
+        blocks.add(level.getBlockState(pos.relative(Direction.NORTH)));
+        blocks.add(level.getBlockState(pos.relative(Direction.EAST)));
+        blocks.add(level.getBlockState(pos.relative(Direction.SOUTH)));
+        blocks.add(level.getBlockState(pos.relative(Direction.WEST)));
         return blocks;
     }
 
-    public static RayTraceResult getNearestPositionWithAir(World world, PlayerEntity player, int reach) {
-        return getMovingObjectPosWithReachDistance(world, player, reach, false, false, true);
+    public static HitResult getNearestPositionWithAir(Level level, Player player, int reach) {
+        return getMovingObjectPosWithReachDistance(level, player, reach, false, false, true);
     }
 
-    private static RayTraceResult getMovingObjectPosWithReachDistance(World world, PlayerEntity player, double distance, boolean p1, boolean p2, boolean p3) {
-        float f = player.xRot;
-        float f1 = player.yRot;
+    private static HitResult getMovingObjectPosWithReachDistance(Level level, Player player, double distance, boolean p1, boolean p2, boolean p3) {
+        float f = player.getXRot();
+        float f1 = player.getYRot();
         double d0 = player.position().x;
         double d1 = player.position().y + player.getEyeHeight();
         double d2 = player.position().z;
-        Vector3d vec3 = new Vector3d(d0, d1, d2);
-        float f2 = MathHelper.cos(-f1 * 0.017453292F - (float) Math.PI);
-        float f3 = MathHelper.sin(-f1 * 0.017453292F - (float) Math.PI);
-        float f4 = -MathHelper.cos(-f * 0.017453292F);
-        float f5 = MathHelper.sin(-f * 0.017453292F);
+        Vec3 vec3 = new Vec3(d0, d1, d2);
+        float f2 = Mth.cos(-f1 * 0.017453292F - (float) Math.PI);
+        float f3 = Mth.sin(-f1 * 0.017453292F - (float) Math.PI);
+        float f4 = -Mth.cos(-f * 0.017453292F);
+        float f5 = Mth.sin(-f * 0.017453292F);
         float f6 = f3 * f4;
         float f7 = f2 * f4;
-        Vector3d vec31 = vec3.add(f6 * distance, f5 * distance, f7 * distance);
+        Vec3 vec31 = vec3.add(f6 * distance, f5 * distance, f7 * distance);
         //return world.clipWithInteractionOverride(vec3, vec31, p1, p2, p3); //TODO
 
-        return new BlockRayTraceResult(Vector3d.ZERO, Direction.DOWN, BlockPos.ZERO, false);
+        return new BlockHitResult(Vec3.ZERO, Direction.DOWN, BlockPos.ZERO, false);
     }
 
-    public static RayTraceResult getNearestBlockWithDefaultReachDistance(World world, PlayerEntity player) {
-        return getNearestBlockWithDefaultReachDistance(world, player, false, true, false);
+    public static HitResult getNearestBlockWithDefaultReachDistance(Level level, Player player) {
+        return getNearestBlockWithDefaultReachDistance(level, player, false, true, false);
     }
 
-    public static RayTraceResult getNearestBlockWithDefaultReachDistance(World world, PlayerEntity player, boolean stopOnLiquids, boolean ignoreBlockWithoutBoundingBox, boolean returnLastUncollidableBlock) {
-        return new BlockRayTraceResult(Vector3d.ZERO, Direction.DOWN, BlockPos.ZERO, false); //TODO
+    public static HitResult getNearestBlockWithDefaultReachDistance(Level level, Player player, boolean stopOnLiquids, boolean ignoreBlockWithoutBoundingBox, boolean returnLastUncollidableBlock) {
+        return new BlockHitResult(Vec3.ZERO, Direction.DOWN, BlockPos.ZERO, false); //TODO
         //return getMovingObjectPosWithReachDistance(world, player, player.getAttribute(PlayerEntity.REACH_DISTANCE).getAttributeValue(), stopOnLiquids, ignoreBlockWithoutBoundingBox, returnLastUncollidableBlock);
     }
 
-    public static void setHandItemWithoutAnnoyingSound(PlayerEntity player, Hand hand, ItemStack stack) {
-        if (hand == Hand.MAIN_HAND) {
-            player.inventory.items.set(player.inventory.selected, stack);
-        } else if (hand == Hand.OFF_HAND) {
-            player.inventory.offhand.set(0, stack);
+    public static void setHandItemWithoutAnnoyingSound(Player player, InteractionHand hand, ItemStack stack) {
+        if (hand == InteractionHand.MAIN_HAND) {
+            player.getInventory().items.set(player.getInventory().selected, stack);
+        } else if (hand == InteractionHand.OFF_HAND) {
+            player.getInventory().offhand.set(0, stack);
         }
     }
 
     //I think something is up with this, but I'm not entirely certain what.
-    public static float fireFakeHarvestEventsForDropChance(TileEntity caller, List<ItemStack> drops, World world, BlockPos pos) {
-        if (world instanceof ServerWorld) {
-            FakePlayer fake = FakePlayerFactory.getMinecraft((ServerWorld) world);
+    public static float fireFakeHarvestEventsForDropChance(BlockEntity caller, List<ItemStack> drops, Level level, BlockPos pos) {
+        if (level instanceof ServerLevel) {
+            FakePlayer fake = FakePlayerFactory.getMinecraft((ServerLevel) level);
             BlockPos tePos = caller.getBlockPos();
             fake.setPos(tePos.getX() + 0.5, tePos.getY() + 0.5, tePos.getZ() + 0.5);
-            BlockState state = world.getBlockState(pos);
+            BlockState state = level.getBlockState(pos);
 
-            BreakEvent event = new BreakEvent(world, pos, state, fake);
+            BreakEvent event = new BreakEvent(level, pos, state, fake);
             if (!MinecraftForge.EVENT_BUS.post(event)) {
                 //return ForgeEventFactory.fireBlockHarvesting(drops, world, pos, state, 0, 1, false, fake); //TODO what?!
             }
@@ -311,43 +309,43 @@ public final class WorldUtil {
      * Tries to break a block as if this player had broken it.  This is a complex operation.
      *
      * @param stack  The player's current held stack, main hand.
-     * @param world  The player's world.
+     * @param level  The player's world.
      * @param player The player that is breaking this block.
      * @param pos    The pos to break.
      * @return If the break was successful.
      */
-    public static boolean breakExtraBlock(ItemStack stack, World world, PlayerEntity player, BlockPos pos) {
-        BlockState state = world.getBlockState(pos);
+    public static boolean breakExtraBlock(ItemStack stack, Level level, Player player, BlockPos pos) {
+        BlockState state = level.getBlockState(pos);
         Block block = state.getBlock();
 
         if (player.isCreative()) {
-            if (block.removedByPlayer(state, world, pos, player, false, state.getFluidState())) {
-                block.destroy(world, pos, state);
+            if (block.onDestroyedByPlayer(state, level, pos, player, false, state.getFluidState())) {
+                block.destroy(level, pos, state);
             }
 
             // send update to client
-            if (!world.isClientSide) {
+            if (!level.isClientSide) {
                 //((ServerPlayerEntity) player).connection.send(new SPacketBlockChange(world, pos)); //TODO dunno what this is
             }
             return true;
         }
 
         // callback to the tool the player uses. Called on both sides. This damages the tool n stuff.
-        stack.mineBlock(world, state, pos, player);
+        stack.mineBlock(level, state, pos, player);
 
         // server sided handling
-        if (!world.isClientSide) {
+        if (!level.isClientSide) {
             // send the blockbreak event
-            int xp = ForgeHooks.onBlockBreakEvent(world, ((ServerPlayerEntity) player).gameMode.getGameModeForPlayer(), (ServerPlayerEntity) player, pos);
+            int xp = ForgeHooks.onBlockBreakEvent(level, ((ServerPlayer) player).gameMode.getGameModeForPlayer(), (ServerPlayer) player, pos);
             if (xp == -1) {
                 return false;
             }
 
-            TileEntity tileEntity = world.getBlockEntity(pos);
-            if (block.removedByPlayer(state, world, pos, player, true, state.getFluidState())) { // boolean is if block can be harvested, checked above
-                block.destroy(world, pos, state);
-                block.playerDestroy(world, player, pos, state, tileEntity, stack);
-                block.popExperience(((ServerWorld) world), pos, xp);
+            BlockEntity blockEntity = level.getBlockEntity(pos);
+            if (block.onDestroyedByPlayer(state, level, pos, player, true, state.getFluidState())) { // boolean is if block can be harvested, checked above
+                block.destroy(level, pos, state);
+                block.playerDestroy(level, player, pos, state, blockEntity, stack);
+                block.popExperience(((ServerLevel) level), pos, xp);
             }
 
             // always send block update to client
@@ -360,12 +358,12 @@ public final class WorldUtil {
             // the code above, executed on the server, sends a block-updates that give us the correct state of the block we destroy.
 
             // following code can be found in PlayerControllerMP.onPlayerDestroyBlock
-            world.levelEvent(2001, pos, Block.getId(state));
-            if (block.removedByPlayer(state, world, pos, player, true, state.getFluidState())) {
-                block.destroy(world, pos, state);
+            level.levelEvent(2001, pos, Block.getId(state));
+            if (block.onDestroyedByPlayer(state, level, pos, player, true, state.getFluidState())) {
+                block.destroy(level, pos, state);
             }
             // callback to the tool
-            stack.mineBlock(world, state, pos, player);
+            stack.mineBlock(level, state, pos, player);
 
             // send an update to the server, so we get an update back
 

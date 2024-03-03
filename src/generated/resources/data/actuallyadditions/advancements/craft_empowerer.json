@@ -1,35 +1,38 @@
 {
   "parent": "actuallyadditions:make_first_crystal",
+  "criteria": {
+    "empowerer": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "actuallyadditions:empowerer"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
   "display": {
-    "icon": {
-      "item": "actuallyadditions:empowerer"
-    },
-    "title": {
-      "translate": "achievement.actuallyadditions.craftEmpowerer"
-    },
+    "announce_to_chat": true,
     "description": {
       "translate": "achievement.actuallyadditions.craftEmpowerer.desc"
     },
     "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "actuallyadditions:empowerer"
+    },
     "show_toast": true,
-    "announce_to_chat": true,
-    "hidden": false
-  },
-  "criteria": {
-    "empowerer": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {
-        "items": [
-          {
-            "item": "actuallyadditions:empowerer"
-          }
-        ]
-      }
+    "title": {
+      "translate": "achievement.actuallyadditions.craftEmpowerer"
     }
   },
   "requirements": [
     [
       "empowerer"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

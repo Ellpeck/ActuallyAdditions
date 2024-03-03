@@ -12,24 +12,24 @@ package de.ellpeck.actuallyadditions.mod.inventory;
 
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityFermentingBarrel;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.Objects;
 
-public class ContainerFermentingBarrel extends Container {
+public class ContainerFermentingBarrel extends AbstractContainerMenu {
 
     public final TileEntityFermentingBarrel barrel;
 
-    public static ContainerFermentingBarrel fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
-        return new ContainerFermentingBarrel(windowId, inv, (TileEntityFermentingBarrel) Objects.requireNonNull(inv.player.level.getBlockEntity(data.readBlockPos())));
+    public static ContainerFermentingBarrel fromNetwork(int windowId, Inventory inv, FriendlyByteBuf data) {
+        return new ContainerFermentingBarrel(windowId, inv, (TileEntityFermentingBarrel) Objects.requireNonNull(inv.player.level().getBlockEntity(data.readBlockPos())));
     }
 
-    public ContainerFermentingBarrel(int windowId, PlayerInventory inventory, TileEntityFermentingBarrel tile) {
+    public ContainerFermentingBarrel(int windowId, Inventory inventory, TileEntityFermentingBarrel tile) {
         super(ActuallyContainers.FERMENTING_BARREL_CONTAINER.get(), windowId);
         this.barrel = tile;
 
@@ -44,7 +44,7 @@ public class ContainerFermentingBarrel extends Container {
     }
 
     @Override
-    public ItemStack quickMoveStack(PlayerEntity player, int slot) {
+    public ItemStack quickMoveStack(Player player, int slot) {
         int inventoryStart = 0;
         int inventoryEnd = inventoryStart + 26;
         int hotbarStart = inventoryEnd + 1;
@@ -86,7 +86,7 @@ public class ContainerFermentingBarrel extends Container {
     }
 
     @Override
-    public boolean stillValid(PlayerEntity player) {
+    public boolean stillValid(Player player) {
         return this.barrel.canPlayerUse(player);
     }
 }

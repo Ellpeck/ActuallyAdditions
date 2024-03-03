@@ -12,62 +12,59 @@ package de.ellpeck.actuallyadditions.mod.blocks.base;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
-import de.ellpeck.actuallyadditions.mod.config.ConfigValues;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityInventoryBase;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.ContainerBlock;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Random;
 
-public abstract class BlockContainerBase extends Block {
+public abstract class BlockContainerBase extends Block implements EntityBlock {
     public BlockContainerBase(Properties properties) {
         super(properties);
     }
 
-    public ActionResultType openGui(World world, PlayerEntity player, BlockPos pos, Class<? extends INamedContainerProvider> expectedInstance) {
+    public InteractionResult openGui(Level world, Player player, BlockPos pos, Class<? extends MenuProvider> expectedInstance) {
         if (!world.isClientSide) {
-            TileEntity tile = world.getBlockEntity(pos);
+            BlockEntity tile = world.getBlockEntity(pos);
             if (expectedInstance.isInstance(tile)) {
-                NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) tile, pos);
+                NetworkHooks.openScreen((ServerPlayer) player, (MenuProvider) tile, pos);
             }
-            return ActionResultType.SUCCESS;
+            return InteractionResult.SUCCESS;
         }
 
-        return ActionResultType.SUCCESS;
+        return InteractionResult.SUCCESS;
     }
 
-    private void dropInventory(World world, BlockPos position) {
+    private void dropInventory(Level world, BlockPos position) {
         if (!world.isClientSide) {
-            TileEntity aTile = world.getBlockEntity(position);
-            if (aTile instanceof TileEntityInventoryBase) {
-                TileEntityInventoryBase tile = (TileEntityInventoryBase) aTile;
-                if (tile.inv.getSlots() > 0) {
+            BlockEntity aTile = world.getBlockEntity(position);
+            if (aTile instanceof TileEntityInventoryBase tile) {
+	            if (tile.inv.getSlots() > 0) {
                     for (int i = 0; i < tile.inv.getSlots(); i++) {
                         this.dropSlotFromInventory(i, tile, world, position);
                     }
@@ -76,7 +73,7 @@ public abstract class BlockContainerBase extends Block {
         }
     }
 
-    private void dropSlotFromInventory(int i, TileEntityInventoryBase tile, World world, BlockPos pos) {
+    private void dropSlotFromInventory(int i, TileEntityInventoryBase tile, Level world, BlockPos pos) {
         ItemStack stack = tile.inv.getStackInSlot(i);
         if (stack.isEmpty()) {
             return;
@@ -91,13 +88,12 @@ public abstract class BlockContainerBase extends Block {
         world.addFreshEntity(entityItem);
     }
 
-    public boolean tryToggleRedstone(World world, BlockPos pos, PlayerEntity player) {
+    public boolean tryToggleRedstone(Level world, BlockPos pos, Player player) {
         ItemStack stack = player.getMainHandItem();
         if (stack.getItem() == CommonConfig.Other.redstoneConfigureItem) {
-            TileEntity tile = world.getBlockEntity(pos);
-            if (tile instanceof TileEntityBase) {
-                TileEntityBase base = (TileEntityBase) tile;
-                if (!world.isClientSide && base.isRedstoneToggle()) {
+            BlockEntity tile = world.getBlockEntity(pos);
+            if (tile instanceof TileEntityBase base) {
+	            if (!world.isClientSide && base.isRedstoneToggle()) {
                     base.isPulseMode = !base.isPulseMode;
                     base.setChanged();
                     base.sendUpdate();
@@ -109,49 +105,46 @@ public abstract class BlockContainerBase extends Block {
     }
 
     @Override
-    public void tick(@Nonnull BlockState state, ServerWorld world, @Nonnull BlockPos pos, @Nonnull Random rand) {
+    public void tick(@Nonnull BlockState state, ServerLevel world, @Nonnull BlockPos pos, @Nonnull RandomSource rand) {
         if (!world.isClientSide) {
-            TileEntity tile = world.getBlockEntity(pos);
-            if (tile instanceof TileEntityBase) {
-                TileEntityBase base = (TileEntityBase) tile;
-                if (base.respondsToPulses()) {
+            BlockEntity tile = world.getBlockEntity(pos);
+            if (tile instanceof TileEntityBase base) {
+	            if (base.respondsToPulses()) {
                     base.activateOnPulse();
                 }
             }
         }
     }
 
-    public void neighborsChangedCustom(World world, BlockPos pos) {
+    public void neighborsChangedCustom(Level world, BlockPos pos) {
         this.updateRedstoneState(world, pos);
 
-        TileEntity tile = world.getBlockEntity(pos);
-        if (tile instanceof TileEntityBase) {
-            TileEntityBase base = (TileEntityBase) tile;
-            if (base.shouldSaveDataOnChangeOrWorldStart()) {
+        BlockEntity tile = world.getBlockEntity(pos);
+        if (tile instanceof TileEntityBase base) {
+	        if (base.shouldSaveDataOnChangeOrWorldStart()) {
                 base.saveDataOnChangeOrWorldStart();
             }
         }
     }
 
     @Override //TODO do we need this?
-    public void neighborChanged(@Nonnull BlockState state, @Nonnull World worldIn, @Nonnull BlockPos pos, @Nonnull Block blockIn, @Nonnull BlockPos fromPos, boolean isMoving) {
+    public void neighborChanged(@Nonnull BlockState state, @Nonnull Level worldIn, @Nonnull BlockPos pos, @Nonnull Block blockIn, @Nonnull BlockPos fromPos, boolean isMoving) {
         this.neighborsChangedCustom(worldIn, pos);
     }
 
     @Override
-    public void onNeighborChange(BlockState state, IWorldReader world, BlockPos pos, BlockPos neighbor) {
+    public void onNeighborChange(BlockState state, LevelReader world, BlockPos pos, BlockPos neighbor) {
         super.onNeighborChange(state, world, pos, neighbor);
-        if (world instanceof World) { //TODO what?
-            this.neighborsChangedCustom((World) world, pos);
+        if (world instanceof Level) { //TODO what?
+            this.neighborsChangedCustom((Level) world, pos);
         }
     }
 
-    public void updateRedstoneState(World world, BlockPos pos) {
+    public void updateRedstoneState(Level world, BlockPos pos) {
         if (!world.isClientSide) {
-            TileEntity tile = world.getBlockEntity(pos);
-            if (tile instanceof TileEntityBase) {
-                TileEntityBase base = (TileEntityBase) tile;
-                boolean powered = world.getBestNeighborSignal(pos) > 0;
+            BlockEntity tile = world.getBlockEntity(pos);
+            if (tile instanceof TileEntityBase base) {
+	            boolean powered = world.getBestNeighborSignal(pos) > 0;
                 boolean wasPowered = base.isRedstonePowered;
                 if (powered && !wasPowered) {
                     if (base.respondsToPulses()) {
@@ -168,36 +161,35 @@ public abstract class BlockContainerBase extends Block {
         }
     }
 
-    protected boolean tryUseItemOnTank(PlayerEntity player, Hand hand, FluidTank tank) {
+    protected boolean tryUseItemOnTank(Player player, InteractionHand hand, FluidTank tank) {
         ItemStack heldItem = player.getItemInHand(hand);
         return StackUtil.isValid(heldItem) && FluidUtil.interactWithFluidHandler(player, hand, tank);
 
     }
 
     @Override
-    public void onPlace(@Nonnull BlockState state, @Nonnull World worldIn, @Nonnull BlockPos pos, @Nonnull BlockState oldState, boolean isMoving) {
+    public void onPlace(@Nonnull BlockState state, @Nonnull Level worldIn, @Nonnull BlockPos pos, @Nonnull BlockState oldState, boolean isMoving) {
         this.updateRedstoneState(worldIn, pos);
     }
 
     @Override
-    public void setPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+    public void setPlacedBy(Level world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
         if (stack.hasTag()) {
-            TileEntity tile = world.getBlockEntity(pos);
-            if (tile instanceof TileEntityBase) {
-                TileEntityBase base = (TileEntityBase) tile;
-                CompoundNBT compound = stack.getOrCreateTag().getCompound("Data");
+            BlockEntity tile = world.getBlockEntity(pos);
+            if (tile instanceof TileEntityBase base) {
+	            CompoundTag compound = stack.getOrCreateTag().getCompound("Data");
                 base.readSyncableNBT(compound, TileEntityBase.NBTType.SAVE_BLOCK);
             }
         }
     }
 
     @Override
-    public void playerWillDestroy(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull BlockState state, PlayerEntity player) {
+    public void playerWillDestroy(@Nonnull Level world, @Nonnull BlockPos pos, @Nonnull BlockState state, Player player) {
         super.playerWillDestroy(world, pos, state, player);
         if (!player.isCreative()) {
-            TileEntity tile = world.getBlockEntity(pos);
+            BlockEntity tile = world.getBlockEntity(pos);
             if (tile instanceof TileEntityBase && ((TileEntityBase) tile).stopFromDropping) {
-                player.displayClientMessage(new TranslationTextComponent("info." + ActuallyAdditions.MODID + ".machineBroke").withStyle(TextFormatting.RED), false);
+                player.displayClientMessage(Component.translatable("info." + ActuallyAdditions.MODID + ".machineBroke").withStyle(ChatFormatting.RED), false);
             }
         }
     }
@@ -208,8 +200,8 @@ public abstract class BlockContainerBase extends Block {
     }
 
     @Override
-    public int getAnalogOutputSignal(BlockState state, World world, BlockPos pos) {
-        TileEntity tile = world.getBlockEntity(pos);
+    public int getAnalogOutputSignal(BlockState state, Level world, BlockPos pos) {
+        BlockEntity tile = world.getBlockEntity(pos);
         if (tile instanceof TileEntityBase) {
             return ((TileEntityBase) tile).getComparatorStrength();
         }
@@ -266,12 +258,12 @@ public abstract class BlockContainerBase extends Block {
 
 
     @Override
-    public BlockRenderType getRenderShape(BlockState pState) {
-        return BlockRenderType.MODEL;
+    public RenderShape getRenderShape(BlockState pState) {
+        return RenderShape.MODEL;
     }
 
     @Override
-    public void onRemove(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
+    public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
         if (state.getBlock() != newState.getBlock()) {
             if (this.shouldDropInventory(world, pos)) {
                 this.dropInventory(world, pos);
@@ -280,7 +272,7 @@ public abstract class BlockContainerBase extends Block {
         super.onRemove(state, world, pos, newState, isMoving);
     }
 
-    public boolean shouldDropInventory(World world, BlockPos pos) {
+    public boolean shouldDropInventory(Level world, BlockPos pos) {
         return true;
     }
 }

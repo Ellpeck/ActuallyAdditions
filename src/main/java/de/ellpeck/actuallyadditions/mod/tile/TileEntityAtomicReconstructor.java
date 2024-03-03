@@ -20,16 +20,17 @@ import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
-import net.minecraft.block.BlockState;
-import net.minecraft.item.Item;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.Direction;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 
@@ -45,23 +46,23 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     private int maxAge = 0;
     private int beamColor = 0x1b6dff;
 
-    public TileEntityAtomicReconstructor() {
-        super(ActuallyBlocks.ATOMIC_RECONSTRUCTOR.getTileEntityType(), 1);
+    public TileEntityAtomicReconstructor(BlockPos pos, BlockState state) {
+        super(ActuallyBlocks.ATOMIC_RECONSTRUCTOR.getTileEntityType(), pos, state, 1);
         int power = CommonConfig.Machines.RECONSTRUCTOR_POWER.get();
-        int recieve = MathHelper.ceil(power * 0.016666F);
+        int recieve = Mth.ceil(power * 0.016666F);
         this.storage = new CustomEnergyStorage(power, recieve, 0);
         this.lazyEnergy = LazyOptional.of(() -> this.storage);
     }
 
-    public static void shootLaser(IAtomicReconstructor tile, World world, double startX, double startY, double startZ, double endX, double endY, double endZ, Lens currentLens) {
-        world.playSound(null, startX, startY, startZ, AASounds.RECONSTRUCTOR.get(), SoundCategory.BLOCKS, 0.35F, 1.0F);
+    public static void shootLaser(IAtomicReconstructor tile, Level world, double startX, double startY, double startZ, double endX, double endY, double endZ, Lens currentLens) {
+        world.playSound(null, startX, startY, startZ, AASounds.RECONSTRUCTOR.get(), SoundSource.BLOCKS, 0.35F, 1.0F);
         AssetUtil.spawnLaserWithTimeServer(world, startX, startY, startZ, endX, endY, endZ, currentLens.getColor(), 25, 0, 0.2F, 0.8F);
     }
 
     @Override
-    public AxisAlignedBB getRenderBoundingBox() {
+    public AABB getRenderBoundingBox() {
         if (getProgress() > 0.0f)
-            return new AxisAlignedBB(getPosition(), getPosition().offset(1,1,1).relative(getBlockState().getValue(BlockStateProperties.FACING), 11));
+            return new AABB(getPosition(), getPosition().offset(1,1,1).relative(getBlockState().getValue(BlockStateProperties.FACING), 11));
         else
             return super.getRenderBoundingBox();
     }
@@ -100,7 +101,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     }
 
     @Override
-    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
         if (type != NBTType.SAVE_BLOCK) {
             compound.putInt("CurrentTime", this.currentTime);
@@ -115,7 +116,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     }
 
     @Override
-    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void readSyncableNBT(CompoundTag compound, NBTType type) {
         super.readSyncableNBT(compound, type);
         if (type != NBTType.SAVE_BLOCK) {
             this.currentTime = compound.getInt("CurrentTime");
@@ -125,27 +126,32 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
             this.storage.readFromNBT(compound);
     }
 
-    @Override
-    public void updateEntity() {
-        super.updateEntity();
-        if (!this.level.isClientSide) {
-            if (!this.isRedstonePowered && !this.isPulseMode) {
-                if (this.currentTime > 0) {
-                    this.currentTime--;
-                    if (this.currentTime <= 0) {
-                        ActuallyAdditionsAPI.methodHandler.invokeReconstructor(this);
+    public static <T extends BlockEntity> void clientTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityAtomicReconstructor tile) {
+            tile.clientTick();
+        }
+    }
+
+    public static <T extends BlockEntity> void serverTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityAtomicReconstructor tile) {
+            tile.serverTick();
+
+            if (!tile.isRedstonePowered && !tile.isPulseMode) {
+                if (tile.currentTime > 0) {
+                    tile.currentTime--;
+                    if (tile.currentTime <= 0) {
+                        ActuallyAdditionsAPI.methodHandler.invokeReconstructor(tile);
                     }
                 } else {
-                    this.currentTime = 100;
+                    tile.currentTime = 100;
                 }
             }
 
-            if (this.oldEnergy != this.storage.getEnergyStored() && this.sendUpdateWithInterval()) {
-                this.oldEnergy = this.storage.getEnergyStored();
-                this.level.updateNeighbourForOutputSignal(this.worldPosition, ActuallyBlocks.ATOMIC_RECONSTRUCTOR.get());
+            if (tile.oldEnergy != tile.storage.getEnergyStored() && tile.sendUpdateWithInterval()) {
+                tile.oldEnergy = tile.storage.getEnergyStored();
+                level.updateNeighbourForOutputSignal(pos, ActuallyBlocks.ATOMIC_RECONSTRUCTOR.get());
             }
         }
-
     }
 
     @Override
@@ -184,7 +190,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     }
 
     @Override
-    public World getWorldObject() {
+    public Level getWorldObject() {
         return this.getLevel();
     }
 

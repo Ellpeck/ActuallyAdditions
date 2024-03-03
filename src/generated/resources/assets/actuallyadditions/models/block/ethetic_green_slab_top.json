@@ -1,8 +1,8 @@
 {
   "parent": "minecraft:block/slab_top",
   "textures": {
-    "side": "actuallyadditions:block/ethetic_green_block",
     "bottom": "actuallyadditions:block/ethetic_green_block",
+    "side": "actuallyadditions:block/ethetic_green_block",
     "top": "actuallyadditions:block/ethetic_green_block"
   }
 }

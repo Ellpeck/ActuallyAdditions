@@ -12,8 +12,8 @@ package de.ellpeck.actuallyadditions.mod.util;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.util.compat.SlotlessableItemHandlerWrapper;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
+import net.minecraft.core.NonNullList;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 
 import java.util.Collection;
@@ -184,7 +184,7 @@ public final class StackUtil {
         ItemStack sc = s.copy();
         s.shrink(i);
         if (s.isEmpty()) {
-            return sc.getItem().getContainerItem(sc);
+            return sc.getItem().getCraftingRemainingItem(sc);
         }
         return s;
     }

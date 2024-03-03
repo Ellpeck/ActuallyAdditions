@@ -12,53 +12,64 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 
 import de.ellpeck.actuallyadditions.mod.blocks.base.FullyDirectionalBlock;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityLongRangeBreaker;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+
+import javax.annotation.Nullable;
 
 public class BlockLongRangeBreaker extends FullyDirectionalBlock.Container {
 
     public BlockLongRangeBreaker() {
-        super(ActuallyBlocks.defaultPickProps(0));
+        super(ActuallyBlocks.defaultPickProps());
     }
 
-    //@Override
-    public TileEntity newBlockEntity(IBlockReader worldIn) {
-        return new TileEntityLongRangeBreaker();
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new TileEntityLongRangeBreaker(pos, state);
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> entityType) {
+        return level.isClientSide? TileEntityLongRangeBreaker::clientTick : TileEntityLongRangeBreaker::serverTick;
     }
 
     @Override
-    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
         if (this.tryToggleRedstone(world, pos, player)) {
-            return ActionResultType.PASS;
+            return InteractionResult.PASS;
         }
 
         return this.openGui(world, player, pos, TileEntityLongRangeBreaker.class);
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         switch (state.getValue(FACING)) {
             case UP:
-                return Shapes.DirectionalBlockBreakerShapes.SHAPE_U;
+                return VoxelShapes.DirectionalBlockBreakerShapes.SHAPE_U;
             case DOWN:
-                return Shapes.DirectionalBlockBreakerShapes.SHAPE_D;
+                return VoxelShapes.DirectionalBlockBreakerShapes.SHAPE_D;
             case EAST:
-                return Shapes.DirectionalBlockBreakerShapes.SHAPE_E;
+                return VoxelShapes.DirectionalBlockBreakerShapes.SHAPE_E;
             case SOUTH:
-                return Shapes.DirectionalBlockBreakerShapes.SHAPE_S;
+                return VoxelShapes.DirectionalBlockBreakerShapes.SHAPE_S;
             case WEST:
-                return Shapes.DirectionalBlockBreakerShapes.SHAPE_W;
+                return VoxelShapes.DirectionalBlockBreakerShapes.SHAPE_W;
             default:
-                return Shapes.DirectionalBlockBreakerShapes.SHAPE_N;
+                return VoxelShapes.DirectionalBlockBreakerShapes.SHAPE_N;
         }
     }
 }

@@ -1,35 +1,38 @@
 {
   "parent": "actuallyadditions:craft_phantom_face",
+  "criteria": {
+    "energyface": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "actuallyadditions:phantom_energyface"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
   "display": {
-    "icon": {
-      "item": "actuallyadditions:phantom_energyface"
-    },
-    "title": {
-      "translate": "achievement.actuallyadditions.craftEnergyface"
-    },
+    "announce_to_chat": true,
     "description": {
       "translate": "achievement.actuallyadditions.craftEnergyface.desc"
     },
     "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "actuallyadditions:phantom_energyface"
+    },
     "show_toast": true,
-    "announce_to_chat": true,
-    "hidden": false
-  },
-  "criteria": {
-    "energyface": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {
-        "items": [
-          {
-            "item": "actuallyadditions:phantom_energyface"
-          }
-        ]
-      }
+    "title": {
+      "translate": "achievement.actuallyadditions.craftEnergyface"
     }
   },
   "requirements": [
     [
       "energyface"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

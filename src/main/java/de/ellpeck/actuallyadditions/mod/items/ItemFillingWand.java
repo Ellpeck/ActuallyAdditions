@@ -13,26 +13,26 @@ package de.ellpeck.actuallyadditions.mod.items;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.NBTUtil;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.text.IFormattableTextComponent;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtUtils;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -46,17 +46,17 @@ public class ItemFillingWand extends ItemEnergy {
         super(500000, 1000);
     }
 
-    private static boolean removeFittingItem(BlockState state, PlayerEntity player) {
+    private static boolean removeFittingItem(BlockState state, Player player) {
         Block block = state.getBlock();
         ItemStack stack = new ItemStack(block, 1);
 
         if (StackUtil.isValid(stack)) {
-            for (int i = 0; i < player.inventory.getContainerSize(); i++) {
-                ItemStack slot = player.inventory.getItem(i);
-                if (StackUtil.isValid(slot) && slot.sameItem(stack)) {
+            for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
+                ItemStack slot = player.getInventory().getItem(i);
+                if (StackUtil.isValid(slot) && ItemStack.isSameItem(slot, stack)) {
                     slot.shrink(1);
                     if (!StackUtil.isValid(slot)) {
-                        player.inventory.setItem(i, ItemStack.EMPTY);
+                        player.getInventory().setItem(i, ItemStack.EMPTY);
                     }
 
                     return true;
@@ -68,21 +68,21 @@ public class ItemFillingWand extends ItemEnergy {
     }
 
     private static void saveData(BlockState state, ItemStack wand) {
-        wand.getOrCreateTag().put("state", NBTUtil.writeBlockState(state));
+        wand.getOrCreateTag().put("state", NbtUtils.writeBlockState(state));
     }
 
     private static Optional<BlockState> loadData(ItemStack stack) {
         if (stack.getOrCreateTag().contains("state")) {
-            return Optional.of(NBTUtil.readBlockState(stack.getOrCreateTag().getCompound("state")));
+            return Optional.of(NbtUtils.readBlockState(BuiltInRegistries.BLOCK.asLookup(), stack.getOrCreateTag().getCompound("state")));
         }
 
         return Optional.empty();
     }
 
     @Override
-    public ActionResultType useOn(ItemUseContext context) {
+    public InteractionResult useOn(UseOnContext context) {
         if (context.getPlayer() == null) {
-            return ActionResultType.PASS;
+            return InteractionResult.PASS;
         }
 
         ItemStack stack = context.getPlayer().getItemInHand(context.getHand());
@@ -90,9 +90,9 @@ public class ItemFillingWand extends ItemEnergy {
             if (context.getPlayer().isCrouching()) {
                 BlockState state = context.getLevel().getBlockState(context.getClickedPos());
                 saveData(state, stack);
-                return ActionResultType.SUCCESS;
+                return InteractionResult.SUCCESS;
             } else if (loadData(stack).isPresent()) {
-                CompoundNBT compound = stack.getOrCreateTag();
+                CompoundTag compound = stack.getOrCreateTag();
 
                 if (compound.getInt("CurrX") == 0 && compound.getInt("CurrY") == 0 && compound.getInt("CurrZ") == 0) {
                     compound.putInt("FirstX", context.getClickedPos().getX());
@@ -100,7 +100,7 @@ public class ItemFillingWand extends ItemEnergy {
                     compound.putInt("FirstZ", context.getClickedPos().getZ());
 
                     context.getPlayer().startUsingItem(context.getHand());
-                    return ActionResultType.SUCCESS;
+                    return InteractionResult.SUCCESS;
                 }
             }
         }
@@ -108,15 +108,15 @@ public class ItemFillingWand extends ItemEnergy {
     }
 
     @Override
-    public void releaseUsing(ItemStack stack, World world, LivingEntity entity, int timeLeft) {
+    public void releaseUsing(ItemStack stack, Level world, LivingEntity entity, int timeLeft) {
         if (!world.isClientSide) {
             boolean clear = true;
-            if (entity instanceof PlayerEntity) {
-                RayTraceResult result = WorldUtil.getNearestBlockWithDefaultReachDistance(world, (PlayerEntity) entity);
-                if (result instanceof BlockRayTraceResult) {
-                    CompoundNBT compound = stack.getOrCreateTag();
+            if (entity instanceof Player) {
+                HitResult result = WorldUtil.getNearestBlockWithDefaultReachDistance(world, (Player) entity);
+                if (result instanceof BlockHitResult) {
+                    CompoundTag compound = stack.getOrCreateTag();
 
-                    BlockPos pos = ((BlockRayTraceResult) result).getBlockPos();
+                    BlockPos pos = ((BlockHitResult) result).getBlockPos();
                     compound.putInt("SecondX", pos.getX());
                     compound.putInt("SecondY", pos.getY());
                     compound.putInt("SecondZ", pos.getZ());
@@ -134,7 +134,7 @@ public class ItemFillingWand extends ItemEnergy {
     }
 
     @Override
-    public void inventoryTick(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
+    public void inventoryTick(ItemStack stack, Level world, Entity entity, int itemSlot, boolean isSelected) {
         super.inventoryTick(stack, world, entity, itemSlot, isSelected);
 
 
@@ -142,11 +142,10 @@ public class ItemFillingWand extends ItemEnergy {
             boolean shouldClear = false;
 
             if (isSelected) {
-                if (entity instanceof PlayerEntity && stack.hasTag()) {
-                    PlayerEntity player = (PlayerEntity) entity;
-                    boolean creative = player.isCreative();
+                if (entity instanceof Player player && stack.hasTag()) {
+	                boolean creative = player.isCreative();
 
-                    CompoundNBT compound = stack.getOrCreateTag();
+                    CompoundTag compound = stack.getOrCreateTag();
 
                     BlockPos firstPos = new BlockPos(compound.getInt("FirstX"), compound.getInt("FirstY"), compound.getInt("FirstZ"));
                     BlockPos secondPos = new BlockPos(compound.getInt("SecondX"), compound.getInt("SecondY"), compound.getInt("SecondZ"));
@@ -168,12 +167,12 @@ public class ItemFillingWand extends ItemEnergy {
                             BlockPos pos = new BlockPos(lowestX + currX, lowestY + currY, lowestZ + currZ);
                             BlockState state = world.getBlockState(pos);
 
-                            if (state.getMaterial().isReplaceable() && replaceState.canSurvive(world, pos)) {
+                            if (state.canBeReplaced() && replaceState.canSurvive(world, pos)) {
                                 if (creative || removeFittingItem(replaceState, player)) {
                                     world.setBlock(pos, replaceState, 2);
 
                                     SoundType sound = replaceState.getBlock().getSoundType(replaceState, world, pos, player);
-                                    world.playSound(null, pos, sound.getPlaceSound(), SoundCategory.BLOCKS, sound.getVolume() / 2F + .5F, sound.getPitch() * 0.8F);
+                                    world.playSound(null, pos, sound.getPlaceSound(), SoundSource.BLOCKS, sound.getVolume() / 2F + .5F, sound.getPitch() * 0.8F);
 
                                     if (!creative) {
                                         this.extractEnergyInternal(stack, energyUse, false);
@@ -222,14 +221,14 @@ public class ItemFillingWand extends ItemEnergy {
 
     @OnlyIn(Dist.CLIENT)
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+    public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
 
-        IFormattableTextComponent display = loadData(stack)
+        MutableComponent display = loadData(stack)
             .map(state -> state.getBlock().getName())
-            .orElse(new TranslationTextComponent("tooltip.actuallyadditions.item_filling_wand.selected_block.none"));
+            .orElse(Component.translatable("tooltip.actuallyadditions.item_filling_wand.selected_block.none"));
 
-        tooltip.add(new TranslationTextComponent("tooltip.actuallyadditions.item_filling_wand.selected_block", display.getString()));
+        tooltip.add(Component.translatable("tooltip.actuallyadditions.item_filling_wand.selected_block", display.getString()));
     }
 
     @Override

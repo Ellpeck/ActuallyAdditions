@@ -12,15 +12,15 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 
 import de.ellpeck.actuallyadditions.mod.blocks.base.FullyDirectionalBlock;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,20 +28,20 @@ import java.util.List;
 public class BlockLampController extends FullyDirectionalBlock {
 
     public BlockLampController() {
-        super(ActuallyBlocks.defaultPickProps(0));
+        super(ActuallyBlocks.defaultPickProps());
     }
 
     @Override
-    public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
+    public void neighborChanged(BlockState state, Level worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
         this.updateLamp(worldIn, pos);
     }
 
     @Override
-    public void onPlace(BlockState state, World world, BlockPos pos, BlockState oldState, boolean isMoving) {
+    public void onPlace(BlockState state, Level world, BlockPos pos, BlockState oldState, boolean isMoving) {
         this.updateLamp(world, pos);
     }
 
-    private void updateLamp(World world, BlockPos pos) {
+    private void updateLamp(Level world, BlockPos pos) {
         if (!world.isClientSide) {
             BlockState state = world.getBlockState(pos);
             BlockPos coords = pos.relative(WorldUtil.getDirectionByPistonRotation(state));
@@ -49,7 +49,7 @@ public class BlockLampController extends FullyDirectionalBlock {
         }
     }
 
-    private void updateLampsAtPos(World world, BlockPos pos, boolean powered, List<BlockPos> updatedAlready) {
+    private void updateLampsAtPos(Level world, BlockPos pos, boolean powered, List<BlockPos> updatedAlready) {
         BlockState state = world.getBlockState(pos);
         Block block = state.getBlock();
         if (block instanceof BlockColoredLamp) {
@@ -65,7 +65,7 @@ public class BlockLampController extends FullyDirectionalBlock {
         }
     }
 
-    private void updateSurrounding(World world, BlockPos pos, boolean powered, List<BlockPos> updatedAlready) {
+    private void updateSurrounding(Level world, BlockPos pos, boolean powered, List<BlockPos> updatedAlready) {
         for (Direction side : Direction.values()) {
             BlockPos offset = pos.relative(side);
             if (!updatedAlready.contains(offset)) {
@@ -76,16 +76,16 @@ public class BlockLampController extends FullyDirectionalBlock {
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         switch (state.getValue(FACING)) {
             case EAST:
-                return Shapes.LampPowererShapes.SHAPE_E;
+                return VoxelShapes.LampPowererShapes.SHAPE_E;
             case SOUTH:
-                return Shapes.LampPowererShapes.SHAPE_S;
+                return VoxelShapes.LampPowererShapes.SHAPE_S;
             case WEST:
-                return Shapes.LampPowererShapes.SHAPE_W;
+                return VoxelShapes.LampPowererShapes.SHAPE_W;
             default:
-                return Shapes.LampPowererShapes.SHAPE_N;
+                return VoxelShapes.LampPowererShapes.SHAPE_N;
         }
     }
 }

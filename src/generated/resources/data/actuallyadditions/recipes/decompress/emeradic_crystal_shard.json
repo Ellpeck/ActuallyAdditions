@@ -1,12 +1,13 @@
 {
   "type": "minecraft:crafting_shapeless",
+  "category": "misc",
   "ingredients": [
     {
       "item": "actuallyadditions:emeradic_crystal"
     }
   ],
   "result": {
-    "item": "actuallyadditions:emeradic_crystal_shard",
-    "count": 9
+    "count": 9,
+    "item": "actuallyadditions:emeradic_crystal_shard"
   }
 }

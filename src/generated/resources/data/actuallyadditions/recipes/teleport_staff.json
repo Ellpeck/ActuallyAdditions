@@ -1,25 +1,27 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "actuallyadditions:single_battery"
+    },
+    "E": {
+      "tag": "forge:ender_pearls"
+    },
+    "F": {
+      "item": "actuallyadditions:empowered_diamatine_crystal"
+    },
+    "S": {
+      "item": "actuallyadditions:ender_casing"
+    }
+  },
   "pattern": [
     " FE",
     " S ",
     "SB "
   ],
-  "key": {
-    "F": {
-      "item": "actuallyadditions:empowered_diamatine_crystal"
-    },
-    "E": {
-      "tag": "forge:ender_pearls"
-    },
-    "S": {
-      "item": "actuallyadditions:ender_casing"
-    },
-    "B": {
-      "item": "actuallyadditions:single_battery"
-    }
-  },
   "result": {
     "item": "actuallyadditions:teleport_staff"
-  }
+  },
+  "show_notification": true
 }

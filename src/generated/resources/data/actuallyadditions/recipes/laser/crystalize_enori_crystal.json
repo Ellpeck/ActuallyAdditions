@@ -1,9 +1,9 @@
 {
   "type": "actuallyadditions:laser",
+  "energy": 80,
   "ingredient": {
     "tag": "forge:ingots/iron"
   },
-  "energy": 80,
   "result": {
     "item": "actuallyadditions:enori_crystal"
   }

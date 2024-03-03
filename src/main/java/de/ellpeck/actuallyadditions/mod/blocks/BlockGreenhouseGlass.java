@@ -11,23 +11,22 @@
 package de.ellpeck.actuallyadditions.mod.blocks;
 
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBase;
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.IGrowable;
-import net.minecraft.block.SoundType;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BonemealableBlock;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.apache.commons.lang3.tuple.Triple;
-
-import java.util.Random;
 
 public class BlockGreenhouseGlass extends BlockBase {
     public BlockGreenhouseGlass() {
-        super(ActuallyBlocks.defaultPickProps(0, 0.5F, 10.0F).sound(SoundType.GLASS).randomTicks());
+        super(ActuallyBlocks.defaultPickProps(0.5F, 10.0F).sound(SoundType.GLASS).randomTicks());
     }
 
 
@@ -44,17 +43,17 @@ public class BlockGreenhouseGlass extends BlockBase {
 
 
     @Override
-    public BlockRenderType getRenderShape(BlockState state) {
-        return BlockRenderType.INVISIBLE;
+    public RenderShape getRenderShape(BlockState state) {
+        return RenderShape.INVISIBLE;
     }
 
     @Override
-    public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random rand) {
+    public void randomTick(BlockState state, ServerLevel world, BlockPos pos, RandomSource rand) {
         if (world.isClientSide) {
             return;
         }
         if (world.canSeeSkyFromBelowWater(pos) && world.isDay()) {
-            Triple<BlockPos, BlockState, IGrowable> trip = this.firstBlock(world, pos);
+            Triple<BlockPos, BlockState, BonemealableBlock> trip = this.firstBlock(world, pos);
             boolean once = false;
             if (trip != null) {
                 for (int i = 0; i < 3; i++) {
@@ -75,17 +74,17 @@ public class BlockGreenhouseGlass extends BlockBase {
         }
     }
 
-    public Triple<BlockPos, BlockState, IGrowable> firstBlock(World world, BlockPos glassPos) {
-        BlockPos.Mutable mut = new BlockPos(glassPos).mutable();
+    public Triple<BlockPos, BlockState, BonemealableBlock> firstBlock(Level world, BlockPos glassPos) {
+        BlockPos.MutableBlockPos mut = new BlockPos(glassPos).mutable();
         while (true) {
             mut.set(mut.getX(), mut.getY() - 1, mut.getZ());
             if (mut.getY() < 0) {
                 return null;
             }
             BlockState state = world.getBlockState(mut);
-            if (state.isSolidRender(world, mut) || state.getBlock() instanceof IGrowable || state.getBlock() == this) {
-                if (state.getBlock() instanceof IGrowable) {
-                    return Triple.of(mut.immutable(), state, (IGrowable) state.getBlock());
+            if (state.isSolidRender(world, mut) || state.getBlock() instanceof BonemealableBlock || state.getBlock() == this) {
+                if (state.getBlock() instanceof BonemealableBlock) {
+                    return Triple.of(mut.immutable(), state, (BonemealableBlock) state.getBlock());
                 } else {
                     return null;
                 }
@@ -94,7 +93,7 @@ public class BlockGreenhouseGlass extends BlockBase {
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        return Shapes.GLASS_SHAPE;
+    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+        return VoxelShapes.GLASS_SHAPE;
     }
 }

@@ -3,6 +3,8 @@
   "base": {
     "item": "actuallyadditions:emeradic_crystal_block"
   },
+  "color": 3492376,
+  "energy": 50000,
   "modifiers": [
     {
       "tag": "forge:dyes/lime"
@@ -17,10 +19,8 @@
       "tag": "forge:slimeballs"
     }
   ],
-  "energy": 50000,
-  "time": 500,
-  "color": 3492376,
   "result": {
     "item": "actuallyadditions:empowered_emeradic_crystal_block"
-  }
+  },
+  "time": 500
 }

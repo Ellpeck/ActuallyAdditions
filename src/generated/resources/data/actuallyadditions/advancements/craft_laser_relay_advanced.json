@@ -1,35 +1,38 @@
 {
   "parent": "actuallyadditions:craft_laser_relay",
+  "criteria": {
+    "laser_relay_advanced": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "actuallyadditions:laser_relay_advanced"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
   "display": {
-    "icon": {
-      "item": "actuallyadditions:laser_relay_advanced"
-    },
-    "title": {
-      "translate": "achievement.actuallyadditions.craftLaserRelayAdvanced"
-    },
+    "announce_to_chat": true,
     "description": {
       "translate": "achievement.actuallyadditions.craftLaserRelayAdvanced.desc"
     },
     "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "actuallyadditions:laser_relay_advanced"
+    },
     "show_toast": true,
-    "announce_to_chat": true,
-    "hidden": false
-  },
-  "criteria": {
-    "laser_relay_advanced": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {
-        "items": [
-          {
-            "item": "actuallyadditions:laser_relay_advanced"
-          }
-        ]
-      }
+    "title": {
+      "translate": "achievement.actuallyadditions.craftLaserRelayAdvanced"
     }
   },
   "requirements": [
     [
       "laser_relay_advanced"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

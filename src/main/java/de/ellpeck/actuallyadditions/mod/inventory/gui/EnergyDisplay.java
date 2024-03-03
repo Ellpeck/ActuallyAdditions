@@ -10,25 +10,21 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import de.ellpeck.actuallyadditions.mod.tile.CustomEnergyStorage;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.AbstractGui;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.network.chat.Component;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.client.gui.GuiUtils;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 @OnlyIn(Dist.CLIENT)
-public class EnergyDisplay extends AbstractGui {
+public class EnergyDisplay {
 
     private CustomEnergyStorage rfReference;
     private int x;
@@ -52,28 +48,26 @@ public class EnergyDisplay extends AbstractGui {
         this.drawTextNextTo = drawTextNextTo;
     }
 
-    public void draw(MatrixStack matrices) {
+    public void draw(GuiGraphics guiGraphics) {
         Minecraft mc = Minecraft.getInstance();
-        mc.getTextureManager().bind(AssetUtil.GUI_INVENTORY_LOCATION);
-
         int barX = this.x;
         int barY = this.y;
 
         if (this.outline) {
-            this.blit(matrices, this.x, this.y, 52, 163, 26, 93);
+            guiGraphics.blit(AssetUtil.GUI_INVENTORY_LOCATION, this.x, this.y, 52, 163, 26, 93);
 
             barX += 4;
             barY += 4;
         }
-        this.blit(matrices, barX, barY, 18, 171, 18, 85);
+        guiGraphics.blit(AssetUtil.GUI_INVENTORY_LOCATION, barX, barY, 18, 171, 18, 85);
 
         if (this.rfReference.getEnergyStored() > 0) {
             int i = this.rfReference.getEnergyStored() * 83 / this.rfReference.getMaxEnergyStored();
 
             float[] color = AssetUtil.getWheelColor(mc.level.getGameTime() % 256);
-            RenderSystem.color3f(color[0] / 255F, color[1] / 255F, color[2] / 255F);
-            this.blit(matrices, barX + 1, barY + 84 - i, 36, 172, 16, i);
-            RenderSystem.color3f(1F, 1F, 1F);
+            RenderSystem.setShaderColor(color[0] / 255F, color[1] / 255F, color[2] / 255F, 1F); //color3f
+            guiGraphics.blit(AssetUtil.GUI_INVENTORY_LOCATION, barX + 1, barY + 84 - i, 36, 172, 16, i);
+            RenderSystem.setShaderColor(1F, 1F, 1F, 1F); //color3f
         }
 
         if (this.drawTextNextTo) {
@@ -81,13 +75,13 @@ public class EnergyDisplay extends AbstractGui {
         }
     }
 
-    public void render(MatrixStack matrices, int mouseX, int mouseY) {
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY) {
         if (this.isMouseOver(mouseX, mouseY)) {
             Minecraft mc = Minecraft.getInstance();
 
-            List<StringTextComponent> text = new ArrayList<>();
-            text.add(new StringTextComponent(this.getOverlayText()));
-            GuiUtils.drawHoveringText(matrices, text, mouseX, mouseY, mc.getWindow().getWidth(), mc.getWindow().getHeight(), -1, mc.font);
+            List<Component> text = new ArrayList<>();
+            text.add(Component.literal(this.getOverlayText()));
+            guiGraphics.renderComponentTooltip(mc.font, text, mouseX, mouseY); //TODO: Check if this is correct, used to call GuiUtils.drawHoveringText
         }
     }
 
@@ -101,7 +95,7 @@ public class EnergyDisplay extends AbstractGui {
 
     private String getOverlayText() {
         NumberFormat format = NumberFormat.getInstance();
-        return new TranslationTextComponent("misc.actuallyadditions.power_long",
+        return Component.translatable("misc.actuallyadditions.power_long",
             format.format(this.rfReference.getEnergyStored()),
             format.format(this.rfReference.getMaxEnergyStored()))
             .getString();

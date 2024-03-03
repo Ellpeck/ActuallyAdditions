@@ -12,25 +12,40 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.blocks.BlockPhantom;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 
 public class TileEntityPhantomEnergyface extends TileEntityPhantomface implements ISharingEnergyProvider {
 
-    public TileEntityPhantomEnergyface() {
-        super(ActuallyBlocks.PHANTOM_ENERGYFACE.getTileEntityType());
+    public TileEntityPhantomEnergyface(BlockPos pos, BlockState state) {
+        super(ActuallyBlocks.PHANTOM_ENERGYFACE.getTileEntityType(), pos, state);
         this.type = BlockPhantom.Type.ENERGYFACE;
+    }
+
+    public static <T extends BlockEntity> void clientTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityPhantomEnergyface tile) {
+            tile.clientTick();
+        }
+    }
+
+    public static <T extends BlockEntity> void serverTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityPhantomEnergyface tile) {
+            tile.serverTick();
+        }
     }
 
     @Override
     public boolean isBoundThingInRange() {
         if (super.isBoundThingInRange()) {
-            TileEntity tile = this.level.getBlockEntity(this.boundPosition);
+            BlockEntity tile = this.level.getBlockEntity(this.boundPosition);
             if (tile != null && !(tile instanceof TileEntityLaserRelayEnergy)) {
                 for (Direction facing : Direction.values()) {
-                    if (tile.getCapability(CapabilityEnergy.ENERGY, facing).isPresent()) {
+                    if (tile.getCapability(ForgeCapabilities.ENERGY, facing).isPresent()) {
                         return true;
                     }
                 }
@@ -41,7 +56,7 @@ public class TileEntityPhantomEnergyface extends TileEntityPhantomface implement
 
     @Override
     protected boolean isCapabilitySupported(Capability<?> capability) {
-        return capability == CapabilityEnergy.ENERGY;
+        return capability == ForgeCapabilities.ENERGY;
     }
 
     @Override
@@ -60,7 +75,7 @@ public class TileEntityPhantomEnergyface extends TileEntityPhantomface implement
     }
 
     @Override
-    public boolean canShareTo(TileEntity tile) {
+    public boolean canShareTo(BlockEntity tile) {
         return true;
     }
 }

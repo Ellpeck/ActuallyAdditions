@@ -1,35 +1,38 @@
 {
   "parent": "actuallyadditions:craft_crusher",
+  "criteria": {
+    "crystal": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "actuallyadditions:crusher_double"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
   "display": {
-    "icon": {
-      "item": "actuallyadditions:crusher_double"
-    },
-    "title": {
-      "translate": "achievement.actuallyadditions.craftDoubleCrusher"
-    },
+    "announce_to_chat": true,
     "description": {
       "translate": "achievement.actuallyadditions.craftDoubleCrusher.desc"
     },
     "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "actuallyadditions:crusher_double"
+    },
     "show_toast": true,
-    "announce_to_chat": true,
-    "hidden": false
-  },
-  "criteria": {
-    "crystal": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {
-        "items": [
-          {
-            "item": "actuallyadditions:crusher_double"
-          }
-        ]
-      }
+    "title": {
+      "translate": "achievement.actuallyadditions.craftDoubleCrusher"
     }
   },
   "requirements": [
     [
       "crystal"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

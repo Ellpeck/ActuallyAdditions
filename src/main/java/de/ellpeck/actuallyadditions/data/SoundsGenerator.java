@@ -2,15 +2,15 @@ package de.ellpeck.actuallyadditions.data;
 
 import de.ellpeck.actuallyadditions.mod.AASounds;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import net.minecraft.data.DataGenerator;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.data.PackOutput;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.data.SoundDefinitionsProvider;
 
 public class SoundsGenerator extends SoundDefinitionsProvider {
 
-    protected SoundsGenerator(DataGenerator generator, ExistingFileHelper helper) {
-        super(generator, ActuallyAdditions.MODID, helper);
+    protected SoundsGenerator(PackOutput packOutput, ExistingFileHelper helper) {
+        super(packOutput, ActuallyAdditions.MODID, helper);
     }
 
     @Override

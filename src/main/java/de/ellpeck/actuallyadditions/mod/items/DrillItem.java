@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.items;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
+import de.ellpeck.actuallyadditions.api.ActuallyTags;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerDrill;
@@ -21,33 +22,40 @@ import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.material.Material;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.Attribute;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.inventory.container.SimpleNamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.SimpleMenuProvider;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.Tiers;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.common.ToolType;
+import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.ToolAction;
+import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
-
-import javax.annotation.Nullable;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class DrillItem extends ItemEnergy {
 
@@ -55,7 +63,29 @@ public class DrillItem extends ItemEnergy {
     private static final int ENERGY_USE = 100;
 
     public DrillItem() {
-        super(ActuallyItems.defaultProps().defaultDurability(0).stacksTo(1).addToolType(ToolType.SHOVEL, HARVEST_LEVEL).addToolType(ToolType.PICKAXE, HARVEST_LEVEL), 250000, 1000);
+        super(ActuallyItems.defaultProps().defaultDurability(0).stacksTo(1), 250000, 1000);
+    }
+
+    @Override
+    public boolean canPerformAction(ItemStack stack, ToolAction toolAction) {
+        if (toolAction == ToolActions.SHOVEL_DIG || toolAction == ToolActions.PICKAXE_DIG)
+            return true;
+        return super.canPerformAction(stack, toolAction);
+    }
+
+    @Override
+    public boolean isCorrectToolForDrops(BlockState pBlock) {
+        Tier tier = Tiers.NETHERITE; //Use Nettherite as the tier as it has the same harvest level as the drill
+        if (net.minecraftforge.common.TierSortingRegistry.isTierSorted(tier)) {
+            return net.minecraftforge.common.TierSortingRegistry.isCorrectTierForDrops(tier, pBlock) && pBlock.is(ActuallyTags.Blocks.MINEABLE_WITH_DRILL);
+        }
+        if (HARVEST_LEVEL < 3 && pBlock.is(BlockTags.NEEDS_DIAMOND_TOOL)) {
+            return false;
+        } else if (HARVEST_LEVEL < 2 && pBlock.is(BlockTags.NEEDS_IRON_TOOL)) {
+            return false;
+        } else {
+            return HARVEST_LEVEL < 1 && pBlock.is(BlockTags.NEEDS_STONE_TOOL) ? false : pBlock.is(ActuallyTags.Blocks.MINEABLE_WITH_DRILL);
+        }
     }
 
     /**
@@ -64,7 +94,7 @@ public class DrillItem extends ItemEnergy {
      * @param stack The Drill
      */
     public static void loadSlotsFromNBT(IItemHandlerModifiable slots, ItemStack stack) {
-        CompoundNBT compound = stack.getOrCreateTag();
+        CompoundTag compound = stack.getOrCreateTag();
         TileEntityInventoryBase.loadSlots(slots, compound);
     }
 
@@ -75,23 +105,23 @@ public class DrillItem extends ItemEnergy {
      * @param stack The Drill
      */
     public static void writeSlotsToNBT(IItemHandler slots, ItemStack stack) {
-        CompoundNBT compound = stack.getOrCreateTag();
+        CompoundTag compound = stack.getOrCreateTag();
 
         TileEntityInventoryBase.saveSlots(slots, compound);
         stack.setTag(compound);
     }
 
     @Override
-    public ActionResultType useOn(ItemUseContext context) {
-        PlayerEntity player = context.getPlayer();
-        Hand hand = context.getHand();
+    public InteractionResult useOn(UseOnContext context) {
+        Player player = context.getPlayer();
+        InteractionHand hand = context.getHand();
 
         ItemStack stack = player.getItemInHand(hand);
         ItemStack upgrade = this.getHasUpgradeAsStack(stack, ItemDrillUpgrade.UpgradeType.PLACER);
         if (StackUtil.isValid(upgrade)) {
             int slot = ItemDrillUpgrade.getSlotToPlaceFrom(upgrade);
             if (slot >= 0 && slot < 9) { // TODO: validate... old = PlayerInventory.getHotbarSize(); new = 9
-                ItemStack equip = player.inventory.getItem(slot);
+                ItemStack equip = player.getInventory().getItem(slot);
                 if (StackUtil.isValid(equip) && equip != stack) {
                     ItemStack toPlaceStack = equip.copy();
 
@@ -100,7 +130,7 @@ public class DrillItem extends ItemEnergy {
                     //tryPlaceItemIntoWorld could throw an Exception
                     try {
                         //Places the Block into the World
-                        if (toPlaceStack.useOn(context) != ActionResultType.FAIL) {
+                        if (toPlaceStack.useOn(context) != InteractionResult.FAIL) {
                             if (!player.isCreative()) {
                                 WorldUtil.setHandItemWithoutAnnoyingSound(player, hand, toPlaceStack.copy());
                             }
@@ -111,10 +141,10 @@ public class DrillItem extends ItemEnergy {
                         ActuallyAdditions.LOGGER.error("Player " + player.getName() + " who should place a Block using a Drill at " + player.getX() + ", " + player.getY() + ", " + player.getZ() + " in World " + context.getLevel().dimension() + " threw an Exception! Don't let that happen again!");
                     }
 
-                    player.inventory.setItem(slot, player.getItemInHand(hand));
+                    player.getInventory().setItem(slot, player.getItemInHand(hand));
                     WorldUtil.setHandItemWithoutAnnoyingSound(player, hand, stack);
 
-                    return ActionResultType.SUCCESS;
+                    return InteractionResult.SUCCESS;
                 }
             }
         }
@@ -130,7 +160,7 @@ public class DrillItem extends ItemEnergy {
      * @return The Upgrade, if it's installed
      */
     public ItemStack getHasUpgradeAsStack(ItemStack stack, ItemDrillUpgrade.UpgradeType upgrade) {
-        CompoundNBT compound = stack.getOrCreateTag();
+        CompoundTag compound = stack.getOrCreateTag();
 
         ItemStackHandlerAA inv = new ItemStackHandlerAA(ContainerDrill.SLOT_AMOUNT);
         loadSlotsFromNBT(inv, stack);
@@ -146,30 +176,30 @@ public class DrillItem extends ItemEnergy {
     }
 
     @Override
-    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
-        if (!world.isClientSide && player.isShiftKeyDown() && hand == Hand.MAIN_HAND) {
-            player.openMenu(new SimpleNamedContainerProvider((id, inv, p) -> new ContainerDrill(id, inv), new StringTextComponent("")));
+    public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
+        if (!world.isClientSide && player.isShiftKeyDown() && hand == InteractionHand.MAIN_HAND) {
+            player.openMenu(new SimpleMenuProvider((id, inv, p) -> new ContainerDrill(id, inv), Component.literal("")));
 //            player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.DRILL.ordinal(), world, (int) player.posX, (int) player.posY, (int) player.posZ);
         }
-        return new ActionResult<>(ActionResultType.PASS, player.getItemInHand(hand));
+        return new InteractionResultHolder<>(InteractionResult.PASS, player.getItemInHand(hand));
     }
 
     @Override
-    public ActionResultType interactLivingEntity(ItemStack stack, PlayerEntity player, LivingEntity entityHit, Hand hand) {
+    public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity entityHit, InteractionHand hand) {
         int use = this.getEnergyUsePerBlock(stack);
-        if (!(entityHit instanceof PlayerEntity) || !((PlayerEntity) entityHit).isCreative()) {
+        if (!(entityHit instanceof Player) || !((Player) entityHit).isCreative()) {
             if (this.getEnergyStored(stack) >= use) {
                 this.extractEnergyInternal(stack, use, false);
             }
         }
-        return ActionResultType.SUCCESS;
+        return InteractionResult.SUCCESS;
     }
 
     @Override
-    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack stack) {
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot, ItemStack stack) {
         Multimap<Attribute, AttributeModifier> map = ArrayListMultimap.create();
 
-        if (slot == EquipmentSlotType.MAINHAND) {
+        if (slot == EquipmentSlot.MAINHAND) {
             map.put(Attributes.ATTACK_DAMAGE, new AttributeModifier("Drill Modifier", this.getEnergyStored(stack) >= ENERGY_USE
                     ? 8.0F
                     : 0.1F, AttributeModifier.Operation.ADDITION));
@@ -182,15 +212,18 @@ public class DrillItem extends ItemEnergy {
 
     @Override
     public float getDestroySpeed(ItemStack stack, BlockState state) {
+        if(!state.is(ActuallyTags.Blocks.MINEABLE_WITH_DRILL))
+            return 1.0F;
+
         return this.getEnergyStored(stack) >= this.getEnergyUsePerBlock(stack)
-                ? (this.hasExtraWhitelist(state.getBlock()) || state.getBlock().getHarvestTool(state) == null || state.getBlock().getHarvestTool(state) == ToolType.PICKAXE || state.getBlock().getHarvestTool(state) == ToolType.SHOVEL)
+                ? (this.hasExtraWhitelist(state.getBlock()))
                 ? this.getEfficiencyFromUpgrade(stack)
                 : 1.0F
                 : 0.1F;
     }
 
     @Override
-    public boolean onBlockStartBreak(ItemStack stack, BlockPos pos, PlayerEntity player) {
+    public boolean onBlockStartBreak(ItemStack stack, BlockPos pos, Player player) {
         boolean toReturn = false;
         int use = this.getEnergyUsePerBlock(stack);
         if (this.getEnergyStored(stack) >= use) {
@@ -206,18 +239,18 @@ public class DrillItem extends ItemEnergy {
             }
 
             //Block hit
-            RayTraceResult ray = WorldUtil.getNearestBlockWithDefaultReachDistance(player.level, player);
-            if (ray != null && ray.getType() == RayTraceResult.Type.BLOCK) {
-                BlockRayTraceResult trace = (BlockRayTraceResult) ray;
+            HitResult ray = WorldUtil.getNearestBlockWithDefaultReachDistance(player.level(), player);
+            if (ray != null && ray.getType() == HitResult.Type.BLOCK) {
+                BlockHitResult trace = (BlockHitResult) ray;
                 //Breaks the Blocks
                 if (!player.isShiftKeyDown() && this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.THREE_BY_THREE)) {
                     if (this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FIVE_BY_FIVE)) {
-                        toReturn = this.breakBlocks(stack, 2, player.level, pos, trace.getDirection(), player);
+                        toReturn = this.breakBlocks(stack, 2, player.level(), pos, trace.getDirection(), player);
                     } else {
-                        toReturn = this.breakBlocks(stack, 1, player.level, pos, trace.getDirection(), player);
+                        toReturn = this.breakBlocks(stack, 1, player.level(), pos, trace.getDirection(), player);
                     }
                 } else {
-                    toReturn = this.breakBlocks(stack, 0, player.level, pos, trace.getDirection(), player);
+                    toReturn = this.breakBlocks(stack, 0, player.level(), pos, trace.getDirection(), player);
                 }
 
                 //Removes Enchantments added above
@@ -229,9 +262,9 @@ public class DrillItem extends ItemEnergy {
     }
 
     @Override
-    public boolean canHarvestBlock(ItemStack stack, BlockState state) {
+    public boolean isCorrectToolForDrops(ItemStack stack, BlockState state) {
         Block block = state.getBlock();
-        return this.getEnergyStored(stack) >= this.getEnergyUsePerBlock(stack) && (this.hasExtraWhitelist(block) || state.getMaterial().isReplaceable() || block == Blocks.SNOW_BLOCK || block == Blocks.SNOW || (block == Blocks.OBSIDIAN
+        return this.getEnergyStored(stack) >= this.getEnergyUsePerBlock(stack) && (this.hasExtraWhitelist(block) || state.canBeReplaced() || block == Blocks.SNOW_BLOCK || block == Blocks.SNOW || (block == Blocks.OBSIDIAN
                 ? HARVEST_LEVEL >= 3
                 : block != Blocks.DIAMOND_BLOCK && block != Blocks.DIAMOND_ORE
                 ? block != Blocks.EMERALD_ORE && block != Blocks.EMERALD_BLOCK
@@ -239,7 +272,7 @@ public class DrillItem extends ItemEnergy {
                 ? block != Blocks.IRON_BLOCK && block != Blocks.IRON_ORE
                 ? block != Blocks.LAPIS_BLOCK && block != Blocks.LAPIS_ORE
                 ? block != Blocks.REDSTONE_ORE
-                ? state.getMaterial() == Material.STONE || state.getMaterial() == Material.METAL || state.getMaterial() == Material.HEAVY_METAL
+                ? state.is(Tags.Blocks.STONE) || state.is(Tags.Blocks.STORAGE_BLOCKS)
                 : HARVEST_LEVEL >= 2
                 : HARVEST_LEVEL >= 1
                 : HARVEST_LEVEL >= 1
@@ -248,10 +281,10 @@ public class DrillItem extends ItemEnergy {
                 : HARVEST_LEVEL >= 2));
     }
 
-    @Override
-    public int getHarvestLevel(ItemStack stack, ToolType p_getHarvestLevel_2_, @Nullable PlayerEntity p_getHarvestLevel_3_, @Nullable BlockState p_getHarvestLevel_4_) {
-        return HARVEST_LEVEL;
-    }
+//    @Override
+//    public int getHarvestLevel(ItemStack stack, ToolType p_getHarvestLevel_2_, @Nullable Player p_getHarvestLevel_3_, @Nullable BlockState p_getHarvestLevel_4_) {
+//        return HARVEST_LEVEL;
+//    }
 
     /**
      * Gets the Energy that is used per Block broken
@@ -365,7 +398,7 @@ public class DrillItem extends ItemEnergy {
      * @param world  The World
      * @param player The Player who breaks the Blocks
      */
-    public boolean breakBlocks(ItemStack stack, int radius, World world, BlockPos aPos, Direction side, PlayerEntity player) {
+    public boolean breakBlocks(ItemStack stack, int radius, Level world, BlockPos aPos, Direction side, Player player) {
         int xRange = radius;
         int yRange = radius;
         int zRange = 0;
@@ -437,12 +470,13 @@ public class DrillItem extends ItemEnergy {
      * @param player  The Player breaking the Blocks
      * @param use     The Energy that should be extracted per Block
      */
-    private boolean tryHarvestBlock(World world, BlockPos pos, boolean isExtra, ItemStack stack, PlayerEntity player, int use) {
+    private boolean tryHarvestBlock(Level world, BlockPos pos, boolean isExtra, ItemStack stack, Player player, int use) {
         BlockState state = world.getBlockState(pos);
         Block block = state.getBlock();
         float hardness = state.getDestroySpeed(world, pos);
-        boolean canHarvest = (ForgeHooks.canHarvestBlock(state, player, world, pos) || this.canHarvestBlock(stack, state)) && (!isExtra || this.getDestroySpeed(stack, world.getBlockState(pos)) > 1.0F);
-        if (hardness >= 0.0F && (!isExtra || canHarvest && !block.hasTileEntity(world.getBlockState(pos)))) {
+
+        boolean canHarvest = (ForgeHooks.isCorrectToolForDrops(state, player) || this.isCorrectToolForDrops(stack, state)) && (!isExtra || this.getDestroySpeed(stack, world.getBlockState(pos)) > 1.0F);
+        if (hardness >= 0.0F && (!isExtra || canHarvest && !state.hasBlockEntity())) {
             if (!player.isCreative()) {
                 this.extractEnergyInternal(stack, use, false);
             }
@@ -454,7 +488,7 @@ public class DrillItem extends ItemEnergy {
 
     private boolean hasExtraWhitelist(Block block) {
         if (block != null) {
-            ResourceLocation location = block.getRegistryName();
+            ResourceLocation location = ForgeRegistries.BLOCKS.getKey(block);
             if (location != null) {
                 String name = location.toString();
                 if (name != null) {
@@ -471,6 +505,6 @@ public class DrillItem extends ItemEnergy {
 
     @Override
     public boolean shouldCauseBlockBreakReset(ItemStack oldStack, ItemStack newStack) {
-        return !newStack.sameItem(oldStack);
+        return !ItemStack.isSameItem(newStack, oldStack);
     }
 }

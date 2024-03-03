@@ -1,28 +1,29 @@
 {
+  "criteria": {
+    "right_click": {
+      "trigger": "minecraft:impossible"
+    }
+  },
   "display": {
-    "icon": {
-      "item": "actuallyadditions:booklet"
-    },
-    "title": {
-      "translate": "achievement.actuallyadditions.openBooklet"
-    },
+    "announce_to_chat": true,
+    "background": "minecraft:textures/gui/advancements/backgrounds/stone.png",
     "description": {
       "translate": "achievement.actuallyadditions.openBooklet.desc"
     },
     "frame": "task",
-    "show_toast": true,
-    "announce_to_chat": true,
     "hidden": false,
-    "background": "minecraft:textures/gui/advancements/backgrounds/stone.png"
-  },
-  "criteria": {
-    "right_click": {
-      "trigger": "minecraft:impossible"
+    "icon": {
+      "item": "actuallyadditions:booklet"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "achievement.actuallyadditions.openBooklet"
     }
   },
   "requirements": [
     [
       "right_click"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

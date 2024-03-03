@@ -10,29 +10,29 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
 
-public class ContainerFireworkBox extends Container {
+public class ContainerFireworkBox extends AbstractContainerMenu {
 
-    public static ContainerFireworkBox fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
+    public static ContainerFireworkBox fromNetwork(int windowId, Inventory inv, FriendlyByteBuf data) {
         return new ContainerFireworkBox(windowId, inv);
     }
 
-    public ContainerFireworkBox(int windowId, PlayerInventory inventory) {
+    public ContainerFireworkBox(int windowId, Inventory inventory) {
         super(ActuallyContainers.FIREWORK_BOX_CONTAINER.get(), windowId);
     }
 
     @Override
-    public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
+    public ItemStack quickMoveStack(Player playerIn, int index) {
         return ItemStack.EMPTY;
     }
 
     @Override
-    public boolean stillValid(PlayerEntity playerIn) {
+    public boolean stillValid(Player playerIn) {
         return true;
     }
 }

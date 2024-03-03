@@ -289,9 +289,9 @@
 //        chaptersIntroduction[10] = new BookletChapter("trialsIntro", ActuallyAdditionsAPI.entryTrials, new ItemStack(Items.GOLD_INGOT), new PageTextOnly(1), new PageTextOnly(2)).setSpecial();
 //        new BookletChapterTrials("crystalProduction", new ItemStack(ActuallyItems.EMERADIC_CRYSTAL.get()), false);
 //        new BookletChapterTrials("leatherProduction", new ItemStack(Items.LEATHER), false);
-//        new BookletChapterTrials("crystalOil", FluidUtil.getFilledBucket(new FluidStack(InitFluids.fluidCrystalOil, FluidAttributes.BUCKET_VOLUME)), false);
+//        new BookletChapterTrials("crystalOil", FluidUtil.getFilledBucket(new FluidStack(InitFluids.fluidCrystalOil, FluidType.BUCKET_VOLUME)), false);
 //        new BookletChapterTrials("autoDisenchanter", new ItemStack(ActuallyItems.DISENCHANTING_LENS.get()), false);
-//        new BookletChapterTrials("empoweredOil", FluidUtil.getFilledBucket(new FluidStack(InitFluids.fluidEmpoweredOil, FluidAttributes.BUCKET_VOLUME)), false);
+//        new BookletChapterTrials("empoweredOil", FluidUtil.getFilledBucket(new FluidStack(InitFluids.fluidEmpoweredOil, FluidType.BUCKET_VOLUME)), false);
 //        new BookletChapterTrials("mobFarm", new ItemStack(Items.ROTTEN_FLESH), false);
 //        new BookletChapterTrials("empowererAutomation", new ItemStack(ActuallyBlocks.EMPOWERER.get()), false);
 //

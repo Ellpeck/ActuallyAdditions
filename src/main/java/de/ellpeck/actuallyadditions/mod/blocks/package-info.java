@@ -2,5 +2,6 @@
 @MethodsReturnNonnullByDefault
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import mcp.MethodsReturnNonnullByDefault;
+import net.minecraft.MethodsReturnNonnullByDefault;
+
 import javax.annotation.ParametersAreNonnullByDefault;

@@ -10,19 +10,18 @@
 
 package de.ellpeck.actuallyadditions.mod.misc.special;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Axis;
+import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.model.ItemCameraTransforms;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerModelPart;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Util;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.PlayerModelPart;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemDisplayContext;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.Vec3;
 
 public class RenderSpecial {
 
@@ -32,15 +31,15 @@ public class RenderSpecial {
         this.theThingToRender = stack;
     }
 
-    public void render(MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, PlayerEntity player, float partialTicks) {
+    public void render(PoseStack matrixStack, MultiBufferSource buffer, int combinedLight, Player player, float partialTick) {
         if (this.theThingToRender.isEmpty() || player.isInvisible() || !player.isModelPartShown(PlayerModelPart.CAPE) || player.isFallFlying()) {
             return;
         }
 
         matrixStack.pushPose();
 
-        Vector3d currentPos = Minecraft.getInstance().player.getEyePosition(partialTicks);
-        Vector3d playerPos = player.getEyePosition(partialTicks);
+        Vec3 currentPos = Minecraft.getInstance().player.getEyePosition(partialTick);
+        Vec3 playerPos = player.getEyePosition(partialTick);
         matrixStack.translate(playerPos.x - currentPos.x, playerPos.y - currentPos.y, playerPos.z - currentPos.z);
         matrixStack.translate(0D, 2.575D - (player.isCrouching()
             ? 0.125D
@@ -53,7 +52,7 @@ public class RenderSpecial {
         if (isBlock) {
             matrixStack.translate(0D, -0.1875D, 0D);
         }
-        matrixStack.mulPose(Vector3f.ZP.rotationDegrees(180));
+        matrixStack.mulPose(Axis.ZP.rotationDegrees(180));
 
         float size = isBlock
             ? 0.5F
@@ -64,19 +63,19 @@ public class RenderSpecial {
         //Peck edit: What do you mean by "nice" you jackass? >_>
         double boop = Util.getMillis() / 1000D;
         matrixStack.translate(0D, Math.sin(boop % (2 * Math.PI)) * 0.25, 0D);
-        matrixStack.mulPose(Vector3f.YP.rotationDegrees((float) (boop * 40D % 360)));
+        matrixStack.mulPose(Axis.YP.rotationDegrees((float) (boop * 40D % 360)));
 
-        GlStateManager._disableLighting();
+//        GlStateManager._disableLighting();
         matrixStack.pushPose();
 
         if (!isBlock) {
             matrixStack.translate(0D, 0.5D, 0D);
         }
-        matrixStack.mulPose(Vector3f.XN.rotationDegrees(180F));
-        Minecraft.getInstance().getItemRenderer().renderStatic(theThingToRender, ItemCameraTransforms.TransformType.FIXED, combinedLight, OverlayTexture.NO_OVERLAY, matrixStack, buffer);
+        matrixStack.mulPose(Axis.XN.rotationDegrees(180F));
+        Minecraft.getInstance().getItemRenderer().renderStatic(theThingToRender, ItemDisplayContext.FIXED, combinedLight, OverlayTexture.NO_OVERLAY, matrixStack, buffer, null, 0);
         matrixStack.popPose();
 
-        GlStateManager._enableLighting();
+//        GlStateManager._enableLighting();
 
         matrixStack.popPose();
 

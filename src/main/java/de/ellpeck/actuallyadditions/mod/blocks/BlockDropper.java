@@ -12,39 +12,41 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 
 import de.ellpeck.actuallyadditions.mod.blocks.base.FullyDirectionalBlock;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityDropper;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
 
 import javax.annotation.Nullable;
 
 public class BlockDropper extends FullyDirectionalBlock.Container {
 
     public BlockDropper() {
-        super(ActuallyBlocks.defaultPickProps(0));
-    }
-
-    @Override
-    public boolean hasTileEntity(BlockState state) {
-        return true;
+        super(ActuallyBlocks.defaultPickProps());
     }
 
     @Nullable
     @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return new TileEntityDropper();
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new TileEntityDropper(pos, state);
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> entityType) {
+        return level.isClientSide? TileEntityDropper::clientTick : TileEntityDropper::serverTick;
     }
 
     @Override
-    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (this.tryToggleRedstone(world, pos, player)) {
-            return ActionResultType.CONSUME;
+            return InteractionResult.CONSUME;
         }
 
         return this.openGui(world, player, pos, TileEntityDropper.class);

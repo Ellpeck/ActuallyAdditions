@@ -10,14 +10,14 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import de.ellpeck.actuallyadditions.mod.inventory.SackContainer;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Inventory;
 
 import javax.annotation.Nonnull;
 
@@ -30,7 +30,7 @@ public class SackGui extends AAScreen<SackContainer> {
     private FilterSettingsGui filter;
     private Button buttonAutoInsert;
 
-    public SackGui(SackContainer container, PlayerInventory inventory, ITextComponent title) {
+    public SackGui(SackContainer container, Inventory inventory, Component title) {
         super(container, inventory, title);
         this.imageWidth = 176;
         this.imageHeight = 90 + 86;
@@ -42,7 +42,7 @@ public class SackGui extends AAScreen<SackContainer> {
     public void init() {
         super.init();
 
-        this.filter = new FilterSettingsGui(this.container.filter, this.leftPos + 138, this.topPos + 10, this.buttons);
+        this.filter = new FilterSettingsGui(this.container.filter, this.leftPos + 138, this.topPos + 10, this.renderables);
 //
 //        this.buttonAutoInsert = new Button(0, this.leftPos - 21, this.topPos + 8, 20, 20, (this.container.autoInsert
 //            ? TextFormatting.DARK_GREEN
@@ -60,8 +60,8 @@ public class SackGui extends AAScreen<SackContainer> {
 //    }
 
     @Override
-    public void tick() {
-        super.tick();
+    public void containerTick() {
+        super.containerTick();
         this.filter.tick();
 
         //this.buttonAutoInsert.displayString = (this.container.autoInsert
@@ -77,9 +77,9 @@ public class SackGui extends AAScreen<SackContainer> {
     }*/
 
     @Override
-    public void render(@Nonnull MatrixStack stack, int mouseX, int mouseY, float partialTicks) {
-        super.render(stack, mouseX, mouseY, partialTicks);
-        this.filter.drawHover(stack, mouseX, mouseY);
+    public void render(@Nonnull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+        super.render(guiGraphics, mouseX, mouseY, partialTicks);
+        this.filter.drawHover(guiGraphics, mouseX, mouseY);
 
 /*        if (this.buttonAutoInsert.isMouseOver()) {
             List<String> text = new ArrayList<>();
@@ -93,15 +93,12 @@ public class SackGui extends AAScreen<SackContainer> {
     }
 
     @Override
-    protected void renderBg(MatrixStack matrixStack, float partialTicks, int x, int y) {
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+    protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int x, int y) {
+        RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
 
-        this.getMinecraft().getTextureManager().bind(AssetUtil.GUI_INVENTORY_LOCATION);
-        this.blit(matrixStack, this.leftPos, this.topPos + 90, 0, 0, 176, 86);
+        RenderSystem.setShaderTexture(0, AssetUtil.GUI_INVENTORY_LOCATION);
+        guiGraphics.blit(AssetUtil.GUI_INVENTORY_LOCATION, this.leftPos, this.topPos + 90, 0, 0, 176, 86);
 
-        this.getMinecraft().getTextureManager().bind(this.isVoid
-            ? RES_LOC_VOID
-            : RES_LOC);
-        this.blit(matrixStack, this.leftPos, this.topPos, 0, 0, 176, 90);
+        guiGraphics.blit(this.isVoid ? RES_LOC_VOID : RES_LOC, this.leftPos, this.topPos, 0, 0, 176, 90);
     }
 }

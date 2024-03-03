@@ -3,24 +3,25 @@ package de.ellpeck.actuallyadditions.mod.crafting;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import net.minecraft.data.IFinishedRecipe;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.IItemProvider;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
-import net.minecraftforge.registries.ForgeRegistryEntry;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class CrushingRecipe implements IRecipe<IInventory> {
+public class CrushingRecipe implements Recipe<Container> {
     public static String NAME = "crushing";
     private final ResourceLocation id;
     protected Ingredient input;
@@ -39,7 +40,7 @@ public class CrushingRecipe implements IRecipe<IInventory> {
     }
 
     public CrushingRecipe(Ingredient input, ItemStack outputOne, float chance1, ItemStack outputTwo, float chance2) {
-        this.id = new ResourceLocation(ActuallyAdditions.MODID, input.getItems()[0].getItem().getRegistryName().getPath() + "_crushing");
+        this.id = new ResourceLocation(ActuallyAdditions.MODID, ForgeRegistries.ITEMS.getKey(input.getItems()[0].getItem()).getPath() + "_crushing");
         this.input = input;
         this.outputOne = outputOne;
         this.outputTwo = outputTwo;
@@ -48,7 +49,7 @@ public class CrushingRecipe implements IRecipe<IInventory> {
     }
 
     @Override
-    public boolean matches(IInventory pInv, World pLevel) {
+    public boolean matches(Container pInv, Level pLevel) {
         return input.test(pInv.getItem(0));
     }
 
@@ -63,7 +64,7 @@ public class CrushingRecipe implements IRecipe<IInventory> {
 
     @Override
     @Nonnull
-    public ItemStack assemble(@Nonnull IInventory pInv) {
+    public ItemStack assemble(Container pInv, RegistryAccess pRegistryAccess) {
         return ItemStack.EMPTY;
     }
 
@@ -74,7 +75,7 @@ public class CrushingRecipe implements IRecipe<IInventory> {
 
     @Override
     @Nonnull
-    public ItemStack getResultItem() {
+    public ItemStack getResultItem(RegistryAccess pRegistryAccess) {
         return outputOne;
     }
 
@@ -86,13 +87,13 @@ public class CrushingRecipe implements IRecipe<IInventory> {
 
     @Override
     @Nonnull
-    public IRecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<?> getSerializer() {
         return ActuallyRecipes.CRUSHING_RECIPE.get();
     }
 
     @Override
     @Nonnull
-    public IRecipeType<?> getType() {
+    public RecipeType<?> getType() {
         return ActuallyRecipes.Types.CRUSHING;
     }
 
@@ -115,36 +116,36 @@ public class CrushingRecipe implements IRecipe<IInventory> {
         return this.input;
     }
 
-    public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<CrushingRecipe> {
+    public static class Serializer implements RecipeSerializer<CrushingRecipe> {
 
         @Override
         @Nonnull
         public CrushingRecipe fromJson(@Nonnull ResourceLocation pRecipeId, @Nonnull JsonObject pJson) {
-            Ingredient ingredient = Ingredient.fromJson(JSONUtils.getAsJsonObject(pJson, "ingredient"));
+            Ingredient ingredient = Ingredient.fromJson(GsonHelper.getAsJsonObject(pJson, "ingredient"));
 
-            JsonArray resultList = JSONUtils.getAsJsonArray(pJson, "result");
+            JsonArray resultList = GsonHelper.getAsJsonArray(pJson, "result");
             if (resultList.size() < 1)
                 throw new IllegalStateException(pRecipeId.toString() + ": Recipe must contain at least 1 result item");
 
             JsonObject result1 = resultList.get(0).getAsJsonObject();
-            int count1 = JSONUtils.getAsInt(result1, "count", 0);
-            ItemStack output1 = new ItemStack(JSONUtils.getAsItem(result1, "item"), count1);
-            float chance1 = JSONUtils.getAsFloat(result1, "chance");
+            int count1 = GsonHelper.getAsInt(result1, "count", 0);
+            ItemStack output1 = new ItemStack(GsonHelper.getAsItem(result1, "item"), count1);
+            float chance1 = GsonHelper.getAsFloat(result1, "chance");
 
             ItemStack output2 = ItemStack.EMPTY;
             float chance2 = 1.0f;
             if (resultList.size() > 1) {
                 JsonObject result2 = resultList.get(1).getAsJsonObject();
-                int count2 = JSONUtils.getAsInt(result2, "count", 0);
-                output2 = new ItemStack(JSONUtils.getAsItem(result2, "item"), count2);
-                chance2 = JSONUtils.getAsFloat(result2, "chance");
+                int count2 = GsonHelper.getAsInt(result2, "count", 0);
+                output2 = new ItemStack(GsonHelper.getAsItem(result2, "item"), count2);
+                chance2 = GsonHelper.getAsFloat(result2, "chance");
             }
 
             return new CrushingRecipe(pRecipeId, ingredient, output1, chance1, output2, chance2);
         }
 
         @Override
-        public CrushingRecipe fromNetwork(@Nonnull ResourceLocation pRecipeId, @Nonnull PacketBuffer pBuffer) {
+        public CrushingRecipe fromNetwork(@Nonnull ResourceLocation pRecipeId, @Nonnull FriendlyByteBuf pBuffer) {
             Ingredient ingredient = Ingredient.fromNetwork(pBuffer);
             ItemStack output1 = pBuffer.readItem();
             ItemStack output2 = pBuffer.readItem();
@@ -155,7 +156,7 @@ public class CrushingRecipe implements IRecipe<IInventory> {
         }
 
         @Override
-        public void toNetwork(@Nonnull PacketBuffer pBuffer, CrushingRecipe pRecipe) {
+        public void toNetwork(@Nonnull FriendlyByteBuf pBuffer, CrushingRecipe pRecipe) {
             pRecipe.input.toNetwork(pBuffer);
             pBuffer.writeItem(pRecipe.outputOne);
             pBuffer.writeItem(pRecipe.outputTwo);
@@ -164,17 +165,17 @@ public class CrushingRecipe implements IRecipe<IInventory> {
         }
     }
 
-    public static class FinishedRecipe implements IFinishedRecipe {
+    public static class Result implements FinishedRecipe {
         private final ResourceLocation id;
         protected Ingredient input;
-        protected IItemProvider outputOne;
+        protected ItemLike outputOne;
         protected int countOne;
         protected float outputChance1;
-        protected IItemProvider outputTwo;
+        protected ItemLike outputTwo;
         protected int countTwo;
         protected float outputChance2;
 
-        public FinishedRecipe(ResourceLocation id, Ingredient input, IItemProvider outputOne, int countOne, float outputChance1, IItemProvider outputTwo, int countTwo, float outputChance2) {
+        public Result(ResourceLocation id, Ingredient input, ItemLike outputOne, int countOne, float outputChance1, ItemLike outputTwo, int countTwo, float outputChance2) {
             this.id = id;
             this.countOne = countOne;
             this.countTwo = countTwo;
@@ -190,12 +191,12 @@ public class CrushingRecipe implements IRecipe<IInventory> {
             pJson.add("ingredient", input.toJson());
 
             JsonObject result1 = new JsonObject();
-            result1.addProperty("item", outputOne.asItem().getRegistryName().toString());
+            result1.addProperty("item", ForgeRegistries.ITEMS.getKey(outputOne.asItem()).toString());
             result1.addProperty("count", countOne);
             result1.addProperty("chance", outputChance1);
 
             JsonObject result2 = new JsonObject();
-            result2.addProperty("item", outputTwo.asItem().getRegistryName().toString());
+            result2.addProperty("item", ForgeRegistries.ITEMS.getKey(outputTwo.asItem()).toString());
             result2.addProperty("count", countTwo);
             result2.addProperty("chance", outputChance2);
 
@@ -214,7 +215,7 @@ public class CrushingRecipe implements IRecipe<IInventory> {
 
         @Override
         @Nonnull
-        public IRecipeSerializer<?> getType() {
+        public RecipeSerializer<?> getType() {
             return ActuallyRecipes.CRUSHING_RECIPE.get();
         }
 

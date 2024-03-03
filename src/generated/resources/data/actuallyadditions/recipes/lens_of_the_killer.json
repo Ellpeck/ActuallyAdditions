@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shapeless",
+  "category": "misc",
   "ingredients": [
     {
       "item": "minecraft:diamond_sword"
@@ -8,7 +9,10 @@
       "item": "actuallyadditions:lens_of_certain_death"
     },
     {
-      "item": "minecraft:enchanted_book"
+      "type": "forge:nbt",
+      "count": 1,
+      "item": "minecraft:enchanted_book",
+      "nbt": "{Enchantments:[{id:\"minecraft:sharpness\",lvl:5s}]}"
     }
   ],
   "result": {

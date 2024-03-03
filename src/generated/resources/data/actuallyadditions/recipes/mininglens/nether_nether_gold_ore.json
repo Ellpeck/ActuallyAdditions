@@ -3,8 +3,8 @@
   "ingredient": {
     "tag": "forge:netherrack"
   },
-  "weight": 500,
   "result": {
     "item": "minecraft:nether_gold_ore"
-  }
+  },
+  "weight": 500
 }

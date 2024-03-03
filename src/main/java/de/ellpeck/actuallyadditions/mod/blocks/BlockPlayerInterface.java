@@ -10,45 +10,54 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.platform.Window;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityPlayerInterface;
-import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import net.minecraft.block.BlockState;
-import net.minecraft.client.MainWindow;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+
+import javax.annotation.Nullable;
 
 
 public class BlockPlayerInterface extends BlockContainerBase implements IHudDisplay {
     public BlockPlayerInterface() {
-        super(ActuallyBlocks.defaultPickProps(0, 4.5F, 10.0F));
+        super(ActuallyBlocks.defaultPickProps(4.5F, 10.0F));
     }
 
-    //@Override
-    public TileEntity newBlockEntity(IBlockReader worldIn) {
-        return new TileEntityPlayerInterface();
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new TileEntityPlayerInterface(pos, state);
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> entityType) {
+        return level.isClientSide? TileEntityPlayerInterface::clientTick : TileEntityPlayerInterface::serverTick;
     }
 
     @Override
-    public void setPlacedBy(World world, BlockPos pos, BlockState state, LivingEntity player, ItemStack stack) {
-        TileEntity tile = world.getBlockEntity(pos);
-        if (tile instanceof TileEntityPlayerInterface) {
-            TileEntityPlayerInterface face = (TileEntityPlayerInterface) tile;
-            if (face.connectedPlayer == null) {
+    public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity player, ItemStack stack) {
+        BlockEntity tile = world.getBlockEntity(pos);
+        if (tile instanceof TileEntityPlayerInterface face) {
+	        if (face.connectedPlayer == null) {
                 face.connectedPlayer = player.getUUID();
                 face.playerName = player.getName().getString();
                 face.setChanged();
@@ -61,26 +70,25 @@ public class BlockPlayerInterface extends BlockContainerBase implements IHudDisp
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void displayHud(MatrixStack matrices, Minecraft minecraft, PlayerEntity player, ItemStack stack, RayTraceResult rayCast, MainWindow resolution) {
-        if (!(rayCast instanceof BlockRayTraceResult)) {
+    public void displayHud(GuiGraphics guiGraphics, Minecraft minecraft, Player player, ItemStack stack, HitResult rayCast, Window resolution) {
+        if (!(rayCast instanceof BlockHitResult)) {
             return;
         }
 
-        TileEntity tile = minecraft.level.getBlockEntity(((BlockRayTraceResult) rayCast).getBlockPos());
+        BlockEntity tile = minecraft.level.getBlockEntity(((BlockHitResult) rayCast).getBlockPos());
         if (tile != null) {
-            if (tile instanceof TileEntityPlayerInterface) {
-                TileEntityPlayerInterface face = (TileEntityPlayerInterface) tile;
-                String name = face.playerName == null
+            if (tile instanceof TileEntityPlayerInterface face) {
+	            String name = face.playerName == null
                     ? "Unknown"
                     : face.playerName;
-                minecraft.font.drawShadow(matrices, "Bound to: " + TextFormatting.RED + name, resolution.getGuiScaledWidth() / 2f + 5, resolution.getGuiScaledHeight() / 2f + 5, 0xFFFFFF);
-                minecraft.font.drawShadow(matrices, "UUID: " + TextFormatting.DARK_GREEN + face.connectedPlayer, resolution.getGuiScaledWidth() / 2f + 5, resolution.getGuiScaledHeight() / 2f + 15, 0xFFFFFF);
+                guiGraphics.drawString(minecraft.font, "Bound to: " + ChatFormatting.RED + name, (int) (resolution.getGuiScaledWidth() / 2f + 5), (int) (resolution.getGuiScaledHeight() / 2f + 5), 0xFFFFFF);
+                guiGraphics.drawString(minecraft.font, "UUID: " + ChatFormatting.DARK_GREEN + face.connectedPlayer, (int) (resolution.getGuiScaledWidth() / 2f + 5), (int) (resolution.getGuiScaledHeight() / 2f + 15), 0xFFFFFF);
             }
         }
     }
     
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        return Shapes.PLAYER_INTERFACE_SHAPE;
+    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+        return VoxelShapes.PLAYER_INTERFACE_SHAPE;
     }
 }

@@ -1,7 +1,7 @@
 {
-  "reconstructor": {
+  "coffee_machine": {
     "sounds": [
-      "actuallyadditions:reconstructor"
+      "actuallyadditions:coffee_machine"
     ]
   },
   "crusher": {
@@ -9,14 +9,14 @@
       "actuallyadditions:crusher"
     ]
   },
-  "coffee_machine": {
-    "sounds": [
-      "actuallyadditions:coffee_machine"
-    ]
-  },
   "duh_duh_duh_duuuh": {
     "sounds": [
       "actuallyadditions:duh_duh_duh_duuuh"
+    ]
+  },
+  "reconstructor": {
+    "sounds": [
+      "actuallyadditions:reconstructor"
     ]
   }
 }

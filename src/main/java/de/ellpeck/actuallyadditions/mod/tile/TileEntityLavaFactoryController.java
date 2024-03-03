@@ -12,12 +12,14 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 
@@ -33,12 +35,12 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
     private int currentWorkTime;
     private int oldEnergy;
 
-    public TileEntityLavaFactoryController() {
-        super(ActuallyBlocks.LAVA_FACTORY_CONTROLLER.getTileEntityType());
+    public TileEntityLavaFactoryController(BlockPos pos, BlockState state) {
+        super(ActuallyBlocks.LAVA_FACTORY_CONTROLLER.getTileEntityType(), pos, state);
     }
 
     @Override
-    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
         this.storage.writeToNBT(compound);
         if (type != NBTType.SAVE_BLOCK) {
@@ -47,7 +49,7 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
     }
 
     @Override
-    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void readSyncableNBT(CompoundTag compound, NBTType type) {
         super.readSyncableNBT(compound, type);
         this.storage.readFromNBT(compound);
         if (type != NBTType.SAVE_BLOCK) {
@@ -55,23 +57,29 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
         }
     }
 
-    @Override
-    public void updateEntity() {
-        super.updateEntity();
-        if (!this.level.isClientSide) {
-            if (this.storage.getEnergyStored() >= ENERGY_USE && this.isMultiblock() == HAS_AIR) {
-                this.currentWorkTime++;
-                if (this.currentWorkTime >= 200) {
-                    this.currentWorkTime = 0;
-                    this.level.setBlock(this.worldPosition.above(), Blocks.LAVA.defaultBlockState(), 2);
-                    this.storage.extractEnergyInternal(ENERGY_USE, false);
+    public static <T extends BlockEntity> void clientTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityLavaFactoryController tile) {
+            tile.clientTick();
+        }
+    }
+
+    public static <T extends BlockEntity> void serverTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityLavaFactoryController tile) {
+            tile.serverTick();
+            
+            if (tile.storage.getEnergyStored() >= ENERGY_USE && tile.isMultiblock() == HAS_AIR) {
+                tile.currentWorkTime++;
+                if (tile.currentWorkTime >= 200) {
+                    tile.currentWorkTime = 0;
+                    level.setBlock(tile.worldPosition.above(), Blocks.LAVA.defaultBlockState(), 2);
+                    tile.storage.extractEnergyInternal(ENERGY_USE, false);
                 }
             } else {
-                this.currentWorkTime = 0;
+                tile.currentWorkTime = 0;
             }
 
-            if (this.oldEnergy != this.storage.getEnergyStored() && this.sendUpdateWithInterval()) {
-                this.oldEnergy = this.storage.getEnergyStored();
+            if (tile.oldEnergy != tile.storage.getEnergyStored() && tile.sendUpdateWithInterval()) {
+                tile.oldEnergy = tile.storage.getEnergyStored();
             }
         }
     }

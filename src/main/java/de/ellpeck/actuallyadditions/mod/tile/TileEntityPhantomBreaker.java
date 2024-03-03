@@ -14,12 +14,28 @@ import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class TileEntityPhantomBreaker extends TileEntityPhantomPlacer {
 
-    public TileEntityPhantomBreaker() {
-        super(ActuallyBlocks.PHANTOM_BREAKER.getTileEntityType(), 9);
+    public TileEntityPhantomBreaker(BlockPos pos, BlockState state) {
+        super(ActuallyBlocks.PHANTOM_BREAKER.getTileEntityType(), pos, state, 9);
         this.isBreaker = true;
+    }
+
+    public static <T extends BlockEntity> void clientTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityPhantomBreaker tile) {
+            tile.clientTick();
+        }
+    }
+
+    public static <T extends BlockEntity> void serverTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityPhantomBreaker tile) {
+            tile.serverTick();
+        }
     }
 
     @Override

@@ -10,7 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.config;
 
-import net.minecraft.item.Item;
+import net.minecraft.world.item.Item;
 
 public final class ConfigValues {
     //

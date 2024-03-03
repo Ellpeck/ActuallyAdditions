@@ -1,23 +1,22 @@
 package de.ellpeck.actuallyadditions.mod.sack;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.world.World;
-import net.minecraft.world.storage.WorldSavedData;
-import net.minecraftforge.common.util.Constants;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fml.common.thread.SidedThreadGroups;
-import net.minecraftforge.fml.server.ServerLifecycleHooks;
+import net.minecraftforge.fml.util.thread.SidedThreadGroups;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.server.ServerLifecycleHooks;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Optional;
 import java.util.UUID;
 
-public class SackManager extends WorldSavedData {
+public class SackManager extends SavedData {
     private static final String NAME = ActuallyAdditions.MODID + "_sack_data";
 
     private static final SackManager blankClient = new SackManager();
@@ -25,12 +24,12 @@ public class SackManager extends WorldSavedData {
     private static final HashMap<UUID, SackData> data = new HashMap<>();
 
     public SackManager() {
-        super(NAME);
+        super();
     }
 
     public static SackManager get() {
         if (Thread.currentThread().getThreadGroup() == SidedThreadGroups.SERVER)
-            return ServerLifecycleHooks.getCurrentServer().getLevel(World.OVERWORLD).getDataStorage().computeIfAbsent(SackManager::new, NAME);
+            return ServerLifecycleHooks.getCurrentServer().getLevel(Level.OVERWORLD).getDataStorage().computeIfAbsent(SackManager::load, SackManager::new, NAME);
         else
             return blankClient;
     }
@@ -72,18 +71,18 @@ public class SackManager extends WorldSavedData {
         return LazyOptional.empty();
     }
 
-    @Override
-    public void load(CompoundNBT nbt) {
+    public static SackManager load(CompoundTag nbt) {
         if (nbt.contains("Sacks")) {
-            ListNBT list = nbt.getList("Sacks", Constants.NBT.TAG_COMPOUND);
-            list.forEach((sackNBT) -> SackData.fromNBT((CompoundNBT) sackNBT).ifPresent((sack) -> data.put(sack.getUuid(), sack)));
+            ListTag list = nbt.getList("Sacks", CompoundTag.TAG_COMPOUND);
+            list.forEach((sackNBT) -> SackData.fromNBT((CompoundTag) sackNBT).ifPresent((sack) -> data.put(sack.getUuid(), sack)));
         }
+        return new SackManager();
     }
 
     @Override
     @Nonnull
-    public CompoundNBT save(CompoundNBT compound) {
-        ListNBT sacks = new ListNBT();
+    public CompoundTag save(CompoundTag compound) {
+        ListTag sacks = new ListTag();
         data.forEach(((uuid, sackData) -> sacks.add(sackData.toNBT())));
         compound.put("Sacks", sacks);
         return compound;

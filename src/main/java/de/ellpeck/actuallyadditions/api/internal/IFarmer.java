@@ -10,10 +10,10 @@
 
 package de.ellpeck.actuallyadditions.api.internal;
 
-import java.util.List;
+import net.minecraft.core.Direction;
+import net.minecraft.world.item.ItemStack;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Direction;
+import java.util.List;
 
 /**
  * This is a helper interface for IFarmerBehavior.

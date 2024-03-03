@@ -10,7 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.energy.EnergyStorage;
 
 public class CustomEnergyStorage extends EnergyStorage {
@@ -60,12 +60,12 @@ public class CustomEnergyStorage extends EnergyStorage {
         dirty = false;
     }
 
-    public void readFromNBT(CompoundNBT compound) {
+    public void readFromNBT(CompoundTag compound) {
         if (compound.contains("Energy"))
             this.setEnergyStored(compound.getInt("Energy"));
     }
 
-    public void writeToNBT(CompoundNBT compound) {
+    public void writeToNBT(CompoundTag compound) {
         compound.putInt("Energy", this.getEnergyStored());
     }
 

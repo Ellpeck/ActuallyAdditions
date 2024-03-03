@@ -13,21 +13,21 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.LeavesBlock;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
 
 public class TileEntityLeafGenerator extends TileEntityBase implements ISharingEnergyProvider, IEnergyDisplay {
 
@@ -36,43 +36,49 @@ public class TileEntityLeafGenerator extends TileEntityBase implements ISharingE
     private int nextUseCounter;
     private int oldEnergy;
 
-    public TileEntityLeafGenerator() {
-        super(ActuallyBlocks.LEAF_GENERATOR.getTileEntityType());
+    public TileEntityLeafGenerator(BlockPos pos, BlockState state) {
+        super(ActuallyBlocks.LEAF_GENERATOR.getTileEntityType(), pos, state);
     }
 
     @Override
-    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
         this.storage.writeToNBT(compound);
     }
 
     @Override
-    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void readSyncableNBT(CompoundTag compound, NBTType type) {
         super.readSyncableNBT(compound, type);
         this.storage.readFromNBT(compound);
     }
 
-    @Override
-    public void updateEntity() {
-        super.updateEntity();
-        if (!this.level.isClientSide) {
-            if (!this.isRedstonePowered) {
+    public static <T extends BlockEntity> void clientTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityLeafGenerator tile) {
+            tile.clientTick();
+        }
+    }
 
-                if (this.nextUseCounter >= ConfigIntValues.LEAF_GENERATOR_COOLDOWN.getValue()) {
-                    this.nextUseCounter = 0;
+    public static <T extends BlockEntity> void serverTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityLeafGenerator tile) {
+            tile.serverTick();
+
+            if (!tile.isRedstonePowered) {
+
+                if (tile.nextUseCounter >= ConfigIntValues.LEAF_GENERATOR_COOLDOWN.getValue()) {
+                    tile.nextUseCounter = 0;
 
                     int energyProduced = ConfigIntValues.LEAF_GENERATOR_CF_PER_LEAF.getValue();
-                    if (energyProduced > 0 && energyProduced <= this.storage.getMaxEnergyStored() - this.storage.getEnergyStored()) {
+                    if (energyProduced > 0 && energyProduced <= tile.storage.getMaxEnergyStored() - tile.storage.getEnergyStored()) {
                         List<BlockPos> breakPositions = new ArrayList<>();
 
                         int range = ConfigIntValues.LEAF_GENERATOR_AREA.getValue();
                         for (int reachX = -range; reachX < range + 1; reachX++) {
                             for (int reachZ = -range; reachZ < range + 1; reachZ++) {
                                 for (int reachY = -range; reachY < range + 1; reachY++) {
-                                    BlockPos pos = this.worldPosition.offset(reachX, reachY, reachZ);
-                                    Block block = this.level.getBlockState(pos).getBlock();
-                                    if (block instanceof LeavesBlock) { // TODO: [port] validate this is a good way of checking if something is a leaf
-                                        breakPositions.add(pos);
+                                    BlockPos offsetPos = pos.offset(reachX, reachY, reachZ);
+                                    Block block = level.getBlockState(offsetPos).getBlock();
+                                    if (block instanceof LeavesBlock) { // TODO: [port] validate tile is a good way of checking if something is a leaf
+                                        breakPositions.add(offsetPos);
                                     }
                                 }
                             }
@@ -82,22 +88,22 @@ public class TileEntityLeafGenerator extends TileEntityBase implements ISharingE
                             Collections.shuffle(breakPositions);
                             BlockPos theCoord = breakPositions.get(0);
 
-                            this.level.levelEvent(2001, theCoord, Block.getId(this.level.getBlockState(theCoord)));
+                            level.levelEvent(2001, theCoord, Block.getId(level.getBlockState(theCoord)));
 
-                            this.level.setBlockAndUpdate(theCoord, Blocks.AIR.defaultBlockState());
+                            level.setBlockAndUpdate(theCoord, Blocks.AIR.defaultBlockState());
 
-                            this.storage.receiveEnergyInternal(energyProduced, false);
+                            tile.storage.receiveEnergyInternal(energyProduced, false);
 
-                            AssetUtil.spawnLaserWithTimeServer(this.level, this.getBlockPos().getX(), this.getBlockPos().getY(), this.getBlockPos().getZ(), theCoord.getX(), theCoord.getY(), theCoord.getZ(), 0x3EA34A, 25, 0, 0.075F, 0.8F);
+                            AssetUtil.spawnLaserWithTimeServer(level, pos.getX(), pos.getY(), pos.getZ(), theCoord.getX(), theCoord.getY(), theCoord.getZ(), 0x3EA34A, 25, 0, 0.075F, 0.8F);
                         }
                     }
                 } else {
-                    this.nextUseCounter++;
+                    tile.nextUseCounter++;
                 }
             }
 
-            if (this.oldEnergy != this.storage.getEnergyStored() && this.sendUpdateWithInterval()) {
-                this.oldEnergy = this.storage.getEnergyStored();
+            if (tile.oldEnergy != tile.storage.getEnergyStored() && tile.sendUpdateWithInterval()) {
+                tile.oldEnergy = tile.storage.getEnergyStored();
             }
         }
     }
@@ -128,7 +134,7 @@ public class TileEntityLeafGenerator extends TileEntityBase implements ISharingE
     }
 
     @Override
-    public boolean canShareTo(TileEntity tile) {
+    public boolean canShareTo(BlockEntity tile) {
         return true;
     }
 

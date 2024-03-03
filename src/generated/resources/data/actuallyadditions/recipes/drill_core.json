@@ -1,22 +1,24 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "actuallyadditions:basic_coil"
+    },
+    "I": {
+      "item": "actuallyadditions:enori_crystal"
+    },
+    "R": {
+      "item": "actuallyadditions:restonia_crystal"
+    }
+  },
   "pattern": [
     "ICI",
     "CRC",
     "ICI"
   ],
-  "key": {
-    "C": {
-      "item": "actuallyadditions:basic_coil"
-    },
-    "R": {
-      "item": "actuallyadditions:restonia_crystal"
-    },
-    "I": {
-      "item": "actuallyadditions:enori_crystal"
-    }
-  },
   "result": {
     "item": "actuallyadditions:drill_core"
-  }
+  },
+  "show_notification": true
 }

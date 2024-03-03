@@ -11,7 +11,7 @@
 package de.ellpeck.actuallyadditions.api.internal;
 
 import de.ellpeck.actuallyadditions.api.lens.Lens;
-import net.minecraft.util.Direction;
+import net.minecraft.core.Direction;
 
 /**
  * This is a helper interface for Lens' invoke() method.

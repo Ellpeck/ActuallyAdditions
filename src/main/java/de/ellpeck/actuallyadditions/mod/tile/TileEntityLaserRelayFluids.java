@@ -17,18 +17,20 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayEnergy.Mode;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
 import javax.annotation.Nonnull;
@@ -40,12 +42,12 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class TileEntityLaserRelayFluids extends TileEntityLaserRelay {
 
-    public final ConcurrentHashMap<Direction, TileEntity> handlersAround = new ConcurrentHashMap<>();
+    public final ConcurrentHashMap<Direction, BlockEntity> handlersAround = new ConcurrentHashMap<>();
     private final IFluidHandler[] fluidHandlers = new IFluidHandler[6];
     private Mode mode = Mode.BOTH;
 
-    public TileEntityLaserRelayFluids() {
-        super(ActuallyBlocks.LASER_RELAY_FLUIDS.getTileEntityType(), LaserType.FLUID);
+    public TileEntityLaserRelayFluids(BlockPos pos, BlockState state) {
+        super(ActuallyBlocks.LASER_RELAY_FLUIDS.getTileEntityType(), pos, state, LaserType.FLUID);
 
         for (int i = 0; i < this.fluidHandlers.length; i++) {
             Direction facing = Direction.values()[i];
@@ -93,15 +95,24 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay {
         }
     }
 
-    @Override
-    public void updateEntity() {
-        super.updateEntity();
+    public static <T extends BlockEntity> void clientTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityLaserRelayFluids tile) {
+            tile.clientTick();
+        }
+    }
 
-        if (!this.level.isClientSide) {
-            if (this.mode == Mode.INPUT_ONLY) {
-                for (Direction side : this.handlersAround.keySet()) {
-                    WorldUtil.doFluidInteraction(this.handlersAround.get(side), this, side.getOpposite(), Integer.MAX_VALUE);
-                }
+    public static <T extends BlockEntity> void serverTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityLaserRelayFluids tile) {
+            tile.serverTick();
+        }
+    }
+
+    @Override
+    protected void serverTick() {
+        super.serverTick();
+        if (this.mode == Mode.INPUT_ONLY) {
+            for (Direction side : this.handlersAround.keySet()) {
+                WorldUtil.doFluidInteraction(this.handlersAround.get(side), this, side.getOpposite(), Integer.MAX_VALUE);
             }
         }
     }
@@ -113,19 +124,19 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay {
 
     @Override
     public void saveDataOnChangeOrWorldStart() {
-        Map<Direction, TileEntity> old = new HashMap<>(this.handlersAround);
+        Map<Direction, BlockEntity> old = new HashMap<>(this.handlersAround);
         boolean change = false;
 
         this.handlersAround.clear();
         for (Direction side : Direction.values()) {
             BlockPos pos = this.getBlockPos().relative(side);
             if (this.level.hasChunkAt(pos)) {
-                TileEntity tile = this.level.getBlockEntity(pos);
+                BlockEntity tile = this.level.getBlockEntity(pos);
                 if (tile != null && !(tile instanceof TileEntityLaserRelay)) {
-                    if (tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side.getOpposite()).isPresent()) {
+                    if (tile.getCapability(ForgeCapabilities.FLUID_HANDLER, side.getOpposite()).isPresent()) {
                         this.handlersAround.put(side, tile);
 
-                        TileEntity oldTile = old.get(side);
+                        BlockEntity oldTile = old.get(side);
                         if (oldTile == null || !tile.equals(oldTile)) {
                             change = true;
                         }
@@ -173,18 +184,17 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay {
             for (BlockPos relay : pair.getPositions()) {
                 if (relay != null && this.level.hasChunkAt(relay) && !alreadyChecked.contains(relay)) {
                     alreadyChecked.add(relay);
-                    TileEntity relayTile = this.level.getBlockEntity(relay);
-                    if (relayTile instanceof TileEntityLaserRelayFluids) {
-                        TileEntityLaserRelayFluids theRelay = (TileEntityLaserRelayFluids) relayTile;
-                        if (theRelay.mode != Mode.INPUT_ONLY) {
+                    BlockEntity relayTile = this.level.getBlockEntity(relay);
+                    if (relayTile instanceof TileEntityLaserRelayFluids theRelay) {
+	                    if (theRelay.mode != Mode.INPUT_ONLY) {
                             boolean workedOnce = false;
 
                             for (Direction facing : theRelay.handlersAround.keySet()) {
                                 if (theRelay != this || facing != from) {
-                                    TileEntity tile = theRelay.handlersAround.get(facing);
+                                    BlockEntity tile = theRelay.handlersAround.get(facing);
                                     Direction opp = facing.getOpposite();
 
-                                    boolean received = tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, opp).map(cap -> cap.fill(stack, IFluidHandler.FluidAction.SIMULATE) > 0).orElse(false);
+                                    boolean received = tile.getCapability(ForgeCapabilities.FLUID_HANDLER, opp).map(cap -> cap.fill(stack, IFluidHandler.FluidAction.SIMULATE) > 0).orElse(false);
                                     if (received) {
                                         totalReceiverAmount++;
                                         workedOnce = true;
@@ -207,15 +217,15 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay {
                 : stack.getAmount();
 
             for (TileEntityLaserRelayFluids theRelay : relaysThatWork) {
-                for (Map.Entry<Direction, TileEntity> receiver : theRelay.handlersAround.entrySet()) {
+                for (Map.Entry<Direction, BlockEntity> receiver : theRelay.handlersAround.entrySet()) {
                     if (receiver != null) {
                         Direction side = receiver.getKey();
                         Direction opp = side.getOpposite();
-                        TileEntity tile = receiver.getValue();
+                        BlockEntity tile = receiver.getValue();
                         if (!alreadyChecked.contains(tile.getBlockPos())) {
                             alreadyChecked.add(tile.getBlockPos());
                             if (theRelay != this || side != from) {
-                                transmitted += tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, opp).map(cap -> {
+                                transmitted += tile.getCapability(ForgeCapabilities.FLUID_HANDLER, opp).map(cap -> {
                                     int trans = 0;
                                     FluidStack copy = stack.copy();
                                     copy.setAmount(amountPer);
@@ -240,22 +250,22 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay {
     @Override
     @OnlyIn(Dist.CLIENT)
     public String getExtraDisplayString() {
-        return I18n.get("info." + ActuallyAdditions.MODID + ".laserRelay.fluid.extra") + ": " + TextFormatting.DARK_RED + I18n.get(this.mode.name) + TextFormatting.RESET;
+        return I18n.get("info." + ActuallyAdditions.MODID + ".laserRelay.fluid.extra") + ": " + ChatFormatting.DARK_RED + I18n.get(this.mode.name) + ChatFormatting.RESET;
     }
 
     @Override
     @OnlyIn(Dist.CLIENT)
     public String getCompassDisplayString() {
-        return TextFormatting.GREEN + I18n.get("info." + ActuallyAdditions.MODID + ".laserRelay.energy.display");
+        return ChatFormatting.GREEN + I18n.get("info." + ActuallyAdditions.MODID + ".laserRelay.energy.display");
     }
 
     @Override
-    public void onCompassAction(PlayerEntity player) {
+    public void onCompassAction(Player player) {
         this.mode = this.mode.getNext();
     }
 
     @Override
-    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
 
         if (type != NBTType.SAVE_BLOCK) {
@@ -264,7 +274,7 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay {
     }
 
     @Override
-    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void readSyncableNBT(CompoundTag compound, NBTType type) {
         super.readSyncableNBT(compound, type);
 
         if (type != NBTType.SAVE_BLOCK) {

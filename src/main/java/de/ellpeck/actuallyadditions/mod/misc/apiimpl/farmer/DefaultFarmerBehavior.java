@@ -14,21 +14,30 @@ import de.ellpeck.actuallyadditions.api.farmer.FarmerResult;
 import de.ellpeck.actuallyadditions.api.farmer.IFarmerBehavior;
 import de.ellpeck.actuallyadditions.api.internal.IFarmer;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.block.*;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.*;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootParameters;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.BonemealableBlock;
+import net.minecraft.world.level.block.CropBlock;
+import net.minecraft.world.level.block.StemBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.IPlantable;
-import net.minecraftforge.common.Tags;
-import net.minecraftforge.common.ToolType;
 import net.minecraftforge.common.util.FakePlayerFactory;
 
 import java.util.ArrayList;
@@ -36,14 +45,14 @@ import java.util.List;
 
 public class DefaultFarmerBehavior implements IFarmerBehavior {
 
-    public static boolean defaultPlant(World world, BlockPos pos, BlockState toPlant, IFarmer farmer, int use) {
+    public static boolean defaultPlant(Level world, BlockPos pos, BlockState toPlant, IFarmer farmer, int use) {
         if (toPlant != null) {
             BlockPos farmland = pos.below();
-            Block farmlandBlock = world.getBlockState(farmland).getBlock();
-            if (Tags.Blocks.DIRT.contains(farmlandBlock) || farmlandBlock == Blocks.GRASS) {
+            BlockState farmlandState = world.getBlockState(farmland);
+            if (farmlandState.is(BlockTags.DIRT) || farmlandState.is(Blocks.GRASS_BLOCK)) {
                 world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
                 useHoeAt(world, farmland);
-                world.playSound(null, farmland, SoundEvents.HOE_TILL, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                world.playSound(null, farmland, SoundEvents.HOE_TILL, SoundSource.BLOCKS, 1.0F, 1.0F);
                 farmer.extractEnergy(use);
             }
 
@@ -55,7 +64,7 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
         return false;
     }
 
-    private static boolean tryPlant(BlockState toPlant, World world, BlockPos pos) {
+    private static boolean tryPlant(BlockState toPlant, Level world, BlockPos pos) {
         if (toPlant.canSurvive(world, pos)) {
             world.setBlockAndUpdate(pos, toPlant);
             return true;
@@ -64,7 +73,7 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
     }
 
     @Override
-    public FarmerResult tryPlantSeed(ItemStack seed, World world, BlockPos pos, IFarmer farmer) {
+    public FarmerResult tryPlantSeed(ItemStack seed, Level world, BlockPos pos, IFarmer farmer) {
         int use = 350;
         if (farmer.getEnergy() >= use * 2) {
             if (defaultPlant(world, pos, this.getPlantablePlantFromStack(seed, world, pos), farmer, use)) {
@@ -75,14 +84,14 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
     }
 
     @Override
-    public FarmerResult tryHarvestPlant(ServerWorld world, BlockPos pos, IFarmer farmer) {
+    public FarmerResult tryHarvestPlant(ServerLevel world, BlockPos pos, IFarmer farmer) {
         int use = 250;
         if (farmer.getEnergy() >= use) {
             BlockState state = world.getBlockState(pos);
             Block block = state.getBlock();
 
-            if (block instanceof CropsBlock) {
-                if (((CropsBlock) block).isMaxAge(state)) {
+            if (block instanceof CropBlock) {
+                if (((CropBlock) block).isMaxAge(state)) {
                     return this.doFarmerStuff(state, world, pos, farmer);
                 }
             }
@@ -95,12 +104,12 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
         return FarmerResult.FAIL;
     }
 
-    private FarmerResult doFarmerStuff(BlockState state, ServerWorld world, BlockPos pos, IFarmer farmer) {
+    private FarmerResult doFarmerStuff(BlockState state, ServerLevel serverLevel, BlockPos pos, IFarmer farmer) {
         List<ItemStack> seeds = new ArrayList<>();
         List<ItemStack> other = new ArrayList<>();
-        List<ItemStack> drops = state.getDrops(new LootContext.Builder(world)
-            .withParameter(LootParameters.ORIGIN, new Vector3d(pos.getX(), pos.getY(), pos.getZ()))
-            .withParameter(LootParameters.TOOL, ItemStack.EMPTY));
+        List<ItemStack> drops = state.getDrops((new LootParams.Builder(serverLevel))
+                .withParameter(LootContextParams.ORIGIN, new Vec3(pos.getX(), pos.getY(), pos.getZ()))
+                .withParameter(LootContextParams.TOOL, ItemStack.EMPTY));
         if (drops.isEmpty())
             return FarmerResult.FAIL;
         for (ItemStack stack : drops) {
@@ -124,8 +133,8 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
                 farmer.addToSeeds(seeds);
             }
 
-            world.levelEvent(2001, pos, Block.getId(state));
-            world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+            serverLevel.levelEvent(2001, pos, Block.getId(state));
+            serverLevel.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
 
             farmer.extractEnergy(250);
             return FarmerResult.SUCCESS;
@@ -138,12 +147,12 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
         return 0;
     }
 
-    private BlockState getPlantablePlantFromStack(ItemStack stack, World world, BlockPos pos) {
+    private BlockState getPlantablePlantFromStack(ItemStack stack, Level world, BlockPos pos) {
         if (StackUtil.isValid(stack)) {
             IPlantable plantable = this.getPlantableFromStack(stack);
             if (plantable != null) {
                 BlockState state = plantable.getPlant(world, pos);
-                if (state != null && state.getBlock() instanceof IGrowable) {
+                if (state != null && state.getBlock() instanceof BonemealableBlock) {
                     return state;
                 }
             }
@@ -173,36 +182,36 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
         return hoe;
     }
 
-    public static ActionResultType useHoeAt(World world, BlockPos pos) {
+    public static InteractionResult useHoeAt(Level world, BlockPos pos) {
 
-        PlayerEntity player = FakePlayerFactory.getMinecraft((ServerWorld) world); //TODO we need our own fakeplayer for the mod.
+        Player player = FakePlayerFactory.getMinecraft((ServerLevel) world); //TODO we need our own fakeplayer for the mod.
 
         ItemStack itemstack = getHoeStack();
 
         if (!player.mayUseItemAt(pos.relative(Direction.UP), Direction.UP, itemstack)) {
-            return ActionResultType.FAIL;
+            return InteractionResult.FAIL;
         } else {
-            ItemUseContext dummyContext = new ItemUseContext(world, player, Hand.MAIN_HAND, itemstack, new BlockRayTraceResult(new Vector3d(0.5, 0.5, 0.5), Direction.UP, pos, false));
-            int hook = net.minecraftforge.event.ForgeEventFactory.onHoeUse(dummyContext);
-            if (hook != 0) {
-                return hook > 0
-                    ? ActionResultType.SUCCESS
-                    : ActionResultType.FAIL;
-            }
+//            UseOnContext dummyContext = new UseOnContext(world, player, InteractionHand.MAIN_HAND, itemstack, new BlockHitResult(new Vec3(0.5, 0.5, 0.5), Direction.UP, pos, false));
+//            int hook = net.minecraftforge.event.ForgeEventFactory.onHoeUse(dummyContext);
+//            if (hook != 0) {
+//                return hook > 0
+//                    ? InteractionResult.SUCCESS
+//                    : InteractionResult.FAIL;
+//            } TODO: Fire event for hoe use?
 
             if (world.isEmptyBlock(pos.above())) {
-                Block block = world.getBlockState(pos).getBlock();
-                if (block == Blocks.GRASS || block == Blocks.GRASS_PATH) {
+                BlockState state = world.getBlockState(pos);
+                if (state.is(Blocks.GRASS_BLOCK) || state.is(Blocks.DIRT_PATH)) {
                     world.setBlockAndUpdate(pos, Blocks.FARMLAND.defaultBlockState());
-                    return ActionResultType.SUCCESS;
+                    return InteractionResult.SUCCESS;
                 }
 
-                if (Tags.Blocks.DIRT.contains(block)) {
+                if (state.is(BlockTags.DIRT)) {
                     world.setBlockAndUpdate(pos, Blocks.FARMLAND.defaultBlockState());
-                    return ActionResultType.SUCCESS;
+                    return InteractionResult.SUCCESS;
                 }
             }
-            return ActionResultType.PASS;
+            return InteractionResult.PASS;
         }
     }
 }

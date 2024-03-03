@@ -12,8 +12,6 @@ package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 
-import net.minecraft.item.Item.Properties;
-
 public class ItemGeneric extends ItemBase {
     public ItemGeneric(Properties props) {
         super(props.durability(0));

@@ -11,12 +11,11 @@
 package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.world.Explosion;
-import net.minecraft.world.World;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 
 public class ItemResonantRice extends ItemBase {
 
@@ -25,12 +24,12 @@ public class ItemResonantRice extends ItemBase {
     }
 
     @Override
-    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+    public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         if (!world.isClientSide) {
             stack.shrink(1);
-            world.explode(null, player.getX(), player.getY(), player.getZ(), 0.5F, Explosion.Mode.DESTROY);
+            world.explode(null, player.getX(), player.getY(), player.getZ(), 0.5F, Level.ExplosionInteraction.MOB);
         }
-        return ActionResult.success(stack);
+        return InteractionResultHolder.success(stack);
     }
 }

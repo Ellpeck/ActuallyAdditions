@@ -14,29 +14,30 @@ import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerDropper;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.util.text.TranslationTextComponent;
-
-public class TileEntityDropper extends TileEntityInventoryBase implements INamedContainerProvider {
+public class TileEntityDropper extends TileEntityInventoryBase implements MenuProvider {
 
     private int currentTime;
 
-    public TileEntityDropper() {
-        super(ActuallyBlocks.DROPPER.getTileEntityType(),  9);
+    public TileEntityDropper(BlockPos pos, BlockState state) {
+        super(ActuallyBlocks.DROPPER.getTileEntityType(),  pos, state,9);
     }
 
     @Override
-    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
         if (type != NBTType.SAVE_BLOCK) {
             compound.putInt("CurrentTime", this.currentTime);
@@ -44,25 +45,31 @@ public class TileEntityDropper extends TileEntityInventoryBase implements INamed
     }
 
     @Override
-    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void readSyncableNBT(CompoundTag compound, NBTType type) {
         super.readSyncableNBT(compound, type);
         if (type != NBTType.SAVE_BLOCK) {
             this.currentTime = compound.getInt("CurrentTime");
         }
     }
 
-    @Override
-    public void updateEntity() {
-        super.updateEntity();
-        if (!this.level.isClientSide) {
-            if (!this.isRedstonePowered && !this.isPulseMode) {
-                if (this.currentTime > 0) {
-                    this.currentTime--;
-                    if (this.currentTime <= 0) {
-                        this.doWork();
+    public static <T extends BlockEntity> void clientTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityDropper tile) {
+            tile.clientTick();
+        }
+    }
+
+    public static <T extends BlockEntity> void serverTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityDropper tile) {
+            tile.serverTick();
+            
+            if (!tile.isRedstonePowered && !tile.isPulseMode) {
+                if (tile.currentTime > 0) {
+                    tile.currentTime--;
+                    if (tile.currentTime <= 0) {
+                        tile.doWork();
                     }
                 } else {
-                    this.currentTime = 5;
+                    tile.currentTime = 5;
                 }
             }
         }
@@ -104,13 +111,13 @@ public class TileEntityDropper extends TileEntityInventoryBase implements INamed
     }
 
     @Override
-    public ITextComponent getDisplayName() {
-        return new TranslationTextComponent("container.actuallyadditions.dropper");
+    public Component getDisplayName() {
+        return Component.translatable("container.actuallyadditions.dropper");
     }
 
     @Nullable
     @Override
-    public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity player) {
+    public AbstractContainerMenu createMenu(int windowId, Inventory playerInventory, Player player) {
         return new ContainerDropper(windowId, playerInventory, this);
     }
 }

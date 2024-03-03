@@ -10,10 +10,10 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks.metalists;
 
-import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.StringRepresentable;
 
 @Deprecated
-public enum TheColoredLampColors implements IStringSerializable {
+public enum TheColoredLampColors implements StringRepresentable {
 
     WHITE("White", "white"),
     ORANGE("Orange", "orange"),

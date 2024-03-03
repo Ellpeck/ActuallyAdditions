@@ -11,17 +11,20 @@
 package de.ellpeck.actuallyadditions.mod.blocks;
 
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityShockSuppressor;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.world.ExplosionEvent;
+import net.minecraftforge.event.level.ExplosionEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import javax.annotation.Nullable;
@@ -29,16 +32,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class BlockShockSuppressor extends Block {
+public class BlockShockSuppressor extends Block implements EntityBlock {
 
     public BlockShockSuppressor() {
-        super(ActuallyBlocks.defaultPickProps(0, 20F, 2000.0F));
+        super(ActuallyBlocks.defaultPickProps(20F, 2000.0F));
         MinecraftForge.EVENT_BUS.register(this);
     }
 
     @SubscribeEvent
     public void onExplosion(ExplosionEvent.Detonate event) {
-        World world = event.getWorld();
+        Level world = event.getLevel();
         if (!world.isClientSide) {
             List<BlockPos> affectedBlocks = event.getAffectedBlocks();
             List<Entity> affectedEntities = event.getAffectedEntities();
@@ -90,17 +93,18 @@ public class BlockShockSuppressor extends Block {
 
     @Nullable
     @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return new TileEntityShockSuppressor();
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new TileEntityShockSuppressor(pos, state);
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> entityType) {
+        return level.isClientSide? TileEntityShockSuppressor::clientTick : TileEntityShockSuppressor::serverTick;
     }
 
     @Override
-    public boolean hasTileEntity(BlockState state) {
-        return true;
-    }
-
-    @Override
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        return Shapes.SUPPRESSOR_SHAPE;
+    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+        return VoxelShapes.SUPPRESSOR_SHAPE;
     }
 }

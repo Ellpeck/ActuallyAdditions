@@ -12,38 +12,33 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
-import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
-import de.ellpeck.actuallyadditions.mod.crafting.SingleItem;
 import de.ellpeck.actuallyadditions.mod.crafting.SolidFuelRecipe;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerCoalGenerator;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.common.util.RecipeMatcher;
 import net.minecraftforge.energy.IEnergyStorage;
 
 import javax.annotation.Nullable;
 
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
-import net.minecraftforge.fml.server.ServerLifecycleHooks;
-
-public class TileEntityCoalGenerator extends TileEntityInventoryBase implements INamedContainerProvider, ISharingEnergyProvider, IEnergyDisplay {
+public class TileEntityCoalGenerator extends TileEntityInventoryBase implements MenuProvider, ISharingEnergyProvider, IEnergyDisplay {
 
     public final CustomEnergyStorage storage = new CustomEnergyStorage(60000, 0, 80);
     public final LazyOptional<IEnergyStorage> lazyEnergy = LazyOptional.of(() -> this.storage);
@@ -55,8 +50,8 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
     private int lastCompare;
     private SolidFuelRecipe currentRecipe = null;
 
-    public TileEntityCoalGenerator() {
-        super(ActuallyBlocks.COAL_GENERATOR.getTileEntityType(), 1);
+    public TileEntityCoalGenerator(BlockPos pos, BlockState state) {
+        super(ActuallyBlocks.COAL_GENERATOR.getTileEntityType(), pos, state, 1);
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -70,7 +65,7 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
         if (type != NBTType.SAVE_BLOCK) {
             compound.putInt("BurnTime", this.currentBurnTime);
             compound.putInt("MaxBurnTime", this.maxBurnTime);
@@ -82,7 +77,7 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void readSyncableNBT(CompoundTag compound, NBTType type) {
         if (type != NBTType.SAVE_BLOCK) {
             this.currentBurnTime = compound.getInt("BurnTime");
             this.maxBurnTime = compound.getInt("MaxBurnTime");
@@ -100,42 +95,48 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
         super.readSyncableNBT(compound, type);
     }
 
-    @Override
-    public void updateEntity() {
-        super.updateEntity();
-        if (!level.isClientSide) {
-            boolean flag = this.currentBurnTime > 0;
+    public static <T extends BlockEntity> void clientTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityCoalGenerator tile) {
+            tile.clientTick();
+        }
+    }
 
-            if (this.currentBurnTime > 0 && currentRecipe != null) {
-                this.currentBurnTime--;
-                int produce = currentRecipe.getTotalEnergy() / currentRecipe.getBurnTime();
+    public static <T extends BlockEntity> void serverTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityCoalGenerator tile) {
+            tile.serverTick();
+
+            boolean flag = tile.currentBurnTime > 0;
+
+            if (tile.currentBurnTime > 0 && tile.currentRecipe != null) {
+                tile.currentBurnTime--;
+                int produce = tile.currentRecipe.getTotalEnergy() / tile.currentRecipe.getBurnTime();
                 if (produce > 0) {
-                    this.storage.receiveEnergyInternal(produce, false);
+                    tile.storage.receiveEnergyInternal(produce, false);
                 }
             }
 
-            if (!this.isRedstonePowered && this.currentBurnTime <= 0 && this.storage.getEnergyStored() < this.storage.getMaxEnergyStored()) {
-                ItemStack stack = this.inv.getStackInSlot(0);
+            if (!tile.isRedstonePowered && tile.currentBurnTime <= 0 && tile.storage.getEnergyStored() < tile.storage.getMaxEnergyStored()) {
+                ItemStack stack = tile.inv.getStackInSlot(0);
                 if (!stack.isEmpty()) {
                     ActuallyAdditionsAPI.SOLID_FUEL_RECIPES.stream().filter(r -> r.matches(stack)).findFirst().ifPresent(recipe -> {
-                        this.currentRecipe = recipe;
-                        this.maxBurnTime = recipe.getBurnTime();
-                        this.currentBurnTime = this.maxBurnTime;
-                        this.inv.setStackInSlot(0, StackUtil.shrinkForContainer(stack, 1));
+                        tile.currentRecipe = recipe;
+                        tile.maxBurnTime = recipe.getBurnTime();
+                        tile.currentBurnTime = tile.maxBurnTime;
+                        tile.inv.setStackInSlot(0, StackUtil.shrinkForContainer(stack, 1));
                     });
                 } else
-                    this.currentRecipe = null;
+                    tile.currentRecipe = null;
             }
 
-            if (flag != this.currentBurnTime > 0 || this.lastCompare != this.getComparatorStrength()) {
-                this.lastCompare = this.getComparatorStrength();
-                this.setChanged();
+            if (flag != tile.currentBurnTime > 0 || tile.lastCompare != tile.getComparatorStrength()) {
+                tile.lastCompare = tile.getComparatorStrength();
+                tile.setChanged();
             }
 
-            if ((this.storage.getEnergyStored() != this.lastEnergy || this.currentBurnTime != this.lastCurrentBurnTime || this.lastBurnTime != this.maxBurnTime) && this.sendUpdateWithInterval()) {
-                this.lastEnergy = this.storage.getEnergyStored();
-                this.lastCurrentBurnTime = this.currentBurnTime;
-                this.lastBurnTime = this.currentBurnTime;
+            if ((tile.storage.getEnergyStored() != tile.lastEnergy || tile.currentBurnTime != tile.lastCurrentBurnTime || tile.lastBurnTime != tile.maxBurnTime) && tile.sendUpdateWithInterval()) {
+                tile.lastEnergy = tile.storage.getEnergyStored();
+                tile.lastCurrentBurnTime = tile.currentBurnTime;
+                tile.lastBurnTime = tile.currentBurnTime;
             }
         }
     }
@@ -162,7 +163,7 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
             if (!automation) {
                 return true;
             }
-            return ForgeHooks.getBurnTime(this.inv.getStackInSlot(0)) <= 0;
+            return ForgeHooks.getBurnTime(this.inv.getStackInSlot(0), null) <= 0;
         };
     }
 
@@ -182,7 +183,7 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public boolean canShareTo(TileEntity tile) {
+    public boolean canShareTo(BlockEntity tile) {
         return true;
     }
 
@@ -192,13 +193,13 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public ITextComponent getDisplayName() {
-        return new TranslationTextComponent("container.actuallyadditions.coalGenerator");
+    public Component getDisplayName() {
+        return Component.translatable("container.actuallyadditions.coalGenerator");
     }
 
     @Nullable
     @Override
-    public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity player) {
+    public AbstractContainerMenu createMenu(int windowId, Inventory playerInventory, Player player) {
         return new ContainerCoalGenerator(windowId, playerInventory, this);
     }
 

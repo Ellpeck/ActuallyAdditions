@@ -10,7 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.platform.Window;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.laser.IConnectionPair;
 import de.ellpeck.actuallyadditions.api.laser.Network;
@@ -20,30 +20,39 @@ import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import de.ellpeck.actuallyadditions.mod.items.ItemEngineerGoggles;
 import de.ellpeck.actuallyadditions.mod.items.ItemLaserRelayUpgrade;
 import de.ellpeck.actuallyadditions.mod.items.ItemLaserWrench;
-import de.ellpeck.actuallyadditions.mod.tile.*;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelay;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayEnergy;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayEnergyAdvanced;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayEnergyExtreme;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayFluids;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayItem;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayItemAdvanced;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import io.netty.util.internal.ConcurrentSet;
-import net.minecraft.block.BlockState;
-import net.minecraft.client.MainWindow;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,7 +71,7 @@ public class BlockLaserRelay extends FullyDirectionalBlock.Container implements 
     private final Type type;
 
     public BlockLaserRelay(Type type) {
-        super(ActuallyBlocks.defaultPickProps(0));
+        super(ActuallyBlocks.defaultPickProps());
         this.type = type;
     }
 
@@ -85,20 +94,19 @@ public class BlockLaserRelay extends FullyDirectionalBlock.Container implements 
 
 
     @Override
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
         return this.defaultBlockState().setValue(FACING, context.getClickedFace());
     }
 
     @Override
-    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         ItemStack stack = player.getItemInHand(hand);
-        TileEntity tile = world.getBlockEntity(pos);
-        if (tile instanceof TileEntityLaserRelay) {
-            TileEntityLaserRelay relay = (TileEntityLaserRelay) tile;
+        BlockEntity tile = world.getBlockEntity(pos);
+        if (tile instanceof TileEntityLaserRelay relay) {
 
-            if (StackUtil.isValid(stack)) {
+	        if (StackUtil.isValid(stack)) {
                 if (stack.getItem() instanceof ItemLaserWrench) {
-                    return ActionResultType.FAIL;
+                    return InteractionResult.FAIL;
                 } else if (stack.getItem() == CommonConfig.Other.relayConfigureItem) {
                     if (!world.isClientSide) {
                         relay.onCompassAction(player);
@@ -112,7 +120,7 @@ public class BlockLaserRelay extends FullyDirectionalBlock.Container implements 
                         relay.sendUpdate();
                     }
 
-                    return ActionResultType.PASS;
+                    return InteractionResult.PASS;
                 } else if (stack.getItem() instanceof ItemLaserRelayUpgrade) {
                     ItemStack inRelay = relay.inv.getStackInSlot(0);
                     if (!StackUtil.isValid(inRelay)) {
@@ -125,7 +133,7 @@ public class BlockLaserRelay extends FullyDirectionalBlock.Container implements 
                             set.setCount(1);
                             relay.inv.setStackInSlot(0, set);
                         }
-                        return ActionResultType.PASS;
+                        return InteractionResult.PASS;
                     }
 
                 }
@@ -137,11 +145,11 @@ public class BlockLaserRelay extends FullyDirectionalBlock.Container implements 
                     if (!world.isClientSide) {
                         relay.inv.setStackInSlot(0, ItemStack.EMPTY);
 
-                        if (!player.inventory.add(inRelay)) {
+                        if (!player.getInventory().add(inRelay)) {
                             player.spawnAtLocation(inRelay, 0);
                         }
                     }
-                    return ActionResultType.PASS;
+                    return InteractionResult.PASS;
                 }
             }
 
@@ -149,60 +157,74 @@ public class BlockLaserRelay extends FullyDirectionalBlock.Container implements 
                 return this.openGui(world, player, pos, TileEntityLaserRelayItemAdvanced.class);
             }
         }
-        return ActionResultType.FAIL;
+        return InteractionResult.FAIL;
     }
 
+    @Nullable
     @Override
-    public boolean hasTileEntity(BlockState state) {
-        return true;
-    }
-
-    @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         switch (this.type) {
             case ITEM:
-                return new TileEntityLaserRelayItem();
+                return new TileEntityLaserRelayItem(pos, state);
             case ITEM_WHITELIST:
-                return new TileEntityLaserRelayItemAdvanced();
+                return new TileEntityLaserRelayItemAdvanced(pos, state);
             case ENERGY_ADVANCED:
-                return new TileEntityLaserRelayEnergyAdvanced();
+                return new TileEntityLaserRelayEnergyAdvanced(pos, state);
             case ENERGY_EXTREME:
-                return new TileEntityLaserRelayEnergyExtreme();
+                return new TileEntityLaserRelayEnergyExtreme(pos, state);
             case FLUIDS:
-                return new TileEntityLaserRelayFluids();
+                return new TileEntityLaserRelayFluids(pos, state);
             default:
-                return new TileEntityLaserRelayEnergy();
+                return new TileEntityLaserRelayEnergy(pos, state);
+        }
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> entityType) {
+        switch (this.type) {
+            case ITEM:
+                return level.isClientSide? TileEntityLaserRelayItem::clientTick : TileEntityLaserRelayItem::serverTick;
+            case ITEM_WHITELIST:
+                return level.isClientSide? TileEntityLaserRelayItemAdvanced::clientTick : TileEntityLaserRelayItemAdvanced::serverTick;
+            case ENERGY_ADVANCED:
+                return level.isClientSide? TileEntityLaserRelayEnergyAdvanced::clientTick : TileEntityLaserRelayEnergyAdvanced::serverTick;
+            case ENERGY_EXTREME:
+                return level.isClientSide? TileEntityLaserRelayEnergyExtreme::clientTick : TileEntityLaserRelayEnergyExtreme::serverTick;
+            case FLUIDS:
+                return level.isClientSide? TileEntityLaserRelayFluids::clientTick : TileEntityLaserRelayFluids::serverTick;
+            default:
+                return level.isClientSide? TileEntityLaserRelayEnergy::clientTick : TileEntityLaserRelayEnergy::serverTick;
         }
     }
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void displayHud(MatrixStack matrices, Minecraft minecraft, PlayerEntity player, ItemStack stack, RayTraceResult rayCast, MainWindow resolution) {
-        if (!(rayCast instanceof BlockRayTraceResult)) {
+    public void displayHud(GuiGraphics guiGraphics, Minecraft minecraft, Player player, ItemStack stack, HitResult rayCast, Window resolution) {
+        if (!(rayCast instanceof BlockHitResult)) {
             return;
         }
 
-        BlockPos pos = ((BlockRayTraceResult) rayCast).getBlockPos();
+        BlockPos pos = ((BlockHitResult) rayCast).getBlockPos();
         if (minecraft.level != null) {
             boolean wearing = ItemEngineerGoggles.isWearing(player);
             if (wearing || StackUtil.isValid(stack)) {
                 boolean compass = stack.getItem() == CommonConfig.Other.relayConfigureItem;
                 if (wearing || compass || stack.getItem() instanceof ItemLaserWrench) {
-                    TileEntity tile = minecraft.level.getBlockEntity(pos);
-                    if (tile instanceof TileEntityLaserRelay) {
-                        TileEntityLaserRelay relay = (TileEntityLaserRelay) tile;
+                    BlockEntity tile = minecraft.level.getBlockEntity(pos);
+                    if (tile instanceof TileEntityLaserRelay relay) {
 
-                        String strg = relay.getExtraDisplayString();
-                        minecraft.font.drawShadow(matrices, strg, resolution.getGuiScaledWidth() / 2f + 5, resolution.getGuiScaledHeight() / 2f + 5, 0xFFFFFF);
+	                    String strg = relay.getExtraDisplayString();
+                        guiGraphics.drawString(minecraft.font, strg, (int) (resolution.getGuiScaledWidth() / 2f + 5), (int) (resolution.getGuiScaledHeight() / 2f + 5), 0xFFFFFF);
 
                         String expl;
                         if (compass) {
                             expl = relay.getCompassDisplayString();
                         } else {
-                            expl = TextFormatting.GRAY.toString() + TextFormatting.ITALIC + I18n.get("info." + ActuallyAdditions.MODID + ".laserRelay.mode.noCompasss", I18n.get(CommonConfig.Other.relayConfigureItem.getDescriptionId()));
+                            expl = ChatFormatting.GRAY.toString() + ChatFormatting.ITALIC + I18n.get("info." + ActuallyAdditions.MODID + ".laserRelay.mode.noCompasss", I18n.get(CommonConfig.Other.relayConfigureItem.getDescriptionId()));
                         }
 
-                        minecraft.font.draw(matrices, expl, resolution.getGuiScaledWidth() / 2f + 5, resolution.getGuiScaledHeight() / 2f + 15, 0xFFFFFF);
+                        guiGraphics.drawString(minecraft.font, expl, (int) (resolution.getGuiScaledWidth() / 2f + 5), (int) (resolution.getGuiScaledHeight() / 2f + 15), 0xFFFFFF);
                     }
                 }
             }
@@ -210,7 +232,7 @@ public class BlockLaserRelay extends FullyDirectionalBlock.Container implements 
     }
 
     @Override
-    public void onRemove(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
+    public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
         if (state != newState) {
             ConcurrentSet<IConnectionPair> connectionPairs = ActuallyAdditionsAPI.connectionHandler.getConnectionsFor(pos, world);
             ActuallyAdditionsAPI.connectionHandler.removeRelayFromNetwork(pos, world);
@@ -224,10 +246,9 @@ public class BlockLaserRelay extends FullyDirectionalBlock.Container implements 
             });
             //Update the connected relays to sync the changes to the client
             relayPositions.forEach(relayPos -> {
-                TileEntity tile = world.getBlockEntity(relayPos);
-                if(tile instanceof TileEntityLaserRelay) {
-                    TileEntityLaserRelay relay = (TileEntityLaserRelay) tile;
-                    relay.sendUpdate();
+                BlockEntity tile = world.getBlockEntity(relayPos);
+                if(tile instanceof TileEntityLaserRelay relay) {
+	                relay.sendUpdate();
                 }
             });
         }
@@ -251,20 +272,20 @@ public class BlockLaserRelay extends FullyDirectionalBlock.Container implements 
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         switch (state.getValue(FACING)) {
             case UP:
-                return Shapes.LaserRelayShapes.SHAPE_U;
+                return VoxelShapes.LaserRelayShapes.SHAPE_U;
             case DOWN:
-                return Shapes.LaserRelayShapes.SHAPE_D;
+                return VoxelShapes.LaserRelayShapes.SHAPE_D;
             case EAST:
-                return Shapes.LaserRelayShapes.SHAPE_E;
+                return VoxelShapes.LaserRelayShapes.SHAPE_E;
             case SOUTH:
-                return Shapes.LaserRelayShapes.SHAPE_S;
+                return VoxelShapes.LaserRelayShapes.SHAPE_S;
             case WEST:
-                return Shapes.LaserRelayShapes.SHAPE_W;
+                return VoxelShapes.LaserRelayShapes.SHAPE_W;
             default:
-                return Shapes.LaserRelayShapes.SHAPE_N;
+                return VoxelShapes.LaserRelayShapes.SHAPE_N;
         }
     }
 }

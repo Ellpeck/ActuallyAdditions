@@ -10,11 +10,11 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks.metalists;
 
-import net.minecraft.item.Rarity;
-import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.StringRepresentable;
+import net.minecraft.world.item.Rarity;
 
 @Deprecated
-public enum TheMiscBlocks implements IStringSerializable {
+public enum TheMiscBlocks implements StringRepresentable {
 
     QUARTZ_PILLAR("black_quartz_pillar", Rarity.RARE),
     QUARTZ_CHISELED("black_quartz_chiseled", Rarity.RARE),

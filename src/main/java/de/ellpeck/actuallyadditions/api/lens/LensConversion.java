@@ -12,8 +12,8 @@ package de.ellpeck.actuallyadditions.api.lens;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.state.BlockState;
 
 /**
  * This is the base class for a Reconstructor Lens Type that converts two items

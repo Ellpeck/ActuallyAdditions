@@ -10,32 +10,30 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks.render;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Axis;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.crafting.EmpowererRecipe;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityEmpowerer;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Util;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Quaternion;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.Util;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.registries.ForgeRegistries;
 
-public class RenderEmpowerer extends TileEntityRenderer<TileEntityEmpowerer> {
-    public RenderEmpowerer(TileEntityRendererDispatcher rendererDispatcherIn) {
-        super(rendererDispatcherIn);
+public class RenderEmpowerer implements BlockEntityRenderer<TileEntityEmpowerer> {
+    public RenderEmpowerer(BlockEntityRendererProvider.Context context) {
     }
 
     @Override
-    public void render(TileEntityEmpowerer tile, float partialTicks, MatrixStack matrices, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
+    public void render(TileEntityEmpowerer tile, float partialTicks, PoseStack matrices, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
         ItemStack stack = tile.inv.getStackInSlot(0);
         if (StackUtil.isValid(stack)) {
             // TODO: [port][refactor] migrate this logic into a single method, most renders use it
@@ -44,7 +42,7 @@ public class RenderEmpowerer extends TileEntityRenderer<TileEntityEmpowerer> {
 
             float boop = Util.getMillis() / 800F;
             matrices.translate(0D, Math.sin(boop % (2 * Math.PI)) * 0.065, 0D);
-            matrices.mulPose(Vector3f.YP.rotationDegrees(boop * 40F % 360.0F));
+            matrices.mulPose(Axis.YP.rotationDegrees(boop * 40F % 360.0F));
 
             float scale = stack.getItem() instanceof BlockItem
                 ? 0.85F
@@ -53,7 +51,7 @@ public class RenderEmpowerer extends TileEntityRenderer<TileEntityEmpowerer> {
             try {
                 AssetUtil.renderItemInWorld(stack, combinedLight, combinedOverlay, matrices, buffer);
             } catch (Exception e) {
-                ActuallyAdditions.LOGGER.error("Something went wrong trying to render an item in an empowerer! The item is " + stack.getItem().getRegistryName() + "!", e);
+                ActuallyAdditions.LOGGER.error("Something went wrong trying to render an item in an empowerer! The item is " + ForgeRegistries.ITEMS.getKey(stack.getItem()) + "!", e);
             }
 
             matrices.popPose();
@@ -79,7 +77,7 @@ public class RenderEmpowerer extends TileEntityRenderer<TileEntityEmpowerer> {
                 Direction facing = Direction.from2DDataValue(i);
                 BlockPos offset = new BlockPos(0,0,0).relative(facing, 3);
 
-                AssetUtil.renderLaser(matrices, buffer, new Vector3d(0.0d, 0.0d, 0.0d), new Vector3d(offset.getX(), offset.getY() + 0.45, offset.getZ()), 80, recipe.getParticleColors(), 1.0f ,0.1F);
+                AssetUtil.renderLaser(matrices, buffer, new Vec3(0.0d, 0.0d, 0.0d), new Vec3(offset.getX(), offset.getY() + 0.45, offset.getZ()), 80, recipe.getParticleColors(), 1.0f ,0.1F);
             }
         }
     }

@@ -10,30 +10,29 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.platform.Window;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.IHudDisplay;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
+import net.minecraft.ChatFormatting;
 import net.minecraft.advancements.Advancement;
-import net.minecraft.advancements.AdvancementManager;
-import net.minecraft.advancements.PlayerAdvancements;
-import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.PlayerAdvancements;
+import net.minecraft.server.ServerAdvancementManager;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -50,7 +49,7 @@ public class ItemBooklet extends ItemBase implements IHudDisplay {
     }
 
     @Override
-    public ActionResultType useOn(ItemUseContext context) {
+    public InteractionResult useOn(UseOnContext context) {
 //        if (context.getPlayer().isShiftKeyDown()) {
 //            BlockState state = context.getLevel().getBlockState(context.getClickedPos());
 //            Block block = state.getBlock();
@@ -64,15 +63,15 @@ public class ItemBooklet extends ItemBase implements IHudDisplay {
 //                return ActionResultType.SUCCESS;
 //            }
 //        }
-        return ActionResultType.FAIL;
+        return InteractionResult.FAIL;
     }
 
     @Override
-    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+    public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
         if (!world.isClientSide) {
-            ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
+            ServerPlayer serverPlayer = (ServerPlayer) player;
             PlayerAdvancements advancements = serverPlayer.getAdvancements();
-            AdvancementManager manager = player.getServer().getAdvancements();
+            ServerAdvancementManager manager = player.getServer().getAdvancements();
             Advancement advancement = manager.getAdvancement(new ResourceLocation(ActuallyAdditions.MODID, "root"));
             if (advancement != null && !advancements.getOrStartProgress(advancement).isDone()) {
                 advancements.award(advancement, "right_click");
@@ -84,27 +83,27 @@ public class ItemBooklet extends ItemBase implements IHudDisplay {
 //            //TheAchievements.OPEN_BOOKLET.get(player);
 //            //TheAchievements.OPEN_BOOKLET_MILESTONE.get(player);
 //        }
-        return ActionResult.success(player.getItemInHand(hand));
+        return InteractionResultHolder.success(player.getItemInHand(hand));
     }
 
     @OnlyIn(Dist.CLIENT)
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable World playerIn, List<ITextComponent> tooltip, ITooltipFlag advanced) {
-        tooltip.add(new TranslationTextComponent("tooltip." + ActuallyAdditions.MODID + "." + this.getDescription().getString() + ".desc"));
+    public void appendHoverText(ItemStack stack, @Nullable Level playerIn, List<Component> tooltip, TooltipFlag advanced) {
+        tooltip.add(Component.translatable("tooltip." + ActuallyAdditions.MODID + "." + this.getDescription().getString() + ".desc"));
 
         // TODO: this is bad
         for (int i = 1; i <= 4; i++) {
-            tooltip.add(new TranslationTextComponent("tooltip." + ActuallyAdditions.MODID + "." + this.getDescription().getString() + ".sub." + i).withStyle(i == 4
-                    ? TextFormatting.GOLD
-                    : TextFormatting.RESET).withStyle(i == 4
-                    ? TextFormatting.ITALIC
-                    : TextFormatting.RESET));
+            tooltip.add(Component.translatable("tooltip." + ActuallyAdditions.MODID + "." + this.getDescription().getString() + ".sub." + i).withStyle(i == 4
+                    ? ChatFormatting.GOLD
+                    : ChatFormatting.RESET).withStyle(i == 4
+                    ? ChatFormatting.ITALIC
+                    : ChatFormatting.RESET));
         }
     }
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void displayHud(MatrixStack matrices, Minecraft minecraft, PlayerEntity player, ItemStack stack, RayTraceResult rayCast, MainWindow resolution) {
+    public void displayHud(GuiGraphics guiGraphics, Minecraft minecraft, Player player, ItemStack stack, HitResult rayCast, Window resolution) {
 //        if (rayCast != null && rayCast.getBlockPos() != null) {
 //            BlockState state = minecraft.level.getBlockState(rayCast.getBlockPos());
 //            Block block = state.getBlock();

@@ -1,35 +1,38 @@
 {
   "parent": "actuallyadditions:root",
+  "criteria": {
+    "coal_generator": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "actuallyadditions:coal_generator"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
   "display": {
-    "icon": {
-      "item": "actuallyadditions:coal_generator"
-    },
-    "title": {
-      "translate": "achievement.actuallyadditions.craftCoalGen"
-    },
+    "announce_to_chat": true,
     "description": {
       "translate": "achievement.actuallyadditions.craftCoalGen.desc"
     },
     "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "actuallyadditions:coal_generator"
+    },
     "show_toast": true,
-    "announce_to_chat": true,
-    "hidden": false
-  },
-  "criteria": {
-    "coal_generator": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {
-        "items": [
-          {
-            "item": "actuallyadditions:coal_generator"
-          }
-        ]
-      }
+    "title": {
+      "translate": "achievement.actuallyadditions.craftCoalGen"
     }
   },
   "requirements": [
     [
       "coal_generator"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

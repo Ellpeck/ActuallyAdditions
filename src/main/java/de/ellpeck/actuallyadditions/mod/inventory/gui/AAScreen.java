@@ -10,31 +10,30 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 
 import javax.annotation.Nonnull;
 
-public abstract class AAScreen<T extends Container> extends ContainerScreen<T> {
+public abstract class AAScreen<T extends AbstractContainerMenu> extends AbstractContainerScreen<T> {
 
-    public AAScreen(T container, PlayerInventory inventory, ITextComponent pTitle) {
+    public AAScreen(T container, Inventory inventory, Component pTitle) {
         super(container, inventory, pTitle);
     }
 
     @Override
-    public void render(@Nonnull MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-        this.renderBackground(matrixStack);
-        super.render(matrixStack, mouseX, mouseY, partialTicks);
-        this.renderTooltip(matrixStack, mouseX, mouseY);
+    public void render(@Nonnull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+        this.renderBackground(guiGraphics);
+        super.render(guiGraphics, mouseX, mouseY, partialTicks);
+        this.renderTooltip(guiGraphics, mouseX, mouseY);
     }
 
     @Override
-    public void renderLabels(@Nonnull MatrixStack matrices, int x, int y) {
-        font.draw(matrices, this.title, titleLabelX, titleLabelY, 0xFFFFFF);
+    public void renderLabels(@Nonnull GuiGraphics guiGraphics, int x, int y) {
+        guiGraphics.drawString(this.font, this.title, titleLabelX, titleLabelY, 0xFFFFFF, false);
     }
 
     @Override

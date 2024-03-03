@@ -10,16 +10,16 @@
 
 package de.ellpeck.actuallyadditions.api.booklet.internal;
 
-import net.minecraft.client.gui.IGuiEventListener;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.client.gui.components.events.GuiEventListener;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
 
 public abstract class GuiBookletBase extends Screen {
 
-    protected GuiBookletBase(ITextComponent titleIn) {
+    protected GuiBookletBase(Component titleIn) {
         super(titleIn);
     }
 
@@ -27,7 +27,7 @@ public abstract class GuiBookletBase extends Screen {
 
     public abstract void renderSplitScaledAsciiString(String text, int x, int y, int color, boolean shadow, float scale, int length);
 
-    public abstract List<IGuiEventListener> getButtonList();
+    public abstract List<GuiEventListener> getButtonList();
 
     public abstract int getGuiLeft();
 

@@ -10,8 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.block.entity.BlockEntity;
 
 public interface ISharingEnergyProvider {
 
@@ -21,5 +21,5 @@ public interface ISharingEnergyProvider {
 
     Direction[] getEnergyShareSides();
 
-    boolean canShareTo(TileEntity tile);
+    boolean canShareTo(BlockEntity tile);
 }

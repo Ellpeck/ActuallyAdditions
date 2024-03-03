@@ -1,28 +1,30 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "GFG",
-    "SAS",
-    "CCC"
-  ],
+  "category": "misc",
   "key": {
+    "A": {
+      "item": "actuallyadditions:iron_casing"
+    },
+    "C": {
+      "item": "actuallyadditions:enori_crystal"
+    },
+    "F": {
+      "item": "minecraft:firework_rocket"
+    },
     "G": {
       "tag": "forge:gunpowder"
     },
     "S": {
       "tag": "forge:rods/wooden"
-    },
-    "A": {
-      "item": "actuallyadditions:iron_casing"
-    },
-    "F": {
-      "item": "minecraft:firework_rocket"
-    },
-    "C": {
-      "item": "actuallyadditions:enori_crystal"
     }
   },
+  "pattern": [
+    "GFG",
+    "SAS",
+    "CCC"
+  ],
   "result": {
     "item": "actuallyadditions:firework_box"
-  }
+  },
+  "show_notification": true
 }

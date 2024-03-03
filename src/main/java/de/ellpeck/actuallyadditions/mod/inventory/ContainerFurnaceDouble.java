@@ -15,23 +15,23 @@ import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditio
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotOutput;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityPoweredFurnace;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeType;
 
 import javax.annotation.Nonnull;
 import java.util.Objects;
 
-public class ContainerFurnaceDouble extends Container {
+public class ContainerFurnaceDouble extends AbstractContainerMenu {
 
     public final TileEntityPoweredFurnace furnace;
 
-    public ContainerFurnaceDouble(int windowId, PlayerInventory inventory, TileEntityPoweredFurnace tile) {
+    public ContainerFurnaceDouble(int windowId, Inventory inventory, TileEntityPoweredFurnace tile) {
         super(ActuallyContainers.FURNACE_DOUBLE_CONTAINER.get(), windowId);
         this.furnace = tile;
 
@@ -50,13 +50,13 @@ public class ContainerFurnaceDouble extends Container {
         }
     }
 
-    public static ContainerFurnaceDouble fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
-        return new ContainerFurnaceDouble(windowId, inv, (TileEntityPoweredFurnace) Objects.requireNonNull(inv.player.level.getBlockEntity(data.readBlockPos())));
+    public static ContainerFurnaceDouble fromNetwork(int windowId, Inventory inv, FriendlyByteBuf data) {
+        return new ContainerFurnaceDouble(windowId, inv, (TileEntityPoweredFurnace) Objects.requireNonNull(inv.player.level().getBlockEntity(data.readBlockPos())));
     }
 
     @Nonnull
     @Override
-    public ItemStack quickMoveStack(@Nonnull PlayerEntity player, int slot) {
+    public ItemStack quickMoveStack(@Nonnull Player player, int slot) {
         int inventoryStart = 4;
         int inventoryEnd = inventoryStart + 26;
         int hotbarStart = inventoryEnd + 1;
@@ -78,12 +78,12 @@ public class ContainerFurnaceDouble extends Container {
             //Other Slots in Inventory excluded
             else if (slot >= inventoryStart) {
                 // TODO: VALIDATE
-                IRecipe<?> irecipe = this.furnace.getLevel().getRecipeManager().getRecipeFor(IRecipeType.SMELTING, new SingleItem(newStack), this.furnace.getLevel()).orElse(null);
+                Recipe<?> irecipe = this.furnace.getLevel().getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SingleItem(newStack), this.furnace.getLevel()).orElse(null);
                 if (irecipe == null) {
                     return ItemStack.EMPTY;
                 }
 
-                ItemStack recipeOutput = irecipe.getResultItem();
+                ItemStack recipeOutput = irecipe.getResultItem(player.level().registryAccess());
 
                 //Shift from Inventory
                 if (StackUtil.isValid(recipeOutput)) {
@@ -123,7 +123,7 @@ public class ContainerFurnaceDouble extends Container {
     }
 
     @Override
-    public boolean stillValid(@Nonnull PlayerEntity player) {
+    public boolean stillValid(@Nonnull Player player) {
         return this.furnace.canPlayerUse(player);
     }
 }

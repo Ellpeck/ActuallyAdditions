@@ -1,25 +1,27 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " F",
-    "IP",
-    "IC"
-  ],
+  "category": "misc",
   "key": {
+    "C": {
+      "item": "actuallyadditions:advanced_coil"
+    },
+    "F": {
+      "item": "minecraft:flint"
+    },
     "I": {
       "item": "actuallyadditions:enori_crystal"
     },
     "P": {
       "item": "minecraft:piston"
-    },
-    "F": {
-      "item": "minecraft:flint"
-    },
-    "C": {
-      "item": "actuallyadditions:advanced_coil"
     }
   },
+  "pattern": [
+    " F",
+    "IP",
+    "IC"
+  ],
   "result": {
     "item": "actuallyadditions:leaf_blower"
-  }
+  },
+  "show_notification": true
 }

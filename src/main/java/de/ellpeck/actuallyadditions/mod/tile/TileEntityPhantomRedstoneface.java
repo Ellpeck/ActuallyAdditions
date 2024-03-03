@@ -11,9 +11,12 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 
 import java.util.Arrays;
@@ -26,29 +29,34 @@ public class TileEntityPhantomRedstoneface extends TileEntityPhantomface {
     private final int[] lastProvidesStrong = new int[this.providesStrong.length];
     private final int[] lastProvidesWeak = new int[this.providesWeak.length];
 
-    public TileEntityPhantomRedstoneface() {
-        super(ActuallyBlocks.PHANTOM_REDSTONEFACE.getTileEntityType());
+    public TileEntityPhantomRedstoneface(BlockPos pos, BlockState state) {
+        super(ActuallyBlocks.PHANTOM_REDSTONEFACE.getTileEntityType(), pos, state);
     }
 
-    @Override
-    public void updateEntity() {
-        if (!this.level.isClientSide) {
-            if (this.isBoundThingInRange()) {
-                BlockState boundState = this.level.getBlockState(this.boundPosition);
+    public static <T extends BlockEntity> void clientTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityPhantomRedstoneface tile) {
+            tile.clientTick();
+        }
+    }
+
+    public static <T extends BlockEntity> void serverTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityPhantomRedstoneface tile) {
+            tile.serverTick();
+
+            if (tile.isBoundThingInRange()) {
+                BlockState boundState = tile.level.getBlockState(tile.boundPosition);
                 if (boundState != null) {
                     Block boundBlock = boundState.getBlock();
                     if (boundBlock != null) {
                         for (int i = 0; i < Direction.values().length; i++) {
                             Direction facing = Direction.values()[i];
-                            this.providesWeak[i] = boundState.getSignal(this.level, this.boundPosition, facing);
-                            this.providesStrong[i] = boundState.getDirectSignal(this.level, this.boundPosition, facing);
+                            tile.providesWeak[i] = boundState.getSignal(tile.level, tile.boundPosition, facing);
+                            tile.providesStrong[i] = boundState.getDirectSignal(tile.level, tile.boundPosition, facing);
                         }
                     }
                 }
             }
         }
-
-        super.updateEntity();
     }
 
     @Override

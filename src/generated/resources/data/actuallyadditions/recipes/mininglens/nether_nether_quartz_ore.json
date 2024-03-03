@@ -3,8 +3,8 @@
   "ingredient": {
     "tag": "forge:netherrack"
   },
-  "weight": 3000,
   "result": {
     "item": "minecraft:nether_quartz_ore"
-  }
+  },
+  "weight": 3000
 }

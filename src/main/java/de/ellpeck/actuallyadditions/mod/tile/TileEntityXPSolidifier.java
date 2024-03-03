@@ -18,24 +18,25 @@ import de.ellpeck.actuallyadditions.mod.items.ItemSolidifiedExperience;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.entity.item.ExperienceOrbEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.util.Mth;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.ExperienceOrb;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
-
-public class TileEntityXPSolidifier extends TileEntityInventoryBase implements IButtonReactor, INamedContainerProvider {
+public class TileEntityXPSolidifier extends TileEntityInventoryBase implements IButtonReactor, MenuProvider {
 
     private static final int[] XP_MAP = new int[256];
 
@@ -50,8 +51,8 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
     private int lastAmount;
     private int singlePointAmount;
 
-    public TileEntityXPSolidifier() {
-        super(ActuallyBlocks.XP_SOLIDIFIER.getTileEntityType(), 2);
+    public TileEntityXPSolidifier(BlockPos pos, BlockState state) {
+        super(ActuallyBlocks.XP_SOLIDIFIER.getTileEntityType(), pos, state, 2);
     }
 
     /*
@@ -101,11 +102,11 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
         return i - 1;
     }
 
-    public static int getPlayerXP(PlayerEntity player) {
+    public static int getPlayerXP(Player player) {
         return (int) (getExperienceForLevel(player.experienceLevel) + player.experienceProgress * player.getXpNeededForNextLevel());
     }
 
-    public static void addPlayerXP(PlayerEntity player, int amount) {
+    public static void addPlayerXP(Player player, int amount) {
         int experience = Math.max(0, getPlayerXP(player) + amount);
         player.totalExperience = experience;
         player.experienceLevel = getLevelForExperience(experience);
@@ -114,75 +115,81 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
     }
 
     @Override
-    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
         compound.putInt("Amount", this.amount);
         compound.putInt("SinglePointAmount", this.singlePointAmount);
     }
 
     @Override
-    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void readSyncableNBT(CompoundTag compound, NBTType type) {
         super.readSyncableNBT(compound, type);
         this.amount = compound.getInt("Amount");
         this.singlePointAmount = compound.getInt("SinglePointAmount");
     }
 
-    @Override
-    public void updateEntity() {
-        super.updateEntity();
-        if (!this.level.isClientSide) {
-            if (this.amount > 0) {
-                ItemStack stack = this.inv.getStackInSlot(0);
+    public static <T extends BlockEntity> void clientTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityXPSolidifier tile) {
+            tile.clientTick();
+        }
+    }
+
+    public static <T extends BlockEntity> void serverTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityXPSolidifier tile) {
+            tile.serverTick();
+
+            if (tile.amount > 0) {
+                ItemStack stack = tile.inv.getStackInSlot(0);
                 if (stack.isEmpty()) {
-                    int toSet = Math.min(this.amount, 64);
-                    this.inv.setStackInSlot(0, new ItemStack(ActuallyItems.SOLIDIFIED_EXPERIENCE.get(), toSet));
-                    this.amount -= toSet;
-                    this.setChanged();
+                    int toSet = Math.min(tile.amount, 64);
+                    tile.inv.setStackInSlot(0, new ItemStack(ActuallyItems.SOLIDIFIED_EXPERIENCE.get(), toSet));
+                    tile.amount -= toSet;
+                    tile.setChanged();
                 } else if (stack.getCount() < 64) {
                     int needed = 64 - stack.getCount();
-                    int toAdd = Math.min(needed, this.amount);
+                    int toAdd = Math.min(needed, tile.amount);
                     stack.grow(toAdd);
-                    this.amount -= toAdd;
-                    this.setChanged();
+                    tile.amount -= toAdd;
+                    tile.setChanged();
                 }
             }
 
-            if (!this.isRedstonePowered) {
+            if (!tile.isRedstonePowered) {
                 int range = 5;
-                List<ExperienceOrbEntity> orbs = this.level.getEntitiesOfClass(ExperienceOrbEntity.class, new AxisAlignedBB(this.worldPosition.getX() - range, this.worldPosition.getY() - range, this.worldPosition.getZ() - range, this.worldPosition.getX() + 1 + range, this.worldPosition.getY() + 1 + range, this.worldPosition.getZ() + 1 + range));
+                List<ExperienceOrb> orbs = level.getEntitiesOfClass(ExperienceOrb.class, new AABB(pos.getX() - range, pos.getY() - range, pos.getZ() - range, pos.getX() + 1 + range, pos.getY() + 1 + range, pos.getZ() + 1 + range));
                 if (orbs != null && !orbs.isEmpty()) {
-                    for (ExperienceOrbEntity orb : orbs) {
+                    for (ExperienceOrb orb : orbs) {
                         // TODO: [port] validate the getPersistentData is correct
                         if (orb != null && orb.isAlive() && !orb.getPersistentData().getBoolean(ActuallyAdditions.MODID + "FromSolidified")) {
-                            this.singlePointAmount += orb.getValue();
-                            orb.remove();
+                            tile.singlePointAmount += orb.getValue();
+                            orb.discard();
 
-                            if (this.singlePointAmount >= ItemSolidifiedExperience.SOLID_XP_AMOUNT) {
-                                this.amount += this.singlePointAmount / ItemSolidifiedExperience.SOLID_XP_AMOUNT;
-                                this.singlePointAmount = 0;
-                                this.setChanged();
+                            if (tile.singlePointAmount >= ItemSolidifiedExperience.SOLID_XP_AMOUNT) {
+                                tile.amount += tile.singlePointAmount / ItemSolidifiedExperience.SOLID_XP_AMOUNT;
+                                tile.singlePointAmount = 0;
+                                tile.setChanged();
                             }
                         }
                     }
                 }
             }
 
-            ItemStack stack = this.inv.getStackInSlot(1);
+            ItemStack stack = tile.inv.getStackInSlot(1);
             if (StackUtil.isValid(stack) && stack.getItem() instanceof ItemSolidifiedExperience) {
-                int remainingSpace = MathHelper.clamp(Integer.MAX_VALUE - this.amount, 0, stack.getCount());
+                int remainingSpace = Mth.clamp(Integer.MAX_VALUE - tile.amount, 0, stack.getCount());
                 if (stack.getCount() >= remainingSpace && remainingSpace != 0) {
-                    this.amount += remainingSpace;
+                    tile.amount += remainingSpace;
                     stack.shrink(remainingSpace);
-                    this.setChanged();
+                    tile.setChanged();
                 }
             }
 
-            if (this.lastAmount != this.amount && this.sendUpdateWithInterval()) {
-                this.lastAmount = this.amount;
+            if (tile.lastAmount != tile.amount && tile.sendUpdateWithInterval()) {
+                tile.lastAmount = tile.amount;
             }
         }
     }
-
+    
     @Override
     public IAcceptor getAcceptor() {
         return (slot, stack, automation) -> slot == 1 && stack.getItem() == ActuallyItems.SOLIDIFIED_EXPERIENCE.get();
@@ -197,7 +204,7 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
     }
 
     @Override
-    public void onButtonPressed(int buttonID, PlayerEntity player) {
+    public void onButtonPressed(int buttonID, Player player) {
         if (buttonID < this.buttonAmounts.length) {
             int playerXP = getPlayerXP(player);
             if (playerXP > 0) {
@@ -215,13 +222,13 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
     }
 
     @Override
-    public ITextComponent getDisplayName() {
-        return StringTextComponent.EMPTY;
+    public Component getDisplayName() {
+        return Component.empty();
     }
 
     @Nullable
     @Override
-    public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity player) {
+    public AbstractContainerMenu createMenu(int windowId, Inventory playerInventory, Player player) {
         return new ContainerXPSolidifier(windowId, playerInventory, this);
     }
 }

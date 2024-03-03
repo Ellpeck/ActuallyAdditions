@@ -15,24 +15,24 @@ import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotOutput;
 import de.ellpeck.actuallyadditions.mod.items.ItemSolidifiedExperience;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityXPSolidifier;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.Objects;
 
-public class ContainerXPSolidifier extends Container {
+public class ContainerXPSolidifier extends AbstractContainerMenu {
 
     public final TileEntityXPSolidifier solidifier;
 
-    public static ContainerXPSolidifier fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
-        return new ContainerXPSolidifier(windowId, inv, (TileEntityXPSolidifier) Objects.requireNonNull(inv.player.level.getBlockEntity(data.readBlockPos())));
+    public static ContainerXPSolidifier fromNetwork(int windowId, Inventory inv, FriendlyByteBuf data) {
+        return new ContainerXPSolidifier(windowId, inv, (TileEntityXPSolidifier) Objects.requireNonNull(inv.player.level().getBlockEntity(data.readBlockPos())));
     }
 
-    public ContainerXPSolidifier(int windowId, PlayerInventory inventory, TileEntityXPSolidifier tile) {
+    public ContainerXPSolidifier(int windowId, Inventory inventory, TileEntityXPSolidifier tile) {
         super(ActuallyContainers.XPSOLIDIFIER_CONTAINER.get(), windowId);
         this.solidifier = tile;
 
@@ -50,7 +50,7 @@ public class ContainerXPSolidifier extends Container {
     }
 
     @Override
-    public ItemStack quickMoveStack(PlayerEntity player, int slot) {
+    public ItemStack quickMoveStack(Player player, int slot) {
         int inventoryStart = 2;
         int inventoryEnd = inventoryStart + 26;
         int hotbarStart = inventoryEnd + 1;
@@ -96,7 +96,7 @@ public class ContainerXPSolidifier extends Container {
     }
 
     @Override
-    public boolean stillValid(PlayerEntity player) {
+    public boolean stillValid(Player player) {
         return this.solidifier.canPlayerUse(player);
     }
 }

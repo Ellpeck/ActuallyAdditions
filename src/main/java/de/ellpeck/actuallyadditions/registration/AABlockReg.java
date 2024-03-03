@@ -2,29 +2,29 @@ package de.ellpeck.actuallyadditions.registration;
 
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
-import net.minecraft.block.Block;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraftforge.registries.RegistryObject;
 
 import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-public class AABlockReg<B extends Block, I extends Item, T extends TileEntity> implements Supplier<Block> {
+public class AABlockReg<B extends Block, I extends Item, T extends BlockEntity> implements Supplier<Block> {
     private final String name;
     private RegistryObject<B> block;
     private RegistryObject<I> item;
-    private RegistryObject<TileEntityType<T>> tileEntityType;
+    private RegistryObject<BlockEntityType<T>> tileEntityType;
 
-    public AABlockReg(String name, Supplier<B> blockSupplier, Function<B, I> itemSupplier, Supplier<T> tileSupplier) {
+    public AABlockReg(String name, Supplier<B> blockSupplier, Function<B, I> itemSupplier, BlockEntityType.BlockEntitySupplier<T> tileSupplier) {
         this.name = name;
         this.block = ActuallyBlocks.BLOCKS.register(name, blockSupplier);
         this.item = ActuallyItems.ITEMS.register(name, () -> itemSupplier.apply(block.get()));
-        this.tileEntityType = ActuallyBlocks.TILES.register(name, () -> TileEntityType.Builder.of(tileSupplier, block.get()).build(null));
+        this.tileEntityType = ActuallyBlocks.TILES.register(name, () -> BlockEntityType.Builder.of(tileSupplier, block.get()).build(null));
     }
     public AABlockReg(String name, Supplier<B> blockSupplier, Function<B, I> itemSupplier) {
         this.name = name;
@@ -59,7 +59,7 @@ public class AABlockReg<B extends Block, I extends Item, T extends TileEntity> i
     }
 
     @Nonnull
-    public TileEntityType<T> getTileEntityType() { return Objects.requireNonNull(tileEntityType.get());}
+    public BlockEntityType<T> getTileEntityType() { return Objects.requireNonNull(tileEntityType.get());}
 
 
     public static class BlockBuilder {
@@ -67,7 +67,7 @@ public class AABlockReg<B extends Block, I extends Item, T extends TileEntity> i
         private Supplier<Block> blockSupplier;
         private Function<Block, Item> itemSupplier = (b) -> new BlockItem(b, ActuallyItems.defaultProps());
         private boolean hasTile = false;
-        private Supplier<TileEntityType<?>> tileSupplier;
+        private Supplier<BlockEntityType<?>> tileSupplier;
 
         private BlockBuilder(String nameIn, Supplier<Block> blockSupplierIn) {
             this.name = nameIn;
@@ -84,7 +84,7 @@ public class AABlockReg<B extends Block, I extends Item, T extends TileEntity> i
             return this;
         }
 
-        public BlockBuilder tile(Supplier<TileEntityType<?>> tileSupplierIn) {
+        public BlockBuilder tile(Supplier<BlockEntityType<?>> tileSupplierIn) {
             tileSupplier = tileSupplierIn;
             hasTile = true;
 

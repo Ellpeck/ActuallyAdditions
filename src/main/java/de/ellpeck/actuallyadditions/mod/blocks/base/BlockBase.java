@@ -10,11 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks.base;
 
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
-
-import net.minecraft.block.AbstractBlock.Properties;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
 
 public class BlockBase extends Block {
     public BlockBase(Properties properties) {
@@ -22,7 +19,7 @@ public class BlockBase extends Block {
     }
 
     protected ItemBlockBase getItemBlock() {
-        return new ItemBlockBase(this, new Item.Properties().tab(ActuallyAdditions.GROUP));
+        return new ItemBlockBase(this, new Item.Properties());
     }
 
     public boolean shouldAddCreative() {

@@ -11,9 +11,9 @@
 package de.ellpeck.actuallyadditions.api.laser;
 
 import io.netty.util.internal.ConcurrentSet;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 
 /**
  * This is the internal laser relay connection handler.
@@ -25,21 +25,21 @@ import net.minecraft.world.World;
  */
 public interface ILaserRelayConnectionHandler {
 
-    ConcurrentSet<IConnectionPair> getConnectionsFor(BlockPos relay, World world);
+    ConcurrentSet<IConnectionPair> getConnectionsFor(BlockPos relay, Level world);
 
-    void removeRelayFromNetwork(BlockPos relay, World world);
+    void removeRelayFromNetwork(BlockPos relay, Level world);
 
-    Network getNetworkFor(BlockPos relay, World world);
+    Network getNetworkFor(BlockPos relay, Level world);
 
-    boolean addConnection(BlockPos firstRelay, BlockPos secondRelay, LaserType type, World world);
+    boolean addConnection(BlockPos firstRelay, BlockPos secondRelay, LaserType type, Level world);
 
-    boolean addConnection(BlockPos firstRelay, BlockPos secondRelay, LaserType type, World world, boolean suppressConnectionRender);
+    boolean addConnection(BlockPos firstRelay, BlockPos secondRelay, LaserType type, Level world, boolean suppressConnectionRender);
 
-    boolean addConnection(BlockPos firstRelay, BlockPos secondRelay, LaserType type, World world, boolean suppressConnectionRender, boolean removeIfConnected);
+    boolean addConnection(BlockPos firstRelay, BlockPos secondRelay, LaserType type, Level world, boolean suppressConnectionRender, boolean removeIfConnected);
 
-    void removeConnection(World world, BlockPos firstRelay, BlockPos secondRelay);
+    void removeConnection(Level world, BlockPos firstRelay, BlockPos secondRelay);
 
-    LaserType getTypeFromLaser(TileEntity tile);
+    LaserType getTypeFromLaser(BlockEntity tile);
 
-    LaserType getTypeFromLaser(BlockPos pos, World world);
+    LaserType getTypeFromLaser(BlockPos pos, Level world);
 }

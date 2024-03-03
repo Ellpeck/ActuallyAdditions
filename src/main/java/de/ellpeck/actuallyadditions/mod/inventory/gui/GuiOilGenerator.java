@@ -10,16 +10,16 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerOilGenerator;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityOilGenerator;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import de.ellpeck.actuallyadditions.mod.util.StringUtil;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -35,7 +35,7 @@ public class GuiOilGenerator extends AAScreen<ContainerOilGenerator> {
     private EnergyDisplay energy;
     private FluidDisplay fluid;
 
-    public GuiOilGenerator(ContainerOilGenerator container, PlayerInventory inventory, ITextComponent title) {
+    public GuiOilGenerator(ContainerOilGenerator container, Inventory inventory, Component title) {
         super(container, inventory, title);
         this.generator = container.generator;
         this.imageWidth = 176;
@@ -50,39 +50,38 @@ public class GuiOilGenerator extends AAScreen<ContainerOilGenerator> {
     }
 
     @Override
-    public void render(@Nonnull MatrixStack matrices, int x, int y, float f) {
-        super.render(matrices, x, y, f);
-        this.energy.render(matrices, x, y);
-        this.fluid.render(matrices, x, y);
+    public void render(@Nonnull GuiGraphics guiGraphics, int x, int y, float f) {
+        super.render(guiGraphics, x, y, f);
+        this.energy.render(guiGraphics, x, y);
+        this.fluid.render(guiGraphics, x, y);
     }
 
     @Override
-    public void renderBg(MatrixStack matrices, float f, int x, int y) {
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+    public void renderBg(GuiGraphics guiGraphics, float f, int x, int y) {
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 
-        this.getMinecraft().getTextureManager().bind(AssetUtil.GUI_INVENTORY_LOCATION);
-        this.blit(matrices, this.leftPos, this.topPos + 93, 0, 0, 176, 86);
+        guiGraphics.blit(AssetUtil.GUI_INVENTORY_LOCATION, this.leftPos, this.topPos + 93, 0, 0, 176, 86);
 
-        this.getMinecraft().getTextureManager().bind(RES_LOC);
-        this.blit(matrices, this.leftPos, this.topPos, 0, 0, 176, 93);
+        guiGraphics.blit(RES_LOC, this.leftPos, this.topPos, 0, 0, 176, 93);
 
         if (this.generator.currentBurnTime > 0 && this.generator.maxBurnTime > 0) {
             int i = this.generator.getBurningScaled(13);
-            this.blit(matrices, this.leftPos + 72, this.topPos + 44 + 12 - i, 176, 96 - i, 14, i);
+            guiGraphics.blit(RES_LOC, this.leftPos + 72, this.topPos + 44 + 12 - i, 176, 96 - i, 14, i);
         }
 
         if (this.generator.maxBurnTime > 0 && this.generator.currentEnergyProduce > 0) {
-            drawCenteredString(matrices, this.font, this.generator.currentEnergyProduce + " " + I18n.get("misc.actuallyadditions.energy_tick"), this.leftPos + 87, this.topPos + 65, 0xFFFFFF);
-            drawCenteredString(matrices, this.font, "for " + this.generator.maxBurnTime + " t", this.leftPos + 87, this.topPos + 75, 0xFFFFFF);
-            matrices.pushPose();
-            matrices.translate(this.leftPos + 87, this.topPos + 85, 0);
-            matrices.scale(0.5625F, 0.5625F, 1F);
+            guiGraphics.drawCenteredString(this.font, this.generator.currentEnergyProduce + " " + I18n.get("misc.actuallyadditions.energy_tick"), this.leftPos + 87, this.topPos + 65, 0xFFFFFF);
+            guiGraphics.drawCenteredString(this.font, "for " + this.generator.maxBurnTime + " t", this.leftPos + 87, this.topPos + 75, 0xFFFFFF);
+            PoseStack poseStack = guiGraphics.pose();
+            poseStack.pushPose();
+            poseStack.translate(this.leftPos + 87, this.topPos + 85, 0);
+            poseStack.scale(0.5625F, 0.5625F, 1F);
             int usage = this.generator.fuelUsage;
-            drawCenteredString(matrices, this.font, "(per " + usage + " mB)",0, 0, 0xFFFFFF);
-            matrices.popPose();
+            guiGraphics.drawCenteredString(this.font, "(per " + usage + " mB)",0, 0, 0xFFFFFF);
+            poseStack.popPose();
         }
 
-        this.energy.draw(matrices);
-        this.fluid.draw(matrices);
+        this.energy.draw(guiGraphics);
+        this.fluid.draw(guiGraphics);
     }
 }

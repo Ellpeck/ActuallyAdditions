@@ -14,27 +14,27 @@ import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditio
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotOutput;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityEnervator;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 
 import java.util.Objects;
 
-public class ContainerEnervator extends Container {
+public class ContainerEnervator extends AbstractContainerMenu {
 
     public final TileEntityEnervator enervator;
 
-    public static ContainerEnervator fromNetwork(int windowId, PlayerInventory inv, PacketBuffer data) {
-        return new ContainerEnervator(windowId, inv, (TileEntityEnervator) Objects.requireNonNull(inv.player.level.getBlockEntity(data.readBlockPos())));
+    public static ContainerEnervator fromNetwork(int windowId, Inventory inv, FriendlyByteBuf data) {
+        return new ContainerEnervator(windowId, inv, (TileEntityEnervator) Objects.requireNonNull(inv.player.level().getBlockEntity(data.readBlockPos())));
     }
 
-    public ContainerEnervator(int windowId, PlayerInventory inventory, TileEntityEnervator tile) {
+    public ContainerEnervator(int windowId, Inventory inventory, TileEntityEnervator tile) {
         super(ActuallyContainers.ENERVATOR_CONTAINER.get(), windowId);
         this.enervator = tile;
 
@@ -51,7 +51,7 @@ public class ContainerEnervator extends Container {
         }
 
         for (int k = 0; k < 4; ++k) {
-            EquipmentSlotType slot = ContainerEnergizer.VALID_EQUIPMENT_SLOTS[k];
+            EquipmentSlot slot = ContainerEnergizer.VALID_EQUIPMENT_SLOTS[k];
             this.addSlot(new Slot(inventory, 36 + 3 - k, 102, 19 + k * 18) {
                 @Override
                 public int getMaxStackSize() {
@@ -76,7 +76,7 @@ public class ContainerEnervator extends Container {
     }
 
     @Override
-    public ItemStack quickMoveStack(PlayerEntity player, int slot) {
+    public ItemStack quickMoveStack(Player player, int slot) {
         int inventoryStart = 2;
         int inventoryEnd = inventoryStart + 26;
         int hotbarStart = inventoryEnd + 1;
@@ -98,7 +98,7 @@ public class ContainerEnervator extends Container {
             //Other Slots in Inventory excluded
             else if (slot >= inventoryStart) {
                 //Shift from Inventory
-                if (newStack.getCapability(CapabilityEnergy.ENERGY).isPresent()) {
+                if (newStack.getCapability(ForgeCapabilities.ENERGY).isPresent()) {
                     if (!this.moveItemStackTo(newStack, 0, 1, false)) {
                         return ItemStack.EMPTY;
                     }
@@ -133,7 +133,7 @@ public class ContainerEnervator extends Container {
     }
 
     @Override
-    public boolean stillValid(PlayerEntity player) {
+    public boolean stillValid(Player player) {
         return this.enervator.canPlayerUse(player);
     }
 }

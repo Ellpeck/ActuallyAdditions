@@ -10,8 +10,8 @@
 
 package de.ellpeck.actuallyadditions.api.internal;
 
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 
 /**
  * This is not supposed to be implemented.
@@ -28,7 +28,7 @@ public interface IEnergyTile {
     int getZ();
 
     //TODO: Rename to getWorld
-    World getWorldObject();
+    Level getWorldObject();
 
     void extractEnergy(int amount);
 

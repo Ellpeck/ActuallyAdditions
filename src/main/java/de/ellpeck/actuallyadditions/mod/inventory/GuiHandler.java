@@ -15,8 +15,8 @@ package de.ellpeck.actuallyadditions.mod.inventory;
 //import de.ellpeck.actuallyadditions.mod.booklet.misc.BookletUtils;
 
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 
 @Deprecated
 enum GuiTypes {
@@ -71,7 +71,7 @@ enum GuiTypes {
 public class GuiHandler {
 
     @Deprecated
-    public Object getServerGuiElement(int id, PlayerEntity player, World world, int x, int y, int z) {
+    public Object getServerGuiElement(int id, Player player, Level world, int x, int y, int z) {
         TileEntityBase tile = null;
 //        if (GuiTypes.values()[id].checkTileEntity) {
 //            tile = (TileEntityBase) world.getBlockEntity(new BlockPos(x, y, z));
@@ -155,7 +155,7 @@ public class GuiHandler {
     }
 
     @Deprecated
-    public Object getClientGuiElement(int id, PlayerEntity player, World world, int x, int y, int z) {
+    public Object getClientGuiElement(int id, Player player, Level world, int x, int y, int z) {
 //        TileEntityBase tile = null;
 //        if (GuiTypes.values()[id].checkTileEntity) {
 //            tile = (TileEntityBase) world.getBlockEntity(new BlockPos(x, y, z));

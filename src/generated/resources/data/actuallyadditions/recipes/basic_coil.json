@@ -1,10 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " R ",
-    "RIR",
-    " R "
-  ],
+  "category": "misc",
   "key": {
     "I": {
       "item": "actuallyadditions:black_quartz"
@@ -13,7 +9,13 @@
       "item": "actuallyadditions:restonia_crystal"
     }
   },
+  "pattern": [
+    " R ",
+    "RIR",
+    " R "
+  ],
   "result": {
     "item": "actuallyadditions:basic_coil"
-  }
+  },
+  "show_notification": true
 }

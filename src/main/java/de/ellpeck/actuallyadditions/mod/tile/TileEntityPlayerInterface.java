@@ -12,19 +12,21 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.PlayerInvWrapper;
 
 import java.util.UUID;
-
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase.NBTType;
 
 public class TileEntityPlayerInterface extends TileEntityBase implements IEnergyDisplay {
 
@@ -34,17 +36,17 @@ public class TileEntityPlayerInterface extends TileEntityBase implements IEnergy
     public UUID connectedPlayer;
     public String playerName;
     private IItemHandler playerHandler;
-    private PlayerEntity oldPlayer;
+    private Player oldPlayer;
     private int oldEnergy;
     private int range;
 
-    public TileEntityPlayerInterface() {
-        super(ActuallyBlocks.PLAYER_INTERFACE.getTileEntityType());
+    public TileEntityPlayerInterface(BlockPos pos, BlockState state) {
+        super(ActuallyBlocks.PLAYER_INTERFACE.getTileEntityType(), pos, state);
     }
 
-    private PlayerEntity getPlayer() {
+    private Player getPlayer() {
         if (this.connectedPlayer != null && this.level != null) {
-            PlayerEntity player = this.level.getPlayerByUUID(this.connectedPlayer);
+            Player player = this.level.getPlayerByUUID(this.connectedPlayer);
             if (player != null) {
                 if (player.distanceToSqr(this.worldPosition.getX(), this.worldPosition.getY(), this.worldPosition.getZ()) <= this.range) {
                     return player;
@@ -57,37 +59,43 @@ public class TileEntityPlayerInterface extends TileEntityBase implements IEnergy
     // TODO: [port] this might not be a stable way of doing this.
     @Override
     public LazyOptional<IItemHandler> getItemHandler(Direction facing) {
-        PlayerEntity player = this.getPlayer();
+        Player player = this.getPlayer();
 
         if (this.oldPlayer != player) {
             this.oldPlayer = player;
 
             this.playerHandler = player == null
                 ? null
-                : new PlayerInvWrapper(player.inventory);
+                : new PlayerInvWrapper(player.getInventory());
         }
 
         return LazyOptional.of(() -> this.playerHandler);
     }
 
-    @Override
-    public void updateEntity() {
-        super.updateEntity();
-        if (!this.level.isClientSide) {
+    public static <T extends BlockEntity> void clientTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityPlayerInterface tile) {
+            tile.clientTick();
+        }
+    }
+
+    public static <T extends BlockEntity> void serverTick(Level level, BlockPos pos, BlockState state, T t) {
+        if (t instanceof TileEntityPlayerInterface tile) {
+            tile.serverTick();
+
             boolean changed = false;
 
-            this.range = TileEntityPhantomface.upgradeRange(DEFAULT_RANGE, this.level, this.worldPosition);
+            tile.range = TileEntityPhantomface.upgradeRange(DEFAULT_RANGE, level, pos);
 
-            PlayerEntity player = this.getPlayer();
+            Player player = tile.getPlayer();
             if (player != null) {
-                for (int i = 0; i < player.inventory.getContainerSize(); i++) {
-                    if (this.storage.getEnergyStored() > 0) {
-                        ItemStack slot = player.inventory.getItem(i);
+                for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
+                    if (tile.storage.getEnergyStored() > 0) {
+                        ItemStack slot = player.getInventory().getItem(i);
                         if (StackUtil.isValid(slot) && slot.getCount() == 1) {
 
-                            int received = slot.getCapability(CapabilityEnergy.ENERGY).map(cap -> cap.receiveEnergy(this.storage.getEnergyStored(), false)).orElse(0);
+                            int received = slot.getCapability(ForgeCapabilities.ENERGY).map(cap -> cap.receiveEnergy(tile.storage.getEnergyStored(), false)).orElse(0);
                             if (received > 0) {
-                                this.storage.extractEnergyInternal(received, false);
+                                tile.storage.extractEnergyInternal(received, false);
                             }
                         }
                     } else {
@@ -97,18 +105,18 @@ public class TileEntityPlayerInterface extends TileEntityBase implements IEnergy
             }
 
             if (changed) {
-                this.setChanged();
-                this.sendUpdate();
+                tile.setChanged();
+                tile.sendUpdate();
             }
 
-            if (this.storage.getEnergyStored() != this.oldEnergy && this.sendUpdateWithInterval()) {
-                this.oldEnergy = this.storage.getEnergyStored();
+            if (tile.storage.getEnergyStored() != tile.oldEnergy && tile.sendUpdateWithInterval()) {
+                tile.oldEnergy = tile.storage.getEnergyStored();
             }
         }
     }
 
     @Override
-    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
         super.writeSyncableNBT(compound, type);
 
         this.storage.writeToNBT(compound);
@@ -119,7 +127,7 @@ public class TileEntityPlayerInterface extends TileEntityBase implements IEnergy
     }
 
     @Override
-    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
+    public void readSyncableNBT(CompoundTag compound, NBTType type) {
         super.readSyncableNBT(compound, type);
 
         this.storage.readFromNBT(compound);

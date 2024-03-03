@@ -14,18 +14,16 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelay;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -38,28 +36,26 @@ public class ItemLaserWrench extends ItemBase {
     }
 
     @Override
-    public ActionResultType useOn(ItemUseContext context) {
+    public InteractionResult useOn(UseOnContext context) {
         BlockPos pos = context.getClickedPos();
-        World world = context.getLevel();
-        PlayerEntity player = context.getPlayer();
+        Level world = context.getLevel();
+        Player player = context.getPlayer();
 
         ItemStack stack = player.getItemInHand(context.getHand());
-        TileEntity tile = world.getBlockEntity(pos);
-        if (tile instanceof TileEntityLaserRelay) {
-            TileEntityLaserRelay relay = (TileEntityLaserRelay) tile;
-            if (!world.isClientSide) {
+        BlockEntity tile = world.getBlockEntity(pos);
+        if (tile instanceof TileEntityLaserRelay relay) {
+	        if (!world.isClientSide) {
                 if (ItemPhantomConnector.getStoredPosition(stack) == null) {
                     ItemPhantomConnector.storeConnection(stack, pos.getX(), pos.getY(), pos.getZ(), world);
-                    player.displayClientMessage(new TranslationTextComponent("tooltip." + ActuallyAdditions.MODID + ".laser.stored.desc"), true);
+                    player.displayClientMessage(Component.translatable("tooltip." + ActuallyAdditions.MODID + ".laser.stored.desc"), true);
                 } else {
                     BlockPos savedPos = ItemPhantomConnector.getStoredPosition(stack);
                     if (savedPos != null) {
-                        TileEntity savedTile = world.getBlockEntity(savedPos);
-                        if (savedTile instanceof TileEntityLaserRelay) {
+                        BlockEntity savedTile = world.getBlockEntity(savedPos);
+                        if (savedTile instanceof TileEntityLaserRelay savedRelay) {
                             int distanceSq = (int) savedPos.distSqr(pos);
-                            TileEntityLaserRelay savedRelay = (TileEntityLaserRelay) savedTile;
 
-                            int lowestRange = Math.min(relay.getMaxRange(), savedRelay.getMaxRange());
+	                        int lowestRange = Math.min(relay.getMaxRange(), savedRelay.getMaxRange());
                             int range = lowestRange * lowestRange;
                             if (ItemPhantomConnector.getStoredWorld(stack) == world.dimension() && savedRelay.type == relay.type && distanceSq <= range && ActuallyAdditionsAPI.connectionHandler.addConnection(savedPos, pos, relay.type, world, false, true)) {
                                 ItemPhantomConnector.clearStorage(stack, "XCoordOfTileStored", "YCoordOfTileStored", "ZCoordOfTileStored", "WorldOfTileStored");
@@ -67,20 +63,20 @@ public class ItemLaserWrench extends ItemBase {
                                 ((TileEntityLaserRelay) savedTile).sendUpdate();
                                 relay.sendUpdate();
 
-                                player.displayClientMessage(new TranslationTextComponent("tooltip." + ActuallyAdditions.MODID + ".laser.connected.desc"), true);
+                                player.displayClientMessage(Component.translatable("tooltip." + ActuallyAdditions.MODID + ".laser.connected.desc"), true);
 
-                                return ActionResultType.SUCCESS;
+                                return InteractionResult.SUCCESS;
                             }
                         }
 
-                        player.displayClientMessage(new TranslationTextComponent("tooltip." + ActuallyAdditions.MODID + ".laser.cantConnect.desc"), false);
+                        player.displayClientMessage(Component.translatable("tooltip." + ActuallyAdditions.MODID + ".laser.cantConnect.desc"), false);
                         ItemPhantomConnector.clearStorage(stack, "XCoordOfTileStored", "YCoordOfTileStored", "ZCoordOfTileStored", "WorldOfTileStored");
                     }
                 }
             }
-            return ActionResultType.SUCCESS;
+            return InteractionResult.SUCCESS;
         }
-        return ActionResultType.FAIL;
+        return InteractionResult.FAIL;
     }
 
     //    // TODO: [port] ensure this is correct
@@ -92,14 +88,14 @@ public class ItemLaserWrench extends ItemBase {
 
     @OnlyIn(Dist.CLIENT)
     @Override
-    public void appendHoverText(ItemStack stack, World playerIn, List<ITextComponent> list, ITooltipFlag advanced) {
+    public void appendHoverText(ItemStack stack, Level playerIn, List<Component> list, TooltipFlag advanced) {
         BlockPos coords = ItemPhantomConnector.getStoredPosition(stack);
         if (coords != null) {
-            list.add(new TranslationTextComponent("tooltip." + ActuallyAdditions.MODID + ".boundTo.desc").append(":"));
-            list.add(new StringTextComponent("X: " + coords.getX()));
-            list.add(new StringTextComponent("Y: " + coords.getY()));
-            list.add(new StringTextComponent("Z: " + coords.getZ()));
-            list.add(new TranslationTextComponent("tooltip." + ActuallyAdditions.MODID + ".clearStorage.desc").withStyle(TextFormatting.ITALIC));
+            list.add(Component.translatable("tooltip." + ActuallyAdditions.MODID + ".boundTo.desc").append(":"));
+            list.add(Component.literal("X: " + coords.getX()));
+            list.add(Component.literal("Y: " + coords.getY()));
+            list.add(Component.literal("Z: " + coords.getZ()));
+            list.add(Component.translatable("tooltip." + ActuallyAdditions.MODID + ".clearStorage.desc").withStyle(ChatFormatting.ITALIC));
         }
     }
 }

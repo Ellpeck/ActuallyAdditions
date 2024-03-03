@@ -1,35 +1,38 @@
 {
   "parent": "actuallyadditions:craft_laser_relay",
+  "criteria": {
+    "item_interface": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "actuallyadditions:item_interface"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
   "display": {
-    "icon": {
-      "item": "actuallyadditions:item_interface"
-    },
-    "title": {
-      "translate": "achievement.actuallyadditions.craftItemInterface"
-    },
+    "announce_to_chat": true,
     "description": {
       "translate": "achievement.actuallyadditions.craftItemInterface.desc"
     },
     "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "actuallyadditions:item_interface"
+    },
     "show_toast": true,
-    "announce_to_chat": true,
-    "hidden": false
-  },
-  "criteria": {
-    "item_interface": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {
-        "items": [
-          {
-            "item": "actuallyadditions:item_interface"
-          }
-        ]
-      }
+    "title": {
+      "translate": "achievement.actuallyadditions.craftItemInterface"
     }
   },
   "requirements": [
     [
       "item_interface"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

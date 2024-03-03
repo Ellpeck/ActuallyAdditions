@@ -11,17 +11,17 @@
 package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.math.vector.Vector3i;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 
 public class ItemTeleportStaff extends ItemEnergy {
 
@@ -30,28 +30,28 @@ public class ItemTeleportStaff extends ItemEnergy {
     }
 
     @Override
-    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+    public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         if (!world.isClientSide) {
-            RayTraceResult rayTraceResult = player.pick(100,1F,false);
-            if (rayTraceResult.getType() == RayTraceResult.Type.BLOCK || player.xRot >= -5) {
-                Vector3d location = rayTraceResult.getLocation();
-                Vector3d pos = Vector3d.atBottomCenterOf(new Vector3i(location.x, location.y, location.z));
+            HitResult rayTraceResult = player.pick(100,1F,false);
+            if (rayTraceResult.getType() == HitResult.Type.BLOCK || player.getXRot() >= -5) {
+                Vec3 location = rayTraceResult.getLocation();
+                Vec3 pos = Vec3.atBottomCenterOf(BlockPos.containing(location.x, location.y, location.z));
                 int baseUse = 200;
-                int use = baseUse + (int) (baseUse * player.blockPosition().distSqr(new Vector3i(pos.x, pos.y, pos.z)));
+                int use = baseUse + (int) (baseUse * player.blockPosition().distSqr(BlockPos.containing(pos.x, pos.y, pos.z)));
                 if (this.getEnergyStored(stack) >= use) {
-                    ((ServerPlayerEntity) player).connection.teleport(pos.x, pos.y + 1F, pos.z, player.yRot, player.xRot);
+                    ((ServerPlayer) player).connection.teleport(pos.x, pos.y + 1F, pos.z, player.getYRot(), player.getXRot());
                     player.removeVehicle();
-                    world.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0F, 1.0F);
+                    world.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, 1.0F);
                     if (!player.isCreative()) {
                         this.extractEnergyInternal(stack, use, false);
                         player.getCooldowns().addCooldown(this, 50);
                     }
-                    return ActionResult.success(stack);
+                    return InteractionResultHolder.success(stack);
                 }
             }
         }
         player.swing(hand);
-        return ActionResult.fail(stack);
+        return InteractionResultHolder.fail(stack);
     }
 }
