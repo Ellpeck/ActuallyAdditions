@@ -22,13 +22,11 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.level.Level;
@@ -196,7 +194,7 @@ public class TileEntityPoweredFurnace extends TileEntityInventoryBase implements
     }
 
     public Optional<ItemStack> getOutputForInput(ItemStack stack) {
-        return level.getServer().getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SingleItem(stack), level).map(AbstractCookingRecipe::getResultItem);
+        return level.getServer().getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SingleItem(stack), level).map(recipe -> recipe.getResultItem(this.level.registryAccess()));
     }
 
     public Optional<SmeltingRecipe> getRecipeForInput(ItemStack stack) {
@@ -218,7 +216,7 @@ public class TileEntityPoweredFurnace extends TileEntityInventoryBase implements
         ItemStack output = this.inv.getStackInSlot(theOutput);
         if (!input.isEmpty()) {
             Optional<SmeltingRecipe> recipe = getRecipeForInput(input);
-            return recipe.map($ -> output.isEmpty() || output.sameItem($.getResultItem()) &&  output.getCount() <= output.getMaxStackSize() - $.getResultItem().getCount()).orElse(false);
+            return recipe.map($ -> output.isEmpty() || ItemStack.isSameItem(output, $.getResultItem(this.level.registryAccess())) &&  output.getCount() <= output.getMaxStackSize() - $.getResultItem(this.level.registryAccess()).getCount()).orElse(false);
         }
         return false;
     }
@@ -258,7 +256,7 @@ public class TileEntityPoweredFurnace extends TileEntityInventoryBase implements
     @Nonnull
     @Override
     public Component getDisplayName() {
-        return new TranslatableComponent("container.actuallyadditions.powered_furnace");
+        return Component.translatable("container.actuallyadditions.powered_furnace");
     }
 
     @Nullable

@@ -100,9 +100,8 @@ public class ConnectionPair implements IConnectionPair {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof ConnectionPair) {
-            ConnectionPair pair = (ConnectionPair) obj;
-            for (int i = 0; i < this.positions.length; i++) {
+        if (obj instanceof ConnectionPair pair) {
+	        for (int i = 0; i < this.positions.length; i++) {
                 if (this.positions[i] == pair.positions[i] || this.positions[i] != null && this.positions[i].equals(pair.positions[i])) {
                     return true;
                 }

@@ -1,23 +1,7 @@
 {
   "parent": "actuallyadditions:pickup_coffee",
-  "display": {
-    "icon": {
-      "item": "actuallyadditions:coffee_machine"
-    },
-    "title": {
-      "translate": "achievement.actuallyadditions.craftCoffeeMachine"
-    },
-    "description": {
-      "translate": "achievement.actuallyadditions.craftCoffeeMachine.desc"
-    },
-    "frame": "task",
-    "show_toast": true,
-    "announce_to_chat": true,
-    "hidden": false
-  },
   "criteria": {
     "coffee_machine": {
-      "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
@@ -26,12 +10,29 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "achievement.actuallyadditions.craftCoffeeMachine.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "actuallyadditions:coffee_machine"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "achievement.actuallyadditions.craftCoffeeMachine"
     }
   },
   "requirements": [
     [
       "coffee_machine"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

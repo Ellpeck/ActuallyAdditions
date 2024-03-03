@@ -1,5 +1,9 @@
 {
   "variants": {
+    "facing=east": {
+      "model": "actuallyadditions:block/lava_factory_controller",
+      "y": 90
+    },
     "facing=north": {
       "model": "actuallyadditions:block/lava_factory_controller"
     },
@@ -10,10 +14,6 @@
     "facing=west": {
       "model": "actuallyadditions:block/lava_factory_controller",
       "y": 270
-    },
-    "facing=east": {
-      "model": "actuallyadditions:block/lava_factory_controller",
-      "y": 90
     }
   }
 }

@@ -11,7 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.blocks.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import de.ellpeck.actuallyadditions.api.lens.ILensItem;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
@@ -59,8 +59,8 @@ public class ReconstructorRenderer implements BlockEntityRenderer<TileEntityAtom
         matrices.pushPose();
         matrices.translate(0.5F, 0.5F, 0.5F);
 
-        matrices.mulPose(Vector3f.YP.rotationDegrees(rot));
-        matrices.mulPose(Vector3f.XP.rotationDegrees(pitch));
+        matrices.mulPose(Axis.YP.rotationDegrees(rot));
+        matrices.mulPose(Axis.XP.rotationDegrees(pitch));
 
         matrices.translate(0.0F, 0.0F, -0.5F);
 

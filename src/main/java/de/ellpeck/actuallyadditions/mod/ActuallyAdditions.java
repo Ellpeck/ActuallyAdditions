@@ -39,13 +39,10 @@ import de.ellpeck.actuallyadditions.mod.util.ResourceReloader;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
+import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.event.AddReloadListenerEvent;
@@ -79,16 +76,9 @@ public class ActuallyAdditions {
     public static final String GUIFACTORY = "de.ellpeck.actuallyadditions.mod.config.GuiFactory";
     public static final String DEPS = "required:forge@[14.23.5.2836,);before:craftingtweaks;after:fastbench@[1.3.2,)";
 
-    public static final CreativeModeTab GROUP = new CreativeModeTab(MODID) {
-        @OnlyIn(Dist.CLIENT)
-        @Override
-        public ItemStack makeIcon() {
-            return new ItemStack(ActuallyItems.ITEM_BOOKLET.get());
-        }
-    };
     public static final Logger LOGGER = LogManager.getLogger(NAME);
 
-    public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, MODID);
+    public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, MODID);
     public static final RegistryObject<EntityType<EntityWorm>> ENTITY_WORM = ENTITIES.register("worm", () -> EntityType.Builder.of(EntityWorm::new, MobCategory.MISC).build(MODID + ":worm"));
 
     public static boolean commonCapsLoaded;
@@ -100,6 +90,7 @@ public class ActuallyAdditions {
 
         ActuallyBlocks.init(eventBus);
         ActuallyItems.init(eventBus);
+        ActuallyTabs.init(eventBus);
         ActuallyRecipes.init(eventBus);
         AASounds.init(eventBus);
         ActuallyContainers.CONTAINERS.register(eventBus);
@@ -165,7 +156,7 @@ public class ActuallyAdditions {
         ActuallyAdditionsClient.setup(event);
     }
 
-    private void particleFactoryRegister(ParticleFactoryRegisterEvent event) {
+    private void particleFactoryRegister(RegisterParticleProvidersEvent event) {
         ActuallyAdditionsClient.registerParticleFactories();
     }
 

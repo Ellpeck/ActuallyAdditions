@@ -11,17 +11,15 @@
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiComponent;
-import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -31,7 +29,7 @@ import java.text.NumberFormat;
 import java.util.Collections;
 
 @OnlyIn(Dist.CLIENT)
-public class FluidDisplay extends GuiComponent {
+public class FluidDisplay {
 
     private IFluidTank fluidReference;
     private Fluid oldFluid;
@@ -73,21 +71,19 @@ public class FluidDisplay extends GuiComponent {
         this.drawTextNextTo = drawTextNextTo;
     }
 
-    public void draw(PoseStack matrices) {
+    public void draw(GuiGraphics guiGraphics) {
         Minecraft mc = Minecraft.getInstance();
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderTexture(0, AssetUtil.GUI_INVENTORY_LOCATION); //bind?
 
         int barX = this.x;
         int barY = this.y;
 
         if (this.outline) {
-            this.blit(matrices, this.x, this.y, 52, 163, 26, 93);
+	        guiGraphics.blit(AssetUtil.GUI_INVENTORY_LOCATION, this.x, this.y, 52, 163, 26, 93);
 
             barX += 4;
             barY += 4;
         }
-        this.blit(matrices, barX, barY, 0, 171, 18, 85);
+	    guiGraphics.blit(AssetUtil.GUI_INVENTORY_LOCATION, barX, barY, 0, 171, 18, 85);
 
         FluidStack stack = this.fluidReference.getFluid();
         Fluid fluid = stack.getFluid();
@@ -95,20 +91,18 @@ public class FluidDisplay extends GuiComponent {
         if (this.resLoc == null || this.oldFluid != stack.getFluid()) {
             this.oldFluid = stack.getFluid();
 
-            if (fluid != null && fluid.getAttributes().getStillTexture() != null) {
-                this.resLoc = new ResourceLocation(fluid.getAttributes().getStillTexture().getNamespace(), "textures/" + fluid.getAttributes().getStillTexture().getPath() + ".png");
+            if (fluid != null && IClientFluidTypeExtensions.of(fluid).getStillTexture() != null) {
+                this.resLoc = new ResourceLocation(IClientFluidTypeExtensions.of(fluid).getStillTexture().getNamespace(), "textures/" + IClientFluidTypeExtensions.of(fluid).getStillTexture().getPath() + ".png");
             }
         }
 
         if (stack != null && fluid != null && this.resLoc != null) {
-            RenderSystem.setShaderTexture(0, this.resLoc);
-
 //            GlStateManager._pushMatrix();
             GlStateManager._enableBlend();
 //            GlStateManager._disableAlphaTest();
             GlStateManager._blendFuncSeparate(770, 771, 1, 0);
             int i = this.fluidReference.getFluid().getAmount() * 83 / this.fluidReference.getCapacity();
-            blit(matrices, barX + 1, barY + 84 - i, 0, 0, 16, i, 16, 512);
+	        guiGraphics.blit(this.resLoc, barX + 1, barY + 84 - i, 0, 0, 16, i, 16, 512);
             //drawModalRectWithCustomSizedTexture(barX + 1, barY + 84 - i, 36, 172, 16, i, 16, 512);
             GlStateManager._disableBlend();
 //            GlStateManager._enableAlphaTest();
@@ -116,19 +110,18 @@ public class FluidDisplay extends GuiComponent {
         }
 
         if (this.drawTextNextTo) {
-            mc.font.draw(matrices, new TextComponent(this.getOverlayText()), barX + 25, barY + 78, 0xFFFFFF);
+			guiGraphics.drawString(mc.font, Component.literal(this.getOverlayText()), barX + 25, barY + 78, 0xFFFFFF, false);
         }
     }
 
-    public void render(PoseStack matrices, int mouseX, int mouseY) {
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY) {
         if (mouseX >= this.x && mouseY >= this.y && mouseX < this.x + (this.outline
             ? 26
             : 18) && mouseY < this.y + (this.outline
             ? 93
             : 85)) {
             Minecraft mc = Minecraft.getInstance();
-            if(mc.screen != null)
-                mc.screen.renderComponentTooltip(matrices, Collections.singletonList(new TextComponent(this.getOverlayText())), mouseX, mouseY, mc.font); //TODO: Check if this is correct, used to call GuiUtils.drawHoveringText
+            guiGraphics.renderComponentTooltip(mc.font, Collections.singletonList(Component.literal(this.getOverlayText())), mouseX, mouseY); //TODO: Check if this is correct, used to call GuiUtils.drawHoveringText
         }
     }
 

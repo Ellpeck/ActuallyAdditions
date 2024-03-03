@@ -23,9 +23,10 @@ import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
@@ -34,7 +35,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderGuiOverlayEvent;
+import net.minecraftforge.client.gui.overlay.GuiOverlayManager;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -42,8 +44,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 @OnlyIn(Dist.CLIENT)
 public class ClientEvents {
 
-    private static final Component ADVANCED_INFO_TEXT_PRE = new TextComponent("  -").withStyle(ChatFormatting.DARK_GRAY);
-    private static final Component ADVANCED_INFO_HEADER_PRE = new TextComponent("  -").withStyle(ChatFormatting.GRAY);
+    private static final Component ADVANCED_INFO_TEXT_PRE = Component.literal("  -").withStyle(ChatFormatting.DARK_GRAY);
+    private static final Component ADVANCED_INFO_HEADER_PRE = Component.literal("  -").withStyle(ChatFormatting.GRAY);
 
     private static EnergyDisplay energyDisplay;
 
@@ -161,10 +163,10 @@ public class ClientEvents {
     }
 
     @SubscribeEvent
-    public void onGameOverlay(RenderGameOverlayEvent.Post event) {
+    public void onGameOverlay(RenderGuiOverlayEvent.Post event) {
         Minecraft minecraft = Minecraft.getInstance();
-        if (event.getType() == RenderGameOverlayEvent.ElementType.ALL && minecraft.screen == null) {
-            PoseStack matrices = event.getMatrixStack();
+        if (event.getOverlay() == GuiOverlayManager.findOverlay(new ResourceLocation("crosshair")) && minecraft.screen == null) { //ALL
+            GuiGraphics guiGraphics = event.getGuiGraphics();
             Player player = minecraft.player;
             if (player == null) {
                 return;
@@ -176,7 +178,7 @@ public class ClientEvents {
 
             if (StackUtil.isValid(stack)) {
                 if (stack.getItem() instanceof IHudDisplay) {
-                    ((IHudDisplay) stack.getItem()).displayHud(matrices, minecraft, player, stack, posHit, event.getWindow());
+                    ((IHudDisplay) stack.getItem()).displayHud(guiGraphics, minecraft, player, stack, posHit, event.getWindow());
                 }
             }
 
@@ -186,16 +188,15 @@ public class ClientEvents {
                 BlockEntity tileHit = minecraft.level.getBlockEntity(rayCast.getBlockPos());
 
                 if (blockHit instanceof IHudDisplay) {
-                    ((IHudDisplay) blockHit).displayHud(matrices, minecraft, player, stack, posHit, event.getWindow());
+                    ((IHudDisplay) blockHit).displayHud(guiGraphics, minecraft, player, stack, posHit, event.getWindow());
                 }
 
-                if (tileHit instanceof TileEntityBase) {
-                    TileEntityBase base = (TileEntityBase) tileHit;
-                    if (base.isRedstoneToggle()) {
+                if (tileHit instanceof TileEntityBase base) {
+	                if (base.isRedstoneToggle()) {
                         String strg = String.format("%s: %s", I18n.get("info." + ActuallyAdditions.MODID + ".redstoneMode"), ChatFormatting.DARK_RED + I18n.get("info." + ActuallyAdditions.MODID + ".redstoneMode." + (base.isPulseMode
                             ? "pulse"
                             : "deactivation")) + ChatFormatting.RESET);
-                        font.drawShadow(matrices, strg, event.getWindow().getGuiScaledWidth() / 2f + 5, event.getWindow().getGuiScaledHeight() / 2f + 5, 0xFFFFFF);
+                        guiGraphics.drawString(font, strg, (int) (event.getWindow().getGuiScaledWidth() / 2f + 5), (int) (event.getWindow().getGuiScaledHeight() / 2f + 5), 0xFFFFFF);
 
                         String expl;
                         if (!stack.isEmpty() && stack.getItem() == CommonConfig.Other.redstoneConfigureItem) {
@@ -203,22 +204,22 @@ public class ClientEvents {
                         } else {
                                 expl = ChatFormatting.GRAY.toString() + ChatFormatting.ITALIC + I18n.get("info." + ActuallyAdditions.MODID + ".redstoneMode.invalidItem", I18n.get(CommonConfig.Other.redstoneConfigureItem.asItem().getDescriptionId()));
                         }
-                        font.drawShadow(matrices, expl, event.getWindow().getGuiScaledWidth() / 2f + 5, event.getWindow().getGuiScaledHeight() / 2f + 15, 0xFFFFFF);
+                        guiGraphics.drawString(font, expl, (int) (event.getWindow().getGuiScaledWidth() / 2f + 5), (int) (event.getWindow().getGuiScaledHeight() / 2f + 15), 0xFFFFFF);
                     }
                 }
 
-                if (tileHit instanceof IEnergyDisplay) {
-                    IEnergyDisplay display = (IEnergyDisplay) tileHit;
-                    if (!display.needsHoldShift() || player.isShiftKeyDown()) {
+                if (tileHit instanceof IEnergyDisplay display) {
+	                if (!display.needsHoldShift() || player.isShiftKeyDown()) {
                         if (energyDisplay == null) {
                             energyDisplay = new EnergyDisplay(0, 0, null);
                         }
                         energyDisplay.setData(2, event.getWindow().getGuiScaledHeight() - 96, display.getEnergyStorage(), true, true);
 
+                        PoseStack matrices = guiGraphics.pose();
                         matrices.pushPose();
 //                        GlStateManager._color4f(1F, 1F, 1F, 1F);
                         RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
-                        energyDisplay.draw(matrices);
+                        energyDisplay.draw(guiGraphics);
                         matrices.popPose();
                     }
                 }

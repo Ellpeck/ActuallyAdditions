@@ -3,8 +3,8 @@ package de.ellpeck.actuallyadditions.mod;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraftforge.client.event.ModelBakeEvent;
-import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.client.event.ModelEvent.BakingCompleted;
+import net.minecraftforge.client.event.ModelEvent.RegisterGeometryLoaders;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.util.HashMap;
@@ -30,7 +30,7 @@ public class ClientRegistryHandler {
     }
 
     @SubscribeEvent
-    public void onModelRegistry(ModelRegistryEvent event) {
+    public void onModelRegistry(RegisterGeometryLoaders event) {
         //        for (Block block : RegistryHandler.BLOCKS_TO_REGISTER) {
         //            if (block instanceof IHasModel) {
         //                ((IHasModel) block).registerRendering();
@@ -48,7 +48,7 @@ public class ClientRegistryHandler {
     }
 
     @SubscribeEvent
-    public void onModelBake(ModelBakeEvent e) {
+    public void onModelBake(BakingCompleted e) {
         //        ModelResourceLocation mrl = new ModelResourceLocation(new ResourceLocation(ActuallyAdditions.MODID, "block_compost"), "normal");
         //        CompostModel.compostBase = e.getModelRegistry().getObject(mrl);
         //        e.getModelRegistry().putObject(mrl, new ActualCompostModel());

@@ -24,7 +24,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.NetherWartBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.IPlantable;
@@ -56,7 +56,7 @@ public class NetherWartFarmerBehavior implements IFarmerBehavior {
             BlockState state = world.getBlockState(pos);
             if (state.getBlock() instanceof NetherWartBlock) {
                 if (state.getValue(BlockStateProperties.AGE_3) >= 3) {
-                    List<ItemStack> drops = state.getDrops(new LootContext.Builder(world)
+                    List<ItemStack> drops = state.getDrops(new LootParams.Builder(world)
                         .withParameter(LootContextParams.ORIGIN, new Vec3(pos.getX(), pos.getY(), pos.getZ()))
                         .withParameter(LootContextParams.TOOL, ItemStack.EMPTY));
                     if (!drops.isEmpty()) {

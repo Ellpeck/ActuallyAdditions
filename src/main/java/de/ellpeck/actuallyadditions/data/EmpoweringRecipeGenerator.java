@@ -6,13 +6,12 @@ import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.crafting.EmpowererRecipe;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.Crystals;
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.HashCache;
+import net.minecraft.data.CachedOutput;
+import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.Tag;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -20,23 +19,31 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.Nullable;
 
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 public class EmpoweringRecipeGenerator extends RecipeProvider {
-    public EmpoweringRecipeGenerator(DataGenerator p_i48262_1_) {
-        super(p_i48262_1_);
+    public EmpoweringRecipeGenerator(PackOutput packOutput) {
+        super(packOutput);
     }
 
     @Override
-    protected void saveAdvancement(HashCache pCache, JsonObject pAdvancementJson, Path pPath) {
+    public String getName() {
+        return "Empowering " + super.getName();
     }
 
     @Override
-    protected void buildCraftingRecipes(Consumer<FinishedRecipe> consumer) {
+    protected @Nullable CompletableFuture<?> saveAdvancement(CachedOutput output, FinishedRecipe finishedRecipe, JsonObject advancementJson) {
+        return null; //Nope...
+    }
+
+    @Override
+    protected void buildRecipes(Consumer<FinishedRecipe> consumer) {
         EmpoweringBuilder.builder(ActuallyItems.EMPOWERED_RESTONIA_CRYSTAL.get(), ActuallyItems.RESTONIA_CRYSTAL.get(), 5000, 50, Crystals.REDSTONE.conversionColorParticles)
                 .addModifier(Tags.Items.DYES_RED)
                 .addModifier(Items.NETHER_BRICK)
@@ -133,14 +140,14 @@ public class EmpoweringRecipeGenerator extends RecipeProvider {
 
         public EmpoweringBuilder addModifier(ItemLike input) {
             if (modifiers.size() >= 4)
-                throw new IllegalStateException("too many modifiers for empowering recipe, input: " + input.asItem().getRegistryName());
+                throw new IllegalStateException("too many modifiers for empowering recipe, input: " + ForgeRegistries.ITEMS.getKey(input.asItem()));
             modifiers.add(Ingredient.of(input));
             return this;
         }
 
         public EmpoweringBuilder addModifier(ItemStack input) {
             if (modifiers.size() >= 4)
-                throw new IllegalStateException("too many modifiers for empowering recipe, input: " + input.getItem().getRegistryName());
+                throw new IllegalStateException("too many modifiers for empowering recipe, input: " + ForgeRegistries.ITEMS.getKey(input.getItem()));
             modifiers.add(Ingredient.of(input));
             return this;
         }

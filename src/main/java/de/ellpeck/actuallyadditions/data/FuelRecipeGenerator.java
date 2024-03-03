@@ -6,8 +6,8 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.crafting.LiquidFuelRecipe;
 import de.ellpeck.actuallyadditions.mod.crafting.SolidFuelRecipe;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.HashCache;
+import net.minecraft.data.CachedOutput;
+import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.resources.ResourceLocation;
@@ -16,23 +16,29 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.fluids.FluidStack;
+import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
-import java.nio.file.Path;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 public class FuelRecipeGenerator extends RecipeProvider {
-    public FuelRecipeGenerator(DataGenerator pGenerator) {
-        super(pGenerator);
+    public FuelRecipeGenerator(PackOutput packOutput) {
+        super(packOutput);
     }
 
     @Override
-    protected void saveAdvancement(@Nonnull HashCache pCache, @Nonnull JsonObject pAdvancementJson, @Nonnull Path pPath) {
-        //Nah
+    public String getName() {
+        return "Fuel " + super.getName();
     }
 
     @Override
-    protected void buildCraftingRecipes(@Nonnull Consumer<FinishedRecipe> consumer) {
+    protected @Nullable CompletableFuture<?> saveAdvancement(CachedOutput output, FinishedRecipe finishedRecipe, JsonObject advancementJson) {
+        return null; //Nope...
+    }
+
+    @Override
+    protected void buildRecipes(@Nonnull Consumer<FinishedRecipe> consumer) {
         addSolid(consumer, "coal", Items.COAL, 32000, 1600);
         addSolid(consumer, "stick", Items.STICK, 2000, 100);
         addSolid(consumer, "tiny-coal", ActuallyTags.Items.TINY_COALS, 4000, 200);

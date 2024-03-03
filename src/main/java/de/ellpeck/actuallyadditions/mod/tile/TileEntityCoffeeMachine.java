@@ -25,7 +25,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -40,8 +39,8 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 
@@ -62,7 +61,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     public final CustomEnergyStorage storage = new CustomEnergyStorage(300000, 250, 0);
     public final LazyOptional<IEnergyStorage> lazyEnergy = LazyOptional.of(() -> this.storage);
 
-    public final FluidTank tank = new FluidTank(4 * FluidAttributes.BUCKET_VOLUME) {
+    public final FluidTank tank = new FluidTank(4 * FluidType.BUCKET_VOLUME) {
         @Nonnull
         @Override
         public FluidStack drain(int maxDrain, FluidAction action) {
@@ -252,7 +251,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
 
     @Override
     public Component getDisplayName() {
-        return new TranslatableComponent("container.actuallyadditions.coffeeMachine");
+        return Component.translatable("container.actuallyadditions.coffeeMachine");
     }
 
     @Nullable

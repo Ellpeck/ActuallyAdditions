@@ -14,7 +14,7 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.Util;
 import net.minecraft.client.Camera;
@@ -84,7 +84,7 @@ public class ParticleLaserItem extends Particle {
         matrices.scale(0.3F, 0.3F, 0.3F);
 
         double boop = Util.getMillis() / 600D;
-        matrices.mulPose(Vector3f.YP.rotationDegrees((float) (boop * 40D % 360)));
+        matrices.mulPose(Axis.YP.rotationDegrees((float) (boop * 40D % 360)));
 
 //        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F); TODO: See if this is needed
         RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA,
@@ -96,8 +96,8 @@ public class ParticleLaserItem extends Particle {
                 : ageRatio;
 //        RenderSystem.blendColor(color, color, color, color); TODO: See if this is needed
 
-        int blockLight = level.getBrightness(LightLayer.BLOCK, new BlockPos(x, y, z));
-        int skyLight = level.getBrightness(LightLayer.SKY, new BlockPos(x, y, z));
+        int blockLight = level.getBrightness(LightLayer.BLOCK, BlockPos.containing(x, y, z));
+        int skyLight = level.getBrightness(LightLayer.SKY, BlockPos.containing(x, y, z));
         AssetUtil.renderItemWithoutScrewingWithColors(this.stack, matrices, LightTexture.pack(blockLight, skyLight), OverlayTexture.NO_OVERLAY);
 
 //        Lighting.turnOff();

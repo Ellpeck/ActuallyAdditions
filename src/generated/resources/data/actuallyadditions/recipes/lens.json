@@ -1,19 +1,21 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "actuallyadditions:black_quartz"
+    },
+    "G": {
+      "tag": "forge:glass"
+    }
+  },
   "pattern": [
     "GGG",
     "GBG",
     "GGG"
   ],
-  "key": {
-    "G": {
-      "tag": "forge:glass"
-    },
-    "B": {
-      "item": "actuallyadditions:black_quartz"
-    }
-  },
   "result": {
     "item": "actuallyadditions:lens"
-  }
+  },
+  "show_notification": true
 }

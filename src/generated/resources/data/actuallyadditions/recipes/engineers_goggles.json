@@ -1,21 +1,23 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " R ",
-    "IGI"
-  ],
+  "category": "misc",
   "key": {
-    "R": {
-      "item": "actuallyadditions:restonia_crystal"
+    "G": {
+      "tag": "forge:glass"
     },
     "I": {
       "item": "minecraft:iron_bars"
     },
-    "G": {
-      "tag": "forge:glass"
+    "R": {
+      "item": "actuallyadditions:restonia_crystal"
     }
   },
+  "pattern": [
+    " R ",
+    "IGI"
+  ],
   "result": {
     "item": "actuallyadditions:engineers_goggles"
-  }
+  },
+  "show_notification": true
 }

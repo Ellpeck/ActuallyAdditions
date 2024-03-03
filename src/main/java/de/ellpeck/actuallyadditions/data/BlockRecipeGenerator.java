@@ -4,9 +4,10 @@ import com.google.gson.JsonObject;
 import de.ellpeck.actuallyadditions.api.ActuallyTags;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.HashCache;
+import net.minecraft.data.CachedOutput;
+import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
@@ -14,19 +15,20 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.common.Tags;
+import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
-import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 public class BlockRecipeGenerator extends RecipeProvider {
-    public BlockRecipeGenerator(DataGenerator generatorIn) {
-        super(generatorIn);
+    public BlockRecipeGenerator(PackOutput packOutput) {
+        super(packOutput);
     }
 
     @Override
-    protected void buildCraftingRecipes(@Nonnull Consumer<FinishedRecipe> consumer) {
+    protected void buildRecipes(@Nonnull Consumer<FinishedRecipe> consumer) {
         //Battery Box
         Recipe.shapeless(ActuallyBlocks.BATTERY_BOX.getItem()).ingredients(ActuallyBlocks.ENERGIZER.get(), ActuallyBlocks.ENERVATOR.get(), ActuallyItems.BASIC_COIL.get()).save(consumer);
 
@@ -231,7 +233,8 @@ public class BlockRecipeGenerator extends RecipeProvider {
     }
 
     @Override
-    protected void saveAdvancement(HashCache p_208310_1_, JsonObject p_208310_2_, Path p_208310_3_) {
+    protected @Nullable CompletableFuture<?> saveAdvancement(CachedOutput output, FinishedRecipe finishedRecipe, JsonObject advancementJson) {
+        return null;
         //Nope... maybe later...
     }
 
@@ -270,7 +273,7 @@ public class BlockRecipeGenerator extends RecipeProvider {
             }
 
             public Shapeless(ItemLike result, int countIn) {
-                super(result, countIn);
+                super(RecipeCategory.MISC, result, countIn);
             }
 
             public Shapeless ingredients(ItemLike... ingredients) {
@@ -291,7 +294,7 @@ public class BlockRecipeGenerator extends RecipeProvider {
             }
 
             public Shaped(ItemLike resultIn, int countIn) {
-                super(resultIn, countIn);
+                super(RecipeCategory.MISC, resultIn, countIn);
             }
 
             public Shaped pattern(String line1, String line2, String line3) {

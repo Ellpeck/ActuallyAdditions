@@ -64,13 +64,15 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityXPSolidifier;
 import de.ellpeck.actuallyadditions.registration.AABlockReg;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.WallBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -79,11 +81,11 @@ import java.util.function.Supplier;
 
 public final class ActuallyBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, ActuallyAdditions.MODID);
-    public static final DeferredRegister<BlockEntityType<?>> TILES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, ActuallyAdditions.MODID);
+    public static final DeferredRegister<BlockEntityType<?>> TILES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, ActuallyAdditions.MODID);
 
-    public static final Item.Properties defaultBlockItemProperties = new Item.Properties().tab(ActuallyAdditions.GROUP).stacksTo(64);
+    public static final Item.Properties defaultBlockItemProperties = new Item.Properties().stacksTo(64);
 
-    public static final BlockBehaviour.Properties miscBlockProperties = BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(1.5f, 10f);
+    public static final BlockBehaviour.Properties miscBlockProperties = BlockBehaviour.Properties.copy(Blocks.STONE).requiresCorrectToolForDrops().strength(1.5f, 10f);
 
     // Casings
     public static final AABlockReg<ActuallyBlock, AABlockItem, ?> WOOD_CASING = new AABlockReg<>("wood_casing", () -> new ActuallyBlock(miscBlockProperties), ActuallyBlock::createBlockItem);
@@ -316,15 +318,15 @@ public final class ActuallyBlocks {
         (b) -> new AABlockItem(b, defaultBlockItemProperties));
 
     public static BlockBehaviour.Properties defaultPickProps(float hardness, float resistance) {
-        return BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(hardness, resistance).sound(SoundType.STONE);
+        return BlockBehaviour.Properties.copy(Blocks.STONE).requiresCorrectToolForDrops().strength(hardness, resistance).sound(SoundType.STONE);
     }
 
     public static BlockBehaviour.Properties defaultPickProps() {
-        return BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(1.5F, 10.0F).sound(SoundType.STONE);
+        return BlockBehaviour.Properties.copy(Blocks.STONE).requiresCorrectToolForDrops().strength(1.5F, 10.0F).sound(SoundType.STONE);
     }
 
     public static BlockBehaviour.Properties defaultCropProps() {
-        return BlockBehaviour.Properties.of(Material.PLANT).noCollission().randomTicks().instabreak().sound(SoundType.CROP);
+        return BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).noCollission().randomTicks().instabreak().sound(SoundType.CROP);
     }
 
     public static void init(IEventBus evt) {

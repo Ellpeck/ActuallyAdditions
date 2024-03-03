@@ -16,6 +16,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -31,7 +32,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nullable;
-import java.util.Random;
 
 public class BlockOilGenerator extends DirectionalBlock.Container {
 
@@ -53,7 +53,7 @@ public class BlockOilGenerator extends DirectionalBlock.Container {
 
     // TODO: Move all of these over to the client version
     @Override
-    public void randomTick(BlockState state, ServerLevel world, BlockPos pos, Random random) {
+    public void randomTick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
         BlockEntity tile = world.getBlockEntity(pos);
         if (tile instanceof TileEntityOilGenerator) {
             if (((TileEntityOilGenerator) tile).currentBurnTime > 0) {
@@ -70,7 +70,7 @@ public class BlockOilGenerator extends DirectionalBlock.Container {
             TileEntityOilGenerator generator = (TileEntityOilGenerator) world.getBlockEntity(pos);
             if (generator != null) {
                 if (!this.tryUseItemOnTank(player, hand, generator.tank)) {
-                    NetworkHooks.openGui((ServerPlayer) player, generator, pos);
+                    NetworkHooks.openScreen((ServerPlayer) player, generator, pos);
                 }
             }
         }

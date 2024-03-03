@@ -50,7 +50,7 @@
 //
 //    @Override
 //    public String getTitle() {
-//        return new TranslatableComponent("container.actuallyadditions.reconstructor").getString();
+//        return Component.translatable("container.actuallyadditions.reconstructor").getString();
 //    }
 //
 //    @Override

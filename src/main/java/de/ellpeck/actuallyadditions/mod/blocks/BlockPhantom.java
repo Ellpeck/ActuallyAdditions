@@ -11,7 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.blocks;
 
 import com.mojang.blaze3d.platform.Window;
-import com.mojang.blaze3d.vertex.PoseStack;
 import de.ellpeck.actuallyadditions.api.tile.IPhantomTile;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
@@ -24,6 +23,7 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityPhantomRedstoneface;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -148,16 +148,15 @@ public class BlockPhantom extends BlockContainerBase implements IHudDisplay {
     // TODO: [port] fix all of this, it's a mess
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void displayHud(PoseStack matrices, Minecraft minecraft, Player player, ItemStack stack, HitResult rayCast, Window resolution) {
+    public void displayHud(GuiGraphics guiGraphics, Minecraft minecraft, Player player, ItemStack stack, HitResult rayCast, Window resolution) {
         if (!(rayCast instanceof BlockHitResult)) {
             return;
         }
         BlockPos pos = ((BlockHitResult) rayCast).getBlockPos();
         BlockEntity tile = minecraft.level.getBlockEntity(pos);
         if (tile != null) {
-            if (tile instanceof IPhantomTile) {
-                IPhantomTile phantom = (IPhantomTile) tile;
-                minecraft.font.drawShadow(matrices, ChatFormatting.GOLD + I18n.get("tooltip." + ActuallyAdditions.MODID + ".blockPhantomRange.desc") + ": " + phantom.getRange(), resolution.getGuiScaledWidth() / 2 + 5, resolution.getGuiScaledHeight() / 2 - 40, ChatFormatting.WHITE.getColor());
+            if (tile instanceof IPhantomTile phantom) {
+	            guiGraphics.drawString(minecraft.font, ChatFormatting.GOLD + I18n.get("tooltip." + ActuallyAdditions.MODID + ".blockPhantomRange.desc") + ": " + phantom.getRange(), resolution.getGuiScaledWidth() / 2 + 5, resolution.getGuiScaledHeight() / 2 - 40, ChatFormatting.WHITE.getColor());
                 if (phantom.hasBoundPosition()) {
                     int distance = Mth.ceil(new Vec3(pos.getX(), pos.getY(), pos.getZ()).distanceTo(new Vec3(phantom.getBoundPosition().getX(), phantom.getBoundPosition().getY(), phantom.getBoundPosition().getZ())));
                     BlockState state = minecraft.level.getBlockState(phantom.getBoundPosition());
@@ -172,7 +171,7 @@ public class BlockPhantom extends BlockContainerBase implements IHudDisplay {
                         StringUtil.drawSplitString(minecraft.font, ChatFormatting.DARK_RED + I18n.get("tooltip." + ActuallyAdditions.MODID + ".phantom.connectedNoRange.desc"), resolution.getGuiScaledWidth() / 2 + 5, resolution.getGuiScaledHeight() / 2 + 25, 200, 0xFFFFFF, true);
                     }
                 } else {
-                    minecraft.font.drawShadow(matrices, ChatFormatting.RED + I18n.get("tooltip." + ActuallyAdditions.MODID + ".phantom.notConnected.desc"), resolution.getGuiScaledWidth() / 2 + 5, resolution.getGuiScaledHeight() / 2 + 25, ChatFormatting.WHITE.getColor());
+                    guiGraphics.drawString(minecraft.font, ChatFormatting.RED + I18n.get("tooltip." + ActuallyAdditions.MODID + ".phantom.notConnected.desc"), resolution.getGuiScaledWidth() / 2 + 5, resolution.getGuiScaledHeight() / 2 + 25, ChatFormatting.WHITE.getColor());
                 }
             }
         }

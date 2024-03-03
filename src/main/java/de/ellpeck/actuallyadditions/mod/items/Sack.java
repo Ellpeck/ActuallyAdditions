@@ -27,7 +27,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.network.NetworkHooks;
 
 import java.util.UUID;
@@ -49,7 +49,7 @@ public class Sack extends ItemBase {
                 if (!context.getLevel().isClientSide) {
                     ItemStackHandlerAA inv = new ItemStackHandlerAA(28);
 
-                    boolean changed = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, context.getClickedFace())
+                    boolean changed = tile.getCapability(ForgeCapabilities.ITEM_HANDLER, context.getClickedFace())
                         .map(cap -> {
                             boolean localChanged = false;
                             DrillItem.loadSlotsFromNBT(inv, stack);
@@ -99,14 +99,14 @@ public class Sack extends ItemBase {
                 data.updateAccessRecords(player.getName().getString(), System.currentTimeMillis());
 
 
-                NetworkHooks.openGui((ServerPlayer) player, new SimpleMenuProvider((id, inv, entity) ->
+                NetworkHooks.openScreen((ServerPlayer) player, new SimpleMenuProvider((id, inv, entity) ->
                         new SackContainer(id, inv, uuid, data.getSpecialHandler()), sackStack.getHoverName()), (buffer -> buffer.writeUUID(uuid)));
             }
 
 
 /*            NetworkHooks.openGui((ServerPlayerEntity) player,
                     new SimpleNamedContainerProvider((windowId, playerInventory, playerEntity) ->
-                            new ContainerBag(windowId, playerInventory, playerEntity.getItemInHand(hand), this.isVoid), StringTextComponent.EMPTY));*/
+                            new ContainerBag(windowId, playerInventory, playerEntity.getItemInHand(hand), this.isVoid), StringComponent.empty()));*/
         }
         return InteractionResultHolder.pass(player.getItemInHand(hand));
     }

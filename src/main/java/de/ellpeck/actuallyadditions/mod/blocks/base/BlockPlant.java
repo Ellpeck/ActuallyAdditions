@@ -25,7 +25,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.common.PlantType;
 import net.minecraftforge.items.ItemHandlerHelper;
@@ -39,7 +40,7 @@ public class BlockPlant extends CropBlock {
     // Stolen from potato for now
     //    PotatoBlock(AbstractBlock.Properties.create(Material.PLANTS).doesNotBlockMovement().tickRandomly().zeroHardnessAndResistance().sound(SoundType.CROP)));
     public BlockPlant(Supplier<Item> seedItem) {
-        super(Properties.of(Material.PLANT).noCollission().randomTicks().instabreak().sound(SoundType.CROP));
+        super(Properties.of().mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).noCollission().randomTicks().instabreak().sound(SoundType.CROP));
         this.seedItem = seedItem;
     }
 
@@ -75,7 +76,7 @@ public class BlockPlant extends CropBlock {
             boolean deductedSeedSize = false;
             for (ItemStack drop : drops) {
                 if (StackUtil.isValid(drop)) {
-                    if (drop.getItem() == this.seedItem && !deductedSeedSize) {
+                    if (drop.getItem() == this.seedItem.get() && !deductedSeedSize) {
                         drop.shrink(1);
                         deductedSeedSize = true;
                     }

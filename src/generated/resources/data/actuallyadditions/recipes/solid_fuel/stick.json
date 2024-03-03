@@ -1,8 +1,8 @@
 {
   "type": "actuallyadditions:solid_fuel",
+  "burn_time": 100,
   "item": {
     "item": "minecraft:stick"
   },
-  "total_energy": 2000,
-  "burn_time": 100
+  "total_energy": 2000
 }

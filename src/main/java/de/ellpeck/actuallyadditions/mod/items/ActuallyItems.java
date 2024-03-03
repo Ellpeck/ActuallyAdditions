@@ -211,7 +211,7 @@ public final class ActuallyItems {
         return () -> new Item(defaultProps());
     }
     public static Item.Properties defaultProps() {
-        return new Item.Properties().tab(ActuallyAdditions.GROUP);
+        return new Item.Properties();
     }
 
     public static Item.Properties defaultNonStacking() {

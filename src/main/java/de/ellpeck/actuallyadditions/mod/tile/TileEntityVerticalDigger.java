@@ -13,7 +13,6 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerMiner;
-import de.ellpeck.actuallyadditions.mod.items.DrillItem;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
@@ -23,7 +22,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -43,6 +41,7 @@ import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.IFluidBlock;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -190,7 +189,7 @@ public class TileEntityVerticalDigger extends TileEntityInventoryBase implements
                         //                            }
                         //                        }
 
-                        String reg = block.getRegistryName().toString();
+                        String reg = ForgeRegistries.BLOCKS.getKey(block).toString();
                         if (!reg.isEmpty()) {
                             for (String string : ConfigStringListValues.MINER_EXTRA_WHITELIST.getValue()) {
                                 if (reg.equals(string)) {
@@ -211,7 +210,7 @@ public class TileEntityVerticalDigger extends TileEntityInventoryBase implements
     }
 
     private boolean isBlacklisted(Block block) {
-        String reg = block.getRegistryName().toString();
+        String reg =  ForgeRegistries.BLOCKS.getKey(block).toString();
         if (!reg.isEmpty()) {
             for (String string : ConfigStringListValues.MINER_BLACKLIST.getValue()) {
                 if (reg.equals(string)) {
@@ -256,7 +255,7 @@ public class TileEntityVerticalDigger extends TileEntityInventoryBase implements
 
     @Override
     public Component getDisplayName() {
-        return TextComponent.EMPTY;
+        return Component.empty();
     }
 
     @Nullable

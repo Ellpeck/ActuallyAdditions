@@ -1,22 +1,24 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "WSW",
-    "SRS",
-    "WSW"
-  ],
+  "category": "misc",
   "key": {
-    "W": {
-      "tag": "forge:ender_pearls"
-    },
     "R": {
       "item": "actuallyadditions:black_quartz_block"
     },
     "S": {
       "item": "actuallyadditions:empowered_diamatine_crystal"
+    },
+    "W": {
+      "tag": "forge:ender_pearls"
     }
   },
+  "pattern": [
+    "WSW",
+    "SRS",
+    "WSW"
+  ],
   "result": {
     "item": "actuallyadditions:ender_casing"
-  }
+  },
+  "show_notification": true
 }

@@ -60,9 +60,8 @@ public class BlockBatteryBox extends BlockContainerBase {
     @Override
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         BlockEntity tile = world.getBlockEntity(pos);
-        if (tile instanceof TileEntityBatteryBox) {
-            TileEntityBatteryBox box = (TileEntityBatteryBox) tile;
-            ItemStack stack = player.getItemInHand(hand);
+        if (tile instanceof TileEntityBatteryBox box) {
+	        ItemStack stack = player.getItemInHand(hand);
 
             if (!stack.isEmpty()) {
                 if (stack.getItem() instanceof ItemBattery && box.inv.getStackInSlot(0).isEmpty()) {

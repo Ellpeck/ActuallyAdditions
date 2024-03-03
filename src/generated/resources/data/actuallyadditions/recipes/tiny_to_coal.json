@@ -4,25 +4,27 @@
     {
       "conditions": [
         {
-          "config_name": "tinyCoalStuff",
-          "type": "actuallyadditions:bool_config_condition"
+          "type": "actuallyadditions:bool_config_condition",
+          "config_name": "tinyCoalStuff"
         }
       ],
       "recipe": {
         "type": "minecraft:crafting_shaped",
-        "pattern": [
-          "CCC",
-          "C C",
-          "CCC"
-        ],
+        "category": "misc",
         "key": {
           "C": {
             "item": "actuallyadditions:tiny_coal"
           }
         },
+        "pattern": [
+          "CCC",
+          "C C",
+          "CCC"
+        ],
         "result": {
           "item": "minecraft:coal"
-        }
+        },
+        "show_notification": true
       }
     }
   ]

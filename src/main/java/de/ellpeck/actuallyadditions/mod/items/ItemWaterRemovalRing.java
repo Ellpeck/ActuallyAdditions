@@ -29,7 +29,7 @@ public class ItemWaterRemovalRing extends ItemEnergy {
 
     @Override
     public void inventoryTick(ItemStack stack, Level world, Entity player, int itemSlot, boolean isSelected) {
-        if (!(player instanceof Player) || player.level.isClientSide || player.isShiftKeyDown()) {
+        if (!(player instanceof Player) || player.level().isClientSide || player.isShiftKeyDown()) {
             return;
         }
 

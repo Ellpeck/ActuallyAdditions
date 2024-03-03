@@ -11,9 +11,9 @@
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import de.ellpeck.actuallyadditions.mod.inventory.SackContainer;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -77,9 +77,9 @@ public class SackGui extends AAScreen<SackContainer> {
     }*/
 
     @Override
-    public void render(@Nonnull PoseStack stack, int mouseX, int mouseY, float partialTicks) {
-        super.render(stack, mouseX, mouseY, partialTicks);
-        this.filter.drawHover(stack, mouseX, mouseY);
+    public void render(@Nonnull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+        super.render(guiGraphics, mouseX, mouseY, partialTicks);
+        this.filter.drawHover(guiGraphics, mouseX, mouseY);
 
 /*        if (this.buttonAutoInsert.isMouseOver()) {
             List<String> text = new ArrayList<>();
@@ -93,15 +93,12 @@ public class SackGui extends AAScreen<SackContainer> {
     }
 
     @Override
-    protected void renderBg(PoseStack matrixStack, float partialTicks, int x, int y) {
+    protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int x, int y) {
         RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
 
         RenderSystem.setShaderTexture(0, AssetUtil.GUI_INVENTORY_LOCATION);
-        this.blit(matrixStack, this.leftPos, this.topPos + 90, 0, 0, 176, 86);
+        guiGraphics.blit(AssetUtil.GUI_INVENTORY_LOCATION, this.leftPos, this.topPos + 90, 0, 0, 176, 86);
 
-        RenderSystem.setShaderTexture(0, this.isVoid
-            ? RES_LOC_VOID
-            : RES_LOC);
-        this.blit(matrixStack, this.leftPos, this.topPos, 0, 0, 176, 90);
+        guiGraphics.blit(this.isVoid ? RES_LOC_VOID : RES_LOC, this.leftPos, this.topPos, 0, 0, 176, 90);
     }
 }

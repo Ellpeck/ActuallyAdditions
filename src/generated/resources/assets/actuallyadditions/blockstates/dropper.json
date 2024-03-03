@@ -4,8 +4,10 @@
       "model": "actuallyadditions:block/dropper",
       "x": 180
     },
-    "facing=up": {
-      "model": "actuallyadditions:block/dropper"
+    "facing=east": {
+      "model": "actuallyadditions:block/dropper",
+      "x": 90,
+      "y": 90
     },
     "facing=north": {
       "model": "actuallyadditions:block/dropper",
@@ -16,15 +18,13 @@
       "x": 90,
       "y": 180
     },
+    "facing=up": {
+      "model": "actuallyadditions:block/dropper"
+    },
     "facing=west": {
       "model": "actuallyadditions:block/dropper",
       "x": 90,
       "y": 270
-    },
-    "facing=east": {
-      "model": "actuallyadditions:block/dropper",
-      "x": 90,
-      "y": 90
     }
   }
 }

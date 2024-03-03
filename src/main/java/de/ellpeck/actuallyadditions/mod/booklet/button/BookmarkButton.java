@@ -42,7 +42,7 @@
 //    public IBookletPage assignedPage;
 //
 //    public BookmarkButton(int x, int y, GuiBooklet booklet) {
-//        super(x, y, 16, 16, StringTextComponent.EMPTY, btn -> {
+//        super(x, y, 16, 16, StringComponent.empty(), btn -> {
 //            BookmarkButton button = (BookmarkButton) btn;
 //            if (button.assignedPage != null) {
 //                if (Screen.hasShiftDown()) {
@@ -74,7 +74,7 @@
 //            GlStateManager._blendFuncSeparate(770, 771, 1, 0);
 //            GlStateManager._blendFunc(770, 771);
 //            int renderHeight = 25;
-//            this.blit(matrices, this.x, this.y, 224 + (this.assignedPage == null
+//            guiGraphics.blit(matrices, this.x, this.y, 224 + (this.assignedPage == null
 //                ? 0
 //                : 16), 14 - renderHeight + offset * renderHeight, this.width, renderHeight);
 //

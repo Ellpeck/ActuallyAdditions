@@ -20,7 +20,7 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -45,7 +45,8 @@ public class CrystalClusterBlock extends FullyDirectionalBlock {
     ).reduce((v1, v2) -> Shapes.join(v1, v2, BooleanOp.OR) ).get();
 
     public CrystalClusterBlock(Crystals crystal) {
-        super(Block.Properties.of(Material.GLASS)
+        super(Block.Properties.of()
+            .instrument(NoteBlockInstrument.HAT)
             .lightLevel((e) -> 7)
             .sound(SoundType.GLASS)
             .noOcclusion()

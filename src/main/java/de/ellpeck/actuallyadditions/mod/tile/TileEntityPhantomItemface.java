@@ -20,7 +20,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 
 public class TileEntityPhantomItemface extends TileEntityPhantomface {
 
@@ -52,7 +52,7 @@ public class TileEntityPhantomItemface extends TileEntityPhantomface {
             BlockEntity tile = this.level.getBlockEntity(this.getBoundPosition());
             if (tile != null) {
                 for (Direction facing : Direction.values()) {
-                    if (tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing).isPresent()) {
+                    if (tile.getCapability(ForgeCapabilities.ITEM_HANDLER, facing).isPresent()) {
                         return true;
                     }
                 }
@@ -63,7 +63,7 @@ public class TileEntityPhantomItemface extends TileEntityPhantomface {
 
     @Override
     protected boolean isCapabilitySupported(Capability<?> capability) {
-        return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY;
+        return capability == ForgeCapabilities.ITEM_HANDLER;
     }
 
     @Override

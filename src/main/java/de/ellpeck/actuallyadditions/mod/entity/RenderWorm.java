@@ -11,18 +11,18 @@
 package de.ellpeck.actuallyadditions.mod.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.InventoryMenu;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -39,7 +39,7 @@ public class RenderWorm extends EntityRenderer<EntityWorm> {
 
         stack = new ItemStack(ActuallyItems.WORM.get());
         snailStack = new ItemStack(ActuallyItems.WORM.get());
-        snailStack.setHoverName(new TextComponent("Snail Mail"));
+        snailStack.setHoverName(Component.literal("Snail Mail"));
     }
 
     @Override
@@ -48,10 +48,10 @@ public class RenderWorm extends EntityRenderer<EntityWorm> {
         matrix.pushPose();
         matrix.translate(0, 0.7F, 0);
         double boop = Util.getMillis() / 70D;
-        matrix.mulPose(Vector3f.YP.rotationDegrees(-(float) (boop % 360)));
+        matrix.mulPose(Axis.YP.rotationDegrees(-(float) (boop % 360)));
         matrix.translate(0,0,0.4);
         Minecraft.getInstance().getItemRenderer().renderStatic(
-                isSnail? snailStack:stack, ItemTransforms.TransformType.FIXED, light, OverlayTexture.NO_OVERLAY, matrix, buffer, 0
+                isSnail? snailStack:stack, ItemDisplayContext.FIXED, light, OverlayTexture.NO_OVERLAY, matrix, buffer, null, 0
         );
 
         matrix.popPose();

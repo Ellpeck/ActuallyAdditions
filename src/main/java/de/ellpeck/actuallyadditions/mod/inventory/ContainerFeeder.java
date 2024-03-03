@@ -27,7 +27,7 @@ public class ContainerFeeder extends AbstractContainerMenu {
     public final TileEntityFeeder feeder;
 
     public static ContainerFeeder fromNetwork(int windowId, Inventory inv, FriendlyByteBuf data) {
-        return new ContainerFeeder(windowId, inv, (TileEntityFeeder) Objects.requireNonNull(inv.player.level.getBlockEntity(data.readBlockPos())));
+        return new ContainerFeeder(windowId, inv, (TileEntityFeeder) Objects.requireNonNull(inv.player.level().getBlockEntity(data.readBlockPos())));
     }
 
     public ContainerFeeder(int windowId, Inventory inventory, TileEntityFeeder tile) {

@@ -51,7 +51,7 @@ public class ContainerFurnaceDouble extends AbstractContainerMenu {
     }
 
     public static ContainerFurnaceDouble fromNetwork(int windowId, Inventory inv, FriendlyByteBuf data) {
-        return new ContainerFurnaceDouble(windowId, inv, (TileEntityPoweredFurnace) Objects.requireNonNull(inv.player.level.getBlockEntity(data.readBlockPos())));
+        return new ContainerFurnaceDouble(windowId, inv, (TileEntityPoweredFurnace) Objects.requireNonNull(inv.player.level().getBlockEntity(data.readBlockPos())));
     }
 
     @Nonnull
@@ -83,7 +83,7 @@ public class ContainerFurnaceDouble extends AbstractContainerMenu {
                     return ItemStack.EMPTY;
                 }
 
-                ItemStack recipeOutput = irecipe.getResultItem();
+                ItemStack recipeOutput = irecipe.getResultItem(player.level().registryAccess());
 
                 //Shift from Inventory
                 if (StackUtil.isValid(recipeOutput)) {

@@ -159,7 +159,7 @@ public class MethodHandler implements IMethodHandler {
                             }
                             Optional<LaserRecipe> recipe = LaserRecipe.getRecipeForStack(new ItemStack(state.getBlock()));
                             if (recipe.isPresent() && tile.getEnergy() >= recipe.get().getEnergy()) {
-                                ItemStack output = recipe.get().getResultItem().copy();
+                                ItemStack output = recipe.get().getResultItem(tile.getWorldObject().registryAccess()).copy();
                                 if (!output.isEmpty()) {
                                     tile.getWorldObject().levelEvent(2001, pos, Block.getId(state));
                                     if (output.getItem() instanceof BlockItem) {
@@ -205,7 +205,7 @@ public class MethodHandler implements IMethodHandler {
                                 tile.getWorldObject().addFreshEntity(inputLeft);
                             }
 
-                            ItemStack outputCopy = recipe.get().getResultItem().copy();
+                            ItemStack outputCopy = recipe.get().getResultItem(tile.getWorldObject().registryAccess()).copy();
                             outputCopy.setCount(itemsPossible);
 
                             ItemEntity newItem = new ItemEntity(tile.getWorldObject(), item.getX(), item.getY(), item.getZ(), outputCopy);

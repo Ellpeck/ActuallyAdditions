@@ -1,9 +1,9 @@
 {
   "type": "actuallyadditions:laser",
+  "energy": 100,
   "ingredient": {
     "tag": "forge:gems/emerald"
   },
-  "energy": 100,
   "result": {
     "item": "actuallyadditions:emeradic_crystal"
   }

@@ -22,7 +22,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
 
@@ -54,26 +54,26 @@ public class CactusFarmerBehavior implements IFarmerBehavior {
     }
 
     @Override
-    public FarmerResult tryHarvestPlant(ServerLevel world, BlockPos pos, IFarmer farmer) {
+    public FarmerResult tryHarvestPlant(ServerLevel serverLevel, BlockPos pos, IFarmer farmer) {
         int use = 250;
         if (farmer.getEnergy() >= use) {
-            BlockState state = world.getBlockState(pos);
+            BlockState state = serverLevel.getBlockState(pos);
             if (state.getBlock() == Blocks.CACTUS) {
                 FarmerResult result = FarmerResult.STOP_PROCESSING;
 
                 for (int i = 2; i >= 1; i--) {
                     if (farmer.getEnergy() >= use) {
                         BlockPos up = pos.above(i);
-                        BlockState upState = world.getBlockState(up);
+                        BlockState upState = serverLevel.getBlockState(up);
                         if (upState.getBlock() == Blocks.CACTUS) {
-                            List<ItemStack> drops = state.getDrops(new LootContext.Builder(world)
-                                .withParameter(LootContextParams.ORIGIN, new Vec3(pos.getX(), pos.getY(), pos.getZ()))
-                                .withParameter(LootContextParams.TOOL, ItemStack.EMPTY));
+                            List<ItemStack> drops = state.getDrops((new LootParams.Builder(serverLevel))
+                                    .withParameter(LootContextParams.ORIGIN, new Vec3(pos.getX(), pos.getY(), pos.getZ()))
+                                    .withParameter(LootContextParams.TOOL, ItemStack.EMPTY));
 
                             if (!drops.isEmpty()) {
                                 if (farmer.canAddToOutput(drops)) {
-                                    world.levelEvent(2001, up, Block.getId(upState));
-                                    world.setBlockAndUpdate(up, Blocks.AIR.defaultBlockState());
+                                    serverLevel.levelEvent(2001, up, Block.getId(upState));
+                                    serverLevel.setBlockAndUpdate(up, Blocks.AIR.defaultBlockState());
 
                                     farmer.extractEnergy(use);
                                     farmer.addToOutput(drops);

@@ -21,7 +21,7 @@ public class BoolConfigCondition implements ICondition {
     }
 
     @Override
-    public boolean test() {
+    public boolean test(IContext condition) {
         switch (boolConfig) {
             default:
                 return true;

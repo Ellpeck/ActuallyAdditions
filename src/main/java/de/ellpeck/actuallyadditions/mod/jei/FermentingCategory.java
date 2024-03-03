@@ -58,7 +58,7 @@
 //
 //    @Override
 //    public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull FermentingRecipe fermentingRecipe, @Nonnull IIngredients ingredients) {
-//        int maxFluid = Math.max(FluidAttributes.BUCKET_VOLUME, Math.max(fermentingRecipe.getInput().getAmount(), fermentingRecipe.getOutput().getAmount()));
+//        int maxFluid = Math.max(FluidType.BUCKET_VOLUME, Math.max(fermentingRecipe.getInput().getAmount(), fermentingRecipe.getOutput().getAmount()));
 //
 //        fermentingRecipe.setInputDisplay(new FluidDisplay(19, 1, fermentingRecipe.getInput(), maxFluid, false));
 //        fermentingRecipe.setOutputDisplay(new FluidDisplay(19+38, 1, fermentingRecipe.getOutput(), maxFluid, false));

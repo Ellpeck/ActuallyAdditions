@@ -1,25 +1,27 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "OBO",
-    "RCR",
-    "OBO"
-  ],
+  "category": "misc",
   "key": {
     "B": {
       "tag": "forge:dusts/redstone"
+    },
+    "C": {
+      "tag": "forge:chests/wooden"
     },
     "O": {
       "item": "actuallyadditions:basic_coil"
     },
     "R": {
       "item": "actuallyadditions:restonia_crystal"
-    },
-    "C": {
-      "tag": "forge:chests/wooden"
     }
   },
+  "pattern": [
+    "OBO",
+    "RCR",
+    "OBO"
+  ],
   "result": {
     "item": "actuallyadditions:item_interface"
-  }
+  },
+  "show_notification": true
 }

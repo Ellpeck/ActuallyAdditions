@@ -32,7 +32,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.event.ForgeEventFactory;
@@ -48,36 +47,36 @@ public class ItemWaterBowl extends ItemBase {
 
     @SubscribeEvent
     public void onPlayerInteractEvent(PlayerInteractEvent.RightClickItem event) {
-        if (event.getWorld() != null) {
+        if (event.getLevel() != null) {
             if (CommonConfig.Other.WATER_BOWL.get()) {
                 if (StackUtil.isValid(event.getItemStack()) && event.getItemStack().getItem() == Items.BOWL) {
-                    HitResult rayTrace = WorldUtil.getNearestBlockWithDefaultReachDistance(event.getWorld(), event.getPlayer(), true, false, false);
+                    HitResult rayTrace = WorldUtil.getNearestBlockWithDefaultReachDistance(event.getLevel(), event.getEntity(), true, false, false);
                     if (rayTrace.getType() != HitResult.Type.BLOCK) {
                         return;
                     }
 
                     BlockHitResult trace = (BlockHitResult) rayTrace;
-                    InteractionResultHolder<ItemStack> result = ForgeEventFactory.onBucketUse(event.getPlayer(), event.getWorld(), event.getItemStack(), trace);
+                    InteractionResultHolder<ItemStack> result = ForgeEventFactory.onBucketUse(event.getEntity(), event.getLevel(), event.getItemStack(), trace);
                     if (result == null) {
-                        if (event.getPlayer().mayUseItemAt(trace.getBlockPos().relative(trace.getDirection()), trace.getDirection(), event.getItemStack())) {
-                            BlockState state = event.getWorld().getBlockState(trace.getBlockPos());
+                        if (event.getEntity().mayUseItemAt(trace.getBlockPos().relative(trace.getDirection()), trace.getDirection(), event.getItemStack())) {
+                            BlockState state = event.getLevel().getBlockState(trace.getBlockPos());
                             Block block = state.getBlock();
 
                             // TODO: Validate fluid check
                             if ((block == Blocks.WATER) && state.getValue(BlockStateProperties.LEVEL) == 0) {
-                                event.getPlayer().playSound(SoundEvents.BUCKET_FILL, 1.0F, 1.0F);
+                                event.getEntity().playSound(SoundEvents.BUCKET_FILL, 1.0F, 1.0F);
 
-                                if (!event.getWorld().isClientSide) {
-                                    event.getWorld().setBlock(trace.getBlockPos(), Blocks.AIR.defaultBlockState(), 11);
+                                if (!event.getLevel().isClientSide) {
+                                    event.getLevel().setBlock(trace.getBlockPos(), Blocks.AIR.defaultBlockState(), 11);
                                     ItemStack reduced = StackUtil.shrink(event.getItemStack(), 1);
 
                                     ItemStack bowl = new ItemStack(ActuallyItems.WATER_BOWL.get());
                                     if (!StackUtil.isValid(reduced)) {
-                                        event.getPlayer().setItemInHand(event.getHand(), bowl);
-                                    } else if (!event.getPlayer().getInventory().add(bowl.copy())) {
-                                        ItemEntity entityItem = new ItemEntity(event.getWorld(), event.getPlayer().getX(), event.getPlayer().getY(), event.getPlayer().getZ(), bowl.copy());
+                                        event.getEntity().setItemInHand(event.getHand(), bowl);
+                                    } else if (!event.getEntity().getInventory().add(bowl.copy())) {
+                                        ItemEntity entityItem = new ItemEntity(event.getLevel(), event.getEntity().getX(), event.getEntity().getY(), event.getEntity().getZ(), bowl.copy());
                                         entityItem.setPickUpDelay(0);
-                                        event.getWorld().addFreshEntity(entityItem);
+                                        event.getLevel().addFreshEntity(entityItem);
                                     }
                                 }
                             }
@@ -109,7 +108,7 @@ public class ItemWaterBowl extends ItemBase {
             if (!world.mayInteract(player, pos)) {
                 return InteractionResultHolder.fail(stack);
             } else {
-                BlockPos pos1 = world.getBlockState(pos).getMaterial().isReplaceable() && blockTrace.getDirection() == Direction.UP
+                BlockPos pos1 = world.getBlockState(pos).canBeReplaced() && blockTrace.getDirection() == Direction.UP
                     ? pos
                     : pos.relative(blockTrace.getDirection());
 
@@ -143,9 +142,8 @@ public class ItemWaterBowl extends ItemBase {
                     boolean change = false;
                     if (lastX != 0 && lastX != (int) entity.getX() || lastY != 0 && lastY != (int) entity.getY()) {
                         if (!entity.isShiftKeyDown()) {
-                            if (entity instanceof Player) {
-                                Player player = (Player) entity;
-                                if (this.tryPlaceContainedLiquid(player, world, player.blockPosition(), true)) {
+                            if (entity instanceof Player player) {
+	                            if (this.tryPlaceContainedLiquid(player, world, player.blockPosition(), true)) {
                                     this.checkReplace(player, stack, new ItemStack(Items.BOWL), itemSlot);
                                 }
                             }
@@ -173,14 +171,13 @@ public class ItemWaterBowl extends ItemBase {
 
     @Override
     public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
-        return !ItemStack.isSame(oldStack, newStack);
+        return !ItemStack.isSameItem(oldStack, newStack);
     }
 
     public boolean tryPlaceContainedLiquid(Player player, Level world, BlockPos pos, boolean finite) {
         BlockState state = world.getBlockState(pos);
-        Material material = state.getMaterial();
-        boolean nonSolid = !material.isSolid();
-        boolean replaceable = state.getMaterial().isReplaceable();
+        boolean nonSolid = !state.isSolid();
+        boolean replaceable = state.canBeReplaced();
 
         if (!world.isEmptyBlock(pos) && !nonSolid && !replaceable) {
             return false;
@@ -192,7 +189,7 @@ public class ItemWaterBowl extends ItemBase {
                     world.addParticle(ParticleTypes.LARGE_SMOKE, pos.getX() + Math.random(), pos.getY() + Math.random(), pos.getZ() + Math.random(), 0.0D, 0.0D, 0.0D);
                 }
             } else {
-                if (!world.isClientSide && (nonSolid || replaceable) && !material.isLiquid()) {
+                if (!world.isClientSide && (nonSolid || replaceable) && world.getFluidState(pos).isEmpty()) {
                     world.destroyBlock(pos, true);
                 }
 

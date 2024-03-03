@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shapeless",
+  "category": "misc",
   "ingredients": [
     {
       "item": "minecraft:diamond_sword"
@@ -9,8 +10,8 @@
     },
     {
       "type": "forge:nbt",
-      "item": "minecraft:enchanted_book",
       "count": 1,
+      "item": "minecraft:enchanted_book",
       "nbt": "{Enchantments:[{id:\"minecraft:sharpness\",lvl:5s}]}"
     }
   ],

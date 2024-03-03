@@ -11,10 +11,10 @@
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerXPSolidifier;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityXPSolidifier;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
@@ -70,16 +70,14 @@ public class GuiXPSolidifier extends AAScreen<ContainerXPSolidifier> {
     }
 
     @Override
-    public void renderBg(PoseStack matrices, float f, int x, int y) {
+    public void renderBg(GuiGraphics guiGraphics, float f, int x, int y) {
         RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
 
-        RenderSystem.setShaderTexture(0, AssetUtil.GUI_INVENTORY_LOCATION);
-        this.blit(matrices, this.leftPos, this.topPos + 93, 0, 0, 176, 86);
+        guiGraphics.blit(AssetUtil.GUI_INVENTORY_LOCATION, this.leftPos, this.topPos + 93, 0, 0, 176, 86);
 
-        RenderSystem.setShaderTexture(0, RES_LOC);
-        this.blit(matrices, this.leftPos, this.topPos, 0, 0, 176, 93);
+        guiGraphics.blit(RES_LOC, this.leftPos, this.topPos, 0, 0, 176, 93);
 
-        drawCenteredString(matrices, this.font, Integer.toString(this.solidifier.amount), this.leftPos + 88, this.topPos + 30, 0xFFFFFF);
+        guiGraphics.drawCenteredString(this.font, Integer.toString(this.solidifier.amount), this.leftPos + 88, this.topPos + 30, 0xFFFFFF);
     }
 
 //    @Override

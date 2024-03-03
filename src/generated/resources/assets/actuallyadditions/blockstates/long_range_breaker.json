@@ -4,8 +4,10 @@
       "model": "actuallyadditions:block/long_range_breaker",
       "x": 180
     },
-    "facing=up": {
-      "model": "actuallyadditions:block/long_range_breaker"
+    "facing=east": {
+      "model": "actuallyadditions:block/long_range_breaker",
+      "x": 90,
+      "y": 90
     },
     "facing=north": {
       "model": "actuallyadditions:block/long_range_breaker",
@@ -16,15 +18,13 @@
       "x": 90,
       "y": 180
     },
+    "facing=up": {
+      "model": "actuallyadditions:block/long_range_breaker"
+    },
     "facing=west": {
       "model": "actuallyadditions:block/long_range_breaker",
       "x": 90,
       "y": 270
-    },
-    "facing=east": {
-      "model": "actuallyadditions:block/long_range_breaker",
-      "x": 90,
-      "y": 90
     }
   }
 }

@@ -1,27 +1,16 @@
-buildscript {
-    repositories {
-        maven { url = 'https://maven.minecraftforge.net' }
-        mavenCentral()
-
-        maven { url = 'https://maven.parchmentmc.org' }
-        maven { url "https://www.cursemaven.com" }
-    }
-    dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
-        classpath 'org.parchmentmc:librarian:1.+'
-    }
+plugins {
+    id 'eclipse'
+    id 'idea'
+    id 'maven-publish'
+    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
+    id 'org.parchmentmc.librarian.forgegradle' version '1.+'
 }
 
-apply plugin: 'net.minecraftforge.gradle'
-apply plugin: 'org.parchmentmc.librarian.forgegradle'
-apply plugin: 'java'
-apply plugin: 'idea'
-apply plugin: 'maven-publish'
-apply from: 'https://raw.githubusercontent.com/SizableShrimp/Forge-Class-Remapper/main/classremapper.gradle'
-apply from: 'https://raw.githubusercontent.com/SizableShrimp/ForgeUpdatesRemapper/main/remapper.gradle'
 version = "$mod_version"
 group = "de.ellpeck.actuallyadditions"
-archivesBaseName = "ActuallyAdditions-$game_version"
+base {
+    archivesName = "ActuallyAdditions-$game_version"
+}
 
 if (System.getenv('BUILD_NUMBER') != null) {
     version += "." + System.getenv('BUILD_NUMBER')
@@ -75,8 +64,7 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
     maven {
-        name = "Progwml6 maven"
-        url = "https://dvs1.progwml6.com/files/maven/"
+        url = "https://maven.blamejared.com"
     }
     maven {
         url = "https://www.cursemaven.com"
@@ -86,11 +74,13 @@ repositories {
 dependencies {
     minecraft "net.minecraftforge:forge:${game_version}-${forge_version}"
 
-    compileOnly fg.deobf("mezz.jei:jei-${jei_version}:api")
-    runtimeOnly fg.deobf("mezz.jei:jei-${jei_version}")
+    compileOnly fg.deobf("mezz.jei:jei-${game_version}-common-api:${jei_version}")
+    compileOnly fg.deobf("mezz.jei:jei-${game_version}-forge-api:${jei_version}")
 
-    runtimeOnly fg.deobf("curse.maven:the-one-probe-245211:3965688")
-    runtimeOnly fg.deobf("curse.maven:mekanism-268560:3875976")
+    runtimeOnly fg.deobf("mezz.jei:jei-${game_version}-forge:${jei_version}")
+
+    runtimeOnly fg.deobf("curse.maven:the-one-probe-245211:4629624")
+    runtimeOnly fg.deobf("curse.maven:mekanism-268560:5125665")
 }
 
 // not sure if this is still needed
@@ -123,13 +113,13 @@ jar {
 task deobfJar(type: Jar) {
     from sourceSets.main.output
     from sourceSets.main.java
-    classifier = 'dev'
+    archiveClassifier.set('dev')
 }
 
 task apiJar(type: Jar) {
     from sourceSets.main.output
     from sourceSets.main.java
-    classifier = 'api'
+    archiveClassifier.set('api')
     include 'de/ellpeck/actuallyadditions/api/**'
 }
 
@@ -139,12 +129,12 @@ javadoc {
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
     from 'build/docs/javadoc'
-    classifier 'javadoc'
+    archiveClassifier.set('javadoc')
 }
 
 task sourcesJar(type: Jar) {
     from sourceSets.main.java
-    classifier = 'sources'
+    archiveClassifier.set('sources')
 }
 
 artifacts {
@@ -156,7 +146,7 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             groupId = group
-            artifactId = archivesBaseName
+            artifactId = base.archivesName.get()
             version = version
 
             from components.java
@@ -178,4 +168,8 @@ publishing {
             url "file://" + System.getenv("local_maven")
         }
     }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
 }

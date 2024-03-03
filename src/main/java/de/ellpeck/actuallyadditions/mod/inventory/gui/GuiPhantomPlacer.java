@@ -11,10 +11,10 @@
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerPhantomPlacer;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityPhantomPlacer;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
@@ -55,8 +55,8 @@ public class GuiPhantomPlacer extends AAScreen<ContainerPhantomPlacer> {
     }
 
     @Override
-    public void render(@Nonnull PoseStack matrices, int mouseX, int mouseY, float partialTicks) {
-        super.render(matrices, mouseX, mouseY, partialTicks);
+    public void render(@Nonnull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+        super.render(guiGraphics, mouseX, mouseY, partialTicks);
 
 //        if (!this.placer.isBreaker && this.buttonList.get(0).isMouseOver()) {
 //            String loc = "info." + ActuallyAdditions.MODID + ".placer.sides";
@@ -79,13 +79,11 @@ public class GuiPhantomPlacer extends AAScreen<ContainerPhantomPlacer> {
 //        return GuiInputter.SIDES[this.placer.side + 1];
 //    }
     @Override
-    public void renderBg(PoseStack matrices, float f, int x, int y) {
+    public void renderBg(GuiGraphics guiGraphics, float f, int x, int y) {
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 
-        RenderSystem.setShaderTexture(0, AssetUtil.GUI_INVENTORY_LOCATION);
-        this.blit(matrices, this.leftPos, this.topPos + 93, 0, 0, 176, 86);
+        guiGraphics.blit(AssetUtil.GUI_INVENTORY_LOCATION, this.leftPos, this.topPos + 93, 0, 0, 176, 86);
 
-        RenderSystem.setShaderTexture(0, RES_LOC);
-        this.blit(matrices, this.leftPos, this.topPos, 0, 0, 176, 93);
+        guiGraphics.blit(RES_LOC, this.leftPos, this.topPos, 0, 0, 176, 93);
     }
 }

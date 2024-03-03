@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.Tier;
 
@@ -28,7 +27,7 @@ public class ItemPickaxeAA extends DiggerItem {
 //                .addToolType(ToolType.SHOVEL, tier.getLevel())
 //                .addToolType(ToolType.PICKAXE, tier.getLevel())
                 .durability(tier.getUses() * 4)
-                .tab(ActuallyAdditions.GROUP)
+                
         );
 
         this.tier = tier;

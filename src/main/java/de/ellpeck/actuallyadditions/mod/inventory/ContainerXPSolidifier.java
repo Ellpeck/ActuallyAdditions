@@ -29,7 +29,7 @@ public class ContainerXPSolidifier extends AbstractContainerMenu {
     public final TileEntityXPSolidifier solidifier;
 
     public static ContainerXPSolidifier fromNetwork(int windowId, Inventory inv, FriendlyByteBuf data) {
-        return new ContainerXPSolidifier(windowId, inv, (TileEntityXPSolidifier) Objects.requireNonNull(inv.player.level.getBlockEntity(data.readBlockPos())));
+        return new ContainerXPSolidifier(windowId, inv, (TileEntityXPSolidifier) Objects.requireNonNull(inv.player.level().getBlockEntity(data.readBlockPos())));
     }
 
     public ContainerXPSolidifier(int windowId, Inventory inventory, TileEntityXPSolidifier tile) {

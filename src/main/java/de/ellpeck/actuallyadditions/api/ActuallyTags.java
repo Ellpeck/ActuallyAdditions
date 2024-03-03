@@ -1,9 +1,8 @@
 package de.ellpeck.actuallyadditions.api;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -13,6 +12,7 @@ public final class ActuallyTags {
     public static final void init() {
         // lol
         Items.touch();
+        Blocks.touch();
     }
     public static class Items {
         public static void touch() {
@@ -25,7 +25,7 @@ public final class ActuallyTags {
         public static final TagKey<Item> CRYSTALS = tag("crystals");
 
         private static TagKey<Item> tag(String name) {
-            return TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(ActuallyAdditions.MODID, name));
+            return TagKey.create(Registries.ITEM, new ResourceLocation(ActuallyAdditions.MODID, name));
         }
     }
 
@@ -45,7 +45,7 @@ public final class ActuallyTags {
         public static final TagKey<Block> NEEDS_ENORI_TOOL = tag("needs_enori_tool");
 
         private static TagKey<Block> tag(String name) {
-            return TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation(ActuallyAdditions.MODID, name));
+            return TagKey.create(Registries.BLOCK, new ResourceLocation(ActuallyAdditions.MODID, name));
         }
     }
 }

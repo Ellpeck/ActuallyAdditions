@@ -17,7 +17,6 @@ import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -113,7 +112,7 @@ public class TileEntityDropper extends TileEntityInventoryBase implements MenuPr
 
     @Override
     public Component getDisplayName() {
-        return new TranslatableComponent("container.actuallyadditions.dropper");
+        return Component.translatable("container.actuallyadditions.dropper");
     }
 
     @Nullable

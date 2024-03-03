@@ -19,7 +19,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -27,8 +26,8 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
 import javax.annotation.Nullable;
@@ -67,7 +66,7 @@ public class TileEntityEnervator extends TileEntityInventoryBase implements ISha
 
             if (StackUtil.isValid(tile.inv.getStackInSlot(0)) && !StackUtil.isValid(tile.inv.getStackInSlot(1))) {
                 if (tile.storage.getEnergyStored() < tile.storage.getMaxEnergyStored()) {
-                    LazyOptional<IEnergyStorage> capability = tile.inv.getStackInSlot(0).getCapability(CapabilityEnergy.ENERGY, null);
+                    LazyOptional<IEnergyStorage> capability = tile.inv.getStackInSlot(0).getCapability(ForgeCapabilities.ENERGY, null);
 
                     int maxExtract = tile.storage.getMaxEnergyStored() - tile.storage.getEnergyStored();
                     int extracted = capability.map(cap -> cap.extractEnergy(maxExtract, false)).orElse(0);
@@ -92,7 +91,7 @@ public class TileEntityEnervator extends TileEntityInventoryBase implements ISha
 
     @Override
     public IAcceptor getAcceptor() {
-        return (slot, stack, automation) -> !automation || slot == 0 && stack.getCapability(CapabilityEnergy.ENERGY, null).isPresent();
+        return (slot, stack, automation) -> !automation || slot == 0 && stack.getCapability(ForgeCapabilities.ENERGY, null).isPresent();
     }
 
     @Override
@@ -131,7 +130,7 @@ public class TileEntityEnervator extends TileEntityInventoryBase implements ISha
 
     @Override
     public Component getDisplayName() {
-        return TextComponent.EMPTY;
+        return Component.empty();
     }
 
     @Nullable

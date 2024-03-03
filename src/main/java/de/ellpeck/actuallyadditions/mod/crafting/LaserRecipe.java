@@ -2,6 +2,7 @@ package de.ellpeck.actuallyadditions.mod.crafting;
 
 import com.google.gson.JsonObject;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -14,7 +15,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.registries.ForgeRegistryEntry;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -63,7 +64,7 @@ public class LaserRecipe implements Recipe<Container> {
     }
 
     @Override
-    public ItemStack assemble(Container pInv) {
+    public ItemStack assemble(Container pInv, RegistryAccess pRegistryAccess) {
         return result.copy();
     }
 
@@ -73,7 +74,7 @@ public class LaserRecipe implements Recipe<Container> {
     }
 
     @Override
-    public ItemStack getResultItem() {
+    public ItemStack getResultItem(RegistryAccess pRegistryAccess) {
         return result;
     }
 
@@ -100,7 +101,7 @@ public class LaserRecipe implements Recipe<Container> {
         return getRecipeForStack(stack).isPresent();
     }
 
-    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<LaserRecipe> {
+    public static class Serializer implements RecipeSerializer<LaserRecipe> {
         @Override
         public LaserRecipe fromJson(@Nonnull ResourceLocation pRecipeId, @Nonnull JsonObject pJson) {
             Ingredient ingredient = Ingredient.fromJson(GsonHelper.getAsJsonObject(pJson, "ingredient"));
@@ -147,7 +148,7 @@ public class LaserRecipe implements Recipe<Container> {
             pJson.addProperty("energy", energy);
 
             JsonObject resultObject = new JsonObject();
-            resultObject.addProperty("item", output.asItem().getRegistryName().toString());
+            resultObject.addProperty("item", ForgeRegistries.ITEMS.getKey(output.asItem()).toString());
 
             pJson.add("result", resultObject);
         }

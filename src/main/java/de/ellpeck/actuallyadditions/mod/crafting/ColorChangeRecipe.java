@@ -2,6 +2,7 @@ package de.ellpeck.actuallyadditions.mod.crafting;
 
 import com.google.gson.JsonObject;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -14,7 +15,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.registries.ForgeRegistryEntry;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -49,7 +50,7 @@ public class ColorChangeRecipe implements Recipe<Container> {
 
     @Nonnull
     @Override
-    public ItemStack assemble(@Nonnull Container pInv) {
+    public ItemStack assemble(Container pInv, RegistryAccess pRegistryAccess) {
         return output.copy();
     }
 
@@ -64,7 +65,7 @@ public class ColorChangeRecipe implements Recipe<Container> {
 
     @Nonnull
     @Override
-    public ItemStack getResultItem() {
+    public ItemStack getResultItem(RegistryAccess pRegistryAccess) {
         return output.copy();
     }
 
@@ -85,7 +86,7 @@ public class ColorChangeRecipe implements Recipe<Container> {
         return ActuallyRecipes.Types.COLOR_CHANGE;
     }
 
-    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<ColorChangeRecipe> {
+    public static class Serializer implements RecipeSerializer<ColorChangeRecipe> {
         @Override
         public ColorChangeRecipe fromJson(@Nonnull ResourceLocation pRecipeId, @Nonnull JsonObject pJson) {
             Ingredient ingredient = Ingredient.fromJson(GsonHelper.getAsJsonObject(pJson, "ingredient"));
@@ -126,7 +127,7 @@ public class ColorChangeRecipe implements Recipe<Container> {
             pJson.add("ingredient", itemIngredient.toJson());
 
             JsonObject resultObject = new JsonObject();
-            resultObject.addProperty("item", output.asItem().getRegistryName().toString());
+            resultObject.addProperty("item", ForgeRegistries.ITEMS.getKey(output.asItem()).toString());
 
             pJson.add("result", resultObject);
         }

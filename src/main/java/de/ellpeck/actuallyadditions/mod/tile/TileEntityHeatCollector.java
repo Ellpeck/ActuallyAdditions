@@ -15,13 +15,13 @@ import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.MagmaBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 
@@ -76,7 +76,7 @@ public class TileEntityHeatCollector extends TileEntityBase implements ISharingE
                     BlockPos coords = pos.relative(WorldUtil.getDirectionBySidesInOrder(i));
                     BlockState relativeState = level.getBlockState(coords);
                     Block block = relativeState.getBlock();
-                    if (block != null && level.getBlockState(coords).getMaterial() == Material.LAVA || level.getBlockState(coords).getBlock() instanceof MagmaBlock) {
+                    if (block != null && level.getFluidState(coords).is(FluidTags.LAVA) || level.getBlockState(coords).getBlock() instanceof MagmaBlock) {
                         blocksAround.add(i);
                     }
                 }

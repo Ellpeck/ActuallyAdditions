@@ -15,7 +15,6 @@ import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -40,7 +39,7 @@ public class ItemFilter extends ItemBase {
     @Override
     public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
         if (!world.isClientSide && hand == InteractionHand.MAIN_HAND) {
-            NetworkHooks.openGui((ServerPlayer) player, new SimpleMenuProvider((windowId, inv, playerEnt) -> new ContainerFilter(windowId, inv), TextComponent.EMPTY));
+            NetworkHooks.openScreen((ServerPlayer) player, new SimpleMenuProvider((windowId, inv, playerEnt) -> new ContainerFilter(windowId, inv), Component.empty()));
             //            player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.FILTER.ordinal(), world, (int) player.posX, (int) player.posY, (int) player.posZ);
         }
         return InteractionResultHolder.pass(player.getItemInHand(hand));

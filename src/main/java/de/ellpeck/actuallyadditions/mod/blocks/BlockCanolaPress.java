@@ -63,7 +63,7 @@ public class BlockCanolaPress extends BlockContainerBase {
             return InteractionResult.SUCCESS;
         if (!player.isShiftKeyDown()) {
             if (!FluidUtil.interactWithFluidHandler(player, hand, tile.tank))
-                NetworkHooks.openGui((ServerPlayer) player, tile, pos);
+                NetworkHooks.openScreen((ServerPlayer) player, tile, pos);
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.PASS;

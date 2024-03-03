@@ -41,7 +41,7 @@ public class BlockCoffeeMachine extends DirectionalBlock.Container {
             TileEntityCoffeeMachine tile = (TileEntityCoffeeMachine) world.getBlockEntity(pos);
             if (tile != null) {
                 if (!this.tryUseItemOnTank(player, hand, tile.tank)) {
-                    NetworkHooks.openGui((ServerPlayer) player, tile, pos);
+                    NetworkHooks.openScreen((ServerPlayer) player, tile, pos);
                 }
             }
             return InteractionResult.PASS;

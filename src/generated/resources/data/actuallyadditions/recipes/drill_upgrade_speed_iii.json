@@ -1,22 +1,24 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "I": {
+      "item": "actuallyadditions:empowered_enori_crystal"
+    },
+    "R": {
+      "item": "actuallyadditions:empowered_diamatine_crystal"
+    },
+    "S": {
+      "item": "minecraft:sugar"
+    }
+  },
   "pattern": [
     "ISI",
     "SRS",
     "ISI"
   ],
-  "key": {
-    "I": {
-      "item": "actuallyadditions:empowered_enori_crystal"
-    },
-    "S": {
-      "item": "minecraft:sugar"
-    },
-    "R": {
-      "item": "actuallyadditions:empowered_diamatine_crystal"
-    }
-  },
   "result": {
     "item": "actuallyadditions:drill_upgrade_speed_iii"
-  }
+  },
+  "show_notification": true
 }

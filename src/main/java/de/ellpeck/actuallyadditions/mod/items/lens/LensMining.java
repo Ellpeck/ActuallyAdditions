@@ -100,7 +100,7 @@ public class LensMining extends Lens {
                     int totalWeight = WeightedRandom.getTotalWeight(ores);
                     Optional<MiningLensRecipe> ore = WeightedRandom.getRandomItem(tile.getWorldObject().random, ores);
 
-                    ItemStack stack = ore.map(recipe -> recipe.getResultItem().copy()).orElse(ItemStack.EMPTY);
+                    ItemStack stack = ore.map(recipe -> recipe.getResultItem(tile.getWorldObject().registryAccess()).copy()).orElse(ItemStack.EMPTY);
 
                     if (!stack.isEmpty() && stack.getItem() instanceof BlockItem) {
                         Block toPlace = Block.byItem(stack.getItem());

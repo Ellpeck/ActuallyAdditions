@@ -11,10 +11,10 @@
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerBioReactor;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBioReactor;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -42,28 +42,26 @@ public class GuiBioReactor extends AAScreen<ContainerBioReactor> {
     }
 
     @Override
-    public void render(@Nonnull PoseStack matrices, int mouseX, int mouseY, float partialTicks) {
-        super.render(matrices, mouseX, mouseY, partialTicks);
+    public void render(@Nonnull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+        super.render(guiGraphics, mouseX, mouseY, partialTicks);
         //this.energy.render(mouseX, mouseY);
     }
 
     @Override
-    public void renderBg(PoseStack matrices, float partialTicks, int x, int y) {
+    public void renderBg(GuiGraphics guiGraphics, float partialTicks, int x, int y) {
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 
-        RenderSystem.setShaderTexture(0, AssetUtil.GUI_INVENTORY_LOCATION);
-        this.blit(matrices, this.leftPos, this.topPos + 93, 0, 0, 176, 86);
+        guiGraphics.blit(AssetUtil.GUI_INVENTORY_LOCATION, this.leftPos, this.topPos + 93, 0, 0, 176, 86);
 
-        RenderSystem.setShaderTexture(0, RES_LOC);
-        this.blit(matrices, this.leftPos, this.topPos, 0, 0, 176, 93);
+        guiGraphics.blit(RES_LOC, this.leftPos, this.topPos, 0, 0, 176, 93);
 
         if (this.tile.burnTime > 0) {
             int i = this.tile.burnTime * 13 / this.tile.maxBurnTime;
-            this.blit(matrices, this.leftPos + 87, this.topPos + 51 + 12 - i, 176, 96 - i, 14, i);
+            guiGraphics.blit(RES_LOC, this.leftPos + 87, this.topPos + 51 + 12 - i, 176, 96 - i, 14, i);
         }
 
         if (this.tile.producePerTick > 0) {
-            drawCenteredString(matrices, this.font, this.tile.producePerTick + " " + I18n.get("actuallyadditions.cft"), this.leftPos + 87, this.topPos + 86, 0xFFFFFF);
+            guiGraphics.drawCenteredString(this.font, this.tile.producePerTick + " " + I18n.get("actuallyadditions.cft"), this.leftPos + 87, this.topPos + 86, 0xFFFFFF);
         }
 
         //this.energy.draw();

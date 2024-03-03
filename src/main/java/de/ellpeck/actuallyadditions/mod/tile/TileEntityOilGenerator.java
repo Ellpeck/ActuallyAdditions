@@ -19,7 +19,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -31,8 +30,8 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 
@@ -42,7 +41,7 @@ import javax.annotation.Nullable;
 public class TileEntityOilGenerator extends TileEntityBase implements ISharingEnergyProvider, ISharingFluidHandler, MenuProvider {
     public final CustomEnergyStorage storage = new CustomEnergyStorage(50000, 0, CommonConfig.Machines.OIL_GENERATOR_TRANSFER.get());
     public final LazyOptional<IEnergyStorage> lazyEnergy = LazyOptional.of(() -> this.storage);
-    public final FluidTank tank = new FluidTank(2 * FluidAttributes.BUCKET_VOLUME, fluid -> getRecipeForFluid(fluid) != null) {
+    public final FluidTank tank = new FluidTank(2 * FluidType.BUCKET_VOLUME, fluid -> getRecipeForFluid(fluid) != null) {
         @Nonnull
         @Override
         public FluidStack drain(FluidStack resource, FluidAction action) {
@@ -224,7 +223,7 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
 
     @Override
     public Component getDisplayName() {
-        return new TranslatableComponent("container.actuallyadditions.oilGenerator");
+        return Component.translatable("container.actuallyadditions.oilGenerator");
     }
 
     @Nullable

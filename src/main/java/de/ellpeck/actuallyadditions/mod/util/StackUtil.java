@@ -184,7 +184,7 @@ public final class StackUtil {
         ItemStack sc = s.copy();
         s.shrink(i);
         if (s.isEmpty()) {
-            return sc.getItem().getContainerItem(sc);
+            return sc.getItem().getCraftingRemainingItem(sc);
         }
         return s;
     }

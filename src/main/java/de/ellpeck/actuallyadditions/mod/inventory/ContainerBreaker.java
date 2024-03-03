@@ -27,7 +27,7 @@ public class ContainerBreaker extends AbstractContainerMenu {
     public final TileEntityBreaker breaker;
 
     public static ContainerBreaker fromNetwork(int windowId, Inventory inv, FriendlyByteBuf data) {
-        return new ContainerBreaker(windowId, inv, (TileEntityBreaker) Objects.requireNonNull(inv.player.level.getBlockEntity(data.readBlockPos())));
+        return new ContainerBreaker(windowId, inv, (TileEntityBreaker) Objects.requireNonNull(inv.player.level().getBlockEntity(data.readBlockPos())));
     }
 
     public ContainerBreaker(int windowId, Inventory inventory, TileEntityBreaker tile) {

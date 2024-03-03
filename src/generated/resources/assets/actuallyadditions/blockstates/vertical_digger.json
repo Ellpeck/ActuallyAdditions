@@ -1,5 +1,9 @@
 {
   "variants": {
+    "facing=east": {
+      "model": "actuallyadditions:block/vertical_digger",
+      "y": 90
+    },
     "facing=north": {
       "model": "actuallyadditions:block/vertical_digger"
     },
@@ -10,10 +14,6 @@
     "facing=west": {
       "model": "actuallyadditions:block/vertical_digger",
       "y": 270
-    },
-    "facing=east": {
-      "model": "actuallyadditions:block/vertical_digger",
-      "y": 90
     }
   }
 }

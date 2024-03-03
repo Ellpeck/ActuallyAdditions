@@ -15,7 +15,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 
 public class ItemResonantRice extends ItemBase {
@@ -29,7 +28,7 @@ public class ItemResonantRice extends ItemBase {
         ItemStack stack = player.getItemInHand(hand);
         if (!world.isClientSide) {
             stack.shrink(1);
-            world.explode(null, player.getX(), player.getY(), player.getZ(), 0.5F, Explosion.BlockInteraction.DESTROY);
+            world.explode(null, player.getX(), player.getY(), player.getZ(), 0.5F, Level.ExplosionInteraction.MOB);
         }
         return InteractionResultHolder.success(stack);
     }

@@ -24,7 +24,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.world.ExplosionEvent;
+import net.minecraftforge.event.level.ExplosionEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import javax.annotation.Nullable;
@@ -41,7 +41,7 @@ public class BlockShockSuppressor extends Block implements EntityBlock {
 
     @SubscribeEvent
     public void onExplosion(ExplosionEvent.Detonate event) {
-        Level world = event.getWorld();
+        Level world = event.getLevel();
         if (!world.isClientSide) {
             List<BlockPos> affectedBlocks = event.getAffectedBlocks();
             List<Entity> affectedEntities = event.getAffectedEntities();

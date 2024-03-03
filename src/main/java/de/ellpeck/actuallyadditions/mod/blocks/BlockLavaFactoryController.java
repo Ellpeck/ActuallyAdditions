@@ -11,12 +11,12 @@
 package de.ellpeck.actuallyadditions.mod.blocks;
 
 import com.mojang.blaze3d.platform.Window;
-import com.mojang.blaze3d.vertex.PoseStack;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.DirectionalBlock;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityLavaFactoryController;
 import de.ellpeck.actuallyadditions.mod.util.StringUtil;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
@@ -57,7 +57,7 @@ public class BlockLavaFactoryController extends DirectionalBlock.Container imple
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void displayHud(PoseStack matrices, Minecraft minecraft, Player player, ItemStack stack, HitResult rayCast, Window resolution) {
+    public void displayHud(GuiGraphics guiGraphics, Minecraft minecraft, Player player, ItemStack stack, HitResult rayCast, Window resolution) {
         if (!(rayCast instanceof BlockHitResult)) {
             return;
         }

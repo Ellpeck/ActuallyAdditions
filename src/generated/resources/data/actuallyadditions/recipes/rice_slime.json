@@ -1,19 +1,21 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "minecraft:water_bucket"
+    },
+    "R": {
+      "item": "actuallyadditions:rice_dough"
+    }
+  },
   "pattern": [
     " R ",
     "RBR",
     " R "
   ],
-  "key": {
-    "R": {
-      "item": "actuallyadditions:rice_dough"
-    },
-    "B": {
-      "item": "minecraft:water_bucket"
-    }
-  },
   "result": {
     "item": "actuallyadditions:rice_slimeball"
-  }
+  },
+  "show_notification": true
 }

@@ -11,7 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
-import net.minecraft.core.Vec3i;
+import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -36,9 +36,9 @@ public class ItemTeleportStaff extends ItemEnergy {
             HitResult rayTraceResult = player.pick(100,1F,false);
             if (rayTraceResult.getType() == HitResult.Type.BLOCK || player.getXRot() >= -5) {
                 Vec3 location = rayTraceResult.getLocation();
-                Vec3 pos = Vec3.atBottomCenterOf(new Vec3i(location.x, location.y, location.z));
+                Vec3 pos = Vec3.atBottomCenterOf(BlockPos.containing(location.x, location.y, location.z));
                 int baseUse = 200;
-                int use = baseUse + (int) (baseUse * player.blockPosition().distSqr(new Vec3i(pos.x, pos.y, pos.z)));
+                int use = baseUse + (int) (baseUse * player.blockPosition().distSqr(BlockPos.containing(pos.x, pos.y, pos.z)));
                 if (this.getEnergyStored(stack) >= use) {
                     ((ServerPlayer) player).connection.teleport(pos.x, pos.y + 1F, pos.z, player.getYRot(), player.getXRot());
                     player.removeVehicle();

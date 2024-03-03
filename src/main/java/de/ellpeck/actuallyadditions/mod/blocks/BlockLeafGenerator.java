@@ -20,7 +20,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -29,7 +29,7 @@ import javax.annotation.Nullable;
 public class BlockLeafGenerator extends DirectionalBlock.Container {
 
     public BlockLeafGenerator() {
-        super(Properties.of(Material.METAL).strength(5.0F, 10.0F).requiresCorrectToolForDrops().strength(5.0F, 10.0F).sound(SoundType.METAL));
+        super(Properties.of().mapColor(MapColor.METAL).strength(5.0F, 10.0F).requiresCorrectToolForDrops().strength(5.0F, 10.0F).sound(SoundType.METAL));
     }
 
     @Nullable

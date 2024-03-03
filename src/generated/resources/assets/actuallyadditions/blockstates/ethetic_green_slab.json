@@ -1,13 +1,13 @@
 {
   "variants": {
-    "type=top": {
-      "model": "actuallyadditions:block/ethetic_green_slab_top"
-    },
     "type=bottom": {
       "model": "actuallyadditions:block/ethetic_green_slab"
     },
     "type=double": {
       "model": "actuallyadditions:block/ethetic_green_block"
+    },
+    "type=top": {
+      "model": "actuallyadditions:block/ethetic_green_slab_top"
     }
   }
 }

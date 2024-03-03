@@ -1,6 +1,7 @@
 package de.ellpeck.actuallyadditions.mod.crafting;
 
 import com.google.gson.JsonObject;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -10,7 +11,6 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import javax.annotation.Nullable;
 
@@ -51,7 +51,7 @@ public class SolidFuelRecipe implements Recipe<SingleItem> {
     }
 
     @Override
-    public ItemStack assemble(SingleItem pInv) {
+    public ItemStack assemble(SingleItem pInv, RegistryAccess registryAccess) {
         return ItemStack.EMPTY;
     }
 
@@ -61,7 +61,7 @@ public class SolidFuelRecipe implements Recipe<SingleItem> {
     }
 
     @Override
-    public ItemStack getResultItem() {
+    public ItemStack getResultItem(RegistryAccess pRegistryAccess) {
         return ItemStack.EMPTY;
     }
 
@@ -80,7 +80,7 @@ public class SolidFuelRecipe implements Recipe<SingleItem> {
         return ActuallyRecipes.Types.SOLID_FUEL;
     }
 
-    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<SolidFuelRecipe> {
+    public static class Serializer implements RecipeSerializer<SolidFuelRecipe> {
         @Override
         public SolidFuelRecipe fromJson(ResourceLocation pId, JsonObject pJson) {
             Ingredient itemIngredient = Ingredient.fromJson(pJson.get("item"));

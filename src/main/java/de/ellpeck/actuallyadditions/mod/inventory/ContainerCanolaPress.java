@@ -45,7 +45,7 @@ public class ContainerCanolaPress extends AbstractContainerMenu {
     }
 
     public static ContainerCanolaPress fromNetwork(int windowId, Inventory inv, FriendlyByteBuf data) {
-        return new ContainerCanolaPress(windowId, inv, (TileEntityCanolaPress) Objects.requireNonNull(inv.player.level.getBlockEntity(data.readBlockPos())));
+        return new ContainerCanolaPress(windowId, inv, (TileEntityCanolaPress) Objects.requireNonNull(inv.player.level().getBlockEntity(data.readBlockPos())));
     }
 
     @Override

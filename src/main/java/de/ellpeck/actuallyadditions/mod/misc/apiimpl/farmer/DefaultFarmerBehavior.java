@@ -20,14 +20,12 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -36,9 +34,8 @@ import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.StemBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.FakePlayerFactory;
@@ -107,12 +104,12 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
         return FarmerResult.FAIL;
     }
 
-    private FarmerResult doFarmerStuff(BlockState state, ServerLevel world, BlockPos pos, IFarmer farmer) {
+    private FarmerResult doFarmerStuff(BlockState state, ServerLevel serverLevel, BlockPos pos, IFarmer farmer) {
         List<ItemStack> seeds = new ArrayList<>();
         List<ItemStack> other = new ArrayList<>();
-        List<ItemStack> drops = state.getDrops(new LootContext.Builder(world)
-            .withParameter(LootContextParams.ORIGIN, new Vec3(pos.getX(), pos.getY(), pos.getZ()))
-            .withParameter(LootContextParams.TOOL, ItemStack.EMPTY));
+        List<ItemStack> drops = state.getDrops((new LootParams.Builder(serverLevel))
+                .withParameter(LootContextParams.ORIGIN, new Vec3(pos.getX(), pos.getY(), pos.getZ()))
+                .withParameter(LootContextParams.TOOL, ItemStack.EMPTY));
         if (drops.isEmpty())
             return FarmerResult.FAIL;
         for (ItemStack stack : drops) {
@@ -136,8 +133,8 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
                 farmer.addToSeeds(seeds);
             }
 
-            world.levelEvent(2001, pos, Block.getId(state));
-            world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+            serverLevel.levelEvent(2001, pos, Block.getId(state));
+            serverLevel.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
 
             farmer.extractEnergy(250);
             return FarmerResult.SUCCESS;
@@ -194,13 +191,13 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
         if (!player.mayUseItemAt(pos.relative(Direction.UP), Direction.UP, itemstack)) {
             return InteractionResult.FAIL;
         } else {
-            UseOnContext dummyContext = new UseOnContext(world, player, InteractionHand.MAIN_HAND, itemstack, new BlockHitResult(new Vec3(0.5, 0.5, 0.5), Direction.UP, pos, false));
-            int hook = net.minecraftforge.event.ForgeEventFactory.onHoeUse(dummyContext);
-            if (hook != 0) {
-                return hook > 0
-                    ? InteractionResult.SUCCESS
-                    : InteractionResult.FAIL;
-            }
+//            UseOnContext dummyContext = new UseOnContext(world, player, InteractionHand.MAIN_HAND, itemstack, new BlockHitResult(new Vec3(0.5, 0.5, 0.5), Direction.UP, pos, false));
+//            int hook = net.minecraftforge.event.ForgeEventFactory.onHoeUse(dummyContext);
+//            if (hook != 0) {
+//                return hook > 0
+//                    ? InteractionResult.SUCCESS
+//                    : InteractionResult.FAIL;
+//            } TODO: Fire event for hoe use?
 
             if (world.isEmptyBlock(pos.above())) {
                 BlockState state = world.getBlockState(pos);

@@ -47,7 +47,7 @@ public class ContainerMiner extends AbstractContainerMenu {
     }
 
     public static ContainerMiner fromNetwork(int windowId, Inventory inv, FriendlyByteBuf data) {
-        return new ContainerMiner(windowId, inv, (TileEntityVerticalDigger) Objects.requireNonNull(inv.player.level.getBlockEntity(data.readBlockPos())));
+        return new ContainerMiner(windowId, inv, (TileEntityVerticalDigger) Objects.requireNonNull(inv.player.level().getBlockEntity(data.readBlockPos())));
     }
 
     @Override

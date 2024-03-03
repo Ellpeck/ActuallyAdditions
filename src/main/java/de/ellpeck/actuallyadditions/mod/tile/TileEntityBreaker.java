@@ -20,7 +20,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -140,7 +139,7 @@ public class TileEntityBreaker extends TileEntityInventoryBase implements MenuPr
     @Nonnull
     @Override
     public Component getDisplayName() {
-        return new TranslatableComponent(isPlacer ? "container.actuallyadditions.placer" : "container.actuallyadditions.breaker");
+        return Component.translatable(isPlacer ? "container.actuallyadditions.placer" : "container.actuallyadditions.breaker");
     }
 
     @Nullable

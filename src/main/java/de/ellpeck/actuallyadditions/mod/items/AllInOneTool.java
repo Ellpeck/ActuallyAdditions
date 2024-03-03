@@ -1,7 +1,6 @@
 package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.api.ActuallyTags;
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.items.base.IActuallyItem;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.DiggerItem;
@@ -24,7 +23,7 @@ public class AllInOneTool extends DiggerItem implements IActuallyItem {
                 ActuallyTags.Blocks.MINEABLE_WITH_AIO,
             new Properties()
                 .durability(tier.getUses() * 4)
-                .tab(ActuallyAdditions.GROUP)
+                
         );
 
         this.tier = tier;

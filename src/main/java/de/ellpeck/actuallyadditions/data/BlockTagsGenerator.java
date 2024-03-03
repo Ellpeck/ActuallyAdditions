@@ -3,22 +3,22 @@ package de.ellpeck.actuallyadditions.data;
 import de.ellpeck.actuallyadditions.api.ActuallyTags;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.tags.BlockTagsProvider;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
+import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 import javax.annotation.Nullable;
-import java.nio.file.Path;
+import java.util.concurrent.CompletableFuture;
 
 public class BlockTagsGenerator extends BlockTagsProvider {
-    public BlockTagsGenerator(DataGenerator generatorIn, @Nullable ExistingFileHelper existingFileHelper) {
-        super(generatorIn, ActuallyAdditions.MODID, existingFileHelper);
+    public BlockTagsGenerator(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider, @Nullable ExistingFileHelper existingFileHelper) {
+        super(packOutput, lookupProvider, ActuallyAdditions.MODID, existingFileHelper);
     }
 
     @Override
-    public void addTags() {
+    protected void addTags(HolderLookup.Provider provider) {
         tag(BlockTags.WALLS).add(
             ActuallyBlocks.ETHETIC_WHITE_WALL.get(),
             ActuallyBlocks.ETHETIC_GREEN_WALL.get(),
@@ -162,13 +162,13 @@ public class BlockTagsGenerator extends BlockTagsProvider {
         );
     }
 
-    /**
-     * Resolves a Path for the location to save the given tag.
-     */
-    @Override
-    protected Path getPath(ResourceLocation id) {
-        return this.generator.getOutputFolder().resolve("data/" + id.getNamespace() + "/tags/blocks/" + id.getPath() + ".json");
-    }
+//    /**
+//     * Resolves a Path for the location to save the given tag.
+//     */
+//    @Override
+//    protected Path getPath(ResourceLocation id) {
+//        return this.generator.getOutputFolder().resolve("data/" + id.getNamespace() + "/tags/blocks/" + id.getPath() + ".json");
+//    }
 
     /**
      * Gets a name for this provider, to use in logging.

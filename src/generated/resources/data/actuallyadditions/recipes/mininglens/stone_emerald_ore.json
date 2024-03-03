@@ -3,8 +3,8 @@
   "ingredient": {
     "tag": "forge:stone"
   },
-  "weight": 30,
   "result": {
     "item": "minecraft:emerald_ore"
-  }
+  },
+  "weight": 30
 }

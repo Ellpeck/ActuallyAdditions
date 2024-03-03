@@ -23,7 +23,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
 
@@ -62,7 +62,7 @@ public class MelonPumpkinFarmerBehavior implements IFarmerBehavior {
             BlockState state = world.getBlockState(pos);
             Block block = state.getBlock();
             if (block == Blocks.PUMPKIN || block == Blocks.MELON) {
-                List<ItemStack> drops = state.getDrops(new LootContext.Builder(world)
+                List<ItemStack> drops = state.getDrops(new LootParams.Builder(world)
                     .withParameter(LootContextParams.ORIGIN, new Vec3(pos.getX(), pos.getY(), pos.getZ()))
                     .withParameter(LootContextParams.TOOL, ItemStack.EMPTY));
                 if (!drops.isEmpty()) {

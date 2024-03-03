@@ -1,6 +1,5 @@
 package de.ellpeck.actuallyadditions.mod.items.base;
 
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import net.minecraft.world.item.Item;
 
 /**
@@ -13,6 +12,6 @@ public abstract class ActuallyItem extends Item implements IActuallyItem {
     }
 
     protected static Properties baseProps() {
-        return new Properties().tab(ActuallyAdditions.GROUP);
+        return new Properties();
     }
 }

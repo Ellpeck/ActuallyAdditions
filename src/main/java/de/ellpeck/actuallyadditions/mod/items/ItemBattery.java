@@ -13,7 +13,6 @@ package de.ellpeck.actuallyadditions.mod.items;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
@@ -23,8 +22,8 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
 import javax.annotation.Nonnull;
@@ -44,12 +43,11 @@ public class ItemBattery extends ItemEnergy {
 
     @Override
     public void inventoryTick(@Nonnull ItemStack stack, Level world, @Nonnull Entity entity, int itemSlot, boolean isSelected) {
-        if (!world.isClientSide && entity instanceof Player && ItemUtil.isEnabled(stack) && !isSelected) {
-            Player player = (Player) entity;
-            for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
+        if (!world.isClientSide && entity instanceof Player player && ItemUtil.isEnabled(stack) && !isSelected) {
+	        for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
                 ItemStack slot = player.getInventory().getItem(i);
                 if (!slot.isEmpty() && slot.getCount() == 1) {
-                    LazyOptional<IEnergyStorage> energy = slot.getCapability(CapabilityEnergy.ENERGY);
+                    LazyOptional<IEnergyStorage> energy = slot.getCapability(ForgeCapabilities.ENERGY);
                     energy.ifPresent(cap -> {
                         int extractable = this.extractEnergy(stack, Integer.MAX_VALUE, true);
                         int received = cap.receiveEnergy(extractable, false);
@@ -77,9 +75,9 @@ public class ItemBattery extends ItemEnergy {
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level playerIn, List<Component> list, TooltipFlag advanced) {
         super.appendHoverText(stack, playerIn, list, advanced);
-        list.add(new TranslatableComponent("tooltip.actuallyadditions.battery." + (ItemUtil.isEnabled(stack)
+        list.add(Component.translatable("tooltip.actuallyadditions.battery." + (ItemUtil.isEnabled(stack)
             ? "discharge"
             : "noDischarge")));
-        list.add(new TranslatableComponent("tooltip.actuallyadditions.battery.changeMode"));
+        list.add(Component.translatable("tooltip.actuallyadditions.battery.changeMode"));
     }
 }

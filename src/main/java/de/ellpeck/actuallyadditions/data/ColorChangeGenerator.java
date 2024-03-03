@@ -4,8 +4,8 @@ import com.google.gson.JsonObject;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.crafting.ColorChangeRecipe;
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.HashCache;
+import net.minecraft.data.CachedOutput;
+import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.resources.ResourceLocation;
@@ -13,21 +13,30 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
+import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
-import java.nio.file.Path;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 public class ColorChangeGenerator extends RecipeProvider {
-    public ColorChangeGenerator(DataGenerator p_i48262_1_) {
-        super(p_i48262_1_);
-    }
-    @Override
-    protected void saveAdvancement(@Nonnull HashCache pCache, @Nonnull JsonObject pAdvancementJson, @Nonnull Path pPath) {
+    public ColorChangeGenerator(PackOutput packOutput) {
+        super(packOutput);
     }
 
     @Override
-    protected void buildCraftingRecipes(@Nonnull Consumer<FinishedRecipe> consumer) {
+    public String getName() {
+        return "Color Change " + super.getName();
+    }
+
+    @Override
+    protected @Nullable CompletableFuture<?> saveAdvancement(CachedOutput output, FinishedRecipe finishedRecipe, JsonObject advancementJson) {
+        return null; //Nope...
+    }
+
+    @Override
+    protected void buildRecipes(@Nonnull Consumer<FinishedRecipe> consumer) {
         buildWool(consumer);
         buildStainedGlass(consumer);
         buildStainedGlassPane(consumer);
@@ -193,15 +202,15 @@ public class ColorChangeGenerator extends RecipeProvider {
 
 
     private void changeColor(Consumer<FinishedRecipe> consumer, ItemLike output, Ingredient input) {
-        consumer.accept(new ColorChangeRecipe.Result(new ResourceLocation(ActuallyAdditions.MODID, "colorchange/" + output.asItem().getRegistryName().getPath()),
+        consumer.accept(new ColorChangeRecipe.Result(new ResourceLocation(ActuallyAdditions.MODID, "colorchange/" + ForgeRegistries.ITEMS.getKey(output.asItem()).getPath()),
                 input, output));
     }
     private void changeColor(Consumer<FinishedRecipe> consumer, ItemLike output, ItemLike input) {
-        consumer.accept(new ColorChangeRecipe.Result(new ResourceLocation(ActuallyAdditions.MODID, "colorchange/" + output.asItem().getRegistryName().getPath()),
+        consumer.accept(new ColorChangeRecipe.Result(new ResourceLocation(ActuallyAdditions.MODID, "colorchange/" + ForgeRegistries.ITEMS.getKey(output.asItem()).getPath()),
                 Ingredient.of(input), output));
     }
     private void changeColor(Consumer<FinishedRecipe> consumer, ItemLike output, ItemStack input) {
-        consumer.accept(new ColorChangeRecipe.Result(new ResourceLocation(ActuallyAdditions.MODID, "colorchange/" + output.asItem().getRegistryName().getPath()),
+        consumer.accept(new ColorChangeRecipe.Result(new ResourceLocation(ActuallyAdditions.MODID, "colorchange/" + ForgeRegistries.ITEMS.getKey(output.asItem()).getPath()),
                 Ingredient.of(input), output));
     }
 }

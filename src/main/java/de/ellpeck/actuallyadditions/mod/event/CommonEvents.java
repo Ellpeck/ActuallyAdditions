@@ -33,9 +33,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Locale;
 
@@ -57,7 +58,7 @@ public class CommonEvents {
             return;
         }
 
-        Player player = event.getPlayer();
+        Player player = event.getEntity();
         ItemEntity item = event.getItem();
         if (item != null && item.isAlive()) {
             ItemStack stack = item.getItem();
@@ -141,11 +142,11 @@ public class CommonEvents {
     //TODO this isnt how this should be done im pretty sure...
     @SubscribeEvent
     public void onEntityDropEvent(LivingDropsEvent event) {
-        if (event.getEntityLiving().level != null && !event.getEntityLiving().level.isClientSide && event.getSource().getEntity() instanceof Player) {
+        if (event.getEntity().level() != null && !event.getEntity().level().isClientSide && event.getSource().getEntity() instanceof Player) {
             //Drop Cobwebs from Spiders
-            if (ConfigBoolValues.DO_SPIDER_DROPS.isEnabled() && event.getEntityLiving() instanceof Spider) {
-                if (event.getEntityLiving().level.random.nextInt(20) <= event.getLootingLevel() * 2) {
-                    event.getDrops().add(new ItemEntity(event.getEntityLiving().level, event.getEntityLiving().getX(), event.getEntityLiving().getY(), event.getEntityLiving().getZ(), new ItemStack(Blocks.COBWEB, event.getEntityLiving().level.random.nextInt(2 + event.getLootingLevel()) + 1)));
+            if (ConfigBoolValues.DO_SPIDER_DROPS.isEnabled() && event.getEntity() instanceof Spider) {
+                if (event.getEntity().level().random.nextInt(20) <= event.getLootingLevel() * 2) {
+                    event.getDrops().add(new ItemEntity(event.getEntity().level(), event.getEntity().getX(), event.getEntity().getY(), event.getEntity().getZ(), new ItemStack(Blocks.COBWEB, event.getEntity().level().random.nextInt(2 + event.getLootingLevel()) + 1)));
                 }
             }
         }
@@ -153,9 +154,8 @@ public class CommonEvents {
 
     @SubscribeEvent
     public void onLogInEvent(PlayerEvent.PlayerLoggedInEvent event) {
-        if (!event.getPlayer().level.isClientSide && event.getPlayer() instanceof ServerPlayer) {
-            ServerPlayer player = (ServerPlayer) event.getPlayer();
-            PacketHandlerHelper.syncPlayerData(player, true);
+        if (!event.getEntity().level().isClientSide && event.getEntity() instanceof ServerPlayer player) {
+	        PacketHandlerHelper.syncPlayerData(player, true);
             ActuallyAdditions.LOGGER.info("Sending Player Data to player " + player.getName() + " with UUID " + player.getUUID() + ".");
         }
     }
@@ -166,18 +166,18 @@ public class CommonEvents {
         //checkAchievements(event.crafting, event.player, InitAchievements.Type.CRAFTING);
 
         if (CommonConfig.Other.GIVE_BOOKLET_ON_FIRST_CRAFT.get()) {
-            if (!event.getPlayer().level.isClientSide && StackUtil.isValid(event.getCrafting()) && event.getCrafting().getItem() != ActuallyItems.ITEM_BOOKLET.get()) {
+            if (!event.getEntity().level().isClientSide && StackUtil.isValid(event.getCrafting()) && event.getCrafting().getItem() != ActuallyItems.ITEM_BOOKLET.get()) {
 
-                String name = event.getCrafting().getItem().getRegistryName().toString();
+                String name = ForgeRegistries.ITEMS.getKey(event.getCrafting().getItem()).toString();
                 if (name != null && name.toLowerCase(Locale.ROOT).contains(ActuallyAdditions.MODID)) {
-                    PlayerData.PlayerSave save = PlayerData.getDataFromPlayer(event.getPlayer());
+                    PlayerData.PlayerSave save = PlayerData.getDataFromPlayer(event.getEntity());
                     if (save != null && !save.bookGottenAlready) {
                         save.bookGottenAlready = true;
-                        WorldData.get(event.getPlayer().getCommandSenderWorld()).setDirty();
+                        WorldData.get(event.getEntity().getCommandSenderWorld()).setDirty();
 
-                        ItemEntity entityItem = new ItemEntity(event.getPlayer().level, event.getPlayer().getX(), event.getPlayer().getY(), event.getPlayer().getZ(), new ItemStack(ActuallyItems.ITEM_BOOKLET.get()));
+                        ItemEntity entityItem = new ItemEntity(event.getEntity().level(), event.getEntity().getX(), event.getEntity().getY(), event.getEntity().getZ(), new ItemStack(ActuallyItems.ITEM_BOOKLET.get()));
                         entityItem.setPickUpDelay(0);
-                        event.getPlayer().level.addFreshEntity(entityItem);
+                        event.getEntity().level().addFreshEntity(entityItem);
                     }
                 }
             }

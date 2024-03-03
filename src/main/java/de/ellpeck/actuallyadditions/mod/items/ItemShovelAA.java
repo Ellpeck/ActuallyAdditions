@@ -12,7 +12,6 @@ package de.ellpeck.actuallyadditions.mod.items;
 
 import com.google.common.collect.Sets;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemToolAA;
-import net.minecraft.tags.Tag;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Item;

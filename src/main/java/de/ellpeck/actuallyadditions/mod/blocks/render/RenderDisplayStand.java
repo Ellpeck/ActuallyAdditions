@@ -11,7 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.blocks.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityDisplayStand;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
@@ -21,6 +21,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 
@@ -40,7 +41,7 @@ public class RenderDisplayStand implements BlockEntityRenderer<TileEntityDisplay
 
         float boop = Util.getMillis() / 800F;
         matrices.translate(0D, Math.sin(boop % (2 * Math.PI)) * 0.065, 0D);
-        matrices.mulPose(Vector3f.YP.rotationDegrees(boop * 40F % 360.0F));
+        matrices.mulPose(Axis.YP.rotationDegrees(boop * 40F % 360.0F));
 
         float scale = stack.getItem() instanceof BlockItem
             ? 0.85F
@@ -49,7 +50,7 @@ public class RenderDisplayStand implements BlockEntityRenderer<TileEntityDisplay
         try {
             AssetUtil.renderItemInWorld(stack, combinedLightIn, combinedOverlayIn, matrices, buffer);
         } catch (Exception e) {
-            ActuallyAdditions.LOGGER.error("Something went wrong trying to render an item in a display stand! The item is " + stack.getItem().getRegistryName() + "!", e);
+            ActuallyAdditions.LOGGER.error("Something went wrong trying to render an item in a display stand! The item is " + ForgeRegistries.ITEMS.getKey(stack.getItem()) + "!", e);
         }
 
         matrices.popPose();

@@ -57,7 +57,7 @@ public class CrusherContainer extends AbstractContainerMenu {
     }
 
     public static CrusherContainer fromNetwork(int windowId, Inventory inv, FriendlyByteBuf data) {
-        return new CrusherContainer(windowId, inv, (TileEntityCrusher) Objects.requireNonNull(inv.player.level.getBlockEntity(data.readBlockPos())));
+        return new CrusherContainer(windowId, inv, (TileEntityCrusher) Objects.requireNonNull(inv.player.level().getBlockEntity(data.readBlockPos())));
     }
 
     @Override

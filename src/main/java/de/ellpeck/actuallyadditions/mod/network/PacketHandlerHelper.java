@@ -60,7 +60,7 @@ public final class PacketHandlerHelper {
 
         Player player = Minecraft.getInstance().player;
         if (player != null) {
-            compound.putString("World", player.level.dimension().getRegistryName().toString());
+            compound.putString("World", player.level().dimension().location().toString());
             compound.putUUID("UUID", player.getUUID());
 
             PlayerSave data = PlayerData.getDataFromPlayer(player);
@@ -94,7 +94,7 @@ public final class PacketHandlerHelper {
         compound.putInt("X", tile.getBlockPos().getX());
         compound.putInt("Y", tile.getBlockPos().getY());
         compound.putInt("Z", tile.getBlockPos().getZ());
-        compound.putString("WorldID", tile.getLevel().dimension().getRegistryName().toString());
+        compound.putString("WorldID", tile.getLevel().dimension().location().toString());
         compound.putInt("PlayerID", Minecraft.getInstance().player.getId());
         compound.putInt("NumberID", id);
         compound.putDouble("Number", number);

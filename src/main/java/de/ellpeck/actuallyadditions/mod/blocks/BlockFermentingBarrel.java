@@ -28,7 +28,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -40,7 +41,7 @@ import javax.annotation.Nullable;
 public class BlockFermentingBarrel extends BlockContainerBase {
 
     public BlockFermentingBarrel() {
-        super(Properties.of(Material.WOOD).requiresCorrectToolForDrops().strength(0.5F, 5.0F).sound(SoundType.WOOD));
+        super(Properties.of().mapColor(MapColor.WOOD).ignitedByLava().instrument(NoteBlockInstrument.BASS).requiresCorrectToolForDrops().strength(0.5F, 5.0F).sound(SoundType.WOOD));
     }
 
     @Nullable
@@ -67,7 +68,7 @@ public class BlockFermentingBarrel extends BlockContainerBase {
                 ItemStack stack = player.getItemInHand(hand);
                 world.playSound(null, pos, stack.getItem() == Items.BUCKET ? SoundEvents.BUCKET_EMPTY:SoundEvents.BUCKET_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
             } else
-                NetworkHooks.openGui((ServerPlayer) player, tile, pos);
+                NetworkHooks.openScreen((ServerPlayer) player, tile, pos);
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.PASS;

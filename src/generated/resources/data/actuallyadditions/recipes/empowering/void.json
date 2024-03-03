@@ -3,6 +3,8 @@
   "base": {
     "item": "actuallyadditions:void_crystal"
   },
+  "color": 3355443,
+  "energy": 5000,
   "modifiers": [
     {
       "tag": "forge:dyes/black"
@@ -17,10 +19,8 @@
       "tag": "forge:stone"
     }
   ],
-  "energy": 5000,
-  "time": 50,
-  "color": 3355443,
   "result": {
     "item": "actuallyadditions:empowered_void_crystal"
-  }
+  },
+  "time": 50
 }

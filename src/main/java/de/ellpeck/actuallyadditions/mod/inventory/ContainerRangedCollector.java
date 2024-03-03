@@ -29,7 +29,7 @@ public class ContainerRangedCollector extends AbstractContainerMenu {
     public final TileEntityRangedCollector collector;
 
     public static ContainerRangedCollector fromNetwork(int windowId, Inventory inv, FriendlyByteBuf data) {
-        return new ContainerRangedCollector(windowId, inv, (TileEntityRangedCollector) Objects.requireNonNull(inv.player.level.getBlockEntity(data.readBlockPos())));
+        return new ContainerRangedCollector(windowId, inv, (TileEntityRangedCollector) Objects.requireNonNull(inv.player.level().getBlockEntity(data.readBlockPos())));
     }
 
     public ContainerRangedCollector(int windowId, Inventory inventory, TileEntityRangedCollector tile) {

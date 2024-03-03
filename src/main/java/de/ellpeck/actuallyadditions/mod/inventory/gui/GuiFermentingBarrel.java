@@ -11,10 +11,10 @@
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFermentingBarrel;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityFermentingBarrel;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
@@ -40,10 +40,10 @@ public class GuiFermentingBarrel extends AAScreen<ContainerFermentingBarrel> {
     }
 
     @Override
-    public void render(@Nonnull PoseStack matrices, int x, int y, float f) {
-        super.render(matrices, x, y, f);
-        this.input.render(matrices, x, y);
-        this.output.render(matrices, x, y);
+    public void render(@Nonnull GuiGraphics guiGraphics, int x, int y, float f) {
+        super.render(guiGraphics, x, y, f);
+        this.input.render(guiGraphics, x, y);
+        this.output.render(guiGraphics, x, y);
     }
 
     @Override
@@ -54,21 +54,20 @@ public class GuiFermentingBarrel extends AAScreen<ContainerFermentingBarrel> {
     }
 
     @Override
-    public void renderBg(PoseStack matrices, float f, int x, int y) {
+    public void renderBg(GuiGraphics guiGraphics, float f, int x, int y) {
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 
-        RenderSystem.setShaderTexture(0, AssetUtil.GUI_INVENTORY_LOCATION);
-        this.blit(matrices, this.leftPos, this.topPos + 93, 0, 0, 176, 86);
+        guiGraphics.blit(AssetUtil.GUI_INVENTORY_LOCATION, this.leftPos, this.topPos + 93, 0, 0, 176, 86);
 
         RenderSystem.setShaderTexture(0, RES_LOC);
-        this.blit(matrices, this.leftPos, this.topPos, 0, 0, 176, 93);
+        guiGraphics.blit(RES_LOC, this.leftPos, this.topPos, 0, 0, 176, 93);
 
         if (this.press.currentProcessTime > 0) {
             int i = this.press.getProcessScaled(29);
-            this.blit(matrices, this.leftPos + 82, this.topPos + 34, 176, 0, 12, i);
+            guiGraphics.blit(RES_LOC, this.leftPos + 82, this.topPos + 34, 176, 0, 12, i);
         }
 
-        this.input.draw(matrices);
-        this.output.draw(matrices);
+        this.input.draw(guiGraphics);
+        this.output.draw(guiGraphics);
     }
 }

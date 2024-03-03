@@ -31,8 +31,8 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
 import java.util.HashMap;
@@ -92,7 +92,7 @@ public class TileEntityLaserRelayItem extends TileEntityLaserRelay {
             if (this.level.hasChunkAt(pos)) {
                 BlockEntity tile = this.level.getBlockEntity(pos);
                 if (tile != null && !(tile instanceof TileEntityItemInterface) && !(tile instanceof TileEntityLaserRelay)) {
-                    LazyOptional<IItemHandler> itemHandler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side.getOpposite());
+                    LazyOptional<IItemHandler> itemHandler = tile.getCapability(ForgeCapabilities.ITEM_HANDLER, side.getOpposite());
 
                     Object slotlessHandler = null;
                     // TODO: [port] add this back maybe?
@@ -131,9 +131,8 @@ public class TileEntityLaserRelayItem extends TileEntityLaserRelay {
                 if (relay != null && this.level.hasChunkAt(relay) && !alreadyChecked.contains(relay)) {
                     alreadyChecked.add(relay);
                     BlockEntity aRelayTile = this.level.getBlockEntity(relay);
-                    if (aRelayTile instanceof TileEntityLaserRelayItem) {
-                        TileEntityLaserRelayItem relayTile = (TileEntityLaserRelayItem) aRelayTile;
-                        GenericItemHandlerInfo info = new GenericItemHandlerInfo(relayTile);
+                    if (aRelayTile instanceof TileEntityLaserRelayItem relayTile) {
+	                    GenericItemHandlerInfo info = new GenericItemHandlerInfo(relayTile);
 
                         for (Map.Entry<BlockPos, SlotlessableItemHandlerWrapper> handler : relayTile.handlersAround.entrySet()) {
                             if (!alreadyChecked.contains(handler.getKey())) {

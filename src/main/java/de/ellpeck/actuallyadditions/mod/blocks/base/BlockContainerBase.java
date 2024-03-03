@@ -18,9 +18,10 @@ import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
@@ -41,7 +42,6 @@ import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Random;
 
 public abstract class BlockContainerBase extends Block implements EntityBlock {
     public BlockContainerBase(Properties properties) {
@@ -52,7 +52,7 @@ public abstract class BlockContainerBase extends Block implements EntityBlock {
         if (!world.isClientSide) {
             BlockEntity tile = world.getBlockEntity(pos);
             if (expectedInstance.isInstance(tile)) {
-                NetworkHooks.openGui((ServerPlayer) player, (MenuProvider) tile, pos);
+                NetworkHooks.openScreen((ServerPlayer) player, (MenuProvider) tile, pos);
             }
             return InteractionResult.SUCCESS;
         }
@@ -63,9 +63,8 @@ public abstract class BlockContainerBase extends Block implements EntityBlock {
     private void dropInventory(Level world, BlockPos position) {
         if (!world.isClientSide) {
             BlockEntity aTile = world.getBlockEntity(position);
-            if (aTile instanceof TileEntityInventoryBase) {
-                TileEntityInventoryBase tile = (TileEntityInventoryBase) aTile;
-                if (tile.inv.getSlots() > 0) {
+            if (aTile instanceof TileEntityInventoryBase tile) {
+	            if (tile.inv.getSlots() > 0) {
                     for (int i = 0; i < tile.inv.getSlots(); i++) {
                         this.dropSlotFromInventory(i, tile, world, position);
                     }
@@ -93,9 +92,8 @@ public abstract class BlockContainerBase extends Block implements EntityBlock {
         ItemStack stack = player.getMainHandItem();
         if (stack.getItem() == CommonConfig.Other.redstoneConfigureItem) {
             BlockEntity tile = world.getBlockEntity(pos);
-            if (tile instanceof TileEntityBase) {
-                TileEntityBase base = (TileEntityBase) tile;
-                if (!world.isClientSide && base.isRedstoneToggle()) {
+            if (tile instanceof TileEntityBase base) {
+	            if (!world.isClientSide && base.isRedstoneToggle()) {
                     base.isPulseMode = !base.isPulseMode;
                     base.setChanged();
                     base.sendUpdate();
@@ -107,12 +105,11 @@ public abstract class BlockContainerBase extends Block implements EntityBlock {
     }
 
     @Override
-    public void tick(@Nonnull BlockState state, ServerLevel world, @Nonnull BlockPos pos, @Nonnull Random rand) {
+    public void tick(@Nonnull BlockState state, ServerLevel world, @Nonnull BlockPos pos, @Nonnull RandomSource rand) {
         if (!world.isClientSide) {
             BlockEntity tile = world.getBlockEntity(pos);
-            if (tile instanceof TileEntityBase) {
-                TileEntityBase base = (TileEntityBase) tile;
-                if (base.respondsToPulses()) {
+            if (tile instanceof TileEntityBase base) {
+	            if (base.respondsToPulses()) {
                     base.activateOnPulse();
                 }
             }
@@ -123,9 +120,8 @@ public abstract class BlockContainerBase extends Block implements EntityBlock {
         this.updateRedstoneState(world, pos);
 
         BlockEntity tile = world.getBlockEntity(pos);
-        if (tile instanceof TileEntityBase) {
-            TileEntityBase base = (TileEntityBase) tile;
-            if (base.shouldSaveDataOnChangeOrWorldStart()) {
+        if (tile instanceof TileEntityBase base) {
+	        if (base.shouldSaveDataOnChangeOrWorldStart()) {
                 base.saveDataOnChangeOrWorldStart();
             }
         }
@@ -147,9 +143,8 @@ public abstract class BlockContainerBase extends Block implements EntityBlock {
     public void updateRedstoneState(Level world, BlockPos pos) {
         if (!world.isClientSide) {
             BlockEntity tile = world.getBlockEntity(pos);
-            if (tile instanceof TileEntityBase) {
-                TileEntityBase base = (TileEntityBase) tile;
-                boolean powered = world.getBestNeighborSignal(pos) > 0;
+            if (tile instanceof TileEntityBase base) {
+	            boolean powered = world.getBestNeighborSignal(pos) > 0;
                 boolean wasPowered = base.isRedstonePowered;
                 if (powered && !wasPowered) {
                     if (base.respondsToPulses()) {
@@ -181,9 +176,8 @@ public abstract class BlockContainerBase extends Block implements EntityBlock {
     public void setPlacedBy(Level world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
         if (stack.hasTag()) {
             BlockEntity tile = world.getBlockEntity(pos);
-            if (tile instanceof TileEntityBase) {
-                TileEntityBase base = (TileEntityBase) tile;
-                CompoundTag compound = stack.getOrCreateTag().getCompound("Data");
+            if (tile instanceof TileEntityBase base) {
+	            CompoundTag compound = stack.getOrCreateTag().getCompound("Data");
                 base.readSyncableNBT(compound, TileEntityBase.NBTType.SAVE_BLOCK);
             }
         }
@@ -195,7 +189,7 @@ public abstract class BlockContainerBase extends Block implements EntityBlock {
         if (!player.isCreative()) {
             BlockEntity tile = world.getBlockEntity(pos);
             if (tile instanceof TileEntityBase && ((TileEntityBase) tile).stopFromDropping) {
-                player.displayClientMessage(new TranslatableComponent("info." + ActuallyAdditions.MODID + ".machineBroke").withStyle(ChatFormatting.RED), false);
+                player.displayClientMessage(Component.translatable("info." + ActuallyAdditions.MODID + ".machineBroke").withStyle(ChatFormatting.RED), false);
             }
         }
     }

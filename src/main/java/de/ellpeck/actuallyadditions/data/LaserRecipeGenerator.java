@@ -5,34 +5,41 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.crafting.LaserRecipe;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.HashCache;
+import net.minecraft.data.CachedOutput;
+import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.Tag;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.Nullable;
 
-import java.nio.file.Path;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 public class LaserRecipeGenerator extends RecipeProvider {
-    public LaserRecipeGenerator(DataGenerator p_i48262_1_) {
-        super(p_i48262_1_);
+    public LaserRecipeGenerator(PackOutput packOutput) {
+        super(packOutput);
     }
 
     @Override
-    protected void saveAdvancement(HashCache pCache, JsonObject pAdvancementJson, Path pPath) {
+    public String getName() {
+        return "Laser " + super.getName();
     }
 
     @Override
-    protected void buildCraftingRecipes(Consumer<FinishedRecipe> consumer) {
+    protected @Nullable CompletableFuture<?> saveAdvancement(CachedOutput output, FinishedRecipe finishedRecipe, JsonObject advancementJson) {
+        return null; //Nope...
+    }
+
+    @Override
+    protected void buildRecipes(Consumer<FinishedRecipe> consumer) {
         //Crystal Blocks
         laserCrystalizeRecipe(consumer, ActuallyBlocks.RESTONIA_CRYSTAL.getItem(), Tags.Items.STORAGE_BLOCKS_REDSTONE, 400);
         laserCrystalizeRecipe(consumer, ActuallyBlocks.PALIS_CRYSTAL.getItem(), Tags.Items.STORAGE_BLOCKS_LAPIS, 400);
@@ -72,27 +79,27 @@ public class LaserRecipeGenerator extends RecipeProvider {
     }
 
     private void laserRecipe(Consumer<FinishedRecipe> consumer, ItemLike output, Ingredient input, int energy) {
-        consumer.accept(new LaserRecipe.Result(new ResourceLocation(ActuallyAdditions.MODID, "laser/" + output.asItem().getRegistryName().getPath()),
+        consumer.accept(new LaserRecipe.Result(new ResourceLocation(ActuallyAdditions.MODID, "laser/" + ForgeRegistries.ITEMS.getKey(output.asItem()).getPath()),
             input, energy, output));
     }
     private void laserRecipe(Consumer<FinishedRecipe> consumer, ItemLike output, TagKey<Item> input, int energy) {
-        consumer.accept(new LaserRecipe.Result(new ResourceLocation(ActuallyAdditions.MODID, "laser/" + output.asItem().getRegistryName().getPath()),
+        consumer.accept(new LaserRecipe.Result(new ResourceLocation(ActuallyAdditions.MODID, "laser/" + ForgeRegistries.ITEMS.getKey(output.asItem()).getPath()),
             Ingredient.of(input), energy, output));
     }
     private void laserRecipe(Consumer<FinishedRecipe> consumer, ItemLike output, ItemLike input, int energy) {
-        consumer.accept(new LaserRecipe.Result(new ResourceLocation(ActuallyAdditions.MODID, "laser/" + output.asItem().getRegistryName().getPath()),
+        consumer.accept(new LaserRecipe.Result(new ResourceLocation(ActuallyAdditions.MODID, "laser/" + ForgeRegistries.ITEMS.getKey(output.asItem()).getPath()),
             Ingredient.of(input), energy, output));
     }
     private void laserCrystalizeRecipe(Consumer<FinishedRecipe> consumer, ItemLike output, Ingredient input, int energy) {
-        consumer.accept(new LaserRecipe.Result(new ResourceLocation(ActuallyAdditions.MODID, "laser/crystalize_" + output.asItem().getRegistryName().getPath()),
+        consumer.accept(new LaserRecipe.Result(new ResourceLocation(ActuallyAdditions.MODID, "laser/crystalize_" + ForgeRegistries.ITEMS.getKey(output.asItem()).getPath()),
             input, energy, output));
     }
     private void laserCrystalizeRecipe(Consumer<FinishedRecipe> consumer, ItemLike output, TagKey<Item> input, int energy) {
-        consumer.accept(new LaserRecipe.Result(new ResourceLocation(ActuallyAdditions.MODID, "laser/crystalize_" + output.asItem().getRegistryName().getPath()),
+        consumer.accept(new LaserRecipe.Result(new ResourceLocation(ActuallyAdditions.MODID, "laser/crystalize_" + ForgeRegistries.ITEMS.getKey(output.asItem()).getPath()),
             Ingredient.of(input), energy, output));
     }
     private void laserCrystalizeRecipe(Consumer<FinishedRecipe> consumer, ItemLike output, ItemLike input, int energy) {
-        consumer.accept(new LaserRecipe.Result(new ResourceLocation(ActuallyAdditions.MODID, "laser/crystalize_" + output.asItem().getRegistryName().getPath()),
+        consumer.accept(new LaserRecipe.Result(new ResourceLocation(ActuallyAdditions.MODID, "laser/crystalize_" + ForgeRegistries.ITEMS.getKey(output.asItem()).getPath()),
             Ingredient.of(input), energy, output));
     }
 }

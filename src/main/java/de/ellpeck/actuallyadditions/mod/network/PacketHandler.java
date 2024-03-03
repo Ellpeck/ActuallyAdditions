@@ -21,7 +21,7 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -90,19 +90,18 @@ public final class PacketHandler {
         }
     };
     public static final IDataHandler GUI_BUTTON_TO_TILE_HANDLER = (compound, context) -> {
-        Level world = context.getSender().getServer().getLevel(ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(compound.getString("WorldID"))));
+        Level world = context.getSender().getServer().getLevel(ResourceKey.create(Registries.DIMENSION, new ResourceLocation(compound.getString("WorldID"))));
         BlockEntity tile = world.getBlockEntity(new BlockPos(compound.getInt("X"), compound.getInt("Y"), compound.getInt("Z")));
 
-        if (tile instanceof IButtonReactor) {
-            IButtonReactor reactor = (IButtonReactor) tile;
-            Entity entity = world.getEntity(compound.getInt("PlayerID"));
+        if (tile instanceof IButtonReactor reactor) {
+	        Entity entity = world.getEntity(compound.getInt("PlayerID"));
             if (entity instanceof Player) {
                 reactor.onButtonPressed(compound.getInt("ButtonID"), (Player) entity);
             }
         }
     };
     public static final IDataHandler GUI_BUTTON_TO_CONTAINER_HANDLER = (compound, context) -> {
-        Level world = context.getSender().getServer().getLevel(ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(compound.getString("WorldID"))));
+        Level world = context.getSender().getServer().getLevel(ResourceKey.create(Registries.DIMENSION, new ResourceLocation(compound.getString("WorldID"))));
         Entity entity = world.getEntity(compound.getInt("PlayerID"));
         if (entity instanceof Player) {
             AbstractContainerMenu container = ((Player) entity).containerMenu;
@@ -112,21 +111,19 @@ public final class PacketHandler {
         }
     };
     public static final IDataHandler GUI_NUMBER_TO_TILE_HANDLER = (compound, context) -> {
-        Level world = context.getSender().getServer().getLevel(ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(compound.getString("WorldID"))));
+        Level world = context.getSender().getServer().getLevel(ResourceKey.create(Registries.DIMENSION, new ResourceLocation(compound.getString("WorldID"))));
         BlockEntity tile = world.getBlockEntity(new BlockPos(compound.getInt("X"), compound.getInt("Y"), compound.getInt("Z")));
 
-        if (tile instanceof INumberReactor) {
-            INumberReactor reactor = (INumberReactor) tile;
-            reactor.onNumberReceived(compound.getDouble("Number"), compound.getInt("NumberID"), (Player) world.getEntity(compound.getInt("PlayerID")));
+        if (tile instanceof INumberReactor reactor) {
+	        reactor.onNumberReceived(compound.getDouble("Number"), compound.getInt("NumberID"), (Player) world.getEntity(compound.getInt("PlayerID")));
         }
     };
     public static final IDataHandler GUI_STRING_TO_TILE_HANDLER = (compound, context) -> {
-        Level world = context.getSender().getServer().getLevel(ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(compound.getString("WorldID"))));
+        Level world = context.getSender().getServer().getLevel(ResourceKey.create(Registries.DIMENSION, new ResourceLocation(compound.getString("WorldID"))));
         BlockEntity tile = world.getBlockEntity(new BlockPos(compound.getInt("X"), compound.getInt("Y"), compound.getInt("Z")));
 
-        if (tile instanceof IStringReactor) {
-            IStringReactor reactor = (IStringReactor) tile;
-            reactor.onTextReceived(compound.getString("Text"), compound.getInt("TextID"), (Player) world.getEntity(compound.getInt("PlayerID")));
+        if (tile instanceof IStringReactor reactor) {
+	        reactor.onTextReceived(compound.getString("Text"), compound.getInt("TextID"), (Player) world.getEntity(compound.getInt("PlayerID")));
         }
     };
     public static final IDataHandler SYNC_PLAYER_DATA = new IDataHandler() {
@@ -148,7 +145,7 @@ public final class PacketHandler {
         }
     };
     public static final IDataHandler PLAYER_DATA_TO_SERVER = (compound, context) -> {
-        Level world = context.getSender().getServer().getLevel(ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(compound.getString("World"))));
+        Level world = context.getSender().getServer().getLevel(ResourceKey.create(Registries.DIMENSION, new ResourceLocation(compound.getString("World"))));
         Player player = world.getServer().getPlayerList().getPlayer(compound.getUUID("UUID"));
         if (player != null) {
             PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(player);
@@ -187,12 +184,12 @@ public final class PacketHandler {
         THE_NETWORK.messageBuilder(PacketServerToClient.class, 0, NetworkDirection.PLAY_TO_CLIENT)
             .decoder(PacketServerToClient::fromBytes)
             .encoder(PacketServerToClient::toBytes)
-            .consumer(PacketServerToClient::handle).add();
+            .consumerNetworkThread(PacketServerToClient::handle).add();
 
         THE_NETWORK.messageBuilder(PacketClientToServer.class, 1, NetworkDirection.PLAY_TO_SERVER)
             .decoder(PacketClientToServer::fromBytes)
             .encoder(PacketClientToServer::toBytes)
-            .consumer(PacketClientToServer::handle).add();
+            .consumerNetworkThread(PacketClientToServer::handle).add();
 
 
         DATA_HANDLERS.add(LASER_HANDLER);
@@ -208,7 +205,7 @@ public final class PacketHandler {
 
     public static void sendTo(Object msg, ServerPlayer player) {
         if (!(player instanceof FakePlayer)) {
-            THE_NETWORK.sendTo(msg, player.connection.getConnection(), NetworkDirection.PLAY_TO_CLIENT);
+            THE_NETWORK.sendTo(msg, player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
         }
     }
 

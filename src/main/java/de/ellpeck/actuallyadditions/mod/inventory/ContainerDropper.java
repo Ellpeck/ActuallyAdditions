@@ -29,7 +29,7 @@ public class ContainerDropper extends AbstractContainerMenu {
     Player player;
 
     public static ContainerDropper fromNetwork(int windowId, Inventory inv, FriendlyByteBuf data) {
-        return new ContainerDropper(windowId, inv, (TileEntityDropper) Objects.requireNonNull(inv.player.level.getBlockEntity(data.readBlockPos())));
+        return new ContainerDropper(windowId, inv, (TileEntityDropper) Objects.requireNonNull(inv.player.level().getBlockEntity(data.readBlockPos())));
     }
 
     public ContainerDropper(int windowId, Inventory inventory, TileEntityDropper tile) {

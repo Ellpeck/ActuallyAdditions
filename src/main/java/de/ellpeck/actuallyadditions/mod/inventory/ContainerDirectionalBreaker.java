@@ -47,7 +47,7 @@ public class ContainerDirectionalBreaker extends AbstractContainerMenu {
     }
 
     public static ContainerDirectionalBreaker fromNetwork(int windowId, Inventory inv, FriendlyByteBuf data) {
-        return new ContainerDirectionalBreaker(windowId, inv, (TileEntityLongRangeBreaker) Objects.requireNonNull(inv.player.level.getBlockEntity(data.readBlockPos())));
+        return new ContainerDirectionalBreaker(windowId, inv, (TileEntityLongRangeBreaker) Objects.requireNonNull(inv.player.level().getBlockEntity(data.readBlockPos())));
     }
 
     @Override

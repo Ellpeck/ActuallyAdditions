@@ -4,8 +4,10 @@
       "model": "actuallyadditions:block/fluid_placer",
       "x": 180
     },
-    "facing=up": {
-      "model": "actuallyadditions:block/fluid_placer"
+    "facing=east": {
+      "model": "actuallyadditions:block/fluid_placer",
+      "x": 90,
+      "y": 90
     },
     "facing=north": {
       "model": "actuallyadditions:block/fluid_placer",
@@ -16,15 +18,13 @@
       "x": 90,
       "y": 180
     },
+    "facing=up": {
+      "model": "actuallyadditions:block/fluid_placer"
+    },
     "facing=west": {
       "model": "actuallyadditions:block/fluid_placer",
       "x": 90,
       "y": 270
-    },
-    "facing=east": {
-      "model": "actuallyadditions:block/fluid_placer",
-      "x": 90,
-      "y": 90
     }
   }
 }

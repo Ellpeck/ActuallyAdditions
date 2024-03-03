@@ -31,7 +31,7 @@ public class ContainerCoffeeMachine extends AbstractContainerMenu {
     public final TileEntityCoffeeMachine machine;
 
     public static ContainerCoffeeMachine fromNetwork(int windowId, Inventory inv, FriendlyByteBuf data) {
-        return new ContainerCoffeeMachine(windowId, inv, (TileEntityCoffeeMachine) Objects.requireNonNull(inv.player.level.getBlockEntity(data.readBlockPos())));
+        return new ContainerCoffeeMachine(windowId, inv, (TileEntityCoffeeMachine) Objects.requireNonNull(inv.player.level().getBlockEntity(data.readBlockPos())));
     }
 
     public ContainerCoffeeMachine(int windowId, Inventory inventory, TileEntityCoffeeMachine tile) {

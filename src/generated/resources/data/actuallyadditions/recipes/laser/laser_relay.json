@@ -1,9 +1,9 @@
 {
   "type": "actuallyadditions:laser",
+  "energy": 2000,
   "ingredient": {
     "item": "actuallyadditions:laser_relay_item"
   },
-  "energy": 2000,
   "result": {
     "item": "actuallyadditions:laser_relay"
   }

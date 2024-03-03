@@ -18,7 +18,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.util.Mth;
 import net.minecraft.util.random.Weight;
 import net.minecraft.util.random.WeightedEntry;
@@ -157,7 +156,7 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisp
         double newX = x + this.getRandomAoe();
         double newZ = z + this.getRandomAoe();
 
-        if (world.hasChunkAt(new BlockPos(newX, y, newZ))) {
+        if (world.hasChunkAt(BlockPos.containing(newX, y, newZ))) {
             FireworkRocketEntity rocket = new FireworkRocketEntity(world, newX, y + 1, newZ, firework);
             world.addFreshEntity(rocket);
         }
@@ -296,7 +295,7 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisp
 
     @Override
     public Component getDisplayName() {
-        return TextComponent.EMPTY;
+        return Component.empty();
     }
 
     @Nullable

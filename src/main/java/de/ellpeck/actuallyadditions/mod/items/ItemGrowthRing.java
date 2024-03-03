@@ -36,19 +36,18 @@ public class ItemGrowthRing extends ItemEnergy {
 
     @Override
     public void inventoryTick(ItemStack stack, Level world, Entity entity, int itemSlot, boolean isSelected) {
-        if (!(entity instanceof Player) || world.isClientSide || entity.isShiftKeyDown()) {
+        if (!(entity instanceof Player player) || world.isClientSide || entity.isShiftKeyDown()) {
             return;
         }
 
-        Player player = (Player) entity;
-        ItemStack equipped = player.getMainHandItem();
+	    ItemStack equipped = player.getMainHandItem();
 
         int energyUse = 300;
         if (StackUtil.isValid(equipped) && equipped == stack && this.getEnergyStored(stack) >= energyUse) {
             List<BlockPos> blocks = new ArrayList<>();
 
             //Adding all possible Blocks
-            if (player.level.getGameTime() % 30 == 0) {
+            if (player.level().getGameTime() % 30 == 0) {
                 int range = 3;
                 for (int x = -range; x < range + 1; x++) {
                     for (int z = -range; z < range + 1; z++) {

@@ -88,9 +88,9 @@ public class ItemWingsOfTheBats extends ItemBase {
     public void onEntityDropEvent(LivingDropsEvent event) {
         Entity source = event.getSource().getEntity();
 
-        if (event.getEntityLiving().level != null && !event.getEntityLiving().level.isClientSide && source instanceof Player) {
+        if (event.getEntity().level() != null && !event.getEntity().level().isClientSide && source instanceof Player) {
             //Drop Wings from Bats
-            if (ConfigBoolValues.DO_BAT_DROPS.isEnabled() && event.getEntityLiving() instanceof Bat) {
+            if (ConfigBoolValues.DO_BAT_DROPS.isEnabled() && event.getEntity() instanceof Bat) {
                 int looting = event.getLootingLevel();
 
                 Iterable<ItemStack> equip = source.getHandSlots();
@@ -102,23 +102,22 @@ public class ItemWingsOfTheBats extends ItemBase {
                     }
                 }
 
-                if (event.getEntityLiving().level.random.nextInt(15) <= looting * 2) {
-                    LivingEntity entityLiving = event.getEntityLiving();
-                    event.getDrops().add(new ItemEntity(event.getEntityLiving().level, entityLiving.getX(), entityLiving.getY(), entityLiving.getZ(), new ItemStack(ActuallyItems.BATS_WING.get(), event.getEntityLiving().level.random.nextInt(2 + looting) + 1)));
+                if (event.getEntity().level().random.nextInt(15) <= looting * 2) {
+                    LivingEntity entityLiving = event.getEntity();
+                    event.getDrops().add(new ItemEntity(event.getEntity().level(), entityLiving.getX(), entityLiving.getY(), entityLiving.getZ(), new ItemStack(ActuallyItems.BATS_WING.get(), event.getEntity().level().random.nextInt(2 + looting) + 1)));
                 }
             }
         }
     }
 
     @SubscribeEvent
-    public void livingUpdateEvent(LivingEvent.LivingUpdateEvent event) {
-        if (event.getEntityLiving() instanceof Player) {
-            Player player = (Player) event.getEntityLiving();
+    public void livingUpdateEvent(LivingEvent.LivingTickEvent event) {
+        if (event.getEntity() instanceof Player player) {
 
-            if (false &&!player.isCreative() && !player.isSpectator()) { //TODO disabled for now.
+	        if (false &&!player.isCreative() && !player.isSpectator()) { //TODO disabled for now.
                 PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(player);
 
-                if (!player.level.isClientSide) {
+                if (!player.level().isClientSide) {
                     boolean tryDeduct = false;
                     boolean shouldSend = false;
 
@@ -139,7 +138,7 @@ public class ItemWingsOfTheBats extends ItemBase {
                             if (player.getAbilities().flying) {
                                 data.batWingsFlyTime++;
 
-                                if (player.level.getLevelData().getGameTime() % 10 == 0) {
+                                if (player.level().getLevelData().getGameTime() % 10 == 0) {
                                     shouldSend = true;
                                 }
                             }
@@ -162,9 +161,9 @@ public class ItemWingsOfTheBats extends ItemBase {
                         if (!player.getAbilities().flying) {
                             deductTime = 2;
                         } else {
-                            BlockPos pos = new BlockPos(player.getX(), player.getY() + player.getBbHeight(), player.getZ());
-                            BlockState state = player.level.getBlockState(pos);
-                            if (state.isFaceSturdy(player.level, pos, Direction.DOWN)) {
+                            BlockPos pos = BlockPos.containing(player.getX(), player.getY() + player.getBbHeight(), player.getZ());
+                            BlockState state = player.level().getBlockState(pos);
+                            if (state.isFaceSturdy(player.level(), pos, Direction.DOWN)) {
                                 deductTime = 10;
                             }
                         }
@@ -172,7 +171,7 @@ public class ItemWingsOfTheBats extends ItemBase {
                         if (deductTime > 0) {
                             data.batWingsFlyTime = Math.max(0, data.batWingsFlyTime - deductTime);
 
-                            if (player.level.getLevelData().getGameTime() % 10 == 0) {
+                            if (player.level().getLevelData().getGameTime() % 10 == 0) {
                                 shouldSend = true;
                             }
                         }

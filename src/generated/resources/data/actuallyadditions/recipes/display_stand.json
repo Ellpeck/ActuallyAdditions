@@ -1,22 +1,24 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " R ",
-    "EEE",
-    "GGG"
-  ],
+  "category": "misc",
   "key": {
-    "R": {
-      "item": "actuallyadditions:advanced_coil"
-    },
     "E": {
       "item": "actuallyadditions:ethetic_green_block"
     },
     "G": {
       "item": "actuallyadditions:ethetic_white_block"
+    },
+    "R": {
+      "item": "actuallyadditions:advanced_coil"
     }
   },
+  "pattern": [
+    " R ",
+    "EEE",
+    "GGG"
+  ],
   "result": {
     "item": "actuallyadditions:display_stand"
-  }
+  },
+  "show_notification": true
 }

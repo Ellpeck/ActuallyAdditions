@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityCoalGenerator;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -29,7 +30,6 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import javax.annotation.Nullable;
-import java.util.Random;
 
 public class BlockCoalGenerator extends DirectionalBlock.Container {
     public BlockCoalGenerator() {
@@ -49,7 +49,7 @@ public class BlockCoalGenerator extends DirectionalBlock.Container {
     }
 
     @Override
-    public void randomTick(BlockState state, ServerLevel world, BlockPos pos, Random random) {
+    public void randomTick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
         BlockEntity tile = world.getBlockEntity(pos);
         if (tile instanceof TileEntityCoalGenerator) {
             if (((TileEntityCoalGenerator) tile).currentBurnTime > 0) {

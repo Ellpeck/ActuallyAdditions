@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.items.base;
 
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tier;
 
@@ -26,7 +25,7 @@ public class ItemSwordAA extends SwordItem {
 //                .addToolType(ToolType.SHOVEL, tier.getLevel())
 //                .addToolType(ToolType.PICKAXE, tier.getLevel())
                 .durability(tier.getUses() * 4)
-                .tab(ActuallyAdditions.GROUP)
+                
         );
     }
 

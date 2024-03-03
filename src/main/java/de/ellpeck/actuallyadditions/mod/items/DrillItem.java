@@ -25,7 +25,7 @@ import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;
@@ -47,14 +47,15 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class DrillItem extends ItemEnergy {
 
@@ -177,7 +178,7 @@ public class DrillItem extends ItemEnergy {
     @Override
     public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
         if (!world.isClientSide && player.isShiftKeyDown() && hand == InteractionHand.MAIN_HAND) {
-            player.openMenu(new SimpleMenuProvider((id, inv, p) -> new ContainerDrill(id, inv), new TextComponent("")));
+            player.openMenu(new SimpleMenuProvider((id, inv, p) -> new ContainerDrill(id, inv), Component.literal("")));
 //            player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.DRILL.ordinal(), world, (int) player.posX, (int) player.posY, (int) player.posZ);
         }
         return new InteractionResultHolder<>(InteractionResult.PASS, player.getItemInHand(hand));
@@ -238,18 +239,18 @@ public class DrillItem extends ItemEnergy {
             }
 
             //Block hit
-            HitResult ray = WorldUtil.getNearestBlockWithDefaultReachDistance(player.level, player);
+            HitResult ray = WorldUtil.getNearestBlockWithDefaultReachDistance(player.level(), player);
             if (ray != null && ray.getType() == HitResult.Type.BLOCK) {
                 BlockHitResult trace = (BlockHitResult) ray;
                 //Breaks the Blocks
                 if (!player.isShiftKeyDown() && this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.THREE_BY_THREE)) {
                     if (this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FIVE_BY_FIVE)) {
-                        toReturn = this.breakBlocks(stack, 2, player.level, pos, trace.getDirection(), player);
+                        toReturn = this.breakBlocks(stack, 2, player.level(), pos, trace.getDirection(), player);
                     } else {
-                        toReturn = this.breakBlocks(stack, 1, player.level, pos, trace.getDirection(), player);
+                        toReturn = this.breakBlocks(stack, 1, player.level(), pos, trace.getDirection(), player);
                     }
                 } else {
-                    toReturn = this.breakBlocks(stack, 0, player.level, pos, trace.getDirection(), player);
+                    toReturn = this.breakBlocks(stack, 0, player.level(), pos, trace.getDirection(), player);
                 }
 
                 //Removes Enchantments added above
@@ -263,7 +264,7 @@ public class DrillItem extends ItemEnergy {
     @Override
     public boolean isCorrectToolForDrops(ItemStack stack, BlockState state) {
         Block block = state.getBlock();
-        return this.getEnergyStored(stack) >= this.getEnergyUsePerBlock(stack) && (this.hasExtraWhitelist(block) || state.getMaterial().isReplaceable() || block == Blocks.SNOW_BLOCK || block == Blocks.SNOW || (block == Blocks.OBSIDIAN
+        return this.getEnergyStored(stack) >= this.getEnergyUsePerBlock(stack) && (this.hasExtraWhitelist(block) || state.canBeReplaced() || block == Blocks.SNOW_BLOCK || block == Blocks.SNOW || (block == Blocks.OBSIDIAN
                 ? HARVEST_LEVEL >= 3
                 : block != Blocks.DIAMOND_BLOCK && block != Blocks.DIAMOND_ORE
                 ? block != Blocks.EMERALD_ORE && block != Blocks.EMERALD_BLOCK
@@ -271,7 +272,7 @@ public class DrillItem extends ItemEnergy {
                 ? block != Blocks.IRON_BLOCK && block != Blocks.IRON_ORE
                 ? block != Blocks.LAPIS_BLOCK && block != Blocks.LAPIS_ORE
                 ? block != Blocks.REDSTONE_ORE
-                ? state.getMaterial() == Material.STONE || state.getMaterial() == Material.METAL || state.getMaterial() == Material.HEAVY_METAL
+                ? state.is(Tags.Blocks.STONE) || state.is(Tags.Blocks.STORAGE_BLOCKS)
                 : HARVEST_LEVEL >= 2
                 : HARVEST_LEVEL >= 1
                 : HARVEST_LEVEL >= 1
@@ -487,7 +488,7 @@ public class DrillItem extends ItemEnergy {
 
     private boolean hasExtraWhitelist(Block block) {
         if (block != null) {
-            ResourceLocation location = block.getRegistryName();
+            ResourceLocation location = ForgeRegistries.BLOCKS.getKey(block);
             if (location != null) {
                 String name = location.toString();
                 if (name != null) {
@@ -504,6 +505,6 @@ public class DrillItem extends ItemEnergy {
 
     @Override
     public boolean shouldCauseBlockBreakReset(ItemStack oldStack, ItemStack newStack) {
-        return !newStack.sameItem(oldStack);
+        return !ItemStack.isSameItem(newStack, oldStack);
     }
 }

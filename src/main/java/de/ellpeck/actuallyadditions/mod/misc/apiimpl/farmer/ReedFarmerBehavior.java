@@ -22,7 +22,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SugarCaneBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
 
@@ -59,7 +59,7 @@ public class ReedFarmerBehavior implements IFarmerBehavior {
                         BlockPos up = pos.above(i);
                         BlockState upState = world.getBlockState(up);
                         if (upState.getBlock() instanceof SugarCaneBlock) {
-                            List<ItemStack> drops = state.getDrops(new LootContext.Builder(world)
+                            List<ItemStack> drops = state.getDrops(new LootParams.Builder(world)
                                 .withParameter(LootContextParams.ORIGIN, new Vec3(pos.getX(), pos.getY(), pos.getZ()))
                                 .withParameter(LootContextParams.TOOL, ItemStack.EMPTY));
 

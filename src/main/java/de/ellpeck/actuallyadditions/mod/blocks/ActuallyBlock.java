@@ -1,6 +1,5 @@
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SlabBlock;
@@ -27,7 +26,7 @@ public class ActuallyBlock extends Block implements IActuallyBlock {
 
     @Override
     public Item.Properties getItemProperties() {
-        return new Item.Properties().tab(ActuallyAdditions.GROUP);
+        return new Item.Properties();
     }
 
     public static class Stairs extends StairBlock implements IActuallyBlock {
@@ -42,7 +41,7 @@ public class ActuallyBlock extends Block implements IActuallyBlock {
 
         @Override
         public Item.Properties getItemProperties() {
-            return new Item.Properties().tab(ActuallyAdditions.GROUP);
+            return new Item.Properties();
         }
     }
 
@@ -58,7 +57,7 @@ public class ActuallyBlock extends Block implements IActuallyBlock {
 
         @Override
         public Item.Properties getItemProperties() {
-            return new Item.Properties().tab(ActuallyAdditions.GROUP);
+            return new Item.Properties();
         }
     }
 }

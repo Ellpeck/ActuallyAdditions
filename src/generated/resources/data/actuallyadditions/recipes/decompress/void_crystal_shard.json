@@ -1,12 +1,13 @@
 {
   "type": "minecraft:crafting_shapeless",
+  "category": "misc",
   "ingredients": [
     {
       "item": "actuallyadditions:void_crystal"
     }
   ],
   "result": {
-    "item": "actuallyadditions:void_crystal_shard",
-    "count": 9
+    "count": 9,
+    "item": "actuallyadditions:void_crystal_shard"
   }
 }

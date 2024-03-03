@@ -2,7 +2,7 @@ package de.ellpeck.actuallyadditions.data;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CropBlock;
@@ -14,12 +14,13 @@ import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.function.Supplier;
 
 public class BlockStateGenerator extends BlockStateProvider {
-    public BlockStateGenerator(DataGenerator gen, ExistingFileHelper exFileHelper) {
-        super(gen, ActuallyAdditions.MODID, exFileHelper);
+    public BlockStateGenerator(PackOutput packOutput, ExistingFileHelper exFileHelper) {
+        super(packOutput, ActuallyAdditions.MODID, exFileHelper);
     }
 
     @Override
@@ -207,7 +208,7 @@ public class BlockStateGenerator extends BlockStateProvider {
     }
 
     private void standardBlock(Supplier<Block> block) {
-        ResourceLocation name = block.get().getRegistryName();
+        ResourceLocation name = ForgeRegistries.BLOCKS.getKey(block.get());
         ModelFile model = new ModelFile.UncheckedModelFile(modLoc("block/" + name.getPath()));
 
         assert name != null;
@@ -215,7 +216,7 @@ public class BlockStateGenerator extends BlockStateProvider {
     }
 
     private void standardBlockWithCube(Supplier<Block> block) {
-        ResourceLocation name = block.get().getRegistryName();
+        ResourceLocation name =  ForgeRegistries.BLOCKS.getKey(block.get());
         assert name != null;
 
         ModelFile model = models().cubeAll(name.toString(), modLoc("block/" + name.getPath()));
@@ -223,7 +224,7 @@ public class BlockStateGenerator extends BlockStateProvider {
     }
 
     private void buildLitState(Supplier<Block> block) {
-        ResourceLocation name = block.get().getRegistryName();
+        ResourceLocation name =  ForgeRegistries.BLOCKS.getKey(block.get());
         assert name != null;
 
         getVariantBuilder(block.get())
@@ -234,7 +235,7 @@ public class BlockStateGenerator extends BlockStateProvider {
     }
 
     private void fullyDirectionalBlock(Supplier<Block> block) {
-        ResourceLocation name = block.get().getRegistryName();
+        ResourceLocation name =  ForgeRegistries.BLOCKS.getKey(block.get());
         ModelFile model = new ModelFile.UncheckedModelFile(modLoc("block/" + name.toString().split(":")[1]));
         ModelFile verModel = new ModelFile.UncheckedModelFile(modLoc("block/" + name.toString().split(":")[1] + "_ver"));
 
@@ -243,7 +244,7 @@ public class BlockStateGenerator extends BlockStateProvider {
     }
 
     private void horizontallyDirectionalBlock(Supplier<Block> block) {
-        ResourceLocation name = block.get().getRegistryName();
+        ResourceLocation name =  ForgeRegistries.BLOCKS.getKey(block.get());
         ModelFile model = new ModelFile.UncheckedModelFile(modLoc("block/" + name.toString().split(":")[1]));
 
         assert name != null;

@@ -2,7 +2,6 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemNameBlockItem;
 import net.minecraft.world.item.ItemStack;
@@ -46,7 +45,7 @@ public class AABlockItem extends BlockItem {
                     energy = BET.getInt("Energy");
                 }
                 NumberFormat format = NumberFormat.getInstance();
-                pTooltip.add(new TranslatableComponent("misc.actuallyadditions.power_single", format.format(energy)));
+                pTooltip.add(Component.translatable("misc.actuallyadditions.power_single", format.format(energy)));
             }
         }
     }

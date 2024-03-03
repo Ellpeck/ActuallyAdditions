@@ -18,7 +18,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 
 public class TileEntityPhantomLiquiface extends TileEntityPhantomface implements ISharingFluidHandler {
 
@@ -45,7 +45,7 @@ public class TileEntityPhantomLiquiface extends TileEntityPhantomface implements
             BlockEntity tile = this.level.getBlockEntity(this.boundPosition);
             if (tile != null && !(tile instanceof TileEntityLaserRelayFluids)) {
                 for (Direction facing : Direction.values()) {
-                    if (tile.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing).isPresent()) {
+                    if (tile.getCapability(ForgeCapabilities.FLUID_HANDLER, facing).isPresent()) {
                         return true;
                     }
                 }
@@ -56,7 +56,7 @@ public class TileEntityPhantomLiquiface extends TileEntityPhantomface implements
 
     @Override
     protected boolean isCapabilitySupported(Capability<?> capability) {
-        return capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY;
+        return capability == ForgeCapabilities.FLUID_HANDLER;
     }
 
     @Override

@@ -17,6 +17,7 @@ import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class FilterSettings {
     public final ItemStackHandlerAA filterInventory;
@@ -68,7 +69,7 @@ public class FilterSettings {
     private static boolean areEqualEnough(ItemStack first, ItemStack second, boolean nbt, boolean mod) {
         Item firstItem = first.getItem();
         Item secondItem = second.getItem();
-        if (mod && firstItem.getRegistryName().getNamespace().equals(secondItem.getRegistryName().getNamespace())) {
+        if (mod && ForgeRegistries.ITEMS.getKey(firstItem).getNamespace().equals(ForgeRegistries.ITEMS.getKey(secondItem).getNamespace())) {
             return true;
         }
 
@@ -76,7 +77,7 @@ public class FilterSettings {
             return false;
         }
 
-        boolean nbtFine = !nbt || ItemStack.tagMatches(first, second);
+        boolean nbtFine = !nbt || ItemStack.isSameItemSameTags(first, second);
         if (nbtFine) {
             return true;
         }

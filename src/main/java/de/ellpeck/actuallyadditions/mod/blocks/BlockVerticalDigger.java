@@ -11,10 +11,10 @@
 package de.ellpeck.actuallyadditions.mod.blocks;
 
 import com.mojang.blaze3d.platform.Window;
-import com.mojang.blaze3d.vertex.PoseStack;
 import de.ellpeck.actuallyadditions.mod.blocks.base.DirectionalBlock;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityVerticalDigger;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -61,19 +61,18 @@ public class BlockVerticalDigger extends DirectionalBlock.Container implements I
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void displayHud(PoseStack matrices, Minecraft minecraft, Player player, ItemStack stack, HitResult rayCast, Window resolution) {
+    public void displayHud(GuiGraphics guiGraphics, Minecraft minecraft, Player player, ItemStack stack, HitResult rayCast, Window resolution) {
         if (!(rayCast instanceof BlockHitResult)) {
             return;
         }
         BlockEntity tile = minecraft.level.getBlockEntity(((BlockHitResult) rayCast).getBlockPos());
-        if (tile instanceof TileEntityVerticalDigger) {
-            TileEntityVerticalDigger miner = (TileEntityVerticalDigger) tile;
-            String info = miner.checkY == 0
+        if (tile instanceof TileEntityVerticalDigger miner) {
+	        String info = miner.checkY == 0
                 ? "Done Mining!"
                 : miner.checkY == -1
                 ? "Calculating positions..."
                 : "Mining at " + (miner.getBlockPos().getX() + miner.checkX) + ", " + miner.checkY + ", " + (miner.getBlockPos().getZ() + miner.checkZ) + ".";
-            minecraft.font.drawShadow(matrices, info, resolution.getGuiScaledWidth() / 2f + 5, resolution.getGuiScaledHeight() / 2f - 20, 0xFFFFFF);
+            guiGraphics.drawString(minecraft.font, info, (int) (resolution.getGuiScaledWidth() / 2f + 5), (int) (resolution.getGuiScaledHeight() / 2f - 20), 0xFFFFFF);
         }
     }
 

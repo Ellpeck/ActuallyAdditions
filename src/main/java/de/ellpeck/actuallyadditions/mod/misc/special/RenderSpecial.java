@@ -11,15 +11,15 @@
 package de.ellpeck.actuallyadditions.mod.misc.special;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.PlayerModelPart;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 
@@ -52,7 +52,7 @@ public class RenderSpecial {
         if (isBlock) {
             matrixStack.translate(0D, -0.1875D, 0D);
         }
-        matrixStack.mulPose(Vector3f.ZP.rotationDegrees(180));
+        matrixStack.mulPose(Axis.ZP.rotationDegrees(180));
 
         float size = isBlock
             ? 0.5F
@@ -63,7 +63,7 @@ public class RenderSpecial {
         //Peck edit: What do you mean by "nice" you jackass? >_>
         double boop = Util.getMillis() / 1000D;
         matrixStack.translate(0D, Math.sin(boop % (2 * Math.PI)) * 0.25, 0D);
-        matrixStack.mulPose(Vector3f.YP.rotationDegrees((float) (boop * 40D % 360)));
+        matrixStack.mulPose(Axis.YP.rotationDegrees((float) (boop * 40D % 360)));
 
 //        GlStateManager._disableLighting();
         matrixStack.pushPose();
@@ -71,8 +71,8 @@ public class RenderSpecial {
         if (!isBlock) {
             matrixStack.translate(0D, 0.5D, 0D);
         }
-        matrixStack.mulPose(Vector3f.XN.rotationDegrees(180F));
-        Minecraft.getInstance().getItemRenderer().renderStatic(theThingToRender, ItemTransforms.TransformType.FIXED, combinedLight, OverlayTexture.NO_OVERLAY, matrixStack, buffer, 0);
+        matrixStack.mulPose(Axis.XN.rotationDegrees(180F));
+        Minecraft.getInstance().getItemRenderer().renderStatic(theThingToRender, ItemDisplayContext.FIXED, combinedLight, OverlayTexture.NO_OVERLAY, matrixStack, buffer, null, 0);
         matrixStack.popPose();
 
 //        GlStateManager._enableLighting();

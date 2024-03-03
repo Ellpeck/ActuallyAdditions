@@ -16,11 +16,9 @@ import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionResult;
@@ -47,7 +45,7 @@ public class ItemPhantomConnector extends ItemBase {
             return null;
         }
 
-        return ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(tag.getString("WorldOfTileStored")));
+        return ResourceKey.create(Registries.DIMENSION, new ResourceLocation(tag.getString("WorldOfTileStored")));
     }
 
     public static BlockPos getStoredPosition(ItemStack stack) {
@@ -95,7 +93,7 @@ public class ItemPhantomConnector extends ItemBase {
                             ((TileEntityBase) tile).sendUpdate();
                         }
                         clearStorage(stack, "XCoordOfTileStored", "YCoordOfTileStored", "ZCoordOfTileStored", "WorldOfTileStored");
-                        context.getPlayer().displayClientMessage(new TranslatableComponent("tooltip." + ActuallyAdditions.MODID + ".phantom.connected.desc"), true);
+                        context.getPlayer().displayClientMessage(Component.translatable("tooltip." + ActuallyAdditions.MODID + ".phantom.connected.desc"), true);
                         return InteractionResult.SUCCESS;
                     }
                     return InteractionResult.FAIL;
@@ -103,7 +101,7 @@ public class ItemPhantomConnector extends ItemBase {
             }
             //Storing Connections
             storeConnection(stack, pos.getX(), pos.getY(), pos.getZ(), context.getLevel());
-            context.getPlayer().displayClientMessage(new TranslatableComponent("tooltip." + ActuallyAdditions.MODID + ".phantom.stored.desc"), true);
+            context.getPlayer().displayClientMessage(Component.translatable("tooltip." + ActuallyAdditions.MODID + ".phantom.stored.desc"), true);
         }
         return InteractionResult.SUCCESS;
     }
@@ -119,11 +117,11 @@ public class ItemPhantomConnector extends ItemBase {
     public void appendHoverText(ItemStack stack, @Nullable Level playerIn, List<Component> list, TooltipFlag advanced) {
         BlockPos coords = getStoredPosition(stack);
         if (coords != null) {
-            list.add(new TranslatableComponent("tooltip." + ActuallyAdditions.MODID + ".boundTo.desc").append(":"));
-            list.add(new TextComponent("X: " + coords.getX()));
-            list.add(new TextComponent("Y: " + coords.getY()));
-            list.add(new TextComponent("Z: " + coords.getZ()));
-            list.add(new TranslatableComponent("tooltip." + ActuallyAdditions.MODID + ".clearStorage.desc").withStyle(ChatFormatting.ITALIC));
+            list.add(Component.translatable("tooltip." + ActuallyAdditions.MODID + ".boundTo.desc").append(":"));
+            list.add(Component.literal("X: " + coords.getX()));
+            list.add(Component.literal("Y: " + coords.getY()));
+            list.add(Component.literal("Z: " + coords.getZ()));
+            list.add(Component.translatable("tooltip." + ActuallyAdditions.MODID + ".clearStorage.desc").withStyle(ChatFormatting.ITALIC));
         }
     }
 }

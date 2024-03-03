@@ -16,6 +16,7 @@ import de.ellpeck.actuallyadditions.mod.crafting.ColorChangeRecipe;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
@@ -53,7 +54,7 @@ public class LensColor extends Lens {
             if (tile.getEnergy() >= ENERGY_USE) {
                 BlockState state = tile.getWorldObject().getBlockState(hitBlock);
                 Block block = state.getBlock();
-                ItemStack returnStack = this.tryConvert(new ItemStack(block));
+                ItemStack returnStack = this.tryConvert(new ItemStack(block), tile.getWorldObject().registryAccess());
                 if (!returnStack.isEmpty() && returnStack.getItem() instanceof BlockItem) {
                     Block toPlace = Block.byItem(returnStack.getItem());
                     BlockState state2Place = toPlace.defaultBlockState();
@@ -65,7 +66,7 @@ public class LensColor extends Lens {
             List<ItemEntity> items = tile.getWorldObject().getEntitiesOfClass(ItemEntity.class, new AABB(hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), hitBlock.getX() + 1, hitBlock.getY() + 1, hitBlock.getZ() + 1));
             for (ItemEntity item : items) {
                 if (item.isAlive() && !item.getItem().isEmpty() && tile.getEnergy() >= ENERGY_USE) {
-                    ItemStack newStack = this.tryConvert(item.getItem());
+                    ItemStack newStack = this.tryConvert(item.getItem(), tile.getWorldObject().registryAccess());
                     if (StackUtil.isValid(newStack)) {
                         item.discard();
 
@@ -80,8 +81,8 @@ public class LensColor extends Lens {
         return false;
     }
 
-    private ItemStack tryConvert(ItemStack stack) {
-        return ColorChangeRecipe.getRecipeForStack(stack).map(ColorChangeRecipe::getResultItem).orElse(ItemStack.EMPTY);
+    private ItemStack tryConvert(ItemStack stack, RegistryAccess registryAccess) {
+        return ColorChangeRecipe.getRecipeForStack(stack).map(recipe -> recipe.getResultItem(registryAccess)).orElse(ItemStack.EMPTY);
     }
 
     @Override

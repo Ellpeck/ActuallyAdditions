@@ -2,6 +2,7 @@ package de.ellpeck.actuallyadditions.mod.crafting;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -16,7 +17,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -44,7 +44,7 @@ public class PressingRecipe implements Recipe<Container> {
     }
 
     @Override
-    public ItemStack assemble(Container pInv) {
+    public ItemStack assemble(Container pInv, RegistryAccess pRegistryAccess) {
         return ItemStack.EMPTY;
     }
 
@@ -58,7 +58,7 @@ public class PressingRecipe implements Recipe<Container> {
     }
 
     @Override
-    public ItemStack getResultItem() {
+    public ItemStack getResultItem(RegistryAccess pRegistryAccess) {
         return ItemStack.EMPTY;
     }
 
@@ -77,7 +77,7 @@ public class PressingRecipe implements Recipe<Container> {
         return ActuallyRecipes.Types.PRESSING;
     }
 
-    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<PressingRecipe> {
+    public static class Serializer implements RecipeSerializer<PressingRecipe> {
         @Nonnull
         @Override
         public PressingRecipe fromJson(@Nonnull ResourceLocation pRecipeId, @Nonnull JsonObject pJson) {
@@ -110,7 +110,7 @@ public class PressingRecipe implements Recipe<Container> {
         @Override
         public void toNetwork(@Nonnull FriendlyByteBuf pBuffer, @Nonnull PressingRecipe pRecipe) {
             pRecipe.input.toNetwork(pBuffer);
-            pBuffer.writeUtf(pRecipe.output.getFluid().getRegistryName().toString());
+            pBuffer.writeUtf(ForgeRegistries.FLUIDS.getKey(pRecipe.output.getFluid()).toString());
             pBuffer.writeInt(pRecipe.output.getAmount());
         }
     }
@@ -129,7 +129,7 @@ public class PressingRecipe implements Recipe<Container> {
         public void serializeRecipeData(JsonObject pJson) {
             pJson.add("ingredient", input.toJson());
             JsonObject result = new JsonObject();
-            result.addProperty("fluid", output.getFluid().getRegistryName().toString());
+            result.addProperty("fluid", ForgeRegistries.FLUIDS.getKey(output.getFluid()).toString());
             result.addProperty("amount", output.getAmount());
             pJson.add("result", result);
         }

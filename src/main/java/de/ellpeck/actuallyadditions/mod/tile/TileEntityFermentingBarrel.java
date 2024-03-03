@@ -18,7 +18,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -29,8 +28,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 
@@ -168,7 +167,7 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
     @Nonnull
     @Override
     public Component getDisplayName() {
-        return new TranslatableComponent("container.actuallyadditions.fermenting_barrel");
+        return Component.translatable("container.actuallyadditions.fermenting_barrel");
     }
 
     @Nullable
@@ -188,7 +187,7 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
 
     public static class FermentingBarrelMultiTank implements IFluidHandler {
 
-        private final int capacity = FluidAttributes.BUCKET_VOLUME * 2;
+        private final int capacity = FluidType.BUCKET_VOLUME * 2;
         public FluidTank inputTank = new FluidTank(capacity);
         public FluidTank outputTank = new FluidTank(capacity);
 

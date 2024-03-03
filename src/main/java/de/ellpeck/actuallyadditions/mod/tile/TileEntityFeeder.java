@@ -17,7 +17,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.util.Mth;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.animal.Animal;
@@ -114,10 +113,10 @@ public class TileEntityFeeder extends TileEntityInventoryBase implements MenuPro
     private static void feedAnimal(Animal animal) {
         animal.setInLove(null);
         for (int i = 0; i < 7; i++) {
-            double d = animal.level.random.nextGaussian() * 0.02D;
-            double d1 = animal.level.random.nextGaussian() * 0.02D;
-            double d2 = animal.level.random.nextGaussian() * 0.02D;
-            animal.level.addParticle(ParticleTypes.HEART, animal.getX() + animal.level.random.nextFloat() * animal.getBbWidth() * 2.0F - animal.getBbWidth(), animal.getY() + 0.5D + animal.level.random.nextFloat() * animal.getBbHeight(), animal.getZ() + animal.level.random.nextFloat() * animal.getBbWidth() * 2.0F - animal.getBbWidth(), d, d1, d2);
+            double d = animal.level().random.nextGaussian() * 0.02D;
+            double d1 = animal.level().random.nextGaussian() * 0.02D;
+            double d2 = animal.level().random.nextGaussian() * 0.02D;
+            animal.level().addParticle(ParticleTypes.HEART, animal.getX() + animal.level().random.nextFloat() * animal.getBbWidth() * 2.0F - animal.getBbWidth(), animal.getY() + 0.5D + animal.level().random.nextFloat() * animal.getBbHeight(), animal.getZ() + animal.level().random.nextFloat() * animal.getBbWidth() * 2.0F - animal.getBbWidth(), d, d1, d2);
         }
     }
 
@@ -131,7 +130,7 @@ public class TileEntityFeeder extends TileEntityInventoryBase implements MenuPro
 
     @Override
     public Component getDisplayName() {
-        return TextComponent.EMPTY;
+        return Component.empty();
     }
 
     @Nullable

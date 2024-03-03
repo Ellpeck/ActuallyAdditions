@@ -57,14 +57,14 @@
 //        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 //
 //        this.getMinecraft().getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
-//        this.blit(matrices, this.guiLeft, this.guiTop + 93, 0, 0, 176, 86);
+//        guiGraphics.blit(matrices, this.guiLeft, this.guiTop + 93, 0, 0, 176, 86);
 //
 //        this.getMinecraft().getTextureManager().bindTexture(RES_LOC);
-//        this.blit(matrices, this.guiLeft, this.guiTop, 0, 0, 176, 93);
+//        guiGraphics.blit(matrices, this.guiLeft, this.guiTop, 0, 0, 176, 93);
 //
 //        if (TileEntityItemRepairer.canBeRepaired(this.tileRepairer.inv.getStackInSlot(TileEntityItemRepairer.SLOT_INPUT))) {
 //            int i = this.tileRepairer.getItemDamageToScale(22);
-//            this.blit(matrices, this.guiLeft + 73, this.guiTop + 52, 176, 28, i, 16);
+//            guiGraphics.blit(matrices, this.guiLeft + 73, this.guiTop + 52, 176, 28, i, 16);
 //        }
 //
 //        this.energy.draw();

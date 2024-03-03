@@ -26,7 +26,7 @@ public class ContainerFermentingBarrel extends AbstractContainerMenu {
     public final TileEntityFermentingBarrel barrel;
 
     public static ContainerFermentingBarrel fromNetwork(int windowId, Inventory inv, FriendlyByteBuf data) {
-        return new ContainerFermentingBarrel(windowId, inv, (TileEntityFermentingBarrel) Objects.requireNonNull(inv.player.level.getBlockEntity(data.readBlockPos())));
+        return new ContainerFermentingBarrel(windowId, inv, (TileEntityFermentingBarrel) Objects.requireNonNull(inv.player.level().getBlockEntity(data.readBlockPos())));
     }
 
     public ContainerFermentingBarrel(int windowId, Inventory inventory, TileEntityFermentingBarrel tile) {

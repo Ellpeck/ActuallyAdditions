@@ -16,8 +16,7 @@ import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.render.RenderTypes;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
@@ -26,9 +25,9 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureManager;
@@ -38,6 +37,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -46,6 +46,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.network.PacketDistributor;
+import org.joml.Matrix4f;
 
 public final class AssetUtil {
 
@@ -63,13 +64,13 @@ public final class AssetUtil {
     }
 
     @OnlyIn(Dist.CLIENT)
-    public static void displayNameString(PoseStack matrices, Font font, int xSize, int yPositionOfMachineText, String text) {
-        font.draw(matrices, text, xSize / 2f - font.width(text) / 2f, yPositionOfMachineText, 0xFFFFFF);
+    public static void displayNameString(GuiGraphics guiGraphics, Font font, int xSize, int yPositionOfMachineText, String text) {
+        guiGraphics.drawString(font, text, xSize / 2f - font.width(text) / 2f, yPositionOfMachineText, 0xFFFFFF, false);
     }
 
     @OnlyIn(Dist.CLIENT)
-    public static void displayNameString(PoseStack matrices, Font font, int xSize, int yPositionOfMachineText, TileEntityBase tile) {
-        displayNameString(matrices, font, xSize, yPositionOfMachineText, I18n.get(tile.getNameForTranslation()));
+    public static void displayNameString(GuiGraphics guiGraphics, Font font, int xSize, int yPositionOfMachineText, TileEntityBase tile) {
+        displayNameString(guiGraphics, font, xSize, yPositionOfMachineText, I18n.get(tile.getNameForTranslation()));
     }
 
     //    public static void renderBlockInWorld(Block block, int meta) {
@@ -80,7 +81,7 @@ public final class AssetUtil {
     public static void renderItemInWorld(ItemStack stack, int combinedLight, int combinedOverlay, PoseStack matrices, MultiBufferSource buffer) {
         if (!stack.isEmpty()) {
             Minecraft.getInstance().getItemRenderer().renderStatic(
-                    stack, ItemTransforms.TransformType.FIXED, combinedLight, combinedOverlay, matrices, buffer, 0
+                    stack, ItemDisplayContext.FIXED, combinedLight, combinedOverlay, matrices, buffer, null, 0
             );
         }
     }
@@ -114,8 +115,8 @@ public final class AssetUtil {
             RenderSystem.enableBlend();
 //            RenderSystem.pushMatrix();
             matrices.pushPose();
-            model = ForgeHooksClient.handleCameraTransforms(matrices, model, ItemTransforms.TransformType.FIXED, false);
-            renderer.render(stack, ItemTransforms.TransformType.FIXED, false, matrices, bufferSource,
+            model = ForgeHooksClient.handleCameraTransforms(matrices, model, ItemDisplayContext.FIXED, false);
+            renderer.render(stack, ItemDisplayContext.FIXED, false, matrices, bufferSource,
                     combinedOverlay, combinedLight, model);
 //            RenderSystem.popMatrix();
             matrices.popPose();
@@ -238,7 +239,7 @@ public final class AssetUtil {
     @OnlyIn(Dist.CLIENT)
     public static void spawnLaserWithTimeClient(double startX, double startY, double startZ, double endX, double endY, double endZ, int color, int maxAge, double rotationTime, float size, float alpha) {
         Minecraft mc = Minecraft.getInstance();
-        BlockEntity tile = mc.level.getBlockEntity(new BlockPos(startX, startY, startZ));
+        BlockEntity tile = mc.level.getBlockEntity(BlockPos.containing(startX, startY, startZ));
         if(tile instanceof TileEntityAtomicReconstructor)
             ((TileEntityAtomicReconstructor) tile).resetBeam(maxAge, color);
 
@@ -271,9 +272,9 @@ public final class AssetUtil {
         matrixStack.translate(0.5f, 0.5f, 0.5f);
         matrixStack.translate(offX, offY, offZ);
 
-        matrixStack.mulPose(Vector3f.YP.rotationDegrees(yaw));
-        matrixStack.mulPose(Vector3f.XP.rotationDegrees(pitch));
-        matrixStack.mulPose(Vector3f.ZP.rotationDegrees(roll));
+        matrixStack.mulPose(Axis.YP.rotationDegrees(yaw));
+        matrixStack.mulPose(Axis.XP.rotationDegrees(pitch));
+        matrixStack.mulPose(Axis.ZP.rotationDegrees(roll));
 
         Matrix4f matrix = matrixStack.last().pose();
 
@@ -436,22 +437,23 @@ public final class AssetUtil {
     }
 
     @OnlyIn(Dist.CLIENT)
-    public static void renderTextInWorld(PoseStack matrixStack, double offsetX, double offsetY, double offsetZ, NonNullList<String> text, int color) {
-        matrixStack.pushPose();
-        matrixStack.translate(offsetX,offsetY,offsetZ);
-        matrixStack.scale(-1, -1, 1);
-        matrixStack.mulPose(Vector3f.YP.rotationDegrees(Minecraft.getInstance().cameraEntity.getYRot()));
-        matrixStack.scale(0.01F, 0.01F, 0.01F);
+    public static void renderTextInWorld(GuiGraphics guiGraphics, double offsetX, double offsetY, double offsetZ, NonNullList<String> text, int color) {
+        PoseStack matrices = guiGraphics.pose();
+        matrices.pushPose();
+        matrices.translate(offsetX,offsetY,offsetZ);
+        matrices.scale(-1, -1, 1);
+        matrices.mulPose(Axis.YP.rotationDegrees(Minecraft.getInstance().cameraEntity.getYRot()));
+        matrices.scale(0.01F, 0.01F, 0.01F);
 
         Font font = Minecraft.getInstance().font;
 
         int y = 0;
         for (String s : text) {
-            font.draw(matrixStack, s, 0, y, color);
+            guiGraphics.drawString(font, s, 0, y, color);
             y+= 10;
         }
 
-        matrixStack.popPose();
+        matrices.popPose();
     }
 
     public static float[] getWheelColor(float pos) {

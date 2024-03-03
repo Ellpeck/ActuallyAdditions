@@ -28,7 +28,7 @@ public class ContainerCoalGenerator extends AbstractContainerMenu {
     public final TileEntityCoalGenerator generator;
 
     public static ContainerCoalGenerator fromNetwork(int windowId, Inventory inv, FriendlyByteBuf data) {
-        return new ContainerCoalGenerator(windowId, inv, (TileEntityCoalGenerator) Objects.requireNonNull(inv.player.level.getBlockEntity(data.readBlockPos())));
+        return new ContainerCoalGenerator(windowId, inv, (TileEntityCoalGenerator) Objects.requireNonNull(inv.player.level().getBlockEntity(data.readBlockPos())));
     }
 
     public ContainerCoalGenerator(int windowId, Inventory inventory, TileEntityCoalGenerator tile) {

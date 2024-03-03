@@ -63,8 +63,8 @@ public class ItemLeafBlower extends ItemBase implements IDisplayStandItem {
     }
 
     @Override
-    public void onUsingTick(ItemStack stack, LivingEntity player, int count) {
-        this.doUpdate(player.level, Mth.floor(player.getX()), Mth.floor(player.getY()), Mth.floor(player.getZ()), count, stack);
+    public void onUseTick(Level level, LivingEntity livingEntity, ItemStack stack, int remainingUseDuration) {
+        this.doUpdate(level, Mth.floor(livingEntity.getX()), Mth.floor(livingEntity.getY()), Mth.floor(livingEntity.getZ()), remainingUseDuration, stack);
     }
 
     private boolean doUpdate(Level world, int x, int y, int z, int time, ItemStack stack) {

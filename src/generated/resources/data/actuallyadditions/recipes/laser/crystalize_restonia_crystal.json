@@ -1,9 +1,9 @@
 {
   "type": "actuallyadditions:laser",
+  "energy": 40,
   "ingredient": {
     "tag": "forge:dusts/redstone"
   },
-  "energy": 40,
   "result": {
     "item": "actuallyadditions:restonia_crystal"
   }

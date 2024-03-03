@@ -11,7 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.items;
 
 import com.mojang.blaze3d.platform.Window;
-import com.mojang.blaze3d.vertex.PoseStack;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.IHudDisplay;
@@ -19,8 +18,8 @@ import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import net.minecraft.ChatFormatting;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.PlayerAdvancements;
 import net.minecraft.server.ServerAdvancementManager;
@@ -90,11 +89,11 @@ public class ItemBooklet extends ItemBase implements IHudDisplay {
     @OnlyIn(Dist.CLIENT)
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level playerIn, List<Component> tooltip, TooltipFlag advanced) {
-        tooltip.add(new TranslatableComponent("tooltip." + ActuallyAdditions.MODID + "." + this.getDescription().getString() + ".desc"));
+        tooltip.add(Component.translatable("tooltip." + ActuallyAdditions.MODID + "." + this.getDescription().getString() + ".desc"));
 
         // TODO: this is bad
         for (int i = 1; i <= 4; i++) {
-            tooltip.add(new TranslatableComponent("tooltip." + ActuallyAdditions.MODID + "." + this.getDescription().getString() + ".sub." + i).withStyle(i == 4
+            tooltip.add(Component.translatable("tooltip." + ActuallyAdditions.MODID + "." + this.getDescription().getString() + ".sub." + i).withStyle(i == 4
                     ? ChatFormatting.GOLD
                     : ChatFormatting.RESET).withStyle(i == 4
                     ? ChatFormatting.ITALIC
@@ -104,7 +103,7 @@ public class ItemBooklet extends ItemBase implements IHudDisplay {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void displayHud(PoseStack matrices, Minecraft minecraft, Player player, ItemStack stack, HitResult rayCast, Window resolution) {
+    public void displayHud(GuiGraphics guiGraphics, Minecraft minecraft, Player player, ItemStack stack, HitResult rayCast, Window resolution) {
 //        if (rayCast != null && rayCast.getBlockPos() != null) {
 //            BlockState state = minecraft.level.getBlockState(rayCast.getBlockPos());
 //            Block block = state.getBlock();

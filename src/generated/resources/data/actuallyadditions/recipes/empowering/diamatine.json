@@ -3,6 +3,8 @@
   "base": {
     "item": "actuallyadditions:diamatine_crystal"
   },
+  "color": 6522834,
+  "energy": 5000,
   "modifiers": [
     {
       "tag": "forge:dyes/light_blue"
@@ -17,10 +19,8 @@
       "item": "minecraft:clay"
     }
   ],
-  "energy": 5000,
-  "time": 50,
-  "color": 6522834,
   "result": {
     "item": "actuallyadditions:empowered_diamatine_crystal"
-  }
+  },
+  "time": 50
 }

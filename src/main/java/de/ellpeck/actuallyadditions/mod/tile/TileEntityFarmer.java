@@ -25,7 +25,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -153,7 +152,7 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
             for (int i = 0; i < 6; i++) { //Process seed slots only
                 ItemStack stack = this.inv.getStackInSlot(i);
                 BlockState state = this.level.getBlockState(query);
-                if (StackUtil.isValid(stack) && state.getMaterial().isReplaceable()) {
+                if (StackUtil.isValid(stack) && state.canBeReplaced()) {
                     FarmerResult plantResult = behavior.tryPlantSeed(stack, this.level, query, this);
                     if (plantResult == FarmerResult.SUCCESS) {
                         this.inv.getStackInSlot(i).shrink(1);
@@ -245,7 +244,7 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
 
     @Override
     public Component getDisplayName() {
-        return new TranslatableComponent("container.actuallyadditions.farmer");
+        return Component.translatable("container.actuallyadditions.farmer");
     }
 
     @Nullable

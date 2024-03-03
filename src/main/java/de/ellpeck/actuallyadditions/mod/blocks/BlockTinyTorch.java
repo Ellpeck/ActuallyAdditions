@@ -12,7 +12,7 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBase;
 import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.AABB;
 
 public class BlockTinyTorch extends BlockBase {
@@ -26,7 +26,7 @@ public class BlockTinyTorch extends BlockBase {
     private static final AABB TORCH_EAST_AABB = new AABB(0.0D, 0.25D, 0.4375D, 0.1875D, 0.5625D, 0.5625D);
 
     public BlockTinyTorch() {
-        super(Properties.of(Material.DECORATION).sound(SoundType.WOOD).strength(0.0F, 0.8F));
+        super(Properties.of().pushReaction(PushReaction.DESTROY).sound(SoundType.WOOD).strength(0.0F, 0.8F));
         //        TorchBlock
         //        this.setDefaultState(this.blockState.getBaseState().withProperty(BlockTorch.FACING, Direction.UP));
         //        this.setTickRandomly(true);

@@ -16,7 +16,6 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityPlayerInterface;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -51,13 +50,13 @@ public class ItemPlayerProbe extends ItemBase {
                 if (player != null) {
                     if (player.isShiftKeyDown()) {
                         ItemPhantomConnector.clearStorage(stack, "UUIDLeast", "UUIDMost", "Name");
-                        ((Player) entity).displayClientMessage(new TranslatableComponent("tooltip." + ActuallyAdditions.MODID + ".playerProbe.disconnect.1"), false);
-                        player.displayClientMessage(new TranslatableComponent("tooltip." + ActuallyAdditions.MODID + ".playerProbe.notice"), false);
+                        ((Player) entity).displayClientMessage(Component.translatable("tooltip." + ActuallyAdditions.MODID + ".playerProbe.disconnect.1"), false);
+                        player.displayClientMessage(Component.translatable("tooltip." + ActuallyAdditions.MODID + ".playerProbe.notice"), false);
                         //TheAchievements.GET_UNPROBED.get(player);
                     }
                 } else {
                     ItemPhantomConnector.clearStorage(stack, "UUIDLeast", "UUIDMost", "Name");
-                    ((Player) entity).displayClientMessage(new TranslatableComponent("tooltip." + ActuallyAdditions.MODID + ".playerProbe.disconnect.2"), false);
+                    ((Player) entity).displayClientMessage(Component.translatable("tooltip." + ActuallyAdditions.MODID + ".playerProbe.disconnect.2"), false);
                 }
             }
         }
@@ -92,13 +91,12 @@ public class ItemPlayerProbe extends ItemBase {
 
     @Override
     public InteractionResult interactLivingEntity(ItemStack aStack, Player player, LivingEntity entity, InteractionHand hand) {
-        if (!player.level.isClientSide) {
+        if (!player.level().isClientSide) {
             ItemStack stack = player.getMainHandItem();
             if (StackUtil.isValid(stack) && stack.getItem() == this) {
-                if (entity instanceof Player) {
-                    Player playerHit = (Player) entity;
+                if (entity instanceof Player playerHit) {
 
-                    if (!playerHit.isShiftKeyDown()) {
+	                if (!playerHit.isShiftKeyDown()) {
                         CompoundTag compound = stack.getOrCreateTag();
                         compound.putString("Name", playerHit.getName().getString());
                         compound.putUUID("UUID", playerHit.getUUID());
@@ -115,7 +113,7 @@ public class ItemPlayerProbe extends ItemBase {
     public void appendHoverText(ItemStack stack, @Nullable Level playerIn, List<Component> tooltip, TooltipFlag advanced) {
         if (stack.getOrCreateTag().contains("Name")) {
             String name = stack.getOrCreateTag().getString("Name");
-            tooltip.add(new TranslatableComponent("tooltip." + ActuallyAdditions.MODID + ".playerProbe.probing").append(": " + name));
+            tooltip.add(Component.translatable("tooltip." + ActuallyAdditions.MODID + ".playerProbe.probing").append(": " + name));
         }
     }
 }

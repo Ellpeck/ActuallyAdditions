@@ -1,22 +1,24 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "actuallyadditions:empowered_void_crystal"
+    },
+    "C": {
+      "item": "actuallyadditions:advanced_coil"
+    },
+    "O": {
+      "tag": "forge:obsidian"
+    }
+  },
   "pattern": [
     "OAO",
     "ACA",
     "OAO"
   ],
-  "key": {
-    "A": {
-      "item": "actuallyadditions:empowered_void_crystal"
-    },
-    "O": {
-      "tag": "forge:obsidian"
-    },
-    "C": {
-      "item": "actuallyadditions:advanced_coil"
-    }
-  },
   "result": {
     "item": "actuallyadditions:shock_suppressor"
-  }
+  },
+  "show_notification": true
 }

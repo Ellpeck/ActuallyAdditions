@@ -3,6 +3,8 @@
   "base": {
     "item": "actuallyadditions:palis_crystal"
   },
+  "color": 2437779,
+  "energy": 5000,
   "modifiers": [
     {
       "tag": "forge:dyes/cyan"
@@ -17,10 +19,8 @@
       "item": "minecraft:prismarine_shard"
     }
   ],
-  "energy": 5000,
-  "time": 50,
-  "color": 2437779,
   "result": {
     "item": "actuallyadditions:empowered_palis_crystal"
-  }
+  },
+  "time": 50
 }

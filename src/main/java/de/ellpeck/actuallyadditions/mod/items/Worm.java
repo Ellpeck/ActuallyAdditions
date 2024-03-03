@@ -23,7 +23,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.event.entity.player.UseHoeEvent;
+import net.minecraftforge.common.ToolActions;
+import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
 
 import java.util.List;
@@ -58,20 +59,22 @@ public class Worm extends ItemBase {
         return InteractionResult.SUCCESS;
     }
 
-    public static void onHoe(UseHoeEvent event) {
-        Level level = event.getEntity().level;
+    public static void onHoe(BlockEvent.BlockToolModificationEvent event) {
+        if (event.getToolAction() == ToolActions.HOE_TILL) {
+            Level level = event.getPlayer().level();
 
-        if (level.isClientSide || !CommonConfig.Other.WORMS.get() || event.getResult() == Event.Result.DENY)
-            return;
+            if (level.isClientSide || !CommonConfig.Other.WORMS.get() || event.getResult() == Event.Result.DENY)
+                return;
 
-        BlockPos pos = event.getContext().getClickedPos();
-        if (level.isEmptyBlock(pos.above())) {
-            BlockState state = level.getBlockState(pos);
-            if (state.getBlock() == Blocks.GRASS_BLOCK && level.random.nextFloat() >= 0.95F) {
-                ItemStack stack = new ItemStack(ActuallyItems.WORM.get(), level.random.nextInt(2) + 1);
-                ItemEntity item = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, stack);
+            BlockPos pos = event.getContext().getClickedPos();
+            if (level.isEmptyBlock(pos.above())) {
+                BlockState state = level.getBlockState(pos);
+                if (state.getBlock() == Blocks.GRASS_BLOCK && level.random.nextFloat() >= 0.95F) {
+                    ItemStack stack = new ItemStack(ActuallyItems.WORM.get(), level.random.nextInt(2) + 1);
+                    ItemEntity item = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, stack);
 
-                level.addFreshEntity(item);
+                    level.addFreshEntity(item);
+                }
             }
         }
     }

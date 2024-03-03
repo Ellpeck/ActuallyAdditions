@@ -4,8 +4,10 @@
       "model": "actuallyadditions:block/atomic_reconstructor",
       "x": 180
     },
-    "facing=up": {
-      "model": "actuallyadditions:block/atomic_reconstructor"
+    "facing=east": {
+      "model": "actuallyadditions:block/atomic_reconstructor",
+      "x": 90,
+      "y": 90
     },
     "facing=north": {
       "model": "actuallyadditions:block/atomic_reconstructor",
@@ -16,15 +18,13 @@
       "x": 90,
       "y": 180
     },
+    "facing=up": {
+      "model": "actuallyadditions:block/atomic_reconstructor"
+    },
     "facing=west": {
       "model": "actuallyadditions:block/atomic_reconstructor",
       "x": 90,
       "y": 270
-    },
-    "facing=east": {
-      "model": "actuallyadditions:block/atomic_reconstructor",
-      "x": 90,
-      "y": 90
     }
   }
 }

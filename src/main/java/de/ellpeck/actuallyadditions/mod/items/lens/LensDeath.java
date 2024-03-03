@@ -12,8 +12,11 @@ package de.ellpeck.actuallyadditions.mod.items.lens;
 
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
-import de.ellpeck.actuallyadditions.mod.misc.DamageSources;
+import de.ellpeck.actuallyadditions.mod.misc.ActuallyDamageTypes;
+import de.ellpeck.actuallyadditions.mod.misc.MultiMessageDamageSource;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
@@ -38,7 +41,8 @@ public class LensDeath extends Lens {
     }
 
     protected void onAttacked(LivingEntity entity, IAtomicReconstructor tile) {
-        entity.hurt(DamageSources.DAMAGE_ATOMIC_RECONSTRUCTOR, 20F);
+        Holder<DamageType> type = entity.damageSources().damageTypes.getHolderOrThrow(ActuallyDamageTypes.ATOMIC_RECONSTRUCTOR);
+        entity.hurt(new MultiMessageDamageSource(type, 5), 20F);
     }
 
     protected int getUsePerEntity() {

@@ -11,7 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.blocks.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.crafting.EmpowererRecipe;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityEmpowerer;
@@ -26,6 +26,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class RenderEmpowerer implements BlockEntityRenderer<TileEntityEmpowerer> {
     public RenderEmpowerer(BlockEntityRendererProvider.Context context) {
@@ -41,7 +42,7 @@ public class RenderEmpowerer implements BlockEntityRenderer<TileEntityEmpowerer>
 
             float boop = Util.getMillis() / 800F;
             matrices.translate(0D, Math.sin(boop % (2 * Math.PI)) * 0.065, 0D);
-            matrices.mulPose(Vector3f.YP.rotationDegrees(boop * 40F % 360.0F));
+            matrices.mulPose(Axis.YP.rotationDegrees(boop * 40F % 360.0F));
 
             float scale = stack.getItem() instanceof BlockItem
                 ? 0.85F
@@ -50,7 +51,7 @@ public class RenderEmpowerer implements BlockEntityRenderer<TileEntityEmpowerer>
             try {
                 AssetUtil.renderItemInWorld(stack, combinedLight, combinedOverlay, matrices, buffer);
             } catch (Exception e) {
-                ActuallyAdditions.LOGGER.error("Something went wrong trying to render an item in an empowerer! The item is " + stack.getItem().getRegistryName() + "!", e);
+                ActuallyAdditions.LOGGER.error("Something went wrong trying to render an item in an empowerer! The item is " + ForgeRegistries.ITEMS.getKey(stack.getItem()) + "!", e);
             }
 
             matrices.popPose();

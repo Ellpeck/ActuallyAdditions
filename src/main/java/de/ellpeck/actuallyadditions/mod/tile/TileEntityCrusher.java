@@ -23,7 +23,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -208,7 +207,7 @@ public class TileEntityCrusher extends TileEntityInventoryBase implements IButto
             ItemStack outputOne = recipe.getOutputOne();
             ItemStack outputTwo = recipe.getOutputTwo();
             if (!outputOne.isEmpty()) {
-                return (this.inv.getStackInSlot(theFirstOutput).isEmpty() || this.inv.getStackInSlot(theFirstOutput).sameItem(outputOne) && this.inv.getStackInSlot(theFirstOutput).getCount() <= this.inv.getStackInSlot(theFirstOutput).getMaxStackSize() - outputOne.getCount()) && (outputTwo.isEmpty() || this.inv.getStackInSlot(theSecondOutput).isEmpty() || this.inv.getStackInSlot(theSecondOutput).sameItem(outputTwo) && this.inv.getStackInSlot(theSecondOutput).getCount() <= this.inv.getStackInSlot(theSecondOutput).getMaxStackSize() - outputTwo.getCount());
+                return (this.inv.getStackInSlot(theFirstOutput).isEmpty() || ItemStack.isSameItem(this.inv.getStackInSlot(theFirstOutput), outputOne) && this.inv.getStackInSlot(theFirstOutput).getCount() <= this.inv.getStackInSlot(theFirstOutput).getMaxStackSize() - outputOne.getCount()) && (outputTwo.isEmpty() || this.inv.getStackInSlot(theSecondOutput).isEmpty() || ItemStack.isSameItem(this.inv.getStackInSlot(theSecondOutput), outputTwo) && this.inv.getStackInSlot(theSecondOutput).getCount() <= this.inv.getStackInSlot(theSecondOutput).getMaxStackSize() - outputTwo.getCount());
             }
         }
         return false;
@@ -278,7 +277,7 @@ public class TileEntityCrusher extends TileEntityInventoryBase implements IButto
 
     @Override
     public Component getDisplayName() {
-        return new TranslatableComponent("container.actuallyadditions.crusher");
+        return Component.translatable("container.actuallyadditions.crusher");
     }
 
     @Nullable

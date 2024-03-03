@@ -11,11 +11,11 @@
 package de.ellpeck.actuallyadditions.mod.blocks;
 
 import com.mojang.blaze3d.platform.Window;
-import com.mojang.blaze3d.vertex.PoseStack;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityPlayerInterface;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -56,9 +56,8 @@ public class BlockPlayerInterface extends BlockContainerBase implements IHudDisp
     @Override
     public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity player, ItemStack stack) {
         BlockEntity tile = world.getBlockEntity(pos);
-        if (tile instanceof TileEntityPlayerInterface) {
-            TileEntityPlayerInterface face = (TileEntityPlayerInterface) tile;
-            if (face.connectedPlayer == null) {
+        if (tile instanceof TileEntityPlayerInterface face) {
+	        if (face.connectedPlayer == null) {
                 face.connectedPlayer = player.getUUID();
                 face.playerName = player.getName().getString();
                 face.setChanged();
@@ -71,20 +70,19 @@ public class BlockPlayerInterface extends BlockContainerBase implements IHudDisp
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void displayHud(PoseStack matrices, Minecraft minecraft, Player player, ItemStack stack, HitResult rayCast, Window resolution) {
+    public void displayHud(GuiGraphics guiGraphics, Minecraft minecraft, Player player, ItemStack stack, HitResult rayCast, Window resolution) {
         if (!(rayCast instanceof BlockHitResult)) {
             return;
         }
 
         BlockEntity tile = minecraft.level.getBlockEntity(((BlockHitResult) rayCast).getBlockPos());
         if (tile != null) {
-            if (tile instanceof TileEntityPlayerInterface) {
-                TileEntityPlayerInterface face = (TileEntityPlayerInterface) tile;
-                String name = face.playerName == null
+            if (tile instanceof TileEntityPlayerInterface face) {
+	            String name = face.playerName == null
                     ? "Unknown"
                     : face.playerName;
-                minecraft.font.drawShadow(matrices, "Bound to: " + ChatFormatting.RED + name, resolution.getGuiScaledWidth() / 2f + 5, resolution.getGuiScaledHeight() / 2f + 5, 0xFFFFFF);
-                minecraft.font.drawShadow(matrices, "UUID: " + ChatFormatting.DARK_GREEN + face.connectedPlayer, resolution.getGuiScaledWidth() / 2f + 5, resolution.getGuiScaledHeight() / 2f + 15, 0xFFFFFF);
+                guiGraphics.drawString(minecraft.font, "Bound to: " + ChatFormatting.RED + name, (int) (resolution.getGuiScaledWidth() / 2f + 5), (int) (resolution.getGuiScaledHeight() / 2f + 5), 0xFFFFFF);
+                guiGraphics.drawString(minecraft.font, "UUID: " + ChatFormatting.DARK_GREEN + face.connectedPlayer, (int) (resolution.getGuiScaledWidth() / 2f + 5), (int) (resolution.getGuiScaledHeight() / 2f + 15), 0xFFFFFF);
             }
         }
     }

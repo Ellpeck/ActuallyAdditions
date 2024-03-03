@@ -8,9 +8,10 @@ import de.ellpeck.actuallyadditions.mod.crafting.ActuallyRecipes;
 import de.ellpeck.actuallyadditions.mod.crafting.TargetNBTIngredient;
 import de.ellpeck.actuallyadditions.mod.crafting.WrappedRecipe;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.HashCache;
+import net.minecraft.data.CachedOutput;
+import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
@@ -23,22 +24,28 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.crafting.ConditionalRecipe;
-import net.minecraftforge.common.crafting.NBTIngredient;
+import net.minecraftforge.common.crafting.StrictNBTIngredient;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
-import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 public class ItemRecipeGenerator extends RecipeProvider {
-    public ItemRecipeGenerator(DataGenerator generatorIn) {
-        super(generatorIn);
+    public ItemRecipeGenerator(PackOutput packOutput) {
+        super(packOutput);
     }
 
     @Override
-    protected void buildCraftingRecipes(Consumer<FinishedRecipe> consumer) {
+    public String getName() {
+        return "Item " + super.getName();
+    }
+
+    @Override
+    protected void buildRecipes(Consumer<FinishedRecipe> consumer) {
         generatePaxels(consumer);
 
         //Goggles
@@ -149,7 +156,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
         Recipe.shapeless(ActuallyItems.LENS_OF_THE_KILLER.get())
             .requires(Items.DIAMOND_SWORD)
             .requires(ActuallyItems.LENS_OF_CERTAIN_DEATH.get())
-            .requires(NBTIngredient.of(enchantedBook)).save(consumer);
+            .requires(StrictNBTIngredient.of(enchantedBook)).save(consumer);
 
 
         //Filter
@@ -551,10 +558,9 @@ public class ItemRecipeGenerator extends RecipeProvider {
         decompress(consumer, shard, crystal);
     }
 
-
     @Override
-    protected void saveAdvancement(HashCache cache, JsonObject cache2, Path advancementJson) {
-        //Nope...
+    protected @Nullable CompletableFuture<?> saveAdvancement(CachedOutput output, FinishedRecipe finishedRecipe, JsonObject advancementJson) {
+        return null; //Nope...
     }
 
     public static void addToolAndArmorRecipes(Consumer<FinishedRecipe> consumer, RegistryObject<Item> base, RegistryObject<Item> pickaxe, RegistryObject<Item> sword, RegistryObject<Item> axe, RegistryObject<Item> shovel, RegistryObject<Item> hoe, RegistryObject<Item> helm, RegistryObject<Item> chest, RegistryObject<Item> pants, RegistryObject<Item> boots) {
@@ -642,7 +648,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
             }
 
             public Shapeless(ItemLike result, int countIn) {
-                super(result, countIn);
+                super(RecipeCategory.MISC, result, countIn);
             }
 
             public ItemRecipeGenerator.Recipe.Shapeless ingredients(ItemLike... ingredients) {
@@ -677,7 +683,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
             }
 
             public Shaped(ItemLike resultIn, int countIn) {
-                super(resultIn, countIn);
+                super(RecipeCategory.MISC, resultIn, countIn);
             }
 
             public ItemRecipeGenerator.Recipe.Shaped pattern(String line1, String line2, String line3) {

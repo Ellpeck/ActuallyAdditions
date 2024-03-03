@@ -3,6 +3,7 @@ package de.ellpeck.actuallyadditions.mod.crafting;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import de.ellpeck.actuallyadditions.mod.inventory.gui.FluidDisplay;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -16,7 +17,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -87,7 +87,7 @@ public class FermentingRecipe implements Recipe<Container> {
 
     @Nonnull
     @Override
-    public ItemStack assemble(Container pInv) {
+    public ItemStack assemble(Container pInv, RegistryAccess pRegistryAccess) {
         return ItemStack.EMPTY;
     }
 
@@ -98,7 +98,7 @@ public class FermentingRecipe implements Recipe<Container> {
 
     @Nonnull
     @Override
-    public ItemStack getResultItem() {
+    public ItemStack getResultItem(RegistryAccess pRegistryAccess) {
         return ItemStack.EMPTY;
     }
 
@@ -120,7 +120,7 @@ public class FermentingRecipe implements Recipe<Container> {
         return ActuallyRecipes.Types.FERMENTING;
     }
 
-    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<FermentingRecipe> {
+    public static class Serializer implements RecipeSerializer<FermentingRecipe> {
         @Nonnull
         @Override
         public FermentingRecipe fromJson(@Nonnull ResourceLocation pRecipeId, @Nonnull JsonObject pJson) {
@@ -170,9 +170,9 @@ public class FermentingRecipe implements Recipe<Container> {
 
         @Override
         public void toNetwork(@Nonnull FriendlyByteBuf pBuffer, @Nonnull FermentingRecipe pRecipe) {
-            pBuffer.writeUtf(pRecipe.input.getFluid().getRegistryName().toString());
+            pBuffer.writeUtf(ForgeRegistries.FLUIDS.getKey(pRecipe.input.getFluid()).toString());
             pBuffer.writeInt(pRecipe.input.getAmount());
-            pBuffer.writeUtf(pRecipe.output.getFluid().getRegistryName().toString());
+            pBuffer.writeUtf(ForgeRegistries.FLUIDS.getKey(pRecipe.output.getFluid()).toString());
             pBuffer.writeInt(pRecipe.output.getAmount());
             pBuffer.writeInt(pRecipe.time);
         }
@@ -193,11 +193,11 @@ public class FermentingRecipe implements Recipe<Container> {
         @Override
         public void serializeRecipeData(JsonObject pJson) {
             JsonObject ingredient = new JsonObject();
-            ingredient.addProperty("fluid", input.getFluid().getRegistryName().toString());
+            ingredient.addProperty("fluid", ForgeRegistries.FLUIDS.getKey(input.getFluid()).toString());
             ingredient.addProperty("amount", input.getAmount());
 
             JsonObject result = new JsonObject();
-            result.addProperty("fluid", output.getFluid().getRegistryName().toString());
+            result.addProperty("fluid", ForgeRegistries.FLUIDS.getKey(output.getFluid()).toString());
             result.addProperty("amount", output.getAmount());
 
             pJson.add("ingredient", ingredient);

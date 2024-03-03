@@ -73,7 +73,7 @@ public class TileEntityItemInterface extends TileEntityBase {
                 IItemHandlerInfo info = TileEntityItemInterface.this.getSwitchedIndexHandler(slot);
                 if (info != null && info.isLoaded() && TileEntityItemInterface.this.isWhitelisted(info, stack, false)) {
                     ItemStack remain = info.handler.insertItem(info.switchedIndex, stack, simulate);
-                    if (!ItemStack.isSame(remain, stack) && !simulate) {
+                    if (!ItemStack.isSameItem(remain, stack) && !simulate) {
                         TileEntityItemInterface.this.setChanged();
                         TileEntityItemInterface.this.doItemParticle(stack, info.relayInQuestion.getBlockPos(), TileEntityItemInterface.this.connectedRelay.getBlockPos());
                     }

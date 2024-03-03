@@ -26,7 +26,7 @@ public class ContainerBioReactor extends AbstractContainerMenu {
     public final TileEntityBioReactor tile;
 
     public static ContainerBioReactor fromNetwork(int windowId, Inventory inv, FriendlyByteBuf data) {
-        return new ContainerBioReactor(windowId, inv, (TileEntityBioReactor) Objects.requireNonNull(inv.player.level.getBlockEntity(data.readBlockPos())));
+        return new ContainerBioReactor(windowId, inv, (TileEntityBioReactor) Objects.requireNonNull(inv.player.level().getBlockEntity(data.readBlockPos())));
     }
 
     public ContainerBioReactor(int windowId, Inventory inventory, TileEntityBioReactor tile) {

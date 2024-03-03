@@ -26,7 +26,7 @@ public class ContainerFluidCollector extends AbstractContainerMenu {
     public final TileEntityFluidCollector collector;
 
     public static ContainerFluidCollector fromNetwork(int windowId, Inventory inv, FriendlyByteBuf data) {
-        return new ContainerFluidCollector(windowId, inv, (TileEntityFluidCollector) Objects.requireNonNull(inv.player.level.getBlockEntity(data.readBlockPos())));
+        return new ContainerFluidCollector(windowId, inv, (TileEntityFluidCollector) Objects.requireNonNull(inv.player.level().getBlockEntity(data.readBlockPos())));
     }
 
     public ContainerFluidCollector(int windowId, Inventory inventory, TileEntityFluidCollector tile) {

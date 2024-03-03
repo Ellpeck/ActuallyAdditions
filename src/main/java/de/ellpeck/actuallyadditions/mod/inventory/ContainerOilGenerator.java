@@ -26,7 +26,7 @@ public class ContainerOilGenerator extends AbstractContainerMenu {
     public final TileEntityOilGenerator generator;
 
     public static ContainerOilGenerator fromNetwork(int windowId, Inventory inv, FriendlyByteBuf data) {
-        return new ContainerOilGenerator(windowId, inv, (TileEntityOilGenerator) Objects.requireNonNull(inv.player.level.getBlockEntity(data.readBlockPos())));
+        return new ContainerOilGenerator(windowId, inv, (TileEntityOilGenerator) Objects.requireNonNull(inv.player.level().getBlockEntity(data.readBlockPos())));
     }
 
     public ContainerOilGenerator(int windowId, Inventory inventory, TileEntityOilGenerator tile) {

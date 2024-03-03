@@ -8,7 +8,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 public class ActuallyContainers {
-    public static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, ActuallyAdditions.MODID);
+    public static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.MENU_TYPES, ActuallyAdditions.MODID);
 
     public static final RegistryObject<MenuType<SackContainer>> BAG_CONTAINER = CONTAINERS.register("bag_container", () -> IForgeMenuType.create(SackContainer::fromNetwork));
     public static final RegistryObject<MenuType<ContainerBioReactor>> BIO_REACTOR_CONTAINER = CONTAINERS.register("bioreactor_container", () -> IForgeMenuType.create(ContainerBioReactor::fromNetwork));

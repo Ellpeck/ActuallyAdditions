@@ -20,8 +20,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.PlayerInvWrapper;
@@ -93,7 +93,7 @@ public class TileEntityPlayerInterface extends TileEntityBase implements IEnergy
                         ItemStack slot = player.getInventory().getItem(i);
                         if (StackUtil.isValid(slot) && slot.getCount() == 1) {
 
-                            int received = slot.getCapability(CapabilityEnergy.ENERGY).map(cap -> cap.receiveEnergy(tile.storage.getEnergyStored(), false)).orElse(0);
+                            int received = slot.getCapability(ForgeCapabilities.ENERGY).map(cap -> cap.receiveEnergy(tile.storage.getEnergyStored(), false)).orElse(0);
                             if (received > 0) {
                                 tile.storage.extractEnergyInternal(received, false);
                             }

@@ -27,7 +27,7 @@ public class ContainerFarmer extends AbstractContainerMenu {
     public final TileEntityFarmer farmer;
 
     public static ContainerFarmer fromNetwork(int windowId, Inventory inv, FriendlyByteBuf data) {
-        return new ContainerFarmer(windowId, inv, (TileEntityFarmer) Objects.requireNonNull(inv.player.level.getBlockEntity(data.readBlockPos())));
+        return new ContainerFarmer(windowId, inv, (TileEntityFarmer) Objects.requireNonNull(inv.player.level().getBlockEntity(data.readBlockPos())));
     }
 
     public ContainerFarmer(int windowId, Inventory inventory, TileEntityFarmer tile) {

@@ -52,7 +52,7 @@ public class ContainerLaserRelayItemWhitelist extends AbstractContainerMenu {
     }
 
     public static ContainerLaserRelayItemWhitelist fromNetwork(int windowId, Inventory inv, FriendlyByteBuf data) {
-        return new ContainerLaserRelayItemWhitelist(windowId, inv, (TileEntityLaserRelayItemAdvanced) Objects.requireNonNull(inv.player.level.getBlockEntity(data.readBlockPos())));
+        return new ContainerLaserRelayItemWhitelist(windowId, inv, (TileEntityLaserRelayItemAdvanced) Objects.requireNonNull(inv.player.level().getBlockEntity(data.readBlockPos())));
     }
 
     @Override

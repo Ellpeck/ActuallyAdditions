@@ -26,7 +26,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
 
 import java.util.HashMap;
@@ -55,7 +56,7 @@ public class BlockColoredLamp extends BlockBase {
     private static final BooleanProperty LIT = BlockStateProperties.LIT;
 
     public BlockColoredLamp() {
-        super(Properties.of(Material.BUILDABLE_GLASS).strength(0.5F, 3.0F).requiresCorrectToolForDrops());
+        super(Properties.of().mapColor(MapColor.NONE).instrument(NoteBlockInstrument.HAT).strength(0.5F, 3.0F).requiresCorrectToolForDrops());
         this.registerDefaultState(this.stateDefinition.any().setValue(LIT, false));
     }
 

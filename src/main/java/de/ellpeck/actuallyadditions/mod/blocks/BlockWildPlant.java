@@ -12,7 +12,8 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBushBase;
 import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 
 public class BlockWildPlant extends BlockBushBase {
 
@@ -20,7 +21,7 @@ public class BlockWildPlant extends BlockBushBase {
     //    public static final PropertyEnum<TheWildPlants> TYPE = PropertyEnum.create("type", TheWildPlants.class);
 
     public BlockWildPlant() {
-        super(Properties.of(Material.PLANT).sound(SoundType.GRASS).strength(0, 0));
+        super(Properties.of().mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).sound(SoundType.GRASS).strength(0, 0));
         //        this.setSoundType(SoundType.PLANT);
     }
 

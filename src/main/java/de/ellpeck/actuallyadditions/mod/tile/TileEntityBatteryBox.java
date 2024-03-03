@@ -20,8 +20,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
 import java.util.ArrayList;
@@ -40,7 +40,7 @@ public class TileEntityBatteryBox extends TileEntityInventoryBase implements ISh
     public LazyOptional<IEnergyStorage> getEnergyStorage(Direction facing) {
         ItemStack stack = this.inv.getStackInSlot(0);
         if (stack.getItem() instanceof ItemBattery) {
-            return stack.getCapability(CapabilityEnergy.ENERGY, null);
+            return stack.getCapability(ForgeCapabilities.ENERGY, null);
         }
         return LazyOptional.empty();
     }
@@ -75,7 +75,7 @@ public class TileEntityBatteryBox extends TileEntityInventoryBase implements ISh
                             for (TileEntityBatteryBox te : tiles) {
                                 ItemStack battery = te.inv.getStackInSlot(0);
                                 if (!battery.isEmpty() && !ItemUtil.isEnabled(battery)) {
-                                    int received = te.getCapability(CapabilityEnergy.ENERGY, null).map(e -> e.receiveEnergy(maxPer, false)).orElse(0);
+                                    int received = te.getCapability(ForgeCapabilities.ENERGY, null).map(e -> e.receiveEnergy(maxPer, false)).orElse(0);
                                     storage.extractEnergy(received, false);
 
                                     if (storage.getEnergyStored() <= 0) {
@@ -134,9 +134,8 @@ public class TileEntityBatteryBox extends TileEntityInventoryBase implements ISh
         }
 
         for (BlockEntity tile : startTile.tilesAround) {
-            if (tile instanceof TileEntityBatteryBox) {
-                TileEntityBatteryBox box = (TileEntityBatteryBox) tile;
-                if (!pushOffTo.contains(box)) {
+            if (tile instanceof TileEntityBatteryBox box) {
+	            if (!pushOffTo.contains(box)) {
                     pushOffTo.add(box);
 
                     this.energyPushOffLoop(box, pushOffTo);

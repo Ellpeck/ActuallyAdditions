@@ -26,8 +26,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.AABB;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
 import java.util.List;
@@ -111,7 +111,7 @@ public class TileEntityItemInterfaceHopping extends TileEntityItemInterface {
 
         BlockEntity from = this.level.getBlockEntity(this.getBlockPos().relative(Direction.UP));
         if (from != null && !(from instanceof TileEntityItemInterface)) {
-            LazyOptional<IItemHandler> normal = from.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.DOWN);
+            LazyOptional<IItemHandler> normal = from.getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.DOWN);
 
             Object slotless = null;
             // TODO: [port] add back
@@ -132,7 +132,7 @@ public class TileEntityItemInterfaceHopping extends TileEntityItemInterface {
         if (this.level.isLoaded(toPos)) {
             BlockEntity to = this.level.getBlockEntity(toPos);
             if (to != null && !(to instanceof TileEntityItemInterface)) {
-                LazyOptional<IItemHandler> normal = to.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing.getOpposite());
+                LazyOptional<IItemHandler> normal = to.getCapability(ForgeCapabilities.ITEM_HANDLER, facing.getOpposite());
 
                 Object slotless = null;
                 //                TODO: [port] Add back

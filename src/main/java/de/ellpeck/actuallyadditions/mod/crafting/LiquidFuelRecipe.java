@@ -2,6 +2,7 @@ package de.ellpeck.actuallyadditions.mod.crafting;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -15,7 +16,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -73,7 +73,7 @@ public class LiquidFuelRecipe implements Recipe<Container> {
 
     @Nonnull
     @Override
-    public ItemStack assemble(@Nonnull Container pInv) {
+    public ItemStack assemble(Container pInv, RegistryAccess pRegistryAccess) {
         return ItemStack.EMPTY;
     }
 
@@ -84,7 +84,7 @@ public class LiquidFuelRecipe implements Recipe<Container> {
 
     @Nonnull
     @Override
-    public ItemStack getResultItem() {
+    public ItemStack getResultItem(RegistryAccess pRegistryAccess) {
         return ItemStack.EMPTY;
     }
 
@@ -106,7 +106,7 @@ public class LiquidFuelRecipe implements Recipe<Container> {
         return ActuallyRecipes.Types.LIQUID_FUEL;
     }
 
-    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<LiquidFuelRecipe> {
+    public static class Serializer implements RecipeSerializer<LiquidFuelRecipe> {
         @Nonnull
         @Override
         public LiquidFuelRecipe fromJson(@Nonnull ResourceLocation pId, JsonObject pJson) {
@@ -141,7 +141,7 @@ public class LiquidFuelRecipe implements Recipe<Container> {
 
         @Override
         public void toNetwork(@Nonnull FriendlyByteBuf pBuffer, LiquidFuelRecipe pRecipe) {
-            pBuffer.writeUtf(pRecipe.fuel.getFluid().getRegistryName().toString());
+            pBuffer.writeUtf(ForgeRegistries.FLUIDS.getKey(pRecipe.fuel.getFluid()).toString());
             pBuffer.writeInt(pRecipe.fuel.getAmount());
             pBuffer.writeInt(pRecipe.totalEnergy);
             pBuffer.writeInt(pRecipe.burnTime);
@@ -164,7 +164,7 @@ public class LiquidFuelRecipe implements Recipe<Container> {
         @Override
         public void serializeRecipeData(JsonObject pJson) {
             JsonObject ingredient = new JsonObject();
-            ingredient.addProperty("fluid", fuel.getFluid().getRegistryName().toString());
+            ingredient.addProperty("fluid", ForgeRegistries.FLUIDS.getKey(fuel.getFluid()).toString());
             ingredient.addProperty("amount", fuel.getAmount());
 
             JsonObject result = new JsonObject();

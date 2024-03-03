@@ -11,18 +11,18 @@
 package de.ellpeck.actuallyadditions.mod.blocks;
 
 import com.mojang.blaze3d.platform.Window;
-import com.mojang.blaze3d.vertex.PoseStack;
 import de.ellpeck.actuallyadditions.api.lens.ILensItem;
 import de.ellpeck.actuallyadditions.mod.blocks.base.FullyDirectionalBlock;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -46,7 +46,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.text.NumberFormat;
 import java.util.List;
-import java.util.Random;
 
 public class BlockAtomicReconstructor extends FullyDirectionalBlock.Container implements IHudDisplay {
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
@@ -106,7 +105,7 @@ public class BlockAtomicReconstructor extends FullyDirectionalBlock.Container im
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void displayHud(PoseStack matrices, Minecraft minecraft, Player player, ItemStack stack, HitResult rayCast, Window resolution) {
+    public void displayHud(GuiGraphics guiGraphics, Minecraft minecraft, Player player, ItemStack stack, HitResult rayCast, Window resolution) {
         if (!(rayCast instanceof BlockHitResult) || minecraft.level == null) {
             return;
         }
@@ -116,13 +115,13 @@ public class BlockAtomicReconstructor extends FullyDirectionalBlock.Container im
             ItemStack slot = ((TileEntityAtomicReconstructor) tile).inv.getStackInSlot(0);
             Component lens_name;
             if (slot.isEmpty()) {
-                lens_name = new TranslatableComponent("info.actuallyadditions.nolens");
+                lens_name = Component.translatable("info.actuallyadditions.nolens");
             } else {
                 lens_name = slot.getItem().getName(slot);
 
                 AssetUtil.renderStackToGui(slot, resolution.getGuiScaledWidth() / 2 + 15, resolution.getGuiScaledHeight() / 2 - 19, 1F);
             }
-            minecraft.font.drawShadow(matrices, lens_name.plainCopy().withStyle(ChatFormatting.YELLOW).withStyle(ChatFormatting.ITALIC).getString(), resolution.getGuiScaledWidth() / 2.0f + 35, resolution.getGuiScaledHeight() / 2.0f - 15, 0xFFFFFF);
+            guiGraphics.drawString(minecraft.font, lens_name.plainCopy().withStyle(ChatFormatting.YELLOW).withStyle(ChatFormatting.ITALIC).getString(), (int) (resolution.getGuiScaledWidth() / 2.0f + 35), (int) (resolution.getGuiScaledHeight() / 2.0f - 15), 0xFFFFFF);
         }
     }
 
@@ -148,14 +147,14 @@ public class BlockAtomicReconstructor extends FullyDirectionalBlock.Container im
             if (this.lastSysTime + 3000 < sysTime) {
                 this.lastSysTime = sysTime;
                 if (Minecraft.getInstance().level != null) {
-                    Random random = Minecraft.getInstance().level.random;
+                    RandomSource random = Minecraft.getInstance().level.random;
                     this.toPick1 = random.nextInt(NAME_FLAVOR_AMOUNTS_1) + 1;
                     this.toPick2 = random.nextInt(NAME_FLAVOR_AMOUNTS_2) + 1;
                 }
             }
 
             String base = block.getDescriptionId() + ".info.";
-            pTooltip.add(new TranslatableComponent(base + "1." + this.toPick1).append(" ").append(new TranslatableComponent(base + "2." + this.toPick2)).withStyle(s -> s.withColor(ChatFormatting.GRAY)));
+            pTooltip.add(Component.translatable(base + "1." + this.toPick1).append(" ").append(Component.translatable(base + "2." + this.toPick2)).withStyle(s -> s.withColor(ChatFormatting.GRAY)));
 
             if (pStack.hasTag() && pStack.getTag().contains("BlockEntityTag")) {
                 CompoundTag BET = pStack.getTag().getCompound("BlockEntityTag");
@@ -164,11 +163,11 @@ public class BlockAtomicReconstructor extends FullyDirectionalBlock.Container im
                     energy = BET.getInt("Energy");
                 }
                 NumberFormat format = NumberFormat.getInstance();
-                pTooltip.add(new TranslatableComponent("misc.actuallyadditions.power_single", format.format(energy)));
+                pTooltip.add(Component.translatable("misc.actuallyadditions.power_single", format.format(energy)));
 
                 if (BET.contains("IsPulseMode")) {
-                    pTooltip.add(new TranslatableComponent("info.actuallyadditions.redstoneMode").append(": ")
-                            .append(new TranslatableComponent(BET.getBoolean("IsPulseMode")?"info.actuallyadditions.redstoneMode.pulse":"info.actuallyadditions.redstoneMode.deactivation").withStyle($ -> $.withColor(ChatFormatting.RED))));
+                    pTooltip.add(Component.translatable("info.actuallyadditions.redstoneMode").append(": ")
+                            .append(Component.translatable(BET.getBoolean("IsPulseMode")?"info.actuallyadditions.redstoneMode.pulse":"info.actuallyadditions.redstoneMode.deactivation").withStyle($ -> $.withColor(ChatFormatting.RED))));
                 }
             }
         }

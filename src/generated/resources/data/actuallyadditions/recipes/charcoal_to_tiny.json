@@ -4,20 +4,21 @@
     {
       "conditions": [
         {
-          "config_name": "tinyCoalStuff",
-          "type": "actuallyadditions:bool_config_condition"
+          "type": "actuallyadditions:bool_config_condition",
+          "config_name": "tinyCoalStuff"
         }
       ],
       "recipe": {
         "type": "minecraft:crafting_shapeless",
+        "category": "misc",
         "ingredients": [
           {
             "item": "minecraft:charcoal"
           }
         ],
         "result": {
-          "item": "actuallyadditions:tiny_charcoal",
-          "count": 8
+          "count": 8,
+          "item": "actuallyadditions:tiny_charcoal"
         }
       }
     }

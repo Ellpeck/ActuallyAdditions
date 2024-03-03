@@ -22,7 +22,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 
 import java.util.Objects;
 
@@ -31,7 +31,7 @@ public class ContainerEnervator extends AbstractContainerMenu {
     public final TileEntityEnervator enervator;
 
     public static ContainerEnervator fromNetwork(int windowId, Inventory inv, FriendlyByteBuf data) {
-        return new ContainerEnervator(windowId, inv, (TileEntityEnervator) Objects.requireNonNull(inv.player.level.getBlockEntity(data.readBlockPos())));
+        return new ContainerEnervator(windowId, inv, (TileEntityEnervator) Objects.requireNonNull(inv.player.level().getBlockEntity(data.readBlockPos())));
     }
 
     public ContainerEnervator(int windowId, Inventory inventory, TileEntityEnervator tile) {
@@ -98,7 +98,7 @@ public class ContainerEnervator extends AbstractContainerMenu {
             //Other Slots in Inventory excluded
             else if (slot >= inventoryStart) {
                 //Shift from Inventory
-                if (newStack.getCapability(CapabilityEnergy.ENERGY).isPresent()) {
+                if (newStack.getCapability(ForgeCapabilities.ENERGY).isPresent()) {
                     if (!this.moveItemStackTo(newStack, 0, 1, false)) {
                         return ItemStack.EMPTY;
                     }

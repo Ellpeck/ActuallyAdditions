@@ -30,20 +30,18 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.event.world.BlockEvent.BreakEvent;
+import net.minecraftforge.event.level.BlockEvent.BreakEvent;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
 import java.util.ArrayList;
@@ -120,8 +118,8 @@ public final class WorldUtil {
             Direction opp = sideTo == null
                 ? null
                 : sideTo.getOpposite();
-            LazyOptional<IEnergyStorage> handlerFrom = tileFrom.getCapability(CapabilityEnergy.ENERGY, sideTo);
-            LazyOptional<IEnergyStorage> handlerTo = tileTo.getCapability(CapabilityEnergy.ENERGY, opp);
+            LazyOptional<IEnergyStorage> handlerFrom = tileFrom.getCapability(ForgeCapabilities.ENERGY, sideTo);
+            LazyOptional<IEnergyStorage> handlerTo = tileTo.getCapability(ForgeCapabilities.ENERGY, opp);
             handlerFrom.ifPresent((from) -> {
                 handlerTo.ifPresent((to) -> {
                     int drain = from.extractEnergy(maxTransfer, true);
@@ -136,8 +134,8 @@ public final class WorldUtil {
 
     public static void doFluidInteraction(BlockEntity tileFrom, BlockEntity tileTo, Direction sideTo, int maxTransfer) {
         if (maxTransfer > 0) {
-            LazyOptional<IFluidHandler> optionalFrom = tileFrom.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, sideTo);
-            LazyOptional<IFluidHandler> optionalTo = tileTo.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, sideTo.getOpposite());
+            LazyOptional<IFluidHandler> optionalFrom = tileFrom.getCapability(ForgeCapabilities.FLUID_HANDLER, sideTo);
+            LazyOptional<IFluidHandler> optionalTo = tileTo.getCapability(ForgeCapabilities.FLUID_HANDLER, sideTo.getOpposite());
             optionalFrom.ifPresent((from) -> {
                 optionalTo.ifPresent((to) -> {
                     FluidStack drain = from.drain(maxTransfer, IFluidHandler.FluidAction.SIMULATE);
@@ -242,12 +240,12 @@ public final class WorldUtil {
         return state.getValue(BlockStateProperties.FACING);
     }
 
-    public static ArrayList<Material> getMaterialsAround(Level level, BlockPos pos) {
-        ArrayList<Material> blocks = new ArrayList<>();
-        blocks.add(level.getBlockState(pos.relative(Direction.NORTH)).getMaterial());
-        blocks.add(level.getBlockState(pos.relative(Direction.EAST)).getMaterial());
-        blocks.add(level.getBlockState(pos.relative(Direction.SOUTH)).getMaterial());
-        blocks.add(level.getBlockState(pos.relative(Direction.WEST)).getMaterial());
+    public static ArrayList<BlockState> getStatesAround(Level level, BlockPos pos) {
+        ArrayList<BlockState> blocks = new ArrayList<>();
+        blocks.add(level.getBlockState(pos.relative(Direction.NORTH)));
+        blocks.add(level.getBlockState(pos.relative(Direction.EAST)));
+        blocks.add(level.getBlockState(pos.relative(Direction.SOUTH)));
+        blocks.add(level.getBlockState(pos.relative(Direction.WEST)));
         return blocks;
     }
 

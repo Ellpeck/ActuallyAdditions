@@ -27,7 +27,7 @@ public class ContainerPhantomPlacer extends AbstractContainerMenu {
     public final TileEntityPhantomPlacer placer;
 
     public static ContainerPhantomPlacer fromNetwork(int windowId, Inventory inv, FriendlyByteBuf data) {
-        return new ContainerPhantomPlacer(windowId, inv, (TileEntityPhantomPlacer) Objects.requireNonNull(inv.player.level.getBlockEntity(data.readBlockPos())));
+        return new ContainerPhantomPlacer(windowId, inv, (TileEntityPhantomPlacer) Objects.requireNonNull(inv.player.level().getBlockEntity(data.readBlockPos())));
     }
 
     public ContainerPhantomPlacer(int windowId, Inventory inventory, TileEntityPhantomPlacer tile) {

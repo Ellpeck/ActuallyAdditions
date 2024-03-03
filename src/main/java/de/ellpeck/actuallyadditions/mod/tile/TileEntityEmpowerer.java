@@ -166,7 +166,7 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase {
             this.processTime = compound.getInt("ProcessTime");
         }
         if (type == NBTType.SYNC && compound.contains("CurrentRecipe")) {
-            if (!compound.getString("CurrentRecipe").equals("")) {
+            if (!compound.getString("CurrentRecipe").isEmpty()) {
                 ResourceLocation id = new ResourceLocation(compound.getString("CurrentRecipe"));
                 for (EmpowererRecipe empowererRecipe : ActuallyAdditionsAPI.EMPOWERER_RECIPES) {
                     if (empowererRecipe.getId().equals(id)) {

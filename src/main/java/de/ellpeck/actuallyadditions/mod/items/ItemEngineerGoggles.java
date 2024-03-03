@@ -17,7 +17,6 @@ import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import io.netty.util.internal.ConcurrentSet;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
@@ -38,7 +37,7 @@ public class ItemEngineerGoggles extends ItemArmorAA implements IGoggles {
     private final boolean displayMobs;
 
     public ItemEngineerGoggles(boolean displayMobs) {
-        super(ArmorMaterials.GOGGLES, EquipmentSlot.HEAD, ActuallyItems.defaultProps().setNoRepair().durability(0));
+        super(ArmorMaterials.GOGGLES, Type.HELMET, ActuallyItems.defaultProps().setNoRepair().durability(0));
         this.displayMobs = displayMobs;
 
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> MinecraftForge.EVENT_BUS.register(this));
@@ -59,7 +58,7 @@ public class ItemEngineerGoggles extends ItemArmorAA implements IGoggles {
             if (((IGoggles) face.getItem()).displaySpectralMobs()) {
                 double range = 8;
                 AABB aabb = new AABB(player.getX() - range, player.getY() - range, player.getZ() - range, player.getX() + range, player.getY() + range, player.getZ() + range);
-                List<Entity> entities = player.level.getEntitiesOfClass(Entity.class, aabb);
+                List<Entity> entities = player.level().getEntitiesOfClass(Entity.class, aabb);
                 if (entities != null && !entities.isEmpty()) {
                     this.cachedGlowingEntities.addAll(entities);
                 }

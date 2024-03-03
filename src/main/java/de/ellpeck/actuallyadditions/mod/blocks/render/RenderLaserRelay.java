@@ -11,7 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.blocks.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import de.ellpeck.actuallyadditions.api.laser.IConnectionPair;
 import de.ellpeck.actuallyadditions.api.laser.LaserType;
 import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
@@ -73,7 +73,7 @@ public class RenderLaserRelay implements BlockEntityRenderer<TileEntityLaserRela
                 matrices.scale(0.2F, 0.2F, 0.2F);
 
                 double boop = Util.getMillis() / 800D;
-                matrices.mulPose(Vector3f.YP.rotationDegrees((float) (boop * 40D % 360)));
+                matrices.mulPose(Axis.YP.rotationDegrees((float) (boop * 40D % 360)));
 
                 AssetUtil.renderItemInWorld(upgrade, combinedLight, combinedOverlay, matrices, buffer);
 

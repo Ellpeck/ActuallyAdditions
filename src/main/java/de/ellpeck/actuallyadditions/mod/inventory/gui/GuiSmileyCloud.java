@@ -78,7 +78,7 @@
 //        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 //
 //        this.getMinecraft().getTextureManager().bindTexture(RES_LOC);
-//        this.blit(matrices, this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
+//        guiGraphics.blit(matrices, this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
 //
 //        this.nameField.drawTextBox();
 //    }

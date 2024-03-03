@@ -72,8 +72,8 @@
 //    public void drawGuiContainerBackgroundLayer(float f, int x, int y) {
 //        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 //        this.getMinecraft().getTextureManager().bindTexture(RES_LOC);
-//        this.blit(matrices, this.guiLeft, this.guiTop, 0, 0, 242, 190);
+//        guiGraphics.blit(matrices, this.guiLeft, this.guiTop, 0, 0, 242, 190);
 //        this.getMinecraft().getTextureManager().bindTexture(AssetUtil.GUI_INVENTORY_LOCATION);
-//        this.blit(matrices, this.guiLeft + 33, this.guiTop + 172, 0, 0, 176, 86);
+//        guiGraphics.blit(matrices, this.guiLeft + 33, this.guiTop + 172, 0, 0, 176, 86);
 //    }
 //}

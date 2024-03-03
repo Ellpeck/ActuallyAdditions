@@ -37,9 +37,8 @@ public class ItemMagnetRing extends ItemEnergy {
 
     @Override
     public void inventoryTick(@Nonnull ItemStack stack, @Nonnull Level world, @Nonnull Entity entity, int itemSlot, boolean isSelected) {
-        if (entity instanceof Player && !world.isClientSide && !ItemUtil.isEnabled(stack)) {
-            Player player = (Player) entity;
-            if (player.isCreative() || player.isSpectator()) {
+        if (entity instanceof Player player && !world.isClientSide && !ItemUtil.isEnabled(stack)) {
+	        if (player.isCreative() || player.isSpectator()) {
                 return;
             }
             if (!entity.isShiftKeyDown()) {

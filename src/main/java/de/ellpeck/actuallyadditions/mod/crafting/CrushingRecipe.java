@@ -3,6 +3,7 @@ package de.ellpeck.actuallyadditions.mod.crafting;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -15,7 +16,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.registries.ForgeRegistryEntry;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -39,7 +40,7 @@ public class CrushingRecipe implements Recipe<Container> {
     }
 
     public CrushingRecipe(Ingredient input, ItemStack outputOne, float chance1, ItemStack outputTwo, float chance2) {
-        this.id = new ResourceLocation(ActuallyAdditions.MODID, input.getItems()[0].getItem().getRegistryName().getPath() + "_crushing");
+        this.id = new ResourceLocation(ActuallyAdditions.MODID, ForgeRegistries.ITEMS.getKey(input.getItems()[0].getItem()).getPath() + "_crushing");
         this.input = input;
         this.outputOne = outputOne;
         this.outputTwo = outputTwo;
@@ -63,7 +64,7 @@ public class CrushingRecipe implements Recipe<Container> {
 
     @Override
     @Nonnull
-    public ItemStack assemble(@Nonnull Container pInv) {
+    public ItemStack assemble(Container pInv, RegistryAccess pRegistryAccess) {
         return ItemStack.EMPTY;
     }
 
@@ -74,7 +75,7 @@ public class CrushingRecipe implements Recipe<Container> {
 
     @Override
     @Nonnull
-    public ItemStack getResultItem() {
+    public ItemStack getResultItem(RegistryAccess pRegistryAccess) {
         return outputOne;
     }
 
@@ -115,7 +116,7 @@ public class CrushingRecipe implements Recipe<Container> {
         return this.input;
     }
 
-    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<CrushingRecipe> {
+    public static class Serializer implements RecipeSerializer<CrushingRecipe> {
 
         @Override
         @Nonnull
@@ -190,12 +191,12 @@ public class CrushingRecipe implements Recipe<Container> {
             pJson.add("ingredient", input.toJson());
 
             JsonObject result1 = new JsonObject();
-            result1.addProperty("item", outputOne.asItem().getRegistryName().toString());
+            result1.addProperty("item", ForgeRegistries.ITEMS.getKey(outputOne.asItem()).toString());
             result1.addProperty("count", countOne);
             result1.addProperty("chance", outputChance1);
 
             JsonObject result2 = new JsonObject();
-            result2.addProperty("item", outputTwo.asItem().getRegistryName().toString());
+            result2.addProperty("item", ForgeRegistries.ITEMS.getKey(outputTwo.asItem()).toString());
             result2.addProperty("count", countTwo);
             result2.addProperty("chance", outputChance2);
 

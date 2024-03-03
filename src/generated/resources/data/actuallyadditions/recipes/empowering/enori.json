@@ -3,6 +3,8 @@
   "base": {
     "item": "actuallyadditions:enori_crystal"
   },
+  "color": 13421772,
+  "energy": 5000,
   "modifiers": [
     {
       "tag": "forge:dyes/gray"
@@ -17,10 +19,8 @@
       "tag": "forge:cobblestone"
     }
   ],
-  "energy": 5000,
-  "time": 50,
-  "color": 13421772,
   "result": {
     "item": "actuallyadditions:empowered_enori_crystal"
-  }
+  },
+  "time": 50
 }

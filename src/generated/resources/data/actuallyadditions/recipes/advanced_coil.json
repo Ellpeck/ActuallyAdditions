@@ -1,10 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "GGG",
-    "GCG",
-    "GGG"
-  ],
+  "category": "misc",
   "key": {
     "C": {
       "item": "actuallyadditions:basic_coil"
@@ -13,7 +9,13 @@
       "item": "minecraft:gold_nugget"
     }
   },
+  "pattern": [
+    "GGG",
+    "GCG",
+    "GGG"
+  ],
   "result": {
     "item": "actuallyadditions:advanced_coil"
-  }
+  },
+  "show_notification": true
 }

@@ -11,7 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.blocks;
 
 import com.mojang.blaze3d.platform.Window;
-import com.mojang.blaze3d.vertex.PoseStack;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.laser.IConnectionPair;
 import de.ellpeck.actuallyadditions.api.laser.Network;
@@ -32,6 +31,7 @@ import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import io.netty.util.internal.ConcurrentSet;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
@@ -102,10 +102,9 @@ public class BlockLaserRelay extends FullyDirectionalBlock.Container implements 
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         ItemStack stack = player.getItemInHand(hand);
         BlockEntity tile = world.getBlockEntity(pos);
-        if (tile instanceof TileEntityLaserRelay) {
-            TileEntityLaserRelay relay = (TileEntityLaserRelay) tile;
+        if (tile instanceof TileEntityLaserRelay relay) {
 
-            if (StackUtil.isValid(stack)) {
+	        if (StackUtil.isValid(stack)) {
                 if (stack.getItem() instanceof ItemLaserWrench) {
                     return InteractionResult.FAIL;
                 } else if (stack.getItem() == CommonConfig.Other.relayConfigureItem) {
@@ -201,7 +200,7 @@ public class BlockLaserRelay extends FullyDirectionalBlock.Container implements 
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void displayHud(PoseStack matrices, Minecraft minecraft, Player player, ItemStack stack, HitResult rayCast, Window resolution) {
+    public void displayHud(GuiGraphics guiGraphics, Minecraft minecraft, Player player, ItemStack stack, HitResult rayCast, Window resolution) {
         if (!(rayCast instanceof BlockHitResult)) {
             return;
         }
@@ -213,11 +212,10 @@ public class BlockLaserRelay extends FullyDirectionalBlock.Container implements 
                 boolean compass = stack.getItem() == CommonConfig.Other.relayConfigureItem;
                 if (wearing || compass || stack.getItem() instanceof ItemLaserWrench) {
                     BlockEntity tile = minecraft.level.getBlockEntity(pos);
-                    if (tile instanceof TileEntityLaserRelay) {
-                        TileEntityLaserRelay relay = (TileEntityLaserRelay) tile;
+                    if (tile instanceof TileEntityLaserRelay relay) {
 
-                        String strg = relay.getExtraDisplayString();
-                        minecraft.font.drawShadow(matrices, strg, resolution.getGuiScaledWidth() / 2f + 5, resolution.getGuiScaledHeight() / 2f + 5, 0xFFFFFF);
+	                    String strg = relay.getExtraDisplayString();
+                        guiGraphics.drawString(minecraft.font, strg, (int) (resolution.getGuiScaledWidth() / 2f + 5), (int) (resolution.getGuiScaledHeight() / 2f + 5), 0xFFFFFF);
 
                         String expl;
                         if (compass) {
@@ -226,7 +224,7 @@ public class BlockLaserRelay extends FullyDirectionalBlock.Container implements 
                             expl = ChatFormatting.GRAY.toString() + ChatFormatting.ITALIC + I18n.get("info." + ActuallyAdditions.MODID + ".laserRelay.mode.noCompasss", I18n.get(CommonConfig.Other.relayConfigureItem.getDescriptionId()));
                         }
 
-                        minecraft.font.draw(matrices, expl, resolution.getGuiScaledWidth() / 2f + 5, resolution.getGuiScaledHeight() / 2f + 15, 0xFFFFFF);
+                        guiGraphics.drawString(minecraft.font, expl, (int) (resolution.getGuiScaledWidth() / 2f + 5), (int) (resolution.getGuiScaledHeight() / 2f + 15), 0xFFFFFF);
                     }
                 }
             }
@@ -249,9 +247,8 @@ public class BlockLaserRelay extends FullyDirectionalBlock.Container implements 
             //Update the connected relays to sync the changes to the client
             relayPositions.forEach(relayPos -> {
                 BlockEntity tile = world.getBlockEntity(relayPos);
-                if(tile instanceof TileEntityLaserRelay) {
-                    TileEntityLaserRelay relay = (TileEntityLaserRelay) tile;
-                    relay.sendUpdate();
+                if(tile instanceof TileEntityLaserRelay relay) {
+	                relay.sendUpdate();
                 }
             });
         }

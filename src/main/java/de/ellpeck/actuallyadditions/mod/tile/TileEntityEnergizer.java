@@ -19,7 +19,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -28,8 +27,8 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
 import javax.annotation.Nullable;
@@ -68,8 +67,8 @@ public class TileEntityEnergizer extends TileEntityInventoryBase implements Menu
 
             if (StackUtil.isValid(tile.inv.getStackInSlot(0)) && !StackUtil.isValid(tile.inv.getStackInSlot(1))) {
                 if (tile.storage.getEnergyStored() > 0) {
-                    int received = tile.inv.getStackInSlot(0).getCapability(CapabilityEnergy.ENERGY, null).map(cap -> cap.receiveEnergy(tile.storage.getEnergyStored(), false)).orElse(0);
-                    boolean canTakeUp = tile.inv.getStackInSlot(0).getCapability(CapabilityEnergy.ENERGY, null).map(cap -> cap.getEnergyStored() >= cap.getMaxEnergyStored()).orElse(false);
+                    int received = tile.inv.getStackInSlot(0).getCapability(ForgeCapabilities.ENERGY, null).map(cap -> cap.receiveEnergy(tile.storage.getEnergyStored(), false)).orElse(0);
+                    boolean canTakeUp = tile.inv.getStackInSlot(0).getCapability(ForgeCapabilities.ENERGY, null).map(cap -> cap.getEnergyStored() >= cap.getMaxEnergyStored()).orElse(false);
 
                     if (received > 0) {
                         tile.storage.extractEnergyInternal(received, false);
@@ -90,7 +89,7 @@ public class TileEntityEnergizer extends TileEntityInventoryBase implements Menu
 
     @Override
     public IAcceptor getAcceptor() {
-        return (slot, stack, automation) -> !automation || slot == 0 && stack.getCapability(CapabilityEnergy.ENERGY, null).isPresent();
+        return (slot, stack, automation) -> !automation || slot == 0 && stack.getCapability(ForgeCapabilities.ENERGY, null).isPresent();
     }
 
     @Override
@@ -109,7 +108,7 @@ public class TileEntityEnergizer extends TileEntityInventoryBase implements Menu
 
     @Override
     public Component getDisplayName() {
-        return TextComponent.EMPTY;
+        return Component.empty();
     }
 
     @Nullable

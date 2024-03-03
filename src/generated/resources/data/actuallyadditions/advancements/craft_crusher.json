@@ -1,23 +1,7 @@
 {
   "parent": "actuallyadditions:craft_reconstructor",
-  "display": {
-    "icon": {
-      "item": "actuallyadditions:crusher"
-    },
-    "title": {
-      "translate": "achievement.actuallyadditions.craftCrusher"
-    },
-    "description": {
-      "translate": "achievement.actuallyadditions.craftCrusher.desc"
-    },
-    "frame": "task",
-    "show_toast": true,
-    "announce_to_chat": true,
-    "hidden": false
-  },
   "criteria": {
     "crystal": {
-      "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
@@ -26,12 +10,29 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "achievement.actuallyadditions.craftCrusher.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "actuallyadditions:crusher"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "achievement.actuallyadditions.craftCrusher"
     }
   },
   "requirements": [
     [
       "crystal"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

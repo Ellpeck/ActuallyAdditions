@@ -1,5 +1,9 @@
 {
   "variants": {
+    "facing=east": {
+      "model": "actuallyadditions:block/coffee_machine",
+      "y": 90
+    },
     "facing=north": {
       "model": "actuallyadditions:block/coffee_machine"
     },
@@ -10,10 +14,6 @@
     "facing=west": {
       "model": "actuallyadditions:block/coffee_machine",
       "y": 270
-    },
-    "facing=east": {
-      "model": "actuallyadditions:block/coffee_machine",
-      "y": 90
     }
   }
 }

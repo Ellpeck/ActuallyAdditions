@@ -14,11 +14,11 @@ import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -53,7 +53,7 @@ public class ItemFillingWand extends ItemEnergy {
         if (StackUtil.isValid(stack)) {
             for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
                 ItemStack slot = player.getInventory().getItem(i);
-                if (StackUtil.isValid(slot) && slot.sameItem(stack)) {
+                if (StackUtil.isValid(slot) && ItemStack.isSameItem(slot, stack)) {
                     slot.shrink(1);
                     if (!StackUtil.isValid(slot)) {
                         player.getInventory().setItem(i, ItemStack.EMPTY);
@@ -73,7 +73,7 @@ public class ItemFillingWand extends ItemEnergy {
 
     private static Optional<BlockState> loadData(ItemStack stack) {
         if (stack.getOrCreateTag().contains("state")) {
-            return Optional.of(NbtUtils.readBlockState(stack.getOrCreateTag().getCompound("state")));
+            return Optional.of(NbtUtils.readBlockState(BuiltInRegistries.BLOCK.asLookup(), stack.getOrCreateTag().getCompound("state")));
         }
 
         return Optional.empty();
@@ -142,9 +142,8 @@ public class ItemFillingWand extends ItemEnergy {
             boolean shouldClear = false;
 
             if (isSelected) {
-                if (entity instanceof Player && stack.hasTag()) {
-                    Player player = (Player) entity;
-                    boolean creative = player.isCreative();
+                if (entity instanceof Player player && stack.hasTag()) {
+	                boolean creative = player.isCreative();
 
                     CompoundTag compound = stack.getOrCreateTag();
 
@@ -168,7 +167,7 @@ public class ItemFillingWand extends ItemEnergy {
                             BlockPos pos = new BlockPos(lowestX + currX, lowestY + currY, lowestZ + currZ);
                             BlockState state = world.getBlockState(pos);
 
-                            if (state.getMaterial().isReplaceable() && replaceState.canSurvive(world, pos)) {
+                            if (state.canBeReplaced() && replaceState.canSurvive(world, pos)) {
                                 if (creative || removeFittingItem(replaceState, player)) {
                                     world.setBlock(pos, replaceState, 2);
 
@@ -227,9 +226,9 @@ public class ItemFillingWand extends ItemEnergy {
 
         MutableComponent display = loadData(stack)
             .map(state -> state.getBlock().getName())
-            .orElse(new TranslatableComponent("tooltip.actuallyadditions.item_filling_wand.selected_block.none"));
+            .orElse(Component.translatable("tooltip.actuallyadditions.item_filling_wand.selected_block.none"));
 
-        tooltip.add(new TranslatableComponent("tooltip.actuallyadditions.item_filling_wand.selected_block", display.getString()));
+        tooltip.add(Component.translatable("tooltip.actuallyadditions.item_filling_wand.selected_block", display.getString()));
     }
 
     @Override

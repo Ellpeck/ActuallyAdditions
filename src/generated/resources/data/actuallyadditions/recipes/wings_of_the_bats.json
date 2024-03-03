@@ -1,22 +1,24 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "D": {
+      "item": "actuallyadditions:ender_star"
+    },
+    "N": {
+      "item": "actuallyadditions:diamatine_crystal_block"
+    },
+    "W": {
+      "item": "actuallyadditions:bats_wing"
+    }
+  },
   "pattern": [
     "WNW",
     "WDW",
     "WNW"
   ],
-  "key": {
-    "W": {
-      "item": "actuallyadditions:bats_wing"
-    },
-    "N": {
-      "item": "actuallyadditions:diamatine_crystal_block"
-    },
-    "D": {
-      "item": "actuallyadditions:ender_star"
-    }
-  },
   "result": {
     "item": "actuallyadditions:wings_of_the_bats"
-  }
+  },
+  "show_notification": true
 }

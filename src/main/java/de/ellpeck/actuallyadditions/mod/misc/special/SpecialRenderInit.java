@@ -88,13 +88,13 @@ public class SpecialRenderInit {
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onPlayerRender(RenderPlayerEvent.Pre event) {
-        if (event.getPlayer() != null) {
-            String name = event.getPlayer().getName().getString();
+        if (event.getEntity() != null) {
+            String name = event.getEntity().getName().getString();
             String lower = name.toLowerCase(Locale.ROOT);
             if (SPECIAL_LIST.containsKey(lower)) {
                 RenderSpecial render = SPECIAL_LIST.get(lower);
                 if (render != null) {
-                    render.render(event.getPoseStack(), event.getMultiBufferSource(), event.getPackedLight(), event.getPlayer(), event.getPartialTick());
+                    render.render(event.getPoseStack(), event.getMultiBufferSource(), event.getPackedLight(), event.getEntity(), event.getPartialTick());
                 }
             }
         }
