@@ -11,11 +11,17 @@
 package de.ellpeck.actuallyadditions.mod.jei;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
+import de.ellpeck.actuallyadditions.mod.crafting.ActuallyRecipes;
+import de.ellpeck.actuallyadditions.mod.crafting.EmpowererRecipe;
+import de.ellpeck.actuallyadditions.mod.crafting.FermentingRecipe;
+import de.ellpeck.actuallyadditions.mod.crafting.LaserRecipe;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.RecipeTypes;
 import mezz.jei.api.helpers.IJeiHelpers;
+import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
@@ -32,13 +38,17 @@ public class JEIActuallyAdditionsPlugin implements IModPlugin {
         return ID;
     }
 
+    public static final RecipeType<FermentingRecipe> FERMENTING = RecipeType.create(ActuallyAdditions.MODID, "fermenting", FermentingRecipe.class);
+    public static final RecipeType<LaserRecipe> LASER = RecipeType.create(ActuallyAdditions.MODID, "laser", LaserRecipe.class);
+    public static final RecipeType<EmpowererRecipe> EMPOWERER = RecipeType.create(ActuallyAdditions.MODID, "empowerer", EmpowererRecipe.class);
+
     @Override
     public void registerCategories(IRecipeCategoryRegistration registry) {
         IJeiHelpers helpers = registry.getJeiHelpers();
 
-//        registry.addRecipeCategories(new FermentingCategory(helpers.getGuiHelper())); //TODO: re-enable after refactor jei compat
-//        registry.addRecipeCategories(new LaserRecipeCategory(helpers.getGuiHelper())); //TODO: re-enable after refactor jei compat
-//        registry.addRecipeCategories(new EmpowererRecipeCategory(helpers.getGuiHelper())); //TODO: re-enable after refactor jei compat
+        registry.addRecipeCategories(new FermentingCategory(helpers.getGuiHelper())); //TODO: re-enable after refactor jei compat
+        registry.addRecipeCategories(new LaserRecipeCategory(helpers.getGuiHelper())); //TODO: re-enable after refactor jei compat
+        registry.addRecipeCategories(new EmpowererRecipeCategory(helpers.getGuiHelper())); //TODO: re-enable after refactor jei compat
 
         //registry.addRecipeCategories(new CoffeeMachineRecipeCategory(helpers.getGuiHelper()), new CompostRecipeCategory(helpers.getGuiHelper()), new CrusherRecipeCategory(helpers.getGuiHelper()), new ReconstructorRecipeCategory(helpers.getGuiHelper()), new EmpowererRecipeCategory(helpers.getGuiHelper()), new BookletRecipeCategory(helpers.getGuiHelper()));
     }
@@ -46,9 +56,9 @@ public class JEIActuallyAdditionsPlugin implements IModPlugin {
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registry) {
         registry.addRecipeCatalyst(new ItemStack(ActuallyItems.CRAFTER_ON_A_STICK.get()), RecipeTypes.CRAFTING);
-//        registry.addRecipeCatalyst(new ItemStack(ActuallyBlocks.FERMENTING_BARREL.getItem()), FermentingCategory.ID); //TODO: re-enable after refactor jei compat
-//        registry.addRecipeCatalyst(new ItemStack(ActuallyBlocks.ATOMIC_RECONSTRUCTOR.getItem()), LaserRecipeCategory.ID); //TODO: re-enable after refactor jei compat
-//        registry.addRecipeCatalyst(new ItemStack(ActuallyBlocks.EMPOWERER.getItem()), EmpowererRecipeCategory.ID); //TODO: re-enable after refactor jei compat
+        registry.addRecipeCatalyst(new ItemStack(ActuallyBlocks.FERMENTING_BARREL.getItem()), FERMENTING); //TODO: re-enable after refactor jei compat
+        registry.addRecipeCatalyst(new ItemStack(ActuallyBlocks.ATOMIC_RECONSTRUCTOR.getItem()), LASER); //TODO: re-enable after refactor jei compat
+        registry.addRecipeCatalyst(new ItemStack(ActuallyBlocks.EMPOWERER.getItem()), EMPOWERER); //TODO: re-enable after refactor jei compat
 
 //        registry.addRecipeCatalyst(new ItemStack(ActuallyBlocks.blockFurnaceDouble.get()), VanillaRecipeCategoryUid.SMELTING);
 //        registry.addRecipeCatalyst(new ItemStack(ActuallyBlocks.blockGrinder.get()), CrusherRecipeCategory.NAME);
@@ -64,9 +74,9 @@ public class JEIActuallyAdditionsPlugin implements IModPlugin {
     public void registerRecipes(IRecipeRegistration registry) {
         Level level = Minecraft.getInstance().level;
 
-//        registry.addRecipes(level.getRecipeManager().getAllRecipesFor(ActuallyRecipes.Types.FERMENTING), FermentingCategory.ID); //TODO: re-enable after refactor jei compat
-//        registry.addRecipes(level.getRecipeManager().getAllRecipesFor(ActuallyRecipes.Types.LASER), LaserRecipeCategory.ID); //TODO: re-enable after refactor jei compat
-//        registry.addRecipes(level.getRecipeManager().getAllRecipesFor(ActuallyRecipes.Types.EMPOWERING), EmpowererRecipeCategory.ID); //TODO: re-enable after refactor jei compat
+        registry.addRecipes(FERMENTING, level.getRecipeManager().getAllRecipesFor(ActuallyRecipes.Types.FERMENTING.get())); //TODO: re-enable after refactor jei compat
+        registry.addRecipes(LASER, level.getRecipeManager().getAllRecipesFor(ActuallyRecipes.Types.LASER.get())); //TODO: re-enable after refactor jei compat
+        registry.addRecipes(EMPOWERER, level.getRecipeManager().getAllRecipesFor(ActuallyRecipes.Types.EMPOWERING.get())); //TODO: re-enable after refactor jei compat
 
 
         //registry.addRecipes(ActuallyAdditionsAPI.BOOKLET_PAGES_WITH_ITEM_OR_FLUID_DATA, BookletRecipeCategory.NAME);
