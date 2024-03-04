@@ -35,12 +35,20 @@ public class FilterSettings {
     }
 
     public FilterSettings(int slots, boolean defaultWhitelist, boolean defaultRespectNBT, boolean defaultRespectMod) {
-        this.filterInventory = new ItemStackHandlerAA(slots);
+        this.filterInventory = new ItemStackHandlerAA(slots) {
+            @Override
+            protected void onContentsChanged(int slot) {
+                super.onContentsChanged(slot);
+                FilterSettings.this.onContentsChanged();
+            }
+        };
 
         this.isWhitelist = defaultWhitelist;
         this.respectNBT = defaultRespectNBT;
         this.respectMod = defaultRespectMod;
     }
+
+    public void onContentsChanged() {}
 
     public static boolean check(ItemStack stack, ItemStackHandlerAA filter, boolean whitelist, boolean nbt, boolean mod) {
         if (!stack.isEmpty()) {
@@ -77,11 +85,7 @@ public class FilterSettings {
             return false;
         }
 
-        boolean nbtFine = !nbt || ItemStack.isSameItemSameTags(first, second);
-        if (nbtFine) {
-            return true;
-        }
-        return false;
+        return !nbt || ItemStack.isSameItemSameTags(first, second);
     }
 
     public void writeToNBT(CompoundTag tag, String name) {
@@ -89,7 +93,7 @@ public class FilterSettings {
         compound.putBoolean("Whitelist", this.isWhitelist);
         compound.putBoolean("NBT", this.respectNBT);
         compound.putBoolean("Mod", this.respectMod);
-        TileEntityInventoryBase.saveSlots(this.filterInventory, compound);
+        compound.put("Items", filterInventory.serializeNBT());
         tag.put(name, compound);
     }
 
@@ -98,7 +102,7 @@ public class FilterSettings {
         this.isWhitelist = compound.getBoolean("Whitelist");
         this.respectNBT = compound.getBoolean("NBT");
         this.respectMod = compound.getBoolean("Mod");
-        TileEntityInventoryBase.loadSlots(this.filterInventory, compound);
+        this.filterInventory.deserializeNBT(compound.getCompound("Items"));
     }
 
     public boolean needsUpdateSend() {
