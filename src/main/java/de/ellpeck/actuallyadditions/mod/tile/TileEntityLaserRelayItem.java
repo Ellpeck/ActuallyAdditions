@@ -31,8 +31,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.neoforge.common.capabilities.Capabilities;
-import net.neoforged.neoforge.common.util.LazyOptional;
+import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.IItemHandler;
 
 import java.util.HashMap;
@@ -92,7 +91,7 @@ public class TileEntityLaserRelayItem extends TileEntityLaserRelay {
             if (this.level.hasChunkAt(pos)) {
                 BlockEntity tile = this.level.getBlockEntity(pos);
                 if (tile != null && !(tile instanceof TileEntityItemInterface) && !(tile instanceof TileEntityLaserRelay)) {
-                    LazyOptional<IItemHandler> itemHandler = tile.getCapability(Capabilities.ITEM_HANDLER, side.getOpposite());
+                    IItemHandler itemHandler = this.level.getCapability(Capabilities.ItemHandler.BLOCK, tile.getBlockPos(), side.getOpposite());
 
                     Object slotlessHandler = null;
                     // TODO: [port] add this back maybe?

@@ -14,21 +14,14 @@ import de.ellpeck.actuallyadditions.api.tile.IPhantomTile;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.blocks.BlockPhantom;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.neoforge.common.capabilities.Capability;
-import net.neoforged.neoforge.common.util.LazyOptional;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 public abstract class TileEntityPhantomface extends TileEntityInventoryBase implements IPhantomTile {
     public static final int RANGE = 16;
@@ -184,21 +177,6 @@ public abstract class TileEntityPhantomface extends TileEntityInventoryBase impl
     @Override
     public int getRange() {
         return this.range;
-    }
-
-    protected abstract boolean isCapabilitySupported(Capability<?> capability);
-
-    @Nonnull
-    @Override
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction side) {
-        if (this.isBoundThingInRange() && this.isCapabilitySupported(capability)) {
-            BlockEntity tile = this.level.getBlockEntity(this.getBoundPosition());
-            if (tile != null) {
-                return tile.getCapability(capability, side);
-            }
-        }
-
-        return LazyOptional.empty();
     }
 
     @Override

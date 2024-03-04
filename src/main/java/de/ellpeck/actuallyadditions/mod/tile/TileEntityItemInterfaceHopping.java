@@ -26,11 +26,11 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.AABB;
-import net.neoforged.neoforge.common.capabilities.Capabilities;
-import net.neoforged.neoforge.common.util.LazyOptional;
+import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.IItemHandler;
 
 import java.util.List;
+import java.util.Optional;
 
 public class TileEntityItemInterfaceHopping extends TileEntityItemInterface {
 
@@ -77,7 +77,7 @@ public class TileEntityItemInterfaceHopping extends TileEntityItemInterface {
                                         //                                    }
                                     }
 
-                                    LazyOptional<IItemHandler> handler = tile.itemHandler.getNormalHandler();
+                                    Optional<IItemHandler> handler = Optional.ofNullable(tile.itemHandler.getNormalHandler());
                                     handler.ifPresent(cap -> {
                                         for (int i = 0; i < cap.getSlots(); i++) {
                                             ItemStack left = cap.insertItem(i, item.getItem(), false);
@@ -111,7 +111,7 @@ public class TileEntityItemInterfaceHopping extends TileEntityItemInterface {
 
         BlockEntity from = this.level.getBlockEntity(this.getBlockPos().relative(Direction.UP));
         if (from != null && !(from instanceof TileEntityItemInterface)) {
-            LazyOptional<IItemHandler> normal = from.getCapability(Capabilities.ITEM_HANDLER, Direction.DOWN);
+            IItemHandler normal = this.level.getCapability(Capabilities.ItemHandler.BLOCK, from.getBlockPos(), Direction.DOWN);
 
             Object slotless = null;
             // TODO: [port] add back
@@ -132,7 +132,7 @@ public class TileEntityItemInterfaceHopping extends TileEntityItemInterface {
         if (this.level.isLoaded(toPos)) {
             BlockEntity to = this.level.getBlockEntity(toPos);
             if (to != null && !(to instanceof TileEntityItemInterface)) {
-                LazyOptional<IItemHandler> normal = to.getCapability(Capabilities.ITEM_HANDLER, facing.getOpposite());
+                IItemHandler normal = this.level.getCapability(Capabilities.ItemHandler.BLOCK, to.getBlockPos(), facing.getOpposite());
 
                 Object slotless = null;
                 //                TODO: [port] Add back

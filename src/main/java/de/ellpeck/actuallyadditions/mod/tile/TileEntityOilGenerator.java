@@ -137,7 +137,7 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
             } else if (!tile.isRedstonePowered) {
 
                 RecipeHolder<LiquidFuelRecipe> recipeHolder = tile.getRecipeForCurrentFluid();
-                if (recipeHolder != null && tile.storage.getEnergyStored() < tile.storage.getMaxEnergyStored() && tile.tank.getFluidAmount() >= recipeHolder.getFuelAmount()) {
+                if (recipeHolder != null && tile.storage.getEnergyStored() < tile.storage.getMaxEnergyStored() && tile.tank.getFluidAmount() >= recipeHolder.value().getFuelAmount()) {
                     LiquidFuelRecipe recipe = recipeHolder.value();
                     tile.fuelUsage = recipe.getFuelAmount();
                     tile.currentEnergyProduce = recipe.getTotalEnergy() / recipe.getBurnTime();

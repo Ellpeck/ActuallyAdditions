@@ -30,7 +30,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.common.util.LazyOptional;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 
 import javax.annotation.Nullable;
@@ -41,7 +40,6 @@ public class TileEntityLongRangeBreaker extends TileEntityInventoryBase implemen
     public static final int RANGE = 8;
     public static final int ENERGY_USE = 5;
     public final CustomEnergyStorage storage = new CustomEnergyStorage(10000, 20, 0);
-    public final LazyOptional<IEnergyStorage> lazyEnergy = LazyOptional.of(() -> this.storage);
     private int lastEnergy;
     private int currentTime;
 
@@ -142,7 +140,7 @@ public class TileEntityLongRangeBreaker extends TileEntityInventoryBase implemen
 
     @Override
     public IEnergyStorage getEnergyStorage(Direction facing) {
-        return this.lazyEnergy;
+        return this.storage;
     }
 
     @Override

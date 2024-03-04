@@ -20,19 +20,18 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.common.capabilities.Capabilities;
-import net.neoforged.neoforge.common.util.LazyOptional;
+import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.wrapper.PlayerInvWrapper;
 
+import java.util.Optional;
 import java.util.UUID;
 
 public class TileEntityPlayerInterface extends TileEntityBase implements IEnergyDisplay {
 
     public static final int DEFAULT_RANGE = 32;
     private final CustomEnergyStorage storage = new CustomEnergyStorage(30000, 50, 0);
-    public final LazyOptional<IEnergyStorage> lazyEnergy = LazyOptional.of(() -> this.storage);
     public UUID connectedPlayer;
     public String playerName;
     private IItemHandler playerHandler;
@@ -69,7 +68,7 @@ public class TileEntityPlayerInterface extends TileEntityBase implements IEnergy
                 : new PlayerInvWrapper(player.getInventory());
         }
 
-        return LazyOptional.of(() -> this.playerHandler);
+        return this.playerHandler;
     }
 
     public static <T extends BlockEntity> void clientTick(Level level, BlockPos pos, BlockState state, T t) {
@@ -93,7 +92,8 @@ public class TileEntityPlayerInterface extends TileEntityBase implements IEnergy
                         ItemStack slot = player.getInventory().getItem(i);
                         if (StackUtil.isValid(slot) && slot.getCount() == 1) {
 
-                            int received = slot.getCapability(Capabilities.ENERGY).map(cap -> cap.receiveEnergy(tile.storage.getEnergyStored(), false)).orElse(0);
+                            int received = Optional.ofNullable(slot.getCapability(Capabilities.EnergyStorage.ITEM))
+                                    .map(cap -> cap.receiveEnergy(tile.storage.getEnergyStored(), false)).orElse(0);
                             if (received > 0) {
                                 tile.storage.extractEnergyInternal(received, false);
                             }
@@ -149,6 +149,6 @@ public class TileEntityPlayerInterface extends TileEntityBase implements IEnergy
 
     @Override
     public IEnergyStorage getEnergyStorage(Direction facing) {
-        return this.lazyEnergy;
+        return this.storage;
     }
 }

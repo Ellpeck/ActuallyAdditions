@@ -17,7 +17,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.common.capabilities.Capability;
 
 import java.util.Arrays;
 
@@ -70,10 +69,5 @@ public class TileEntityPhantomRedstoneface extends TileEntityPhantomface {
         System.arraycopy(this.providesStrong, 0, this.lastProvidesStrong, 0, this.providesStrong.length);
 
         super.onUpdateSent();
-    }
-
-    @Override
-    protected boolean isCapabilitySupported(Capability<?> capability) {
-        return false;
     }
 }
