@@ -60,7 +60,7 @@ public class BlockGreenhouseGlass extends BlockBase {
                     BlockState growState = i == 0
                         ? trip.getMiddle()
                         : world.getBlockState(trip.getLeft());
-                    if (growState.getBlock() == trip.getRight() && trip.getRight().isValidBonemealTarget(world, trip.getLeft(), growState, false)) {
+                    if (growState.getBlock() == trip.getRight() && trip.getRight().isValidBonemealTarget(world, trip.getLeft(), growState)) {
                         trip.getRight().performBonemeal(world, rand, trip.getLeft(), growState);
                         once = true;
                     }
