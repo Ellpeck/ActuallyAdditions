@@ -5,7 +5,9 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.common.crafting.IngredientType;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 import java.util.function.Supplier;
 
@@ -14,6 +16,7 @@ public class ActuallyRecipes {
 
     public static void init(IEventBus bus) {
         SERIALIZERS.register(bus);
+        Ingredients.INGREDIENTS.register(bus);
         Types.RECIPE_TYPES.register(bus);
     }
 
@@ -42,5 +45,10 @@ public class ActuallyRecipes {
         public static final Supplier<RecipeType<FermentingRecipe>> FERMENTING = RECIPE_TYPES.register("fermenting", () -> new RecipeType<>() {});
         public static final Supplier<RecipeType<ColorChangeRecipe>> COLOR_CHANGE = RECIPE_TYPES.register("color_change", () -> new RecipeType<>() {});
         public static final Supplier<RecipeType<MiningLensRecipe>> MINING_LENS = RECIPE_TYPES.register("mining_lens", () -> new RecipeType<>() {});
+    }
+    public static class Ingredients {
+        public static final DeferredRegister<IngredientType<?>> INGREDIENTS = DeferredRegister.create(NeoForgeRegistries.Keys.INGREDIENT_TYPES, ActuallyAdditions.MODID);
+
+        public static final Supplier<IngredientType<TargetNBTIngredient>> TARGET_NBT = INGREDIENTS.register("target_nbt", () -> new IngredientType<>(TargetNBTIngredient.CODEC));
     }
 }
