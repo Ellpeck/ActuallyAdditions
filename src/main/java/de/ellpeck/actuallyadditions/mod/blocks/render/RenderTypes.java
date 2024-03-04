@@ -21,10 +21,10 @@ public class RenderTypes extends RenderType {
     VertexFormat.Mode.QUADS, 256, false, true,
     RenderType.CompositeState.builder()
         .setTransparencyState(ADDITIVE_TRANSPARENCY)
-        .setTextureState(NO_TEXTURE)
-        .setOutputState(RenderType.TRANSLUCENT_TARGET)
+        .setTextureState(BLOCK_SHEET)
+        .setOutputState(MAIN_TARGET)
         .setLightmapState(RenderStateShard.LIGHTMAP)
-//        .setAlphaState(RenderStateShard.DEFAULT_ALPHA)
         .setCullState(RenderStateShard.NO_CULL)
+        .setShaderState(RenderStateShard.POSITION_COLOR_TEX_LIGHTMAP_SHADER)
         .createCompositeState(true));
 }

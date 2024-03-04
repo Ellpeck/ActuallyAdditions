@@ -30,6 +30,7 @@ import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlas;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.client.resources.model.BakedModel;
@@ -54,6 +55,7 @@ public final class AssetUtil {
     public static final int MAX_LIGHT_Y = 0xF000F0;
 
     public static final ResourceLocation GUI_INVENTORY_LOCATION = getGuiLocation("gui_inventory");
+    private static final ResourceLocation FORGE_WHITE = new ResourceLocation("forge", "white");
 
     public static ResourceLocation getGuiLocation(String file) {
         return new ResourceLocation(ActuallyAdditions.MODID, "textures/gui/" + file + ".png");
@@ -258,10 +260,14 @@ public final class AssetUtil {
     @OnlyIn(Dist.CLIENT)
     public static void renderLaser(PoseStack matrixStack, MultiBufferSource buffer, float offX, float offY, float offZ, float yaw, float pitch, float length, float rotationTime, int color, float alpha, float beamWidth) {
         Level world = Minecraft.getInstance().level;
-        int r = (color >> 16) & 0xFF;
+/*        int r = (color >> 16) & 0xFF;
         int g = (color >> 8) & 0xFF;
         int b = color & 0xFF;
-        int a = (int) (alpha * 255);
+        int a = (int) (alpha * 255);*/
+        int r = (int)(((color >> 16) & 0xFF) * alpha);
+        int g = (int)(((color >> 8) & 0xFF) * alpha);
+        int b = (int)((color & 0xFF) * alpha);
+        int a = 255;
 
         int lightmap = LightTexture.pack(MAX_LIGHT_X, MAX_LIGHT_Y);
 
@@ -278,29 +284,35 @@ public final class AssetUtil {
 
         Matrix4f matrix = matrixStack.last().pose();
 
+        TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(FORGE_WHITE);
+        float minU = sprite.getU0();
+        float maxU = sprite.getU1();
+        float minV = sprite.getV0();
+        float maxV = sprite.getV1();
+
         //Draw laser tube faces
-        for (int i = 0; i < 4; i++) {
+        for (int i = 1; i < 4; i++) {
             float width = beamWidth * (i / 4.0f);
             //top
-            builder.vertex(matrix, -width, width, 0.0f).color(r, g, b, a).uv2(lightmap).endVertex();
-            builder.vertex(matrix, width, width, 0.0f).color(r, g, b, a).uv2(lightmap).endVertex();
-            builder.vertex(matrix, width, width, -length).color(r, g, b, a).uv2(lightmap).endVertex();
-            builder.vertex(matrix, -width, width, -length).color(r, g, b, a).uv2(lightmap).endVertex();
+            builder.vertex(matrix, -width,  width,    0.0f).color(r, g, b, a).uv(minU, maxV).uv2(lightmap).endVertex();
+            builder.vertex(matrix,  width,  width,    0.0f).color(r, g, b, a).uv(maxU, maxV).uv2(lightmap).endVertex();
+            builder.vertex(matrix,  width,  width, -length).color(r, g, b, a).uv(maxU, minV).uv2(lightmap).endVertex();
+            builder.vertex(matrix, -width,  width, -length).color(r, g, b, a).uv(minU, minV).uv2(lightmap).endVertex();
             //bottom
-            builder.vertex(matrix, -width, -width, 0.0f).color(r, g, b, a).uv2(lightmap).endVertex();
-            builder.vertex(matrix, -width, -width, -length).color(r, g, b, a).uv2(lightmap).endVertex();
-            builder.vertex(matrix, width, -width, -length).color(r, g, b, a).uv2(lightmap).endVertex();
-            builder.vertex(matrix, width, -width, 0.0f).color(r, g, b, a).uv2(lightmap).endVertex();
+            builder.vertex(matrix, -width, -width,    0.0f).color(r, g, b, a).uv(minU, maxV).uv2(lightmap).endVertex();
+            builder.vertex(matrix, -width, -width, -length).color(r, g, b, a).uv(minU, minV).uv2(lightmap).endVertex();
+            builder.vertex(matrix,  width, -width, -length).color(r, g, b, a).uv(maxU, minV).uv2(lightmap).endVertex();
+            builder.vertex(matrix,  width, -width,    0.0f).color(r, g, b, a).uv(maxU, maxV).uv2(lightmap).endVertex();
             //left
-            builder.vertex(matrix, -width, width, 0.0f).color(r, g, b, a).uv2(lightmap).endVertex();
-            builder.vertex(matrix, -width, -width, 0.0f).color(r, g, b, a).uv2(lightmap).endVertex();
-            builder.vertex(matrix, -width, -width, -length).color(r, g, b, a).uv2(lightmap).endVertex();
-            builder.vertex(matrix, -width, width, -length).color(r, g, b, a).uv2(lightmap).endVertex();
+            builder.vertex(matrix, -width,  width,    0.0f).color(r, g, b, a).uv(maxU, maxV).uv2(lightmap).endVertex();
+            builder.vertex(matrix, -width, -width,    0.0f).color(r, g, b, a).uv(maxU, maxV).uv2(lightmap).endVertex();
+            builder.vertex(matrix, -width, -width, -length).color(r, g, b, a).uv(minU, minV).uv2(lightmap).endVertex();
+            builder.vertex(matrix, -width,  width, -length).color(r, g, b, a).uv(minU, minV).uv2(lightmap).endVertex();
             //right
-            builder.vertex(matrix, width, width, 0.0f).color(r, g, b, a).uv2(lightmap).endVertex();
-            builder.vertex(matrix, width, -width, 0.0f).color(r, g, b, a).uv2(lightmap).endVertex();
-            builder.vertex(matrix, width, -width, -length).color(r, g, b, a).uv2(lightmap).endVertex();
-            builder.vertex(matrix, width, width, -length).color(r, g, b, a).uv2(lightmap).endVertex();
+            builder.vertex(matrix,  width,  width,    0.0f).color(r, g, b, a).uv(maxU, maxV).uv2(lightmap).endVertex();
+            builder.vertex(matrix,  width, -width,    0.0f).color(r, g, b, a).uv(maxU, maxV).uv2(lightmap).endVertex();
+            builder.vertex(matrix,  width, -width, -length).color(r, g, b, a).uv(minU, minV).uv2(lightmap).endVertex();
+            builder.vertex(matrix,  width,  width, -length).color(r, g, b, a).uv(minU, minV).uv2(lightmap).endVertex();
         }
 
 
