@@ -108,7 +108,7 @@ public class CrushingRecipe implements Recipe<Container> {
     public static class Serializer implements RecipeSerializer<CrushingRecipe> {
         private static final Codec<CrushingResult> RESULT_CODEC = RecordCodecBuilder.create(
                 instance -> instance.group(
-                                ItemStack.ITEM_WITH_COUNT_CODEC.fieldOf("result").forGetter(result -> result.stack),
+                                ItemStack.CODEC.fieldOf("result").forGetter(result -> result.stack),
                                 Codec.FLOAT.optionalFieldOf("chance", 1.0F).forGetter(recipe -> recipe.chance)
                         )
                         .apply(instance, CrushingResult::new)
