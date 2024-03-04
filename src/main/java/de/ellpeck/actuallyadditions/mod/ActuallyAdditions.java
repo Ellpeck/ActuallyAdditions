@@ -118,6 +118,7 @@ public class ActuallyAdditions {
 	        eventBus.addListener(this::clientSetup);
 	        eventBus.addListener(ActuallyAdditionsClient::setupSpecialRenders);
 	        eventBus.addListener(this::particleFactoryRegister);
+            eventBus.register(new ClientRegistryHandler());
         }
         IFarmerBehavior.initBehaviors();
     }

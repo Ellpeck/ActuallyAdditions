@@ -94,7 +94,6 @@ public class ActuallyAdditionsClient {
         MenuScreens.register(ActuallyContainers.XPSOLIDIFIER_CONTAINER.get(), GuiXPSolidifier::new);
         // From old proxy
         NeoForge.EVENT_BUS.register(new ClientEvents());
-        NeoForge.EVENT_BUS.register(new ClientRegistryHandler());
         NeoForge.EVENT_BUS.register(new SpecialRenderInit());
 
         event.enqueueWork(() ->
