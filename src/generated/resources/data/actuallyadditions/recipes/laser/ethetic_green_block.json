@@ -5,6 +5,7 @@
     "item": "minecraft:chiseled_quartz_block"
   },
   "result": {
-    "item": "actuallyadditions:ethetic_green_block"
+    "count": 1,
+    "result": "actuallyadditions:ethetic_green_block"
   }
 }

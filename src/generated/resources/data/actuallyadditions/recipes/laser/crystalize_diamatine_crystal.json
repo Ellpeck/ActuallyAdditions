@@ -5,6 +5,7 @@
     "tag": "forge:gems/diamond"
   },
   "result": {
-    "item": "actuallyadditions:diamatine_crystal"
+    "count": 1,
+    "result": "actuallyadditions:diamatine_crystal"
   }
 }

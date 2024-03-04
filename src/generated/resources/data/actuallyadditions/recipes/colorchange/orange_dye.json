@@ -4,6 +4,7 @@
     "item": "minecraft:white_dye"
   },
   "result": {
-    "item": "minecraft:orange_dye"
+    "count": 1,
+    "result": "minecraft:orange_dye"
   }
 }

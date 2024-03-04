@@ -20,7 +20,8 @@
     }
   ],
   "result": {
-    "item": "actuallyadditions:empowered_restonia_crystal"
+    "count": 1,
+    "result": "actuallyadditions:empowered_restonia_crystal"
   },
   "time": 50
 }

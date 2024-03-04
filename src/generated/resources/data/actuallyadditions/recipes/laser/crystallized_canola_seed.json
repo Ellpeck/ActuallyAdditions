@@ -5,6 +5,7 @@
     "item": "actuallyadditions:canola_seeds"
   },
   "result": {
-    "item": "actuallyadditions:crystallized_canola_seed"
+    "count": 1,
+    "result": "actuallyadditions:crystallized_canola_seed"
   }
 }

@@ -4,6 +4,7 @@
     "item": "minecraft:orange_terracotta"
   },
   "result": {
-    "item": "minecraft:magenta_terracotta"
+    "count": 1,
+    "result": "minecraft:magenta_terracotta"
   }
 }

@@ -15,16 +15,12 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "achievement.actuallyadditions.craftCrusher.desc"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "actuallyadditions:crusher"
     },
-    "show_toast": true,
     "title": {
       "translate": "achievement.actuallyadditions.craftCrusher"
     }

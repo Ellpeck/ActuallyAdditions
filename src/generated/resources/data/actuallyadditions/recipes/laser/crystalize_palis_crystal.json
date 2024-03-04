@@ -5,6 +5,7 @@
     "tag": "forge:gems/lapis"
   },
   "result": {
-    "item": "actuallyadditions:palis_crystal"
+    "count": 1,
+    "result": "actuallyadditions:palis_crystal"
   }
 }

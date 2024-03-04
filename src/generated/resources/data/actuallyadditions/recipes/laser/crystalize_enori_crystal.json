@@ -5,6 +5,7 @@
     "tag": "forge:ingots/iron"
   },
   "result": {
-    "item": "actuallyadditions:enori_crystal"
+    "count": 1,
+    "result": "actuallyadditions:enori_crystal"
   }
 }

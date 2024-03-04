@@ -5,6 +5,7 @@
     "tag": "minecraft:coals"
   },
   "result": {
-    "item": "actuallyadditions:void_crystal"
+    "count": 1,
+    "result": "actuallyadditions:void_crystal"
   }
 }

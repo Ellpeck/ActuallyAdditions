@@ -20,7 +20,8 @@
     }
   ],
   "result": {
-    "item": "actuallyadditions:empowered_emeradic_crystal"
+    "count": 1,
+    "result": "actuallyadditions:empowered_emeradic_crystal"
   },
   "time": 50
 }

@@ -1,11 +1,9 @@
 {
   "type": "actuallyadditions:liquid_fuel",
-  "ingredient": {
-    "amount": 50,
-    "fluid": "actuallyadditions:empowered_oil"
+  "burn_time": 48000,
+  "fuel": {
+    "Amount": 50,
+    "FluidName": "actuallyadditions:empowered_oil"
   },
-  "result": {
-    "burn_time": 400,
-    "total_energy": 48000
-  }
+  "total_energy": 400
 }

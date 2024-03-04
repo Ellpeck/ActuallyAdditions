@@ -5,6 +5,7 @@
     "tag": "forge:storage_blocks/coal"
   },
   "result": {
-    "item": "actuallyadditions:void_crystal_block"
+    "count": 1,
+    "result": "actuallyadditions:void_crystal_block"
   }
 }

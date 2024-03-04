@@ -20,7 +20,8 @@
     }
   ],
   "result": {
-    "item": "actuallyadditions:empowered_canola_seed"
+    "count": 1,
+    "result": "actuallyadditions:empowered_canola_seed"
   },
   "time": 30
 }

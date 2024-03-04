@@ -15,16 +15,12 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "achievement.actuallyadditions.craftLaserRelayExtreme.desc"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "actuallyadditions:laser_relay_extreme"
     },
-    "show_toast": true,
     "title": {
       "translate": "achievement.actuallyadditions.craftLaserRelayExtreme"
     }

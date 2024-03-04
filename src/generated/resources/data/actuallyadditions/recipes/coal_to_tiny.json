@@ -1,26 +1,19 @@
 {
-  "type": "forge:conditional",
-  "recipes": [
+  "neoforge:conditions": [
     {
-      "conditions": [
-        {
-          "type": "actuallyadditions:bool_config_condition",
-          "config_name": "tinyCoalStuff"
-        }
-      ],
-      "recipe": {
-        "type": "minecraft:crafting_shapeless",
-        "category": "misc",
-        "ingredients": [
-          {
-            "item": "minecraft:coal"
-          }
-        ],
-        "result": {
-          "count": 8,
-          "item": "actuallyadditions:tiny_coal"
-        }
-      }
+      "type": "actuallyadditions:bool_config_condition",
+      "boolConfig": "tinyCoalStuff"
     }
-  ]
+  ],
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:coal"
+    }
+  ],
+  "result": {
+    "count": 8,
+    "item": "actuallyadditions:tiny_coal"
+  }
 }

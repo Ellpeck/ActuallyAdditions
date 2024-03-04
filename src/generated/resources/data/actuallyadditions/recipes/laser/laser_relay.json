@@ -5,6 +5,7 @@
     "item": "actuallyadditions:laser_relay_item"
   },
   "result": {
-    "item": "actuallyadditions:laser_relay"
+    "count": 1,
+    "result": "actuallyadditions:laser_relay"
   }
 }

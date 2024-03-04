@@ -5,6 +5,7 @@
     "item": "actuallyadditions:laser_relay_fluids"
   },
   "result": {
-    "item": "actuallyadditions:laser_relay_item"
+    "count": 1,
+    "result": "actuallyadditions:laser_relay_item"
   }
 }

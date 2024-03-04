@@ -15,16 +15,12 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "achievement.actuallyadditions.craftLaserRelayAdvanced.desc"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "actuallyadditions:laser_relay_advanced"
     },
-    "show_toast": true,
     "title": {
       "translate": "achievement.actuallyadditions.craftLaserRelayAdvanced"
     }

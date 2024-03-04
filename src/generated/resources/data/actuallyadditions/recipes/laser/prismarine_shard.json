@@ -5,6 +5,7 @@
     "item": "minecraft:quartz"
   },
   "result": {
-    "item": "minecraft:prismarine_shard"
+    "count": 1,
+    "result": "minecraft:prismarine_shard"
   }
 }

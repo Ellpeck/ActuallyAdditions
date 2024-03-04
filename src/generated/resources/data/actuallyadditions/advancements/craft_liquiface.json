@@ -15,16 +15,12 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "achievement.actuallyadditions.craftLiquiface.desc"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "actuallyadditions:phantom_liquiface"
     },
-    "show_toast": true,
     "title": {
       "translate": "achievement.actuallyadditions.craftLiquiface"
     }

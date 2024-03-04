@@ -5,6 +5,7 @@
     "tag": "forge:dusts/redstone"
   },
   "result": {
-    "item": "actuallyadditions:restonia_crystal"
+    "count": 1,
+    "result": "actuallyadditions:restonia_crystal"
   }
 }

@@ -5,6 +5,7 @@
     "tag": "forge:storage_blocks/redstone"
   },
   "result": {
-    "item": "actuallyadditions:restonia_crystal_block"
+    "count": 1,
+    "result": "actuallyadditions:restonia_crystal_block"
   }
 }

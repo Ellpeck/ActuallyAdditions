@@ -15,16 +15,12 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "achievement.actuallyadditions.craftCoalGen.desc"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "actuallyadditions:coal_generator"
     },
-    "show_toast": true,
     "title": {
       "translate": "achievement.actuallyadditions.craftCoalGen"
     }

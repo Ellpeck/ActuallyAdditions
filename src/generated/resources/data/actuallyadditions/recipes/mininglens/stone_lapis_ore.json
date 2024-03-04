@@ -4,7 +4,8 @@
     "tag": "forge:stone"
   },
   "result": {
-    "item": "minecraft:lapis_ore"
+    "count": 1,
+    "result": "minecraft:lapis_ore"
   },
   "weight": 250
 }

@@ -5,6 +5,7 @@
     "item": "minecraft:quartz_block"
   },
   "result": {
-    "item": "actuallyadditions:ethetic_white_block"
+    "count": 1,
+    "result": "actuallyadditions:ethetic_white_block"
   }
 }

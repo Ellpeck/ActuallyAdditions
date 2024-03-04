@@ -5,6 +5,7 @@
     "tag": "forge:storage_blocks/diamond"
   },
   "result": {
-    "item": "actuallyadditions:diamatine_crystal_block"
+    "count": 1,
+    "result": "actuallyadditions:diamatine_crystal_block"
   }
 }

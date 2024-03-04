@@ -5,6 +5,7 @@
     "tag": "forge:storage_blocks/emerald"
   },
   "result": {
-    "item": "actuallyadditions:emeradic_crystal_block"
+    "count": 1,
+    "result": "actuallyadditions:emeradic_crystal_block"
   }
 }

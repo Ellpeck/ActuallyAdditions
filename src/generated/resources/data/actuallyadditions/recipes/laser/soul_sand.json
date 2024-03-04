@@ -5,6 +5,7 @@
     "tag": "forge:sand"
   },
   "result": {
-    "item": "minecraft:soul_sand"
+    "count": 1,
+    "result": "minecraft:soul_sand"
   }
 }

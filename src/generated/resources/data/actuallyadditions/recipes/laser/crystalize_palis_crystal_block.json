@@ -5,6 +5,7 @@
     "tag": "forge:storage_blocks/lapis"
   },
   "result": {
-    "item": "actuallyadditions:palis_crystal_block"
+    "count": 1,
+    "result": "actuallyadditions:palis_crystal_block"
   }
 }

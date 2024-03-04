@@ -1,12 +1,12 @@
 {
   "type": "actuallyadditions:fermenting",
   "ingredient": {
-    "amount": 80,
-    "fluid": "actuallyadditions:canola_oil"
+    "Amount": 80,
+    "FluidName": "actuallyadditions:canola_oil"
   },
   "result": {
-    "amount": 80,
-    "fluid": "actuallyadditions:refined_canola_oil"
+    "Amount": 80,
+    "FluidName": "actuallyadditions:refined_canola_oil"
   },
   "time": 100
 }

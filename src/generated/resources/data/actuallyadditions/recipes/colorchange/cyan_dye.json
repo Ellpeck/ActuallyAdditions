@@ -4,6 +4,7 @@
     "item": "minecraft:light_gray_dye"
   },
   "result": {
-    "item": "minecraft:cyan_dye"
+    "count": 1,
+    "result": "minecraft:cyan_dye"
   }
 }

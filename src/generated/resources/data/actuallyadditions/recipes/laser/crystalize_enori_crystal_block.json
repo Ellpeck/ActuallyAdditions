@@ -5,6 +5,7 @@
     "tag": "forge:storage_blocks/iron"
   },
   "result": {
-    "item": "actuallyadditions:enori_crystal_block"
+    "count": 1,
+    "result": "actuallyadditions:enori_crystal_block"
   }
 }

@@ -4,7 +4,8 @@
     "tag": "forge:stone"
   },
   "result": {
-    "item": "minecraft:coal_ore"
+    "count": 1,
+    "result": "minecraft:coal_ore"
   },
   "weight": 5000
 }

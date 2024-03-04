@@ -13,16 +13,12 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "achievement.actuallyadditions.makeCrystal.desc"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "actuallyadditions:emeradic_crystal"
     },
-    "show_toast": true,
     "title": {
       "translate": "achievement.actuallyadditions.makeCrystal"
     }

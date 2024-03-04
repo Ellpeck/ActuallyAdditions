@@ -1,25 +1,28 @@
 {
   "type": "actuallyadditions:copy_nbt",
-  "category": "misc",
-  "key": {
-    "C": {
-      "item": "actuallyadditions:advanced_coil"
+  "value": {
+    "category": "misc",
+    "key": {
+      "C": {
+        "item": "actuallyadditions:advanced_coil"
+      },
+      "I": {
+        "item": "actuallyadditions:empowered_enori_crystal"
+      },
+      "R": {
+        "type": "actuallyadditions:target_nbt",
+        "value": {
+          "item": "actuallyadditions:double_battery"
+        }
+      }
     },
-    "I": {
-      "item": "actuallyadditions:empowered_enori_crystal"
-    },
-    "R": {
-      "type": "actuallyadditions:nbt_target",
-      "item": "actuallyadditions:double_battery"
+    "pattern": [
+      " R ",
+      "ICI",
+      "III"
+    ],
+    "result": {
+      "item": "actuallyadditions:triple_battery"
     }
-  },
-  "pattern": [
-    " R ",
-    "ICI",
-    "III"
-  ],
-  "result": {
-    "item": "actuallyadditions:triple_battery"
-  },
-  "show_notification": true
+  }
 }

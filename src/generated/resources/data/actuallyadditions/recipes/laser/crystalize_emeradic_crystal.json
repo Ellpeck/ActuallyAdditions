@@ -5,6 +5,7 @@
     "tag": "forge:gems/emerald"
   },
   "result": {
-    "item": "actuallyadditions:emeradic_crystal"
+    "count": 1,
+    "result": "actuallyadditions:emeradic_crystal"
   }
 }

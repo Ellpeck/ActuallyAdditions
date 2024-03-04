@@ -5,6 +5,7 @@
     "item": "minecraft:red_mushroom"
   },
   "result": {
-    "item": "minecraft:nether_wart"
+    "count": 1,
+    "result": "minecraft:nether_wart"
   }
 }

@@ -4,6 +4,7 @@
     "item": "actuallyadditions:lamp_magenta"
   },
   "result": {
-    "item": "actuallyadditions:lamp_light_blue"
+    "count": 1,
+    "result": "actuallyadditions:lamp_light_blue"
   }
 }
