@@ -28,8 +28,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.common.PlantType;
-import net.minecraftforge.items.ItemHandlerHelper;
+import net.neoforged.neoforge.common.PlantType;
+import net.neoforged.neoforge.items.ItemHandlerHelper;
 
 import java.util.List;
 import java.util.function.Supplier;

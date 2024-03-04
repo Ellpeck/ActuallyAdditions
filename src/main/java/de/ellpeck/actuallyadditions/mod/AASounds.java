@@ -1,19 +1,19 @@
 package de.ellpeck.actuallyadditions.mod;
 
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class AASounds {
-    public static final DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, ActuallyAdditions.MODID);
+    public static final DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(BuiltInRegistries.SOUND_EVENT, ActuallyAdditions.MODID);
 
-    public static RegistryObject<SoundEvent> RECONSTRUCTOR = SOUNDS.register("reconstructor", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(ActuallyAdditions.MODID, "reconstructor")));
-    public static RegistryObject<SoundEvent> CRUSHER = SOUNDS.register("crusher", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(ActuallyAdditions.MODID, "crusher")));
-    public static RegistryObject<SoundEvent> COFFEE_MACHINE = SOUNDS.register("coffee_machine", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(ActuallyAdditions.MODID, "coffee_machine")));
-    public static RegistryObject<SoundEvent> DUH_DUH_DUH_DUUUH = SOUNDS.register("duh_duh_duh_duuuh", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(ActuallyAdditions.MODID, "duh_duh_duh_duuuh")));
+    public static DeferredHolder<SoundEvent, SoundEvent> RECONSTRUCTOR = SOUNDS.register("reconstructor", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(ActuallyAdditions.MODID, "reconstructor")));
+    public static DeferredHolder<SoundEvent, SoundEvent> CRUSHER = SOUNDS.register("crusher", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(ActuallyAdditions.MODID, "crusher")));
+    public static DeferredHolder<SoundEvent, SoundEvent> COFFEE_MACHINE = SOUNDS.register("coffee_machine", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(ActuallyAdditions.MODID, "coffee_machine")));
+    public static DeferredHolder<SoundEvent, SoundEvent> DUH_DUH_DUH_DUUUH = SOUNDS.register("duh_duh_duh_duuuh", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(ActuallyAdditions.MODID, "duh_duh_duh_duuuh")));
 
 
     public static void init(IEventBus bus) {

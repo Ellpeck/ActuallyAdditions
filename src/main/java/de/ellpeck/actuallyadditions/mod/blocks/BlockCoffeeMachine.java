@@ -13,7 +13,6 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 import de.ellpeck.actuallyadditions.mod.blocks.base.DirectionalBlock;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityCoffeeMachine;
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -26,7 +25,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 
@@ -41,7 +39,7 @@ public class BlockCoffeeMachine extends DirectionalBlock.Container {
             TileEntityCoffeeMachine tile = (TileEntityCoffeeMachine) world.getBlockEntity(pos);
             if (tile != null) {
                 if (!this.tryUseItemOnTank(player, hand, tile.tank)) {
-                    NetworkHooks.openScreen((ServerPlayer) player, tile, pos);
+                    player.openMenu(tile, pos);
                 }
             }
             return InteractionResult.PASS;

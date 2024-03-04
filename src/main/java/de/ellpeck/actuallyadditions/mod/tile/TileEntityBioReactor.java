@@ -31,9 +31,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.IPlantable;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.common.IPlantable;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -42,7 +41,6 @@ import java.util.List;
 public class TileEntityBioReactor extends TileEntityInventoryBase implements MenuProvider, ISharingEnergyProvider {
 
     public final CustomEnergyStorage storage = new CustomEnergyStorage(200000, 0, 800);
-    public final LazyOptional<IEnergyStorage> lazyEnergy = LazyOptional.of(() -> this.storage);
 
     public int burnTime;
     public int maxBurnTime;
@@ -177,8 +175,8 @@ public class TileEntityBioReactor extends TileEntityInventoryBase implements Men
     }
 
     @Override
-    public LazyOptional<IEnergyStorage> getEnergyStorage(Direction facing) {
-        return this.lazyEnergy;
+    public IEnergyStorage getEnergyStorage(Direction facing) {
+        return this.storage;
     }
 
     @Override

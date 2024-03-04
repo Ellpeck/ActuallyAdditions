@@ -12,6 +12,7 @@
 /classes
 /bin/
 /run/
+/runs/
 
 *.classpath
 *.project

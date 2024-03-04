@@ -23,6 +23,7 @@ import de.ellpeck.actuallyadditions.mod.tile.FilterSettings;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Spider;
@@ -30,13 +31,12 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.level.BlockEvent;
-import net.minecraftforge.eventbus.api.Event;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.bus.api.Event;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
+import net.neoforged.neoforge.event.entity.player.EntityItemPickupEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.level.BlockEvent;
 
 import java.util.Locale;
 
@@ -168,7 +168,7 @@ public class CommonEvents {
         if (CommonConfig.Other.GIVE_BOOKLET_ON_FIRST_CRAFT.get()) {
             if (!event.getEntity().level().isClientSide && StackUtil.isValid(event.getCrafting()) && event.getCrafting().getItem() != ActuallyItems.ITEM_BOOKLET.get()) {
 
-                String name = ForgeRegistries.ITEMS.getKey(event.getCrafting().getItem()).toString();
+                String name = BuiltInRegistries.ITEM.getKey(event.getCrafting().getItem()).toString();
                 if (name != null && name.toLowerCase(Locale.ROOT).contains(ActuallyAdditions.MODID)) {
                     PlayerData.PlayerSave save = PlayerData.getDataFromPlayer(event.getEntity());
                     if (save != null && !save.bookGottenAlready) {

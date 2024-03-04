@@ -1,14 +1,14 @@
 package de.ellpeck.actuallyadditions.data;
 
-import com.google.gson.JsonObject;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.crafting.EmpowererRecipe;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.Crystals;
-import net.minecraft.data.CachedOutput;
+import net.minecraft.core.NonNullList;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
@@ -18,14 +18,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
-import net.minecraftforge.common.Tags;
-import net.minecraftforge.registries.ForgeRegistries;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.function.Consumer;
+import net.neoforged.neoforge.common.Tags;
 
 public class EmpoweringRecipeGenerator extends RecipeProvider {
     public EmpoweringRecipeGenerator(PackOutput packOutput) {
@@ -37,13 +30,14 @@ public class EmpoweringRecipeGenerator extends RecipeProvider {
         return "Empowering " + super.getName();
     }
 
-    @Override
-    protected @Nullable CompletableFuture<?> saveAdvancement(CachedOutput output, FinishedRecipe finishedRecipe, JsonObject advancementJson) {
-        return null; //Nope...
-    }
+//    @Override //TODO: Flanks do your RecipeOutput wrapper thingy ;)
+//    protected @Nullable CompletableFuture<?> saveAdvancement(CachedOutput stack, FinishedRecipe finishedRecipe, JsonObject advancementJson) {
+//        return null;
+//        //Nope... maybe later...
+//    }
 
     @Override
-    protected void buildRecipes(Consumer<FinishedRecipe> consumer) {
+    protected void buildRecipes(RecipeOutput consumer) {
         EmpoweringBuilder.builder(ActuallyItems.EMPOWERED_RESTONIA_CRYSTAL.get(), ActuallyItems.RESTONIA_CRYSTAL.get(), 5000, 50, Crystals.REDSTONE.conversionColorParticles)
                 .addModifier(Tags.Items.DYES_RED)
                 .addModifier(Items.NETHER_BRICK)
@@ -124,7 +118,7 @@ public class EmpoweringRecipeGenerator extends RecipeProvider {
         private final int energy;
         private final int time;
         private final int color;
-        private final List<Ingredient> modifiers = new ArrayList<>();
+        private final NonNullList<Ingredient> modifiers = NonNullList.create();
 
         public EmpoweringBuilder(ItemLike resultIn, Ingredient baseIn, int energyIn, int timeIn, int colorIn) {
             result = resultIn.asItem();
@@ -140,14 +134,14 @@ public class EmpoweringRecipeGenerator extends RecipeProvider {
 
         public EmpoweringBuilder addModifier(ItemLike input) {
             if (modifiers.size() >= 4)
-                throw new IllegalStateException("too many modifiers for empowering recipe, input: " + ForgeRegistries.ITEMS.getKey(input.asItem()));
+                throw new IllegalStateException("too many modifiers for empowering recipe, input: " + BuiltInRegistries.ITEM.getKey(input.asItem()));
             modifiers.add(Ingredient.of(input));
             return this;
         }
 
         public EmpoweringBuilder addModifier(ItemStack input) {
             if (modifiers.size() >= 4)
-                throw new IllegalStateException("too many modifiers for empowering recipe, input: " + ForgeRegistries.ITEMS.getKey(input.getItem()));
+                throw new IllegalStateException("too many modifiers for empowering recipe, input: " + BuiltInRegistries.ITEM.getKey(input.getItem()));
             modifiers.add(Ingredient.of(input));
             return this;
         }
@@ -159,17 +153,21 @@ public class EmpoweringRecipeGenerator extends RecipeProvider {
             return this;
         }
 
-        public void save(Consumer<FinishedRecipe> consumer, ResourceLocation name) {
+        public void save(RecipeOutput consumer, ResourceLocation name) {
             if (modifiers.size() != 4)
                 throw new IllegalStateException("invalid modifier count: " + modifiers.size() + ", recipe: " + name.toString());
-            consumer.accept(new EmpowererRecipe.Result(name, result, base, modifiers.get(0), modifiers.get(1), modifiers.get(2), modifiers.get(3), energy, color, time));
+
+            EmpowererRecipe recipe = new EmpowererRecipe(result.getDefaultInstance(), base, modifiers, energy, color, time);
+            consumer.accept(name, recipe, null);
         }
 
-        public void save(Consumer<FinishedRecipe> consumer, String name) {
+        public void save(RecipeOutput consumer, String name) {
             ResourceLocation res = new ResourceLocation(ActuallyAdditions.MODID, "empowering/" + name);
             if (modifiers.size() != 4)
                 throw new IllegalStateException("invalid modifier count: " + modifiers.size() + ", recipe: " + res);
-            consumer.accept(new EmpowererRecipe.Result(res, result, base, modifiers.get(0), modifiers.get(1), modifiers.get(2), modifiers.get(3), energy, color, time));
+
+            EmpowererRecipe recipe = new EmpowererRecipe(result.getDefaultInstance(), base, modifiers, energy, color, time);
+            consumer.accept(res, recipe, null);
         }
     }
 }

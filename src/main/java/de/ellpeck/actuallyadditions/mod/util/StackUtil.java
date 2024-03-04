@@ -14,7 +14,7 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.util.compat.SlotlessableItemHandlerWrapper;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.items.IItemHandler;
+import net.neoforged.neoforge.items.IItemHandler;
 
 import java.util.Collection;
 import java.util.List;
@@ -214,14 +214,17 @@ public final class StackUtil {
             //            }
         }
 
-        return wrapper.getNormalHandler().map(e -> {
+        IItemHandler normalHandler = wrapper.getNormalHandler();
+        if (normalHandler != null) {
             ItemStack remain = stack.copy();
-            for (int i = Math.max(0, slotStart); i < Math.min(slotEnd, e.getSlots()); i++) {
-                remain = e.insertItem(i, remain, simulate);
+            for (int i = Math.max(0, slotStart); i < Math.min(slotEnd, normalHandler.getSlots()); i++) {
+                remain = normalHandler.insertItem(i, remain, simulate);
             }
 
             return remain;
-        }).orElse(stack);
+        } else {
+            return stack;
+        }
     }
 
     /**

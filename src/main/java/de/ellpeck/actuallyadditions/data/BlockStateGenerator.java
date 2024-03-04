@@ -4,6 +4,7 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.blocks.BlockTinyTorch;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
@@ -12,11 +13,10 @@ import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.WallBlock;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraftforge.client.model.generators.BlockStateProvider;
-import net.minecraftforge.client.model.generators.ConfiguredModel;
-import net.minecraftforge.client.model.generators.ModelFile;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
+import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
+import net.neoforged.neoforge.client.model.generators.ModelFile;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 import java.util.function.Supplier;
 
@@ -210,7 +210,7 @@ public class BlockStateGenerator extends BlockStateProvider {
     }
 
     private void standardBlock(Supplier<Block> block) {
-        ResourceLocation name = ForgeRegistries.BLOCKS.getKey(block.get());
+        ResourceLocation name = BuiltInRegistries.BLOCK.getKey(block.get());
         ModelFile model = new ModelFile.UncheckedModelFile(modLoc("block/" + name.getPath()));
 
         assert name != null;
@@ -218,7 +218,7 @@ public class BlockStateGenerator extends BlockStateProvider {
     }
 
     private void standardBlockWithCube(Supplier<Block> block) {
-        ResourceLocation name =  ForgeRegistries.BLOCKS.getKey(block.get());
+        ResourceLocation name = BuiltInRegistries.BLOCK.getKey(block.get());
         assert name != null;
 
         ModelFile model = models().cubeAll(name.toString(), modLoc("block/" + name.getPath()));
@@ -226,7 +226,7 @@ public class BlockStateGenerator extends BlockStateProvider {
     }
 
     private void buildLitState(Supplier<Block> block) {
-        ResourceLocation name =  ForgeRegistries.BLOCKS.getKey(block.get());
+        ResourceLocation name = BuiltInRegistries.BLOCK.getKey(block.get());
         assert name != null;
 
         getVariantBuilder(block.get())
@@ -237,7 +237,7 @@ public class BlockStateGenerator extends BlockStateProvider {
     }
 
     private void fullyDirectionalBlock(Supplier<Block> block) {
-        ResourceLocation name =  ForgeRegistries.BLOCKS.getKey(block.get());
+        ResourceLocation name = BuiltInRegistries.BLOCK.getKey(block.get());
         ModelFile model = new ModelFile.UncheckedModelFile(modLoc("block/" + name.getPath()));
         ModelFile verModel = new ModelFile.UncheckedModelFile(modLoc("block/" + name.getPath() + "_ver"));
 
@@ -246,7 +246,7 @@ public class BlockStateGenerator extends BlockStateProvider {
     }
 
     private void horizontallyDirectionalBlock(Supplier<Block> block) {
-        ResourceLocation name =  ForgeRegistries.BLOCKS.getKey(block.get());
+        ResourceLocation name = BuiltInRegistries.BLOCK.getKey(block.get());
         ModelFile model = new ModelFile.UncheckedModelFile(modLoc("block/" + name.getPath()));
 
         assert name != null;
@@ -255,7 +255,7 @@ public class BlockStateGenerator extends BlockStateProvider {
 
     private void tinyTorchBlock(Supplier<Block> block) {
         assert block.get() instanceof BlockTinyTorch;
-        ResourceLocation name =  ForgeRegistries.BLOCKS.getKey(block.get());
+        ResourceLocation name = BuiltInRegistries.BLOCK.getKey(block.get());
         ModelFile model = new ModelFile.UncheckedModelFile(modLoc("block/" + name.getPath()));
         ModelFile wallModel = new ModelFile.UncheckedModelFile(modLoc("block/" + name.getPath() + "_wall"));
 

@@ -29,13 +29,13 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
@@ -50,7 +50,6 @@ public class TileEntityCrusher extends TileEntityInventoryBase implements IButto
     public static final int SLOT_OUTPUT_2_2 = 5;
     public static final int ENERGY_USE = 40;
     public final CustomEnergyStorage storage = new CustomEnergyStorage(60000, 100, 0);
-    public final LazyOptional<IEnergyStorage> lazyEnergy = LazyOptional.of(() -> this.storage);
     public int firstCrushTime;
     public int secondCrushTime;
     public boolean isDouble;
@@ -193,17 +192,17 @@ public class TileEntityCrusher extends TileEntityInventoryBase implements IButto
         return (slot, automation) -> !automation || slot == SLOT_OUTPUT_1_1 || slot == SLOT_OUTPUT_1_2 || slot == SLOT_OUTPUT_2_1 || slot == SLOT_OUTPUT_2_2;
     }
 
-    public static Optional<CrushingRecipe> getRecipeForInput(ItemStack itemStack) {
-        return ActuallyAdditionsAPI.CRUSHER_RECIPES.stream().filter($ -> $.matches(itemStack)).findFirst();
+    public static Optional<RecipeHolder<CrushingRecipe>> getRecipeForInput(ItemStack itemStack) {
+        return ActuallyAdditionsAPI.CRUSHER_RECIPES.stream().filter($ -> $.value().matches(itemStack)).findFirst();
     }
     public boolean canCrushOn(int theInput, int theFirstOutput, int theSecondOutput) {
         ItemStack inputStack = this.inv.getStackInSlot(theInput);
         if (!inputStack.isEmpty()) {
-            Optional<CrushingRecipe> recipeOpt = getRecipeForInput(inputStack);
+            Optional<RecipeHolder<CrushingRecipe>> recipeOpt = getRecipeForInput(inputStack);
             if (!recipeOpt.isPresent()) {
                 return false;
             }
-            CrushingRecipe recipe = recipeOpt.get();
+            CrushingRecipe recipe = recipeOpt.get().value();
             ItemStack outputOne = recipe.getOutputOne();
             ItemStack outputTwo = recipe.getOutputTwo();
             if (!outputOne.isEmpty()) {
@@ -220,11 +219,11 @@ public class TileEntityCrusher extends TileEntityInventoryBase implements IButto
     }
 
     public void finishCrushing(int theInput, int theFirstOutput, int theSecondOutput) {
-        Optional<CrushingRecipe> recipeOpt = getRecipeForInput(this.inv.getStackInSlot(theInput));
+        Optional<RecipeHolder<CrushingRecipe>> recipeOpt = getRecipeForInput(this.inv.getStackInSlot(theInput));
         if (!recipeOpt.isPresent()) {
             return;
         }
-        CrushingRecipe recipe = recipeOpt.get();
+        CrushingRecipe recipe = recipeOpt.get().value();
 
         ItemStack outputOne = recipe.getOutputOne();
         if (!outputOne.isEmpty()) {
@@ -271,8 +270,8 @@ public class TileEntityCrusher extends TileEntityInventoryBase implements IButto
     }
 
     @Override
-    public LazyOptional<IEnergyStorage> getEnergyStorage(Direction facing) {
-        return this.lazyEnergy;
+    public IEnergyStorage getEnergyStorage(Direction facing) {
+        return this.storage;
     }
 
     @Override

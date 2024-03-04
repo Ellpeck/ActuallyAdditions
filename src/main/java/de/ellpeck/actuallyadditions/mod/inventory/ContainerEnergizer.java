@@ -23,7 +23,7 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.neoforged.neoforge.capabilities.Capabilities;
 
 import java.util.Objects;
 
@@ -43,7 +43,7 @@ public class ContainerEnergizer extends AbstractContainerMenu {
         this.addSlot(new SlotItemHandlerUnconditioned(this.energizer.inv, 0, 76, 73) {
             @Override
             public boolean mayPlace(ItemStack stack) {
-                return super.mayPlace(stack) && stack.getCapability(ForgeCapabilities.ENERGY, null).isPresent();
+                return super.mayPlace(stack) && stack.getCapability(Capabilities.EnergyStorage.ITEM, null) != null;
             }
         });
         this.addSlot(new SlotOutput(this.energizer.inv, 1, 76, 42));
@@ -110,7 +110,7 @@ public class ContainerEnergizer extends AbstractContainerMenu {
             //Other Slots in Inventory excluded
             else if (slot >= inventoryStart) {
                 //Shift from Inventory
-                if (newStack.getCapability(ForgeCapabilities.ENERGY, null).isPresent()) {
+                if (newStack.getCapability(Capabilities.EnergyStorage.ITEM, null) != null) {
                     if (!this.moveItemStackTo(newStack, 0, 1, false)) {
                         return ItemStack.EMPTY;
                     }

@@ -29,7 +29,7 @@ import net.minecraft.world.level.block.BushBlock;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.IForgeShearable;
+import net.neoforged.neoforge.common.IShearable;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -104,7 +104,7 @@ public class ItemLeafBlower extends ItemBase implements IDisplayStandItem {
                     BlockPos pos = new BlockPos(x + reachX, y + reachY, z + reachZ);
                     Block block = world.getBlockState(pos).getBlock();
 
-                    if ((block instanceof BushBlock || block instanceof IForgeShearable) && (this.isAdvanced || !(block instanceof LeavesBlock))) {
+                    if ((block instanceof BushBlock || block instanceof IShearable) && (this.isAdvanced || !(block instanceof LeavesBlock))) {
                         breakPositions.add(pos);
                     }
                 }

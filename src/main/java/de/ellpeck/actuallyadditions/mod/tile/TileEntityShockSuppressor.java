@@ -17,8 +17,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.common.util.LazyOptional;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -99,7 +99,7 @@ public class TileEntityShockSuppressor extends TileEntityBase implements IEnergy
     }
 
     @Override
-    public LazyOptional<IEnergyStorage> getEnergyStorage(Direction facing) {
+    public IEnergyStorage getEnergyStorage(Direction facing) {
         return this.lazyEnergy;
     }
 }

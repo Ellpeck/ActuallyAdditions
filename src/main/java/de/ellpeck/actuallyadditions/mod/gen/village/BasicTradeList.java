@@ -24,18 +24,18 @@
 //
 //    private final ItemStack input;
 //    private final PriceInfo inputAmount;
-//    private final ItemStack output;
+//    private final ItemStack stack;
 //    private final PriceInfo outputAmount;
 //
-//    public BasicTradeList(ItemStack input, PriceInfo inputAmount, ItemStack output, PriceInfo outputAmount) {
+//    public BasicTradeList(ItemStack input, PriceInfo inputAmount, ItemStack stack, PriceInfo outputAmount) {
 //        this.input = input;
 //        this.inputAmount = inputAmount;
-//        this.output = output;
+//        this.stack = stack;
 //        this.outputAmount = outputAmount;
 //    }
 //
-//    public BasicTradeList(PriceInfo emeraldInput, ItemStack output, PriceInfo outputAmount) {
-//        this(new ItemStack(Items.EMERALD), emeraldInput, output, outputAmount);
+//    public BasicTradeList(PriceInfo emeraldInput, ItemStack stack, PriceInfo outputAmount) {
+//        this(new ItemStack(Items.EMERALD), emeraldInput, stack, outputAmount);
 //    }
 //
 //    public BasicTradeList(ItemStack input, PriceInfo inputAmount, PriceInfo emeraldOutput) {
@@ -46,7 +46,7 @@
 //    public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, Random random) {
 //        ItemStack in = this.input.copy();
 //        in.setCount(this.inputAmount.getPrice(random));
-//        ItemStack out = this.output.copy();
+//        ItemStack out = this.stack.copy();
 //        out.setCount(this.outputAmount.getPrice(random));
 //        recipeList.add(new MerchantRecipe(in, out));
 //    }

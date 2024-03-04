@@ -11,8 +11,8 @@
 package de.ellpeck.actuallyadditions.mod.misc;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.BlockSource;
 import net.minecraft.core.Direction;
+import net.minecraft.core.dispenser.BlockSource;
 import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.world.item.BoneMealItem;
 import net.minecraft.world.item.ItemStack;
@@ -23,11 +23,11 @@ public class DispenserHandlerFertilize extends DefaultDispenseItemBehavior {
 
     @Override
     public ItemStack execute(BlockSource source, ItemStack stack) {
-        Direction facing = source.getBlockState().getValue(BlockStateProperties.FACING);
-        BlockPos pos = source.getPos().relative(facing);
+        Direction facing = source.state().getValue(BlockStateProperties.FACING);
+        BlockPos pos = source.pos().relative(facing);
 
-        if (BoneMealItem.growCrop(stack, source.getLevel(), pos)) {
-            source.getLevel().levelEvent(2005, pos, 0);
+        if (BoneMealItem.growCrop(stack, source.level(), pos)) {
+            source.level().levelEvent(2005, pos, 0);
         }
 
         return stack;

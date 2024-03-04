@@ -2,9 +2,8 @@ package de.ellpeck.actuallyadditions.mod.sack;
 
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraftforge.common.util.INBTSerializable;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
+import net.neoforged.neoforge.common.util.INBTSerializable;
+import net.neoforged.neoforge.items.IItemHandler;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -15,11 +14,11 @@ public class SackData {
     private final UUID uuid;
 
     private final ItemStackHandlerAA inventory;
-    private final LazyOptional<IItemHandler> optional;
+    private final Optional<IItemHandler> optional;
 
     public final Metadata meta = new Metadata();
 
-    public LazyOptional<IItemHandler> getOptional() {
+    public Optional<IItemHandler> getOptional() {
         return optional;
     }
 
@@ -51,7 +50,7 @@ public class SackData {
                 SackManager.get().setDirty();
             }
         };
-        optional = LazyOptional.of(() -> inventory);
+        optional = Optional.ofNullable(inventory);
     }
 
     public SackData(UUID uuid, CompoundTag incoming) {
@@ -68,7 +67,7 @@ public class SackData {
 
         inventory.deserializeNBT(incoming.getCompound("Inventory"));
 
-        optional = LazyOptional.of(() -> inventory);
+        optional = Optional.ofNullable(inventory);
 
         if (incoming.contains("Metadata"))
             meta.deserializeNBT(incoming.getCompound("Metadata"));

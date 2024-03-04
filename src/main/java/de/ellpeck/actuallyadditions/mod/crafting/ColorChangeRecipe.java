@@ -1,21 +1,18 @@
 package de.ellpeck.actuallyadditions.mod.crafting;
 
-import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.GsonHelper;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -26,12 +23,10 @@ public class ColorChangeRecipe implements Recipe<Container> {
 
     private final Ingredient input;
     private final ItemStack output;
-    private final ResourceLocation id;
 
-    public ColorChangeRecipe(ResourceLocation id, ItemStack output, Ingredient input) {
+    public ColorChangeRecipe(ItemStack output, Ingredient input) {
         this.input = input;
         this.output = output;
-        this.id = id;
     }
 
     @Override
@@ -59,20 +54,14 @@ public class ColorChangeRecipe implements Recipe<Container> {
         return false;
     }
 
-    public static Optional<ColorChangeRecipe> getRecipeForStack(ItemStack stack) {
-        return ActuallyAdditionsAPI.COLOR_CHANGE_RECIPES.stream().filter(recipe -> recipe.matches(stack)).findFirst();
+    public static Optional<RecipeHolder<ColorChangeRecipe>> getRecipeForStack(ItemStack stack) {
+        return ActuallyAdditionsAPI.COLOR_CHANGE_RECIPES.stream().filter(recipe -> recipe.value().matches(stack)).findFirst();
     }
 
     @Nonnull
     @Override
     public ItemStack getResultItem(RegistryAccess pRegistryAccess) {
         return output.copy();
-    }
-
-    @Nonnull
-    @Override
-    public ResourceLocation getId() {
-        return id;
     }
 
     @Nonnull
@@ -87,71 +76,40 @@ public class ColorChangeRecipe implements Recipe<Container> {
     }
 
     public static class Serializer implements RecipeSerializer<ColorChangeRecipe> {
-        @Override
-        public ColorChangeRecipe fromJson(@Nonnull ResourceLocation pRecipeId, @Nonnull JsonObject pJson) {
-            Ingredient ingredient = Ingredient.fromJson(GsonHelper.getAsJsonObject(pJson, "ingredient"));
-            JsonObject resultObject = GsonHelper.getAsJsonObject(pJson, "result");
-            ItemStack result = new ItemStack(GsonHelper.getAsItem(resultObject, "item"));
+        private static final Codec<ColorChangeRecipe> CODEC = RecordCodecBuilder.create(
+                instance -> instance.group(
+                                ItemStack.RESULT_CODEC.fieldOf("result").forGetter(recipe -> recipe.output),
+                                Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(recipe -> recipe.input)
+                        )
+                        .apply(instance, ColorChangeRecipe::new)
+        );
 
-            return new ColorChangeRecipe(pRecipeId, result, ingredient);
+//        @Override
+//        public ColorChangeRecipe fromJson(@Nonnull ResourceLocation pRecipeId, @Nonnull JsonObject pJson) {
+//            Ingredient ingredient = Ingredient.fromJson(GsonHelper.getAsJsonObject(pJson, "ingredient"));
+//            JsonObject resultObject = GsonHelper.getAsJsonObject(pJson, "result");
+//            ItemStack result = new ItemStack(GsonHelper.getAsItem(resultObject, "item"));
+//
+//            return new ColorChangeRecipe(pRecipeId, result, ingredient);
+//        }
+
+        @Override
+        public Codec<ColorChangeRecipe> codec() {
+            return CODEC;
         }
 
         @Nullable
         @Override
-        public ColorChangeRecipe fromNetwork(@Nonnull ResourceLocation pRecipeId, @Nonnull FriendlyByteBuf pBuffer) {
+        public ColorChangeRecipe fromNetwork(@Nonnull FriendlyByteBuf pBuffer) {
             Ingredient ingredient = Ingredient.fromNetwork(pBuffer);
             ItemStack result = pBuffer.readItem();
-            return new ColorChangeRecipe(pRecipeId, result, ingredient);
+            return new ColorChangeRecipe(result, ingredient);
         }
 
         @Override
         public void toNetwork(@Nonnull FriendlyByteBuf pBuffer, ColorChangeRecipe pRecipe) {
             pRecipe.input.toNetwork(pBuffer);
             pBuffer.writeItem(pRecipe.output);
-        }
-    }
-
-    public static class Result implements FinishedRecipe {
-        private final ResourceLocation id;
-        private final Ingredient itemIngredient;
-        private final ItemLike output;
-
-        public Result(ResourceLocation id, Ingredient itemIngredient, ItemLike output) {
-            this.id = id;
-            this.itemIngredient = itemIngredient;
-            this.output = output;
-        }
-
-        @Override
-        public void serializeRecipeData(JsonObject pJson) {
-            pJson.add("ingredient", itemIngredient.toJson());
-
-            JsonObject resultObject = new JsonObject();
-            resultObject.addProperty("item", ForgeRegistries.ITEMS.getKey(output.asItem()).toString());
-
-            pJson.add("result", resultObject);
-        }
-
-        @Override
-        public ResourceLocation getId() {
-            return id;
-        }
-
-        @Override
-        public RecipeSerializer<?> getType() {
-            return ActuallyRecipes.COLOR_CHANGE_RECIPE.get();
-        }
-
-        @Nullable
-        @Override
-        public JsonObject serializeAdvancement() {
-            return null;
-        }
-
-        @Nullable
-        @Override
-        public ResourceLocation getAdvancementId() {
-            return null;
         }
     }
 }

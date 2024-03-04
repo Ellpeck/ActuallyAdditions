@@ -11,10 +11,10 @@
 package de.ellpeck.actuallyadditions.mod.network;
 
 import net.minecraft.nbt.CompoundTag;
-import net.minecraftforge.network.NetworkEvent;
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 
 public interface IDataHandler {
 
-    void handleData(CompoundTag compound, NetworkEvent.Context context);
+    void handleData(CompoundTag compound, PlayPayloadContext context);
 
 }

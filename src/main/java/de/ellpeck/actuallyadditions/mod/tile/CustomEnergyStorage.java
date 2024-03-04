@@ -11,7 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import net.minecraft.nbt.CompoundTag;
-import net.minecraftforge.energy.EnergyStorage;
+import net.neoforged.neoforge.energy.EnergyStorage;
 
 public class CustomEnergyStorage extends EnergyStorage {
     boolean dirty = false;

@@ -20,12 +20,12 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.DistExecutor;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.TickEvent;
 
 import java.util.List;
 import java.util.Set;
@@ -40,7 +40,9 @@ public class ItemEngineerGoggles extends ItemArmorAA implements IGoggles {
         super(ArmorMaterials.GOGGLES, Type.HELMET, ActuallyItems.defaultProps().setNoRepair().durability(0));
         this.displayMobs = displayMobs;
 
-        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> MinecraftForge.EVENT_BUS.register(this));
+        if (FMLEnvironment.dist.isClient()) {
+            NeoForge.EVENT_BUS.register(this);
+        }
 
     }
 

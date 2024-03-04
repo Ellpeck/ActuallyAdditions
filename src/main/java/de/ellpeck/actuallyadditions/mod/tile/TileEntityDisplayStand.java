@@ -23,13 +23,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 
 public class TileEntityDisplayStand extends TileEntityInventoryBase implements IEnergyDisplay {
 
     public final CustomEnergyStorage storage = new CustomEnergyStorage(80000, 1000, 0);
-    public final LazyOptional<IEnergyStorage> lazyEnergy = LazyOptional.of(() -> this.storage);
     private int oldEnergy;
 
     public TileEntityDisplayStand(BlockPos pos, BlockState state) {
@@ -109,8 +107,8 @@ public class TileEntityDisplayStand extends TileEntityInventoryBase implements I
     }
 
     @Override
-    public LazyOptional<IEnergyStorage> getEnergyStorage(Direction facing) {
-        return this.lazyEnergy;
+    public IEnergyStorage getEnergyStorage(Direction facing) {
+        return this.storage;
     }
 
     public ItemStack getStack() {

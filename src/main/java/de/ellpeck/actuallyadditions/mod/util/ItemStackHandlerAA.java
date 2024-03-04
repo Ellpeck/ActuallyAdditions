@@ -12,7 +12,7 @@ package de.ellpeck.actuallyadditions.mod.util;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 
 /**
  * The Actually Additions variant of ItemStackHandler.  Provides methods to disallow add/removal based on automation context.  Defaults to thinking operations are performed by automation.

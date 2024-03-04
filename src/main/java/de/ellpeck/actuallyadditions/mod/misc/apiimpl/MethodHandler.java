@@ -15,18 +15,21 @@ import de.ellpeck.actuallyadditions.api.internal.IMethodHandler;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
 import de.ellpeck.actuallyadditions.mod.blocks.BlockLaserRelay;
+import de.ellpeck.actuallyadditions.mod.crafting.ColorChangeRecipe;
 import de.ellpeck.actuallyadditions.mod.crafting.LaserRecipe;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -116,7 +119,7 @@ public class MethodHandler implements IMethodHandler {
         int counter = tag.getInt("Counter");
         while (counter > 0) {
             CompoundTag compound = (CompoundTag) tag.get(counter + "");
-            MobEffectInstance effect = new MobEffectInstance(MobEffect.byId(compound.getInt("ID")), compound.getInt("Duration"), compound.getByte("Amplifier"));
+            MobEffectInstance effect = new MobEffectInstance(BuiltInRegistries.MOB_EFFECT.byId(compound.getInt("ID")), compound.getInt("Duration"), compound.getByte("Amplifier"));
             effects.add(effect);
             counter--;
         }
@@ -157,14 +160,15 @@ public class MethodHandler implements IMethodHandler {
                             if (state.getBlock() instanceof BlockLaserRelay) {
                                 continue;
                             }
-                            Optional<LaserRecipe> recipe = LaserRecipe.getRecipeForStack(new ItemStack(state.getBlock()));
-                            if (recipe.isPresent() && tile.getEnergy() >= recipe.get().getEnergy()) {
-                                ItemStack output = recipe.get().getResultItem(tile.getWorldObject().registryAccess()).copy();
+                            Optional<RecipeHolder<LaserRecipe>> holder = LaserRecipe.getRecipeForStack(new ItemStack(state.getBlock()));
+                            if (holder.isPresent() && tile.getEnergy() >= holder.get().value().getEnergy()) {
+                                LaserRecipe recipe = holder.get().value();
+                                ItemStack output = recipe.getResultItem(tile.getWorldObject().registryAccess()).copy();
                                 if (!output.isEmpty()) {
                                     tile.getWorldObject().levelEvent(2001, pos, Block.getId(state));
                                     if (output.getItem() instanceof BlockItem) {
                                         Block toPlace = Block.byItem(output.getItem());
-                                        BlockState state2Place = toPlace.defaultBlockState(); //.getStateForPlacement(tile.getWorldObject(), pos, facing, 0, 0, 0, output.getMetadata(), FakePlayerFactory.getMinecraft((WorldServer) tile.getWorldObject()), Hand.MAIN_HAND); //TODO
+                                        BlockState state2Place = toPlace.defaultBlockState(); //.getStateForPlacement(tile.getWorldObject(), pos, facing, 0, 0, 0, stack.getMetadata(), FakePlayerFactory.getMinecraft((WorldServer) tile.getWorldObject()), Hand.MAIN_HAND); //TODO
                                         tile.getWorldObject().setBlock(pos, state2Place, 2);
                                     } else {
                                         ItemEntity item = new ItemEntity(tile.getWorldObject(), pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, output.copy());
@@ -172,7 +176,7 @@ public class MethodHandler implements IMethodHandler {
                                         tile.getWorldObject().setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
                                     }
 
-                                    tile.extractEnergy(recipe.get().getEnergy());
+                                    tile.extractEnergy(recipe.getEnergy());
                                     break;
                                 }
                             }
@@ -189,9 +193,10 @@ public class MethodHandler implements IMethodHandler {
             for (ItemEntity item : items) {
                 ItemStack stack = item.getItem();
                 if (item.isAlive() && StackUtil.isValid(stack) && !item.getPersistentData().getBoolean("aa_cnv")) {
-                    Optional<LaserRecipe> recipe = LaserRecipe.getRecipeForStack(stack);
-                    if (recipe.isPresent()) {
-                        int itemsPossible = Math.min(tile.getEnergy() / recipe.get().getEnergy(), stack.getCount());
+                    Optional<RecipeHolder<LaserRecipe>> holder = LaserRecipe.getRecipeForStack(stack);
+                    if (holder.isPresent()) {
+                        LaserRecipe recipe = holder.get().value();
+                        int itemsPossible = Math.min(tile.getEnergy() / recipe.getEnergy(), stack.getCount());
 
                         if (itemsPossible > 0) {
                             //recipe.transformHook(item.getItem(), null, item.blockPosition(), tile); //TODO empty method
@@ -205,14 +210,14 @@ public class MethodHandler implements IMethodHandler {
                                 tile.getWorldObject().addFreshEntity(inputLeft);
                             }
 
-                            ItemStack outputCopy = recipe.get().getResultItem(tile.getWorldObject().registryAccess()).copy();
+                            ItemStack outputCopy = recipe.getResultItem(tile.getWorldObject().registryAccess()).copy();
                             outputCopy.setCount(itemsPossible);
 
                             ItemEntity newItem = new ItemEntity(tile.getWorldObject(), item.getX(), item.getY(), item.getZ(), outputCopy);
                             newItem.getPersistentData().putBoolean("aa_cnv", true);
                             tile.getWorldObject().addFreshEntity(newItem);
 
-                            tile.extractEnergy(recipe.get().getEnergy() * itemsPossible);
+                            tile.extractEnergy(recipe.getEnergy() * itemsPossible);
                             break;
                         }
                     }

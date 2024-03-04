@@ -13,7 +13,6 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityCanolaPress;
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -26,8 +25,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.fluids.FluidUtil;
-import net.minecraftforge.network.NetworkHooks;
+import net.neoforged.neoforge.fluids.FluidUtil;
 
 import javax.annotation.Nullable;
 
@@ -63,7 +61,7 @@ public class BlockCanolaPress extends BlockContainerBase {
             return InteractionResult.SUCCESS;
         if (!player.isShiftKeyDown()) {
             if (!FluidUtil.interactWithFluidHandler(player, hand, tile.tank))
-                NetworkHooks.openScreen((ServerPlayer) player, tile, pos);
+                player.openMenu(tile, pos);
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.PASS;

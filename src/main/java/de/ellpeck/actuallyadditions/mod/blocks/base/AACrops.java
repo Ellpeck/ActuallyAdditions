@@ -8,8 +8,8 @@ import java.util.function.Supplier;
 
 public class AACrops extends CropBlock {
     Supplier<Item> itemSupplier;
-    public AACrops(Properties p_i48421_1_, Supplier<Item> seedSupplier) {
-        super(p_i48421_1_);
+    public AACrops(Properties properties, Supplier<Item> seedSupplier) {
+        super(properties);
         this.itemSupplier = seedSupplier;
     }
 

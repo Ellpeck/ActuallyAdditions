@@ -26,16 +26,15 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 
 import javax.annotation.Nullable;
+import java.util.Optional;
 
 public class TileEntityEnervator extends TileEntityInventoryBase implements ISharingEnergyProvider, MenuProvider {
 
     public final CustomEnergyStorage storage = new CustomEnergyStorage(50000, 0, 1000);
-    public final LazyOptional<IEnergyStorage> lazyEnergy = LazyOptional.of(() -> this.storage);
     private int lastEnergy;
 
     public TileEntityEnervator(BlockPos pos, BlockState state) {
@@ -66,7 +65,7 @@ public class TileEntityEnervator extends TileEntityInventoryBase implements ISha
 
             if (StackUtil.isValid(tile.inv.getStackInSlot(0)) && !StackUtil.isValid(tile.inv.getStackInSlot(1))) {
                 if (tile.storage.getEnergyStored() < tile.storage.getMaxEnergyStored()) {
-                    LazyOptional<IEnergyStorage> capability = tile.inv.getStackInSlot(0).getCapability(ForgeCapabilities.ENERGY, null);
+                    Optional<IEnergyStorage> capability = Optional.ofNullable(tile.inv.getStackInSlot(0).getCapability(Capabilities.EnergyStorage.ITEM, null));
 
                     int maxExtract = tile.storage.getMaxEnergyStored() - tile.storage.getEnergyStored();
                     int extracted = capability.map(cap -> cap.extractEnergy(maxExtract, false)).orElse(0);
@@ -91,7 +90,7 @@ public class TileEntityEnervator extends TileEntityInventoryBase implements ISha
 
     @Override
     public IAcceptor getAcceptor() {
-        return (slot, stack, automation) -> !automation || slot == 0 && stack.getCapability(ForgeCapabilities.ENERGY, null).isPresent();
+        return (slot, stack, automation) -> !automation || slot == 0 && stack.getCapability(Capabilities.EnergyStorage.ITEM, null) != null;
     }
 
     @Override
@@ -124,8 +123,8 @@ public class TileEntityEnervator extends TileEntityInventoryBase implements ISha
     }
 
     @Override
-    public LazyOptional<IEnergyStorage> getEnergyStorage(Direction facing) {
-        return this.lazyEnergy;
+    public IEnergyStorage getEnergyStorage(Direction facing) {
+        return this.storage;
     }
 
     @Override

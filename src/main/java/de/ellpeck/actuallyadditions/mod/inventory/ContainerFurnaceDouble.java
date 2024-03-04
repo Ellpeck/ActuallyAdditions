@@ -22,7 +22,9 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.SmeltingRecipe;
 
 import javax.annotation.Nonnull;
 import java.util.Objects;
@@ -78,12 +80,12 @@ public class ContainerFurnaceDouble extends AbstractContainerMenu {
             //Other Slots in Inventory excluded
             else if (slot >= inventoryStart) {
                 // TODO: VALIDATE
-                Recipe<?> irecipe = this.furnace.getLevel().getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SingleItem(newStack), this.furnace.getLevel()).orElse(null);
-                if (irecipe == null) {
+                RecipeHolder<SmeltingRecipe> recipeHolder = this.furnace.getLevel().getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SingleItem(newStack), this.furnace.getLevel()).orElse(null);
+                if (recipeHolder == null) {
                     return ItemStack.EMPTY;
                 }
 
-                ItemStack recipeOutput = irecipe.getResultItem(player.level().registryAccess());
+                ItemStack recipeOutput = recipeHolder.value().getResultItem(player.level().registryAccess());
 
                 //Shift from Inventory
                 if (StackUtil.isValid(recipeOutput)) {

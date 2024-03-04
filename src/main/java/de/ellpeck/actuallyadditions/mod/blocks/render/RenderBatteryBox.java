@@ -24,13 +24,15 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.resources.language.I18n;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.capabilities.Capabilities;
 import org.joml.Matrix4f;
+
+import java.util.Optional;
 
 @OnlyIn(Dist.CLIENT)
 public class RenderBatteryBox implements BlockEntityRenderer<TileEntityBatteryBox> {
@@ -52,7 +54,7 @@ public class RenderBatteryBox implements BlockEntityRenderer<TileEntityBatteryBo
         matrices.scale(0.0075F, 0.0075F, 0.0075F);
         matrices.translate(0F, 0F, -60F);
 
-        stack.getCapability(ForgeCapabilities.ENERGY).ifPresent(cap -> {
+        Optional.ofNullable(stack.getCapability(Capabilities.EnergyStorage.ITEM)).ifPresent(cap -> {
             Font font = Minecraft.getInstance().font;
 
             String energyTotal = Lang.cleanEnergyValues(cap, false);
@@ -91,7 +93,7 @@ public class RenderBatteryBox implements BlockEntityRenderer<TileEntityBatteryBo
         try {
             AssetUtil.renderItemInWorld(stack, combinedLight, combinedOverlay, matrices, buffer);
         } catch (Exception e) {
-            ActuallyAdditions.LOGGER.error("Something went wrong trying to render an item in a battery box! The item is " + ForgeRegistries.ITEMS.getKey(stack.getItem()) + "!", e);
+            ActuallyAdditions.LOGGER.error("Something went wrong trying to render an item in a battery box! The item is " + BuiltInRegistries.ITEM.getKey(stack.getItem()) + "!", e);
         }
 
         matrices.popPose();

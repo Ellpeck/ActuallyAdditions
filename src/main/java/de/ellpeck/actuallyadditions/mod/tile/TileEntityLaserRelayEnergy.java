@@ -28,11 +28,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.IEnergyStorage;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.common.capabilities.Capabilities;
+import net.neoforged.neoforge.common.util.LazyOptional;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -114,7 +114,7 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay {
 
     // TODO: [port] this is super hacky, review and fix up 
     @Override
-    public LazyOptional<IEnergyStorage> getEnergyStorage(Direction facing) {
+    public IEnergyStorage getEnergyStorage(Direction facing) {
         return LazyOptional.of(() -> this.energyStorages[facing == null
             ? 0
             : facing.ordinal()]);
@@ -136,7 +136,7 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay {
             if (this.level.hasChunkAt(pos)) {
                 BlockEntity tile = this.level.getBlockEntity(pos);
                 if (tile != null && !(tile instanceof TileEntityLaserRelay)) {
-                    if (tile.getCapability(ForgeCapabilities.ENERGY, side.getOpposite()).isPresent()) {
+                    if (tile.getCapability(Capabilities.ENERGY, side.getOpposite()).isPresent()) {
                         this.receiversAround.put(side, tile);
 
                         BlockEntity oldTile = old.get(side);
@@ -179,7 +179,7 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay {
 
                                     Direction opp = facing.getOpposite();
                                     if (tile != null) {
-                                        Boolean received = tile.getCapability(ForgeCapabilities.ENERGY, opp).map(cap -> cap.receiveEnergy(maxTransfer, true) > 0).orElse(false);
+                                        Boolean received = tile.getCapability(Capabilities.ENERGY, opp).map(cap -> cap.receiveEnergy(maxTransfer, true) > 0).orElse(false);
                                         if (received) {
                                             totalReceiverAmount++;
                                             workedOnce = true;
@@ -213,7 +213,7 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay {
                         if (!alreadyChecked.contains(tile.getBlockPos())) {
                             alreadyChecked.add(tile.getBlockPos());
                             if (theRelay != this || side != from) {
-                                transmitted += tile.getCapability(ForgeCapabilities.ENERGY, opp).map(cap -> {
+                                transmitted += tile.getCapability(Capabilities.ENERGY, opp).map(cap -> {
                                     int trans = 0;
                                     int theoreticalReceived = cap.receiveEnergy(Math.min(amountPer, lowestCap), true);
                                     if (theoreticalReceived > 0) {

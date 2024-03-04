@@ -20,12 +20,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class TileEntityBatteryBox extends TileEntityInventoryBase implements ISharingEnergyProvider {
 
@@ -37,12 +37,12 @@ public class TileEntityBatteryBox extends TileEntityInventoryBase implements ISh
     }
 
     @Override
-    public LazyOptional<IEnergyStorage> getEnergyStorage(Direction facing) {
+    public IEnergyStorage getEnergyStorage(Direction facing) {
         ItemStack stack = this.inv.getStackInSlot(0);
         if (stack.getItem() instanceof ItemBattery) {
-            return stack.getCapability(ForgeCapabilities.ENERGY, null);
+            return stack.getCapability(Capabilities.EnergyStorage.ITEM, null);
         }
-        return LazyOptional.empty();
+        return null;
     }
 
     public static <T extends BlockEntity> void clientTick(Level level, BlockPos pos, BlockState state, T t) {
@@ -55,7 +55,7 @@ public class TileEntityBatteryBox extends TileEntityInventoryBase implements ISh
         if (t instanceof TileEntityBatteryBox tile) {
             tile.serverTick();
 
-            LazyOptional<IEnergyStorage> cap = tile.getEnergyStorage(null);
+            Optional<IEnergyStorage> cap = Optional.ofNullable(tile.getEnergyStorage(null));
             int currStorage = cap.map(storage -> {
                 ItemStack stack = tile.inv.getStackInSlot(0);
                 if (!stack.isEmpty() && ItemUtil.isEnabled(stack)) {
@@ -75,7 +75,7 @@ public class TileEntityBatteryBox extends TileEntityInventoryBase implements ISh
                             for (TileEntityBatteryBox te : tiles) {
                                 ItemStack battery = te.inv.getStackInSlot(0);
                                 if (!battery.isEmpty() && !ItemUtil.isEnabled(battery)) {
-                                    int received = te.getCapability(ForgeCapabilities.ENERGY, null).map(e -> e.receiveEnergy(maxPer, false)).orElse(0);
+                                    int received = Optional.ofNullable(level.getCapability(Capabilities.EnergyStorage.BLOCK, te.getBlockPos(), null)).map(e -> e.receiveEnergy(maxPer, false)).orElse(0);
                                     storage.extractEnergy(received, false);
 
                                     if (storage.getEnergyStored() <= 0) {
@@ -109,7 +109,7 @@ public class TileEntityBatteryBox extends TileEntityInventoryBase implements ISh
 
     @Override
     public int getComparatorStrength() {
-        return this.getEnergyStorage(null)
+        return Optional.ofNullable(this.getEnergyStorage(null))
             .map(cap -> (int) ((float) cap.getEnergyStored() / (float) cap.getMaxEnergyStored() * 15F))
             .orElse(0);
     }
@@ -156,7 +156,7 @@ public class TileEntityBatteryBox extends TileEntityInventoryBase implements ISh
 
     @Override
     public int getEnergyToSplitShare() {
-        return this.getEnergyStorage(null)
+        return Optional.ofNullable(this.getEnergyStorage(null))
             .map(IEnergyStorage::getEnergyStored)
             .orElse(0);
     }

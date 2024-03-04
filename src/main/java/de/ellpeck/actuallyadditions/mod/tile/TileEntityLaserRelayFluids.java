@@ -26,12 +26,12 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.common.capabilities.Capabilities;
+import net.neoforged.neoforge.common.util.LazyOptional;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
@@ -133,7 +133,7 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay {
             if (this.level.hasChunkAt(pos)) {
                 BlockEntity tile = this.level.getBlockEntity(pos);
                 if (tile != null && !(tile instanceof TileEntityLaserRelay)) {
-                    if (tile.getCapability(ForgeCapabilities.FLUID_HANDLER, side.getOpposite()).isPresent()) {
+                    if (tile.getCapability(Capabilities.FLUID_HANDLER, side.getOpposite()).isPresent()) {
                         this.handlersAround.put(side, tile);
 
                         BlockEntity oldTile = old.get(side);
@@ -155,7 +155,7 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay {
 
     // TODO: [port] super hacky, find better way of handling this.
     @Override
-    public LazyOptional<IFluidHandler> getFluidHandler(Direction facing) {
+    public IFluidHandler getFluidHandler(Direction facing) {
         return LazyOptional.of(() -> this.fluidHandlers[facing == null
             ? 0
             : facing.ordinal()]);
@@ -194,7 +194,7 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay {
                                     BlockEntity tile = theRelay.handlersAround.get(facing);
                                     Direction opp = facing.getOpposite();
 
-                                    boolean received = tile.getCapability(ForgeCapabilities.FLUID_HANDLER, opp).map(cap -> cap.fill(stack, IFluidHandler.FluidAction.SIMULATE) > 0).orElse(false);
+                                    boolean received = tile.getCapability(Capabilities.FLUID_HANDLER, opp).map(cap -> cap.fill(stack, IFluidHandler.FluidAction.SIMULATE) > 0).orElse(false);
                                     if (received) {
                                         totalReceiverAmount++;
                                         workedOnce = true;
@@ -225,7 +225,7 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay {
                         if (!alreadyChecked.contains(tile.getBlockPos())) {
                             alreadyChecked.add(tile.getBlockPos());
                             if (theRelay != this || side != from) {
-                                transmitted += tile.getCapability(ForgeCapabilities.FLUID_HANDLER, opp).map(cap -> {
+                                transmitted += tile.getCapability(Capabilities.FLUID_HANDLER, opp).map(cap -> {
                                     int trans = 0;
                                     FluidStack copy = stack.copy();
                                     copy.setAmount(amountPer);

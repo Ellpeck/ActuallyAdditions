@@ -24,7 +24,7 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.providers.nbt.ContextNbtProvider;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.registries.DeferredHolder;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -236,7 +236,7 @@ public class LootTableGenerator extends LootTableProvider {
                 InitFluids.EMPOWERED_OIL.getBlock()
             );
 
-            return ActuallyBlocks.BLOCKS.getEntries().stream().map(RegistryObject::get).filter(e -> !ignoreForNow.contains(e)).collect(Collectors.toList());
+            return ActuallyBlocks.BLOCKS.getEntries().stream().map(DeferredHolder::get).filter(e -> !ignoreForNow.contains(e)).collect(Collectors.toList());
         }
     }
 }

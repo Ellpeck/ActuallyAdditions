@@ -30,8 +30,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.common.util.LazyOptional;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -141,7 +141,7 @@ public class TileEntityLongRangeBreaker extends TileEntityInventoryBase implemen
     }
 
     @Override
-    public LazyOptional<IEnergyStorage> getEnergyStorage(Direction facing) {
+    public IEnergyStorage getEnergyStorage(Direction facing) {
         return this.lazyEnergy;
     }
 

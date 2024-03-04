@@ -23,24 +23,23 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidType;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.templates.FluidTank;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.FluidType;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class TileEntityOilGenerator extends TileEntityBase implements ISharingEnergyProvider, ISharingFluidHandler, MenuProvider {
     public final CustomEnergyStorage storage = new CustomEnergyStorage(50000, 0, CommonConfig.Machines.OIL_GENERATOR_TRANSFER.get());
-    public final LazyOptional<IEnergyStorage> lazyEnergy = LazyOptional.of(() -> this.storage);
     public final FluidTank tank = new FluidTank(2 * FluidType.BUCKET_VOLUME, fluid -> getRecipeForFluid(fluid) != null) {
         @Nonnull
         @Override
@@ -54,7 +53,6 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
             return FluidStack.EMPTY;
         }
     };
-    public final LazyOptional<IFluidHandler> lazyTank = LazyOptional.of(() -> this.tank);
     public int currentEnergyProduce;
     public int currentBurnTime;
     public int maxBurnTime;
@@ -70,10 +68,10 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
         super(ActuallyBlocks.OIL_GENERATOR.getTileEntityType(), pos, state);
     }
 
-    private static LiquidFuelRecipe getRecipeForFluid(FluidStack fluid) {
+    private static RecipeHolder<LiquidFuelRecipe> getRecipeForFluid(FluidStack fluid) {
         if (fluid != null) {
-            for (LiquidFuelRecipe recipe : ActuallyAdditionsAPI.LIQUID_FUEL_RECIPES) {
-                if (recipe != null && recipe.matches(fluid)) {
+            for (RecipeHolder<LiquidFuelRecipe> recipe : ActuallyAdditionsAPI.LIQUID_FUEL_RECIPES) {
+                if (recipe != null && recipe.value().matches(fluid)) {
                     return recipe;
                 }
             }
@@ -86,7 +84,7 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
         return this.currentBurnTime * i / this.maxBurnTime;
     }
 
-    private LiquidFuelRecipe getRecipeForCurrentFluid() {
+    private RecipeHolder<LiquidFuelRecipe> getRecipeForCurrentFluid() {
         FluidStack stack = this.tank.getFluid();
         if (!stack.isEmpty()) {
             return getRecipeForFluid(stack);
@@ -138,8 +136,9 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
                 tile.storage.receiveEnergyInternal(tile.currentEnergyProduce, false);
             } else if (!tile.isRedstonePowered) {
 
-                LiquidFuelRecipe recipe = tile.getRecipeForCurrentFluid();
-                if (recipe != null && tile.storage.getEnergyStored() < tile.storage.getMaxEnergyStored() && tile.tank.getFluidAmount() >= recipe.getFuelAmount()) {
+                RecipeHolder<LiquidFuelRecipe> recipeHolder = tile.getRecipeForCurrentFluid();
+                if (recipeHolder != null && tile.storage.getEnergyStored() < tile.storage.getMaxEnergyStored() && tile.tank.getFluidAmount() >= recipeHolder.getFuelAmount()) {
+                    LiquidFuelRecipe recipe = recipeHolder.value();
                     tile.fuelUsage = recipe.getFuelAmount();
                     tile.currentEnergyProduce = recipe.getTotalEnergy() / recipe.getBurnTime();
                     tile.maxBurnTime = recipe.getBurnTime();
@@ -177,8 +176,8 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
     }
 
     @Override
-    public LazyOptional<IFluidHandler> getFluidHandler(Direction facing) {
-        return this.lazyTank;
+    public IFluidHandler getFluidHandler(Direction facing) {
+        return this.tank;
     }
 
     @Override
@@ -217,8 +216,8 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
     }
 
     @Override
-    public LazyOptional<IEnergyStorage> getEnergyStorage(Direction facing) {
-        return this.lazyEnergy;
+    public IEnergyStorage getEnergyStorage(Direction facing) {
+        return this.storage;
     }
 
     @Override

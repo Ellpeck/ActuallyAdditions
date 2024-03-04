@@ -29,16 +29,12 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.phys.AABB;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 
 public class TileEntityAtomicReconstructor extends TileEntityInventoryBase implements IEnergyDisplay, IAtomicReconstructor {
 
     public static final int ENERGY_USE = 1000;
     public final CustomEnergyStorage storage;
-    public final LazyOptional<IEnergyStorage> lazyEnergy;
     public int counter;
     private int currentTime;
     private int oldEnergy;
@@ -51,20 +47,11 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
         int power = CommonConfig.Machines.RECONSTRUCTOR_POWER.get();
         int recieve = Mth.ceil(power * 0.016666F);
         this.storage = new CustomEnergyStorage(power, recieve, 0);
-        this.lazyEnergy = LazyOptional.of(() -> this.storage);
     }
 
     public static void shootLaser(IAtomicReconstructor tile, Level world, double startX, double startY, double startZ, double endX, double endY, double endZ, Lens currentLens) {
         world.playSound(null, startX, startY, startZ, AASounds.RECONSTRUCTOR.get(), SoundSource.BLOCKS, 0.35F, 1.0F);
         AssetUtil.spawnLaserWithTimeServer(world, startX, startY, startZ, endX, endY, endZ, currentLens.getColor(), 25, 0, 0.2F, 0.8F);
-    }
-
-    @Override
-    public AABB getRenderBoundingBox() {
-        if (getProgress() > 0.0f)
-            return new AABB(getPosition(), getPosition().offset(1,1,1).relative(getBlockState().getValue(BlockStateProperties.FACING), 11));
-        else
-            return super.getRenderBoundingBox();
     }
 
     @Override
@@ -230,7 +217,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     }
 
     @Override
-    public LazyOptional<IEnergyStorage> getEnergyStorage(Direction facing) {
-        return this.lazyEnergy;
+    public IEnergyStorage getEnergyStorage(Direction facing) {
+        return this.storage;
     }
 }

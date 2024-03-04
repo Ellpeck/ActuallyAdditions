@@ -27,23 +27,23 @@
 //public class PageFurnace extends BookletPage {
 //
 //    private final ItemStack input;
-//    private final ItemStack output;
+//    private final ItemStack stack;
 //
-//    public PageFurnace(int localizationKey, ItemStack output) {
-//        this(localizationKey, output, 0);
+//    public PageFurnace(int localizationKey, ItemStack stack) {
+//        this(localizationKey, stack, 0);
 //    }
 //
-//    public PageFurnace(int localizationKey, ItemStack output, int priority) {
+//    public PageFurnace(int localizationKey, ItemStack stack, int priority) {
 //        super(localizationKey, priority);
-//        this.output = output;
-//        this.input = getInputForOutput(output);
+//        this.stack = stack;
+//        this.input = getInputForOutput(stack);
 //    }
 //
-//    private static ItemStack getInputForOutput(ItemStack output) {
+//    private static ItemStack getInputForOutput(ItemStack stack) {
 //        for (Map.Entry<ItemStack, ItemStack> entry : FurnaceRecipes.instance().getSmeltingList().entrySet()) {
 //            ItemStack stack = entry.getValue();
 //            if (StackUtil.isValid(stack)) {
-//                if (stack.sameItem(output)) {
+//                if (stack.sameItem(stack)) {
 //                    return entry.getKey();
 //                }
 //            }
@@ -70,13 +70,13 @@
 //        super.init(gui, startX, startY);
 //
 //        gui.addOrModifyItemRenderer(this.input, startX + 23 + 1, startY + 10 + 5, 1F, true);
-//        gui.addOrModifyItemRenderer(this.output, startX + 23 + 59, startY + 10 + 5, 1F, false);
+//        gui.addOrModifyItemRenderer(this.stack, startX + 23 + 59, startY + 10 + 5, 1F, false);
 //    }
 //
 //    @Override
 //    public void getItemStacksForPage(List<ItemStack> list) {
 //        super.getItemStacksForPage(list);
 //
-//        list.add(this.output);
+//        list.add(this.stack);
 //    }
 //}

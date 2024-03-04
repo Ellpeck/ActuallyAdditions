@@ -27,28 +27,27 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.IEnergyStorage;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.common.CommonHooks;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 
 import javax.annotation.Nullable;
 
 public class TileEntityCoalGenerator extends TileEntityInventoryBase implements MenuProvider, ISharingEnergyProvider, IEnergyDisplay {
 
     public final CustomEnergyStorage storage = new CustomEnergyStorage(60000, 0, 80);
-    public final LazyOptional<IEnergyStorage> lazyEnergy = LazyOptional.of(() -> this.storage);
     public int maxBurnTime;
     public int currentBurnTime;
     private int lastEnergy;
     private int lastBurnTime;
     private int lastCurrentBurnTime;
     private int lastCompare;
-    private SolidFuelRecipe currentRecipe = null;
+    private RecipeHolder<SolidFuelRecipe> currentRecipe = null;
 
     public TileEntityCoalGenerator(BlockPos pos, BlockState state) {
         super(ActuallyBlocks.COAL_GENERATOR.getTileEntityType(), pos, state, 1);
@@ -70,7 +69,7 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
             compound.putInt("BurnTime", this.currentBurnTime);
             compound.putInt("MaxBurnTime", this.maxBurnTime);
             if (currentRecipe != null)
-                compound.putString("currentRecipe", currentRecipe.getId().toString());
+                compound.putString("currentRecipe", currentRecipe.id().toString());
         }
         this.storage.writeToNBT(compound);
         super.writeSyncableNBT(compound, type);
@@ -83,8 +82,8 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
             this.maxBurnTime = compound.getInt("MaxBurnTime");
             if (compound.contains("currentRecipe")) {
                 ResourceLocation id = new ResourceLocation(compound.getString("currentRecipe"));
-                for (SolidFuelRecipe fuelRecipe : ActuallyAdditionsAPI.SOLID_FUEL_RECIPES) {
-                    if (fuelRecipe.getId().equals(id)) {
+                for (RecipeHolder<SolidFuelRecipe> fuelRecipe : ActuallyAdditionsAPI.SOLID_FUEL_RECIPES) {
+                    if (fuelRecipe.id().equals(id)) {
                         this.currentRecipe = fuelRecipe;
                         break;
                     }
@@ -109,7 +108,7 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
 
             if (tile.currentBurnTime > 0 && tile.currentRecipe != null) {
                 tile.currentBurnTime--;
-                int produce = tile.currentRecipe.getTotalEnergy() / tile.currentRecipe.getBurnTime();
+                int produce = tile.currentRecipe.value().getTotalEnergy() / tile.currentRecipe.value().getBurnTime();
                 if (produce > 0) {
                     tile.storage.receiveEnergyInternal(produce, false);
                 }
@@ -118,9 +117,9 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
             if (!tile.isRedstonePowered && tile.currentBurnTime <= 0 && tile.storage.getEnergyStored() < tile.storage.getMaxEnergyStored()) {
                 ItemStack stack = tile.inv.getStackInSlot(0);
                 if (!stack.isEmpty()) {
-                    ActuallyAdditionsAPI.SOLID_FUEL_RECIPES.stream().filter(r -> r.matches(stack)).findFirst().ifPresent(recipe -> {
+                    ActuallyAdditionsAPI.SOLID_FUEL_RECIPES.stream().filter(r -> r.value().matches(stack)).findFirst().ifPresent(recipe -> {
                         tile.currentRecipe = recipe;
-                        tile.maxBurnTime = recipe.getBurnTime();
+                        tile.maxBurnTime = recipe.value().getBurnTime();
                         tile.currentBurnTime = tile.maxBurnTime;
                         tile.inv.setStackInSlot(0, StackUtil.shrinkForContainer(stack, 1));
                     });
@@ -150,8 +149,8 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
     @Override
     public IAcceptor getAcceptor() {
         return (slot, stack, automation) -> {
-            for (SolidFuelRecipe recipe : ActuallyAdditionsAPI.SOLID_FUEL_RECIPES) {
-                if (recipe.matches(stack))return true;
+            for (RecipeHolder<SolidFuelRecipe> recipe : ActuallyAdditionsAPI.SOLID_FUEL_RECIPES) {
+                if (recipe.value().matches(stack))return true;
             }
             return false;
         };
@@ -163,7 +162,7 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
             if (!automation) {
                 return true;
             }
-            return ForgeHooks.getBurnTime(this.inv.getStackInSlot(0), null) <= 0;
+            return CommonHooks.getBurnTime(this.inv.getStackInSlot(0), null) <= 0;
         };
     }
 
@@ -188,8 +187,8 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public LazyOptional<IEnergyStorage> getEnergyStorage(Direction facing) {
-        return this.lazyEnergy;
+    public IEnergyStorage getEnergyStorage(Direction facing) {
+        return this.storage;
     }
 
     @Override

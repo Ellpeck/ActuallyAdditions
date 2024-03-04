@@ -22,16 +22,16 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidType;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.templates.FluidTank;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.FluidType;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -39,14 +39,13 @@ import java.util.Optional;
 
 public class TileEntityFermentingBarrel extends TileEntityBase implements ISharingFluidHandler, MenuProvider {
     public final FermentingBarrelMultiTank tanks = new FermentingBarrelMultiTank();
-    public final LazyOptional<IFluidHandler> fluidOptional = LazyOptional.of(()->tanks);
 
     public int currentProcessTime;
     private int lastInput;
     private int lastOutput;
     private int lastProcessTime;
     private int lastCompare;
-    private FermentingRecipe currentRecipe;
+    private RecipeHolder<FermentingRecipe> currentRecipe;
 
     public TileEntityFermentingBarrel(BlockPos pos, BlockState state) {
         super(ActuallyBlocks.FERMENTING_BARREL.getTileEntityType(), pos, state);
@@ -57,7 +56,7 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
         compound.putInt("ProcessTime", this.currentProcessTime);
         compound.put("tanks", tanks.writeNBT());
         if (currentRecipe != null)
-            compound.putString("currentRecipe", currentRecipe.getId().toString());
+            compound.putString("currentRecipe", currentRecipe.id().toString());
         super.writeSyncableNBT(compound, type);
     }
 
@@ -68,7 +67,7 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
             tanks.readNBT(compound.getCompound("tanks"));
         }
         if (compound.contains("currentRecipe")) {
-            this.currentRecipe = ActuallyAdditionsAPI.FERMENTING_RECIPES.stream().filter(recipe -> recipe.getId().toString().equals(compound.getString("currentRecipe"))).findFirst().orElse(null);
+            this.currentRecipe = ActuallyAdditionsAPI.FERMENTING_RECIPES.stream().filter(recipe -> recipe.id().toString().equals(compound.getString("currentRecipe"))).findFirst().orElse(null);
         }
         super.readSyncableNBT(compound, type);
     }
@@ -86,19 +85,20 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
             if (tile.currentRecipe == null) {
                 //No recipe currently selected, check for one every 20 ticks
                 if (tile.ticksElapsed % 20 == 0)
-                    tile.currentRecipe = ActuallyAdditionsAPI.FERMENTING_RECIPES.stream().filter(recipe -> recipe.matches(tile.tanks.getFluidInTank(0), tile.tanks.getFluidInTank(1))).findFirst().orElse(null);
+                    tile.currentRecipe = ActuallyAdditionsAPI.FERMENTING_RECIPES.stream().filter(recipe -> recipe.value().matches(tile.tanks.getFluidInTank(0), tile.tanks.getFluidInTank(1))).findFirst().orElse(null);
             } else {
-                if (tile.tanks.getFluidInTank(0).getAmount() >= tile.currentRecipe.getInput().getAmount() &&
-                        tile.tanks.getFluidInTank(0).getFluid().isSame(tile.currentRecipe.getInput().getFluid()) &&
-                        (tile.tanks.getFluidInTank(1).getFluid().isSame(tile.currentRecipe.getOutput().getFluid()) || tile.tanks.getFluidInTank(1).isEmpty()) &&
-                        tile.currentRecipe.getOutput().getAmount() <= tile.tanks.getTankCapacity(1) - tile.tanks.getFluidInTank(1).getAmount()) {
+                FermentingRecipe recipe = tile.currentRecipe.value();
+                if (tile.tanks.getFluidInTank(0).getAmount() >= recipe.getInput().getAmount() &&
+                        tile.tanks.getFluidInTank(0).getFluid().isSame(recipe.getInput().getFluid()) &&
+                        (tile.tanks.getFluidInTank(1).getFluid().isSame(recipe.getOutput().getFluid()) || tile.tanks.getFluidInTank(1).isEmpty()) &&
+                        recipe.getOutput().getAmount() <= tile.tanks.getTankCapacity(1) - tile.tanks.getFluidInTank(1).getAmount()) {
 
                     tile.currentProcessTime++;
-                    if (tile.currentProcessTime >= tile.currentRecipe.getTime()) {
+                    if (tile.currentProcessTime >= recipe.getTime()) {
                         tile.currentProcessTime = 0;
 
-                        tile.tanks.outputTank.fill(tile.currentRecipe.getOutput().copy(), IFluidHandler.FluidAction.EXECUTE);
-                        tile.tanks.inputTank.getFluid().shrink(tile.currentRecipe.getInput().getAmount());
+                        tile.tanks.outputTank.fill(recipe.getOutput().copy(), IFluidHandler.FluidAction.EXECUTE);
+                        tile.tanks.inputTank.getFluid().shrink(recipe.getInput().getAmount());
                     }
                 } else {
                     tile.currentProcessTime = 0;
@@ -129,7 +129,7 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
     @OnlyIn(Dist.CLIENT)
     public int getProcessScaled(int i) {
         if (currentRecipe != null)
-            return this.currentProcessTime * i / currentRecipe.getTime();
+            return this.currentProcessTime * i / currentRecipe.value().getTime();
         else
             return this.currentProcessTime * i / 100;
     }
@@ -145,8 +145,8 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
     }
 
     @Override
-    public LazyOptional<IFluidHandler> getFluidHandler(Direction facing) {
-        return fluidOptional;
+    public IFluidHandler getFluidHandler(Direction facing) {
+        return tanks;
     }
 
     @Override
@@ -180,8 +180,8 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
         return getRecipeForInput(stack).isPresent();
     }
 
-    public static Optional<FermentingRecipe> getRecipeForInput(FluidStack stack) {
-        return ActuallyAdditionsAPI.FERMENTING_RECIPES.stream().filter(recipe -> recipe.matches(stack)).findFirst();
+    public static Optional<RecipeHolder<FermentingRecipe>> getRecipeForInput(FluidStack stack) {
+        return ActuallyAdditionsAPI.FERMENTING_RECIPES.stream().filter(recipe -> recipe.value().matches(stack)).findFirst();
     }
 
 

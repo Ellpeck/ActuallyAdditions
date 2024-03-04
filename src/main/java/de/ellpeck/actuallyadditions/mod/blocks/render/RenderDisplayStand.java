@@ -19,9 +19,9 @@ import net.minecraft.Util;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 
@@ -50,7 +50,7 @@ public class RenderDisplayStand implements BlockEntityRenderer<TileEntityDisplay
         try {
             AssetUtil.renderItemInWorld(stack, combinedLightIn, combinedOverlayIn, matrices, buffer);
         } catch (Exception e) {
-            ActuallyAdditions.LOGGER.error("Something went wrong trying to render an item in a display stand! The item is " + ForgeRegistries.ITEMS.getKey(stack.getItem()) + "!", e);
+            ActuallyAdditions.LOGGER.error("Something went wrong trying to render an item in a display stand! The item is " + BuiltInRegistries.ITEM.getKey(stack.getItem()) + "!", e);
         }
 
         matrices.popPose();

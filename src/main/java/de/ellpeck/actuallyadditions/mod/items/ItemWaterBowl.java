@@ -34,9 +34,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.event.EventHooks;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
 public class ItemWaterBowl extends ItemBase {
 
@@ -56,7 +56,7 @@ public class ItemWaterBowl extends ItemBase {
                     }
 
                     BlockHitResult trace = (BlockHitResult) rayTrace;
-                    InteractionResultHolder<ItemStack> result = ForgeEventFactory.onBucketUse(event.getEntity(), event.getLevel(), event.getItemStack(), trace);
+                    InteractionResultHolder<ItemStack> result = EventHooks.onBucketUse(event.getEntity(), event.getLevel(), event.getItemStack(), trace);
                     if (result == null) {
                         if (event.getEntity().mayUseItemAt(trace.getBlockPos().relative(trace.getDirection()), trace.getDirection(), event.getItemStack())) {
                             BlockState state = event.getLevel().getBlockState(trace.getBlockPos());
@@ -92,7 +92,7 @@ public class ItemWaterBowl extends ItemBase {
         ItemStack stack = player.getItemInHand(hand);
 
         HitResult trace = WorldUtil.getNearestBlockWithDefaultReachDistance(world, player);
-        InteractionResultHolder<ItemStack> result = ForgeEventFactory.onBucketUse(player, world, stack, trace);
+        InteractionResultHolder<ItemStack> result = EventHooks.onBucketUse(player, world, stack, trace);
         if (result != null) {
             return result;
         }

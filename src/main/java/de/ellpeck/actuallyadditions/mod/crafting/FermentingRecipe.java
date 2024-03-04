@@ -1,22 +1,17 @@
 package de.ellpeck.actuallyadditions.mod.crafting;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import de.ellpeck.actuallyadditions.mod.inventory.gui.FluidDisplay;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.GsonHelper;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.material.Fluid;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.fluids.FluidStack;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -24,7 +19,6 @@ import java.util.Optional;
 
 public class FermentingRecipe implements Recipe<Container> {
     public static final String NAME = "fermenting";
-    private final ResourceLocation ID;
     private final FluidStack input;
     private final FluidStack output;
     private final int time;
@@ -32,8 +26,7 @@ public class FermentingRecipe implements Recipe<Container> {
     private Optional<FluidDisplay> inputDisplay;
     private Optional<FluidDisplay> outputDisplay;
 
-    public FermentingRecipe(ResourceLocation ID, FluidStack input, FluidStack output, int timeIn) {
-        this.ID = ID;
+    public FermentingRecipe(FluidStack input, FluidStack output, int timeIn) {
         this.input = input;
         this.output = output;
         this.time = timeIn;
@@ -104,12 +97,6 @@ public class FermentingRecipe implements Recipe<Container> {
 
     @Nonnull
     @Override
-    public ResourceLocation getId() {
-        return ID;
-    }
-
-    @Nonnull
-    @Override
     public RecipeSerializer<?> getSerializer() {
         return ActuallyRecipes.FERMENTING_RECIPE.get();
     }
@@ -121,110 +108,62 @@ public class FermentingRecipe implements Recipe<Container> {
     }
 
     public static class Serializer implements RecipeSerializer<FermentingRecipe> {
-        @Nonnull
+        private static final Codec<FermentingRecipe> CODEC = RecordCodecBuilder.create(
+                instance -> instance.group(
+                                FluidStack.CODEC.fieldOf("ingredient").forGetter(recipe -> recipe.input),
+                                FluidStack.CODEC.fieldOf("result").forGetter(recipe -> recipe.output),
+                                Codec.INT.fieldOf("time").forGetter(recipe -> recipe.time)
+                        )
+                        .apply(instance, FermentingRecipe::new)
+        );
+
+//        @Nonnull
+//        @Override
+//        public FermentingRecipe fromJson(@Nonnull ResourceLocation pRecipeId, @Nonnull JsonObject pJson) {
+//            JsonObject ingredient = pJson.getAsJsonObject("ingredient");
+//
+//            ResourceLocation fluidRes = new ResourceLocation(GsonHelper.getAsString(ingredient, "fluid"));
+//            Fluid fluid = BuiltInRegistries.FLUIDS.getValue(fluidRes);
+//            if (fluid == null)
+//                throw new JsonParseException("Unknown fluid '" + fluidRes + "'");
+//            int inputAmount = GsonHelper.getAsInt(ingredient, "amount", 80);
+//            FluidStack input = new FluidStack(fluid, inputAmount);
+//
+//            JsonObject result = pJson.getAsJsonObject("result");
+//            ResourceLocation fluidOutputRes = new ResourceLocation(GsonHelper.getAsString(result, "fluid"));
+//            int outputAmount = GsonHelper.getAsInt(result, "amount");
+//            Fluid fluidOutput = BuiltInRegistries.FLUIDS.getValue(fluidOutputRes);
+//            if(fluidOutput == null)
+//                throw new JsonParseException("Unknown fluid '" + fluidRes + "'");
+//            FluidStack output = new FluidStack(fluidOutput, outputAmount);
+//
+//            int time = GsonHelper.getAsInt(pJson, "time", 100);
+//
+//            return new FermentingRecipe(pRecipeId, input, output, time);
+//        }
+
+
         @Override
-        public FermentingRecipe fromJson(@Nonnull ResourceLocation pRecipeId, @Nonnull JsonObject pJson) {
-            JsonObject ingredient = pJson.getAsJsonObject("ingredient");
-
-            ResourceLocation fluidRes = new ResourceLocation(GsonHelper.getAsString(ingredient, "fluid"));
-            Fluid fluid = ForgeRegistries.FLUIDS.getValue(fluidRes);
-            if (fluid == null)
-                throw new JsonParseException("Unknown fluid '" + fluidRes + "'");
-            int inputAmount = GsonHelper.getAsInt(ingredient, "amount", 80);
-            FluidStack input = new FluidStack(fluid, inputAmount);
-
-            JsonObject result = pJson.getAsJsonObject("result");
-            ResourceLocation fluidOutputRes = new ResourceLocation(GsonHelper.getAsString(result, "fluid"));
-            int outputAmount = GsonHelper.getAsInt(result, "amount");
-            Fluid fluidOutput = ForgeRegistries.FLUIDS.getValue(fluidOutputRes);
-            if(fluidOutput == null)
-                throw new JsonParseException("Unknown fluid '" + fluidRes + "'");
-            FluidStack output = new FluidStack(fluidOutput, outputAmount);
-
-            int time = GsonHelper.getAsInt(pJson, "time", 100);
-
-            return new FermentingRecipe(pRecipeId, input, output, time);
+        public Codec<FermentingRecipe> codec() {
+            return CODEC;
         }
 
         @Nullable
         @Override
-        public FermentingRecipe fromNetwork(@Nonnull ResourceLocation pRecipeId, @Nonnull FriendlyByteBuf pBuffer) {
-            ResourceLocation inputRes = new ResourceLocation(pBuffer.readUtf());
-            int inputAmount = pBuffer.readInt();
-            Fluid inputFluid = ForgeRegistries.FLUIDS.getValue(inputRes);
-            if(inputFluid == null)
-                throw new JsonParseException("Unknown input fluid '" + inputRes + "'");
-            FluidStack input = new FluidStack(inputFluid, inputAmount);
-
-            ResourceLocation outputRes = new ResourceLocation(pBuffer.readUtf());
-            int outputAmount = pBuffer.readInt();
-            Fluid outputFluid = ForgeRegistries.FLUIDS.getValue(outputRes);
-            if(outputFluid == null)
-                throw new JsonParseException("Unknown output fluid '" + outputRes + "'");
-            FluidStack output = new FluidStack(outputFluid, outputAmount);
-
+        public FermentingRecipe fromNetwork(@Nonnull FriendlyByteBuf pBuffer) {
+            FluidStack input = FluidStack.readFromPacket(pBuffer);
+            FluidStack output = FluidStack.readFromPacket(pBuffer);
             int time = pBuffer.readInt();
 
-            return new FermentingRecipe(pRecipeId, input, output, time);
+            return new FermentingRecipe(input, output, time);
         }
 
         @Override
         public void toNetwork(@Nonnull FriendlyByteBuf pBuffer, @Nonnull FermentingRecipe pRecipe) {
-            pBuffer.writeUtf(ForgeRegistries.FLUIDS.getKey(pRecipe.input.getFluid()).toString());
-            pBuffer.writeInt(pRecipe.input.getAmount());
-            pBuffer.writeUtf(ForgeRegistries.FLUIDS.getKey(pRecipe.output.getFluid()).toString());
+            pRecipe.input.writeToPacket(pBuffer);
+            pRecipe.output.writeToPacket(pBuffer);
             pBuffer.writeInt(pRecipe.output.getAmount());
             pBuffer.writeInt(pRecipe.time);
-        }
-    }
-    public static class Result implements FinishedRecipe {
-        private final ResourceLocation ID;
-        private final FluidStack input;
-        private final FluidStack output;
-        private final int time;
-
-        public Result(ResourceLocation ID, FluidStack input, FluidStack output, int timeIn) {
-            this.ID = ID;
-            this.input = input;
-            this.output = output;
-            this.time = timeIn;
-        }
-
-        @Override
-        public void serializeRecipeData(JsonObject pJson) {
-            JsonObject ingredient = new JsonObject();
-            ingredient.addProperty("fluid", ForgeRegistries.FLUIDS.getKey(input.getFluid()).toString());
-            ingredient.addProperty("amount", input.getAmount());
-
-            JsonObject result = new JsonObject();
-            result.addProperty("fluid", ForgeRegistries.FLUIDS.getKey(output.getFluid()).toString());
-            result.addProperty("amount", output.getAmount());
-
-            pJson.add("ingredient", ingredient);
-            pJson.add("result", result);
-            pJson.addProperty("time", time);
-        }
-
-        @Override
-        public ResourceLocation getId() {
-            return ID;
-        }
-
-        @Override
-        public RecipeSerializer<?> getType() {
-            return ActuallyRecipes.FERMENTING_RECIPE.get();
-        }
-
-        @Nullable
-        @Override
-        public JsonObject serializeAdvancement() {
-            return null;
-        }
-
-        @Nullable
-        @Override
-        public ResourceLocation getAdvancementId() {
-            return null;
         }
     }
 }

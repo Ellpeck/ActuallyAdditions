@@ -16,6 +16,7 @@ import de.ellpeck.actuallyadditions.mod.sack.SackData;
 import de.ellpeck.actuallyadditions.mod.sack.SackManager;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -27,9 +28,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.network.NetworkHooks;
+import net.neoforged.neoforge.capabilities.Capabilities;
 
+import java.util.Optional;
 import java.util.UUID;
 
 public class Sack extends ItemBase {
@@ -44,12 +45,14 @@ public class Sack extends ItemBase {
     public InteractionResult useOn(UseOnContext context) {
         ItemStack stack = context.getPlayer().getItemInHand(context.getHand());
         if (!this.isVoid) {
-            BlockEntity tile = context.getLevel().getBlockEntity(context.getClickedPos());
+            Level level = context.getLevel();
+            BlockPos clickedPos = context.getClickedPos();
+            BlockEntity tile = level.getBlockEntity(clickedPos);
             if (tile != null) {
                 if (!context.getLevel().isClientSide) {
                     ItemStackHandlerAA inv = new ItemStackHandlerAA(28);
 
-                    boolean changed = tile.getCapability(ForgeCapabilities.ITEM_HANDLER, context.getClickedFace())
+                    boolean changed = Optional.ofNullable(level.getCapability(Capabilities.ItemHandler.BLOCK, clickedPos, context.getClickedFace()))
                         .map(cap -> {
                             boolean localChanged = false;
                             DrillItem.loadSlotsFromNBT(inv, stack);
@@ -99,7 +102,7 @@ public class Sack extends ItemBase {
                 data.updateAccessRecords(player.getName().getString(), System.currentTimeMillis());
 
 
-                NetworkHooks.openScreen((ServerPlayer) player, new SimpleMenuProvider((id, inv, entity) ->
+                player.openMenu(new SimpleMenuProvider((id, inv, entity) ->
                         new SackContainer(id, inv, uuid, data.getSpecialHandler()), sackStack.getHoverName()), (buffer -> buffer.writeUUID(uuid)));
             }
 

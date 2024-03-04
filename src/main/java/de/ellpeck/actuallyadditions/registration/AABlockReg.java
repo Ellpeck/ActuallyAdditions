@@ -7,7 +7,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.registries.DeferredBlock;
+import net.neoforged.neoforge.registries.DeferredItem;
 
 import javax.annotation.Nonnull;
 import java.util.Objects;
@@ -16,9 +17,9 @@ import java.util.function.Supplier;
 
 public class AABlockReg<B extends Block, I extends Item, T extends BlockEntity> implements Supplier<Block> {
     private final String name;
-    private RegistryObject<B> block;
-    private RegistryObject<I> item;
-    private RegistryObject<BlockEntityType<T>> tileEntityType;
+    private DeferredBlock<B> block;
+    private DeferredItem<I> item;
+    private Supplier<BlockEntityType<T>> tileEntityType;
 
     public AABlockReg(String name, Supplier<B> blockSupplier, Function<B, I> itemSupplier, BlockEntityType.BlockEntitySupplier<T> tileSupplier) {
         this.name = name;

@@ -2,7 +2,7 @@ package de.ellpeck.actuallyadditions.mod.util;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
-import net.minecraftforge.fml.loading.FMLLoader;
+import net.neoforged.fml.loading.FMLLoader;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.Nonnull;

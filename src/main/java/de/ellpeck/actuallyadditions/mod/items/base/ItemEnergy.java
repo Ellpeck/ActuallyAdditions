@@ -12,25 +12,19 @@ package de.ellpeck.actuallyadditions.mod.items.base;
 
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.tile.CustomEnergyStorage;
-import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.common.capabilities.ICapabilitySerializable;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.IEnergyStorage;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.text.NumberFormat;
 import java.util.List;
+import java.util.Optional;
 
 public abstract class ItemEnergy extends ItemBase {
 
@@ -98,7 +92,7 @@ public abstract class ItemEnergy extends ItemBase {
     }
 
     public void setEnergy(ItemStack stack, int energy) {
-        stack.getCapability(ForgeCapabilities.ENERGY, null).ifPresent(cap -> {
+        Optional.ofNullable(stack.getCapability(Capabilities.EnergyStorage.ITEM, null)).ifPresent(cap -> {
             if (cap instanceof CustomEnergyStorage) {
                 ((CustomEnergyStorage) cap).setEnergyStored(energy);
             }
@@ -107,13 +101,13 @@ public abstract class ItemEnergy extends ItemBase {
 
     @Deprecated
     public int receiveEnergyInternal(ItemStack stack, int maxReceive, boolean simulate) {
-        return stack.getCapability(ForgeCapabilities.ENERGY)
+        return Optional.ofNullable(stack.getCapability(Capabilities.EnergyStorage.ITEM, null))
             .map(cap -> ((CustomEnergyStorage) cap).receiveEnergyInternal(maxReceive, simulate))
             .orElse(0);
     }
 
     public int extractEnergyInternal(ItemStack stack, int maxExtract, boolean simulate) {
-        return stack.getCapability(ForgeCapabilities.ENERGY)
+        return Optional.ofNullable(stack.getCapability(Capabilities.EnergyStorage.ITEM, null))
             .map(cap -> cap instanceof CustomEnergyStorage
                 ? ((CustomEnergyStorage) cap).extractEnergyInternal(maxExtract, simulate)
                 : 0)
@@ -122,68 +116,68 @@ public abstract class ItemEnergy extends ItemBase {
 
     @Deprecated
     public int receiveEnergy(ItemStack stack, int maxReceive, boolean simulate) {
-        return stack.getCapability(ForgeCapabilities.ENERGY)
+        return Optional.ofNullable(stack.getCapability(Capabilities.EnergyStorage.ITEM, null))
             .map(cap -> cap.receiveEnergy(maxReceive, simulate))
             .orElse(0);
     }
 
     public int extractEnergy(ItemStack stack, int maxExtract, boolean simulate) {
-        return stack.getCapability(ForgeCapabilities.ENERGY)
+        return Optional.ofNullable(stack.getCapability(Capabilities.EnergyStorage.ITEM, null))
             .map(cap -> cap.extractEnergy(maxExtract, simulate))
             .orElse(0);
     }
 
     public int getEnergyStored(ItemStack stack) {
-        return stack.getCapability(ForgeCapabilities.ENERGY, null)
+        return Optional.ofNullable(stack.getCapability(Capabilities.EnergyStorage.ITEM, null))
             .map(IEnergyStorage::getEnergyStored)
             .orElse(0);
     }
 
     public int getMaxEnergyStored(ItemStack stack) {
-        return stack.getCapability(ForgeCapabilities.ENERGY, null)
+        return Optional.ofNullable(stack.getCapability(Capabilities.EnergyStorage.ITEM, null))
             .map(IEnergyStorage::getMaxEnergyStored)
             .orElse(0);
     }
 
-    @Override
-    public ICapabilityProvider initCapabilities(ItemStack stack, CompoundTag nbt) {
-        return new EnergyCapabilityProvider(stack, this);
-    }
+//    @Override TODO: Register Energy cap/attachment
+//    public ICapabilityProvider initCapabilities(ItemStack stack, CompoundTag nbt) {
+//        return new EnergyCapabilityProvider(stack, this);
+//    }
 
-    private static class EnergyCapabilityProvider implements ICapabilitySerializable<CompoundTag> {
-
-        public final CustomEnergyStorage storage;
-        private final LazyOptional<CustomEnergyStorage> energyCapability;
-
-        private final ItemStack stack;
-
-        public EnergyCapabilityProvider(ItemStack stack, ItemEnergy item) {
-            this.storage = new CustomEnergyStorage(item.maxPower, item.transfer, item.transfer);
-            this.energyCapability = LazyOptional.of(() -> this.storage);
-            this.stack = stack;
-        }
-
-        @Nonnull
-        @Override
-        public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-            if (cap == ForgeCapabilities.ENERGY) {
-                return this.energyCapability.cast();
-            }
-            return LazyOptional.empty();
-        }
-
-        @Override
-        public CompoundTag serializeNBT() {
-            if (this.storage.isDirty())
-                stack.getOrCreateTag().putInt("Energy", this.storage.getEnergyStored());
-            this.storage.clearDirty();
-            return new CompoundTag();
-        }
-
-        @Override
-        public void deserializeNBT(CompoundTag nbt) {
-            if (stack.getOrCreateTag().contains("Energy"))
-                this.storage.setEnergyStored(stack.getOrCreateTag().getInt("Energy"));
-        }
-    }
+//    private static class EnergyCapabilityProvider implements ICapabilitySerializable<CompoundTag> {
+//
+//        public final CustomEnergyStorage storage;
+//        private final LazyOptional<CustomEnergyStorage> energyCapability;
+//
+//        private final ItemStack stack;
+//
+//        public EnergyCapabilityProvider(ItemStack stack, ItemEnergy item) {
+//            this.storage = new CustomEnergyStorage(item.maxPower, item.transfer, item.transfer);
+//            this.energyCapability = LazyOptional.of(() -> this.storage);
+//            this.stack = stack;
+//        }
+//
+//        @Nonnull
+//        @Override
+//        public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
+//            if (cap == Capabilities.ENERGY) {
+//                return this.energyCapability.cast();
+//            }
+//            return LazyOptional.empty();
+//        }
+//
+//        @Override
+//        public CompoundTag serializeNBT() {
+//            if (this.storage.isDirty())
+//                stack.getOrCreateTag().putInt("Energy", this.storage.getEnergyStored());
+//            this.storage.clearDirty();
+//            return new CompoundTag();
+//        }
+//
+//        @Override
+//        public void deserializeNBT(CompoundTag nbt) {
+//            if (stack.getOrCreateTag().contains("Energy"))
+//                this.storage.setEnergyStored(stack.getOrCreateTag().getInt("Energy"));
+//        }
+//    }
 }

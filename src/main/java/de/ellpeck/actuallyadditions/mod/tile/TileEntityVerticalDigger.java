@@ -36,12 +36,12 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.TierSortingRegistry;
-import net.minecraftforge.common.util.FakePlayerFactory;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.fluids.IFluidBlock;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.common.TierSortingRegistry;
+import net.neoforged.neoforge.common.util.FakePlayerFactory;
+import net.neoforged.neoforge.common.util.LazyOptional;
+import net.neoforged.neoforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.fluids.IFluidBlock;
+import net.neoforged.neoforge.registries.BuiltInRegistries;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -189,7 +189,7 @@ public class TileEntityVerticalDigger extends TileEntityInventoryBase implements
                         //                            }
                         //                        }
 
-                        String reg = ForgeRegistries.BLOCKS.getKey(block).toString();
+                        String reg = BuiltInRegistries.BLOCK.getKey(block).toString();
                         if (!reg.isEmpty()) {
                             for (String string : ConfigStringListValues.MINER_EXTRA_WHITELIST.getValue()) {
                                 if (reg.equals(string)) {
@@ -210,7 +210,7 @@ public class TileEntityVerticalDigger extends TileEntityInventoryBase implements
     }
 
     private boolean isBlacklisted(Block block) {
-        String reg =  ForgeRegistries.BLOCKS.getKey(block).toString();
+        String reg =  BuiltInRegistries.BLOCK.getKey(block).toString();
         if (!reg.isEmpty()) {
             for (String string : ConfigStringListValues.MINER_BLACKLIST.getValue()) {
                 if (reg.equals(string)) {
@@ -249,7 +249,7 @@ public class TileEntityVerticalDigger extends TileEntityInventoryBase implements
     }
 
     @Override
-    public LazyOptional<IEnergyStorage> getEnergyStorage(Direction facing) {
+    public IEnergyStorage getEnergyStorage(Direction facing) {
         return this.lazyEnergy;
     }
 

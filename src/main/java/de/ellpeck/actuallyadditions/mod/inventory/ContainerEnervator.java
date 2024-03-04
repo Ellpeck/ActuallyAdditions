@@ -22,7 +22,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.neoforged.neoforge.capabilities.Capabilities;
 
 import java.util.Objects;
 
@@ -98,7 +98,7 @@ public class ContainerEnervator extends AbstractContainerMenu {
             //Other Slots in Inventory excluded
             else if (slot >= inventoryStart) {
                 //Shift from Inventory
-                if (newStack.getCapability(ForgeCapabilities.ENERGY).isPresent()) {
+                if (newStack.getCapability(Capabilities.EnergyStorage.ITEM) != null) {
                     if (!this.moveItemStackTo(newStack, 0, 1, false)) {
                         return ItemStack.EMPTY;
                     }

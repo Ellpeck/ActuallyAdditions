@@ -6,11 +6,11 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Locale;
 
@@ -33,7 +33,7 @@ public class LaserItemParticleData extends ParticleType<LaserItemParticleData> i
             reader.expect(' ');
             String itemString = reader.readString();
             ResourceLocation itemLocation = ResourceLocation.tryParse(itemString);
-            Item item = itemLocation == null ? null : ForgeRegistries.ITEMS.getValue(itemLocation);
+            Item item = itemLocation == null ? null : BuiltInRegistries.ITEM.get(itemLocation);
             ItemStack stack = item == null ? ItemStack.EMPTY : new ItemStack(item);
             reader.expect(' ');
             double outputX = reader.readDouble();
@@ -75,7 +75,7 @@ public class LaserItemParticleData extends ParticleType<LaserItemParticleData> i
 
     @Override
     public void writeToNetwork(FriendlyByteBuf buffer) {
-        buffer.writeItemStack(this.stack, true);
+        buffer.writeItem(this.stack);
         buffer.writeDouble(this.outputX);
         buffer.writeDouble(this.outputY);
         buffer.writeDouble(this.outputZ);
@@ -83,8 +83,8 @@ public class LaserItemParticleData extends ParticleType<LaserItemParticleData> i
 
     @Override
     public String writeToString() {
-        return String.format(Locale.ROOT, "%s %s %.2f %.2f %.2f", ForgeRegistries.PARTICLE_TYPES.getKey(this.getType()),
-                ForgeRegistries.ITEMS.getKey(this.stack.getItem()),
+        return String.format(Locale.ROOT, "%s %s %.2f %.2f %.2f", BuiltInRegistries.PARTICLE_TYPE.getKey(this.getType()),
+                BuiltInRegistries.ITEM.getKey(this.stack.getItem()),
                 this.outputX, this.outputY, this.outputZ);
     }
 

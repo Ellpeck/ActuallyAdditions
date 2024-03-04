@@ -11,7 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.util;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import net.minecraftforge.fml.loading.FMLLoader;
+import net.neoforged.fml.loading.FMLLoader;
 
 public final class Util {
 

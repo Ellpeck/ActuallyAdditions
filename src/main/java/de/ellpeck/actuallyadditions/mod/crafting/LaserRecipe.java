@@ -1,21 +1,18 @@
 package de.ellpeck.actuallyadditions.mod.crafting;
 
-import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.GsonHelper;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -27,13 +24,11 @@ public class LaserRecipe implements Recipe<Container> {
     private ItemStack result;
     private Ingredient itemIngredient;
     private int energy;
-    private ResourceLocation id;
 
-    public LaserRecipe(ResourceLocation id, ItemStack result, Ingredient itemIngredient, int energy) {
+    public LaserRecipe(ItemStack result, Ingredient itemIngredient, int energy) {
         this.result = result;
         this.itemIngredient = itemIngredient;
         this.energy = energy;
-        this.id = id;
     }
 
     public int getEnergy() {
@@ -79,11 +74,6 @@ public class LaserRecipe implements Recipe<Container> {
     }
 
     @Override
-    public ResourceLocation getId() {
-        return id;
-    }
-
-    @Override
     public RecipeSerializer<?> getSerializer() {
         return ActuallyRecipes.LASER_RECIPE.get();
     }
@@ -93,8 +83,8 @@ public class LaserRecipe implements Recipe<Container> {
         return ActuallyRecipes.Types.LASER.get();
     }
 
-    public static Optional<LaserRecipe> getRecipeForStack(ItemStack stack) {
-        return ActuallyAdditionsAPI.CONVERSION_LASER_RECIPES.stream().filter(recipe -> recipe.matches(stack)).findFirst();
+    public static Optional<RecipeHolder<LaserRecipe>> getRecipeForStack(ItemStack stack) {
+        return ActuallyAdditionsAPI.CONVERSION_LASER_RECIPES.stream().filter(recipe -> recipe.value().matches(stack)).findFirst();
     }
 
     public boolean validInput(ItemStack stack) {
@@ -102,23 +92,38 @@ public class LaserRecipe implements Recipe<Container> {
     }
 
     public static class Serializer implements RecipeSerializer<LaserRecipe> {
-        @Override
-        public LaserRecipe fromJson(@Nonnull ResourceLocation pRecipeId, @Nonnull JsonObject pJson) {
-            Ingredient ingredient = Ingredient.fromJson(GsonHelper.getAsJsonObject(pJson, "ingredient"));
-            int energy = GsonHelper.getAsInt(pJson, "energy");
-            JsonObject resultObject = GsonHelper.getAsJsonObject(pJson, "result");
-            ItemStack result = new ItemStack(GsonHelper.getAsItem(resultObject, "item"));
+        private static final Codec<LaserRecipe> CODEC = RecordCodecBuilder.create(
+                instance -> instance.group(
+                                ItemStack.RESULT_CODEC.fieldOf("result").forGetter(recipe -> recipe.result),
+                                Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(recipe -> recipe.itemIngredient),
+                                Codec.INT.fieldOf("energy").forGetter(recipe -> recipe.energy)
+                        )
+                        .apply(instance, LaserRecipe::new)
+        );
 
-            return new LaserRecipe(pRecipeId, result, ingredient, energy);
+//        @Override
+//        public LaserRecipe fromJson(@Nonnull ResourceLocation pRecipeId, @Nonnull JsonObject pJson) {
+//            Ingredient ingredient = Ingredient.fromJson(GsonHelper.getAsJsonObject(pJson, "ingredient"));
+//            int energy = GsonHelper.getAsInt(pJson, "energy");
+//            JsonObject resultObject = GsonHelper.getAsJsonObject(pJson, "result");
+//            ItemStack result = new ItemStack(GsonHelper.getAsItem(resultObject, "item"));
+//
+//            return new LaserRecipe(pRecipeId, result, ingredient, energy);
+//        }
+
+
+        @Override
+        public Codec<LaserRecipe> codec() {
+            return CODEC;
         }
 
         @Nullable
         @Override
-        public LaserRecipe fromNetwork(@Nonnull ResourceLocation pRecipeId, @Nonnull FriendlyByteBuf pBuffer) {
+        public LaserRecipe fromNetwork(@Nonnull FriendlyByteBuf pBuffer) {
             Ingredient ingredient = Ingredient.fromNetwork(pBuffer);
             int energy = pBuffer.readInt();
             ItemStack result = pBuffer.readItem();
-            return new LaserRecipe(pRecipeId, result, ingredient, energy);
+            return new LaserRecipe(result, ingredient, energy);
         }
 
         @Override
@@ -126,53 +131,6 @@ public class LaserRecipe implements Recipe<Container> {
             pRecipe.itemIngredient.toNetwork(pBuffer);
             pBuffer.writeInt(pRecipe.energy);
             pBuffer.writeItem(pRecipe.result);
-        }
-    }
-
-    public static class Result implements FinishedRecipe {
-        private ResourceLocation id;
-        private Ingredient itemIngredient;
-        private int energy;
-        private ItemLike output;
-
-        public Result(ResourceLocation id, Ingredient itemIngredient, int energy, ItemLike output) {
-            this.id = id;
-            this.itemIngredient = itemIngredient;
-            this.energy = energy;
-            this.output = output;
-        }
-
-        @Override
-        public void serializeRecipeData(JsonObject pJson) {
-            pJson.add("ingredient", itemIngredient.toJson());
-            pJson.addProperty("energy", energy);
-
-            JsonObject resultObject = new JsonObject();
-            resultObject.addProperty("item", ForgeRegistries.ITEMS.getKey(output.asItem()).toString());
-
-            pJson.add("result", resultObject);
-        }
-
-        @Override
-        public ResourceLocation getId() {
-            return id;
-        }
-
-        @Override
-        public RecipeSerializer<?> getType() {
-            return ActuallyRecipes.LASER_RECIPE.get();
-        }
-
-        @Nullable
-        @Override
-        public JsonObject serializeAdvancement() {
-            return null;
-        }
-
-        @Nullable
-        @Override
-        public ResourceLocation getAdvancementId() {
-            return null;
         }
     }
 }

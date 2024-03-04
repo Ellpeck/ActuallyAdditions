@@ -14,10 +14,10 @@ import de.ellpeck.actuallyadditions.mod.inventory.ContainerFilter;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotFilter;
 import de.ellpeck.actuallyadditions.mod.items.DrillItem;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class FilterSettings {
     public final ItemStackHandlerAA filterInventory;
@@ -69,7 +69,7 @@ public class FilterSettings {
     private static boolean areEqualEnough(ItemStack first, ItemStack second, boolean nbt, boolean mod) {
         Item firstItem = first.getItem();
         Item secondItem = second.getItem();
-        if (mod && ForgeRegistries.ITEMS.getKey(firstItem).getNamespace().equals(ForgeRegistries.ITEMS.getKey(secondItem).getNamespace())) {
+        if (mod && BuiltInRegistries.ITEM.getKey(firstItem).getNamespace().equals(BuiltInRegistries.ITEM.getKey(secondItem).getNamespace())) {
             return true;
         }
 

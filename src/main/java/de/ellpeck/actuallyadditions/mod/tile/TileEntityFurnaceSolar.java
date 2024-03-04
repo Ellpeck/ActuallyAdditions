@@ -112,7 +112,7 @@
 //    }
 //
 //    @Override
-//    public LazyOptional<IEnergyStorage> getEnergyStorage(Direction facing) {
+//    public IEnergyStorage getEnergyStorage(Direction facing) {
 //        return this.lazyEnergy;
 //    }
 //}

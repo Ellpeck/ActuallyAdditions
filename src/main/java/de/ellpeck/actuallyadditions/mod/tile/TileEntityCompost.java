@@ -81,9 +81,9 @@
 //                if (this.recipe != null) {
 //                    this.conversionTime++;
 //                    if (this.conversionTime >= COMPOST_TIME_TICKS) {
-//                        ItemStack output = this.recipe.getOutput().copy();
-//                        output.setCount(input.getCount());
-//                        this.inv.setStackInSlot(0, output);
+//                        ItemStack stack = this.recipe.getOutput().copy();
+//                        stack.setCount(input.getCount());
+//                        this.inv.setStackInSlot(0, stack);
 //                        this.conversionTime = 0;
 //                        this.markDirty();
 //                    }

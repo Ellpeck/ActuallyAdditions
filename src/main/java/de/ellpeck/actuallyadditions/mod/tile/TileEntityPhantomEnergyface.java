@@ -17,8 +17,8 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.neoforged.neoforge.common.capabilities.Capabilities;
+import net.neoforged.neoforge.common.capabilities.Capability;
 
 public class TileEntityPhantomEnergyface extends TileEntityPhantomface implements ISharingEnergyProvider {
 
@@ -45,7 +45,7 @@ public class TileEntityPhantomEnergyface extends TileEntityPhantomface implement
             BlockEntity tile = this.level.getBlockEntity(this.boundPosition);
             if (tile != null && !(tile instanceof TileEntityLaserRelayEnergy)) {
                 for (Direction facing : Direction.values()) {
-                    if (tile.getCapability(ForgeCapabilities.ENERGY, facing).isPresent()) {
+                    if (tile.getCapability(Capabilities.ENERGY, facing).isPresent()) {
                         return true;
                     }
                 }
@@ -56,7 +56,7 @@ public class TileEntityPhantomEnergyface extends TileEntityPhantomface implement
 
     @Override
     protected boolean isCapabilitySupported(Capability<?> capability) {
-        return capability == ForgeCapabilities.ENERGY;
+        return capability == Capabilities.ENERGY;
     }
 
     @Override

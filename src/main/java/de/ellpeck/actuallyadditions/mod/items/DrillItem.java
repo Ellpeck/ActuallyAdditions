@@ -24,6 +24,7 @@ import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -49,13 +50,13 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.common.Tags;
-import net.minecraftforge.common.ToolAction;
-import net.minecraftforge.common.ToolActions;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.IItemHandlerModifiable;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.common.CommonHooks;
+import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.common.TierSortingRegistry;
+import net.neoforged.neoforge.common.ToolAction;
+import net.neoforged.neoforge.common.ToolActions;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.IItemHandlerModifiable;
 
 public class DrillItem extends ItemEnergy {
 
@@ -76,8 +77,8 @@ public class DrillItem extends ItemEnergy {
     @Override
     public boolean isCorrectToolForDrops(BlockState pBlock) {
         Tier tier = Tiers.NETHERITE; //Use Nettherite as the tier as it has the same harvest level as the drill
-        if (net.minecraftforge.common.TierSortingRegistry.isTierSorted(tier)) {
-            return net.minecraftforge.common.TierSortingRegistry.isCorrectTierForDrops(tier, pBlock) && pBlock.is(ActuallyTags.Blocks.MINEABLE_WITH_DRILL);
+        if (TierSortingRegistry.isTierSorted(tier)) {
+            return TierSortingRegistry.isCorrectTierForDrops(tier, pBlock) && pBlock.is(ActuallyTags.Blocks.MINEABLE_WITH_DRILL);
         }
         if (HARVEST_LEVEL < 3 && pBlock.is(BlockTags.NEEDS_DIAMOND_TOOL)) {
             return false;
@@ -475,7 +476,7 @@ public class DrillItem extends ItemEnergy {
         Block block = state.getBlock();
         float hardness = state.getDestroySpeed(world, pos);
 
-        boolean canHarvest = (ForgeHooks.isCorrectToolForDrops(state, player) || this.isCorrectToolForDrops(stack, state)) && (!isExtra || this.getDestroySpeed(stack, world.getBlockState(pos)) > 1.0F);
+        boolean canHarvest = (CommonHooks.isCorrectToolForDrops(state, player) || this.isCorrectToolForDrops(stack, state)) && (!isExtra || this.getDestroySpeed(stack, world.getBlockState(pos)) > 1.0F);
         if (hardness >= 0.0F && (!isExtra || canHarvest && !state.hasBlockEntity())) {
             if (!player.isCreative()) {
                 this.extractEnergyInternal(stack, use, false);
@@ -488,7 +489,7 @@ public class DrillItem extends ItemEnergy {
 
     private boolean hasExtraWhitelist(Block block) {
         if (block != null) {
-            ResourceLocation location = ForgeRegistries.BLOCKS.getKey(block);
+            ResourceLocation location = BuiltInRegistries.BLOCK.getKey(block);
             if (location != null) {
                 String name = location.toString();
                 if (name != null) {

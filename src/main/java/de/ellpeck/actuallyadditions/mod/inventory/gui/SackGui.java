@@ -56,7 +56,7 @@ public class SackGui extends AAScreen<SackContainer> {
 //        data.putInt("ButtonID", button.id);
 //        data.putInt("PlayerID", Minecraft.getInstance().player.getId());
 //        data.putInt("WorldID", Minecraft.getInstance().level.provider.getDimension());
-//        PacketHandler.THE_NETWORK.sendToServer(new PacketClientToServer(data, PacketHandler.GUI_BUTTON_TO_CONTAINER_HANDLER));
+//        PacketDistributor.SERVER.noArg().send(new PacketClientToServer(data, PacketHandler.GUI_BUTTON_TO_CONTAINER_HANDLER));
 //    }
 
     @Override

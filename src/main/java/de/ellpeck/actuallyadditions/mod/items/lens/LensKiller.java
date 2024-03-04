@@ -13,7 +13,7 @@ package de.ellpeck.actuallyadditions.mod.items.lens;
 import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraftforge.common.util.FakePlayerFactory;
+import net.neoforged.neoforge.common.util.FakePlayerFactory;
 
 public class LensKiller extends LensDeath {
 

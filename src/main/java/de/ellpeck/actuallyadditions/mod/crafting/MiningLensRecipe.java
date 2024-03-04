@@ -1,11 +1,9 @@
 package de.ellpeck.actuallyadditions.mod.crafting;
 
-import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.GsonHelper;
 import net.minecraft.util.random.Weight;
 import net.minecraft.util.random.WeightedEntry;
 import net.minecraft.world.Container;
@@ -14,9 +12,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -24,19 +20,16 @@ import javax.annotation.Nullable;
 public class MiningLensRecipe implements Recipe<Container>, WeightedEntry {
     public static final String NAME = "mining_lens";
 
-    private final ResourceLocation id;
     private final int weight;
     private final Ingredient input;
     //private final int weight;
     private final ItemStack output;
 
-    public MiningLensRecipe(ResourceLocation id, Ingredient input, int weight, ItemStack output) {
-        super();
+    public MiningLensRecipe(Ingredient input, int weight, ItemStack output) {
         this.weight = weight;
         this.input = input;
         //this.weight = weight;
         this.output = output;
-        this.id = id;
     }
 
     public Weight getWeight() {
@@ -78,11 +71,6 @@ public class MiningLensRecipe implements Recipe<Container>, WeightedEntry {
     }
 
     @Override
-    public ResourceLocation getId() {
-        return id;
-    }
-
-    @Override
     public RecipeSerializer<?> getSerializer() {
         return ActuallyRecipes.MINING_LENS_RECIPE.get();
     }
@@ -93,23 +81,38 @@ public class MiningLensRecipe implements Recipe<Container>, WeightedEntry {
     }
 
     public static class Serializer implements RecipeSerializer<MiningLensRecipe> {
-        @Override
-        public MiningLensRecipe fromJson(@Nonnull ResourceLocation pRecipeId, @Nonnull JsonObject pJson) {
-            Ingredient ingredient = Ingredient.fromJson(GsonHelper.getAsJsonObject(pJson, "ingredient"));
-            int weight = GsonHelper.getAsInt(pJson, "weight");
-            JsonObject resultObject = GsonHelper.getAsJsonObject(pJson, "result");
-            ItemStack result = new ItemStack(GsonHelper.getAsItem(resultObject, "item"));
+        private static final Codec<MiningLensRecipe> CODEC = RecordCodecBuilder.create(
+                instance -> instance.group(
+                                Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(recipe -> recipe.input),
+                                Codec.INT.fieldOf("weight").forGetter(recipe -> recipe.weight),
+                                ItemStack.RESULT_CODEC.fieldOf("result").forGetter(recipe -> recipe.output)
+                        )
+                        .apply(instance, MiningLensRecipe::new)
+        );
 
-            return new MiningLensRecipe(pRecipeId, ingredient, weight, result);
+//        @Override
+//        public MiningLensRecipe fromJson(@Nonnull ResourceLocation pRecipeId, @Nonnull JsonObject pJson) {
+//            Ingredient ingredient = Ingredient.fromJson(GsonHelper.getAsJsonObject(pJson, "ingredient"));
+//            int weight = GsonHelper.getAsInt(pJson, "weight");
+//            JsonObject resultObject = GsonHelper.getAsJsonObject(pJson, "result");
+//            ItemStack result = new ItemStack(GsonHelper.getAsItem(resultObject, "item"));
+//
+//            return new MiningLensRecipe(pRecipeId, ingredient, weight, result);
+//        }
+
+
+        @Override
+        public Codec<MiningLensRecipe> codec() {
+            return CODEC;
         }
 
         @Nullable
         @Override
-        public MiningLensRecipe fromNetwork(@Nonnull ResourceLocation pRecipeId, @Nonnull FriendlyByteBuf pBuffer) {
+        public MiningLensRecipe fromNetwork(@Nonnull FriendlyByteBuf pBuffer) {
             Ingredient ingredient = Ingredient.fromNetwork(pBuffer);
             int weight = pBuffer.readInt();
             ItemStack result = pBuffer.readItem();
-            return new MiningLensRecipe(pRecipeId, ingredient, weight, result);
+            return new MiningLensRecipe(ingredient, weight, result);
         }
 
         @Override
@@ -117,53 +120,6 @@ public class MiningLensRecipe implements Recipe<Container>, WeightedEntry {
             pRecipe.input.toNetwork(pBuffer);
             pBuffer.writeInt(pRecipe.weight);
             pBuffer.writeItem(pRecipe.output);
-        }
-    }
-
-    public static class Result implements FinishedRecipe {
-        private final ResourceLocation id;
-        private final Ingredient itemIngredient;
-        private final int weight;
-        private final ItemLike output;
-
-        public Result(ResourceLocation id, Ingredient itemIngredient, int weight, ItemLike output) {
-            this.id = id;
-            this.itemIngredient = itemIngredient;
-            this.weight = weight;
-            this.output = output;
-        }
-
-        @Override
-        public void serializeRecipeData(JsonObject pJson) {
-            pJson.add("ingredient", itemIngredient.toJson());
-            pJson.addProperty("weight", weight);
-
-            JsonObject resultObject = new JsonObject();
-            resultObject.addProperty("item", ForgeRegistries.ITEMS.getKey(output.asItem()).toString());
-
-            pJson.add("result", resultObject);
-        }
-
-        @Override
-        public ResourceLocation getId() {
-            return id;
-        }
-
-        @Override
-        public RecipeSerializer<?> getType() {
-            return ActuallyRecipes.MINING_LENS_RECIPE.get();
-        }
-
-        @Nullable
-        @Override
-        public JsonObject serializeAdvancement() {
-            return null;
-        }
-
-        @Nullable
-        @Override
-        public ResourceLocation getAdvancementId() {
-            return null;
         }
     }
 }

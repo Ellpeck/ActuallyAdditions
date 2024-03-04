@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.recipe;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.mod.crafting.CrushingRecipe;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
 public final class CrusherRecipeRegistry {
     //
@@ -29,13 +30,13 @@ public final class CrusherRecipeRegistry {
     //                        if (ore.substring(0, theCase.theCase.length()).equals(theCase.theCase)) {
     //                            String outputOre = theCase.resultPreString + ore.substring(theCase.theCase.length());
     //                            List<ItemStack> outputs = OreDictionary.getOres(outputOre, false);
-    //                            ItemStack output = outputs.isEmpty() ? ItemStack.EMPTY : outputs.get(0).copy();
-    //                            output.setCount(theCase.resultAmount);
-    //                            if (output.isEmpty()) {
+    //                            ItemStack stack = outputs.isEmpty() ? ItemStack.EMPTY : outputs.get(0).copy();
+    //                            stack.setCount(theCase.resultAmount);
+    //                            if (stack.isEmpty()) {
     //                                if (!oresNoResult.contains(ore)) {
     //                                    oresNoResult.add(ore);
     //                                }
-    //                            } else ActuallyAdditionsAPI.addCrusherRecipe(new OreIngredient(ore), output, StackUtil.getEmpty(), 0);
+    //                            } else ActuallyAdditionsAPI.addCrusherRecipe(new OreIngredient(ore), stack, StackUtil.getEmpty(), 0);
     //                        }
     //                    }
     //                }
@@ -71,9 +72,9 @@ public final class CrusherRecipeRegistry {
     //        ActuallyAdditions.LOGGER.debug(String.format("Removed %s crusher recipes that had dupliate inputs, %s remain.", removed.size(), usable.size()));
     //    }
     //
-    //    public static boolean hasBlacklistedOutput(ItemStack output, String[] config) {
-    //        if (StackUtil.isValid(output)) {
-    //            Item item = output.getItem();
+    //    public static boolean hasBlacklistedOutput(ItemStack stack, String[] config) {
+    //        if (StackUtil.isValid(stack)) {
+    //            Item item = stack.getItem();
     //            if (item != null) {
     //                String reg = item.getRegistryName().toString();
     //
@@ -91,7 +92,7 @@ public final class CrusherRecipeRegistry {
     //                        }
     //                    }
     //
-    //                    if (reg.equals(confReg) && output.getItemDamage() == meta) { return true; }
+    //                    if (reg.equals(confReg) && stack.getItemDamage() == meta) { return true; }
     //                }
     //
     //                return false;
@@ -108,8 +109,8 @@ public final class CrusherRecipeRegistry {
     //    }
     //
     public static CrushingRecipe getRecipeFromInput(ItemStack input) {
-        for (CrushingRecipe recipe : ActuallyAdditionsAPI.CRUSHER_RECIPES)
-            if (recipe.matches(input)) return recipe;
+        for (RecipeHolder<CrushingRecipe> holder : ActuallyAdditionsAPI.CRUSHER_RECIPES)
+            if (holder.value().matches(input)) return holder.value();
         return null;
     }
     //

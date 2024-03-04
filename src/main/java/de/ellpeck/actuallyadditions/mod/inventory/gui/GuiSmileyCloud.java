@@ -122,6 +122,6 @@
 //        compound.putInt("PlayerID", Minecraft.getInstance().player.getEntityId());
 //        compound.putInt("TextID", textID);
 //        compound.setString("Text", text);
-//        PacketHandler.THE_NETWORK.sendToServer(new PacketClientToServer(compound, PacketHandler.GUI_STRING_TO_TILE_HANDLER));
+//        PacketDistributor.SERVER.noArg().send(new PacketClientToServer(compound, PacketHandler.GUI_STRING_TO_TILE_HANDLER));
 //    }
 //}

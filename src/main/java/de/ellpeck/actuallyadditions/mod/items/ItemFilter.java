@@ -15,7 +15,6 @@ import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.SimpleMenuProvider;
@@ -23,9 +22,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.network.NetworkHooks;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -39,7 +37,7 @@ public class ItemFilter extends ItemBase {
     @Override
     public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
         if (!world.isClientSide && hand == InteractionHand.MAIN_HAND) {
-            NetworkHooks.openScreen((ServerPlayer) player, new SimpleMenuProvider((windowId, inv, playerEnt) -> new ContainerFilter(windowId, inv), Component.empty()));
+            player.openMenu(new SimpleMenuProvider((windowId, inv, playerEnt) -> new ContainerFilter(windowId, inv), Component.empty()));
             //            player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.FILTER.ordinal(), world, (int) player.posX, (int) player.posY, (int) player.posZ);
         }
         return InteractionResultHolder.pass(player.getItemInHand(hand));

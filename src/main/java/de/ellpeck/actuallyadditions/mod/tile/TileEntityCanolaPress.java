@@ -28,16 +28,16 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidType;
-import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.FluidType;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
@@ -47,10 +47,7 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements Me
     public static final int ENERGY_USE = 35;
     private static final int TIME = 30;
     public final CustomEnergyStorage storage = new CustomEnergyStorage(40000, 100, 0);
-    public final LazyOptional<IEnergyStorage> lazyEnergy = LazyOptional.of(() -> this.storage);
-
     public final OutputOnlyFluidTank tank = new OutputOnlyFluidTank(2 * FluidType.BUCKET_VOLUME);
-    public final LazyOptional<IFluidHandler> lazyFluid = LazyOptional.of(() -> this.tank);
 
     public int currentProcessTime;
     private int lastEnergyStored;
@@ -106,8 +103,9 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements Me
         if (t instanceof TileEntityCanolaPress tile) {
             tile.serverTick();
 
-            Optional<PressingRecipe> recipe = getRecipeForInput(tile.inv.getStackInSlot(0));
-            recipe.ifPresent(r -> {
+            Optional<RecipeHolder<PressingRecipe>> recipe = getRecipeForInput(tile.inv.getStackInSlot(0));
+            recipe.ifPresent(h -> {
+                PressingRecipe r = h.value();
                 if ((r.getOutput().isFluidEqual(tile.tank.getFluid()) || tile.tank.isEmpty()) && r.getOutput().getAmount() <= tile.tank.getCapacity() - tile.tank.getFluidAmount()) {
                     if (tile.storage.getEnergyStored() >= ENERGY_USE) {
                         tile.currentProcessTime++;
@@ -138,8 +136,8 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements Me
         return getRecipeForInput(stack).isPresent();
     }
 
-    public static Optional<PressingRecipe> getRecipeForInput(ItemStack stack) {
-        return ActuallyAdditionsAPI.PRESSING_RECIPES.stream().filter(recipe -> recipe.matches(new SingleItem(stack), null)).findFirst();
+    public static Optional<RecipeHolder<PressingRecipe>> getRecipeForInput(ItemStack stack) {
+        return ActuallyAdditionsAPI.PRESSING_RECIPES.stream().filter(recipe -> recipe.value().matches(new SingleItem(stack), null)).findFirst();
     }
 
     @Override
@@ -153,8 +151,8 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements Me
     }
 
     @Override
-    public LazyOptional<IFluidHandler> getFluidHandler(Direction facing) {
-        return this.lazyFluid;
+    public IFluidHandler getFluidHandler(Direction facing) {
+        return this.tank;
     }
 
     @Override
@@ -173,8 +171,8 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements Me
     }
 
     @Override
-    public LazyOptional<IEnergyStorage> getEnergyStorage(Direction facing) {
-        return this.lazyEnergy;
+    public IEnergyStorage getEnergyStorage(Direction facing) {
+        return this.storage;
     }
 
     @Override

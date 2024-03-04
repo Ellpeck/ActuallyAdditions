@@ -1,17 +1,13 @@
 package de.ellpeck.actuallyadditions.data;
 
-import com.google.gson.JsonObject;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.config.conditions.BoolConfigCondition;
-import de.ellpeck.actuallyadditions.mod.crafting.ActuallyRecipes;
-import de.ellpeck.actuallyadditions.mod.crafting.TargetNBTIngredient;
-import de.ellpeck.actuallyadditions.mod.crafting.WrappedRecipe;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
-import net.minecraft.data.CachedOutput;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
@@ -22,17 +18,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.ItemLike;
-import net.minecraftforge.common.Tags;
-import net.minecraftforge.common.crafting.ConditionalRecipe;
-import net.minecraftforge.common.crafting.StrictNBTIngredient;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
-import org.jetbrains.annotations.Nullable;
+import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.common.crafting.NBTIngredient;
+import net.neoforged.neoforge.registries.DeferredItem;
 
 import javax.annotation.Nonnull;
 import java.util.Arrays;
-import java.util.concurrent.CompletableFuture;
-import java.util.function.Consumer;
 
 public class ItemRecipeGenerator extends RecipeProvider {
     public ItemRecipeGenerator(PackOutput packOutput) {
@@ -45,7 +36,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
     }
 
     @Override
-    protected void buildRecipes(Consumer<FinishedRecipe> consumer) {
+    protected void buildRecipes(RecipeOutput consumer) {
         generatePaxels(consumer);
 
         //Goggles
@@ -156,7 +147,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
         Recipe.shapeless(ActuallyItems.LENS_OF_THE_KILLER.get())
             .requires(Items.DIAMOND_SWORD)
             .requires(ActuallyItems.LENS_OF_CERTAIN_DEATH.get())
-            .requires(StrictNBTIngredient.of(enchantedBook)).save(consumer);
+            .requires(NBTIngredient.of(true, enchantedBook)).save(consumer);
 
 
         //Filter
@@ -374,45 +365,45 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .define('C', ActuallyItems.ADVANCED_COIL.get())
             .save(consumer);
 
-        //Double Battery
-        Recipe.shaped(ActuallyItems.DOUBLE_BATTERY.get())
-            .pattern(" R ")
-            .pattern("ICI")
-            .pattern("III")
-            .define('R', TargetNBTIngredient.of(ActuallyItems.SINGLE_BATTERY.get()))
-            .define('I', ActuallyItems.ENORI_CRYSTAL.get())
-            .define('C', ActuallyItems.ADVANCED_COIL.get())
-            .save(WrappedRecipe.Inject(consumer, ActuallyRecipes.KEEP_DATA_SHAPED_RECIPE.get()));
-
-        //Triple Battery
-        Recipe.shaped(ActuallyItems.TRIPLE_BATTERY.get())
-            .pattern(" R ")
-            .pattern("ICI")
-            .pattern("III")
-            .define('R', TargetNBTIngredient.of(ActuallyItems.DOUBLE_BATTERY.get()))
-            .define('I', ActuallyItems.EMPOWERED_ENORI_CRYSTAL.get())
-            .define('C', ActuallyItems.ADVANCED_COIL.get())
-            .save(WrappedRecipe.Inject(consumer, ActuallyRecipes.KEEP_DATA_SHAPED_RECIPE.get()));
-
-        //Quad Battery
-        Recipe.shaped(ActuallyItems.QUADRUPLE_BATTERY.get())
-            .pattern(" R ")
-            .pattern("ICI")
-            .pattern("III")
-            .define('R', TargetNBTIngredient.of(ActuallyItems.TRIPLE_BATTERY.get()))
-            .define('I', ActuallyItems.EMPOWERED_ENORI_CRYSTAL.get())
-            .define('C', ActuallyItems.ADVANCED_COIL.get())
-            .save(WrappedRecipe.Inject(consumer, ActuallyRecipes.KEEP_DATA_SHAPED_RECIPE.get()));
-
-        //Quintuple Battery
-        Recipe.shaped(ActuallyItems.QUINTUPLE_BATTERY.get())
-            .pattern(" R ")
-            .pattern("ICI")
-            .pattern("III")
-            .define('R', TargetNBTIngredient.of(ActuallyItems.QUADRUPLE_BATTERY.get()))
-            .define('I', ActuallyItems.EMPOWERED_DIAMATINE_CRYSTAL.get())
-            .define('C', ActuallyItems.ADVANCED_COIL.get())
-            .save(WrappedRecipe.Inject(consumer, ActuallyRecipes.KEEP_DATA_SHAPED_RECIPE.get()));
+//        //Double Battery TODO: Flanks please fix these :)
+//        Recipe.shaped(ActuallyItems.DOUBLE_BATTERY.get())
+//            .pattern(" R ")
+//            .pattern("ICI")
+//            .pattern("III")
+//            .define('R', TargetNBTIngredient.of(ActuallyItems.SINGLE_BATTERY.get()))
+//            .define('I', ActuallyItems.ENORI_CRYSTAL.get())
+//            .define('C', ActuallyItems.ADVANCED_COIL.get())
+//            .save(WrappedRecipe.Inject(consumer, ActuallyRecipes.KEEP_DATA_SHAPED_RECIPE.get()));
+//
+//        //Triple Battery
+//        Recipe.shaped(ActuallyItems.TRIPLE_BATTERY.get())
+//            .pattern(" R ")
+//            .pattern("ICI")
+//            .pattern("III")
+//            .define('R', TargetNBTIngredient.of(ActuallyItems.DOUBLE_BATTERY.get()))
+//            .define('I', ActuallyItems.EMPOWERED_ENORI_CRYSTAL.get())
+//            .define('C', ActuallyItems.ADVANCED_COIL.get())
+//            .save(WrappedRecipe.Inject(consumer, ActuallyRecipes.KEEP_DATA_SHAPED_RECIPE.get()));
+//
+//        //Quad Battery
+//        Recipe.shaped(ActuallyItems.QUADRUPLE_BATTERY.get())
+//            .pattern(" R ")
+//            .pattern("ICI")
+//            .pattern("III")
+//            .define('R', TargetNBTIngredient.of(ActuallyItems.TRIPLE_BATTERY.get()))
+//            .define('I', ActuallyItems.EMPOWERED_ENORI_CRYSTAL.get())
+//            .define('C', ActuallyItems.ADVANCED_COIL.get())
+//            .save(WrappedRecipe.Inject(consumer, ActuallyRecipes.KEEP_DATA_SHAPED_RECIPE.get()));
+//
+//        //Quintuple Battery
+//        Recipe.shaped(ActuallyItems.QUINTUPLE_BATTERY.get())
+//            .pattern(" R ")
+//            .pattern("ICI")
+//            .pattern("III")
+//            .define('R', TargetNBTIngredient.of(ActuallyItems.QUADRUPLE_BATTERY.get()))
+//            .define('I', ActuallyItems.EMPOWERED_DIAMATINE_CRYSTAL.get())
+//            .define('C', ActuallyItems.ADVANCED_COIL.get())
+//            .save(WrappedRecipe.Inject(consumer, ActuallyRecipes.KEEP_DATA_SHAPED_RECIPE.get()));
 
         //Magnet Ring
         Recipe.shaped(ActuallyItems.RING_OF_MAGNETIZING.get())
@@ -433,31 +424,19 @@ public class ItemRecipeGenerator extends RecipeProvider {
 
         Recipe.shapeless(ActuallyItems.CRAFTER_ON_A_STICK.get()).requires(Items.CRAFTING_TABLE).requires(ItemTags.SIGNS).save(consumer);
 
-        ConditionalRecipe.builder()
-                .addCondition(new BoolConfigCondition("tinyCoalStuff"))
-                .addRecipe(
-                        Recipe.shapeless(ActuallyItems.TINY_COAL.get(), 8)
-                            .requires(Items.COAL)::save)
-                .generateAdvancement().build(consumer, new ResourceLocation(ActuallyAdditions.MODID, "coal_to_tiny"));
-        ConditionalRecipe.builder()
-                .addCondition(new BoolConfigCondition("tinyCoalStuff"))
-                .addRecipe(
-                        Recipe.shapeless(ActuallyItems.TINY_CHARCOAL.get(), 8)
-                                .requires(Items.CHARCOAL)::save)
-                .generateAdvancement().build(consumer, new ResourceLocation(ActuallyAdditions.MODID, "charcoal_to_tiny"));
+        RecipeOutput boolConsumer = consumer.withConditions(new BoolConfigCondition("tinyCoalStuff"));
 
-        ConditionalRecipe.builder()
-                .addCondition(new BoolConfigCondition("tinyCoalStuff"))
-                .addRecipe(
-                        Recipe.shaped(Items.COAL)
-                            .pattern("CCC", "C C", "CCC").define('C', ActuallyItems.TINY_COAL.get())::save)
-                .generateAdvancement().build(consumer, new ResourceLocation(ActuallyAdditions.MODID, "tiny_to_coal"));
-        ConditionalRecipe.builder()
-                .addCondition(new BoolConfigCondition("tinyCoalStuff"))
-                .addRecipe(
-                        Recipe.shaped(Items.CHARCOAL)
-                                .pattern("CCC", "C C", "CCC").define('C', ActuallyItems.TINY_CHARCOAL.get())::save)
-                .generateAdvancement().build(consumer, new ResourceLocation(ActuallyAdditions.MODID, "tiny_to_charcoal"));
+        Recipe.shapeless(ActuallyItems.TINY_COAL.get(), 8)
+                .requires(Items.COAL)
+                .save(boolConsumer, new ResourceLocation(ActuallyAdditions.MODID, "coal_to_tiny"));
+        Recipe.shapeless(ActuallyItems.TINY_CHARCOAL.get(), 8)
+                .requires(Items.CHARCOAL).save(boolConsumer, new ResourceLocation(ActuallyAdditions.MODID, "charcoal_to_tiny"));
+        Recipe.shaped(Items.COAL)
+                .pattern("CCC", "C C", "CCC").define('C', ActuallyItems.TINY_COAL.get())
+                .save(boolConsumer, new ResourceLocation(ActuallyAdditions.MODID, "tiny_to_coal"));
+        Recipe.shaped(Items.CHARCOAL)
+                .pattern("CCC", "C C", "CCC").define('C', ActuallyItems.TINY_CHARCOAL.get())
+                .save(boolConsumer, new ResourceLocation(ActuallyAdditions.MODID, "tiny_to_charcoal"));
 
         //Canola Seeds
         Recipe.shapeless(ActuallyItems.CANOLA_SEEDS.get())
@@ -516,7 +495,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
         //        GameRegistry.addSmelting(new ItemStack(InitItems.itemDust, 1, TheDusts.COAL.ordinal()), new ItemStack(Items.COAL), 1F);
     }
 
-    protected void generatePaxels(Consumer<FinishedRecipe> consumer) {
+    protected void generatePaxels(RecipeOutput consumer) {
         addPaxel(consumer, ActuallyItems.WOODEN_AIOT, Items.WOODEN_AXE, Items.WOODEN_PICKAXE, Items.WOODEN_SWORD, Items.WOODEN_SHOVEL, Items.WOODEN_HOE);
         addPaxel(consumer, ActuallyItems.STONE_AIOT, Items.STONE_AXE, Items.STONE_PICKAXE, Items.STONE_SWORD, Items.STONE_SHOVEL, Items.STONE_HOE);
         addPaxel(consumer, ActuallyItems.IRON_AIOT, Items.IRON_AXE, Items.IRON_PICKAXE, Items.IRON_SWORD, Items.IRON_SHOVEL, Items.IRON_HOE);
@@ -525,7 +504,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
         addPaxel(consumer, ActuallyItems.NETHERITE_AIOT, Items.NETHERITE_AXE, Items.NETHERITE_PICKAXE, Items.NETHERITE_SWORD, Items.NETHERITE_SHOVEL, Items.NETHERITE_HOE);
 }
 
-    public static void addPaxel(Consumer<FinishedRecipe> consumer, RegistryObject<Item> output, Item axe, Item pickaxe, Item sword, Item shovel, Item hoe) {
+    public static void addPaxel(RecipeOutput consumer, DeferredItem<Item> output, Item axe, Item pickaxe, Item sword, Item shovel, Item hoe) {
         Recipe.shapeless(output.get())
             .requires(axe)
             .requires(pickaxe)
@@ -535,7 +514,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .save(consumer);
     }
 
-    public static void addPaxel(Consumer<FinishedRecipe> consumer, RegistryObject<Item> output, RegistryObject<Item> axe, RegistryObject<Item> pickaxe, RegistryObject<Item> sword, RegistryObject<Item> shovel, RegistryObject<Item> hoe) {
+    public static void addPaxel(RecipeOutput consumer, DeferredItem<Item> output, DeferredItem<Item> axe, DeferredItem<Item> pickaxe, DeferredItem<Item> sword, DeferredItem<Item> shovel, DeferredItem<Item> hoe) {
         Recipe.shapeless(output.get())
             .requires(axe.get())
             .requires(pickaxe.get())
@@ -545,25 +524,26 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .save(consumer);
     }
 
-    public static void decompress(Consumer<FinishedRecipe> consumer, RegistryObject<Item> output, RegistryObject<Item> input) {
-        ResourceLocation key = ForgeRegistries.ITEMS.getKey(output.get());
+    public static void decompress(RecipeOutput consumer, DeferredItem<Item> output, DeferredItem<Item> input) {
+        ResourceLocation key = BuiltInRegistries.ITEM.getKey(output.get());
         Recipe.shapeless(output.get(), 9).requires(input.get()).save(consumer, new ResourceLocation(key.getNamespace(), "decompress/" + key.getPath()));
     }
-    public static void compress(Consumer<FinishedRecipe> consumer, RegistryObject<Item> output, RegistryObject<Item> input) {
-        ResourceLocation key = ForgeRegistries.ITEMS.getKey(output.get());
+    public static void compress(RecipeOutput consumer, DeferredItem<Item> output, DeferredItem<Item> input) {
+        ResourceLocation key = BuiltInRegistries.ITEM.getKey(output.get());
         Recipe.shaped(output.get()).pattern("xxx","xxx", "xxx").define('x', input.get()).save(consumer, new ResourceLocation(key.getNamespace(), "compress/" + key.getPath()));
     }
-    public static void addShard(Consumer<FinishedRecipe> consumer, RegistryObject<Item> shard, RegistryObject<Item> crystal) {
+    public static void addShard(RecipeOutput consumer, DeferredItem<Item> shard, DeferredItem<Item> crystal) {
         compress(consumer, crystal, shard);
         decompress(consumer, shard, crystal);
     }
 
-    @Override
-    protected @Nullable CompletableFuture<?> saveAdvancement(CachedOutput output, FinishedRecipe finishedRecipe, JsonObject advancementJson) {
-        return null; //Nope...
-    }
+//    @Override //TODO: Flanks do your RecipeOutput wrapper thingy ;)
+//    protected @Nullable CompletableFuture<?> saveAdvancement(CachedOutput stack, FinishedRecipe finishedRecipe, JsonObject advancementJson) {
+//        return null;
+//        //Nope... maybe later...
+//    }
 
-    public static void addToolAndArmorRecipes(Consumer<FinishedRecipe> consumer, RegistryObject<Item> base, RegistryObject<Item> pickaxe, RegistryObject<Item> sword, RegistryObject<Item> axe, RegistryObject<Item> shovel, RegistryObject<Item> hoe, RegistryObject<Item> helm, RegistryObject<Item> chest, RegistryObject<Item> pants, RegistryObject<Item> boots) {
+    public static void addToolAndArmorRecipes(RecipeOutput consumer, DeferredItem<Item> base, DeferredItem<Item> pickaxe, DeferredItem<Item> sword, DeferredItem<Item> axe, DeferredItem<Item> shovel, DeferredItem<Item> hoe, DeferredItem<Item> helm, DeferredItem<Item> chest, DeferredItem<Item> pants, DeferredItem<Item> boots) {
         //Pickaxe
         Recipe.shaped(pickaxe.get())
             .pattern("EEE", " S ", " S ")
@@ -662,7 +642,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
             }
 
             @Override
-            public void save(@Nonnull Consumer<FinishedRecipe> consumer) {
+            public void save(@Nonnull RecipeOutput consumer) {
                 this.unlockedBy("has_book", has(ActuallyItems.ITEM_BOOKLET.get()));
                 if (this.name != null) {
                     this.save(consumer, this.name);
@@ -671,7 +651,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
                 }
             }
             @Override
-            public void save(@Nonnull Consumer<FinishedRecipe> consumer, @Nonnull ResourceLocation location) {
+            public void save(@Nonnull RecipeOutput consumer, @Nonnull ResourceLocation location) {
                 this.unlockedBy("", has(Items.AIR));
                 super.save(consumer, location);
             }
@@ -714,13 +694,13 @@ public class ItemRecipeGenerator extends RecipeProvider {
             }
 
             @Override
-            public void save(@Nonnull Consumer<FinishedRecipe> consumerIn) {
+            public void save(@Nonnull RecipeOutput consumerIn) {
                 this.unlockedBy("has_book", has(ActuallyItems.ITEM_BOOKLET.get()));
                 super.save(consumerIn);
             }
 
             @Override
-            public void save(@Nonnull Consumer<FinishedRecipe> consumer, @Nonnull ResourceLocation location) {
+            public void save(@Nonnull RecipeOutput consumer, @Nonnull ResourceLocation location) {
                 this.unlockedBy("", has(Items.AIR));
                 super.save(consumer, location);
             }

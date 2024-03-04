@@ -20,7 +20,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -36,9 +35,8 @@ import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.fluids.FluidUtil;
-import net.minecraftforge.fluids.capability.templates.FluidTank;
-import net.minecraftforge.network.NetworkHooks;
+import net.neoforged.neoforge.fluids.FluidUtil;
+import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -52,7 +50,7 @@ public abstract class BlockContainerBase extends Block implements EntityBlock {
         if (!world.isClientSide) {
             BlockEntity tile = world.getBlockEntity(pos);
             if (expectedInstance.isInstance(tile)) {
-                NetworkHooks.openScreen((ServerPlayer) player, (MenuProvider) tile, pos);
+                player.openMenu((MenuProvider) tile);
             }
             return InteractionResult.SUCCESS;
         }
@@ -184,14 +182,15 @@ public abstract class BlockContainerBase extends Block implements EntityBlock {
     }
 
     @Override
-    public void playerWillDestroy(@Nonnull Level world, @Nonnull BlockPos pos, @Nonnull BlockState state, Player player) {
-        super.playerWillDestroy(world, pos, state, player);
+    public BlockState playerWillDestroy(@Nonnull Level world, @Nonnull BlockPos pos, @Nonnull BlockState state, Player player) {
+        BlockState theState = super.playerWillDestroy(world, pos, state, player);
         if (!player.isCreative()) {
             BlockEntity tile = world.getBlockEntity(pos);
             if (tile instanceof TileEntityBase && ((TileEntityBase) tile).stopFromDropping) {
                 player.displayClientMessage(Component.translatable("info." + ActuallyAdditions.MODID + ".machineBroke").withStyle(ChatFormatting.RED), false);
             }
         }
+        return theState;
     }
 
     @Override

@@ -26,11 +26,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.AABB;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.items.IItemHandler;
 
 public abstract class TileEntityLaserRelay extends TileEntityInventoryBase {
 
@@ -176,11 +174,11 @@ public abstract class TileEntityLaserRelay extends TileEntityInventoryBase {
         return this.cachedNetwork;
     }
 
-    @Override
-    @OnlyIn(Dist.CLIENT)
-    public AABB getRenderBoundingBox() {
-        return INFINITE_EXTENT_AABB;
-    }
+//    @Override TODO: Fix the renderBoundingBox
+//    @OnlyIn(Dist.CLIENT)
+//    public AABB getRenderBoundingBox() {
+//        return INFINITE_EXTENT_AABB;
+//    }
 
     @Override
     public boolean shouldSyncSlots() {
@@ -188,8 +186,8 @@ public abstract class TileEntityLaserRelay extends TileEntityInventoryBase {
     }
 
     @Override
-    public LazyOptional<IItemHandler> getItemHandler(Direction facing) {
-        return LazyOptional.empty();
+    public IItemHandler getItemHandler(Direction facing) {
+        return null;
     }
 
     public int getMaxRange() {

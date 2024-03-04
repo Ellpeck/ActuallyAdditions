@@ -4,7 +4,7 @@ import com.google.gson.JsonObject;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.registries.BuiltInRegistries;
 
 import javax.annotation.Nullable;
 import java.util.function.Consumer;
@@ -36,9 +36,9 @@ public class WrappedRecipe implements FinishedRecipe {
         JsonObject jsonObject = new JsonObject();
 
         if (serializerOverride != null)
-            jsonObject.addProperty("type", ForgeRegistries.RECIPE_SERIALIZERS.getKey(serializerOverride).toString());
+            jsonObject.addProperty("type", BuiltInRegistries.RECIPE_SERIALIZERS.getKey(serializerOverride).toString());
         else
-            jsonObject.addProperty("type", ForgeRegistries.RECIPE_SERIALIZERS.getKey(inner.getType()).toString());
+            jsonObject.addProperty("type", BuiltInRegistries.RECIPE_SERIALIZERS.getKey(inner.getType()).toString());
         serializeRecipeData(jsonObject);
         return jsonObject;
     }

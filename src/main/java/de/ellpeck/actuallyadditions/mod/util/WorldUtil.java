@@ -33,16 +33,15 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.common.util.FakePlayerFactory;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.event.level.BlockEvent.BreakEvent;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.common.CommonHooks;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.common.util.FakePlayer;
+import net.neoforged.neoforge.common.util.FakePlayerFactory;
+import net.neoforged.neoforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.event.level.BlockEvent.BreakEvent;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -113,38 +112,34 @@ public final class WorldUtil {
         return extracted;
     }
 
-    public static void doEnergyInteraction(BlockEntity tileFrom, BlockEntity tileTo, Direction sideTo, int maxTransfer) {
+    public static void doEnergyInteraction(Level level, BlockPos posFrom, BlockPos posTo, Direction sideTo, int maxTransfer) {
         if (maxTransfer > 0) {
             Direction opp = sideTo == null
                 ? null
                 : sideTo.getOpposite();
-            LazyOptional<IEnergyStorage> handlerFrom = tileFrom.getCapability(ForgeCapabilities.ENERGY, sideTo);
-            LazyOptional<IEnergyStorage> handlerTo = tileTo.getCapability(ForgeCapabilities.ENERGY, opp);
-            handlerFrom.ifPresent((from) -> {
-                handlerTo.ifPresent((to) -> {
-                    int drain = from.extractEnergy(maxTransfer, true);
-                    if (drain > 0) {
-                        int filled = to.receiveEnergy(drain, false);
-                        from.extractEnergy(filled, false);
-                    }
-                });
-            });
+            IEnergyStorage handlerFrom = level.getCapability(Capabilities.EnergyStorage.BLOCK, posFrom, sideTo);
+            IEnergyStorage handlerTo = level.getCapability(Capabilities.EnergyStorage.BLOCK, posTo, opp);
+            if (handlerFrom != null && handlerTo != null) {
+                int drain = handlerFrom.extractEnergy(maxTransfer, true);
+                if (drain > 0) {
+                    int filled = handlerTo.receiveEnergy(drain, false);
+                    handlerFrom.extractEnergy(filled, false);
+                }
+            }
         }
     }
 
-    public static void doFluidInteraction(BlockEntity tileFrom, BlockEntity tileTo, Direction sideTo, int maxTransfer) {
+    public static void doFluidInteraction(Level level, BlockPos posFrom, BlockPos posTo, Direction sideTo, int maxTransfer) {
         if (maxTransfer > 0) {
-            LazyOptional<IFluidHandler> optionalFrom = tileFrom.getCapability(ForgeCapabilities.FLUID_HANDLER, sideTo);
-            LazyOptional<IFluidHandler> optionalTo = tileTo.getCapability(ForgeCapabilities.FLUID_HANDLER, sideTo.getOpposite());
-            optionalFrom.ifPresent((from) -> {
-                optionalTo.ifPresent((to) -> {
-                    FluidStack drain = from.drain(maxTransfer, IFluidHandler.FluidAction.SIMULATE);
-                    if (!drain.isEmpty()) {
-                        int filled = to.fill(drain.copy(), IFluidHandler.FluidAction.EXECUTE);
-                        from.drain(filled, IFluidHandler.FluidAction.EXECUTE);
-                    }
-                });
-            });
+            IFluidHandler handlerFrom = level.getCapability(Capabilities.FluidHandler.BLOCK, posFrom, sideTo);
+            IFluidHandler handlerTo = level.getCapability(Capabilities.FluidHandler.BLOCK, posTo, sideTo.getOpposite());
+            if (handlerFrom != null && handlerTo != null) {
+                FluidStack drain = handlerFrom.drain(maxTransfer, IFluidHandler.FluidAction.SIMULATE);
+                if (!drain.isEmpty()) {
+                    int filled = handlerTo.fill(drain.copy(), IFluidHandler.FluidAction.EXECUTE);
+                    handlerFrom.drain(filled, IFluidHandler.FluidAction.EXECUTE);
+                }
+            }
         }
     }
 
@@ -298,7 +293,7 @@ public final class WorldUtil {
             BlockState state = level.getBlockState(pos);
 
             BreakEvent event = new BreakEvent(level, pos, state, fake);
-            if (!MinecraftForge.EVENT_BUS.post(event)) {
+            if (!NeoForge.EVENT_BUS.post(event).isCanceled()) {
                 //return ForgeEventFactory.fireBlockHarvesting(drops, world, pos, state, 0, 1, false, fake); //TODO what?!
             }
         }
@@ -336,7 +331,7 @@ public final class WorldUtil {
         // server sided handling
         if (!level.isClientSide) {
             // send the blockbreak event
-            int xp = ForgeHooks.onBlockBreakEvent(level, ((ServerPlayer) player).gameMode.getGameModeForPlayer(), (ServerPlayer) player, pos);
+            int xp = CommonHooks.onBlockBreakEvent(level, ((ServerPlayer) player).gameMode.getGameModeForPlayer(), (ServerPlayer) player, pos);
             if (xp == -1) {
                 return false;
             }

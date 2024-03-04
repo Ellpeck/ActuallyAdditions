@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod;
 
+import com.mojang.serialization.Codec;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.ActuallyTags;
 import de.ellpeck.actuallyadditions.api.farmer.IFarmerBehavior;
@@ -18,7 +19,6 @@ import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import de.ellpeck.actuallyadditions.mod.config.conditions.BoolConfigCondition;
 import de.ellpeck.actuallyadditions.mod.crafting.ActuallyRecipes;
 import de.ellpeck.actuallyadditions.mod.crafting.CrusherCrafting;
-import de.ellpeck.actuallyadditions.mod.crafting.TargetNBTIngredient;
 import de.ellpeck.actuallyadditions.mod.data.WorldData;
 import de.ellpeck.actuallyadditions.mod.entity.EntityWorm;
 import de.ellpeck.actuallyadditions.mod.entity.InitEntities;
@@ -36,32 +36,33 @@ import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.particle.ActuallyParticles;
 import de.ellpeck.actuallyadditions.mod.update.UpdateChecker;
 import de.ellpeck.actuallyadditions.mod.util.ResourceReloader;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.crafting.CraftingHelper;
-import net.minecraftforge.event.AddReloadListenerEvent;
-import net.minecraftforge.event.server.ServerStartedEvent;
-import net.minecraftforge.event.server.ServerStoppedEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.event.config.ModConfigEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModLoadingContext;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.event.config.ModConfigEvent;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.common.conditions.ICondition;
+import net.neoforged.neoforge.event.AddReloadListenerEvent;
+import net.neoforged.neoforge.event.server.ServerStartedEvent;
+import net.neoforged.neoforge.event.server.ServerStoppedEvent;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.util.function.Supplier;
 
 @Mod(ActuallyAdditions.MODID)
 public class ActuallyAdditions {
@@ -78,15 +79,17 @@ public class ActuallyAdditions {
 
     public static final Logger LOGGER = LogManager.getLogger(NAME);
 
-    public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, MODID);
-    public static final RegistryObject<EntityType<EntityWorm>> ENTITY_WORM = ENTITIES.register("worm", () -> EntityType.Builder.of(EntityWorm::new, MobCategory.MISC).build(MODID + ":worm"));
+    private static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(BuiltInRegistries.ENTITY_TYPE, MODID);
+    public static final Supplier<EntityType<EntityWorm>> ENTITY_WORM = ENTITIES.register("worm", () -> EntityType.Builder.of(EntityWorm::new, MobCategory.MISC).build(MODID + ":worm"));
+
+    private static final DeferredRegister<Codec<? extends ICondition>> CONDITION_CODECS = DeferredRegister.create(NeoForgeRegistries.Keys.CONDITION_CODECS, MODID);
+    public static final DeferredHolder<Codec<? extends ICondition>, Codec<BoolConfigCondition>> BOOL_CONFIG_CONDITION = CONDITION_CODECS.register("bool_config_condition", () -> BoolConfigCondition.CODEC);
+
 
     public static boolean commonCapsLoaded;
 
-    public ActuallyAdditions() {
+    public ActuallyAdditions(IEventBus eventBus) {
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CommonConfig.COMMON_CONFIG);
-
-        IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         ActuallyBlocks.init(eventBus);
         ActuallyItems.init(eventBus);
@@ -95,25 +98,27 @@ public class ActuallyAdditions {
         AASounds.init(eventBus);
         ActuallyContainers.CONTAINERS.register(eventBus);
         ENTITIES.register(eventBus);
+        CONDITION_CODECS.register(eventBus);
         eventBus.addListener(this::onConfigReload);
         ActuallyParticles.init(eventBus);
         ActuallyTags.init();
 
-        MinecraftForge.EVENT_BUS.addListener(this::serverStarted);
-        MinecraftForge.EVENT_BUS.addListener(this::serverStopped);
-        MinecraftForge.EVENT_BUS.register(new CommonEvents());
-        MinecraftForge.EVENT_BUS.register(new DungeonLoot());
-        MinecraftForge.EVENT_BUS.addListener(ActuallyAdditions::reloadEvent);
-        MinecraftForge.EVENT_BUS.addListener(Worm::onHoe);
+        NeoForge.EVENT_BUS.addListener(this::serverStarted);
+        NeoForge.EVENT_BUS.addListener(this::serverStopped);
+        NeoForge.EVENT_BUS.register(new CommonEvents());
+        NeoForge.EVENT_BUS.register(new DungeonLoot());
+        NeoForge.EVENT_BUS.addListener(ActuallyAdditions::reloadEvent);
+        NeoForge.EVENT_BUS.addListener(Worm::onHoe);
         InitFluids.init(eventBus);
 
+        eventBus.addListener(PacketHandler::register);
         eventBus.addListener(this::setup);
 
-        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
-            eventBus.addListener(this::clientSetup);
-            eventBus.addListener(ActuallyAdditionsClient::setupSpecialRenders);
-            eventBus.addListener(this::particleFactoryRegister);
-        });
+        if (FMLEnvironment.dist.isClient()) {
+	        eventBus.addListener(this::clientSetup);
+	        eventBus.addListener(ActuallyAdditionsClient::setupSpecialRenders);
+	        eventBus.addListener(this::particleFactoryRegister);
+        }
         IFarmerBehavior.initBehaviors();
     }
 
@@ -122,17 +127,11 @@ public class ActuallyAdditions {
     }
 
     private void setup(FMLCommonSetupEvent event) {
-        PacketHandler.init();
-
-        event.enqueueWork(() -> {
-            CraftingHelper.register(BoolConfigCondition.Serializer.INSTANCE);
-        });
-
         ActuallyAdditionsAPI.methodHandler = new MethodHandler();
         ActuallyAdditionsAPI.connectionHandler = new LaserRelayConnectionHandler();
         //Lenses.init();
 //        CompatUtil.registerCraftingTweaks();
-        event.enqueueWork(() -> CraftingHelper.register(TargetNBTIngredient.Serializer.NAME, TargetNBTIngredient.SERIALIZER));
+//        event.enqueueWork(() -> CraftingHelper.register(TargetNBTIngredient.Serializer.NAME, TargetNBTIngredient.SERIALIZER)); TODO: Flanks fix the Target NBT ingredient!
 
         commonCapsLoaded = false; // Loader.isModLoaded("commoncapabilities");
 
@@ -146,8 +145,8 @@ public class ActuallyAdditions {
     }
 
     private void onConfigReload(ModConfigEvent event) {
-        Item item1 = ForgeRegistries.ITEMS.getValue(new ResourceLocation(CommonConfig.Other.REDSTONECONFIGURATOR.get()));
-        Item item2 = ForgeRegistries.ITEMS.getValue(new ResourceLocation(CommonConfig.Other.RELAYCONFIGURATOR.get()));
+        Item item1 = BuiltInRegistries.ITEM.get(new ResourceLocation(CommonConfig.Other.REDSTONECONFIGURATOR.get()));
+        Item item2 = BuiltInRegistries.ITEM.get(new ResourceLocation(CommonConfig.Other.RELAYCONFIGURATOR.get()));
         CommonConfig.Other.redstoneConfigureItem = item1 != null?item1: Items.AIR;
         CommonConfig.Other.relayConfigureItem = item2 != null?item2: Items.AIR;
     }

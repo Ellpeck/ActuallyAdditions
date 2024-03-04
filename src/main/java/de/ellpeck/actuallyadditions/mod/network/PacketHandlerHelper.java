@@ -20,9 +20,9 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.network.PacketDistributor;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 public final class PacketHandlerHelper {
 
@@ -36,7 +36,7 @@ public final class PacketHandlerHelper {
         compound.putString("WorldID", tile.getLevel().dimension().location().toString());
         compound.putInt("PlayerID", Minecraft.getInstance().player.getId());
         compound.putInt("ButtonID", buttonId);
-        PacketHandler.THE_NETWORK.sendToServer(new PacketClientToServer(compound, PacketHandler.GUI_BUTTON_TO_TILE_HANDLER));
+        PacketDistributor.SERVER.noArg().send(new PacketClientToServer(compound, PacketHandler.GUI_BUTTON_TO_TILE_HANDLER));
     }
 
     public static void syncPlayerData(Player player, boolean log) {
@@ -48,7 +48,7 @@ public final class PacketHandlerHelper {
         compound.put("Data", data);
 
         if (player instanceof ServerPlayer) {
-            PacketHandler.THE_NETWORK.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) player), new PacketServerToClient(compound, PacketHandler.SYNC_PLAYER_DATA));
+            ((ServerPlayer) player).connection.send(new PacketServerToClient(compound, PacketHandler.SYNC_PLAYER_DATA));
         }
     }
 
@@ -84,7 +84,7 @@ public final class PacketHandlerHelper {
                 }
             }
 
-            PacketHandler.THE_NETWORK.sendToServer(new PacketClientToServer(compound, PacketHandler.PLAYER_DATA_TO_SERVER));
+            PacketDistributor.SERVER.noArg().send(new PacketClientToServer(compound, PacketHandler.PLAYER_DATA_TO_SERVER));
         }
     }
 
@@ -98,6 +98,6 @@ public final class PacketHandlerHelper {
         compound.putInt("PlayerID", Minecraft.getInstance().player.getId());
         compound.putInt("NumberID", id);
         compound.putDouble("Number", number);
-        PacketHandler.THE_NETWORK.sendToServer(new PacketClientToServer(compound, PacketHandler.GUI_NUMBER_TO_TILE_HANDLER));
+        PacketDistributor.SERVER.noArg().send(new PacketClientToServer(compound, PacketHandler.GUI_NUMBER_TO_TILE_HANDLER));
     }
 }

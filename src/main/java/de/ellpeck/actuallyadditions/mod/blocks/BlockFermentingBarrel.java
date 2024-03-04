@@ -13,7 +13,6 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityFermentingBarrel;
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -33,8 +32,7 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.fluids.FluidUtil;
-import net.minecraftforge.network.NetworkHooks;
+import net.neoforged.neoforge.fluids.FluidUtil;
 
 import javax.annotation.Nullable;
 
@@ -68,7 +66,7 @@ public class BlockFermentingBarrel extends BlockContainerBase {
                 ItemStack stack = player.getItemInHand(hand);
                 world.playSound(null, pos, stack.getItem() == Items.BUCKET ? SoundEvents.BUCKET_EMPTY:SoundEvents.BUCKET_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
             } else
-                NetworkHooks.openScreen((ServerPlayer) player, tile, pos);
+                player.openMenu(tile, pos);
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.PASS;

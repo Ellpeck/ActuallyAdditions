@@ -29,7 +29,7 @@ import java.util.Set;
 
 public class ItemShovelAA extends ItemToolAA {
 
-    private static final Set<Block> EFFECTIVE_ON = Sets.newHashSet(Blocks.CLAY, Blocks.DIRT, Blocks.FARMLAND, Blocks.GRASS, Blocks.GRAVEL, Blocks.MYCELIUM, Blocks.SAND, Blocks.SNOW, Blocks.SNOW_BLOCK, Blocks.SOUL_SAND, Blocks.DIRT_PATH);
+    private static final Set<Block> EFFECTIVE_ON = Sets.newHashSet(Blocks.CLAY, Blocks.DIRT, Blocks.FARMLAND, Blocks.GRASS_BLOCK, Blocks.GRAVEL, Blocks.MYCELIUM, Blocks.SAND, Blocks.SNOW, Blocks.SNOW_BLOCK, Blocks.SOUL_SAND, Blocks.DIRT_PATH);
 
     public ItemShovelAA(float p_i48512_1_, float p_i48512_2_, Tier p_i48512_3_, TagKey<Block> p_i48512_4_, Properties p_i48512_5_, String name, ItemStack repairItem, TagKey<Item> repairTag) {
         super(p_i48512_1_, p_i48512_2_, p_i48512_3_, p_i48512_4_, p_i48512_5_, name, repairItem, repairTag);

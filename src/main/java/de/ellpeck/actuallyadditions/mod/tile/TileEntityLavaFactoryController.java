@@ -20,8 +20,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 
 public class TileEntityLavaFactoryController extends TileEntityBase implements IEnergyDisplay {
 
@@ -30,7 +29,6 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
     public static final int HAS_AIR = 2;
     public static final int ENERGY_USE = 150000;
     public final CustomEnergyStorage storage = new CustomEnergyStorage(300000, 2000, 0);
-    public final LazyOptional<IEnergyStorage> lazyEnergy = LazyOptional.of(() -> this.storage);
 
     private int currentWorkTime;
     private int oldEnergy;
@@ -113,7 +111,7 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
     }
 
     @Override
-    public LazyOptional<IEnergyStorage> getEnergyStorage(Direction facing) {
-        return this.lazyEnergy;
+    public IEnergyStorage getEnergyStorage(Direction facing) {
+        return this.storage;
     }
 }

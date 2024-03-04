@@ -13,8 +13,6 @@ package de.ellpeck.actuallyadditions.mod.entity;
 import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -27,10 +25,9 @@ import net.minecraft.world.level.block.FarmBlock;
 import net.minecraft.world.level.block.GrassBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.common.FarmlandWaterManager;
-import net.minecraftforge.common.IPlantable;
-import net.minecraftforge.common.ticket.AABBTicket;
-import net.minecraftforge.network.NetworkHooks;
+import net.neoforged.neoforge.common.FarmlandWaterManager;
+import net.neoforged.neoforge.common.IPlantable;
+import net.neoforged.neoforge.common.ticket.AABBTicket;
 
 public class EntityWorm extends Entity {
 
@@ -163,10 +160,5 @@ public class EntityWorm extends Entity {
     @Override
     protected void addAdditionalSaveData(CompoundTag compound) {
         compound.putInt("Timer", this.timer);
-    }
-
-    @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
     }
 }

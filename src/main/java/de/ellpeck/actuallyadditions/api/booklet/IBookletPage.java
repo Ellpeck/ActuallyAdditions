@@ -13,9 +13,9 @@ package de.ellpeck.actuallyadditions.api.booklet;
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fluids.FluidStack;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.fluids.FluidStack;
 
 import java.util.List;
 

@@ -35,14 +35,13 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidType;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.templates.FluidTank;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.FluidType;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -59,7 +58,6 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     public static final int TIME_USED = 500;
 
     public final CustomEnergyStorage storage = new CustomEnergyStorage(300000, 250, 0);
-    public final LazyOptional<IEnergyStorage> lazyEnergy = LazyOptional.of(() -> this.storage);
 
     public final FluidTank tank = new FluidTank(4 * FluidType.BUCKET_VOLUME) {
         @Nonnull
@@ -79,7 +77,6 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
             return fluid.getFluid() == Fluids.WATER;
         }
     };
-    public final LazyOptional<IFluidHandler> lazyTank = LazyOptional.of(() -> this.tank);
 
     public int coffeeCacheAmount;
     public int brewTime;
@@ -225,8 +222,8 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public LazyOptional<IFluidHandler> getFluidHandler(Direction facing) {
-        return this.lazyTank;
+    public IFluidHandler getFluidHandler(Direction facing) {
+        return this.tank;
     }
 
     @Override
@@ -245,8 +242,8 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public LazyOptional<IEnergyStorage> getEnergyStorage(Direction facing) {
-        return this.lazyEnergy;
+    public IEnergyStorage getEnergyStorage(Direction facing) {
+        return this.storage;
     }
 
     @Override

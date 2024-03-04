@@ -1,24 +1,19 @@
 package de.ellpeck.actuallyadditions.mod.config.conditions;
 
-import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.common.crafting.conditions.ICondition;
-import net.minecraftforge.common.crafting.conditions.IConditionSerializer;
+import net.neoforged.neoforge.common.conditions.ICondition;
 
-public class BoolConfigCondition implements ICondition {
+public record BoolConfigCondition(String boolConfig) implements ICondition {
+    public static Codec<BoolConfigCondition> CODEC = RecordCodecBuilder.create(
+            builder -> builder
+                    .group(
+                            Codec.STRING.fieldOf("boolConfig").forGetter(BoolConfigCondition::boolConfig))
+                    .apply(builder, BoolConfigCondition::new));
     private static final ResourceLocation NAME = new ResourceLocation(ActuallyAdditions.MODID, "bool_config_condition");
-    private final String boolConfig;
-
-    public BoolConfigCondition(String config) {
-        this.boolConfig = config;
-    }
-
-    @Override
-    public ResourceLocation getID() {
-        return NAME;
-    }
 
     @Override
     public boolean test(IContext condition) {
@@ -30,22 +25,13 @@ public class BoolConfigCondition implements ICondition {
         }
     }
 
-    public static class Serializer implements IConditionSerializer<BoolConfigCondition> {
-        public static final BoolConfigCondition.Serializer INSTANCE = new BoolConfigCondition.Serializer();
+    @Override
+    public Codec<? extends ICondition> codec() {
+        return CODEC;
+    }
 
-        @Override
-        public void write(JsonObject json, BoolConfigCondition value) {
-            json.addProperty("config_name", value.boolConfig);
-        }
-
-        @Override
-        public BoolConfigCondition read(JsonObject json) {
-            return new BoolConfigCondition(json.get("config_name").getAsString());
-        }
-
-        @Override
-        public ResourceLocation getID() {
-            return BoolConfigCondition.NAME;
-        }
+    @Override
+    public String toString() {
+        return "ConfigEnabled(\"" + boolConfig + "\")";
     }
 }

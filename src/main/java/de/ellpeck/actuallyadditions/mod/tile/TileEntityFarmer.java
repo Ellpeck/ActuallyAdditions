@@ -35,8 +35,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -47,7 +46,6 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
 
     private static final List<IFarmerBehavior> SORTED_FARMER_BEHAVIORS = new ArrayList<>();
     public final CustomEnergyStorage storage = new CustomEnergyStorage(100000, 1000, 0);
-    public final LazyOptional<IEnergyStorage> lazyEnergy = LazyOptional.of(() -> this.storage);
     private int waitTime;
     private int checkX;
     private int checkY;
@@ -177,8 +175,8 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
     }
 
     @Override
-    public LazyOptional<IEnergyStorage> getEnergyStorage(Direction facing) {
-        return this.lazyEnergy;
+    public IEnergyStorage getEnergyStorage(Direction facing) {
+        return this.storage;
     }
 
     @Override

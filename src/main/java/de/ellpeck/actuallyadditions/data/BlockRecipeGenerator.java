@@ -1,26 +1,21 @@
 package de.ellpeck.actuallyadditions.data;
 
-import com.google.gson.JsonObject;
 import de.ellpeck.actuallyadditions.api.ActuallyTags;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
-import net.minecraft.data.CachedOutput;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
-import net.minecraftforge.common.Tags;
-import org.jetbrains.annotations.Nullable;
+import net.neoforged.neoforge.common.Tags;
 
 import javax.annotation.Nonnull;
 import java.util.Arrays;
-import java.util.concurrent.CompletableFuture;
-import java.util.function.Consumer;
 
 public class BlockRecipeGenerator extends RecipeProvider {
     public BlockRecipeGenerator(PackOutput packOutput) {
@@ -28,7 +23,7 @@ public class BlockRecipeGenerator extends RecipeProvider {
     }
 
     @Override
-    protected void buildRecipes(@Nonnull Consumer<FinishedRecipe> consumer) {
+    protected void buildRecipes(@Nonnull RecipeOutput consumer) {
         //Battery Box
         Recipe.shapeless(ActuallyBlocks.BATTERY_BOX.getItem()).ingredients(ActuallyBlocks.ENERGIZER.get(), ActuallyBlocks.ENERVATOR.get(), ActuallyItems.BASIC_COIL.get()).save(consumer);
 
@@ -232,11 +227,11 @@ public class BlockRecipeGenerator extends RecipeProvider {
 
     }
 
-    @Override
-    protected @Nullable CompletableFuture<?> saveAdvancement(CachedOutput output, FinishedRecipe finishedRecipe, JsonObject advancementJson) {
-        return null;
-        //Nope... maybe later...
-    }
+//    @Override //TODO: Flanks do your RecipeOutput wrapper thingy ;)
+//    protected @Nullable CompletableFuture<?> saveAdvancement(CachedOutput stack, FinishedRecipe finishedRecipe, JsonObject advancementJson) {
+//        return null;
+//        //Nope... maybe later...
+//    }
 
     public static class Recipe {
         public static Shapeless shapeless(ItemLike result) {
@@ -255,15 +250,15 @@ public class BlockRecipeGenerator extends RecipeProvider {
             return new Shaped(result, count);
         }
 
-        public static void stairs(ItemLike result, ItemLike resource, Consumer<FinishedRecipe> consumer) {
+        public static void stairs(ItemLike result, ItemLike resource, RecipeOutput consumer) {
             Recipe.shaped(result).patternSingleKey('Q', resource, "Q  ", "QQ ", "QQQ").save(consumer);
         }
 
-        public static void wall(ItemLike result, ItemLike resource, Consumer<FinishedRecipe> consumer) {
+        public static void wall(ItemLike result, ItemLike resource, RecipeOutput consumer) {
             Recipe.shaped(result).patternSingleKey('Q', resource, "QQQ", "QQQ").save(consumer);
         }
 
-        public static void slab(ItemLike result, ItemLike resource, Consumer<FinishedRecipe> consumer) {
+        public static void slab(ItemLike result, ItemLike resource, RecipeOutput consumer) {
             Recipe.shaped(result).patternSingleKey('Q', resource, "QQQ").save(consumer);
         }
 
@@ -282,7 +277,7 @@ public class BlockRecipeGenerator extends RecipeProvider {
             }
 
             @Override
-            public void save(Consumer<FinishedRecipe> consumer) {
+            public void save(RecipeOutput consumer) {
                 this.unlockedBy("has_book", has(ActuallyItems.ITEM_BOOKLET.get()));
                 super.save(consumer);
             }
@@ -320,7 +315,7 @@ public class BlockRecipeGenerator extends RecipeProvider {
             }
 
             @Override
-            public void save(Consumer<FinishedRecipe> consumerIn) {
+            public void save(RecipeOutput consumerIn) {
                 this.unlockedBy("has_book", has(ActuallyItems.ITEM_BOOKLET.get()));
                 super.save(consumerIn);
             }

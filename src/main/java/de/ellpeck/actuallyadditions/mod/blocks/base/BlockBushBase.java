@@ -10,11 +10,19 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks.base;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.world.level.block.BushBlock;
 import net.minecraft.world.level.block.SoundType;
 
 public class BlockBushBase extends BushBlock {
+    public static final MapCodec<BlockBushBase> CODEC = simpleCodec(BlockBushBase::new);
+    
     public BlockBushBase(Properties properties) {
         super(properties.sound(SoundType.GRASS));
+    }
+
+    @Override
+    protected MapCodec<? extends BushBlock> codec() {
+        return CODEC;
     }
 }

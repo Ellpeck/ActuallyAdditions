@@ -42,10 +42,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.ForgeHooksClient;
-import net.minecraftforge.network.PacketDistributor;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.client.ClientHooks;
+import net.neoforged.neoforge.network.PacketDistributor;
 import org.joml.Matrix4f;
 
 public final class AssetUtil {
@@ -115,7 +115,7 @@ public final class AssetUtil {
             RenderSystem.enableBlend();
 //            RenderSystem.pushMatrix();
             matrices.pushPose();
-            model = ForgeHooksClient.handleCameraTransforms(matrices, model, ItemDisplayContext.FIXED, false);
+            model = ClientHooks.handleCameraTransforms(matrices, model, ItemDisplayContext.FIXED, false);
             renderer.render(stack, ItemDisplayContext.FIXED, false, matrices, bufferSource,
                     combinedOverlay, combinedLight, model);
 //            RenderSystem.popMatrix();
@@ -232,7 +232,7 @@ public final class AssetUtil {
             data.putFloat("Size", size);
             data.putInt("MaxAge", maxAge);
             data.putFloat("Alpha", alpha);
-            PacketHandler.THE_NETWORK.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(startX, startY, startZ, 96, world.dimension())), new PacketServerToClient(data, PacketHandler.LASER_HANDLER));
+            PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(startX, startY, startZ, 96, world.dimension())).send(new PacketServerToClient(data, PacketHandler.LASER_HANDLER));
         }
     }
 

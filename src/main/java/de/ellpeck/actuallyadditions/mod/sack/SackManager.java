@@ -6,10 +6,9 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fml.util.thread.SidedThreadGroups;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.server.ServerLifecycleHooks;
+import net.neoforged.fml.util.thread.SidedThreadGroups;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.server.ServerLifecycleHooks;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
@@ -29,7 +28,7 @@ public class SackManager extends SavedData {
 
     public static SackManager get() {
         if (Thread.currentThread().getThreadGroup() == SidedThreadGroups.SERVER)
-            return ServerLifecycleHooks.getCurrentServer().getLevel(Level.OVERWORLD).getDataStorage().computeIfAbsent(SackManager::load, SackManager::new, NAME);
+            return ServerLifecycleHooks.getCurrentServer().getLevel(Level.OVERWORLD).getDataStorage().computeIfAbsent(new Factory<>(SackManager::new, SackManager::load), NAME);
         else
             return blankClient;
     }
@@ -48,27 +47,27 @@ public class SackManager extends SavedData {
     }
     public void removeSack(UUID uuid) {
         getSack(uuid).ifPresent(backpack -> {
-            backpack.getOptional().invalidate();
+//            backpack.getOptional().invalidate();
             data.remove(uuid);
             setDirty();
         });
     }
 
-    public LazyOptional<IItemHandler> getCapability(UUID uuid) {
+    public Optional<IItemHandler> getCapability(UUID uuid) {
         if (data.containsKey(uuid))
             return data.get(uuid).getOptional();
 
-        return LazyOptional.empty();
+        return Optional.empty();
     }
 
-    public LazyOptional<IItemHandler> getCapability(ItemStack stack) {
+    public Optional<IItemHandler> getCapability(ItemStack stack) {
         if (stack.getOrCreateTag().contains("UUID")) {
             UUID uuid = stack.getTag().getUUID("UUID");
             if (data.containsKey(uuid))
                 return data.get(uuid).getOptional();
         }
 
-        return LazyOptional.empty();
+        return Optional.empty();
     }
 
     public static SackManager load(CompoundTag nbt) {

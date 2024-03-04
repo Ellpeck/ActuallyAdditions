@@ -21,14 +21,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.items.IItemHandler;
+import net.neoforged.neoforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.items.IItemHandler;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public abstract class TileEntityBase extends BlockEntity {
@@ -193,7 +189,7 @@ public abstract class TileEntityBase extends BlockEntity {
                     for (Direction side : sides) {
                         BlockEntity tile = this.tilesAround[side.ordinal()];
                         if (tile != null && provider.canShareTo(tile)) {
-                            WorldUtil.doEnergyInteraction(this, tile, side, amount);
+                            WorldUtil.doEnergyInteraction(this.level, this.getBlockPos(), tile.getBlockPos(), side, amount);
                         }
                     }
                 }
@@ -215,7 +211,7 @@ public abstract class TileEntityBase extends BlockEntity {
                     for (Direction side : sides) {
                         BlockEntity tile = this.tilesAround[side.ordinal()];
                         if (tile != null) {
-                            WorldUtil.doFluidInteraction(this, tile, side, amount);
+                            WorldUtil.doFluidInteraction(this.level, this.getBlockPos(), tile.getBlockPos(), side, amount);
                         }
                     }
                 }
@@ -262,29 +258,16 @@ public abstract class TileEntityBase extends BlockEntity {
         }
     }
 
-    @Nonnull
-    @Override
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction side) {
-        if (capability == ForgeCapabilities.ITEM_HANDLER) {
-            return this.getItemHandler(side).cast();
-        } else if (capability == ForgeCapabilities.FLUID_HANDLER) {
-            return this.getFluidHandler(side).cast();
-        } else if (capability == ForgeCapabilities.ENERGY) {
-            return this.getEnergyStorage(side).cast();
-        }
-        return LazyOptional.empty();
+    public IFluidHandler getFluidHandler(Direction facing) {
+        return null;
     }
 
-    public LazyOptional<IFluidHandler> getFluidHandler(Direction facing) {
-        return LazyOptional.empty();
+    public IEnergyStorage getEnergyStorage(Direction facing) {
+        return null;
     }
 
-    public LazyOptional<IEnergyStorage> getEnergyStorage(Direction facing) {
-        return LazyOptional.empty();
-    }
-
-    public LazyOptional<IItemHandler> getItemHandler(Direction facing) {
-        return LazyOptional.empty();
+    public IItemHandler getItemHandler(Direction facing) {
+        return null;
     }
 
     public boolean isRedstoneToggle() {

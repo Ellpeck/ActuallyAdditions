@@ -60,9 +60,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.protocol.game.ServerboundPlayerActionPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.common.NeoForge;
 
 public class ActuallyAdditionsClient {
 
@@ -93,9 +93,9 @@ public class ActuallyAdditionsClient {
         MenuScreens.register(ActuallyContainers.RANGED_COLLECTOR_CONTAINER.get(), GuiRangedCollector::new);
         MenuScreens.register(ActuallyContainers.XPSOLIDIFIER_CONTAINER.get(), GuiXPSolidifier::new);
         // From old proxy
-        MinecraftForge.EVENT_BUS.register(new ClientEvents());
-        MinecraftForge.EVENT_BUS.register(new ClientRegistryHandler());
-        MinecraftForge.EVENT_BUS.register(new SpecialRenderInit());
+        NeoForge.EVENT_BUS.register(new ClientEvents());
+        NeoForge.EVENT_BUS.register(new ClientRegistryHandler());
+        NeoForge.EVENT_BUS.register(new SpecialRenderInit());
 
         event.enqueueWork(() ->
                 ItemProperties.register(ActuallyItems.WORM.get(), new ResourceLocation(ActuallyAdditions.MODID, "snail"),

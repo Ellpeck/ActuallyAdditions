@@ -15,7 +15,6 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityOilGenerator;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -29,7 +28,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 
@@ -70,7 +68,7 @@ public class BlockOilGenerator extends DirectionalBlock.Container {
             TileEntityOilGenerator generator = (TileEntityOilGenerator) world.getBlockEntity(pos);
             if (generator != null) {
                 if (!this.tryUseItemOnTank(player, hand, generator.tank)) {
-                    NetworkHooks.openScreen((ServerPlayer) player, generator, pos);
+                    player.openMenu(generator, pos);
                 }
             }
         }

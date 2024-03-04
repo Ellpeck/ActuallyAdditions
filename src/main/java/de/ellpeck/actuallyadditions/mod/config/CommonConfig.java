@@ -2,14 +2,14 @@ package de.ellpeck.actuallyadditions.mod.config;
 
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraftforge.common.ForgeConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CommonConfig {
-    private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
-    public static ForgeConfigSpec COMMON_CONFIG;
+    private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
+    public static ModConfigSpec COMMON_CONFIG;
 
     static {
         Other.build();
@@ -19,7 +19,7 @@ public class CommonConfig {
     }
 
     public static class ItemSettings {
-        public static ForgeConfigSpec.ConfigValue<List<String>> DRILL_EXTRA_MINING_WHITELIST;
+        public static ModConfigSpec.ConfigValue<List<String>> DRILL_EXTRA_MINING_WHITELIST;
 
         public static void build() {
             BUILDER.comment("Item settings").push("itemsSettings");
@@ -35,11 +35,11 @@ public class CommonConfig {
     }
 
     public static class Machines {
-        public static ForgeConfigSpec.IntValue FARMER_AREA;
-        public static ForgeConfigSpec.IntValue RECONSTRUCTOR_POWER;
-        public static ForgeConfigSpec.IntValue OIL_GENERATOR_TRANSFER;
-        public static ForgeConfigSpec.IntValue MINER_LENS_ENERGY;
-        public static ForgeConfigSpec.BooleanValue LASER_RELAY_LOSS;
+        public static ModConfigSpec.IntValue FARMER_AREA;
+        public static ModConfigSpec.IntValue RECONSTRUCTOR_POWER;
+        public static ModConfigSpec.IntValue OIL_GENERATOR_TRANSFER;
+        public static ModConfigSpec.IntValue MINER_LENS_ENERGY;
+        public static ModConfigSpec.BooleanValue LASER_RELAY_LOSS;
 
         public static void build() {
             BUILDER.comment("Machine Settings").push("machineSettings");
@@ -55,24 +55,24 @@ public class CommonConfig {
     }
 
     public static class Other {
-        public static ForgeConfigSpec.BooleanValue SOLID_XP_ALWAYS_ORBS;
-        public static ForgeConfigSpec.BooleanValue DO_UPDATE_CHECK;
-        public static ForgeConfigSpec.BooleanValue UPDATE_CHECK_VERSION_SPECIFIC;
-        public static ForgeConfigSpec.BooleanValue DO_CAT_DROPS;
-        public static ForgeConfigSpec.IntValue FUR_CHANCE;
-        public static ForgeConfigSpec.BooleanValue WORMS;
-        public static ForgeConfigSpec.IntValue WORMS_DIE_TIME;
-        public static ForgeConfigSpec.BooleanValue CTRL_EXTRA_INFO;
-        public static ForgeConfigSpec.BooleanValue CTRL_INFO_FOR_EXTRA_INFO;
-        public static ForgeConfigSpec.BooleanValue GIVE_BOOKLET_ON_FIRST_CRAFT;
-        public static ForgeConfigSpec.BooleanValue DUNGEON_LOOT;
-        public static ForgeConfigSpec.BooleanValue WATER_BOWL;
-        public static ForgeConfigSpec.BooleanValue WATER_BOWL_LOSS;
-        public static ForgeConfigSpec.BooleanValue TINY_COAL_STUFF;
-        public static ForgeConfigSpec.BooleanValue SUPER_DUPER_HARD_MODE;
-        public static ForgeConfigSpec.BooleanValue MOST_BLAND_PERSON_EVER;
-        public static ForgeConfigSpec.ConfigValue<String> REDSTONECONFIGURATOR;
-        public static ForgeConfigSpec.ConfigValue<String> RELAYCONFIGURATOR;
+        public static ModConfigSpec.BooleanValue SOLID_XP_ALWAYS_ORBS;
+        public static ModConfigSpec.BooleanValue DO_UPDATE_CHECK;
+        public static ModConfigSpec.BooleanValue UPDATE_CHECK_VERSION_SPECIFIC;
+        public static ModConfigSpec.BooleanValue DO_CAT_DROPS;
+        public static ModConfigSpec.IntValue FUR_CHANCE;
+        public static ModConfigSpec.BooleanValue WORMS;
+        public static ModConfigSpec.IntValue WORMS_DIE_TIME;
+        public static ModConfigSpec.BooleanValue CTRL_EXTRA_INFO;
+        public static ModConfigSpec.BooleanValue CTRL_INFO_FOR_EXTRA_INFO;
+        public static ModConfigSpec.BooleanValue GIVE_BOOKLET_ON_FIRST_CRAFT;
+        public static ModConfigSpec.BooleanValue DUNGEON_LOOT;
+        public static ModConfigSpec.BooleanValue WATER_BOWL;
+        public static ModConfigSpec.BooleanValue WATER_BOWL_LOSS;
+        public static ModConfigSpec.BooleanValue TINY_COAL_STUFF;
+        public static ModConfigSpec.BooleanValue SUPER_DUPER_HARD_MODE;
+        public static ModConfigSpec.BooleanValue MOST_BLAND_PERSON_EVER;
+        public static ModConfigSpec.ConfigValue<String> REDSTONECONFIGURATOR;
+        public static ModConfigSpec.ConfigValue<String> RELAYCONFIGURATOR;
         public static Item redstoneConfigureItem = Items.AIR;
         public static Item relayConfigureItem = Items.AIR;
 

@@ -27,17 +27,15 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
+import net.neoforged.neoforge.items.IItemHandler;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class TileEntityItemInterface extends TileEntityBase {
 
@@ -45,7 +43,6 @@ public class TileEntityItemInterface extends TileEntityBase {
     public final Map<Integer, IItemHandlerInfo> itemHandlerInfos = new HashMap<>();
     public final List<SlotlessItemHandlerInfo> slotlessInfos = new ArrayList<>();
     protected final SlotlessableItemHandlerWrapper itemHandler;
-    private final LazyOptional<IItemHandler> lazyHandlers;
     public TileEntityLaserRelayItem connectedRelay;
     private int lastNetworkChangeAmount = -1;
     private int slotCount;
@@ -120,8 +117,7 @@ public class TileEntityItemInterface extends TileEntityBase {
         //            slotlessHandler = CommonCapsUtil.createSlotlessItemViewerHandler(this, normalHandler);
         //        }
 
-        this.lazyHandlers = LazyOptional.of(() -> normalHandler);
-        this.itemHandler = new SlotlessableItemHandlerWrapper(this.lazyHandlers, slotlessHandler);
+        this.itemHandler = new SlotlessableItemHandlerWrapper(normalHandler, slotlessHandler);
     }
 
     public TileEntityItemInterface(BlockPos pos, BlockState state) {
@@ -141,14 +137,8 @@ public class TileEntityItemInterface extends TileEntityBase {
     }
 
     @Override
-    public LazyOptional<IItemHandler> getItemHandler(Direction facing) {
+    public IItemHandler getItemHandler(Direction facing) {
         return this.itemHandler.getNormalHandler();
-    }
-
-    @Nonnull
-    @Override
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction side) {
-        return super.getCapability(capability, side);
     }
 
     //    TODO: [port] Maybe add back
@@ -188,7 +178,7 @@ public class TileEntityItemInterface extends TileEntityBase {
             for (Player player : this.level.players()) {
                 if (player instanceof ServerPlayer) {
                     if (player.distanceToSqr(input.getX(), input.getY(), input.getZ()) <= rangeSq || player.distanceToSqr(output.getX(), output.getY(), output.getZ()) <= rangeSq) {
-                        PacketHandler.sendTo(new PacketServerToClient(compound, PacketHandler.LASER_PARTICLE_HANDLER), (ServerPlayer) player);
+                        ((ServerPlayer) player).connection.send(new PacketServerToClient(compound, PacketHandler.LASER_PARTICLE_HANDLER));
                     }
                 }
             }
@@ -209,7 +199,7 @@ public class TileEntityItemInterface extends TileEntityBase {
                         int slotsQueried = 0;
                         for (GenericItemHandlerInfo info : this.genericInfos) {
                             for (SlotlessableItemHandlerWrapper handler : info.handlers) {
-                                LazyOptional<IItemHandler> normalHandler = handler.getNormalHandler();
+                                Optional<IItemHandler> normalHandler = Optional.ofNullable(handler.getNormalHandler());
                                 slotsQueried += normalHandler.map(cap -> {
                                     int queried = 0;
                                     for (int i = 0; i < cap.getSlots(); i++) {

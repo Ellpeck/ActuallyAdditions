@@ -108,9 +108,9 @@
 //        if (!this.recipes.isEmpty()) {
 //            for (IRecipe recipe : this.recipes) {
 //                if (recipe != null) {
-//                    ItemStack output = recipe.getResultItem();
-//                    if (StackUtil.isValid(output)) {
-//                        ItemStack copy = output.copy();
+//                    ItemStack stack = recipe.getResultItem();
+//                    if (StackUtil.isValid(stack)) {
+//                        ItemStack copy = stack.copy();
 //                        /*
 //                        if (this.isWildcard) {
 //                            copy.setItemDamage(Util.WILDCARD);

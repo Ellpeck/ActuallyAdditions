@@ -1,6 +1,6 @@
 
 modLoader="javafml"
-loaderVersion="[47,)"
+loaderVersion="[2,)"
 license="MIT"
 [[mods]]
 modId="actuallyadditions"
@@ -14,15 +14,15 @@ Do you want Automation? Wireless Transport? Better Machines? A cup o' Coffee? Ch
 '''
 
 [[dependencies.actuallyadditions]]
-    modId="forge"
-    mandatory=true
-    versionRange="[47,)"
+    modId="neoforge"
+    type="required"
+    versionRange="[20.4.167,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.actuallyadditions]]
     modId="minecraft"
-    mandatory=true
-    versionRange="[1.20.1,1.21)"
+    type="required"
+    versionRange="[1.20.4,1.21)"
     ordering="NONE"
     side="BOTH"

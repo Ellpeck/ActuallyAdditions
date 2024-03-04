@@ -21,20 +21,17 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.IItemHandlerModifiable;
-import net.minecraftforge.items.ItemHandlerHelper;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.IItemHandlerModifiable;
+import net.neoforged.neoforge.items.ItemHandlerHelper;
 
 public abstract class TileEntityInventoryBase extends TileEntityBase {
 
     public final ItemStackHandlerAA inv;
-    public final LazyOptional<IItemHandler> lazyInv;
 
     public TileEntityInventoryBase(BlockEntityType<?> type, BlockPos pos, BlockState state, int slots) {
         super(type, pos, state);
         this.inv = new TileStackHandler(slots);
-        this.lazyInv = LazyOptional.of(() -> this.inv);
     }
 
     public static void saveSlots(IItemHandler slots, CompoundTag compound) {
@@ -73,8 +70,8 @@ public abstract class TileEntityInventoryBase extends TileEntityBase {
     }
 
     @Override
-    public LazyOptional<IItemHandler> getItemHandler(Direction facing) {
-        return this.lazyInv;
+    public IItemHandler getItemHandler(Direction facing) {
+        return this.inv;
     }
 
     public IAcceptor getAcceptor() {

@@ -26,9 +26,9 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.ModList;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.fml.ModList;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -101,11 +101,11 @@ public class ItemCoffee extends ItemFoodBase {
     //    return EnumAction.DRINK;
     //}
 
-    @Nullable
-    @Override
-    public CompoundTag getShareTag(ItemStack stack) {
-        return super.getShareTag(stack);
-    }
+//    @Nullable
+//    @Override
+//    public CompoundTag getShareTag(ItemStack stack) {
+//        return super.getShareTag(stack);
+//    }
 
     @OnlyIn(Dist.CLIENT)
     @Override

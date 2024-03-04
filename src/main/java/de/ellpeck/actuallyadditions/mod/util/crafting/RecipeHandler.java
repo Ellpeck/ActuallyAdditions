@@ -17,20 +17,20 @@
 //
 //    public static IRecipe lastRecipe;
 //
-//    public static void addOreDictRecipe(ItemStack output, Object... inputs) {
-//        addShapedRecipe(output, inputs);
+//    public static void addOreDictRecipe(ItemStack stack, Object... inputs) {
+//        addShapedRecipe(stack, inputs);
 //    }
 //
-//    public static void addShapelessOreDictRecipe(ItemStack output, Object... inputs) {
-//        addShapelessRecipe(output, inputs);
+//    public static void addShapelessOreDictRecipe(ItemStack stack, Object... inputs) {
+//        addShapelessRecipe(stack, inputs);
 //    }
 //
-//    public static void addShapelessRecipe(ItemStack output, Object... inputs) {
-//        RecipeHelper.addOldShapeless(output, inputs);
+//    public static void addShapelessRecipe(ItemStack stack, Object... inputs) {
+//        RecipeHelper.addOldShapeless(stack, inputs);
 //    }
 //
-//    public static void addShapedRecipe(ItemStack output, Object... inputs) {
-//        RecipeHelper.addOldShaped(output, inputs);
+//    public static void addShapedRecipe(ItemStack stack, Object... inputs) {
+//        RecipeHelper.addOldShaped(stack, inputs);
 //    }
 //
 //}

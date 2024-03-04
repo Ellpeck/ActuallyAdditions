@@ -1,10 +1,9 @@
 package de.ellpeck.actuallyadditions.mod.crafting;
 
-import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
@@ -12,20 +11,16 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 
-import javax.annotation.Nullable;
-
 public class SolidFuelRecipe implements Recipe<SingleItem> {
     public static String NAME = "solid_fuel";
     private Ingredient itemIngredient;
     private int burnTime;
     private int totalEnergy;
-    private ResourceLocation id;
 
-    public SolidFuelRecipe(ResourceLocation id, Ingredient itemIngredient, int totalEnergy, int burnTime) {
+    public SolidFuelRecipe(Ingredient itemIngredient, int totalEnergy, int burnTime) {
         this.itemIngredient = itemIngredient;
         this.burnTime = burnTime;
         this.totalEnergy = totalEnergy;
-        this.id = id;
     }
 
     public int getBurnTime() {
@@ -66,11 +61,6 @@ public class SolidFuelRecipe implements Recipe<SingleItem> {
     }
 
     @Override
-    public ResourceLocation getId() {
-        return id;
-    }
-
-    @Override
     public RecipeSerializer<?> getSerializer() {
         return ActuallyRecipes.SOLID_FUEL_RECIPE.get();
     }
@@ -81,20 +71,35 @@ public class SolidFuelRecipe implements Recipe<SingleItem> {
     }
 
     public static class Serializer implements RecipeSerializer<SolidFuelRecipe> {
+        private static final Codec<SolidFuelRecipe> CODEC = RecordCodecBuilder.create(
+                instance -> instance.group(
+                                Ingredient.CODEC_NONEMPTY.fieldOf("item").forGetter(recipe -> recipe.itemIngredient),
+                                Codec.INT.fieldOf("total_energy").forGetter(recipe -> recipe.totalEnergy),
+                                Codec.INT.fieldOf("burn_time").forGetter(recipe -> recipe.burnTime)
+                        )
+                        .apply(instance, SolidFuelRecipe::new)
+        );
+
+//        @Override
+//        public SolidFuelRecipe fromJson(ResourceLocation pId, JsonObject pJson) {
+//            Ingredient itemIngredient = Ingredient.fromJson(pJson.get("item"));
+//            int totalEnergy = pJson.get("total_energy").getAsInt();
+//            int burnTime = pJson.get("burn_time").getAsInt();
+//            return new SolidFuelRecipe(pId, itemIngredient, totalEnergy, burnTime);
+//        }
+
+
         @Override
-        public SolidFuelRecipe fromJson(ResourceLocation pId, JsonObject pJson) {
-            Ingredient itemIngredient = Ingredient.fromJson(pJson.get("item"));
-            int totalEnergy = pJson.get("total_energy").getAsInt();
-            int burnTime = pJson.get("burn_time").getAsInt();
-            return new SolidFuelRecipe(pId, itemIngredient, totalEnergy, burnTime);
+        public Codec<SolidFuelRecipe> codec() {
+            return CODEC;
         }
 
         @Override
-        public SolidFuelRecipe fromNetwork(ResourceLocation pId, FriendlyByteBuf pBuffer) {
+        public SolidFuelRecipe fromNetwork(FriendlyByteBuf pBuffer) {
             Ingredient itemIngredient = Ingredient.fromNetwork(pBuffer);
             int totalEnergy = pBuffer.readInt();
             int burnTime = pBuffer.readInt();
-            return new SolidFuelRecipe(pId, itemIngredient, totalEnergy, burnTime);
+            return new SolidFuelRecipe(itemIngredient, totalEnergy, burnTime);
         }
 
         @Override
@@ -102,49 +107,6 @@ public class SolidFuelRecipe implements Recipe<SingleItem> {
             pRecipe.itemIngredient.toNetwork(pBuffer);
             pBuffer.writeInt(pRecipe.totalEnergy);
             pBuffer.writeInt(pRecipe.burnTime);
-        }
-    }
-
-    public static class Result implements FinishedRecipe {
-        private Ingredient itemIngredient;
-        private int burnTime;
-        private int totalEnergy;
-        private ResourceLocation id;
-
-        public Result(ResourceLocation id, Ingredient itemIngredient, int totalEnergy, int burnTime) {
-            this.itemIngredient = itemIngredient;
-            this.burnTime = burnTime;
-            this.totalEnergy = totalEnergy;
-            this.id = id;
-        }
-
-        @Override
-        public void serializeRecipeData(JsonObject pJson) {
-            pJson.add("item", itemIngredient.toJson());
-            pJson.addProperty("total_energy", totalEnergy);
-            pJson.addProperty("burn_time", burnTime);
-        }
-
-        @Override
-        public ResourceLocation getId() {
-            return id;
-        }
-
-        @Override
-        public RecipeSerializer<?> getType() {
-            return ActuallyRecipes.SOLID_FUEL_RECIPE.get();
-        }
-
-        @Nullable
-        @Override
-        public JsonObject serializeAdvancement() {
-            return null;
-        }
-
-        @Nullable
-        @Override
-        public ResourceLocation getAdvancementId() {
-            return null;
         }
     }
 }

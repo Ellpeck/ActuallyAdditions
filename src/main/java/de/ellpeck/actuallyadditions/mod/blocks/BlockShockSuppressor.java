@@ -23,9 +23,9 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.level.ExplosionEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.level.ExplosionEvent;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -36,7 +36,7 @@ public class BlockShockSuppressor extends Block implements EntityBlock {
 
     public BlockShockSuppressor() {
         super(ActuallyBlocks.defaultPickProps(20F, 2000.0F));
-        MinecraftForge.EVENT_BUS.register(this);
+        NeoForge.EVENT_BUS.register(this);
     }
 
     @SubscribeEvent

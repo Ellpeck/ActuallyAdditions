@@ -3,9 +3,9 @@ package de.ellpeck.actuallyadditions.mod;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraftforge.client.event.ModelEvent.BakingCompleted;
-import net.minecraftforge.client.event.ModelEvent.RegisterGeometryLoaders;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.client.event.ModelEvent.BakingCompleted;
+import net.neoforged.neoforge.client.event.ModelEvent.RegisterGeometryLoaders;
 
 import java.util.HashMap;
 import java.util.Map;

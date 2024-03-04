@@ -13,52 +13,54 @@ package de.ellpeck.actuallyadditions.mod.network;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
+import net.neoforged.neoforge.network.handling.PlayPayloadContext;
+import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.function.Supplier;
 
+public record PacketServerToClient(CompoundTag data, IDataHandler handler) implements CustomPacketPayload {
+    public static final ResourceLocation ID = new ResourceLocation(ActuallyAdditions.MODID, "server_to_client");
 
-public class PacketServerToClient {
-
-    private CompoundTag data;
-    private IDataHandler handler;
-
-    public PacketServerToClient() {
-
+    public PacketServerToClient(Pair<CompoundTag, IDataHandler> data) {
+        this(data.getLeft(), data.getRight());
     }
 
-    public PacketServerToClient(CompoundTag data, IDataHandler handler) {
-        this.data = data;
-        this.handler = handler;
+    public PacketServerToClient(final FriendlyByteBuf buffer) {
+        this(fromBytes(buffer));
     }
 
-    public static PacketServerToClient fromBytes(final FriendlyByteBuf buffer) {
+    public static Pair<CompoundTag, IDataHandler> fromBytes(FriendlyByteBuf buffer) {
         try {
             CompoundTag data = buffer.readNbt();
 
             int handlerId = buffer.readInt();
             if (handlerId >= 0 && handlerId < PacketHandler.DATA_HANDLERS.size()) {
-                return new PacketServerToClient(data, PacketHandler.DATA_HANDLERS.get(handlerId));
+                return Pair.of(data, PacketHandler.DATA_HANDLERS.get(handlerId));
             }
         } catch (Exception e) {
             ActuallyAdditions.LOGGER.error("Something went wrong trying to receive a client packet!", e);
         }
-        return new PacketServerToClient();
+        return Pair.of(null, null);
     }
 
-    public static void toBytes(final PacketServerToClient message, FriendlyByteBuf buffer) {
-        buffer.writeNbt(message.data);
-        buffer.writeInt(PacketHandler.DATA_HANDLERS.indexOf(message.handler));
+    public void write(FriendlyByteBuf buf) {
+        buf.writeNbt(data);
+        buf.writeInt(PacketHandler.DATA_HANDLERS.indexOf(handler));
     }
 
-    public static void handle(final PacketServerToClient message, final Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(
+    @Override
+    public ResourceLocation id() {
+        return ID;
+    }
+
+    public static void handle(final PacketServerToClient message, final PlayPayloadContext context) {
+        context.workHandler().submitAsync(
             () -> {
                 if (message.data != null && message.handler != null) {
-                    message.handler.handleData(message.data, ctx.get());
+                    message.handler.handleData(message.data, context);
                 }
-            }
-        );
-        ctx.get().setPacketHandled(true);
+                }
+            );
     }
 }

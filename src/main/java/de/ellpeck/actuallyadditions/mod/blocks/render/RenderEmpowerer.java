@@ -23,10 +23,11 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class RenderEmpowerer implements BlockEntityRenderer<TileEntityEmpowerer> {
     public RenderEmpowerer(BlockEntityRendererProvider.Context context) {
@@ -51,7 +52,7 @@ public class RenderEmpowerer implements BlockEntityRenderer<TileEntityEmpowerer>
             try {
                 AssetUtil.renderItemInWorld(stack, combinedLight, combinedOverlay, matrices, buffer);
             } catch (Exception e) {
-                ActuallyAdditions.LOGGER.error("Something went wrong trying to render an item in an empowerer! The item is " + ForgeRegistries.ITEMS.getKey(stack.getItem()) + "!", e);
+                ActuallyAdditions.LOGGER.error("Something went wrong trying to render an item in an empowerer! The item is " + BuiltInRegistries.ITEM.getKey(stack.getItem()) + "!", e);
             }
 
             matrices.popPose();
@@ -72,12 +73,12 @@ public class RenderEmpowerer implements BlockEntityRenderer<TileEntityEmpowerer>
 
  */
         if (tile.getCurrentRecipe() != null) {
-            EmpowererRecipe recipe = tile.getCurrentRecipe();
+            RecipeHolder<EmpowererRecipe> holder = tile.getCurrentRecipe();
             for (int i = 0; i <= 3; i++) {
                 Direction facing = Direction.from2DDataValue(i);
                 BlockPos offset = new BlockPos(0,0,0).relative(facing, 3);
 
-                AssetUtil.renderLaser(matrices, buffer, new Vec3(0.0d, 0.0d, 0.0d), new Vec3(offset.getX(), offset.getY() + 0.45, offset.getZ()), 80, recipe.getParticleColors(), 1.0f ,0.1F);
+                AssetUtil.renderLaser(matrices, buffer, new Vec3(0.0d, 0.0d, 0.0d), new Vec3(offset.getX(), offset.getY() + 0.45, offset.getZ()), 80, holder.value().getParticleColors(), 1.0f ,0.1F);
             }
         }
     }

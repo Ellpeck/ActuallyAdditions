@@ -19,7 +19,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.ForgeHooks;
+import net.neoforged.neoforge.common.CommonHooks;
 
 import java.util.Objects;
 
@@ -63,7 +63,7 @@ public class ContainerCoalGenerator extends AbstractContainerMenu {
             //Other Slots in Inventory excluded
             if (slot >= inventoryStart) {
                 //Shift from Inventory
-                if (ForgeHooks.getBurnTime(newStack, null) > 0) {
+                if (CommonHooks.getBurnTime(newStack, null) > 0) {
                     if (!this.moveItemStackTo(newStack, 0, 1, false)) {
                         return ItemStack.EMPTY;
                     }

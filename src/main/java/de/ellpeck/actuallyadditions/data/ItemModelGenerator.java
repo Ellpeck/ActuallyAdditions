@@ -6,17 +6,17 @@ import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.fluids.FluidAA;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.WallBlock;
-import net.minecraftforge.client.model.generators.ItemModelProvider;
-import net.minecraftforge.client.model.generators.ModelFile;
-import net.minecraftforge.client.model.generators.loaders.DynamicFluidContainerModelBuilder;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
+import net.neoforged.neoforge.client.model.generators.ModelFile;
+import net.neoforged.neoforge.client.model.generators.loaders.DynamicFluidContainerModelBuilder;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.registries.DeferredHolder;
 
 import java.util.Set;
 import java.util.function.Supplier;
@@ -71,16 +71,16 @@ public class ItemModelGenerator extends ItemModelProvider {
                 .override().predicate(new ResourceLocation(ActuallyAdditions.MODID, "snail"), 1F)
                 .model(getBuilder("snail").parent(getExistingFile(mcLoc("item/handheld"))).texture("layer0", "item/snail")).end();*/
 
-        String torchPath = ForgeRegistries.ITEMS.getKey(ActuallyBlocks.TINY_TORCH.getItem()).getPath();
+        String torchPath = BuiltInRegistries.ITEM.getKey(ActuallyBlocks.TINY_TORCH.getItem()).getPath();
         singleTexture(torchPath, mcLoc("item/generated"), "layer0", modLoc("block/" + torchPath));
     }
 
     private void generateBucket(FluidAA fluidSupplier) {
-        withExistingParent(ForgeRegistries.ITEMS.getKey(fluidSupplier.getBucket()).getPath(), "forge:item/bucket")
+        withExistingParent(BuiltInRegistries.ITEM.getKey(fluidSupplier.getBucket()).getPath(), "forge:item/bucket")
             .customLoader((builder, template) -> DynamicFluidContainerModelBuilder.begin(builder, template).fluid(fluidSupplier.get()));
     }
 
-    private void registerBlockModel(RegistryObject<Block> block) {
+    private void registerBlockModel(DeferredHolder<Block, ? extends Block> block) {
         String path = block.getId().getPath();
         if (block.get() instanceof WallBlock) {
             String name = path;
@@ -93,7 +93,7 @@ public class ItemModelGenerator extends ItemModelProvider {
     }
 
     private void simpleItem(Supplier<Item> item) {
-        String path = ForgeRegistries.ITEMS.getKey(item.get()).getPath();
+        String path = BuiltInRegistries.ITEM.getKey(item.get()).getPath();
         singleTexture(path, mcLoc("item/handheld"), "layer0", modLoc("item/" + path));
     }
 }

@@ -20,15 +20,15 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.IEnergyStorage;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Optional;
 
 public class ItemBattery extends ItemEnergy {
 
@@ -47,7 +47,7 @@ public class ItemBattery extends ItemEnergy {
 	        for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
                 ItemStack slot = player.getInventory().getItem(i);
                 if (!slot.isEmpty() && slot.getCount() == 1) {
-                    LazyOptional<IEnergyStorage> energy = slot.getCapability(ForgeCapabilities.ENERGY);
+                    Optional<IEnergyStorage> energy = Optional.ofNullable(slot.getCapability(Capabilities.EnergyStorage.ITEM));
                     energy.ifPresent(cap -> {
                         int extractable = this.extractEnergy(stack, Integer.MAX_VALUE, true);
                         int received = cap.receiveEnergy(extractable, false);

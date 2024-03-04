@@ -27,16 +27,15 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 
 import javax.annotation.Nullable;
+import java.util.Optional;
 
 public class TileEntityEnergizer extends TileEntityInventoryBase implements MenuProvider {
 
     public final CustomEnergyStorage storage = new CustomEnergyStorage(50000, 1000, 0);
-    public final LazyOptional<IEnergyStorage> lazyEnergy = LazyOptional.of(() -> this.storage);
     private int lastEnergy;
 
     public TileEntityEnergizer(BlockPos pos, BlockState state) {
@@ -67,8 +66,10 @@ public class TileEntityEnergizer extends TileEntityInventoryBase implements Menu
 
             if (StackUtil.isValid(tile.inv.getStackInSlot(0)) && !StackUtil.isValid(tile.inv.getStackInSlot(1))) {
                 if (tile.storage.getEnergyStored() > 0) {
-                    int received = tile.inv.getStackInSlot(0).getCapability(ForgeCapabilities.ENERGY, null).map(cap -> cap.receiveEnergy(tile.storage.getEnergyStored(), false)).orElse(0);
-                    boolean canTakeUp = tile.inv.getStackInSlot(0).getCapability(ForgeCapabilities.ENERGY, null).map(cap -> cap.getEnergyStored() >= cap.getMaxEnergyStored()).orElse(false);
+                    Optional<IEnergyStorage> capability = Optional.ofNullable(tile.inv.getStackInSlot(0).getCapability(Capabilities.EnergyStorage.ITEM, null));
+
+                    int received = capability.map(cap -> cap.receiveEnergy(tile.storage.getEnergyStored(), false)).orElse(0);
+                    boolean canTakeUp = capability.map(cap -> cap.getEnergyStored() >= cap.getMaxEnergyStored()).orElse(false);
 
                     if (received > 0) {
                         tile.storage.extractEnergyInternal(received, false);
@@ -89,7 +90,7 @@ public class TileEntityEnergizer extends TileEntityInventoryBase implements Menu
 
     @Override
     public IAcceptor getAcceptor() {
-        return (slot, stack, automation) -> !automation || slot == 0 && stack.getCapability(ForgeCapabilities.ENERGY, null).isPresent();
+        return (slot, stack, automation) -> !automation || slot == 0 && stack.getCapability(Capabilities.EnergyStorage.ITEM, null) != null;
     }
 
     @Override
@@ -102,8 +103,8 @@ public class TileEntityEnergizer extends TileEntityInventoryBase implements Menu
     }
 
     @Override
-    public LazyOptional<IEnergyStorage> getEnergyStorage(Direction facing) {
-        return this.lazyEnergy;
+    public IEnergyStorage getEnergyStorage(Direction facing) {
+        return this.storage;
     }
 
     @Override

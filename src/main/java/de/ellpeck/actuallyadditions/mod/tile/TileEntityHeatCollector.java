@@ -22,8 +22,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.MagmaBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.common.util.LazyOptional;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 
 import java.util.ArrayList;
 
@@ -32,7 +32,6 @@ public class TileEntityHeatCollector extends TileEntityBase implements ISharingE
     public static final int ENERGY_PRODUCE = 40;
     public static final int BLOCKS_NEEDED = 4;
     public final CustomEnergyStorage storage = new CustomEnergyStorage(30000, 0, 80);
-    public final LazyOptional<IEnergyStorage> lazyEnergy = LazyOptional.of(() -> this.storage);
     private int oldEnergy;
     private int disappearTime;
 
@@ -134,8 +133,8 @@ public class TileEntityHeatCollector extends TileEntityBase implements ISharingE
     }
 
     @Override
-    public LazyOptional<IEnergyStorage> getEnergyStorage(Direction facing) {
-        return this.lazyEnergy;
+    public IEnergyStorage getEnergyStorage(Direction facing) {
+        return this.storage;
     }
 
 }

@@ -21,6 +21,9 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nonnull;
 
@@ -74,5 +77,13 @@ public class ReconstructorRenderer implements BlockEntityRenderer<TileEntityAtom
     @Override
     public boolean shouldRenderOffScreen(TileEntityAtomicReconstructor tile) {
         return tile.getProgress() > 0.0f;
+    }
+
+    @Override
+    public AABB getRenderBoundingBox(TileEntityAtomicReconstructor blockEntity) {
+        if (blockEntity.getProgress() > 0.0f)
+            return new AABB(Vec3.atCenterOf(blockEntity.getBlockPos()), Vec3.atCenterOf(blockEntity.getBlockPos()).add(1,1,1).relative(blockEntity.getBlockState().getValue(BlockStateProperties.FACING), 11));
+        else
+            return BlockEntityRenderer.super.getRenderBoundingBox(blockEntity);
     }
 }

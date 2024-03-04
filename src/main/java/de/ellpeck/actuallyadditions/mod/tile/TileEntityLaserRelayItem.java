@@ -29,11 +29,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.common.capabilities.Capabilities;
+import net.neoforged.neoforge.common.util.LazyOptional;
+import net.neoforged.neoforge.items.IItemHandler;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -92,7 +92,7 @@ public class TileEntityLaserRelayItem extends TileEntityLaserRelay {
             if (this.level.hasChunkAt(pos)) {
                 BlockEntity tile = this.level.getBlockEntity(pos);
                 if (tile != null && !(tile instanceof TileEntityItemInterface) && !(tile instanceof TileEntityLaserRelay)) {
-                    LazyOptional<IItemHandler> itemHandler = tile.getCapability(ForgeCapabilities.ITEM_HANDLER, side.getOpposite());
+                    LazyOptional<IItemHandler> itemHandler = tile.getCapability(Capabilities.ITEM_HANDLER, side.getOpposite());
 
                     Object slotlessHandler = null;
                     // TODO: [port] add this back maybe?

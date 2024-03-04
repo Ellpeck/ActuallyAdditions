@@ -33,8 +33,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -44,7 +43,6 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisp
 
     public static final int USE_PER_SHOT = 500;
     public final CustomEnergyStorage storage = new CustomEnergyStorage(20000, 200, 0);
-    public final LazyOptional<IEnergyStorage> lazyEnergy = LazyOptional.of(() -> this.storage);
     public int intValuePlay = 2;
     public int chargeAmount = 2;
     public int flightTime = 2;
@@ -289,8 +287,8 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisp
     }
 
     @Override
-    public LazyOptional<IEnergyStorage> getEnergyStorage(Direction facing) {
-        return this.lazyEnergy;
+    public IEnergyStorage getEnergyStorage(Direction facing) {
+        return this.storage;
     }
 
     @Override

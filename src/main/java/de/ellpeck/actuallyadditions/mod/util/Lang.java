@@ -1,6 +1,6 @@
 package de.ellpeck.actuallyadditions.mod.util;
 
-import net.minecraftforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 
 import java.text.NumberFormat;
 

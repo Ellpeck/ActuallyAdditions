@@ -1,24 +1,19 @@
 package de.ellpeck.actuallyadditions.data;
 
-import com.google.gson.JsonObject;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.crafting.ColorChangeRecipe;
-import net.minecraft.data.CachedOutput;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
-import net.minecraftforge.registries.ForgeRegistries;
-import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
-import java.util.concurrent.CompletableFuture;
-import java.util.function.Consumer;
 
 public class ColorChangeGenerator extends RecipeProvider {
     public ColorChangeGenerator(PackOutput packOutput) {
@@ -30,13 +25,14 @@ public class ColorChangeGenerator extends RecipeProvider {
         return "Color Change " + super.getName();
     }
 
-    @Override
-    protected @Nullable CompletableFuture<?> saveAdvancement(CachedOutput output, FinishedRecipe finishedRecipe, JsonObject advancementJson) {
-        return null; //Nope...
-    }
+//    @Override //TODO: Flanks do your RecipeOutput wrapper thingy ;)
+//    protected @Nullable CompletableFuture<?> saveAdvancement(CachedOutput stack, FinishedRecipe finishedRecipe, JsonObject advancementJson) {
+//        return null;
+//        //Nope... maybe later...
+//    }
 
     @Override
-    protected void buildRecipes(@Nonnull Consumer<FinishedRecipe> consumer) {
+    protected void buildRecipes(@Nonnull RecipeOutput consumer) {
         buildWool(consumer);
         buildStainedGlass(consumer);
         buildStainedGlassPane(consumer);
@@ -47,7 +43,7 @@ public class ColorChangeGenerator extends RecipeProvider {
         buildDye(consumer);
     }
 
-    private void buildWool(@Nonnull Consumer<FinishedRecipe> c) {
+    private void buildWool(@Nonnull RecipeOutput c) {
         //Wool
         changeColor(c, Items.WHITE_WOOL, Items.BLACK_WOOL);
         changeColor(c, Items.ORANGE_WOOL, Items.WHITE_WOOL);
@@ -67,7 +63,7 @@ public class ColorChangeGenerator extends RecipeProvider {
         changeColor(c, Items.BLACK_WOOL, Items.RED_WOOL);
     }
 
-    private void buildStainedGlass(@Nonnull Consumer<FinishedRecipe> c) {
+    private void buildStainedGlass(@Nonnull RecipeOutput c) {
         changeColor(c, Items.WHITE_STAINED_GLASS, Items.BLACK_STAINED_GLASS);
         changeColor(c, Items.ORANGE_STAINED_GLASS, Items.WHITE_STAINED_GLASS);
         changeColor(c, Items.MAGENTA_STAINED_GLASS, Items.ORANGE_STAINED_GLASS);
@@ -86,7 +82,7 @@ public class ColorChangeGenerator extends RecipeProvider {
         changeColor(c, Items.BLACK_STAINED_GLASS, Items.RED_STAINED_GLASS);
     }
 
-    private void buildStainedGlassPane(@Nonnull Consumer<FinishedRecipe> c) {
+    private void buildStainedGlassPane(@Nonnull RecipeOutput c) {
         changeColor(c, Items.WHITE_STAINED_GLASS_PANE, Items.BLACK_STAINED_GLASS_PANE);
         changeColor(c, Items.ORANGE_STAINED_GLASS_PANE, Items.WHITE_STAINED_GLASS_PANE);
         changeColor(c, Items.MAGENTA_STAINED_GLASS_PANE, Items.ORANGE_STAINED_GLASS_PANE);
@@ -105,7 +101,7 @@ public class ColorChangeGenerator extends RecipeProvider {
         changeColor(c, Items.BLACK_STAINED_GLASS_PANE, Items.RED_STAINED_GLASS_PANE);
     }
 
-    private void buildTerracotta(@Nonnull Consumer<FinishedRecipe> c) {
+    private void buildTerracotta(@Nonnull RecipeOutput c) {
         changeColor(c, Items.WHITE_TERRACOTTA, Items.BLACK_TERRACOTTA);
         changeColor(c, Items.ORANGE_TERRACOTTA, Items.WHITE_TERRACOTTA);
         changeColor(c, Items.MAGENTA_TERRACOTTA, Items.ORANGE_TERRACOTTA);
@@ -124,7 +120,7 @@ public class ColorChangeGenerator extends RecipeProvider {
         changeColor(c, Items.BLACK_TERRACOTTA, Items.RED_TERRACOTTA);
     }
 
-    private void buildGlazedTerracotta(@Nonnull Consumer<FinishedRecipe> c) {
+    private void buildGlazedTerracotta(@Nonnull RecipeOutput c) {
         changeColor(c, Items.WHITE_GLAZED_TERRACOTTA, Items.BLACK_GLAZED_TERRACOTTA);
         changeColor(c, Items.ORANGE_GLAZED_TERRACOTTA, Items.WHITE_GLAZED_TERRACOTTA);
         changeColor(c, Items.MAGENTA_GLAZED_TERRACOTTA, Items.ORANGE_GLAZED_TERRACOTTA);
@@ -143,7 +139,7 @@ public class ColorChangeGenerator extends RecipeProvider {
         changeColor(c, Items.BLACK_GLAZED_TERRACOTTA, Items.RED_GLAZED_TERRACOTTA);
     }
 
-    private void buildCarpet(@Nonnull Consumer<FinishedRecipe> c) {
+    private void buildCarpet(@Nonnull RecipeOutput c) {
         changeColor(c, Items.WHITE_CARPET, Items.BLACK_CARPET);
         changeColor(c, Items.ORANGE_CARPET, Items.WHITE_CARPET);
         changeColor(c, Items.MAGENTA_CARPET, Items.ORANGE_CARPET);
@@ -162,7 +158,7 @@ public class ColorChangeGenerator extends RecipeProvider {
         changeColor(c, Items.BLACK_CARPET, Items.RED_CARPET);
     }
 
-    private void buildLamps(@Nonnull Consumer<FinishedRecipe> c) {
+    private void buildLamps(@Nonnull RecipeOutput c) {
         changeColor(c, ActuallyBlocks.LAMP_WHITE.getItem(), ActuallyBlocks.LAMP_BLACK.getItem());
         changeColor(c, ActuallyBlocks.LAMP_ORANGE.getItem(), ActuallyBlocks.LAMP_WHITE.getItem());
         changeColor(c, ActuallyBlocks.LAMP_MAGENTA.getItem(), ActuallyBlocks.LAMP_ORANGE.getItem());
@@ -181,7 +177,7 @@ public class ColorChangeGenerator extends RecipeProvider {
         changeColor(c, ActuallyBlocks.LAMP_BLACK.getItem(), ActuallyBlocks.LAMP_RED.getItem());
     }
 
-    private void buildDye(@Nonnull Consumer<FinishedRecipe> c) {
+    private void buildDye(@Nonnull RecipeOutput c) {
         changeColor(c, Items.WHITE_DYE, Items.BLACK_DYE);
         changeColor(c, Items.ORANGE_DYE, Items.WHITE_DYE);
         changeColor(c, Items.MAGENTA_DYE, Items.ORANGE_DYE);
@@ -201,16 +197,16 @@ public class ColorChangeGenerator extends RecipeProvider {
     }
 
 
-    private void changeColor(Consumer<FinishedRecipe> consumer, ItemLike output, Ingredient input) {
-        consumer.accept(new ColorChangeRecipe.Result(new ResourceLocation(ActuallyAdditions.MODID, "colorchange/" + ForgeRegistries.ITEMS.getKey(output.asItem()).getPath()),
-                input, output));
+    private void changeColor(RecipeOutput consumer, ItemLike output, Ingredient input) {
+        consumer.accept(new ResourceLocation(ActuallyAdditions.MODID, "colorchange/" + BuiltInRegistries.ITEM.getKey(output.asItem()).getPath()),
+                new ColorChangeRecipe(output.asItem().getDefaultInstance(), input), null);
     }
-    private void changeColor(Consumer<FinishedRecipe> consumer, ItemLike output, ItemLike input) {
-        consumer.accept(new ColorChangeRecipe.Result(new ResourceLocation(ActuallyAdditions.MODID, "colorchange/" + ForgeRegistries.ITEMS.getKey(output.asItem()).getPath()),
-                Ingredient.of(input), output));
+    private void changeColor(RecipeOutput consumer, ItemLike output, ItemLike input) {
+        consumer.accept(new ResourceLocation(ActuallyAdditions.MODID, "colorchange/" + BuiltInRegistries.ITEM.getKey(output.asItem()).getPath()),
+                new ColorChangeRecipe(output.asItem().getDefaultInstance(), Ingredient.of(input)), null);
     }
-    private void changeColor(Consumer<FinishedRecipe> consumer, ItemLike output, ItemStack input) {
-        consumer.accept(new ColorChangeRecipe.Result(new ResourceLocation(ActuallyAdditions.MODID, "colorchange/" + ForgeRegistries.ITEMS.getKey(output.asItem()).getPath()),
-                Ingredient.of(input), output));
+    private void changeColor(RecipeOutput consumer, ItemLike output, ItemStack input) {
+        consumer.accept(new ResourceLocation(ActuallyAdditions.MODID, "colorchange/" + BuiltInRegistries.ITEM.getKey(output.asItem()).getPath()),
+                new ColorChangeRecipe(output.asItem().getDefaultInstance(), Ingredient.of(input)), null);
     }
 }

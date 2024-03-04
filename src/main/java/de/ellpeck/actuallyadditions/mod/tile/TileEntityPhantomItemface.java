@@ -19,8 +19,8 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.neoforged.neoforge.common.capabilities.Capabilities;
+import net.neoforged.neoforge.common.capabilities.Capability;
 
 public class TileEntityPhantomItemface extends TileEntityPhantomface {
 
@@ -52,7 +52,7 @@ public class TileEntityPhantomItemface extends TileEntityPhantomface {
             BlockEntity tile = this.level.getBlockEntity(this.getBoundPosition());
             if (tile != null) {
                 for (Direction facing : Direction.values()) {
-                    if (tile.getCapability(ForgeCapabilities.ITEM_HANDLER, facing).isPresent()) {
+                    if (tile.getCapability(Capabilities.ITEM_HANDLER, facing).isPresent()) {
                         return true;
                     }
                 }
@@ -63,7 +63,7 @@ public class TileEntityPhantomItemface extends TileEntityPhantomface {
 
     @Override
     protected boolean isCapabilitySupported(Capability<?> capability) {
-        return capability == ForgeCapabilities.ITEM_HANDLER;
+        return capability == Capabilities.ITEM_HANDLER;
     }
 
     @Override

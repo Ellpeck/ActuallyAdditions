@@ -23,20 +23,21 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.server.ServerLifecycleHooks;
+import net.neoforged.neoforge.server.ServerLifecycleHooks;
 
 import javax.annotation.Nullable;
 
 public class TileEntityEmpowerer extends TileEntityInventoryBase {
 
     public int processTime;
-    private EmpowererRecipe currentRecipe = null;
-    private EmpowererRecipe lastRecipe = null;
+    private RecipeHolder<EmpowererRecipe> currentRecipe = null;
+    private RecipeHolder<EmpowererRecipe> lastRecipe = null;
 
-    public EmpowererRecipe getCurrentRecipe(){
+    public RecipeHolder<EmpowererRecipe> getCurrentRecipe(){
         return this.currentRecipe;
     }
 
@@ -45,8 +46,8 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase {
     }
 
     public static boolean isPossibleInput(ItemStack stack) {
-        for (EmpowererRecipe r : ServerLifecycleHooks.getCurrentServer().getRecipeManager().getAllRecipesFor(ActuallyRecipes.Types.EMPOWERING.get())) {
-            if (r.getInput().test(stack)) {
+        for (RecipeHolder<EmpowererRecipe> r : ServerLifecycleHooks.getCurrentServer().getRecipeManager().getAllRecipesFor(ActuallyRecipes.Types.EMPOWERING.get())) {
+            if (r.value().getInput().test(stack)) {
                 return true;
             }
         }
@@ -54,9 +55,9 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase {
     }
 
     @Nullable
-    public static EmpowererRecipe findMatchingRecipe(ItemStack base, ItemStack stand1, ItemStack stand2, ItemStack stand3, ItemStack stand4) {
-        for (EmpowererRecipe r : ServerLifecycleHooks.getCurrentServer().getRecipeManager().getAllRecipesFor(ActuallyRecipes.Types.EMPOWERING.get())) {
-            if (r.matches(base, stand1, stand2, stand3, stand4)) {
+    public static RecipeHolder<EmpowererRecipe> findMatchingRecipe(ItemStack base, ItemStack stand1, ItemStack stand2, ItemStack stand3, ItemStack stand4) {
+        for (RecipeHolder<EmpowererRecipe> r : ServerLifecycleHooks.getCurrentServer().getRecipeManager().getAllRecipesFor(ActuallyRecipes.Types.EMPOWERING.get())) {
+            if (r.value().matches(base, stand1, stand2, stand3, stand4)) {
                 return r;
             }
         }
@@ -75,9 +76,10 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase {
 
             TileEntityDisplayStand[] stands = tile.getNearbyStands();
             if (stands != null) {
-                EmpowererRecipe recipe = findMatchingRecipe(tile.inv.getStackInSlot(0), stands[0].getStack(), stands[1].getStack(), stands[2].getStack(), stands[3].getStack());
-                if (recipe != null) {
-                    tile.currentRecipe = recipe;
+                RecipeHolder<EmpowererRecipe> holder = findMatchingRecipe(tile.inv.getStackInSlot(0), stands[0].getStack(), stands[1].getStack(), stands[2].getStack(), stands[3].getStack());
+                if (holder != null) {
+                    tile.currentRecipe = holder;
+                    EmpowererRecipe recipe = holder.value();
 
                     boolean hasPower = true;
 
@@ -153,7 +155,7 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase {
         }
         if (type == NBTType.SYNC) {
             if (this.currentRecipe != null)
-                compound.putString("CurrentRecipe", this.currentRecipe.getId().toString());
+                compound.putString("CurrentRecipe", this.currentRecipe.id().toString());
             else
                 compound.putString("CurrentRecipe", "");
         }
@@ -168,8 +170,8 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase {
         if (type == NBTType.SYNC && compound.contains("CurrentRecipe")) {
             if (!compound.getString("CurrentRecipe").isEmpty()) {
                 ResourceLocation id = new ResourceLocation(compound.getString("CurrentRecipe"));
-                for (EmpowererRecipe empowererRecipe : ActuallyAdditionsAPI.EMPOWERER_RECIPES) {
-                    if (empowererRecipe.getId().equals(id)) {
+                for (RecipeHolder<EmpowererRecipe> empowererRecipe : ActuallyAdditionsAPI.EMPOWERER_RECIPES) {
+                    if (empowererRecipe.id().equals(id)) {
                         this.currentRecipe = empowererRecipe;
                         break;
                     }

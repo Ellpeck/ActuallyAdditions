@@ -11,14 +11,14 @@
 package de.ellpeck.actuallyadditions.mod.misc.special;
 
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.client.event.RenderPlayerEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.bus.api.EventPriority;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.client.event.RenderPlayerEvent;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -72,13 +72,13 @@ public class SpecialRenderInit {
     }
 
     private static ItemStack findItem(ResourceLocation resLoc) {
-        if (ForgeRegistries.ITEMS.containsKey(resLoc)) {
-            Item item = ForgeRegistries.ITEMS.getValue(resLoc);
+        if (BuiltInRegistries.ITEM.containsKey(resLoc)) {
+            Item item = BuiltInRegistries.ITEM.get(resLoc);
             if (item != null) {
                 return new ItemStack(item);
             }
-        } else if (ForgeRegistries.BLOCKS.containsKey(resLoc)) {
-            Block block = ForgeRegistries.BLOCKS.getValue(resLoc);
+        } else if (BuiltInRegistries.BLOCK.containsKey(resLoc)) {
+            Block block = BuiltInRegistries.BLOCK.get(resLoc);
             if (block != null) {
                 return new ItemStack(block);
             }

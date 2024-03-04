@@ -11,8 +11,8 @@
 package de.ellpeck.actuallyadditions.mod.entity;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
 
 public final class InitEntities {

@@ -25,11 +25,11 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
-import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
-import net.minecraftforge.common.SoundActions;
-import net.minecraftforge.fluids.FluidType;
-import net.minecraftforge.fluids.ForgeFlowingFluid;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
+import net.neoforged.neoforge.common.SoundActions;
+import net.neoforged.neoforge.fluids.BaseFlowingFluid;
+import net.neoforged.neoforge.fluids.FluidType;
+import net.neoforged.neoforge.registries.DeferredItem;
 
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -38,19 +38,19 @@ public class FluidAA implements Supplier<Fluid> {
     private String name;
     private final ResourceLocation stillTexture;
     private final ResourceLocation flowingTexture;
-    private RegistryObject<FluidType> fluidType;
-    private RegistryObject<ForgeFlowingFluid> source;
-    private RegistryObject<ForgeFlowingFluid> flowing;
-    private RegistryObject<LiquidBlock> fluidBlock;
-    private RegistryObject<Item> bucket;
+    private Supplier<FluidType> fluidType;
+    private Supplier<BaseFlowingFluid> source;
+    private Supplier<BaseFlowingFluid> flowing;
+    private Supplier<LiquidBlock> fluidBlock;
+    private DeferredItem<Item> bucket;
 
     public String getName() {
         return name;
     }
 
-    public static ForgeFlowingFluid.Properties createProperties(Supplier<FluidType> type, Supplier<ForgeFlowingFluid> still, Supplier<ForgeFlowingFluid> flowing,
-                                                               RegistryObject<Item> bucket, Supplier<LiquidBlock> block) {
-        return new ForgeFlowingFluid.Properties(type, still, flowing)
+    public static BaseFlowingFluid.Properties createProperties(Supplier<FluidType> type, Supplier<BaseFlowingFluid> still, Supplier<BaseFlowingFluid> flowing,
+                                                               DeferredItem<Item> bucket, Supplier<LiquidBlock> block) {
+        return new BaseFlowingFluid.Properties(type, still, flowing)
                 .bucket(bucket).block(block);
     }
 
@@ -76,9 +76,9 @@ public class FluidAA implements Supplier<Fluid> {
             }
         });
 
-        source = InitFluids.FLUIDS.register(name, () ->  new ForgeFlowingFluid.Source(createProperties(fluidType, source, flowing, bucket, fluidBlock)));
-        flowing = InitFluids.FLUIDS.register(name + "_flowing", () -> new ForgeFlowingFluid.Flowing(createProperties(fluidType, source, flowing, bucket, fluidBlock)));
-        fluidBlock = ActuallyBlocks.BLOCKS.register(name, () -> new LiquidBlock(source, BlockBehaviour.Properties.copy(Blocks.WATER)));
+        source = InitFluids.FLUIDS.register(name, () ->  new BaseFlowingFluid.Source(createProperties(fluidType, source, flowing, bucket, fluidBlock)));
+        flowing = InitFluids.FLUIDS.register(name + "_flowing", () -> new BaseFlowingFluid.Flowing(createProperties(fluidType, source, flowing, bucket, fluidBlock)));
+        fluidBlock = ActuallyBlocks.BLOCKS.register(name, () -> new LiquidBlock(source, BlockBehaviour.Properties.ofFullCopy(Blocks.WATER)));
         bucket = ActuallyItems.ITEMS.register(name + "_bucket", () -> new BucketItem(source, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
     }
 

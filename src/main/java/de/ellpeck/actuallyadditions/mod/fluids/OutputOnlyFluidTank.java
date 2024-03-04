@@ -1,7 +1,7 @@
 package de.ellpeck.actuallyadditions.mod.fluids;
 
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.templates.FluidTank;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 
 import java.util.function.Predicate;
 

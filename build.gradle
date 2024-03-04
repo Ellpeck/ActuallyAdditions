@@ -1,9 +1,9 @@
 plugins {
+    id 'java-library'
     id 'eclipse'
     id 'idea'
     id 'maven-publish'
-    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
-    id 'org.parchmentmc.librarian.forgegradle' version '1.+'
+    id 'net.neoforged.gradle.userdev' version '7.0.96'
 }
 
 version = "$mod_version"
@@ -16,44 +16,49 @@ if (System.getenv('BUILD_NUMBER') != null) {
     version += "." + System.getenv('BUILD_NUMBER')
 }
 
+// Mojang ships Java 17 to end users in 1.18+, so your mod should target Java 17.
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
-minecraft {
-    mappings channel: 'parchment', version: "${parchment_version}-${game_version}"
-    // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
+if (rootProject.file('src/main/resources/META-INF/accesstransformer.cfg').exists()) {
+    minecraft.accessTransformers.file rootProject.file('src/main/resources/META-INF/accesstransformer.cfg')
+}
+//minecraft.accessTransformers.entry public net.minecraft.client.Minecraft textureManager # textureManager
 
-    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+runs {
+    // applies to all the run configs below
+    configureEach { net.neoforged.gradle.dsl.common.runs.run.Run run ->
+        // Recommended logging data for a userdev environment
+        systemProperty 'forge.logging.markers', 'REGISTRIES'
 
-    runs {
-        client {
-            workingDirectory project.file('run')
-        
-            mods {
-                actuallyadditions {
-                    source sourceSets.main
-                }
-            }
+        // Recommended logging level for the console
+        systemProperty 'forge.logging.console.level', 'debug'
+
+        //Limit ram usage for the dev environment to 4GB
+        jvmArgument '-Xmx4G'
+
+        if (run.project.javaToolchains.launcherFor(java.toolchain).map { it.metadata.vendor }.getOrElse("").contains("JetBrains")) {
+            run.jvmArgument("-XX:+AllowEnhancedClassRedefinition")
         }
 
-        server {
-            workingDirectory project.file('run')
-            mods {
-                actuallyadditions {
-                    source sourceSets.main
-                }
-            }
-        }
+        modSource project.sourceSets.main
+    }
 
-        data {
-            workingDirectory project.file('run')
-            args '--mod', 'actuallyadditions', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+    client {
+        // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
+        systemProperty 'neoforge.enabledGameTestNamespaces', "actuallyadditions"
+    }
 
-            mods {
-                actuallyadditions {
-                    source sourceSets.main
-                }
-            }
-        }
+    server {
+        systemProperty 'neoforge.enabledGameTestNamespaces', "actuallyadditions"
+        programArgument '--nogui'
+    }
+
+    data {
+        // example of overriding the workingDirectory set in configureEach above, uncomment if you want to use it
+        // workingDirectory project.file('run-data')
+
+        // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
+        programArguments.addAll '--mod', "actuallyadditions", '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
     }
 }
 
@@ -64,20 +69,23 @@ repositories {
         url = "https://maven.blamejared.com"
     }
     maven {
-        url = "https://www.cursemaven.com"
+        url "https://cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
     }
 }
 
 dependencies {
-    minecraft "net.minecraftforge:forge:${game_version}-${forge_version}"
+    implementation "net.neoforged:neoforge:${neo_version}"
 
-    compileOnly fg.deobf("mezz.jei:jei-${game_version}-common-api:${jei_version}")
-    compileOnly fg.deobf("mezz.jei:jei-${game_version}-forge-api:${jei_version}")
+    compileOnly "mezz.jei:jei-${game_version}-common-api:${jei_version}"
+    compileOnly "mezz.jei:jei-${game_version}-neoforge-api:${jei_version}"
 
-    runtimeOnly fg.deobf("mezz.jei:jei-${game_version}-forge:${jei_version}")
+    runtimeOnly "mezz.jei:jei-${game_version}-neoforge:${jei_version}"
 
-    runtimeOnly fg.deobf("curse.maven:the-one-probe-245211:4629624")
-    runtimeOnly fg.deobf("curse.maven:mekanism-268560:5125665")
+    runtimeOnly "curse.maven:the-one-probe-245211:5084077"
+    runtimeOnly "curse.maven:mekanism-268560:5155329"
 }
 
 // not sure if this is still needed
@@ -107,12 +115,6 @@ jar {
     from sourceSets.main.output
 }
 
-task deobfJar(type: Jar) {
-    from sourceSets.main.output
-    from sourceSets.main.java
-    archiveClassifier.set('dev')
-}
-
 task apiJar(type: Jar) {
     from sourceSets.main.output
     from sourceSets.main.java
@@ -135,7 +137,7 @@ task sourcesJar(type: Jar) {
 }
 
 artifacts {
-    archives deobfJar, sourcesJar, apiJar, javadocJar
+    archives sourcesJar, apiJar, javadocJar
 }
 
 publishing {
@@ -148,7 +150,6 @@ publishing {
 
             from components.java
 
-            artifact deobfJar
             artifact sourcesJar
             artifact apiJar
             artifact javadocJar

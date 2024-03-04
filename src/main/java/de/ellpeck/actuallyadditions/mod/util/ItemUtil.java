@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.util;
 
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
@@ -17,14 +18,13 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Map;
 
 public final class ItemUtil {
 
     public static Item getItemFromName(String name) {
-        return ForgeRegistries.ITEMS.getValue(new ResourceLocation(name));
+        return BuiltInRegistries.ITEM.get(new ResourceLocation(name));
     }
 
     //    public static boolean contains(ItemStack[] array, ItemStack stack, boolean checkWildcard) {

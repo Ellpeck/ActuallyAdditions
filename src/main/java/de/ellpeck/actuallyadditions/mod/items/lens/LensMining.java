@@ -19,6 +19,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.util.random.WeightedRandom;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -83,9 +84,9 @@ public class LensMining extends Lens {
                 Block hitBlock = hitState.getBlock();
                 ItemStack item = new ItemStack(hitBlock.asItem());
 
-                for(MiningLensRecipe r:ActuallyAdditionsAPI.MINING_LENS_RECIPES) {
-                    if (r.matches(item))
-                        ores.add(r);
+                for(RecipeHolder<MiningLensRecipe> r:ActuallyAdditionsAPI.MINING_LENS_RECIPES) {
+                    if (r.value().matches(item))
+                        ores.add(r.value());
                 }
 
 

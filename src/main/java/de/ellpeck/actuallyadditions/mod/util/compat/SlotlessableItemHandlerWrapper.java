@@ -10,20 +10,20 @@
 
 package de.ellpeck.actuallyadditions.mod.util.compat;
 
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
+import net.neoforged.neoforge.items.IItemHandler;
 
 public class SlotlessableItemHandlerWrapper {
+    //TODO: Check if we need this wrapper at all? The previous implementation used CommonCapabilities ISlotlessItemhandler
 
-    private final LazyOptional<IItemHandler> normalHandler;
+    private final IItemHandler normalHandler;
     private final Object slotlessHandler;
 
-    public SlotlessableItemHandlerWrapper(LazyOptional<IItemHandler> normalHandler, Object slotlessHandler) {
+    public SlotlessableItemHandlerWrapper(IItemHandler normalHandler, Object slotlessHandler) {
         this.normalHandler = normalHandler;
         this.slotlessHandler = slotlessHandler;
     }
 
-    public LazyOptional<IItemHandler> getNormalHandler() {
+    public IItemHandler getNormalHandler() {
         return this.normalHandler;
     }
 
