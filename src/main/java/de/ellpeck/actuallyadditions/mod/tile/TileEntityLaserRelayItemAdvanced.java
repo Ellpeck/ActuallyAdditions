@@ -31,6 +31,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
+import java.util.Optional;
 
 public class TileEntityLaserRelayItemAdvanced extends TileEntityLaserRelayItem implements IButtonReactor, MenuProvider {
 
@@ -99,7 +100,7 @@ public class TileEntityLaserRelayItemAdvanced extends TileEntityLaserRelayItem i
 
     private void addWhitelistSmart(boolean output) {
         for (SlotlessableItemHandlerWrapper handler : this.handlersAround.values()) {
-            handler.getNormalHandler().ifPresent(itemHandler -> {
+            Optional.ofNullable(handler.getNormalHandler()).ifPresent(itemHandler -> {
                 for (int i = 0; i < itemHandler.getSlots(); i++) {
                     ItemStack stack = itemHandler.getStackInSlot(i);
                     if (!stack.isEmpty()) {

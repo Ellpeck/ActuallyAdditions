@@ -20,6 +20,7 @@ import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -38,10 +39,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.TierSortingRegistry;
 import net.neoforged.neoforge.common.util.FakePlayerFactory;
-import net.neoforged.neoforge.common.util.LazyOptional;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.fluids.IFluidBlock;
-import net.neoforged.neoforge.registries.BuiltInRegistries;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -51,7 +50,6 @@ public class TileEntityVerticalDigger extends TileEntityInventoryBase implements
     public static final int ENERGY_USE_PER_BLOCK = 650;
     public static final int DEFAULT_RANGE = 2;
     public final CustomEnergyStorage storage = new CustomEnergyStorage(200000, 2000, 0);
-    public final LazyOptional<IEnergyStorage> lazyEnergy = LazyOptional.of(() -> this.storage);
     public boolean onlyMineOres;
     public int checkX;
     public int checkY = -1;
@@ -210,7 +208,7 @@ public class TileEntityVerticalDigger extends TileEntityInventoryBase implements
     }
 
     private boolean isBlacklisted(Block block) {
-        String reg =  BuiltInRegistries.BLOCK.getKey(block).toString();
+        String reg = BuiltInRegistries.BLOCK.getKey(block).toString();
         if (!reg.isEmpty()) {
             for (String string : ConfigStringListValues.MINER_BLACKLIST.getValue()) {
                 if (reg.equals(string)) {
@@ -250,7 +248,7 @@ public class TileEntityVerticalDigger extends TileEntityInventoryBase implements
 
     @Override
     public IEnergyStorage getEnergyStorage(Direction facing) {
-        return this.lazyEnergy;
+        return this.storage;
     }
 
     @Override

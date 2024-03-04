@@ -27,6 +27,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.level.Level;
@@ -34,7 +35,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.neoforged.neoforge.common.util.LazyOptional;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 
 import javax.annotation.Nonnull;
@@ -50,7 +50,6 @@ public class TileEntityPoweredFurnace extends TileEntityInventoryBase implements
     public static final int ENERGY_USE = 25;
     private static final int SMELT_TIME = 80;
     public final CustomEnergyStorage storage = new CustomEnergyStorage(30000, 150, 0);
-    public final LazyOptional<IEnergyStorage> lazyEnergy = LazyOptional.of(() -> this.storage);
     public int firstSmeltTime;
     public int secondSmeltTime;
     public boolean isAutoSplit;
@@ -194,10 +193,10 @@ public class TileEntityPoweredFurnace extends TileEntityInventoryBase implements
     }
 
     public Optional<ItemStack> getOutputForInput(ItemStack stack) {
-        return level.getServer().getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SingleItem(stack), level).map(recipe -> recipe.getResultItem(this.level.registryAccess()));
+        return level.getServer().getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SingleItem(stack), level).map(recipe -> recipe.value().getResultItem(this.level.registryAccess()));
     }
 
-    public Optional<SmeltingRecipe> getRecipeForInput(ItemStack stack) {
+    public Optional<RecipeHolder<SmeltingRecipe>> getRecipeForInput(ItemStack stack) {
         return level.getServer().getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SingleItem(stack), level);
     }
 
@@ -215,8 +214,8 @@ public class TileEntityPoweredFurnace extends TileEntityInventoryBase implements
         ItemStack input = this.inv.getStackInSlot(theInput);
         ItemStack output = this.inv.getStackInSlot(theOutput);
         if (!input.isEmpty()) {
-            Optional<SmeltingRecipe> recipe = getRecipeForInput(input);
-            return recipe.map($ -> output.isEmpty() || ItemStack.isSameItem(output, $.getResultItem(this.level.registryAccess())) &&  output.getCount() <= output.getMaxStackSize() - $.getResultItem(this.level.registryAccess()).getCount()).orElse(false);
+            Optional<RecipeHolder<SmeltingRecipe>> recipe = getRecipeForInput(input);
+            return recipe.map($ -> output.isEmpty() || ItemStack.isSameItem(output, $.value().getResultItem(this.level.registryAccess())) && output.getCount() <= output.getMaxStackSize() - $.value().getResultItem(this.level.registryAccess()).getCount()).orElse(false);
         }
         return false;
     }
@@ -250,7 +249,7 @@ public class TileEntityPoweredFurnace extends TileEntityInventoryBase implements
 
     @Override
     public IEnergyStorage getEnergyStorage(Direction facing) {
-        return this.lazyEnergy;
+        return this.storage;
     }
 
     @Nonnull

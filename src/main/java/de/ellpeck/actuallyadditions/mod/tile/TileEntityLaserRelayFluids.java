@@ -28,8 +28,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.neoforge.common.capabilities.Capabilities;
-import net.neoforged.neoforge.common.util.LazyOptional;
+import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 
@@ -37,6 +36,7 @@ import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -112,7 +112,7 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay {
         super.serverTick();
         if (this.mode == Mode.INPUT_ONLY) {
             for (Direction side : this.handlersAround.keySet()) {
-                WorldUtil.doFluidInteraction(this.handlersAround.get(side), this, side.getOpposite(), Integer.MAX_VALUE);
+                WorldUtil.doFluidInteraction(this.level, this.handlersAround.get(side).getBlockPos(), this.getBlockPos(), side.getOpposite(), Integer.MAX_VALUE);
             }
         }
     }
@@ -133,7 +133,7 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay {
             if (this.level.hasChunkAt(pos)) {
                 BlockEntity tile = this.level.getBlockEntity(pos);
                 if (tile != null && !(tile instanceof TileEntityLaserRelay)) {
-                    if (tile.getCapability(Capabilities.FLUID_HANDLER, side.getOpposite()).isPresent()) {
+                    if (this.level.getCapability(Capabilities.FluidHandler.BLOCK, tile.getBlockPos(), side.getOpposite()) != null) {
                         this.handlersAround.put(side, tile);
 
                         BlockEntity oldTile = old.get(side);
@@ -156,9 +156,9 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay {
     // TODO: [port] super hacky, find better way of handling this.
     @Override
     public IFluidHandler getFluidHandler(Direction facing) {
-        return LazyOptional.of(() -> this.fluidHandlers[facing == null
+        return this.fluidHandlers[facing == null
             ? 0
-            : facing.ordinal()]);
+            : facing.ordinal()];
     }
 
     private int transmitFluid(Direction from, FluidStack stack, IFluidHandler.FluidAction action) {
@@ -194,7 +194,8 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay {
                                     BlockEntity tile = theRelay.handlersAround.get(facing);
                                     Direction opp = facing.getOpposite();
 
-                                    boolean received = tile.getCapability(Capabilities.FLUID_HANDLER, opp).map(cap -> cap.fill(stack, IFluidHandler.FluidAction.SIMULATE) > 0).orElse(false);
+                                    boolean received = Optional.ofNullable(this.level.getCapability(Capabilities.FluidHandler.BLOCK, tile.getBlockPos(), opp))
+                                            .map(cap -> cap.fill(stack, IFluidHandler.FluidAction.SIMULATE) > 0).orElse(false);
                                     if (received) {
                                         totalReceiverAmount++;
                                         workedOnce = true;
@@ -225,7 +226,8 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay {
                         if (!alreadyChecked.contains(tile.getBlockPos())) {
                             alreadyChecked.add(tile.getBlockPos());
                             if (theRelay != this || side != from) {
-                                transmitted += tile.getCapability(Capabilities.FLUID_HANDLER, opp).map(cap -> {
+                                transmitted += Optional.ofNullable(this.level.getCapability(Capabilities.FluidHandler.BLOCK, tile.getBlockPos(), opp))
+                                        .map(cap -> {
                                     int trans = 0;
                                     FluidStack copy = stack.copy();
                                     copy.setAmount(amountPer);

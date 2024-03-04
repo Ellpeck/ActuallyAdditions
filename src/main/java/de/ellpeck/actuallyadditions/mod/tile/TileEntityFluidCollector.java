@@ -34,7 +34,6 @@ import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.common.util.LazyOptional;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.fluids.IFluidBlock;
@@ -73,7 +72,6 @@ public class TileEntityFluidCollector extends TileEntityBase implements ISharing
             return super.drain(resource, action);
         }
     };
-    public final LazyOptional<IFluidHandler> lazyTank = LazyOptional.of(() -> this.tank);
     private int lastTankAmount;
     private int currentTime;
     private int lastCompare;
@@ -147,7 +145,7 @@ public class TileEntityFluidCollector extends TileEntityBase implements ISharing
 
     @Override
     public IFluidHandler getFluidHandler(Direction facing) {
-        return this.lazyTank;
+        return this.tank;
     }
 
     @Override

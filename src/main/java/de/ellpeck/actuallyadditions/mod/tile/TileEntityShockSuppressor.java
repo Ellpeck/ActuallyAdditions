@@ -17,7 +17,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.common.util.LazyOptional;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 
 import java.util.ArrayList;
@@ -31,7 +30,6 @@ public class TileEntityShockSuppressor extends TileEntityBase implements IEnergy
     public static final int RANGE = 5;
 
     public CustomEnergyStorage storage = new CustomEnergyStorage(300000, 400, 0);
-    public final LazyOptional<IEnergyStorage> lazyEnergy = LazyOptional.of(() -> this.storage);
     private int oldEnergy;
 
     public TileEntityShockSuppressor(BlockPos pos, BlockState state) {
@@ -47,14 +45,14 @@ public class TileEntityShockSuppressor extends TileEntityBase implements IEnergy
         }
     }
 
-    @Override
-    public void invalidateCaps() {
-        super.invalidateCaps();
-
-        if (!this.level.isClientSide) {
-            SUPPRESSORS.remove(this);
-        }
-    }
+//    @Override
+//    public void invalidateCaps() {
+//        super.invalidateCaps();
+//
+//        if (!this.level.isClientSide) {
+//            SUPPRESSORS.remove(this);
+//        }
+//    }
 
     public static <T extends BlockEntity> void clientTick(Level level, BlockPos pos, BlockState state, T t) {
         if (t instanceof TileEntityShockSuppressor tile) {
@@ -100,6 +98,6 @@ public class TileEntityShockSuppressor extends TileEntityBase implements IEnergy
 
     @Override
     public IEnergyStorage getEnergyStorage(Direction facing) {
-        return this.lazyEnergy;
+        return this.storage;
     }
 }

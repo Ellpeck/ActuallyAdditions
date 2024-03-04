@@ -22,7 +22,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.common.util.LazyOptional;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 
 import java.util.ArrayList;
@@ -32,7 +31,6 @@ import java.util.List;
 public class TileEntityLeafGenerator extends TileEntityBase implements ISharingEnergyProvider, IEnergyDisplay {
 
     public final CustomEnergyStorage storage = new CustomEnergyStorage(35000, 0, 450);
-    public final LazyOptional<IEnergyStorage> lazyEnergy = LazyOptional.of(() -> this.storage);
     private int nextUseCounter;
     private int oldEnergy;
 
@@ -140,6 +138,6 @@ public class TileEntityLeafGenerator extends TileEntityBase implements ISharingE
 
     @Override
     public IEnergyStorage getEnergyStorage(Direction facing) {
-        return this.lazyEnergy;
+        return this.storage;
     }
 }

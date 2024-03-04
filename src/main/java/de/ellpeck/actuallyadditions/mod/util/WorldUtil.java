@@ -186,9 +186,9 @@ public final class WorldUtil {
             //Everything else
             try {
                 FakePlayer fake = FakePlayerFactory.getMinecraft((ServerLevel) level);
-                if (fake.connection == null) {
-                    fake.connection = new NetHandlerSpaghettiServer(fake);
-                }
+//                if (fake.connection == null) {
+//                    fake.connection = new NetHandlerSpaghettiServer(fake);
+//                }
                 //ItemStack heldBefore = fake.getMainHandItem();
                 setHandItemWithoutAnnoyingSound(fake, InteractionHand.MAIN_HAND, stack.copy());
                 BlockHitResult ray = new BlockHitResult(new Vec3(0.5, 0.5, 0.5), side.getOpposite(), offsetPos, true);

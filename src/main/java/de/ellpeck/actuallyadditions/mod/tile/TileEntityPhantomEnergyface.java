@@ -17,8 +17,8 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.common.capabilities.Capabilities;
-import net.neoforged.neoforge.common.capabilities.Capability;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 
 public class TileEntityPhantomEnergyface extends TileEntityPhantomface implements ISharingEnergyProvider {
 
@@ -45,7 +45,7 @@ public class TileEntityPhantomEnergyface extends TileEntityPhantomface implement
             BlockEntity tile = this.level.getBlockEntity(this.boundPosition);
             if (tile != null && !(tile instanceof TileEntityLaserRelayEnergy)) {
                 for (Direction facing : Direction.values()) {
-                    if (tile.getCapability(Capabilities.ENERGY, facing).isPresent()) {
+                    if (this.level.getCapability(Capabilities.EnergyStorage.BLOCK, tile.getBlockPos(), facing) != null) {
                         return true;
                     }
                 }
@@ -55,8 +55,14 @@ public class TileEntityPhantomEnergyface extends TileEntityPhantomface implement
     }
 
     @Override
-    protected boolean isCapabilitySupported(Capability<?> capability) {
-        return capability == Capabilities.ENERGY;
+    public IEnergyStorage getEnergyStorage(Direction facing) {
+        if (this.isBoundThingInRange()) {
+            BlockEntity tile = this.level.getBlockEntity(this.getBoundPosition());
+            if (tile != null) {
+                return this.level.getCapability(Capabilities.EnergyStorage.BLOCK, this.getBoundPosition(), facing);
+            }
+        }
+        return null;
     }
 
     @Override

@@ -19,8 +19,8 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.common.capabilities.Capabilities;
-import net.neoforged.neoforge.common.capabilities.Capability;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.items.IItemHandler;
 
 public class TileEntityPhantomItemface extends TileEntityPhantomface {
 
@@ -52,7 +52,7 @@ public class TileEntityPhantomItemface extends TileEntityPhantomface {
             BlockEntity tile = this.level.getBlockEntity(this.getBoundPosition());
             if (tile != null) {
                 for (Direction facing : Direction.values()) {
-                    if (tile.getCapability(Capabilities.ITEM_HANDLER, facing).isPresent()) {
+                    if (this.level.getCapability(Capabilities.ItemHandler.BLOCK, this.getBoundPosition(), facing) != null) {
                         return true;
                     }
                 }
@@ -62,8 +62,14 @@ public class TileEntityPhantomItemface extends TileEntityPhantomface {
     }
 
     @Override
-    protected boolean isCapabilitySupported(Capability<?> capability) {
-        return capability == Capabilities.ITEM_HANDLER;
+    public IItemHandler getItemHandler(Direction facing) {
+        if (this.isBoundThingInRange()) {
+            BlockEntity tile = this.level.getBlockEntity(this.getBoundPosition());
+            if (tile != null) {
+                return this.level.getCapability(Capabilities.ItemHandler.BLOCK, this.getBoundPosition(), facing);
+            }
+        }
+        return null;
     }
 
     @Override
