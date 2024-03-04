@@ -44,11 +44,11 @@ public class GuiCoalGenerator extends AAScreen<ContainerCoalGenerator> {
     }
 
     @Override
-    public void render(@Nonnull GuiGraphics guiGraphics, int x, int y, float f) {
-        renderBackground(guiGraphics);
-        super.render(guiGraphics, x, y, f);
-        this.energy.render(guiGraphics, x, y);
-        renderTooltip(guiGraphics, x, y);
+    public void render(@Nonnull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+        renderBackground(guiGraphics, mouseX, mouseY, partialTicks);
+        super.render(guiGraphics, mouseX, mouseY, partialTicks);
+        this.energy.render(guiGraphics, mouseX, mouseY);
+        renderTooltip(guiGraphics, mouseX, mouseY);
     }
 
     @Override

@@ -131,7 +131,6 @@ public class ActuallyAdditions {
         ActuallyAdditionsAPI.connectionHandler = new LaserRelayConnectionHandler();
         //Lenses.init();
 //        CompatUtil.registerCraftingTweaks();
-//        event.enqueueWork(() -> CraftingHelper.register(TargetNBTIngredient.Serializer.NAME, TargetNBTIngredient.SERIALIZER)); TODO: Flanks fix the Target NBT ingredient!
 
         commonCapsLoaded = false; // Loader.isModLoaded("commoncapabilities");
 

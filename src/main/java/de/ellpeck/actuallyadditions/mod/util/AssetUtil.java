@@ -232,7 +232,7 @@ public final class AssetUtil {
             data.putFloat("Size", size);
             data.putInt("MaxAge", maxAge);
             data.putFloat("Alpha", alpha);
-            PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(startX, startY, startZ, 96, world.dimension())).send(new PacketServerToClient(data, PacketHandler.LASER_HANDLER));
+            PacketDistributor.NEAR.with(new PacketDistributor.TargetPoint(startX, startY, startZ, 96, world.dimension())).send(new PacketServerToClient(data, PacketHandler.LASER_HANDLER));
         }
     }
 

@@ -82,7 +82,7 @@ public class LensColor extends Lens {
     }
 
     private ItemStack tryConvert(ItemStack stack, RegistryAccess registryAccess) {
-        return ColorChangeRecipe.getRecipeForStack(stack).map(recipe -> recipe.getResultItem(registryAccess)).orElse(ItemStack.EMPTY);
+        return ColorChangeRecipe.getRecipeForStack(stack).map(recipe -> recipe.value().getResultItem(registryAccess)).orElse(ItemStack.EMPTY);
     }
 
     @Override

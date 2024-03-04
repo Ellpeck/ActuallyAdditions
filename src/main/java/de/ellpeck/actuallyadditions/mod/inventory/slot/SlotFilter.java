@@ -41,7 +41,7 @@ public class SlotFilter extends SlotItemHandlerUnconditioned {
     }
 
     public static boolean isFilter(ItemStack stack) {
-        return StackUtil.isValid(stack) && stack.getItem() instanceof ItemFilter;
+        return !stack.isEmpty() && stack.getItem() instanceof ItemFilter;
     }
 
     private void slotClick(Player player) {

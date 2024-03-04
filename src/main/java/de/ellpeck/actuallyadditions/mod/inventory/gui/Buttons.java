@@ -11,6 +11,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
+import javax.annotation.Nonnull;
+
 public class Buttons {
     @OnlyIn(Dist.CLIENT)
     public static class SmallerButton extends Button {
@@ -30,7 +32,7 @@ public class Buttons {
         }
 
         @Override
-        public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float f) {
+        public void renderWidget(@Nonnull GuiGraphics guiGraphics, int mouseX, int mouseY, float f) {
             if (this.visible) {
                 RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
                 RenderSystem.setShaderTexture(0, this.resLoc);
@@ -69,7 +71,7 @@ public class Buttons {
         }
 
         @Override
-        public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float f) {
+        public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float f) {
             if (this.visible) {
                 RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
                 RenderSystem.setShaderTexture(0, this.resLoc);

@@ -3,8 +3,11 @@ package de.ellpeck.actuallyadditions.data;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.config.conditions.BoolConfigCondition;
+import de.ellpeck.actuallyadditions.mod.crafting.RecipeKeepDataShaped;
+import de.ellpeck.actuallyadditions.mod.crafting.TargetNBTIngredient;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.util.NoAdvRecipeOutput;
+import de.ellpeck.actuallyadditions.mod.util.RecipeInjector;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
@@ -13,6 +16,7 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.ItemLike;
 import net.neoforged.neoforge.common.Tags;
@@ -364,45 +368,45 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .define('C', ActuallyItems.ADVANCED_COIL.get())
             .save(recipeOutput);
 
-//        //Double Battery TODO: Flanks please fix these :)
-//        Recipe.shaped(ActuallyItems.DOUBLE_BATTERY.get())
-//            .pattern(" R ")
-//            .pattern("ICI")
-//            .pattern("III")
-//            .define('R', TargetNBTIngredient.of(ActuallyItems.SINGLE_BATTERY.get()))
-//            .define('I', ActuallyItems.ENORI_CRYSTAL.get())
-//            .define('C', ActuallyItems.ADVANCED_COIL.get())
-//            .save(WrappedRecipe.Inject(consumer, ActuallyRecipes.KEEP_DATA_SHAPED_RECIPE.get()));
-//
-//        //Triple Battery
-//        Recipe.shaped(ActuallyItems.TRIPLE_BATTERY.get())
-//            .pattern(" R ")
-//            .pattern("ICI")
-//            .pattern("III")
-//            .define('R', TargetNBTIngredient.of(ActuallyItems.DOUBLE_BATTERY.get()))
-//            .define('I', ActuallyItems.EMPOWERED_ENORI_CRYSTAL.get())
-//            .define('C', ActuallyItems.ADVANCED_COIL.get())
-//            .save(WrappedRecipe.Inject(consumer, ActuallyRecipes.KEEP_DATA_SHAPED_RECIPE.get()));
-//
-//        //Quad Battery
-//        Recipe.shaped(ActuallyItems.QUADRUPLE_BATTERY.get())
-//            .pattern(" R ")
-//            .pattern("ICI")
-//            .pattern("III")
-//            .define('R', TargetNBTIngredient.of(ActuallyItems.TRIPLE_BATTERY.get()))
-//            .define('I', ActuallyItems.EMPOWERED_ENORI_CRYSTAL.get())
-//            .define('C', ActuallyItems.ADVANCED_COIL.get())
-//            .save(WrappedRecipe.Inject(consumer, ActuallyRecipes.KEEP_DATA_SHAPED_RECIPE.get()));
-//
-//        //Quintuple Battery
-//        Recipe.shaped(ActuallyItems.QUINTUPLE_BATTERY.get())
-//            .pattern(" R ")
-//            .pattern("ICI")
-//            .pattern("III")
-//            .define('R', TargetNBTIngredient.of(ActuallyItems.QUADRUPLE_BATTERY.get()))
-//            .define('I', ActuallyItems.EMPOWERED_DIAMATINE_CRYSTAL.get())
-//            .define('C', ActuallyItems.ADVANCED_COIL.get())
-//            .save(WrappedRecipe.Inject(consumer, ActuallyRecipes.KEEP_DATA_SHAPED_RECIPE.get()));
+        //Double Battery
+        Recipe.shaped(ActuallyItems.DOUBLE_BATTERY.get())
+            .pattern(" R ")
+            .pattern("ICI")
+            .pattern("III")
+            .define('R', TargetNBTIngredient.of(ActuallyItems.SINGLE_BATTERY.get()))
+            .define('I', ActuallyItems.ENORI_CRYSTAL.get())
+            .define('C', ActuallyItems.ADVANCED_COIL.get())
+            .save(new RecipeInjector<ShapedRecipe>(recipeOutput, RecipeKeepDataShaped::new));
+
+        //Triple Battery
+        Recipe.shaped(ActuallyItems.TRIPLE_BATTERY.get())
+            .pattern(" R ")
+            .pattern("ICI")
+            .pattern("III")
+            .define('R', TargetNBTIngredient.of(ActuallyItems.DOUBLE_BATTERY.get()))
+            .define('I', ActuallyItems.EMPOWERED_ENORI_CRYSTAL.get())
+            .define('C', ActuallyItems.ADVANCED_COIL.get())
+            .save(new RecipeInjector<ShapedRecipe>(recipeOutput, RecipeKeepDataShaped::new));
+
+        //Quad Battery
+        Recipe.shaped(ActuallyItems.QUADRUPLE_BATTERY.get())
+            .pattern(" R ")
+            .pattern("ICI")
+            .pattern("III")
+            .define('R', TargetNBTIngredient.of(ActuallyItems.TRIPLE_BATTERY.get()))
+            .define('I', ActuallyItems.EMPOWERED_ENORI_CRYSTAL.get())
+            .define('C', ActuallyItems.ADVANCED_COIL.get())
+            .save(new RecipeInjector<ShapedRecipe>(recipeOutput, RecipeKeepDataShaped::new));
+
+        //Quintuple Battery
+        Recipe.shaped(ActuallyItems.QUINTUPLE_BATTERY.get())
+            .pattern(" R ")
+            .pattern("ICI")
+            .pattern("III")
+            .define('R', TargetNBTIngredient.of(ActuallyItems.QUADRUPLE_BATTERY.get()))
+            .define('I', ActuallyItems.EMPOWERED_DIAMATINE_CRYSTAL.get())
+            .define('C', ActuallyItems.ADVANCED_COIL.get())
+            .save(new RecipeInjector<ShapedRecipe>(recipeOutput, RecipeKeepDataShaped::new));
 
         //Magnet Ring
         Recipe.shaped(ActuallyItems.RING_OF_MAGNETIZING.get())
@@ -535,12 +539,6 @@ public class ItemRecipeGenerator extends RecipeProvider {
         compress(consumer, crystal, shard);
         decompress(consumer, shard, crystal);
     }
-
-//    @Override //TODO: Flanks do your RecipeOutput wrapper thingy ;)
-//    protected @Nullable CompletableFuture<?> saveAdvancement(CachedOutput stack, FinishedRecipe finishedRecipe, JsonObject advancementJson) {
-//        return null;
-//        //Nope... maybe later...
-//    }
 
     public static void addToolAndArmorRecipes(RecipeOutput consumer, DeferredItem<Item> base, DeferredItem<Item> pickaxe, DeferredItem<Item> sword, DeferredItem<Item> axe, DeferredItem<Item> shovel, DeferredItem<Item> hoe, DeferredItem<Item> helm, DeferredItem<Item> chest, DeferredItem<Item> pants, DeferredItem<Item> boots) {
         //Pickaxe
