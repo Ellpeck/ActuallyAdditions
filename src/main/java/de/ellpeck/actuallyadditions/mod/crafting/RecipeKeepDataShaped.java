@@ -1,30 +1,22 @@
 package de.ellpeck.actuallyadditions.mod.crafting;
 
-import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.ShapedRecipe;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nullable;
 
 public class RecipeKeepDataShaped extends ShapedRecipe {
     public static String NAME = "copy_nbt";
-    public static final Logger LOGGER = LogManager.getLogger();
-    public RecipeKeepDataShaped(ResourceLocation idIn, String groupIn, int recipeWidthIn, int recipeHeightIn, NonNullList<Ingredient> recipeItemsIn, ItemStack recipeOutputIn) {
-        super(idIn, groupIn, CraftingBookCategory.MISC, recipeWidthIn, recipeHeightIn, recipeItemsIn, recipeOutputIn);
-    }
-
     public RecipeKeepDataShaped(ShapedRecipe shapedRecipe) {
-        super(shapedRecipe.getId(), shapedRecipe.getGroup(), CraftingBookCategory.MISC, shapedRecipe.getRecipeWidth(), shapedRecipe.getRecipeHeight(), shapedRecipe.getIngredients(), shapedRecipe.getResultItem(null));
+        super(shapedRecipe.getGroup(), shapedRecipe.category(), shapedRecipe.pattern, shapedRecipe.getResultItem(null));
     }
 
     @Override
@@ -62,21 +54,17 @@ public class RecipeKeepDataShaped extends ShapedRecipe {
     }
 
     public static class Serializer implements RecipeSerializer<RecipeKeepDataShaped> {
-        @Nullable
-        @Override
-        public RecipeKeepDataShaped fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
-            return new RecipeKeepDataShaped(RecipeSerializer.SHAPED_RECIPE.fromNetwork(recipeId, buffer));
-        }
+        private static final Codec<RecipeKeepDataShaped> CODEC = ShapedRecipe.Serializer.CODEC.xmap(RecipeKeepDataShaped::new, $ -> $);
 
         @Override
-        public RecipeKeepDataShaped fromJson(ResourceLocation recipeId, JsonObject json) {
-            try {
-                return new RecipeKeepDataShaped(RecipeSerializer.SHAPED_RECIPE.fromJson(recipeId, json));
-            }
-            catch (Exception exception) {
-                LOGGER.info("Error reading "+ NAME +" Recipe from packet: ", exception);
-                throw exception;
-            }
+        public Codec<RecipeKeepDataShaped> codec() {
+            return CODEC;
+        }
+
+        @Nullable
+        @Override
+        public RecipeKeepDataShaped fromNetwork(FriendlyByteBuf buffer) {
+            return new RecipeKeepDataShaped(RecipeSerializer.SHAPED_RECIPE.fromNetwork(buffer));
         }
 
         @Override
@@ -85,7 +73,7 @@ public class RecipeKeepDataShaped extends ShapedRecipe {
                 RecipeSerializer.SHAPED_RECIPE.toNetwork(buffer, recipe);
             }
             catch (Exception exception) {
-                LOGGER.info("Error writing "+ NAME +" Recipe to packet: ", exception);
+                ActuallyAdditions.LOGGER.info("Error writing "+ NAME +" Recipe to packet: ", exception);
                 throw exception;
             }
         }
