@@ -15,6 +15,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.common.data.AdvancementProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
@@ -56,7 +57,7 @@ public class AdvancementGenerator extends AdvancementProvider {
 					.display(new DisplayInfo(ActuallyBlocks.PHANTOM_LIQUIFACE.get().asItem().getDefaultInstance(),
 							Component.translatable("achievement.actuallyadditions.craftLiquiface"),
 							Component.translatable("achievement.actuallyadditions.craftLiquiface.desc"),
-							null, AdvancementType.TASK, true, true, false))
+							Optional.empty(), AdvancementType.TASK, true, true, false))
 					.addCriterion("liquiface", InventoryChangeTrigger.TriggerInstance.hasItems(ActuallyBlocks.PHANTOM_LIQUIFACE.get()))
 					.save(consumer, "actuallyadditions:craft_liquiface");
 
@@ -65,7 +66,7 @@ public class AdvancementGenerator extends AdvancementProvider {
 					.display(new DisplayInfo(ActuallyBlocks.PHANTOM_ENERGYFACE.get().asItem().getDefaultInstance(),
 							Component.translatable("achievement.actuallyadditions.craftEnergyface"),
 							Component.translatable("achievement.actuallyadditions.craftEnergyface.desc"),
-							null, AdvancementType.TASK, true, true, false))
+							Optional.empty(), AdvancementType.TASK, true, true, false))
 					.addCriterion("energyface", InventoryChangeTrigger.TriggerInstance.hasItems(ActuallyBlocks.PHANTOM_ENERGYFACE.get()))
 					.save(consumer, "actuallyadditions:craft_energyface");
 
@@ -75,7 +76,7 @@ public class AdvancementGenerator extends AdvancementProvider {
 					.display(new DisplayInfo(ActuallyBlocks.COAL_GENERATOR.get().asItem().getDefaultInstance(),
 							Component.translatable("achievement.actuallyadditions.craftCoalGen"),
 							Component.translatable("achievement.actuallyadditions.craftCoalGen.desc"),
-							null, AdvancementType.TASK, true, true, false))
+							Optional.empty(), AdvancementType.TASK, true, true, false))
 					.addCriterion("coal_generator", InventoryChangeTrigger.TriggerInstance.hasItems(ActuallyBlocks.COAL_GENERATOR.get()))
 					.save(consumer, "actuallyadditions:craft_coal_generator");
 
@@ -84,7 +85,7 @@ public class AdvancementGenerator extends AdvancementProvider {
 					.display(new DisplayInfo(ActuallyBlocks.LEAF_GENERATOR.get().asItem().getDefaultInstance(),
 							Component.translatable("achievement.actuallyadditions.craftLeafGen"),
 							Component.translatable("achievement.actuallyadditions.craftLeafGen.desc"),
-							null, AdvancementType.TASK, true, true, false))
+							Optional.empty(), AdvancementType.TASK, true, true, false))
 					.addCriterion("leaf_generator", InventoryChangeTrigger.TriggerInstance.hasItems(ActuallyBlocks.LEAF_GENERATOR.get()))
 					.save(consumer, "actuallyadditions:craft_leaf_generator");
 
@@ -93,7 +94,7 @@ public class AdvancementGenerator extends AdvancementProvider {
 					.display(new DisplayInfo(ActuallyItems.COFFEE_BEANS.get().getDefaultInstance(),
 							Component.translatable("achievement.actuallyadditions.pickUpCoffee"),
 							Component.translatable("achievement.actuallyadditions.pickUpCoffee.desc"),
-							null, AdvancementType.TASK, true, true, false))
+							Optional.empty(), AdvancementType.TASK, true, true, false))
 					.addCriterion("coffee_beans", InventoryChangeTrigger.TriggerInstance.hasItems(ActuallyItems.COFFEE_BEANS.get()))
 					.save(consumer, "actuallyadditions:pickup_coffee");
 
@@ -102,7 +103,7 @@ public class AdvancementGenerator extends AdvancementProvider {
 					.display(new DisplayInfo(ActuallyBlocks.COFFEE_MACHINE.get().asItem().getDefaultInstance(),
 							Component.translatable("achievement.actuallyadditions.craftCoffeeMachine"),
 							Component.translatable("achievement.actuallyadditions.craftCoffeeMachine.desc"),
-							null, AdvancementType.TASK, true, true, false))
+							Optional.empty(), AdvancementType.TASK, true, true, false))
 					.addCriterion("coffee_machine", InventoryChangeTrigger.TriggerInstance.hasItems(ActuallyBlocks.COFFEE_MACHINE.get()))
 					.save(consumer, "actuallyadditions:craft_coffee_machine");
 
@@ -111,7 +112,7 @@ public class AdvancementGenerator extends AdvancementProvider {
 					.display(new DisplayInfo(ActuallyBlocks.ATOMIC_RECONSTRUCTOR.get().asItem().getDefaultInstance(),
 							Component.translatable("achievement.actuallyadditions.craftReconstructor"),
 							Component.translatable("achievement.actuallyadditions.craftReconstructor.desc"),
-							null, AdvancementType.TASK, true, true, false))
+							Optional.empty(), AdvancementType.TASK, true, true, false))
 					.addCriterion("atomic_reconstructor", InventoryChangeTrigger.TriggerInstance.hasItems(ActuallyBlocks.ATOMIC_RECONSTRUCTOR.get()))
 					.save(consumer, "actuallyadditions:craft_reconstructor");
 
@@ -120,7 +121,7 @@ public class AdvancementGenerator extends AdvancementProvider {
 					.display(new DisplayInfo(ActuallyItems.EMERADIC_CRYSTAL.get().getDefaultInstance(),
 							Component.translatable("achievement.actuallyadditions.makeCrystal"),
 							Component.translatable("achievement.actuallyadditions.makeCrystal.desc"),
-							null, AdvancementType.TASK, true, true, false))
+							Optional.empty(), AdvancementType.TASK, true, true, false))
 					.addCriterion("crystal", InventoryChangeTrigger.TriggerInstance.hasItems(
 							ItemPredicate.Builder.item().of(ActuallyTags.Items.CRYSTALS).build())
 					)
@@ -131,7 +132,7 @@ public class AdvancementGenerator extends AdvancementProvider {
 					.display(new DisplayInfo(ActuallyBlocks.EMPOWERER.get().asItem().getDefaultInstance(),
 							Component.translatable("achievement.actuallyadditions.craftEmpowerer"),
 							Component.translatable("achievement.actuallyadditions.craftEmpowerer.desc"),
-							null, AdvancementType.TASK, true, true, false))
+							Optional.empty(), AdvancementType.TASK, true, true, false))
 					.addCriterion("empowerer", InventoryChangeTrigger.TriggerInstance.hasItems(ActuallyBlocks.EMPOWERER.get()))
 					.save(consumer, "actuallyadditions:craft_empowerer");
 
@@ -140,7 +141,7 @@ public class AdvancementGenerator extends AdvancementProvider {
 					.display(new DisplayInfo(ActuallyBlocks.CRUSHER.get().asItem().getDefaultInstance(),
 							Component.translatable("achievement.actuallyadditions.craftCrusher"),
 							Component.translatable("achievement.actuallyadditions.craftCrusher.desc"),
-							null, AdvancementType.TASK, true, true, false))
+							Optional.empty(), AdvancementType.TASK, true, true, false))
 					.addCriterion("crystal", InventoryChangeTrigger.TriggerInstance.hasItems(
 							ItemPredicate.Builder.item().of(ActuallyBlocks.CRUSHER.get()).build())
 					)
@@ -151,7 +152,7 @@ public class AdvancementGenerator extends AdvancementProvider {
 					.display(new DisplayInfo(ActuallyBlocks.CRUSHER_DOUBLE.get().asItem().getDefaultInstance(),
 							Component.translatable("achievement.actuallyadditions.craftDoubleCrusher"),
 							Component.translatable("achievement.actuallyadditions.craftDoubleCrusher.desc"),
-							null, AdvancementType.TASK, true, true, false))
+							Optional.empty(), AdvancementType.TASK, true, true, false))
 					.addCriterion("crystal", InventoryChangeTrigger.TriggerInstance.hasItems(
 							ItemPredicate.Builder.item().of(ActuallyBlocks.CRUSHER_DOUBLE.get()).build())
 					)
@@ -162,7 +163,7 @@ public class AdvancementGenerator extends AdvancementProvider {
 					.display(new DisplayInfo(ActuallyBlocks.LASER_RELAY.get().asItem().getDefaultInstance(),
 							Component.translatable("achievement.actuallyadditions.craftLaserRelay"),
 							Component.translatable("achievement.actuallyadditions.craftLaserRelay.desc"),
-							null, AdvancementType.TASK, true, true, false))
+							Optional.empty(), AdvancementType.TASK, true, true, false))
 					.addCriterion("laser_relay", InventoryChangeTrigger.TriggerInstance.hasItems(
 							ItemPredicate.Builder.item().of(ActuallyBlocks.LASER_RELAY.get()).build())
 					)
@@ -173,7 +174,7 @@ public class AdvancementGenerator extends AdvancementProvider {
 					.display(new DisplayInfo(ActuallyBlocks.LASER_RELAY_ADVANCED.get().asItem().getDefaultInstance(),
 							Component.translatable("achievement.actuallyadditions.craftLaserRelayAdvanced"),
 							Component.translatable("achievement.actuallyadditions.craftLaserRelayAdvanced.desc"),
-							null, AdvancementType.TASK, true, true, false))
+							Optional.empty(), AdvancementType.TASK, true, true, false))
 					.addCriterion("laser_relay_advanced", InventoryChangeTrigger.TriggerInstance.hasItems(
 							ItemPredicate.Builder.item().of(ActuallyBlocks.LASER_RELAY_ADVANCED.get()).build())
 					)
@@ -184,7 +185,7 @@ public class AdvancementGenerator extends AdvancementProvider {
 					.display(new DisplayInfo(ActuallyBlocks.LASER_RELAY_EXTREME.get().asItem().getDefaultInstance(),
 							Component.translatable("achievement.actuallyadditions.craftLaserRelayExtreme"),
 							Component.translatable("achievement.actuallyadditions.craftLaserRelayExtreme.desc"),
-							null, AdvancementType.TASK, true, true, false))
+							Optional.empty(), AdvancementType.TASK, true, true, false))
 					.addCriterion("laser_relay_extreme", InventoryChangeTrigger.TriggerInstance.hasItems(
 							ItemPredicate.Builder.item().of(ActuallyBlocks.LASER_RELAY_EXTREME.get()).build())
 					)
@@ -195,7 +196,7 @@ public class AdvancementGenerator extends AdvancementProvider {
 					.display(new DisplayInfo(ActuallyBlocks.LASER_RELAY_ITEM.get().asItem().getDefaultInstance(),
 							Component.translatable("achievement.actuallyadditions.craftLaserRelayItem"),
 							Component.translatable("achievement.actuallyadditions.craftLaserRelayItem.desc"),
-							null, AdvancementType.TASK, true, true, false))
+							Optional.empty(), AdvancementType.TASK, true, true, false))
 					.addCriterion("laser_relay_item", InventoryChangeTrigger.TriggerInstance.hasItems(
 							ItemPredicate.Builder.item().of(ActuallyBlocks.LASER_RELAY_ITEM.get()).build())
 					)
@@ -206,7 +207,7 @@ public class AdvancementGenerator extends AdvancementProvider {
 					.display(new DisplayInfo(ActuallyBlocks.ITEM_INTERFACE.get().asItem().getDefaultInstance(),
 							Component.translatable("achievement.actuallyadditions.craftItemInterface"),
 							Component.translatable("achievement.actuallyadditions.craftItemInterface.desc"),
-							null, AdvancementType.TASK, true, true, false))
+							Optional.empty(), AdvancementType.TASK, true, true, false))
 					.addCriterion("item_interface", InventoryChangeTrigger.TriggerInstance.hasItems(
 							ItemPredicate.Builder.item().of(ActuallyBlocks.ITEM_INTERFACE.get()).build())
 					)
