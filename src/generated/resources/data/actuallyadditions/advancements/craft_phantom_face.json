@@ -15,17 +15,13 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "background": "minecraft:textures/blocks/stone.png",
     "description": {
       "translate": "achievement.actuallyadditions.craftPhantomface.desc"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "actuallyadditions:phantom_itemface"
     },
-    "show_toast": true,
     "title": {
       "translate": "achievement.actuallyadditions.craftPhantomface"
     }

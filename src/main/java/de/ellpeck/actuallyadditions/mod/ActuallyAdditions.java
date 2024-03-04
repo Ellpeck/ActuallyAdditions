@@ -106,7 +106,7 @@ public class ActuallyAdditions {
         NeoForge.EVENT_BUS.addListener(this::serverStarted);
         NeoForge.EVENT_BUS.addListener(this::serverStopped);
         NeoForge.EVENT_BUS.register(new CommonEvents());
-        NeoForge.EVENT_BUS.register(new DungeonLoot());
+//        NeoForge.EVENT_BUS.register(new DungeonLoot());
         NeoForge.EVENT_BUS.addListener(ActuallyAdditions::reloadEvent);
         NeoForge.EVENT_BUS.addListener(Worm::onHoe);
         InitFluids.init(eventBus);

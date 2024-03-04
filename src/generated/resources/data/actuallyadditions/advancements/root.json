@@ -5,17 +5,13 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "background": "minecraft:textures/gui/advancements/backgrounds/stone.png",
     "description": {
       "translate": "achievement.actuallyadditions.openBooklet.desc"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "actuallyadditions:booklet"
     },
-    "show_toast": true,
     "title": {
       "translate": "achievement.actuallyadditions.openBooklet"
     }
