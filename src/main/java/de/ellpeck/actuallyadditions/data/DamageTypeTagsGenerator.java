@@ -9,6 +9,7 @@ import net.minecraft.tags.DamageTypeTags;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Nullable;
 
+import javax.annotation.Nonnull;
 import java.util.concurrent.CompletableFuture;
 
 public class DamageTypeTagsGenerator extends DamageTypeTagsProvider {
@@ -17,7 +18,7 @@ public class DamageTypeTagsGenerator extends DamageTypeTagsProvider {
 	}
 
 	@Override
-	protected void addTags(HolderLookup.Provider pProvider) {
+	protected void addTags(@Nonnull HolderLookup.Provider pProvider) {
 		tag(DamageTypeTags.BYPASSES_ARMOR).add(
 				ActuallyDamageTypes.ATOMIC_RECONSTRUCTOR
 		);

@@ -33,7 +33,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
     }
 
     @Override
-    protected void buildRecipes(RecipeOutput output) {
+    protected void buildRecipes(@Nonnull RecipeOutput output) {
         var recipeOutput = new NoAdvRecipeOutput(output);
 
         generatePaxels(recipeOutput);

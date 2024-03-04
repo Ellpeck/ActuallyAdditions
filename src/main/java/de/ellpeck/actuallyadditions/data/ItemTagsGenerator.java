@@ -10,6 +10,7 @@ import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
+import javax.annotation.Nonnull;
 import java.util.concurrent.CompletableFuture;
 
 public class ItemTagsGenerator extends ItemTagsProvider {
@@ -19,7 +20,7 @@ public class ItemTagsGenerator extends ItemTagsProvider {
     }
 
     @Override
-    protected void addTags(HolderLookup.Provider provider) {
+    protected void addTags(@Nonnull HolderLookup.Provider provider) {
         tag(ActuallyTags.Items.COFFEE_BEANS)
             .add(ActuallyItems.COFFEE_BEANS.get());
         tag(ActuallyTags.Items.TINY_COALS)

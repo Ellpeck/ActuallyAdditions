@@ -2,6 +2,7 @@ package de.ellpeck.actuallyadditions.data;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.crafting.MiningLensRecipe;
+import de.ellpeck.actuallyadditions.mod.util.NoAdvRecipeOutput;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
@@ -13,6 +14,8 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.neoforged.neoforge.common.Tags;
 
+import javax.annotation.Nonnull;
+
 public class MiningLensGenerator extends RecipeProvider {
     public MiningLensGenerator(PackOutput packOutput) {
         super(packOutput);
@@ -23,15 +26,9 @@ public class MiningLensGenerator extends RecipeProvider {
         return "Mining Lens " + super.getName();
     }
 
-//    @Override //TODO: Flanks do your RecipeOutput wrapper thingy ;)
-//    protected @Nullable CompletableFuture<?> saveAdvancement(CachedOutput stack, FinishedRecipe finishedRecipe, JsonObject advancementJson) {
-//        return null;
-//        //Nope... maybe later...
-//    }
-
     @Override
-    protected void buildRecipes(RecipeOutput consumer) {
-        buildMiningLens(consumer);
+    protected void buildRecipes(@Nonnull RecipeOutput recipeOutput) {
+        buildMiningLens(new NoAdvRecipeOutput(recipeOutput));
     }
 
 //    private String getItemName(ItemLike item) {

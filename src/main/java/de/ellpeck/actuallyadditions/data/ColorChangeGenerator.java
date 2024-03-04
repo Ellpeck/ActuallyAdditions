@@ -3,6 +3,7 @@ package de.ellpeck.actuallyadditions.data;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.crafting.ColorChangeRecipe;
+import de.ellpeck.actuallyadditions.mod.util.NoAdvRecipeOutput;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeOutput;
@@ -25,22 +26,18 @@ public class ColorChangeGenerator extends RecipeProvider {
         return "Color Change " + super.getName();
     }
 
-//    @Override //TODO: Flanks do your RecipeOutput wrapper thingy ;)
-//    protected @Nullable CompletableFuture<?> saveAdvancement(CachedOutput stack, FinishedRecipe finishedRecipe, JsonObject advancementJson) {
-//        return null;
-//        //Nope... maybe later...
-//    }
-
     @Override
-    protected void buildRecipes(@Nonnull RecipeOutput consumer) {
-        buildWool(consumer);
-        buildStainedGlass(consumer);
-        buildStainedGlassPane(consumer);
-        buildTerracotta(consumer);
-        buildGlazedTerracotta(consumer);
-        buildCarpet(consumer);
-        buildLamps(consumer);
-        buildDye(consumer);
+    protected void buildRecipes(@Nonnull RecipeOutput output) {
+        var recipeOutput = new NoAdvRecipeOutput(output);
+
+        buildWool(recipeOutput);
+        buildStainedGlass(recipeOutput);
+        buildStainedGlassPane(recipeOutput);
+        buildTerracotta(recipeOutput);
+        buildGlazedTerracotta(recipeOutput);
+        buildCarpet(recipeOutput);
+        buildLamps(recipeOutput);
+        buildDye(recipeOutput);
     }
 
     private void buildWool(@Nonnull RecipeOutput c) {
