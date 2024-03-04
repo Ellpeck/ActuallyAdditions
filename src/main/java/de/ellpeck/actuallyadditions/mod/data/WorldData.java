@@ -38,7 +38,7 @@ public class WorldData extends SavedData {
     }
 
     public static WorldData get(Level level) {
-        return ((ServerLevel) level).getDataStorage().computeIfAbsent(WorldData::load, WorldData::new, SAVE_NAME);
+        return ((ServerLevel) level).getDataStorage().computeIfAbsent(new Factory<>(WorldData::new, WorldData::load), SAVE_NAME);
     }
 
     //TODO what in the world is this?
