@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.mod.blocks.base.AACrops;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.Crystals;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBatteryBox;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBioReactor;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBreaker;
@@ -64,6 +65,7 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityXPSolidifier;
 import de.ellpeck.actuallyadditions.registration.AABlockReg;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SlabBlock;
@@ -75,9 +77,13 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Supplier;
 
 public final class ActuallyBlocks {
@@ -337,6 +343,60 @@ public final class ActuallyBlocks {
     }
 
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
-        //TODO: Register caps to the BlockEntities that have them
+        List<BlockEntityType<? extends TileEntityBase>> types = List.of(
+                FEEDER.getTileEntityType(),
+                CRUSHER.getTileEntityType(),
+                CRUSHER_DOUBLE.getTileEntityType(),
+                ENERGIZER.getTileEntityType(),
+                ENERVATOR.getTileEntityType(),
+                LAVA_FACTORY_CONTROLLER.getTileEntityType(),
+                CANOLA_PRESS.getTileEntityType(),
+                FERMENTING_BARREL.getTileEntityType(),
+                OIL_GENERATOR.getTileEntityType(),
+                COAL_GENERATOR.getTileEntityType(),
+                LEAF_GENERATOR.getTileEntityType(),
+                XP_SOLIDIFIER.getTileEntityType(),
+                BREAKER.getTileEntityType(),
+                PLACER.getTileEntityType(),
+                DROPPER.getTileEntityType(),
+                FLUID_PLACER.getTileEntityType(),
+                FLUID_COLLECTOR.getTileEntityType(),
+                FARMER.getTileEntityType(),
+                BIOREACTOR.getTileEntityType(),
+                VERTICAL_DIGGER.getTileEntityType(),
+                ATOMIC_RECONSTRUCTOR.getTileEntityType(),
+                RANGED_COLLECTOR.getTileEntityType(),
+                LONG_RANGE_BREAKER.getTileEntityType(),
+                COFFEE_MACHINE.getTileEntityType(),
+                POWERED_FURNACE.getTileEntityType(),
+                EMPOWERER.getTileEntityType(),
+                DISPLAY_STAND.getTileEntityType(),
+                PLAYER_INTERFACE.getTileEntityType(),
+                ITEM_INTERFACE.getTileEntityType(),
+                ITEM_INTERFACE_HOPPING.getTileEntityType(),
+                PHANTOM_ITEMFACE.getTileEntityType(),
+                PHANTOM_PLACER.getTileEntityType(),
+                PHANTOM_LIQUIFACE.getTileEntityType(),
+                PHANTOM_ENERGYFACE.getTileEntityType(),
+                PHANTOM_REDSTONEFACE.getTileEntityType(),
+                PHANTOM_BREAKER.getTileEntityType(),
+                PHANTOM_BOOSTER.getTileEntityType(),
+                BATTERY_BOX.getTileEntityType(),
+                FIREWORK_BOX.getTileEntityType(),
+                SHOCK_SUPPRESSOR.getTileEntityType(),
+                HEAT_COLLECTOR.getTileEntityType(),
+                LASER_RELAY.getTileEntityType(),
+                LASER_RELAY_ADVANCED.getTileEntityType(),
+                LASER_RELAY_EXTREME.getTileEntityType(),
+                LASER_RELAY_FLUIDS.getTileEntityType(),
+                LASER_RELAY_ITEM.getTileEntityType(),
+                LASER_RELAY_ITEM_ADVANCED.getTileEntityType()
+        );
+
+        types.forEach(type -> {
+            event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, type, TileEntityBase::getItemHandler);
+            event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, type, TileEntityBase::getEnergyStorage);
+            event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, type, TileEntityBase::getFluidHandler);
+        });
     }
 }

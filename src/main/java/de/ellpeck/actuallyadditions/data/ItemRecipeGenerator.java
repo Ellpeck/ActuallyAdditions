@@ -507,7 +507,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
         addPaxel(consumer, ActuallyItems.NETHERITE_AIOT, Items.NETHERITE_AXE, Items.NETHERITE_PICKAXE, Items.NETHERITE_SWORD, Items.NETHERITE_SHOVEL, Items.NETHERITE_HOE);
 }
 
-    public static void addPaxel(RecipeOutput consumer, DeferredItem<Item> output, Item axe, Item pickaxe, Item sword, Item shovel, Item hoe) {
+    public static void addPaxel(RecipeOutput consumer, DeferredItem<? extends Item> output, Item axe, Item pickaxe, Item sword, Item shovel, Item hoe) {
         Recipe.shapeless(output.get())
             .requires(axe)
             .requires(pickaxe)
@@ -517,7 +517,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .save(consumer);
     }
 
-    public static void addPaxel(RecipeOutput consumer, DeferredItem<Item> output, DeferredItem<Item> axe, DeferredItem<Item> pickaxe, DeferredItem<Item> sword, DeferredItem<Item> shovel, DeferredItem<Item> hoe) {
+    public static void addPaxel(RecipeOutput consumer, DeferredItem<? extends Item> output, DeferredItem<? extends Item> axe, DeferredItem<? extends Item> pickaxe, DeferredItem<? extends Item> sword, DeferredItem<? extends Item> shovel, DeferredItem<? extends Item> hoe) {
         Recipe.shapeless(output.get())
             .requires(axe.get())
             .requires(pickaxe.get())
@@ -527,20 +527,20 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .save(consumer);
     }
 
-    public static void decompress(RecipeOutput consumer, DeferredItem<Item> output, DeferredItem<Item> input) {
+    public static void decompress(RecipeOutput consumer, DeferredItem<? extends Item> output, DeferredItem<? extends Item> input) {
         ResourceLocation key = BuiltInRegistries.ITEM.getKey(output.get());
         Recipe.shapeless(output.get(), 9).requires(input.get()).save(consumer, new ResourceLocation(key.getNamespace(), "decompress/" + key.getPath()));
     }
-    public static void compress(RecipeOutput consumer, DeferredItem<Item> output, DeferredItem<Item> input) {
+    public static void compress(RecipeOutput consumer, DeferredItem<? extends Item> output, DeferredItem<? extends Item> input) {
         ResourceLocation key = BuiltInRegistries.ITEM.getKey(output.get());
         Recipe.shaped(output.get()).pattern("xxx","xxx", "xxx").define('x', input.get()).save(consumer, new ResourceLocation(key.getNamespace(), "compress/" + key.getPath()));
     }
-    public static void addShard(RecipeOutput consumer, DeferredItem<Item> shard, DeferredItem<Item> crystal) {
+    public static void addShard(RecipeOutput consumer, DeferredItem<? extends Item> shard, DeferredItem<? extends Item> crystal) {
         compress(consumer, crystal, shard);
         decompress(consumer, shard, crystal);
     }
 
-    public static void addToolAndArmorRecipes(RecipeOutput consumer, DeferredItem<Item> base, DeferredItem<Item> pickaxe, DeferredItem<Item> sword, DeferredItem<Item> axe, DeferredItem<Item> shovel, DeferredItem<Item> hoe, DeferredItem<Item> helm, DeferredItem<Item> chest, DeferredItem<Item> pants, DeferredItem<Item> boots) {
+    public static void addToolAndArmorRecipes(RecipeOutput consumer, DeferredItem<? extends Item> base, DeferredItem<? extends Item> pickaxe, DeferredItem<? extends Item> sword, DeferredItem<? extends Item> axe, DeferredItem<? extends Item> shovel, DeferredItem<? extends Item> hoe, DeferredItem<? extends Item> helm, DeferredItem<? extends Item> chest, DeferredItem<? extends Item> pants, DeferredItem<? extends Item> boots) {
         //Pickaxe
         Recipe.shaped(pickaxe.get())
             .pattern("EEE", " S ", " S ")

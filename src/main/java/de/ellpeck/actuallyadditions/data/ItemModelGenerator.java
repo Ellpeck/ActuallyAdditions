@@ -92,7 +92,7 @@ public class ItemModelGenerator extends ItemModelProvider {
         getBuilder(path).parent(new ModelFile.UncheckedModelFile(modLoc("block/" + path)));
     }
 
-    private void simpleItem(Supplier<Item> item) {
+    private void simpleItem(Supplier<? extends Item> item) {
         String path = BuiltInRegistries.ITEM.getKey(item.get()).getPath();
         singleTexture(path, mcLoc("item/handheld"), "layer0", modLoc("item/" + path));
     }

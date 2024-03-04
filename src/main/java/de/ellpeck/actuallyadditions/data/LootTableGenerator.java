@@ -198,20 +198,20 @@ public class LootTableGenerator extends LootTableProvider {
             addCrop(ActuallyBlocks.COFFEE, ActuallyItems.COFFEE_BEANS, ActuallyItems.COFFEE_BEANS);
         }
 
-        private void addCrop(Supplier<Block> block, Supplier<Item> item, Supplier<Item> seed) {
+        private void addCrop(Supplier<? extends Block> block, Supplier<? extends Item> item, Supplier<? extends Item> seed) {
             add(block.get(), createCropDrops(block.get(), item.get(), seed.get(),
                 LootItemBlockStatePropertyCondition.hasBlockStateProperties(block.get()).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CropBlock.AGE, 7))));
 
         }
 
-        private void dropNBT(Supplier<Block> blockSupplier, Consumer<LootPool.Builder> lootFunctionProvider) {
+        private void dropNBT(Supplier<? extends Block> blockSupplier, Consumer<LootPool.Builder> lootFunctionProvider) {
             LootPool.Builder lootpool = LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(blockSupplier.get()));
 
             lootFunctionProvider.accept(lootpool);
 
             add(blockSupplier.get(), LootTable.lootTable().withPool(applyExplosionCondition(ActuallyBlocks.ATOMIC_RECONSTRUCTOR.get(), lootpool)));
         }
-        private void dropKeepEnergy(Supplier<Block> blockSupplier) {
+        private void dropKeepEnergy(Supplier<? extends Block> blockSupplier) {
             dropNBT(blockSupplier, $ -> $.apply(CopyNbtFunction.copyData(ContextNbtProvider.BLOCK_ENTITY).copy("Energy", "BlockEntityTag.Energy")));
         }
 

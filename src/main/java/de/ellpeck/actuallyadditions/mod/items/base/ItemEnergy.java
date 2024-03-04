@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.items.base;
 
+import de.ellpeck.actuallyadditions.mod.attachments.ActuallyAttachments;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.tile.CustomEnergyStorage;
 import net.minecraft.network.chat.Component;
@@ -138,6 +139,12 @@ public abstract class ItemEnergy extends ItemBase {
             .map(IEnergyStorage::getMaxEnergyStored)
             .orElse(0);
     }
+
+	public IEnergyStorage getEnergyStorage(ItemStack stack) {
+		if (!stack.hasData(ActuallyAttachments.ENERGY_STORAGE))
+			stack.setData(ActuallyAttachments.ENERGY_STORAGE, new CustomEnergyStorage(this.maxPower, this.transfer, this.transfer));
+		return stack.getData(ActuallyAttachments.ENERGY_STORAGE);
+	}
 
 //    @Override TODO: Register Energy cap/attachment
 //    public ICapabilityProvider initCapabilities(ItemStack stack, CompoundTag nbt) {

@@ -14,6 +14,7 @@ import com.mojang.serialization.Codec;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.ActuallyTags;
 import de.ellpeck.actuallyadditions.api.farmer.IFarmerBehavior;
+import de.ellpeck.actuallyadditions.mod.attachments.ActuallyAttachments;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import de.ellpeck.actuallyadditions.mod.config.conditions.BoolConfigCondition;
@@ -96,6 +97,7 @@ public class ActuallyAdditions {
         ActuallyTabs.init(eventBus);
         ActuallyRecipes.init(eventBus);
         AASounds.init(eventBus);
+        ActuallyAttachments.init(eventBus);
         ActuallyContainers.CONTAINERS.register(eventBus);
         ENTITIES.register(eventBus);
         CONDITION_CODECS.register(eventBus);
