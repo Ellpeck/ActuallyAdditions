@@ -76,7 +76,7 @@ public class ItemModelGenerator extends ItemModelProvider {
     }
 
     private void generateBucket(FluidAA fluidSupplier) {
-        withExistingParent(BuiltInRegistries.ITEM.getKey(fluidSupplier.getBucket()).getPath(), "forge:item/bucket")
+        withExistingParent(BuiltInRegistries.ITEM.getKey(fluidSupplier.getBucket()).getPath(), "neoforge:item/bucket")
             .customLoader((builder, template) -> DynamicFluidContainerModelBuilder.begin(builder, template).fluid(fluidSupplier.get()));
     }
 
