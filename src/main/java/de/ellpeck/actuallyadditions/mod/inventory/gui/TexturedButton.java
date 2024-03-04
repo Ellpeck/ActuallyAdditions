@@ -45,20 +45,17 @@ public class TexturedButton extends Button {
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-        if (this.visible) {
-            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-            this.isHovered = mouseX >= this.getX() && mouseY >= this.getY() && mouseX < this.getX() + this.width && mouseY < this.getY() + this.height;
-            int k = this.isHovered
+    public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        int k = this.isHovered
                 ? 1
                 : 0;
 
-            GlStateManager._enableBlend();
-            GlStateManager._blendFuncSeparate(770, 771, 1, 0);
-            GlStateManager._blendFunc(770, 771);
-            guiGraphics.blit(this.resLoc, this.getX(), this.getY(), this.texturePosX, this.texturePosY - this.height + k * this.height, this.width, this.height);
-            //            this.mouseDragged(minecraft, x, y);
-        }
+        GlStateManager._enableBlend();
+        GlStateManager._blendFuncSeparate(770, 771, 1, 0);
+        GlStateManager._blendFunc(770, 771);
+        guiGraphics.blit(this.resLoc, this.getX(), this.getY(), this.texturePosX, this.texturePosY - this.height + k * this.height, this.width, this.height);
+        //            this.mouseDragged(minecraft, x, y);
     }
 
     public void drawHover(GuiGraphics guiGraphics, int x, int y) {
