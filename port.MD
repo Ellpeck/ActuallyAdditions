@@ -54,7 +54,7 @@
 - [ ] Item interfaces and item laser system
 - [ ] Farmer
 - [x] Empowerer and display stands
-- [ ] Tiny torch
+- [x] Tiny torch
 - [ ] Shock absorber
 - [ ] Player interface
 - [ ] Vertical digger
