@@ -20,6 +20,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -64,7 +65,7 @@ public class ContainerCanolaPress extends AbstractContainerMenu {
             //Other Slots in Inventory excluded
             if (slot >= inventoryStart) {
                 //Shift from Inventory
-                Optional<PressingRecipe> recipeOptional = TileEntityCanolaPress.getRecipeForInput(newStack);
+                Optional<RecipeHolder<PressingRecipe>> recipeOptional = TileEntityCanolaPress.getRecipeForInput(newStack);
                 if (recipeOptional.isPresent()) {
                     if (!this.moveItemStackTo(newStack, 0, 1, false)) {
                         return ItemStack.EMPTY;
