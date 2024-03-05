@@ -141,7 +141,7 @@ public final class PacketHandler {
         @OnlyIn(Dist.CLIENT)
         public void handleData(CompoundTag compound, PlayPayloadContext context) {
             CompoundTag dataTag = compound.getCompound("Data");
-            Player player = context.player().get(); //ActuallyAdditions.PROXY.getCurrentPlayer();
+            Player player = context.player().orElse(null); //ActuallyAdditions.PROXY.getCurrentPlayer();
 
             if (player != null) {
                 PlayerData.getDataFromPlayer(player).readFromNBT(dataTag, false);
