@@ -76,6 +76,8 @@ public class ItemBooklet extends ItemBase implements IHudDisplay {
             if (advancement != null && !advancements.getOrStartProgress(advancement).isDone()) {
                 advancements.award(advancement, "right_click");
             }
+        } else {
+            vazkii.patchouli.api.PatchouliAPI.get().openBookGUI(new ResourceLocation(ActuallyAdditions.MODID, "booklet"));
         }
 //        player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.BOOK.ordinal(), world, (int) player.posX, (int) player.posY, (int) player.posZ);
 //
@@ -89,11 +91,11 @@ public class ItemBooklet extends ItemBase implements IHudDisplay {
     @OnlyIn(Dist.CLIENT)
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level playerIn, List<Component> tooltip, TooltipFlag advanced) {
-        tooltip.add(Component.translatable("tooltip." + ActuallyAdditions.MODID + "." + this.getDescription().getString() + ".desc"));
+        tooltip.add(Component.translatable("tooltip." + ActuallyAdditions.MODID + ".item_booklet.desc").withStyle(ChatFormatting.GRAY));
 
         // TODO: this is bad
         for (int i = 1; i <= 4; i++) {
-            tooltip.add(Component.translatable("tooltip." + ActuallyAdditions.MODID + "." + this.getDescription().getString() + ".sub." + i).withStyle(i == 4
+            tooltip.add(Component.translatable("tooltip." + ActuallyAdditions.MODID + ".item_booklet.sub." + i).withStyle(i == 4
                     ? ChatFormatting.GOLD
                     : ChatFormatting.RESET).withStyle(i == 4
                     ? ChatFormatting.ITALIC

@@ -1,0 +1,21 @@
+{
+  "book_texture": "actuallyadditions:textures/gui/booklet/booklet.png",
+  "creative_tab": "actuallyadditions.tab",
+  "custom_book_item": "actuallyadditions:booklet",
+  "dont_generate_book": true,
+  "i18n": true,
+  "landing_text": "<i>To be perfectly honest, I never actually realized how much content Actually Additions has before.<r><n> - Ellpeck",
+  "macros": {
+    "<i>": "$(o)",
+    "<imp>": "$(2)",
+    "<item>": "$(9)",
+    "<n>": "$(br)",
+    "<r>": "$()",
+    "<tifisgrin>": "$(4)$(n)"
+  },
+  "name": "booklet.actuallyadditions.item.actuallyadditions.booklet",
+  "show_progress": false,
+  "use_blocky_font": false,
+  "use_resource_pack": true,
+  "version": "153"
+}

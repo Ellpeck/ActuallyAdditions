@@ -1,0 +1,27 @@
+{
+  "category": "actuallyadditions:getting_started",
+  "icon": "actuallyadditions:textures/item/youtube.png",
+  "name": "booklet.actuallyadditions.chapter.video_guide",
+  "pages": [
+    {
+      "type": "patchouli:link",
+      "link_text": "booklet.actuallyadditions.chapter.video_guide.booty.button",
+      "text": "booklet.actuallyadditions.chapter.video_guide.booty.text.1",
+      "url": "https://www.youtube.com/watch?v=fhjz0Ew56pM"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "booklet.actuallyadditions.chapter.video_guide.booty.text.2"
+    },
+    {
+      "type": "patchouli:link",
+      "link_text": "booklet.actuallyadditions.chapter.video_guide.booty.button",
+      "text": "booklet.actuallyadditions.chapter.video_guide.dire.text.1",
+      "url": "https://www.youtube.com/playlist?list=PLJeFZ64pT89MrTRZYzD_rtHFajPVlt6cF"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "booklet.actuallyadditions.chapter.video_guide.dire.text.2"
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-// 1.20.4	2024-03-04T22:51:31.610431	Item Models: actuallyadditions
+// 1.20.4	2024-03-05T23:33:24.583284	Item Models: actuallyadditions
 1966de13838437bc6035f3649976a44797cf5144 assets/actuallyadditions/models/item/advanced_coil.json
 24594fc68e66011dc2d7b79b92c94b387e710318 assets/actuallyadditions/models/item/advanced_leaf_blower.json
 ba2d814e269cdef72e1045f200b3c20ed6961517 assets/actuallyadditions/models/item/atomic_reconstructor.json
@@ -20,6 +20,7 @@ a41a81204caeddaaeaba35a5d1087361d7df5eae assets/actuallyadditions/models/item/bl
 c8974657e959db31495382cf6a86a3367df5d8c9 assets/actuallyadditions/models/item/black_quartz_slab.json
 74aaa894cd68cf64f8ad5aac0e7c0b26cdb0a021 assets/actuallyadditions/models/item/black_quartz_stair.json
 7e8476e561bd4854b54ce79cb798fd9b2915efb4 assets/actuallyadditions/models/item/black_quartz_wall.json
+a921bf283b5864b283ffff0737d8c3c89487dd08 assets/actuallyadditions/models/item/booklet.json
 8f1232a569a12d54b1053fae05dc85d23b28ed42 assets/actuallyadditions/models/item/breaker.json
 d376ad8923f1f63c1ed4429288b479cfbb235d44 assets/actuallyadditions/models/item/canola.json
 fa77f5b54168ff7c11c5ce9fbe342eb7298a9ec8 assets/actuallyadditions/models/item/canola_oil_bucket.json
