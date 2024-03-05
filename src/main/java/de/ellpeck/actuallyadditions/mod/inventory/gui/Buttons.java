@@ -53,7 +53,7 @@ public class Buttons {
                     color = 16777120;
                 }
 
-                guiGraphics.drawCenteredString(Minecraft.getInstance().font, this.getMessage().getString(), this.getX() + this.width / 2, this.getY() + (this.height - 8) / 2, color);
+                guiGraphics.drawCenteredString(Minecraft.getInstance().font, this.getMessage(), this.getX() + this.width / 2, this.getY() + (this.height - 8) / 2, this.getMessage().getStyle().getColor().getValue());
             }
 
         }
