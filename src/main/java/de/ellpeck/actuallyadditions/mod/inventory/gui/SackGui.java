@@ -96,7 +96,6 @@ public class SackGui extends AAScreen<SackContainer> {
     protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int x, int y) {
         RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
 
-        RenderSystem.setShaderTexture(0, AssetUtil.GUI_INVENTORY_LOCATION);
         guiGraphics.blit(AssetUtil.GUI_INVENTORY_LOCATION, this.leftPos, this.topPos + 90, 0, 0, 176, 86);
 
         guiGraphics.blit(this.isVoid ? RES_LOC_VOID : RES_LOC, this.leftPos, this.topPos, 0, 0, 176, 90);

@@ -59,7 +59,6 @@ public class GuiFermentingBarrel extends AAScreen<ContainerFermentingBarrel> {
 
         guiGraphics.blit(AssetUtil.GUI_INVENTORY_LOCATION, this.leftPos, this.topPos + 93, 0, 0, 176, 86);
 
-        RenderSystem.setShaderTexture(0, RES_LOC);
         guiGraphics.blit(RES_LOC, this.leftPos, this.topPos, 0, 0, 176, 93);
 
         if (this.press.currentProcessTime > 0) {

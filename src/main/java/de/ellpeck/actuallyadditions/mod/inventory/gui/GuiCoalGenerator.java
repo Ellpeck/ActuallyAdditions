@@ -53,7 +53,7 @@ public class GuiCoalGenerator extends AAScreen<ContainerCoalGenerator> {
 
     @Override
     public void renderBg(GuiGraphics guiGraphics, float f, int x, int y) {
-        RenderSystem.setShaderTexture(0, AssetUtil.GUI_INVENTORY_LOCATION);
+        RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
 
         guiGraphics.blit(AssetUtil.GUI_INVENTORY_LOCATION, this.leftPos, this.topPos + 93, 0, 0, 176, 86);
 

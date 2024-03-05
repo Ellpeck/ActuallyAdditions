@@ -56,7 +56,6 @@ public class GuiFeeder extends AAScreen<ContainerFeeder> {
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 
         guiGraphics.blit(AssetUtil.GUI_INVENTORY_LOCATION, this.leftPos, this.topPos + 70, 0, 0, 176, 86);
-        RenderSystem.setShaderTexture(0, RES_LOC);
         guiGraphics.blit(RES_LOC, this.leftPos, this.topPos, 0, 0, 176, 70);
 
         if (this.tileFeeder.currentTimer > 0) {
