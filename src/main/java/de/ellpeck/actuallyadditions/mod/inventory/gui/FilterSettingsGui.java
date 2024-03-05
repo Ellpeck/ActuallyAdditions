@@ -35,16 +35,18 @@ public class FilterSettingsGui {
 
     private final FilterSettings theSettings;
 
-    public Buttons.SmallerButton whitelistButton;
-    public Buttons.SmallerButton modButton;
+    public Button whitelistButton;
+    public Button modButton;
 
     public FilterSettingsGui(FilterSettings settings, int x, int y, Consumer<AbstractButton> buttonConsumer, int idOffset) {
         this.theSettings = settings;
 
-        this.whitelistButton = new Buttons.SmallerButton( x, y, Component.literal("WH"), true, $ -> buttonClicked(idOffset)); //TODO these need translation keys
+        this.whitelistButton = Button.builder(Component.literal("WH"), $ -> buttonClicked(idOffset))
+                .bounds(x, y, 16, 12).build();
         buttonConsumer.accept(this.whitelistButton);
         y += 14;
-        this.modButton = new Buttons.SmallerButton( x, y, Component.literal("MO"), true, $ -> buttonClicked(idOffset + 1));
+        this.modButton = Button.builder(Component.literal("MO"), $ -> buttonClicked(idOffset + 1))
+                .bounds(x, y, 16, 12).build();
         buttonConsumer.accept(this.modButton);
 
         this.tick();
