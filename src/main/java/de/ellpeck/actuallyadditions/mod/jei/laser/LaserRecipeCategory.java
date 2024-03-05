@@ -8,10 +8,11 @@
  * © 2015-2017 Ellpeck
  */
 
-package de.ellpeck.actuallyadditions.mod.jei;
+package de.ellpeck.actuallyadditions.mod.jei.laser;
 
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.crafting.LaserRecipe;
+import de.ellpeck.actuallyadditions.mod.jei.JEIActuallyAdditionsPlugin;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;

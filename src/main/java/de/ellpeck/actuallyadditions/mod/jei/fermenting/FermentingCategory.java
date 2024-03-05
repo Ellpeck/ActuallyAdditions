@@ -1,7 +1,8 @@
-package de.ellpeck.actuallyadditions.mod.jei;
+package de.ellpeck.actuallyadditions.mod.jei.fermenting;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.crafting.FermentingRecipe;
+import de.ellpeck.actuallyadditions.mod.jei.JEIActuallyAdditionsPlugin;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
