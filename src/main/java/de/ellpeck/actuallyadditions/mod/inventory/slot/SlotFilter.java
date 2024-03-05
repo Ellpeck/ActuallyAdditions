@@ -33,7 +33,7 @@ public class SlotFilter extends SlotItemHandlerUnconditioned {
         if (slotId >= 0 && slotId < container.slots.size()) {
             Slot slot = container.getSlot(slotId);
             if (slot instanceof SlotFilter) {
-                ((SlotFilter) slot).slotClick(player);
+                ((SlotFilter) slot).slotClick(player, container.getCarried());
                 return true;
             }
         }
@@ -44,8 +44,8 @@ public class SlotFilter extends SlotItemHandlerUnconditioned {
         return !stack.isEmpty() && stack.getItem() instanceof ItemFilter;
     }
 
-    private void slotClick(Player player) {
-        ItemStack heldStack = player.getInventory().getSelected();
+    private void slotClick(Player player, ItemStack cursorItem) {
+        ItemStack heldStack = cursorItem;
         ItemStack stackInSlot = this.getItem();
 
         if (StackUtil.isValid(stackInSlot) && !StackUtil.isValid(heldStack)) {

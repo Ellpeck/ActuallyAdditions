@@ -30,20 +30,16 @@ public class FilterSettingsGui {
     private final FilterSettings theSettings;
 
     public Buttons.SmallerButton whitelistButton;
-    public Buttons.SmallerButton nbtButton;
     public Buttons.SmallerButton modButton;
 
-    public FilterSettingsGui(FilterSettings settings, int x, int y, List<Renderable> buttonList) {
+    public FilterSettingsGui(FilterSettings settings, int x, int y, SackGui gui) {
         this.theSettings = settings;
 
-        this.whitelistButton = new Buttons.SmallerButton( x, y, Component.literal("WH"), true, Button::onPress); //TODO these need translation keys
-        buttonList.add(this.whitelistButton);
+        this.whitelistButton = new Buttons.SmallerButton( x, y, Component.literal("WH"), true, $ -> gui.buttonClicked(1)); //TODO these need translation keys
+        gui.renderables.add(this.whitelistButton);
         y += 14;
-        this.nbtButton = new Buttons.SmallerButton( x, y, Component.literal("NB"), true, Button::onPress);//TODO also button actions
-        buttonList.add(this.nbtButton);
-        y += 14;
-        this.modButton = new Buttons.SmallerButton( x, y, Component.literal("MO"), true, Button::onPress);
-        buttonList.add(this.modButton);
+        this.modButton = new Buttons.SmallerButton( x, y, Component.literal("MO"), true, $ -> gui.buttonClicked(2));
+        gui.renderables.add(this.modButton);
 
         this.tick();
     }
@@ -52,10 +48,7 @@ public class FilterSettingsGui {
         this.whitelistButton.setMessage(Component.literal("WH").withStyle(this.theSettings.isWhitelist
             ? ChatFormatting.DARK_GREEN
             : ChatFormatting.RED));
-        this.whitelistButton.setMessage(Component.literal("NB").withStyle(this.theSettings.respectNBT
-            ? ChatFormatting.DARK_GREEN
-            : ChatFormatting.RED));
-        this.whitelistButton.setMessage(Component.literal("MO").withStyle(this.theSettings.respectMod
+        this.modButton.setMessage(Component.literal("MO").withStyle(this.theSettings.respectMod
             ? ChatFormatting.DARK_GREEN
             : ChatFormatting.RED));
     }
@@ -68,10 +61,6 @@ public class FilterSettingsGui {
                 ? Component.translatable("info." + ActuallyAdditions.MODID + ".gui.whitelist")
                 : Component.translatable("info." + ActuallyAdditions.MODID + ".gui.blacklist")).withStyle(ChatFormatting.BOLD));
             list.add(Component.translatable("info." + ActuallyAdditions.MODID + ".gui.whitelistInfo"));
-        } else if (this.nbtButton.isMouseOver(mouseX, mouseY)) {
-            list.add((this.theSettings.respectNBT
-                ? Component.translatable("info." + ActuallyAdditions.MODID + ".gui.respectNBT")
-                : Component.translatable("info." + ActuallyAdditions.MODID + ".gui.ignoreNBT")).withStyle(ChatFormatting.BOLD));
         } else if (this.modButton.isMouseOver(mouseX, mouseY)) {
             list.add((this.theSettings.respectMod
                 ? Component.translatable("info." + ActuallyAdditions.MODID + ".gui.respectMod")
