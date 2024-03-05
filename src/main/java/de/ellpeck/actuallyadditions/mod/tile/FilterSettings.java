@@ -24,8 +24,12 @@ public class FilterSettings {
     public boolean isWhitelist;
     public boolean respectMod;
     private boolean lastWhitelist;
-    private boolean lastRespectNBT;
     private boolean lastRespectMod;
+
+    public enum Buttons {
+        WHITELIST,
+        MOD
+    }
 
     public FilterSettings(int slots, boolean defaultWhitelist, boolean defaultRespectMod) {
         this.filterInventory = new ItemStackHandlerAA(slots) {
@@ -101,9 +105,9 @@ public class FilterSettings {
     }
 
     public void onButtonPressed(int id) {
-        if (id == 1) {
+        if (id == Buttons.WHITELIST.ordinal()) {
             this.isWhitelist = !this.isWhitelist;
-        } else if (id == 2) {
+        } else if (id == Buttons.MOD.ordinal()) {
             this.respectMod = !this.respectMod;
         }
     }
