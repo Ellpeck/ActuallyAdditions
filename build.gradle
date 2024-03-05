@@ -84,6 +84,11 @@ dependencies {
 
     runtimeOnly "mezz.jei:jei-${game_version}-neoforge:${jei_version}"
 
+    compileOnly "vazkii.patchouli:Patchouli:${patchouli_version}"
+    runtimeOnly "vazkii.patchouli:Patchouli:${patchouli_version}"
+    compileOnly "xyz.brassgoggledcoders:PatchouliProvider:${patchouli_provider_version}"
+    runtimeOnly "xyz.brassgoggledcoders:PatchouliProvider:${patchouli_provider_version}"
+
     runtimeOnly "curse.maven:the-one-probe-245211:5084077"
     runtimeOnly "curse.maven:mekanism-268560:5155329"
 }

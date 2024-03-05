@@ -29,7 +29,7 @@ public class ItemModelGenerator extends ItemModelProvider {
     @Override
     protected void registerModels() {
         // Items
-        //simpleItem(ActuallyItems.BOOKLET); // will require complex I think
+        simpleItem(ActuallyItems.ITEM_BOOKLET); // will require complex I think
 
         // All items?
         ActuallyItems.SIMPLE_ITEMS.forEach(this::simpleItem);
