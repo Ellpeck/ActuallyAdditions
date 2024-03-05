@@ -35,13 +35,11 @@ public class Buttons {
         public void renderWidget(@Nonnull GuiGraphics guiGraphics, int mouseX, int mouseY, float f) {
             if (this.visible) {
                 RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-                RenderSystem.setShaderTexture(0, this.resLoc);
-                this.isHovered = mouseX >= this.getX() && mouseY >= this.getY() && mouseX < this.getX() + this.width && mouseY < this.getY() + this.height;
                 int k = !this.active ? 0 : (this.isHoveredOrFocused() ? 2 : 1);
                 GlStateManager._enableBlend();
                 GlStateManager.glBlendFuncSeparate(770, 771, 1, 0);
                 GlStateManager._blendFunc(770, 771);
-                guiGraphics.blit(this.resLoc, mouseX, mouseY, this.smaller
+                guiGraphics.blit(this.resLoc, this.getX(), this.getY(), this.smaller
                     ? 200
                     : 176, k * this.height, this.width, this.height);
                 //this.mouseDragged(mc, x, y); // The heck was this doing here?
@@ -74,8 +72,6 @@ public class Buttons {
         public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float f) {
             if (this.visible) {
                 RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-                RenderSystem.setShaderTexture(0, this.resLoc);
-                this.isHovered = mouseX >= this.getX() && mouseY >= this.getY() && mouseX < this.getX() + this.width && mouseY < this.getY() + this.height;
                 int k = !this.active ? 0 : (this.isHoveredOrFocused() ? 2 : 1);
                 GlStateManager._enableBlend();
                 GlStateManager.glBlendFuncSeparate(770, 771, 1, 0);
