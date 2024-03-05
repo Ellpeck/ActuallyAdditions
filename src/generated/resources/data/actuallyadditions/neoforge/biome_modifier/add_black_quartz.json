@@ -1,0 +1,7 @@
+{
+  "type": "actuallyadditions:bool_config_feature_modifier",
+  "biomes": "#minecraft:is_overworld",
+  "boolConfig": "generateQuartz",
+  "features": "actuallyadditions:ore_black_quartz",
+  "step": "underground_ores"
+}

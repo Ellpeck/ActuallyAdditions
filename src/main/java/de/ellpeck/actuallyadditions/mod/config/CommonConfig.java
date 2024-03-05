@@ -14,6 +14,7 @@ public class CommonConfig {
     static {
         Other.build();
         Machines.build();
+        Worldgen.build();
         ItemSettings.build();
         COMMON_CONFIG = BUILDER.build();
     }
@@ -49,6 +50,18 @@ public class CommonConfig {
             OIL_GENERATOR_TRANSFER = BUILDER.comment("The amount of power the oil generator can transfer per tick.").defineInRange("oilGeneratorTransfer", 500, 100, Integer.MAX_VALUE);
             MINER_LENS_ENERGY = BUILDER.comment("The energy use of the Atomic Reconstructor's Mining Lens.").defineInRange("minerLensEnergy", 60000, 1, Integer.MAX_VALUE);
             LASER_RELAY_LOSS = BUILDER.comment("If Energy Laser Relays should have energy loss.").define("laserRelayLoss", true);
+
+            BUILDER.pop();
+        }
+    }
+
+    public static class Worldgen {
+        public static ModConfigSpec.BooleanValue GENERATE_QUARTZ;
+
+        public static void build() {
+            BUILDER.comment("Worldgen Settings").push("worldgenSettings");
+
+            GENERATE_QUARTZ = BUILDER.comment("Should Black Quartz generate in the world?").define("laserRelayLoss", true);
 
             BUILDER.pop();
         }

@@ -1,6 +1,9 @@
 package de.ellpeck.actuallyadditions.data;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.gen.ActuallyBiomeModifiers;
+import de.ellpeck.actuallyadditions.mod.gen.ActuallyConfiguredFeatures;
+import de.ellpeck.actuallyadditions.mod.gen.ActuallyPlacedFeatures;
 import de.ellpeck.actuallyadditions.mod.misc.ActuallyDamageTypes;
 import net.minecraft.core.Cloner;
 import net.minecraft.core.HolderLookup;
@@ -17,6 +20,7 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
@@ -65,6 +69,9 @@ public class ActuallyAdditionsData {
         registryBuilder.add(Registries.DAMAGE_TYPE, (context) -> {
             context.register(ActuallyDamageTypes.ATOMIC_RECONSTRUCTOR, new DamageType("actuallyadditions.atomic_reconstructor", 0.0F));
         });
+        registryBuilder.add(Registries.CONFIGURED_FEATURE, ActuallyConfiguredFeatures::bootstrap);
+        registryBuilder.add(Registries.PLACED_FEATURE, ActuallyPlacedFeatures::bootstrap);
+        registryBuilder.add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, ActuallyBiomeModifiers::bootstrap);
         // We need the BIOME registry to be present, so we can use a biome tag, doesn't matter that it's empty
         registryBuilder.add(Registries.BIOME, $ -> {
         });
