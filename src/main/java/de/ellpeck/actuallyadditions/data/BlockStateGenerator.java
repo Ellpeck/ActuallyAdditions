@@ -38,7 +38,7 @@ public class BlockStateGenerator extends BlockStateProvider {
 
         // Horizontal Directional Blocks
         horizontallyDirectionalBlock(ActuallyBlocks.FARMER);
-        //horizontallyDirectionalBlock(ActuallyBlocks.BIOREACTOR);
+        horizontallyDirectionalBlock(ActuallyBlocks.BIOREACTOR);
         horizontallyDirectionalBlock(ActuallyBlocks.VERTICAL_DIGGER);
         horizontallyDirectionalBlock(ActuallyBlocks.LEAF_GENERATOR);
         horizontallyDirectionalBlock(ActuallyBlocks.COFFEE_MACHINE);

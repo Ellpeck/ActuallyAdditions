@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "actuallyadditions:block/bio_reactor",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "actuallyadditions:block/bio_reactor"
+    },
+    "facing=south": {
+      "model": "actuallyadditions:block/bio_reactor",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "actuallyadditions:block/bio_reactor",
+      "y": 270
+    }
+  }
+}
