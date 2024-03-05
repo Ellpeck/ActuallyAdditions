@@ -1,4 +1,4 @@
-// 1.20.4	2024-03-04T22:51:31.5994305	Loot Tables
+// 1.20.4	2024-03-05T17:10:52.5254064	Loot Tables
 f6655bb234dbcf1041fe8ad95c976ddddda2b02a data/actuallyadditions/loot_tables/blocks/atomic_reconstructor.json
 e15c868b26b669c30365bfb93e7d9274e07df16d data/actuallyadditions/loot_tables/blocks/battery_box.json
 745d64af3b0203a138f9eca7de21ed4988b35c95 data/actuallyadditions/loot_tables/blocks/bio_reactor.json
@@ -7,7 +7,7 @@ e15c868b26b669c30365bfb93e7d9274e07df16d data/actuallyadditions/loot_tables/bloc
 7ccaec2a308c46c91faaddf6c529e867a39a7b48 data/actuallyadditions/loot_tables/blocks/black_quartz_brick_slab.json
 1281fecab9def4da2bb659354623b91704f8663e data/actuallyadditions/loot_tables/blocks/black_quartz_brick_stair.json
 7d6c3fd126003b42e84c2159cf07b8c78ff1f729 data/actuallyadditions/loot_tables/blocks/black_quartz_brick_wall.json
-88e3daf6fc127c809adab583ebfc292dd6fd8142 data/actuallyadditions/loot_tables/blocks/black_quartz_ore.json
+fd391c2319606c9e6971f2dcda5eafd22ac12a82 data/actuallyadditions/loot_tables/blocks/black_quartz_ore.json
 ad0d7ffd625d3bec74e52e1384c67120649c1108 data/actuallyadditions/loot_tables/blocks/black_quartz_pillar_block.json
 c49b30e8d893f67866d0a47cf8682502468e9864 data/actuallyadditions/loot_tables/blocks/black_quartz_pillar_slab.json
 32fc64201d29c1a319808ac3bcef4fbab1ad2632 data/actuallyadditions/loot_tables/blocks/black_quartz_pillar_stair.json

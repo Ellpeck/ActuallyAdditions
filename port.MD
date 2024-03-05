@@ -35,7 +35,7 @@
 - [ ] Add off-hand slots to energizer and enervator
 - [ ] Change the recipe of casings (the lava factory ones) to give only 4, and rename them to "Lava Factory Casing"
 - [x] Make coal generator create half as much CF, we don't want this to be a main power source for people( Flanks: already dropped to 20fe/t)
-- [ ] Make black quartz drop the items directly, unless silk-touched
+- [x] Make black quartz drop the items directly, unless silk-touched
 - [ ] Make storage crates work as follows, recipes unchanged:
   - [ ] Lowest tier can hold 8192 of a single item
   - [ ] Mid-tier can hold 16384 of two items

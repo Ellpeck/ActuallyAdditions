@@ -13,17 +13,21 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.ValidationContext;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.functions.CopyNbtFunction;
+import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.providers.nbt.ContextNbtProvider;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
 import javax.annotation.Nonnull;
@@ -189,6 +193,7 @@ public class LootTableGenerator extends LootTableProvider {
 
             //TODO temp
             dropSelf(ActuallyBlocks.BLACK_QUARTZ_ORE.get());
+            add(ActuallyBlocks.BLACK_QUARTZ_ORE.get(), createOreDrop(ActuallyBlocks.BLACK_QUARTZ_ORE.getBlock(), ActuallyItems.BLACK_QUARTZ.get()));
 
             //this.add(ActuallyBlocks.BLACK_QUARTZ_ORE.get(), ore -> droppingItemWithFortune(ore, ActuallyItems.BLACK_QUARTZ.get()));
 
