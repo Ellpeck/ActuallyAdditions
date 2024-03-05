@@ -22,19 +22,12 @@ import net.minecraft.world.item.ItemStack;
 public class FilterSettings {
     public final ItemStackHandlerAA filterInventory;
     public boolean isWhitelist;
-    public boolean respectNBT;
     public boolean respectMod;
     private boolean lastWhitelist;
     private boolean lastRespectNBT;
     private boolean lastRespectMod;
 
-    public enum Buttons {
-        WHITELIST,
-        NBT,
-        MOD
-    }
-
-    public FilterSettings(int slots, boolean defaultWhitelist, boolean defaultRespectNBT, boolean defaultRespectMod) {
+    public FilterSettings(int slots, boolean defaultWhitelist, boolean defaultRespectMod) {
         this.filterInventory = new ItemStackHandlerAA(slots) {
             @Override
             protected void onContentsChanged(int slot) {
@@ -44,13 +37,12 @@ public class FilterSettings {
         };
 
         this.isWhitelist = defaultWhitelist;
-        this.respectNBT = defaultRespectNBT;
         this.respectMod = defaultRespectMod;
     }
 
     public void onContentsChanged() {}
 
-    public static boolean check(ItemStack stack, ItemStackHandlerAA filter, boolean whitelist, boolean nbt, boolean mod) {
+    public static boolean check(ItemStack stack, ItemStackHandlerAA filter, boolean whitelist, boolean mod) {
         if (!stack.isEmpty()) {
             for (int i = 0; i < filter.getSlots(); i++) {
                 ItemStack slot = filter.getStackInSlot(i);
@@ -61,11 +53,11 @@ public class FilterSettings {
                         DrillItem.loadSlotsFromNBT(inv, slot);
                         for (int k = 0; k < inv.getSlots(); k++) {
                             ItemStack filterSlot = inv.getStackInSlot(k);
-                            if (!filterSlot.isEmpty() && areEqualEnough(filterSlot, stack, nbt, mod)) {
+                            if (!filterSlot.isEmpty() && areEqualEnough(filterSlot, stack, mod)) {
                                 return whitelist;
                             }
                         }
-                    } else if (areEqualEnough(slot, stack, nbt, mod)) {
+                    } else if (areEqualEnough(slot, stack, mod)) {
                         return whitelist;
                     }
                 }
@@ -74,24 +66,19 @@ public class FilterSettings {
         return !whitelist;
     }
 
-    private static boolean areEqualEnough(ItemStack first, ItemStack second, boolean nbt, boolean mod) {
+    private static boolean areEqualEnough(ItemStack first, ItemStack second, boolean mod) {
         Item firstItem = first.getItem();
         Item secondItem = second.getItem();
         if (mod && BuiltInRegistries.ITEM.getKey(firstItem).getNamespace().equals(BuiltInRegistries.ITEM.getKey(secondItem).getNamespace())) {
             return true;
         }
 
-        if (firstItem != secondItem) {
-            return false;
-        }
-
-        return !nbt || ItemStack.isSameItemSameTags(first, second);
+        return firstItem == secondItem;
     }
 
     public void writeToNBT(CompoundTag tag, String name) {
         CompoundTag compound = new CompoundTag();
         compound.putBoolean("Whitelist", this.isWhitelist);
-        compound.putBoolean("NBT", this.respectNBT);
         compound.putBoolean("Mod", this.respectMod);
         compound.put("Items", filterInventory.serializeNBT());
         tag.put(name, compound);
@@ -100,37 +87,29 @@ public class FilterSettings {
     public void readFromNBT(CompoundTag tag, String name) {
         CompoundTag compound = tag.getCompound(name);
         this.isWhitelist = compound.getBoolean("Whitelist");
-        this.respectNBT = compound.getBoolean("NBT");
         this.respectMod = compound.getBoolean("Mod");
         this.filterInventory.deserializeNBT(compound.getCompound("Items"));
     }
 
     public boolean needsUpdateSend() {
-        return this.lastWhitelist != this.isWhitelist || this.lastRespectNBT != this.respectNBT || this.lastRespectMod != this.respectMod;
+        return this.lastWhitelist != this.isWhitelist || this.lastRespectMod != this.respectMod;
     }
 
     public void updateLasts() {
         this.lastWhitelist = this.isWhitelist;
-        this.lastRespectNBT = this.respectNBT;
         this.lastRespectMod = this.respectMod;
     }
 
     public void onButtonPressed(int id) {
-        if (id == Buttons.WHITELIST.ordinal()) {
+        if (id == 1) {
             this.isWhitelist = !this.isWhitelist;
-        } else if (id == Buttons.NBT.ordinal()) {
-            this.respectNBT = !this.respectNBT;
-        } else if (id == Buttons.MOD.ordinal()) {
+        } else if (id == 2) {
             this.respectMod = !this.respectMod;
-
-            if (this.respectMod) {
-                this.respectNBT = false;
-            }
         }
     }
 
     public boolean check(ItemStack stack) {
-        return !this.needsCheck() || check(stack, this.filterInventory, this.isWhitelist, this.respectNBT, this.respectMod);
+        return !this.needsCheck() || check(stack, this.filterInventory, this.isWhitelist, this.respectMod);
     }
 
     public boolean needsCheck() {

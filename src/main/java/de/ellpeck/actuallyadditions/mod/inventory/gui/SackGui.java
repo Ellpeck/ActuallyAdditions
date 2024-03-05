@@ -12,14 +12,24 @@ package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import de.ellpeck.actuallyadditions.mod.inventory.SackContainer;
+import de.ellpeck.actuallyadditions.mod.network.PacketClientToServer;
+import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.Tooltip;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public class SackGui extends AAScreen<SackContainer> {
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_bag");
@@ -42,31 +52,34 @@ public class SackGui extends AAScreen<SackContainer> {
     public void init() {
         super.init();
 
-        this.filter = new FilterSettingsGui(this.container.filter, this.leftPos + 138, this.topPos + 10, this.renderables);
-//
-//        this.buttonAutoInsert = new Button(0, this.leftPos - 21, this.topPos + 8, 20, 20, (this.container.autoInsert
-//            ? TextFormatting.DARK_GREEN
-//            : TextFormatting.RED) + "I");
-        //this.addButton(this.buttonAutoInsert);
+        this.filter = new FilterSettingsGui(this.container.filter, this.leftPos + 138, this.topPos + 10, this);
+
+        this.buttonAutoInsert = Button.builder(
+                Component.literal(this.container.autoInsert? "I" : "O")
+                .withStyle(this.container.autoInsert? ChatFormatting.DARK_GREEN : ChatFormatting.RED),
+                (button) -> {
+                    this.container.autoInsert = !this.container.autoInsert;
+                    this.buttonAutoInsert.setMessage(Component.literal(this.container.autoInsert? "I" : "O")
+                            .withStyle(this.container.autoInsert? ChatFormatting.DARK_GREEN : ChatFormatting.RED));
+                    this.buttonClicked(0);
+                }).pos(leftPos - 21, topPos + 8).size(20, 20)
+                .build();
+
+        this.addRenderableWidget(this.buttonAutoInsert);
     }
 
-//    @Override
-//    protected void actionPerformed(Button button) throws IOException {
-//        CompoundNBT data = new CompoundNBT();
-//        data.putInt("ButtonID", button.id);
-//        data.putInt("PlayerID", Minecraft.getInstance().player.getId());
-//        data.putInt("WorldID", Minecraft.getInstance().level.provider.getDimension());
-//        PacketDistributor.SERVER.noArg().send(new PacketClientToServer(data, PacketHandler.GUI_BUTTON_TO_CONTAINER_HANDLER));
-//    }
+    public void buttonClicked(int id) {
+        CompoundTag data = new CompoundTag();
+        data.putInt("ButtonID", id);
+        data.putInt("PlayerID", Minecraft.getInstance().player.getId());
+        data.putString("WorldID", Minecraft.getInstance().level.dimension().location().getPath());
+        PacketDistributor.SERVER.noArg().send(new PacketClientToServer(data, PacketHandler.GUI_BUTTON_TO_CONTAINER_HANDLER));
+    }
 
     @Override
     public void containerTick() {
         super.containerTick();
         this.filter.tick();
-
-        //this.buttonAutoInsert.displayString = (this.container.autoInsert
-        //    ? TextFormatting.DARK_GREEN
-        //    : TextFormatting.RED) + "I";
     }
 
 /*    @Override
@@ -81,15 +94,15 @@ public class SackGui extends AAScreen<SackContainer> {
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
         this.filter.drawHover(guiGraphics, mouseX, mouseY);
 
-/*        if (this.buttonAutoInsert.isMouseOver()) {
-            List<String> text = new ArrayList<>();
-            text.add(TextFormatting.BOLD + "Auto-Insert " + (this.container.autoInsert
+        if (this.buttonAutoInsert.isMouseOver(mouseX, mouseY)) {
+            List<Component> text = new ArrayList<>();
+            text.add(Component.literal("Auto-Insert " + (this.container.autoInsert
                 ? "On"
-                : "Off"));
-            text.addAll(this.font.listFormattedStringToWidth("Turn this on to make items that get picked up automatically go into the bag.", 200));
-            text.addAll(this.font.listFormattedStringToWidth(TextFormatting.GRAY + "" + TextFormatting.ITALIC + "Note that this WON'T work when you are holding the bag in your hand.", 200));
-            this.renderToolTip(stack, text, mouseX, mouseY, this.getMinecraft().font);
-        }*/
+                : "Off")).withStyle(ChatFormatting.BOLD));
+            text.add(Component.literal("Turn this on to make items that get picked up automatically go into the bag.")); //TODO how to word wrap these to 200?
+            text.add(Component.literal("Note that this WON'T work when you are holding the bag in your hand.").withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC)); //TODO this too
+            guiGraphics.renderTooltip(font, text, Optional.empty(), mouseX, mouseY); //TODO i have no idea what im doing here...
+        }
     }
 
     @Override

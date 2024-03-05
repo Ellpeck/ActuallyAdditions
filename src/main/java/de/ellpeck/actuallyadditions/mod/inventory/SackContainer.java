@@ -35,7 +35,7 @@ import java.util.UUID;
 
 public class SackContainer extends AbstractContainerMenu implements IButtonReactor {
 
-    public final FilterSettings filter = new FilterSettings(4, false, false, false);
+    public final FilterSettings filter = new FilterSettings(4, false,false);
     private final ItemStackHandlerAA bagInventory;
     private final Inventory inventory;
     public boolean autoInsert;
@@ -141,10 +141,8 @@ public class SackContainer extends AbstractContainerMenu implements IButtonReact
         if (id == 0) {
             this.filter.isWhitelist = data == 1;
         } else if (id == 1) {
-            this.filter.respectNBT = data == 1;
-        } else if (id == 2) {
             this.autoInsert = data == 1;
-        } else if (id == 3) {
+        } else if (id == 2) {
             this.filter.respectMod = data == 1;
         }
     }
@@ -197,7 +195,7 @@ public class SackContainer extends AbstractContainerMenu implements IButtonReact
     }
 
     @Override
-    public void clicked(int slotId, int dragType, ClickType clickTypeIn, Player player) {
+    public void clicked(int slotId, int dragType, @Nonnull ClickType clickTypeIn, @Nonnull Player player) {
         if (SlotFilter.checkFilter(this, slotId, player)) {
             return; //TODO: Check if this is correct, used to return ItemStack.EMPTY
         } else if (clickTypeIn == ClickType.SWAP && dragType == this.inventory.selected) {
@@ -208,10 +206,9 @@ public class SackContainer extends AbstractContainerMenu implements IButtonReact
     }
 
     @Override
-    public void removed(Player player) {
+    public void removed(@Nonnull Player player) {
         ItemStack stack = this.inventory.getSelected();
         if (!stack.isEmpty() && stack.getItem() instanceof Sack) {
-            //DrillItem.writeSlotsToNBT(this.bagInventory, this.inventory.getSelected());
             CompoundTag compound = stack.getOrCreateTag();
             this.filter.writeToNBT(compound, "Filter");
             compound.putBoolean("AutoInsert", this.autoInsert);
@@ -220,7 +217,7 @@ public class SackContainer extends AbstractContainerMenu implements IButtonReact
     }
 
     @Override
-    public boolean stillValid(Player player) {
+    public boolean stillValid(@Nonnull Player player) {
         return true;
     }
 
@@ -229,7 +226,7 @@ public class SackContainer extends AbstractContainerMenu implements IButtonReact
         if (buttonID == 0) {
             this.autoInsert = !this.autoInsert;
         } else {
-            //this.filter.onButtonPressed(buttonID); //TODO
+            this.filter.onButtonPressed(buttonID);
         }
     }
 }

@@ -106,10 +106,10 @@ public final class PacketHandler {
             Player player = context.player().get();
             Level level = player.getServer().getLevel(ResourceKey.create(Registries.DIMENSION, new ResourceLocation(compound.getString("WorldID"))));
             Entity entity = level.getEntity(compound.getInt("PlayerID"));
-            if (entity instanceof Player) {
-                AbstractContainerMenu container = ((Player) entity).containerMenu;
-                if (container instanceof IButtonReactor) {
-                    ((IButtonReactor) container).onButtonPressed(compound.getInt("ButtonID"), (Player) entity);
+            if (entity instanceof Player p) {
+                AbstractContainerMenu container = p.containerMenu;
+                if (container instanceof IButtonReactor reactor) {
+                    reactor.onButtonPressed(compound.getInt("ButtonID"), (Player) entity);
                 }
             }
         }

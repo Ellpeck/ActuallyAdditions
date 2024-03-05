@@ -38,7 +38,7 @@ import java.util.List;
 public class TileEntityRangedCollector extends TileEntityInventoryBase implements IButtonReactor, MenuProvider {
 
     public static final int RANGE = 6;
-    public FilterSettings filter = new FilterSettings(12, true, false, false);
+    public FilterSettings filter = new FilterSettings(12, true, false);
 
     public TileEntityRangedCollector(BlockPos pos, BlockState state) {
         super(ActuallyBlocks.RANGED_COLLECTOR.getTileEntityType(), pos, state, 6);

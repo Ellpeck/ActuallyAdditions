@@ -75,7 +75,7 @@ public class CommonEvents {
                                 ItemStackHandlerAA inv = new ItemStackHandlerAA(28); //TODO whats going on here
                                 DrillItem.loadSlotsFromNBT(inv, invStack);
 
-                                FilterSettings filter = new FilterSettings(4, false, false, false);
+                                FilterSettings filter = new FilterSettings(4, false, false);
                                 filter.readFromNBT(invStack.getOrCreateTag(), "Filter");
                                 if (filter.check(stack)) {
                                     if (isVoid) {
