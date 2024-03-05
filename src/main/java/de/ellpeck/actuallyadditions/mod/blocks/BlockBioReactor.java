@@ -10,7 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
+import de.ellpeck.actuallyadditions.mod.blocks.base.DirectionalBlock;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBioReactor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
@@ -25,7 +25,7 @@ import net.minecraft.world.phys.BlockHitResult;
 
 import javax.annotation.Nullable;
 
-public class BlockBioReactor extends BlockContainerBase {
+public class BlockBioReactor extends DirectionalBlock.Container {
 
     public BlockBioReactor() {
         super(ActuallyBlocks.defaultPickProps(2.0F, 10.0F));
