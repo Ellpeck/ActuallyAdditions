@@ -226,7 +226,7 @@ public class SackContainer extends AbstractContainerMenu implements IButtonReact
         if (buttonID == 0) {
             this.autoInsert = !this.autoInsert;
         } else {
-            this.filter.onButtonPressed(buttonID);
+            this.filter.onButtonPressed(buttonID - 1);
         }
     }
 }

@@ -11,18 +11,24 @@
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.network.PacketClientToServer;
+import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.tile.FilterSettings;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Renderable;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 @OnlyIn(Dist.CLIENT)
 public class FilterSettingsGui {
@@ -32,16 +38,24 @@ public class FilterSettingsGui {
     public Buttons.SmallerButton whitelistButton;
     public Buttons.SmallerButton modButton;
 
-    public FilterSettingsGui(FilterSettings settings, int x, int y, SackGui gui) {
+    public FilterSettingsGui(FilterSettings settings, int x, int y, Consumer<AbstractButton> buttonConsumer, int idOffset) {
         this.theSettings = settings;
 
-        this.whitelistButton = new Buttons.SmallerButton( x, y, Component.literal("WH"), true, $ -> gui.buttonClicked(1)); //TODO these need translation keys
-        gui.renderables.add(this.whitelistButton);
+        this.whitelistButton = new Buttons.SmallerButton( x, y, Component.literal("WH"), true, $ -> buttonClicked(idOffset)); //TODO these need translation keys
+        buttonConsumer.accept(this.whitelistButton);
         y += 14;
-        this.modButton = new Buttons.SmallerButton( x, y, Component.literal("MO"), true, $ -> gui.buttonClicked(2));
-        gui.renderables.add(this.modButton);
+        this.modButton = new Buttons.SmallerButton( x, y, Component.literal("MO"), true, $ -> buttonClicked(idOffset + 1));
+        buttonConsumer.accept(this.modButton);
 
         this.tick();
+    }
+
+    public void buttonClicked(int id) {
+        CompoundTag data = new CompoundTag();
+        data.putInt("ButtonID", id);
+        data.putInt("PlayerID", Minecraft.getInstance().player.getId());
+        data.putString("WorldID", Minecraft.getInstance().level.dimension().location().toString());
+        PacketDistributor.SERVER.noArg().send(new PacketClientToServer(data, PacketHandler.GUI_BUTTON_TO_CONTAINER_HANDLER));
     }
 
     public void tick() {
