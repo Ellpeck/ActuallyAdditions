@@ -39,7 +39,7 @@ public final class ActuallyItems {
 
     // MISC ITEMS
     public static final DeferredItem<ItemBase> CANOLA = ITEMS.register("canola", () -> new ItemBase());
-    public static final DeferredItem<ItemBase> COFFEE_CUP = ITEMS.register("coffee_cup", () -> new ItemBase());
+    public static final DeferredItem<ItemCoffee> COFFEE_CUP = ITEMS.register("coffee_cup", () -> new ItemCoffee());
     public static final DeferredItem<ItemBase> PAPER_CONE = ITEMS.register("paper_cone", () -> new ItemBase());
     public static final DeferredItem<ItemBase> DOUGH = ITEMS.register("dough", () -> new ItemBase());
     public static final DeferredItem<ItemBase> RING = ITEMS.register("ring", () -> new ItemBase());

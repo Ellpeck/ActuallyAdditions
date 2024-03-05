@@ -978,5 +978,9 @@
   "booklet.actuallyadditions.chapter.crystalClusters.text.1": "<item>Crystal Clusters<r> are blocks that generate naturally inside of <imp>Lush Caves<r>. <n>When broken, they <imp>drop<r> one or more <item>Crystal Shards<r> that can be crafted together to create <item>Crystals<r>. <n><item>Crystal Clusters<r> emit a bit of light, making them perfect for <imp>decoration<r>. To harvest them in their block form, <imp>Silk Touch<r> can be used.",
   "booklet.actuallyadditions.chapter.trialsIntro": "Intro to Trials",
   "booklet.actuallyadditions.chapter.trialsIntro.text.1": "<item>Trials<r> are a set of fun and interesting <imp>challenges<r> that you can use to <imp>get inspiration<r> on what to build next. <n>Once you <imp>complete<r> a <item>Trial<r>, you can <imp>press the button<r> in the bottom right to mark the trial as completed, turning its name in the list green. <n>Since there is <imp>no way to check<r> if a trial is actually completed, <item>Trials<r> are meant as <imp>personal goals<r>. <n><n>To <imp>visit<r> the <item>Trials<r> page, you can click the <imp>bookmark<r> in the <imp>top right<r> corner of the manual GUI.",
-  "booklet.actuallyadditions.chapter.trialsIntro.text.2": "Note that <item>Trials<r> are designed in a way that they should be completed with the concepts of <imp>Minecraft<r> and <imp>Actually Additions<r> alone."
+  "booklet.actuallyadditions.chapter.trialsIntro.text.2": "Note that <item>Trials<r> are designed in a way that they should be completed with the concepts of <imp>Minecraft<r> and <imp>Actually Additions<r> alone.",
+  "_comment": "JEI",
+  "jei.actuallyadditions.coffee.special": "Special Feature",
+  "jei.actuallyadditions.coffee.maxAmount": "Max Amount",
+  "jei.actuallyadditions.coffee.extra.milk": "+01:00, -1 Level"
 }

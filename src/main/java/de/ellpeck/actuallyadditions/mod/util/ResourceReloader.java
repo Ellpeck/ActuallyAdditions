@@ -44,5 +44,8 @@ public class ResourceReloader implements ResourceManagerReloadListener {
 
         ActuallyAdditionsAPI.CRUSHER_RECIPES.clear();
         ActuallyAdditionsAPI.CRUSHER_RECIPES.addAll(recipeManager.getAllRecipesFor(ActuallyRecipes.Types.CRUSHING.get()));
+
+        ActuallyAdditionsAPI.COFFEE_MACHINE_INGREDIENTS.clear();
+        ActuallyAdditionsAPI.COFFEE_MACHINE_INGREDIENTS.addAll(recipeManager.getAllRecipesFor(ActuallyRecipes.Types.COFFEE_INGREDIENT.get()));
     }
 }

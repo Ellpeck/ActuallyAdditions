@@ -11,9 +11,9 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.api.ActuallyTags;
-import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
 import de.ellpeck.actuallyadditions.mod.AASounds;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
+import de.ellpeck.actuallyadditions.mod.crafting.CoffeeIngredientRecipe;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerCoffeeMachine;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.items.ItemCoffee;
@@ -31,6 +31,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -158,12 +159,12 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
 
     @Override
     public IAcceptor getAcceptor() {
-        return (slot, stack, automation) -> !automation || slot >= 3 && ItemCoffee.getIngredientFromStack(stack) != null || slot == SLOT_COFFEE_BEANS && stack.is(ActuallyTags.Items.COFFEE_BEANS) || slot == SLOT_INPUT && stack.getItem() == ActuallyItems.COFFEE_CUP.get();
+        return (slot, stack, automation) -> !automation || slot >= 3 && ItemCoffee.getIngredientRecipeFromStack(stack) != null || slot == SLOT_COFFEE_BEANS && stack.is(ActuallyTags.Items.COFFEE_BEANS) || slot == SLOT_INPUT && stack.getItem() == ActuallyItems.COFFEE_CUP.get();
     }
 
     @Override
     public IRemover getRemover() {
-        return (slot, automation) -> !automation || slot == SLOT_OUTPUT || slot >= 3 && slot < this.inv.getSlots() && ItemCoffee.getIngredientFromStack(this.inv.getStackInSlot(slot)) == null;
+        return (slot, automation) -> !automation || slot == SLOT_OUTPUT || slot >= 3 && slot < this.inv.getSlots() && ItemCoffee.getIngredientRecipeFromStack(this.inv.getStackInSlot(slot)) == null;
     }
 
     public void storeCoffee() {
@@ -195,9 +196,9 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
                     ItemStack output = new ItemStack(ActuallyItems.COFFEE_BEANS.get());
                     for (int i = 3; i < this.inv.getSlots(); i++) {
                         if (StackUtil.isValid(this.inv.getStackInSlot(i))) {
-                            CoffeeIngredient ingredient = ItemCoffee.getIngredientFromStack(this.inv.getStackInSlot(i));
-                            if (ingredient != null) {
-                                if (ingredient.effect(output)) {
+                            RecipeHolder<CoffeeIngredientRecipe> recipeHolder = ItemCoffee.getIngredientRecipeFromStack(this.inv.getStackInSlot(i));
+                            if (recipeHolder != null) {
+                                if (recipeHolder.value().effect(output)) {
                                     this.inv.setStackInSlot(i, StackUtil.shrinkForContainer(this.inv.getStackInSlot(i), 1));
                                 }
                             }

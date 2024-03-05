@@ -1,0 +1,14 @@
+{
+  "type": "actuallyadditions:coffee_ingredient",
+  "effects": [
+    {
+      "amplifier": 0,
+      "duration": 10,
+      "effect": "minecraft:water_breathing"
+    }
+  ],
+  "ingredient": {
+    "item": "minecraft:pufferfish"
+  },
+  "maxAmplifier": 2
+}

@@ -1,0 +1,14 @@
+{
+  "type": "actuallyadditions:coffee_ingredient",
+  "effects": [
+    {
+      "amplifier": 0,
+      "duration": 20,
+      "effect": "minecraft:fire_resistance"
+    }
+  ],
+  "ingredient": {
+    "item": "minecraft:magma_cream"
+  },
+  "maxAmplifier": 2
+}

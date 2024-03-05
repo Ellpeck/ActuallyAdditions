@@ -1,0 +1,14 @@
+{
+  "type": "actuallyadditions:coffee_ingredient",
+  "effects": [
+    {
+      "amplifier": 0,
+      "duration": 25,
+      "effect": "minecraft:invisibility"
+    }
+  ],
+  "ingredient": {
+    "item": "minecraft:fermented_spider_eye"
+  },
+  "maxAmplifier": 2
+}

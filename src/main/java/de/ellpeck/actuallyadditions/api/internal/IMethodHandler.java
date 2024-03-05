@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.api.internal;
 
 import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
+import de.ellpeck.actuallyadditions.mod.crafting.CoffeeIngredientRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.ItemStack;
@@ -25,7 +26,10 @@ import java.util.List;
  */
 public interface IMethodHandler {
 
+    @Deprecated
     boolean addEffectToStack(ItemStack stack, CoffeeIngredient ingredient);
+
+    boolean addRecipeEffectToStack(ItemStack stack, CoffeeIngredientRecipe ingredient);
 
     MobEffectInstance getSameEffectFromStack(ItemStack stack, MobEffectInstance effect);
 

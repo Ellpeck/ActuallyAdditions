@@ -85,7 +85,7 @@ public class ContainerCoffeeMachine extends AbstractContainerMenu {
                     if (!this.moveItemStackTo(newStack, TileEntityCoffeeMachine.SLOT_INPUT, TileEntityCoffeeMachine.SLOT_INPUT + 1, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (ItemCoffee.getIngredientFromStack(newStack) != null) {
+                } else if (ItemCoffee.getIngredientRecipeFromStack(newStack) != null) {
                     if (!this.moveItemStackTo(newStack, 3, 11, false)) {
                         return ItemStack.EMPTY;
                     }

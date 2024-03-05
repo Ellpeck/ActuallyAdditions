@@ -13,110 +13,104 @@ package de.ellpeck.actuallyadditions.mod.items;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.mod.items.base.ItemFoodBase;
-import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
+import de.ellpeck.actuallyadditions.mod.crafting.CoffeeIngredientRecipe;
+import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.StringUtil;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.fml.ModList;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ItemCoffee extends ItemFoodBase {
+public class ItemCoffee extends ItemBase {
+    private static final FoodProperties FOOD = new FoodProperties.Builder().nutrition(8).saturationMod(5.0F).alwaysEat().build();
 
     public ItemCoffee() {
-        super(8, 5.0F, false); //, name);
-        //this.setMaxDamage(3);
-        //this.setAlwaysEdible();
-        //this.setMaxStackSize(1);
-        //this.setNoRepair();
+        super(ActuallyItems.defaultProps().food(FOOD).durability(3));
     }
 
     public static void initIngredients() {
-        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new MilkIngredient(Ingredient.of(Items.MILK_BUCKET)));
-        //Pam's Soy Milk (For Jemx because he's lactose intolerant. YER HAPPY NAO!?)
-        if (ModList.get().isLoaded("harvestcraft")) {
-            Item item = ItemUtil.getItemFromName("harvestcraft:soymilkitem");
-            if (item != null) {
-                ActuallyAdditionsAPI.addCoffeeMachineIngredient(new MilkIngredient(Ingredient.of(item)));
-            }
-        }
-
-        //ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(Ingredient.of(Items.SUGAR), 4, new PotionEffect(MobEffects.SPEED, 30, 0)));
-        //ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(Ingredient.of(Items.MAGMA_CREAM), 2, new PotionEffect(MobEffects.FIRE_RESISTANCE, 20, 0)));
-        //ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(Ingredient.of(new ItemStack(Items.FISH, 1, 3)), 2, new PotionEffect(MobEffects.WATER_BREATHING, 10, 0)));
-        //ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(Ingredient.of(Items.GOLDEN_CARROT), 2, new PotionEffect(MobEffects.NIGHT_VISION, 30, 0)));
-        //ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(Ingredient.of(Items.GHAST_TEAR), 3, new PotionEffect(MobEffects.REGENERATION, 5, 0)));
-        //ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(Ingredient.of(Items.BLAZE_POWDER), 4, new PotionEffect(MobEffects.STRENGTH, 15, 0)));
-        //ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(Ingredient.of(Items.FERMENTED_SPIDER_EYE), 2, new PotionEffect(MobEffects.INVISIBILITY, 25, 0)));
+//        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new MilkIngredient(Ingredient.of(Items.MILK_BUCKET)));
+//        //Pam's Soy Milk (For Jemx because he's lactose intolerant. YER HAPPY NAO!?)
+//        if (ModList.get().isLoaded("harvestcraft")) {
+//            Item item = ItemUtil.getItemFromName("harvestcraft:soymilkitem");
+//            if (item != null) {
+//                ActuallyAdditionsAPI.addCoffeeMachineIngredient(new MilkIngredient(Ingredient.of(item)));
+//            }
+//        }
+//
+//        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(Ingredient.of(Items.SUGAR), 4, new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 30, 0)));
+//        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(Ingredient.of(Items.MAGMA_CREAM), 2, new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 20, 0)));
+//        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(Ingredient.of(Items.PUFFERFISH), 2, new MobEffectInstance(MobEffects.WATER_BREATHING, 10, 0)));
+//        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(Ingredient.of(Items.GOLDEN_CARROT), 2, new MobEffectInstance(MobEffects.NIGHT_VISION, 30, 0)));
+//        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(Ingredient.of(Items.GHAST_TEAR), 3, new MobEffectInstance(MobEffects.REGENERATION, 5, 0)));
+//        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(Ingredient.of(Items.BLAZE_POWDER), 4, new MobEffectInstance(MobEffects.DAMAGE_BOOST, 15, 0)));
+//        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(Ingredient.of(Items.FERMENTED_SPIDER_EYE), 2, new MobEffectInstance(MobEffects.INVISIBILITY, 25, 0)));
     }
 
     @Nullable
-    public static CoffeeIngredient getIngredientFromStack(ItemStack stack) {
-        for (CoffeeIngredient ingredient : ActuallyAdditionsAPI.COFFEE_MACHINE_INGREDIENTS) {
-            if (ingredient.getInput().test(stack)) {
-                return ingredient;
+    public static RecipeHolder<CoffeeIngredientRecipe> getIngredientRecipeFromStack(ItemStack stack) {
+        for (RecipeHolder<CoffeeIngredientRecipe> recipeHolder : ActuallyAdditionsAPI.COFFEE_MACHINE_INGREDIENTS) {
+            if (recipeHolder.value().getIngredient().test(stack)) {
+                return recipeHolder;
             }
         }
         return null;
     }
 
-    public static void applyPotionEffectsFromStack(ItemStack stack, LivingEntity player) {/*
-        PotionEffect[] effects = ActuallyAdditionsAPI.methodHandler.getEffectsFromStack(stack);
+    public static void applyPotionEffectsFromStack(ItemStack stack, LivingEntity player) {
+        MobEffectInstance[] effects = ActuallyAdditionsAPI.methodHandler.getEffectsFromStack(stack);
         if (effects != null && effects.length > 0) {
-            for (PotionEffect effect : effects) {
-                player.addPotionEffect(new PotionEffect(effect.getPotion(), effect.getDuration() * 20, effect.getAmplifier()));
+            for (MobEffectInstance effect : effects) {
+                player.addEffect(new MobEffectInstance(effect.getEffect(), effect.getDuration() * 20, effect.getAmplifier()));
             }
         }
-        */
     }
 
-    //@Override
-    public ItemStack onItemUseFinish(ItemStack stack, Level world, LivingEntity player) {
+    @Override
+    public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity livingEntity) {
         ItemStack theStack = stack.copy();
-        super.finishUsingItem(stack, world, player);
-        applyPotionEffectsFromStack(stack, player);
-        //theStack.setItemDamage(theStack.getItemDamage() + 1);
-        //if (theStack.getMaxDamage() - theStack.getItemDamage() < 0) {
-        //    return new ItemStack(ActuallyItems.COFFEE_CUP.get());
-        //} else {
-        //    return theStack;
-        //}
-        return ItemStack.EMPTY;
+        super.finishUsingItem(stack, level, livingEntity);
+        applyPotionEffectsFromStack(stack, livingEntity);
+        theStack.setDamageValue(theStack.getDamageValue() + 1);
+        if (theStack.getMaxDamage() - theStack.getDamageValue() < 0) {
+            return new ItemStack(ActuallyItems.COFFEE_CUP.get());
+        } else {
+            return theStack;
+        }
     }
 
-    //@Override
-    //public EnumAction getItemUseAction(ItemStack stack) {
-    //    return EnumAction.DRINK;
-    //}
-
-//    @Nullable
-//    @Override
-//    public CompoundTag getShareTag(ItemStack stack) {
-//        return super.getShareTag(stack);
-//    }
+    @Override
+    public UseAnim getUseAnimation(ItemStack pStack) {
+        return UseAnim.DRINK;
+    }
 
     @OnlyIn(Dist.CLIENT)
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level playerIn, List<Component> tooltip, TooltipFlag advanced) {
-        //PotionEffect[] effects = ActuallyAdditionsAPI.methodHandler.getEffectsFromStack(stack);
-        //if (effects != null) {
-        //    for (PotionEffect effect : effects) {
-        //        tooltip.add(StringUtil.localize(effect.getEffectName()) + " " + (effect.getAmplifier() + 1) + ", " + StringUtils.formatTickDuration(effect.getDuration() * 20));
-        //    }
-        //} else {
-        //   tooltip.add(StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".coffeeCup.noEffect"));
-        //}
+        MobEffectInstance[] effects = ActuallyAdditionsAPI.methodHandler.getEffectsFromStack(stack);
+        if (effects != null) {
+            for (MobEffectInstance effect : effects) {
+                tooltip.add(Component.translatable(effect.getDescriptionId())
+                        .append(" " + (effect.getAmplifier() + 1) + ", " + StringUtil.formatTickDuration(effect.getDuration(), 20))
+                        .withStyle(ChatFormatting.GRAY));
+            }
+        } else {
+           tooltip.add(Component.translatable("tooltip." + ActuallyAdditions.MODID + ".coffeeCup.noEffect").withStyle(ChatFormatting.GRAY));
+        }
     }
 
     @Override
@@ -157,7 +151,7 @@ public class ItemCoffee extends ItemFoodBase {
 
         @Override
         public String getExtraText() {
-            return I18n.get("container.nei." + ActuallyAdditions.MODID + ".coffee.extra.milk");
+            return I18n.get("jei." + ActuallyAdditions.MODID + ".coffee.extra.milk");
         }
     }
 }

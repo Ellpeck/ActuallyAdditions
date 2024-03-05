@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.api.internal.IMethodHandler;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
 import de.ellpeck.actuallyadditions.mod.blocks.BlockLaserRelay;
+import de.ellpeck.actuallyadditions.mod.crafting.CoffeeIngredientRecipe;
 import de.ellpeck.actuallyadditions.mod.crafting.LaserRecipe;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
@@ -45,6 +46,29 @@ public class MethodHandler implements IMethodHandler {
         if (ingredient != null) {
             MobEffectInstance[] effects = ingredient.getEffects();
             if (effects != null && effects.length > 0) {
+                for (MobEffectInstance effect : effects) {
+                    MobEffectInstance effectHas = this.getSameEffectFromStack(stack, effect);
+                    if (effectHas != null) {
+                        if (effectHas.getAmplifier() < ingredient.getMaxAmplifier() - 1) {
+                            this.addEffectProperties(stack, effect, false, true);
+                            worked = true;
+                        }
+                    } else {
+                        this.addEffectToStack(stack, effect);
+                        worked = true;
+                    }
+                }
+            }
+        }
+        return worked;
+    }
+
+    @Override
+    public boolean addRecipeEffectToStack(ItemStack stack, CoffeeIngredientRecipe ingredient) {
+        boolean worked = false;
+        if (ingredient != null) {
+           List<MobEffectInstance> effects = ingredient.getEffects();
+            if (!effects.isEmpty()) {
                 for (MobEffectInstance effect : effects) {
                     MobEffectInstance effectHas = this.getSameEffectFromStack(stack, effect);
                     if (effectHas != null) {

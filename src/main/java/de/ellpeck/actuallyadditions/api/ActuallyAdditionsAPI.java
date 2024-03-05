@@ -21,6 +21,7 @@ import de.ellpeck.actuallyadditions.api.lens.LensConversion;
 import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
 import de.ellpeck.actuallyadditions.api.recipe.WeightedOre;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.crafting.CoffeeIngredientRecipe;
 import de.ellpeck.actuallyadditions.mod.crafting.ColorChangeRecipe;
 import de.ellpeck.actuallyadditions.mod.crafting.CrushingRecipe;
 import de.ellpeck.actuallyadditions.mod.crafting.EmpowererRecipe;
@@ -66,7 +67,7 @@ public final class ActuallyAdditionsAPI {
      * Farmer behaviors are sorted when first accessed, this will not be done until after loading, but do not add behaviors at runtime.
      */
     public static final List<IFarmerBehavior> FARMER_BEHAVIORS = new ArrayList<>();
-    public static final List<CoffeeIngredient> COFFEE_MACHINE_INGREDIENTS = new ArrayList<>();
+    public static final List<RecipeHolder<CoffeeIngredientRecipe>> COFFEE_MACHINE_INGREDIENTS = new ArrayList<>();
     //    public static final List<CompostRecipe> COMPOST_RECIPES = new ArrayList<>();
     public static final List<IBookletEntry> BOOKLET_ENTRIES = new ArrayList<>();
     //This is added to automatically, you don't need to add anything to this list
@@ -241,7 +242,7 @@ public final class ActuallyAdditionsAPI {
      * @param ingredient The ingredient to add
      */
     public static void addCoffeeMachineIngredient(CoffeeIngredient ingredient) {
-        COFFEE_MACHINE_INGREDIENTS.add(ingredient);
+//        COFFEE_MACHINE_INGREDIENTS.add(ingredient);
     }
 
     /**
