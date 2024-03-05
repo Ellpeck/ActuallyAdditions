@@ -19,6 +19,7 @@ import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.items.DrillItem;
 import de.ellpeck.actuallyadditions.mod.items.Sack;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
+import de.ellpeck.actuallyadditions.mod.sack.SackManager;
 import de.ellpeck.actuallyadditions.mod.tile.FilterSettings;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
@@ -72,8 +73,12 @@ public class CommonEvents {
                                 boolean changed = false;
 
                                 boolean isVoid = ((Sack) invStack.getItem()).isVoid;
-                                ItemStackHandlerAA inv = new ItemStackHandlerAA(28); //TODO whats going on here
-                                DrillItem.loadSlotsFromNBT(inv, invStack);
+                                var optHandler = SackManager.get().getHandler(invStack);
+
+                                if (optHandler.isEmpty())
+                                    continue;
+
+                                ItemStackHandlerAA inv = optHandler.get();
 
                                 FilterSettings filter = new FilterSettings(4, false, false);
                                 filter.readFromNBT(invStack.getOrCreateTag(), "Filter");
