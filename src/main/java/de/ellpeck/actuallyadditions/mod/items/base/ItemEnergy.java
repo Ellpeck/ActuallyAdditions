@@ -13,12 +13,16 @@ package de.ellpeck.actuallyadditions.mod.items.base;
 import de.ellpeck.actuallyadditions.mod.attachments.ActuallyAttachments;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.tile.CustomEnergyStorage;
+import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 
@@ -79,17 +83,23 @@ public abstract class ItemEnergy extends ItemBase {
 
     @Override
     public int getBarWidth(ItemStack stack) {
-        if (stack.hasTag() && stack.getTag().contains("Energy")) {
-            return (int)(1 - (stack.getTag().getDouble("Energy") / this.maxPower));
+        if (stack.hasData(ActuallyAttachments.ENERGY_STORAGE)) {
+            CustomEnergyStorage storage = stack.getData(ActuallyAttachments.ENERGY_STORAGE);
+            return Math.round(13.0F - (float)storage.getEnergyStored() * 13.0F / storage.getMaxEnergyStored());
         }
         return 1;
     }
 
     @Override
     public int getBarColor(ItemStack stack) {
-        //float[] color = AssetUtil.getWheelColor(player.level().getGameTime() % 256);
-        //return MathHelper.color(color[0] / 255F, color[1] / 255F, color[2] / 255F);
-        return super.getBarColor(stack);
+        int defaultColor = super.getBarColor(stack);
+        if (FMLEnvironment.dist.isClient()) {
+            Minecraft mc = Minecraft.getInstance();
+            if (mc.player == null) return defaultColor;
+            float[] color = AssetUtil.getWheelColor(mc.player.level().getGameTime() % 256);
+            return Mth.color(color[0] / 255F, color[1] / 255F, color[2] / 255F);
+        }
+        return defaultColor;
     }
 
     public void setEnergy(ItemStack stack, int energy) {
