@@ -1,5 +1,6 @@
 package de.ellpeck.actuallyadditions.mod;
 
+import de.ellpeck.actuallyadditions.mod.attachments.ActuallyAttachments;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
 import net.minecraft.core.registries.Registries;
@@ -8,10 +9,15 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.energy.EnergyStorage;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public class ActuallyTabs {
 	public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, ActuallyAdditions.MODID);
@@ -21,12 +27,19 @@ public class ActuallyTabs {
 			.withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
 			.title(Component.translatable("itemGroup.actuallyadditions"))
 			.displayItems((parameters, output) -> {
-				List<ItemStack> stacks = ActuallyItems.ITEMS.getEntries().stream().map(reg -> new ItemStack(reg.get())).toList();
-				stacks.forEach(stack -> {
+				List<ItemStack> stacks = ActuallyItems.ITEMS.getEntries().stream().map(reg -> new ItemStack(reg.get())).collect(Collectors.toList());
+
+				//Add charged versions of all energy items
+				List<ItemStack> charged = ActuallyItems.ITEMS.getEntries().stream().map(reg -> new ItemStack(reg.get()))
+						.filter(stack -> stack.getItem() instanceof ItemEnergy).toList();
+				charged.forEach(stack -> {
 					if(stack.getItem() instanceof ItemEnergy itemEnergy) {
-						stack.getOrCreateTag().putDouble("Energy", itemEnergy.getMaxEnergyStored(stack));
+						EnergyStorage storage = new EnergyStorage(itemEnergy.maxPower, itemEnergy.transfer, itemEnergy.transfer, itemEnergy.maxPower);
+						stack.setData(ActuallyAttachments.ENERGY_STORAGE.get(), storage);
 					}
 				});
+				stacks.addAll(charged);
+
 				output.acceptAll(stacks);
 			}).build());
 

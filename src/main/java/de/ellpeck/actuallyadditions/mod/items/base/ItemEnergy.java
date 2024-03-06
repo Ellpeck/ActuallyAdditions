@@ -33,8 +33,8 @@ import java.util.Optional;
 
 public abstract class ItemEnergy extends ItemBase {
 
-    private final int maxPower;
-    private final int transfer;
+    public final int maxPower;
+    public final int transfer;
 
     public ItemEnergy(int maxPower, int transfer) {
         super(ActuallyItems.defaultProps().stacksTo(1));
@@ -51,12 +51,12 @@ public abstract class ItemEnergy extends ItemBase {
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
-        int energy = 0;
-        if (stack.hasTag() && stack.getTag().contains("Energy")) {
-            energy = stack.getTag().getInt("Energy");
+        IEnergyStorage storage = stack.getCapability(Capabilities.EnergyStorage.ITEM);
+        if(storage != null) {
+            int energy = storage.getEnergyStored();
+            NumberFormat format = NumberFormat.getInstance();
+            tooltip.add(Component.translatable("misc.actuallyadditions.power_long", format.format(energy), format.format(storage.getMaxEnergyStored())));
         }
-        NumberFormat format = NumberFormat.getInstance();
-        tooltip.add(Component.translatable("misc.actuallyadditions.power_long", format.format(energy), format.format(this.maxPower)));
     }
 
     @Override
@@ -83,11 +83,11 @@ public abstract class ItemEnergy extends ItemBase {
 
     @Override
     public int getBarWidth(ItemStack stack) {
-        if (stack.hasData(ActuallyAttachments.ENERGY_STORAGE)) {
-            CustomEnergyStorage storage = stack.getData(ActuallyAttachments.ENERGY_STORAGE);
-            return Math.round(13.0F - (float)storage.getEnergyStored() * 13.0F / storage.getMaxEnergyStored());
+        IEnergyStorage storage = stack.getCapability(Capabilities.EnergyStorage.ITEM);
+        if (storage != null) {
+            return Math.round((13.0F / storage.getMaxEnergyStored() * storage.getEnergyStored()));
         }
-        return 1;
+        return 0;
     }
 
     @Override
@@ -103,7 +103,7 @@ public abstract class ItemEnergy extends ItemBase {
     }
 
     public void setEnergy(ItemStack stack, int energy) {
-        Optional.ofNullable(stack.getCapability(Capabilities.EnergyStorage.ITEM, null)).ifPresent(cap -> {
+        Optional.ofNullable(stack.getCapability(Capabilities.EnergyStorage.ITEM)).ifPresent(cap -> {
             if (cap instanceof CustomEnergyStorage) {
                 ((CustomEnergyStorage) cap).setEnergyStored(energy);
             }
@@ -112,13 +112,13 @@ public abstract class ItemEnergy extends ItemBase {
 
     @Deprecated
     public int receiveEnergyInternal(ItemStack stack, int maxReceive, boolean simulate) {
-        return Optional.ofNullable(stack.getCapability(Capabilities.EnergyStorage.ITEM, null))
+        return Optional.ofNullable(stack.getCapability(Capabilities.EnergyStorage.ITEM))
             .map(cap -> ((CustomEnergyStorage) cap).receiveEnergyInternal(maxReceive, simulate))
             .orElse(0);
     }
 
     public int extractEnergyInternal(ItemStack stack, int maxExtract, boolean simulate) {
-        return Optional.ofNullable(stack.getCapability(Capabilities.EnergyStorage.ITEM, null))
+        return Optional.ofNullable(stack.getCapability(Capabilities.EnergyStorage.ITEM))
             .map(cap -> cap instanceof CustomEnergyStorage
                 ? ((CustomEnergyStorage) cap).extractEnergyInternal(maxExtract, simulate)
                 : 0)
@@ -127,32 +127,30 @@ public abstract class ItemEnergy extends ItemBase {
 
     @Deprecated
     public int receiveEnergy(ItemStack stack, int maxReceive, boolean simulate) {
-        return Optional.ofNullable(stack.getCapability(Capabilities.EnergyStorage.ITEM, null))
+        return Optional.ofNullable(stack.getCapability(Capabilities.EnergyStorage.ITEM))
             .map(cap -> cap.receiveEnergy(maxReceive, simulate))
             .orElse(0);
     }
 
     public int extractEnergy(ItemStack stack, int maxExtract, boolean simulate) {
-        return Optional.ofNullable(stack.getCapability(Capabilities.EnergyStorage.ITEM, null))
+        return Optional.ofNullable(stack.getCapability(Capabilities.EnergyStorage.ITEM))
             .map(cap -> cap.extractEnergy(maxExtract, simulate))
             .orElse(0);
     }
 
     public int getEnergyStored(ItemStack stack) {
-        return Optional.ofNullable(stack.getCapability(Capabilities.EnergyStorage.ITEM, null))
+        return Optional.ofNullable(stack.getCapability(Capabilities.EnergyStorage.ITEM))
             .map(IEnergyStorage::getEnergyStored)
             .orElse(0);
     }
 
     public int getMaxEnergyStored(ItemStack stack) {
-        return Optional.ofNullable(stack.getCapability(Capabilities.EnergyStorage.ITEM, null))
+        return Optional.ofNullable(stack.getCapability(Capabilities.EnergyStorage.ITEM))
             .map(IEnergyStorage::getMaxEnergyStored)
             .orElse(0);
     }
 
 	public IEnergyStorage getEnergyStorage(ItemStack stack) {
-		if (!stack.hasData(ActuallyAttachments.ENERGY_STORAGE))
-			stack.setData(ActuallyAttachments.ENERGY_STORAGE, new CustomEnergyStorage(this.maxPower, this.transfer, this.transfer));
 		return stack.getData(ActuallyAttachments.ENERGY_STORAGE);
 	}
 
