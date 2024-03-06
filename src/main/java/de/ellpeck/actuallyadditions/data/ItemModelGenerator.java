@@ -30,6 +30,7 @@ public class ItemModelGenerator extends ItemModelProvider {
     protected void registerModels() {
         // Items
         simpleItem(ActuallyItems.ITEM_BOOKLET); // will require complex I think
+        simpleItem(ActuallyItems.CRATE_KEEPER);
 
         // All items?
         ActuallyItems.SIMPLE_ITEMS.forEach(this::simpleItem);
