@@ -25,6 +25,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.inventory.ContainerListener;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.api.distmarker.Dist;
@@ -105,13 +106,12 @@ public class SackContainer extends AbstractContainerMenu implements IButtonReact
         }
     }
 
-    @Override
+/*    @Override
     public void broadcastChanges() { // TODO is this needed anymore?
         super.broadcastChanges();
 
         if (this.filter.needsUpdateSend() || this.autoInsert != this.oldAutoInsert) {
-            /*
-            for (IContainerListener listener : this.containerListeners) {
+            for (ContainerListener listener : this..containerListeners) {
                 listener.setContainerData(this, 0, this.filter.isWhitelist
                     ? 1
                     : 0);
@@ -129,7 +129,6 @@ public class SackContainer extends AbstractContainerMenu implements IButtonReact
                     ? 1
                     : 0);
             }
-             */
             this.filter.updateLasts();
             this.oldAutoInsert = this.autoInsert;
         }
@@ -145,7 +144,7 @@ public class SackContainer extends AbstractContainerMenu implements IButtonReact
         } else if (id == 2) {
             this.filter.respectMod = data == 1;
         }
-    }
+    }*/
 
     @Override
     public ItemStack quickMoveStack(@Nonnull Player player, int slot) {

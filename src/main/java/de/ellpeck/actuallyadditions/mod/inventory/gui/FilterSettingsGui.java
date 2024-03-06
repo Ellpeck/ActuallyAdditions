@@ -41,11 +41,17 @@ public class FilterSettingsGui {
     public FilterSettingsGui(FilterSettings settings, int x, int y, Consumer<AbstractButton> buttonConsumer, int idOffset) {
         this.theSettings = settings;
 
-        this.whitelistButton = Button.builder(Component.literal("WH"), $ -> buttonClicked(idOffset))
+        this.whitelistButton = Button.builder(Component.literal("WH"), $ -> {
+            theSettings.isWhitelist = !theSettings.isWhitelist;
+            buttonClicked(idOffset);
+        })
                 .bounds(x, y, 16, 12).build();
         buttonConsumer.accept(this.whitelistButton);
         y += 14;
-        this.modButton = Button.builder(Component.literal("MO"), $ -> buttonClicked(idOffset + 1))
+        this.modButton = Button.builder(Component.literal("MO"), $ -> {
+            theSettings.respectMod = !theSettings.respectMod;
+            buttonClicked(idOffset + 1);
+                })
                 .bounds(x, y, 16, 12).build();
         buttonConsumer.accept(this.modButton);
 
