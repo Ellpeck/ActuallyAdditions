@@ -63,17 +63,12 @@ public class RenderBatteryBox implements BlockEntityRenderer<TileEntityBatteryBo
             int j = (int) (backgroundOpacity * 255.0F) << 24;
 
             for (int i = 0; i < 4; i++) {
-                matrices.pushPose();
+                Matrix4f pose = matrices.last().pose();
+                font.drawInBatch(energyTotal, -font.width(energyTotal) / 2F, 10F, 0xFFFFFF, false, pose, buffer, Font.DisplayMode.NORMAL, j, combinedLight);
+                font.drawInBatch(energyName, -font.width(energyName) / 2F, 20F, 0xFFFFFF, false, pose, buffer, Font.DisplayMode.NORMAL, j, combinedLight);
 
                 matrices.translate(-60F, 0F, 60F);
                 matrices.mulPose(Axis.YP.rotationDegrees(90));
-                Matrix4f pose = matrices.last().pose();
-                font.drawInBatch(energyTotal, -font.width(energyTotal) / 2F, 10F, 0, false, pose, buffer, Font.DisplayMode.SEE_THROUGH, j, combinedLight, true);
-                font.drawInBatch(energyName, -font.width(energyTotal) / 2F, 20F, 0, false, pose, buffer, Font.DisplayMode.SEE_THROUGH, j, combinedLight, true);
-//                font.draw(matrices, energyTotal, -font.width(energyTotal) / 2F, 10F, 0xFFFFFF);
-//                font.draw(matrices, energyName, -font.width(energyName) / 2F, 20F, 0xFFFFFF);
-
-                matrices.popPose();
             }
         });
 
