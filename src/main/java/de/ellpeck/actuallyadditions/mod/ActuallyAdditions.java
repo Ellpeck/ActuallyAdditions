@@ -52,10 +52,8 @@ import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.config.ModConfigEvent;
-import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.loading.FMLEnvironment;
-import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.conditions.ICondition;
 import net.neoforged.neoforge.common.world.BiomeModifier;
@@ -132,9 +130,9 @@ public class ActuallyAdditions {
         eventBus.addListener(this::setup);
 
         if (FMLEnvironment.dist.isClient()) {
-	        eventBus.addListener(this::clientSetup);
+	        eventBus.addListener(ActuallyAdditionsClient::setup);
 	        eventBus.addListener(ActuallyAdditionsClient::setupSpecialRenders);
-	        eventBus.addListener(this::particleFactoryRegister);
+	        eventBus.addListener(ActuallyAdditionsClient::registerParticleFactories);
             eventBus.register(new ClientRegistryHandler());
         }
         IFarmerBehavior.initBehaviors();
@@ -166,14 +164,6 @@ public class ActuallyAdditions {
         Item item2 = BuiltInRegistries.ITEM.get(new ResourceLocation(CommonConfig.Other.RELAYCONFIGURATOR.get()));
         CommonConfig.Other.redstoneConfigureItem = item1 != null?item1: Items.AIR;
         CommonConfig.Other.relayConfigureItem = item2 != null?item2: Items.AIR;
-    }
-
-    private void clientSetup(FMLClientSetupEvent event) {
-        ActuallyAdditionsClient.setup(event);
-    }
-
-    private void particleFactoryRegister(RegisterParticleProvidersEvent event) {
-        ActuallyAdditionsClient.registerParticleFactories();
     }
 
     public void serverStarted(ServerStartedEvent event) {

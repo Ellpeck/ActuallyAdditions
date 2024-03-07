@@ -62,6 +62,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.BlockHitResult;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import net.neoforged.neoforge.common.NeoForge;
 
 public class ActuallyAdditionsClient {
@@ -135,9 +136,9 @@ public class ActuallyAdditionsClient {
         event.registerEntityRenderer(ActuallyAdditions.ENTITY_WORM.get(), RenderWorm::new);
     }
 
-    public static void registerParticleFactories() {
-        Minecraft.getInstance().particleEngine.register(ActuallyParticles.LASER_ITEM.get(), ParticleLaserItem.Factory::new);
-        Minecraft.getInstance().particleEngine.register(ActuallyParticles.BEAM.get(), ParticleBeam.Factory::new);
+    public static void registerParticleFactories(RegisterParticleProvidersEvent event) {
+        event.registerSpriteSet(ActuallyParticles.LASER_ITEM.get(), ParticleLaserItem.Factory::new);
+        event.registerSpriteSet(ActuallyParticles.BEAM.get(), ParticleBeam.Factory::new);
     }
 
     // TODO: [port] validate that this works
