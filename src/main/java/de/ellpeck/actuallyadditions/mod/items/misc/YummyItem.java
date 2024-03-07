@@ -1,7 +1,6 @@
 package de.ellpeck.actuallyadditions.mod.items.misc;
 
 
-import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.items.base.ActuallyItem;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.ItemStack;

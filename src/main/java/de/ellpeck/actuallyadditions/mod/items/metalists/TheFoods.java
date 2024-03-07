@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.items.metalists;
 
-import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;

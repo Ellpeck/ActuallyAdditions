@@ -12,7 +12,6 @@ package de.ellpeck.actuallyadditions.mod.update;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.api.distmarker.Dist;
