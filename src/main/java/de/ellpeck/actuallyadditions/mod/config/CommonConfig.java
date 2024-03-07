@@ -20,16 +20,17 @@ public class CommonConfig {
     }
 
     public static class ItemSettings {
-        public static ModConfigSpec.ConfigValue<List<String>> DRILL_EXTRA_MINING_WHITELIST;
+        public static ModConfigSpec.ConfigValue<List<? extends String>> DRILL_EXTRA_MINING_WHITELIST;
 
         public static void build() {
             BUILDER.comment("Item settings").push("itemsSettings");
 
+            // TODO: Tags!
             DRILL_EXTRA_MINING_WHITELIST = BUILDER
                     .comment("By default, the Drill can mine certain blocks. If there is one that it can't mine, but should be able to, put its REGISTRY NAME here. These are the actual registered Item Names, the ones you use, for example, when using the /give Command.")
-                    .define("Drill Extra Whitelist", new ArrayList<String>() {{
+                    .defineList("Drill Extra Whitelist", new ArrayList<>() {{
                         add("TConstruct:GravelOre");
-                    }});
+                    }}, (o) -> o instanceof String);
 
             BUILDER.pop();
         }
@@ -141,8 +142,8 @@ public class CommonConfig {
             MOST_BLAND_PERSON_EVER = BUILDER.comment("If you want to be really boring and lame, you can turn on this setting to disable colored names on Actually Additions items. Because why would you want things to look pretty anyways, right?")
                 .define("noColoredItemNames", false); //TODO is this still needed?
 
-            REDSTONECONFIGURATOR = BUILDER.comment("define the item used to configure Redstone Mode").define("redstoneConfigurator", "minecraft:redstone_torch", obj -> obj instanceof String);
-            RELAYCONFIGURATOR = BUILDER.comment("define the item used to configure Direction in laser relays").define("relayConfigurator", "minecraft:compass", obj -> obj instanceof String);
+            REDSTONECONFIGURATOR = BUILDER.comment("define the item used to configure Redstone Mode").define("redstoneConfigurator", "minecraft:redstone_torch");
+            RELAYCONFIGURATOR = BUILDER.comment("define the item used to configure Direction in laser relays").define("relayConfigurator", "minecraft:compass");
 
             BUILDER.pop();
         }
