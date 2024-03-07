@@ -79,7 +79,7 @@ dependencies {
     compileOnly "xyz.brassgoggledcoders:PatchouliProvider:${patchouli_provider_version}"
     runtimeOnly "xyz.brassgoggledcoders:PatchouliProvider:${patchouli_provider_version}"
 
-    runtimeOnly "curse.maven:the-one-probe-245211:5084077"
+    runtimeOnly "curse.maven:jade-324717:5109393"
     runtimeOnly "curse.maven:mekanism-268560:5155329"
 }
 
