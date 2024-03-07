@@ -10,7 +10,7 @@ displayName="Actually Additions"
 credits="Author: Ellpeck; Textures and Models: BootyToast, GlenthorLP, canitzp; Porters: Flanks, MrBysco, ErrorMikey; 1.20+ Textures: Ridanisaurus"
 authors="Ellpeck"
 description='''
-Do you want Automation? Wireless Transport? Better Machines? A cup o' Coffee? Chests? Better Hoppers? Leaf Blowers? Faster Growth? Plants? Well, Actually Additions has all that and a lot more!
+Do you want Automation? Wireless Transport? Better Machines? A cup o\' Coffee? Chests? Better Hoppers? Leaf Blowers? Faster Growth? Plants? Well, Actually Additions has all that and a lot more!
 '''
 
 [[dependencies.actuallyadditions]]
