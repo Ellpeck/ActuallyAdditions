@@ -38,7 +38,7 @@ public class GuiDrill extends AAScreen<ContainerDrill> {
 
     @Override
     public void renderLabels(@Nonnull GuiGraphics guiGraphics, int x, int y) {
-        AssetUtil.displayNameString(guiGraphics, this.font, this.imageWidth, -10, I18n.get("container." + ActuallyAdditions.MODID + ".drill.name"));
+        AssetUtil.displayNameString(guiGraphics, this.font, this.imageWidth, -10, I18n.get("container." + ActuallyAdditions.MODID + ".drill"));
     }
 
     @Override
