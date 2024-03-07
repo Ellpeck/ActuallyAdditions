@@ -52,7 +52,8 @@ public class CrusherScreen extends AAScreen<CrusherContainer> {
             : 42), this.topPos + 5, this.tileGrinder.storage);
 
         if (this.isDouble) {
-            this.buttonAutoSplit = new Buttons.SmallerButton( this.leftPos - 10, this.topPos, Component.literal("S"), (button) -> actionPerformed(0));
+            this.buttonAutoSplit = Button.builder(Component.literal("S"), (button) -> actionPerformed(0))
+                    .bounds(this.leftPos - 10, this.topPos, 16, 16).build();
             this.addRenderableWidget(this.buttonAutoSplit);
         }
 
