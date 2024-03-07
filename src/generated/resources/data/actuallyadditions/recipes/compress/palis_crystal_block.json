@@ -2,14 +2,14 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "Q": {
+    "x": {
       "item": "actuallyadditions:palis_crystal"
     }
   },
   "pattern": [
-    "QQQ",
-    "QQQ",
-    "QQQ"
+    "xxx",
+    "xxx",
+    "xxx"
   ],
   "result": {
     "item": "actuallyadditions:palis_crystal_block"

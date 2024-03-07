@@ -496,6 +496,14 @@ public class ItemRecipeGenerator extends RecipeProvider {
         addShard(recipeOutput, ActuallyItems.DIAMATINE_CRYSTAL_SHARD, ActuallyItems.DIAMATINE_CRYSTAL);
         addShard(recipeOutput, ActuallyItems.EMERADIC_CRYSTAL_SHARD, ActuallyItems.EMERADIC_CRYSTAL);
 
+        //Crystal Blocks
+        addCrystalBlock(recipeOutput, ActuallyBlocks.VOID_CRYSTAL.getItem(), ActuallyItems.VOID_CRYSTAL);
+        addCrystalBlock(recipeOutput, ActuallyBlocks.ENORI_CRYSTAL.getItem(), ActuallyItems.ENORI_CRYSTAL);
+        addCrystalBlock(recipeOutput, ActuallyBlocks.RESTONIA_CRYSTAL.getItem(), ActuallyItems.RESTONIA_CRYSTAL);
+        addCrystalBlock(recipeOutput, ActuallyBlocks.PALIS_CRYSTAL.getItem(), ActuallyItems.PALIS_CRYSTAL);
+        addCrystalBlock(recipeOutput, ActuallyBlocks.DIAMATINE_CRYSTAL.getItem(), ActuallyItems.DIAMATINE_CRYSTAL);
+        addCrystalBlock(recipeOutput, ActuallyBlocks.EMERADIC_CRYSTAL.getItem(), ActuallyItems.EMERADIC_CRYSTAL);
+
 
         //        //Quartz
         //        GameRegistry.addSmelting(new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ORE_QUARTZ.ordinal()), new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()), 1F);
@@ -540,17 +548,22 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .save(consumer);
     }
 
-    public static void decompress(RecipeOutput consumer, DeferredItem<? extends Item> output, DeferredItem<? extends Item> input) {
-        ResourceLocation key = BuiltInRegistries.ITEM.getKey(output.get());
-        Recipe.shapeless(output.get(), 9).requires(input.get()).save(consumer, new ResourceLocation(key.getNamespace(), "decompress/" + key.getPath()));
+    public static void decompress(RecipeOutput consumer, ItemLike output, ItemLike input) {
+        ResourceLocation key = BuiltInRegistries.ITEM.getKey(output.asItem());
+        Recipe.shapeless(output, 9).requires(input).save(consumer, new ResourceLocation(key.getNamespace(), "decompress/" + key.getPath()));
     }
-    public static void compress(RecipeOutput consumer, DeferredItem<? extends Item> output, DeferredItem<? extends Item> input) {
-        ResourceLocation key = BuiltInRegistries.ITEM.getKey(output.get());
-        Recipe.shaped(output.get()).pattern("xxx","xxx", "xxx").define('x', input.get()).save(consumer, new ResourceLocation(key.getNamespace(), "compress/" + key.getPath()));
+    public static void compress(RecipeOutput consumer, ItemLike output, ItemLike input) {
+        ResourceLocation key = BuiltInRegistries.ITEM.getKey(output.asItem());
+        Recipe.shaped(output).pattern("xxx","xxx", "xxx").define('x', input).save(consumer, new ResourceLocation(key.getNamespace(), "compress/" + key.getPath()));
     }
     public static void addShard(RecipeOutput consumer, DeferredItem<? extends Item> shard, DeferredItem<? extends Item> crystal) {
         compress(consumer, crystal, shard);
         decompress(consumer, shard, crystal);
+    }
+
+    public static void addCrystalBlock(RecipeOutput consumer, ItemLike block, DeferredItem<? extends Item> crystal) {
+        compress(consumer, block, crystal);
+        decompress(consumer, crystal, block);
     }
 
     public static void addToolAndArmorRecipes(RecipeOutput consumer, DeferredItem<? extends Item> base, DeferredItem<? extends Item> pickaxe, DeferredItem<? extends Item> sword, DeferredItem<? extends Item> axe, DeferredItem<? extends Item> shovel, DeferredItem<? extends Item> hoe, DeferredItem<? extends Item> helm, DeferredItem<? extends Item> chest, DeferredItem<? extends Item> pants, DeferredItem<? extends Item> boots) {

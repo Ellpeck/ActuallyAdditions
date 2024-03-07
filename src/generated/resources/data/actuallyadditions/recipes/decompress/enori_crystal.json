@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "actuallyadditions:enori_crystal_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "actuallyadditions:enori_crystal"
+  }
+}
