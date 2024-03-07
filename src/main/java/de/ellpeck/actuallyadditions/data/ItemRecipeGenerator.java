@@ -451,6 +451,19 @@ public class ItemRecipeGenerator extends RecipeProvider {
                 .requires(ActuallyItems.RICE.get())
                 .save(recipeOutput);
 
+        //Rice Dough
+        Recipe.shapeless(ActuallyItems.RICE_DOUGH.get(), 2)
+                .requires(ActuallyItems.RICE.get(), 3)
+                .save(recipeOutput);
+
+        //Ring, glow stone dust in the middle, iron in the corners, gold in the cardinals.
+        Recipe.shaped(ActuallyItems.RING)
+                .pattern("IGI", "GDG", "IGI")
+                .define('I', Tags.Items.INGOTS_IRON)
+                .define('G', Tags.Items.INGOTS_GOLD)
+                .define('D', Tags.Items.DUSTS_GLOWSTONE)
+                .save(recipeOutput);
+
         //Cup
         Recipe.shaped(ActuallyItems.EMPTY_CUP.get())
                 .pattern("S S", "SCS", "SSS")

@@ -20,8 +20,6 @@ public class YummyItem extends ActuallyItem {
         CHEESE(new FoodProperties.Builder().nutrition(1).saturationMod(0.05F), 3),
         PUMPKIN_STEW(new FoodProperties.Builder().nutrition(6).saturationMod(0.3F), 30, true, new ItemStack(Items.BOWL)),
         CARROT_JUICE(new FoodProperties.Builder().nutrition(4).saturationMod(0.2F), 20, true, new ItemStack(Items.GLASS_BOTTLE)),
-        FISH_N_CHIPS(new FoodProperties.Builder().nutrition(14).saturationMod(0.65F), 40, new ItemStack(ActuallyItems.PAPER_CONE.get())),
-        FRENCH_FRIES(new FoodProperties.Builder().nutrition(10).saturationMod(0.6F), 32, new ItemStack(ActuallyItems.PAPER_CONE.get())),
         FRENCH_FRY(new FoodProperties.Builder().nutrition(2).saturationMod(0.025F), 3),
         SPAGHETTI(new FoodProperties.Builder().nutrition(7).saturationMod(0.4F), 38, new ItemStack(Items.BOWL)),
         NOODLE(new FoodProperties.Builder().nutrition(1).saturationMod(0.01F), 3),

@@ -23,12 +23,6 @@ if (rootProject.file('src/main/resources/META-INF/accesstransformer.cfg').exists
 runs {
     // applies to all the run configs below
     configureEach { net.neoforged.gradle.dsl.common.runs.run.Run run ->
-        // Recommended logging data for a userdev environment
-        systemProperty 'forge.logging.markers', 'REGISTRIES'
-
-        // Recommended logging level for the console
-        systemProperty 'forge.logging.console.level', 'debug'
-
         //Limit ram usage for the dev environment to 4GB
         jvmArgument '-Xmx4G'
 

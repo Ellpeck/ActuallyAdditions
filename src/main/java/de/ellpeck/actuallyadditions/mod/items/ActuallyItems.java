@@ -40,8 +40,6 @@ public final class ActuallyItems {
     // MISC ITEMS
     public static final DeferredItem<ItemBase> CANOLA = ITEMS.register("canola", () -> new ItemBase());
     public static final DeferredItem<ItemCoffee> COFFEE_CUP = ITEMS.register("coffee_cup", () -> new ItemCoffee());
-    public static final DeferredItem<ItemBase> PAPER_CONE = ITEMS.register("paper_cone", () -> new ItemBase());
-    public static final DeferredItem<ItemBase> DOUGH = ITEMS.register("dough", () -> new ItemBase());
     public static final DeferredItem<ItemBase> RING = ITEMS.register("ring", () -> new ItemBase());
     public static final DeferredItem<ItemBase> BASIC_COIL = ITEMS.register("basic_coil", () -> new ItemBase());
     public static final DeferredItem<ItemBase> ADVANCED_COIL = ITEMS.register("advanced_coil", () -> new ItemBase());
@@ -192,7 +190,7 @@ public final class ActuallyItems {
         // The rest?
         RESTONIA_CRYSTAL_SHARD, PALIS_CRYSTAL_SHARD, DIAMATINE_CRYSTAL_SHARD, VOID_CRYSTAL_SHARD, EMERADIC_CRYSTAL_SHARD,
         ENORI_CRYSTAL_SHARD, ENGINEERS_GOGGLES, ENGINEERS_GOGGLES_ADVANCED, LASER_UPGRADE_RANGE, LASER_UPGRADE_INVISIBILITY,
-        HANDHELD_FILLER, TRAVELERS_SACK, VOID_SACK, PLAYER_PROBE, FILTER, WATER_BOWL, PAPER_CONE, DOUGH,
+        HANDHELD_FILLER, TRAVELERS_SACK, VOID_SACK, PLAYER_PROBE, FILTER, WATER_BOWL,
         RING, BASIC_COIL, ADVANCED_COIL, RICE_DOUGH, TINY_COAL, TINY_CHARCOAL, RICE_SLIMEBALL, CANOLA, EMPTY_CUP,
         BATS_WING, DRILL_CORE, LENS, ENDER_STAR, CRYSTALLIZED_CANOLA_SEED, EMPOWERED_CANOLA_SEED, LENS_OF_COLOR,
         LENS_OF_DETONATION, LENS_OF_CERTAIN_DEATH, LENS_OF_THE_KILLER, LENS_OF_DISENCHANTING, LENS_OF_THE_MINER,
