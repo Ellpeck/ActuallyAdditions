@@ -162,7 +162,6 @@ public class FermentingRecipe implements Recipe<Container> {
         public void toNetwork(@Nonnull FriendlyByteBuf pBuffer, @Nonnull FermentingRecipe pRecipe) {
             pRecipe.input.writeToPacket(pBuffer);
             pRecipe.output.writeToPacket(pBuffer);
-            pBuffer.writeInt(pRecipe.output.getAmount());
             pBuffer.writeInt(pRecipe.time);
         }
     }
