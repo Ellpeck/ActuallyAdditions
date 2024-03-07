@@ -15,14 +15,14 @@ import java.util.function.Supplier;
 public class ActuallyAttachments {
 	private static final DeferredRegister<AttachmentType<?>> ATTACHMENT_TYPES = DeferredRegister.create(NeoForgeRegistries.Keys.ATTACHMENT_TYPES, ActuallyAdditions.MODID);
 
-	public static final Supplier<AttachmentType<EnergyStorage>> ENERGY_STORAGE = ATTACHMENT_TYPES.register(
+	public static final Supplier<AttachmentType<CustomEnergyStorage>> ENERGY_STORAGE = ATTACHMENT_TYPES.register(
 			"energy", ActuallyAttachments.itemEnergyStorageAttachment());
 
 	/*
 	 * This is a supplier for an attachment type that can be used to attach an energy storage to an item.
 	 * Implementation is based on EnderIO's https://github.com/Team-EnderIO/EnderIO/blob/e1f022df745131ed5fea718bd860880a5785d4c7/src/core/java/com/enderio/core/common/attachment/AttachmentUtil.java#L47-L60
 	 */
-	public static Supplier<AttachmentType<EnergyStorage>> itemEnergyStorageAttachment() {
+	public static Supplier<AttachmentType<CustomEnergyStorage>> itemEnergyStorageAttachment() {
 		return () -> AttachmentType.serializable(holder -> {
 			if (holder instanceof ItemStack itemStack) {
 				int capacity = 1000;
@@ -33,7 +33,7 @@ public class ActuallyAttachments {
 				}
 
 
-				return new EnergyStorage(capacity, maxTransfer, maxTransfer);
+				return new CustomEnergyStorage(capacity, maxTransfer, maxTransfer);
 			} else {
 				throw new IllegalStateException("Cannot attach energy handler item to a non-item.");
 			}

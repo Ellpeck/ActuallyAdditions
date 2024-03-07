@@ -24,6 +24,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.energy.EnergyStorage;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 
 import javax.annotation.Nullable;
@@ -119,7 +120,7 @@ public abstract class ItemEnergy extends ItemBase {
 
     public int extractEnergyInternal(ItemStack stack, int maxExtract, boolean simulate) {
         return Optional.ofNullable(stack.getCapability(Capabilities.EnergyStorage.ITEM))
-            .map(cap -> cap instanceof CustomEnergyStorage
+            .map(cap -> cap instanceof EnergyStorage
                 ? ((CustomEnergyStorage) cap).extractEnergyInternal(maxExtract, simulate)
                 : 0)
             .orElse(0);
