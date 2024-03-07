@@ -443,7 +443,7 @@
   "tooltip.actuallyadditions.previouslyDoubleFurnace": "Previously \"Double Furnace\"",
   "tooltip.actuallyadditions.previouslyBag": "Previously \"Bag\"",
   "tooltip.actuallyadditions.previouslyVoidBag": "Previously \"Void Bag\"",
-  "tooltip.actuallyadditions.item_filling_wand.selected_block": "Selected Block:",
+  "tooltip.actuallyadditions.item_filling_wand.selected_block": "Selected Block: %s",
   "tooltip.actuallyadditions.item_filling_wand.selected_block.none": "None",
   "tooltip.actuallyadditions.coffeeCup.noEffect": "No Effects",
   "_comment": "Gui Information",
