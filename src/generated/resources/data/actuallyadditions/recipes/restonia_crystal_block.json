@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "Q": {
+      "item": "actuallyadditions:restonia_crystal"
+    }
+  },
+  "pattern": [
+    "QQQ",
+    "QQQ",
+    "QQQ"
+  ],
+  "result": {
+    "item": "actuallyadditions:restonia_crystal_block"
+  }
+}

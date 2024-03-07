@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "actuallyadditions:rice"
+    },
+    {
+      "item": "actuallyadditions:rice"
+    },
+    {
+      "item": "actuallyadditions:rice"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "item": "actuallyadditions:rice_dough"
+  }
+}

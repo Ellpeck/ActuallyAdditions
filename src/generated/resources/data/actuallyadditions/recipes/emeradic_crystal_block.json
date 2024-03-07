@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "Q": {
+      "item": "actuallyadditions:emeradic_crystal"
+    }
+  },
+  "pattern": [
+    "QQQ",
+    "QQQ",
+    "QQQ"
+  ],
+  "result": {
+    "item": "actuallyadditions:emeradic_crystal_block"
+  }
+}
