@@ -6,23 +6,19 @@ plugins {
     id 'net.neoforged.gradle.userdev' version '7.0.96'
 }
 
-version = "$mod_version"
+def buildSuffix = System.getenv('BUILD_NUMBER') ? "-b${System.getenv('BUILD_NUMBER')}" : ""
+
+version = "$mod_version+mc${game_version}${buildSuffix}"
 group = "de.ellpeck.actuallyadditions"
 base {
-    archivesName = "ActuallyAdditions-$game_version"
+    archivesName = "ActuallyAdditions"
 }
 
-if (System.getenv('BUILD_NUMBER') != null) {
-    version += "." + System.getenv('BUILD_NUMBER')
-}
-
-// Mojang ships Java 17 to end users in 1.18+, so your mod should target Java 17.
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 if (rootProject.file('src/main/resources/META-INF/accesstransformer.cfg').exists()) {
     minecraft.accessTransformers.file rootProject.file('src/main/resources/META-INF/accesstransformer.cfg')
 }
-//minecraft.accessTransformers.entry public net.minecraft.client.Minecraft textureManager # textureManager
 
 runs {
     // applies to all the run configs below
@@ -93,20 +89,6 @@ dependencies {
     runtimeOnly "curse.maven:mekanism-268560:5155329"
 }
 
-// not sure if this is still needed
-//processResources {
-//    inputs.property('version', project.version)
-//
-//    from(sourceSets.main.resources.srcDirs) {
-//        include 'META-INF/mods.toml'
-//        expand 'version': project.version
-//    }
-//
-//    from(sourceSets.main.resources.srcDirs) {
-//        exclude 'META-INF/mods.toml'
-//    }
-//}
-
 jar {
     group = 'artifact'
     manifest {
@@ -114,11 +96,26 @@ jar {
                     "Specification-Version"   : "1",
                     "Implementation-Title"    : project.archivesBaseName,
                     "Implementation-Version"  : project.version,
-                    "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")],)
+                    "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+                    "Modloader": "Neoforge",
+                    "Modloader-Version": project.neo_version,
+        ])
     }
 
     from sourceSets.main.output
 }
+
+processResources {
+    inputs.property('version', project.version)
+    inputs.property('neo_version_range', project.neo_version_range)
+    inputs.property('loader', project.loader)
+    inputs.property('minecraft_version_range', project.minecraft_version_range)
+
+    filesMatching(['META-INF/mods.toml'])  {
+        expand 'version': project.version, 'neo_version_range': project.neo_version_range, 'loader': project.loader, 'minecraft_version_range': project.minecraft_version_range
+    }
+}
+
 
 task apiJar(type: Jar) {
     from sourceSets.main.output
