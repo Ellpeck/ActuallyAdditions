@@ -37,16 +37,16 @@ public class ActuallyRecipes {
     public static class Types {
         public static final DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(BuiltInRegistries.RECIPE_TYPE, ActuallyAdditions.MODID);
         
-        public static final Supplier<RecipeType<LaserRecipe>> LASER = RECIPE_TYPES.register("laser", () -> new RecipeType<>() {});
-        public static final Supplier<RecipeType<EmpowererRecipe>> EMPOWERING = RECIPE_TYPES.register("empower", () -> new RecipeType<>() {});
-        public static final Supplier<RecipeType<CrushingRecipe>> CRUSHING = RECIPE_TYPES.register("crushing", () -> new RecipeType<>() {});
-        public static final Supplier<RecipeType<SolidFuelRecipe>> SOLID_FUEL = RECIPE_TYPES.register("solid_fuel", () -> new RecipeType<>() {});
-        public static final Supplier<RecipeType<LiquidFuelRecipe>> LIQUID_FUEL = RECIPE_TYPES.register("liquid_fuel", () -> new RecipeType<>() {});
-        public static final Supplier<RecipeType<PressingRecipe>> PRESSING = RECIPE_TYPES.register("pressing", () -> new RecipeType<>() {});
-        public static final Supplier<RecipeType<FermentingRecipe>> FERMENTING = RECIPE_TYPES.register("fermenting", () -> new RecipeType<>() {});
-        public static final Supplier<RecipeType<ColorChangeRecipe>> COLOR_CHANGE = RECIPE_TYPES.register("color_change", () -> new RecipeType<>() {});
-        public static final Supplier<RecipeType<MiningLensRecipe>> MINING_LENS = RECIPE_TYPES.register("mining_lens", () -> new RecipeType<>() {});
-        public static final Supplier<RecipeType<CoffeeIngredientRecipe>> COFFEE_INGREDIENT = RECIPE_TYPES.register("coffee_ingredient", () -> new RecipeType<>() {});
+        public static final Supplier<RecipeType<LaserRecipe>> LASER = RECIPE_TYPES.register("laser", RecipeType::simple);
+        public static final Supplier<RecipeType<EmpowererRecipe>> EMPOWERING = RECIPE_TYPES.register("empower", RecipeType::simple);
+        public static final Supplier<RecipeType<CrushingRecipe>> CRUSHING = RECIPE_TYPES.register("crushing", RecipeType::simple);
+        public static final Supplier<RecipeType<SolidFuelRecipe>> SOLID_FUEL = RECIPE_TYPES.register("solid_fuel", RecipeType::simple);
+        public static final Supplier<RecipeType<LiquidFuelRecipe>> LIQUID_FUEL = RECIPE_TYPES.register("liquid_fuel", RecipeType::simple);
+        public static final Supplier<RecipeType<PressingRecipe>> PRESSING = RECIPE_TYPES.register("pressing", RecipeType::simple);
+        public static final Supplier<RecipeType<FermentingRecipe>> FERMENTING = RECIPE_TYPES.register("fermenting", RecipeType::simple);
+        public static final Supplier<RecipeType<ColorChangeRecipe>> COLOR_CHANGE = RECIPE_TYPES.register("color_change", RecipeType::simple);
+        public static final Supplier<RecipeType<MiningLensRecipe>> MINING_LENS = RECIPE_TYPES.register("mining_lens", RecipeType::simple);
+        public static final Supplier<RecipeType<CoffeeIngredientRecipe>> COFFEE_INGREDIENT = RECIPE_TYPES.register("coffee_ingredient", RecipeType::simple);
     }
     public static class Ingredients {
         public static final DeferredRegister<IngredientType<?>> INGREDIENTS = DeferredRegister.create(NeoForgeRegistries.Keys.INGREDIENT_TYPES, ActuallyAdditions.MODID);
