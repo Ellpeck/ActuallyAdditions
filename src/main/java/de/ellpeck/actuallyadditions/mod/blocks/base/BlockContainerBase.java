@@ -50,7 +50,7 @@ public abstract class BlockContainerBase extends Block implements EntityBlock {
         if (!world.isClientSide) {
             BlockEntity tile = world.getBlockEntity(pos);
             if (expectedInstance.isInstance(tile)) {
-                player.openMenu((MenuProvider) tile);
+                player.openMenu((MenuProvider) tile, pos);
             }
             return InteractionResult.SUCCESS;
         }
