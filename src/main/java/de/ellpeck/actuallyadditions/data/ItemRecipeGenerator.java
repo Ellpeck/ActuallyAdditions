@@ -489,6 +489,19 @@ public class ItemRecipeGenerator extends RecipeProvider {
                 .define('I', Items.IRON_HELMET)
                 .save(recipeOutput);
 
+        // Sticky Piston from rice slime
+        Recipe.shaped(Items.STICKY_PISTON)
+                .pattern("R", "P")
+                .define('R', ActuallyItems.RICE_SLIMEBALL.get())
+                .define('P', Items.PISTON)
+                .save(recipeOutput);
+
+        // Slime block from rice slime balls
+        Recipe.shaped(Items.SLIME_BLOCK)
+                .pattern("RRR", "RRR", "RRR")
+                .define('R', ActuallyItems.RICE_SLIMEBALL.get())
+                .save(recipeOutput);
+
         //Shards
         addShard(recipeOutput, ActuallyItems.VOID_CRYSTAL_SHARD, ActuallyItems.VOID_CRYSTAL);
         addShard(recipeOutput, ActuallyItems.ENORI_CRYSTAL_SHARD, ActuallyItems.ENORI_CRYSTAL);

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "P": {
+      "item": "minecraft:piston"
+    },
+    "R": {
+      "item": "actuallyadditions:rice_slimeball"
+    }
+  },
+  "pattern": [
+    "R",
+    "P"
+  ],
+  "result": {
+    "item": "minecraft:sticky_piston"
+  }
+}
