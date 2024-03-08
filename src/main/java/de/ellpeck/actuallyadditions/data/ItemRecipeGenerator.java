@@ -41,7 +41,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
     protected void buildRecipes(@Nonnull RecipeOutput output) {
         var recipeOutput = new NoAdvRecipeOutput(output);
 
-        generatePaxels(recipeOutput);
+        generateAOIT(recipeOutput);
 
         //Goggles
         Recipe.shaped(ActuallyItems.ENGINEERS_GOGGLES.get())
@@ -79,7 +79,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .define('C', ActuallyItems.ADVANCED_COIL.get()).save(recipeOutput);
 
         //Filling Wand
-        Recipe.shaped(ActuallyItems.HANDHELD_FILLER.get())
+/*        Recipe.shaped(ActuallyItems.HANDHELD_FILLER.get())
             .pattern("IPI")
             .pattern("DCD")
             .pattern(" B ")
@@ -87,7 +87,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .define('P', ActuallyItems.PALIS_CRYSTAL.get())
             .define('C', ActuallyItems.ADVANCED_COIL.get())
             .define('D', ActuallyItems.DIAMATINE_CRYSTAL.get())
-            .define('B', ActuallyItems.TRIPLE_BATTERY.get()).save(recipeOutput);
+            .define('B', ActuallyItems.TRIPLE_BATTERY.get()).save(recipeOutput);*/ //TODO not done yet
 
         //Bag
         Recipe.shaped(ActuallyItems.TRAVELERS_SACK.get())
@@ -100,12 +100,12 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .define('V', ActuallyBlocks.VOID_CRYSTAL.getItem()).save(recipeOutput);
 
         //Void Bag
-        Recipe.shapeless(ActuallyItems.VOID_SACK.get())
+/*        Recipe.shapeless(ActuallyItems.VOID_SACK.get())
             .requires(ActuallyItems.TRAVELERS_SACK.get())
             .requires(Tags.Items.ENDER_PEARLS)
             .requires(Tags.Items.OBSIDIAN)
             .requires(ActuallyBlocks.VOID_CRYSTAL.getItem())
-            .save(recipeOutput);
+            .save(recipeOutput);*/ //TODO not done yet
 
         //Lens
         Recipe.shaped(ActuallyItems.LENS.get())
@@ -419,12 +419,12 @@ public class ItemRecipeGenerator extends RecipeProvider {
                 .save(recipeOutput);
 
         //Growth Ring
-        Recipe.shaped(ActuallyItems.RING_OF_GROWTH.get())
+/*        Recipe.shaped(ActuallyItems.RING_OF_GROWTH.get())
                 .pattern("SIS", "IOI", "SIS")
                 .define('S', Tags.Items.SEEDS)
                 .define('I', ActuallyItems.EMPOWERED_ENORI_CRYSTAL.get())
                 .define('O', ActuallyItems.RING.get())
-                .save(recipeOutput);
+                .save(recipeOutput);*/ //TODO not done yet
 
         Recipe.shapeless(ActuallyItems.CRAFTER_ON_A_STICK.get()).requires(Items.CRAFTING_TABLE).requires(ItemTags.SIGNS).save(recipeOutput);
 
@@ -532,7 +532,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .save(recipeOutput, new ResourceLocation(ActuallyAdditions.MODID, "rice_dough_smelting"));
     }
 
-    protected void generatePaxels(RecipeOutput consumer) {
+    protected void generateAOIT(RecipeOutput consumer) {
         addPaxel(consumer, ActuallyItems.WOODEN_AIOT, Items.WOODEN_AXE, Items.WOODEN_PICKAXE, Items.WOODEN_SWORD, Items.WOODEN_SHOVEL, Items.WOODEN_HOE);
         addPaxel(consumer, ActuallyItems.STONE_AIOT, Items.STONE_AXE, Items.STONE_PICKAXE, Items.STONE_SWORD, Items.STONE_SHOVEL, Items.STONE_HOE);
         addPaxel(consumer, ActuallyItems.IRON_AIOT, Items.IRON_AXE, Items.IRON_PICKAXE, Items.IRON_SWORD, Items.IRON_SHOVEL, Items.IRON_HOE);
