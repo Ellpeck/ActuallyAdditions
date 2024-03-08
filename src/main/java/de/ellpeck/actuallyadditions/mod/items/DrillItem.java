@@ -201,7 +201,7 @@ public class DrillItem extends ItemEnergy {
             map.put(Attributes.ATTACK_DAMAGE, new AttributeModifier("Drill Modifier", this.getEnergyStored(stack) >= ENERGY_USE
                     ? 8.0F
                     : 0.1F, AttributeModifier.Operation.ADDITION));
-            map.put(Attributes.ATTACK_SPEED, new AttributeModifier("Tool Modifier", -2.5F, AttributeModifier.Operation.ADDITION));
+            map.put(Attributes.ATTACK_SPEED, new AttributeModifier("Tool Modifier", 1.5F, AttributeModifier.Operation.ADDITION));
         }
 
         return map;
