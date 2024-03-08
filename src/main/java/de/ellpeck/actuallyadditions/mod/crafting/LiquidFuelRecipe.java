@@ -95,8 +95,8 @@ public class LiquidFuelRecipe implements Recipe<Container> {
         private static final Codec<LiquidFuelRecipe> CODEC = RecordCodecBuilder.create(
                 instance -> instance.group(
                                 FluidStack.CODEC.fieldOf("fuel").forGetter(recipe -> recipe.fuel),
-                                Codec.INT.fieldOf("burn_time").forGetter(recipe -> recipe.burnTime),
-                                Codec.INT.fieldOf("total_energy").forGetter(recipe -> recipe.totalEnergy)
+                                Codec.INT.fieldOf("total_energy").forGetter(recipe -> recipe.totalEnergy),
+                                Codec.INT.fieldOf("burn_time").forGetter(recipe -> recipe.burnTime)
                         )
                         .apply(instance, LiquidFuelRecipe::new)
         );
