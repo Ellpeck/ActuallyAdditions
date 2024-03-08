@@ -1,9 +1,9 @@
 {
   "type": "actuallyadditions:liquid_fuel",
-  "burn_time": 9600,
+  "burn_time": 120,
   "fuel": {
     "Amount": 50,
     "FluidName": "actuallyadditions:refined_canola_oil"
   },
-  "total_energy": 120
+  "total_energy": 9600
 }
