@@ -246,7 +246,7 @@ public abstract class TileEntityBase extends BlockEntity {
     }
 
     public boolean canPlayerUse(Player player) {
-        return player.distanceToSqr(this.getBlockPos().getX() + 0.5D, this.worldPosition.getY() + 0.5D, this.worldPosition.getZ() + 0.5D) <= 64 && !this.isRemoved() && this.level.getBlockEntity(this.worldPosition) == this;
+        return player.distanceToSqr(this.getBlockPos().getX() + 0.5D, this.getBlockPos().getY() + 0.5D, this.getBlockPos().getZ() + 0.5D) <= 64 && !this.isRemoved() && this.level.getBlockEntity(this.worldPosition) == this;
     }
 
     protected boolean sendUpdateWithInterval() {
