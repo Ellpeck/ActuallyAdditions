@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "actuallyadditions:advanced_coil"
+    },
+    "C": {
+      "tag": "forge:cobblestone"
+    },
+    "E": {
+      "item": "actuallyadditions:enori_crystal"
+    },
+    "X": {
+      "item": "actuallyadditions:canola"
+    }
+  },
+  "pattern": [
+    "CEC",
+    "CXC",
+    "CAC"
+  ],
+  "result": {
+    "item": "actuallyadditions:canola_press"
+  }
+}

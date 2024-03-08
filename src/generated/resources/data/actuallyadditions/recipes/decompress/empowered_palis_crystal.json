@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "actuallyadditions:empowered_palis_crystal_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "actuallyadditions:empowered_palis_crystal"
+  }
+}

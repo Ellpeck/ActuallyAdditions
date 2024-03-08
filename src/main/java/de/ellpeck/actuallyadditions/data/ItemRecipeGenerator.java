@@ -505,6 +505,14 @@ public class ItemRecipeGenerator extends RecipeProvider {
         addCrystalBlock(recipeOutput, ActuallyBlocks.DIAMATINE_CRYSTAL.getItem(), ActuallyItems.DIAMATINE_CRYSTAL);
         addCrystalBlock(recipeOutput, ActuallyBlocks.EMERADIC_CRYSTAL.getItem(), ActuallyItems.EMERADIC_CRYSTAL);
 
+        //Empowered Crystal Blocks
+        addCrystalBlock(recipeOutput, ActuallyBlocks.EMPOWERED_VOID_CRYSTAL.getItem(), ActuallyItems.EMPOWERED_VOID_CRYSTAL);
+        addCrystalBlock(recipeOutput, ActuallyBlocks.EMPOWERED_ENORI_CRYSTAL.getItem(), ActuallyItems.EMPOWERED_ENORI_CRYSTAL);
+        addCrystalBlock(recipeOutput, ActuallyBlocks.EMPOWERED_RESTONIA_CRYSTAL.getItem(), ActuallyItems.EMPOWERED_RESTONIA_CRYSTAL);
+        addCrystalBlock(recipeOutput, ActuallyBlocks.EMPOWERED_PALIS_CRYSTAL.getItem(), ActuallyItems.EMPOWERED_PALIS_CRYSTAL);
+        addCrystalBlock(recipeOutput, ActuallyBlocks.EMPOWERED_DIAMATINE_CRYSTAL.getItem(), ActuallyItems.EMPOWERED_DIAMATINE_CRYSTAL);
+        addCrystalBlock(recipeOutput, ActuallyBlocks.EMPOWERED_EMERADIC_CRYSTAL.getItem(), ActuallyItems.EMPOWERED_EMERADIC_CRYSTAL);
+
 
         //        //Quartz
         //        GameRegistry.addSmelting(new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.ORE_QUARTZ.ordinal()), new ItemStack(InitItems.itemMisc, 1, TheMiscItems.QUARTZ.ordinal()), 1F);

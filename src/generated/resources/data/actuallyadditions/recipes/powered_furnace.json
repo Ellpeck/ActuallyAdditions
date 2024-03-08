@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "tag": "forge:cobblestone"
+    },
+    "E": {
+      "item": "actuallyadditions:enori_crystal"
+    },
+    "F": {
+      "item": "minecraft:furnace"
+    },
+    "I": {
+      "item": "actuallyadditions:iron_casing"
+    },
+    "X": {
+      "item": "actuallyadditions:basic_coil"
+    }
+  },
+  "pattern": [
+    "EXC",
+    "FIF",
+    "CXE"
+  ],
+  "result": {
+    "item": "actuallyadditions:powered_furnace"
+  }
+}
