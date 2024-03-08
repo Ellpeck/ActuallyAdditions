@@ -278,6 +278,11 @@ public class DrillItem extends ItemEnergy {
                 : HARVEST_LEVEL >= 2));
     }*/
 
+    @Override
+    public boolean isCorrectToolForDrops(ItemStack stack, BlockState state) {
+        return this.getEnergyStored(stack) >= this.getEnergyUsePerBlock(stack) && super.isCorrectToolForDrops(stack, state);
+    }
+
 //    @Override
 //    public int getHarvestLevel(ItemStack stack, ToolType p_getHarvestLevel_2_, @Nullable Player p_getHarvestLevel_3_, @Nullable BlockState p_getHarvestLevel_4_) {
 //        return HARVEST_LEVEL;
