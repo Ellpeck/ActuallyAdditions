@@ -314,7 +314,13 @@ public class BlockRecipeGenerator extends RecipeProvider {
                 .define('I', ActuallyBlocks.IRON_CASING.getItem())
                 .save(recipeOutput);
 
-
+        // Greenhouse glass
+        Recipe.shaped(ActuallyBlocks.GREENHOUSE_GLASS.getItem(), 2)
+                .pattern("GSG", "SES", "GSG")
+                .define('G', Tags.Items.GLASS)
+                .define('S', ItemTags.SAPLINGS)
+                .define('E', ActuallyItems.EMPOWERED_PALIS_CRYSTAL)
+                .save(recipeOutput);
     }
 
     public static class Recipe {

@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "E": {
+      "item": "actuallyadditions:empowered_palis_crystal"
+    },
+    "G": {
+      "tag": "forge:glass"
+    },
+    "S": {
+      "tag": "minecraft:saplings"
+    }
+  },
+  "pattern": [
+    "GSG",
+    "SES",
+    "GSG"
+  ],
+  "result": {
+    "count": 2,
+    "item": "actuallyadditions:greenhouse_glass"
+  }
+}
