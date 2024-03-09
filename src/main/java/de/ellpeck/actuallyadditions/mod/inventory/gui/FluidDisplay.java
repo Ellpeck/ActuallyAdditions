@@ -110,7 +110,7 @@ public class FluidDisplay {
         }
 
         if (this.drawTextNextTo) {
-			guiGraphics.drawString(mc.font, Component.literal(this.getOverlayText()), barX + 25, barY + 78, 0xFFFFFF, false);
+			guiGraphics.drawString(mc.font, this.getOverlayText(), barX + 25, barY + 78, 0xFFFFFF, false);
         }
     }
 
@@ -121,17 +121,17 @@ public class FluidDisplay {
             ? 93
             : 85)) {
             Minecraft mc = Minecraft.getInstance();
-            guiGraphics.renderComponentTooltip(mc.font, Collections.singletonList(Component.literal(this.getOverlayText())), mouseX, mouseY); //TODO: Check if this is correct, used to call GuiUtils.drawHoveringText
+            guiGraphics.renderComponentTooltip(mc.font, Collections.singletonList(this.getOverlayText()), mouseX, mouseY);
         }
     }
 
-    private String getOverlayText() {
+    private Component getOverlayText() {
         NumberFormat format = NumberFormat.getInstance();
         FluidStack stack = this.fluidReference.getFluid();
         String cap = format.format(this.fluidReference.getCapacity());
         return stack.isEmpty()
-            ? "0/" + cap + " mB"
-            : format.format(this.fluidReference.getFluidAmount()) + (drawCapacityInTooltip?"/" + cap + " mB ":" mB ") + stack.getDisplayName().getString();
+            ? Component.literal("0/" + cap + " mB")
+            : Component.literal(format.format(this.fluidReference.getFluidAmount()) + (drawCapacityInTooltip?"/" + cap + " mB ":" mB ")).append(stack.getDisplayName());
     }
 
     public static class DummyTank implements IFluidTank {
