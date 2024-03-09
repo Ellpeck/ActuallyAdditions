@@ -36,6 +36,10 @@ public class PressingRecipe implements Recipe<Container> {
         return true;
     }
 
+    public Ingredient getInput() {
+        return this.input;
+    }
+
     @Override
     public ItemStack assemble(Container pInv, RegistryAccess pRegistryAccess) {
         return ItemStack.EMPTY;
