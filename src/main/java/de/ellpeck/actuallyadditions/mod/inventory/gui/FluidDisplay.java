@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -98,13 +99,13 @@ public class FluidDisplay {
 
         if (stack != null && fluid != null && this.resLoc != null) {
 //            GlStateManager._pushMatrix();
-            GlStateManager._enableBlend();
+            RenderSystem.enableBlend();
 //            GlStateManager._disableAlphaTest();
-            GlStateManager._blendFuncSeparate(770, 771, 1, 0);
+            RenderSystem.blendFuncSeparate(770, 771, 1, 0);
             int i = this.fluidReference.getFluid().getAmount() * 83 / this.fluidReference.getCapacity();
 	        guiGraphics.blit(this.resLoc, barX + 1, barY + 84 - i, 0, 0, 16, i, 16, 512);
             //drawModalRectWithCustomSizedTexture(barX + 1, barY + 84 - i, 36, 172, 16, i, 16, 512);
-            GlStateManager._disableBlend();
+            RenderSystem.disableBlend();
 //            GlStateManager._enableAlphaTest();
 //            GlStateManager._popMatrix();
         }
