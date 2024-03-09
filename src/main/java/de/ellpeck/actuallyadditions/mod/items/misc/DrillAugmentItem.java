@@ -3,6 +3,8 @@ package de.ellpeck.actuallyadditions.mod.items.misc;
 
 import de.ellpeck.actuallyadditions.mod.items.base.ActuallyItem;
 
+// Superseded by ItemDrillUpgrade
+@Deprecated
 public class DrillAugmentItem extends ActuallyItem {
     private final AugmentType type;
 
