@@ -45,7 +45,6 @@ import static net.minecraft.world.level.block.state.properties.BlockStatePropert
 
 public class BlockPoweredFurnace extends DirectionalBlock.Container {
     public BlockPoweredFurnace() {
-        // TODO: [port] confirm this is correct for light level... Might not be reactive.
         super(ActuallyBlocks.defaultPickProps().randomTicks().lightLevel(state -> state.getValue(LIT)
             ? 12
             : 0));
