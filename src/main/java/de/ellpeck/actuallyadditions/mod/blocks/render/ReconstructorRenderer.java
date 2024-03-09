@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.blocks.render;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import de.ellpeck.actuallyadditions.api.lens.ILensItem;
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.client.renderer.LevelRenderer;
@@ -34,6 +35,8 @@ public class ReconstructorRenderer implements BlockEntityRenderer<TileEntityAtom
 
     @Override
     public void render(TileEntityAtomicReconstructor tile, float partialTicks, @Nonnull PoseStack matrices, @Nonnull MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
+        if(!tile.getLevel().getBlockState(tile.getBlockPos()).is(ActuallyBlocks.ATOMIC_RECONSTRUCTOR.get()))
+            return; //TODO crash bandage
         ItemStack stack = tile.inv.getStackInSlot(0);
         //default color 0x1b6dff
         int color = tile.getBeamColor();
