@@ -409,7 +409,7 @@ public class DrillItem extends ItemEnergy {
         }
         if (side.getAxis() == Direction.Axis.X) {
             xRange = 0;
-w            zRange = radius;
+            zRange = radius;
         }
 
         //Not defined later because main Block is getting broken below
