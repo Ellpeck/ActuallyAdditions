@@ -50,7 +50,7 @@ public class ItemWaterBowl extends ItemBase {
         if (event.getLevel() != null) {
             if (CommonConfig.Other.WATER_BOWL.get()) {
                 if (StackUtil.isValid(event.getItemStack()) && event.getItemStack().getItem() == Items.BOWL) {
-                    HitResult rayTrace = WorldUtil.getNearestBlockWithDefaultReachDistance(event.getLevel(), event.getEntity(), true, false, false);
+                    HitResult rayTrace = event.getEntity().pick(8f, 1f, true);
                     if (rayTrace.getType() != HitResult.Type.BLOCK) {
                         return;
                     }
@@ -91,7 +91,7 @@ public class ItemWaterBowl extends ItemBase {
     public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
 
-        HitResult trace = WorldUtil.getNearestBlockWithDefaultReachDistance(world, player);
+        HitResult trace = player.pick(8.0D, 1.0F, false);
         InteractionResultHolder<ItemStack> result = EventHooks.onBucketUse(player, world, stack, trace);
         if (result != null) {
             return result;

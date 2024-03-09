@@ -244,38 +244,6 @@ public final class WorldUtil {
         return blocks;
     }
 
-    public static HitResult getNearestPositionWithAir(Level level, Player player, int reach) {
-        return getMovingObjectPosWithReachDistance(level, player, reach, false, false, true);
-    }
-
-    private static HitResult getMovingObjectPosWithReachDistance(Level level, Player player, double distance, boolean p1, boolean p2, boolean p3) {
-        float f = player.getXRot();
-        float f1 = player.getYRot();
-        double d0 = player.position().x;
-        double d1 = player.position().y + player.getEyeHeight();
-        double d2 = player.position().z;
-        Vec3 vec3 = new Vec3(d0, d1, d2);
-        float f2 = Mth.cos(-f1 * 0.017453292F - (float) Math.PI);
-        float f3 = Mth.sin(-f1 * 0.017453292F - (float) Math.PI);
-        float f4 = -Mth.cos(-f * 0.017453292F);
-        float f5 = Mth.sin(-f * 0.017453292F);
-        float f6 = f3 * f4;
-        float f7 = f2 * f4;
-        Vec3 vec31 = vec3.add(f6 * distance, f5 * distance, f7 * distance);
-        //return world.clipWithInteractionOverride(vec3, vec31, p1, p2, p3); //TODO
-
-        return new BlockHitResult(Vec3.ZERO, Direction.DOWN, BlockPos.ZERO, false);
-    }
-
-    public static HitResult getNearestBlockWithDefaultReachDistance(Level level, Player player) {
-        return getNearestBlockWithDefaultReachDistance(level, player, false, true, false);
-    }
-
-    public static HitResult getNearestBlockWithDefaultReachDistance(Level level, Player player, boolean stopOnLiquids, boolean ignoreBlockWithoutBoundingBox, boolean returnLastUncollidableBlock) {
-        return new BlockHitResult(Vec3.ZERO, Direction.DOWN, BlockPos.ZERO, false); //TODO
-        //return getMovingObjectPosWithReachDistance(world, player, player.getAttribute(PlayerEntity.REACH_DISTANCE).getAttributeValue(), stopOnLiquids, ignoreBlockWithoutBoundingBox, returnLastUncollidableBlock);
-    }
-
     public static void setHandItemWithoutAnnoyingSound(Player player, InteractionHand hand, ItemStack stack) {
         if (hand == InteractionHand.MAIN_HAND) {
             player.getInventory().items.set(player.getInventory().selected, stack);
