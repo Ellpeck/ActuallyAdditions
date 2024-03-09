@@ -10,13 +10,13 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
-import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.FastColor;
 import net.minecraft.world.level.material.Fluid;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -89,29 +89,35 @@ public class FluidDisplay {
         FluidStack stack = this.fluidReference.getFluid();
         Fluid fluid = stack.getFluid();
 
-        if (this.resLoc == null || this.oldFluid != stack.getFluid()) {
-            this.oldFluid = stack.getFluid();
+        if (stack != null && !stack.isEmpty() && fluid != null) {
+            IClientFluidTypeExtensions fluidTypeExtension = IClientFluidTypeExtensions.of(fluid);
+            int color = fluidTypeExtension.getTintColor(stack);
+            float red = (float)(FastColor.ARGB32.red(color) / 255.0);
+            float green = (float)(FastColor.ARGB32.green(color) / 255.0);
+            float blue = (float)(FastColor.ARGB32.blue(color) / 255.0);
+            float alpha = (float)(FastColor.ARGB32.alpha(color) / 255.0);
 
-            if (fluid != null && IClientFluidTypeExtensions.of(fluid).getStillTexture() != null) {
-                this.resLoc = new ResourceLocation(IClientFluidTypeExtensions.of(fluid).getStillTexture().getNamespace(), "textures/" + IClientFluidTypeExtensions.of(fluid).getStillTexture().getPath() + ".png");
+            if (this.resLoc == null || this.oldFluid != stack.getFluid()) {
+                this.oldFluid = stack.getFluid();
+
+                if (fluidTypeExtension.getStillTexture() != null) {
+                    this.resLoc = new ResourceLocation(fluidTypeExtension.getStillTexture().getNamespace(), "textures/" + IClientFluidTypeExtensions.of(fluid).getStillTexture().getPath() + ".png");
+                }
             }
-        }
 
-        if (stack != null && fluid != null && this.resLoc != null) {
-//            GlStateManager._pushMatrix();
-            RenderSystem.enableBlend();
-//            GlStateManager._disableAlphaTest();
-            RenderSystem.blendFuncSeparate(770, 771, 1, 0);
-            int i = this.fluidReference.getFluid().getAmount() * 83 / this.fluidReference.getCapacity();
-	        guiGraphics.blit(this.resLoc, barX + 1, barY + 84 - i, 0, 0, 16, i, 16, 512);
-            //drawModalRectWithCustomSizedTexture(barX + 1, barY + 84 - i, 36, 172, 16, i, 16, 512);
-            RenderSystem.disableBlend();
-//            GlStateManager._enableAlphaTest();
-//            GlStateManager._popMatrix();
-        }
+            if (this.resLoc != null) {
+                RenderSystem.setShaderColor(red, green, blue, alpha);
+                RenderSystem.enableBlend();
+                RenderSystem.blendFuncSeparate(770, 771, 1, 0);
+                int i = this.fluidReference.getFluid().getAmount() * 83 / this.fluidReference.getCapacity();
+                guiGraphics.blit(this.resLoc, barX + 1, barY + 84 - i, 0, 0, 16, i, 16, 512);
+                RenderSystem.disableBlend();
+                RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+            }
 
-        if (this.drawTextNextTo) {
-			guiGraphics.drawString(mc.font, this.getOverlayText(), barX + 25, barY + 78, 0xFFFFFF, false);
+            if (this.drawTextNextTo) {
+                guiGraphics.drawString(mc.font, this.getOverlayText(), barX + 25, barY + 78, 0xFFFFFF, false);
+            }
         }
     }
 
