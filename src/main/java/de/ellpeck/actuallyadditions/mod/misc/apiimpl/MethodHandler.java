@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.api.internal.IAtomicReconstructor;
 import de.ellpeck.actuallyadditions.api.internal.IMethodHandler;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.BlockLaserRelay;
 import de.ellpeck.actuallyadditions.mod.crafting.CoffeeIngredientRecipe;
 import de.ellpeck.actuallyadditions.mod.crafting.LaserRecipe;
@@ -24,7 +25,10 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
@@ -123,7 +127,7 @@ public class MethodHandler implements IMethodHandler {
 
         int prevCounter = tag.getInt("Counter");
         CompoundTag compound = new CompoundTag();
-        //compound.putInt("ID", Potion.getIdFromPotion(effect.getEffect())); //TODO ?!
+        compound.putString("ID", BuiltInRegistries.MOB_EFFECT.getKey(effect.getEffect()).toString());
         compound.putInt("Duration", effect.getDuration());
         compound.putInt("Amplifier", effect.getAmplifier());
 
@@ -140,13 +144,20 @@ public class MethodHandler implements IMethodHandler {
         CompoundTag tag = stack.getOrCreateTag();
         int counter = tag.getInt("Counter");
         while (counter > 0) {
-            CompoundTag compound = (CompoundTag) tag.get(counter + "");
-            MobEffectInstance effect = new MobEffectInstance(BuiltInRegistries.MOB_EFFECT.byId(compound.getInt("ID")), compound.getInt("Duration"), compound.getByte("Amplifier"));
-            effects.add(effect);
+            CompoundTag compound = tag.getCompound(counter + "");
+            String id =  compound.getString("ID");
+            ResourceLocation effectID = id.isEmpty() ? new ResourceLocation("speed") : ResourceLocation.tryParse(id);
+            MobEffect effect = BuiltInRegistries.MOB_EFFECT.get(effectID);
+            if (effect == null) {
+                ActuallyAdditions.LOGGER.error("Unable to find effect with ID: {}, defaulting to speed", effectID);
+                effect = MobEffects.MOVEMENT_SPEED;
+            }
+            MobEffectInstance effectInstance = new MobEffectInstance(effect, compound.getInt("Duration"), compound.getByte("Amplifier"));
+            effects.add(effectInstance);
             counter--;
         }
-        return effects.size() > 0
-            ? effects.toArray(new MobEffectInstance[effects.size()])
+        return !effects.isEmpty()
+            ? effects.toArray(new MobEffectInstance[0])
             : null;
     }
 
