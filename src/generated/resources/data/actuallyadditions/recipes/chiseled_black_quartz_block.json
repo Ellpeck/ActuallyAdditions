@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "actuallyadditions:black_quartz_block"
+    }
+  },
+  "pattern": [
+    "B",
+    "B"
+  ],
+  "result": {
+    "count": 2,
+    "item": "actuallyadditions:chiseled_black_quartz_block"
+  }
+}
