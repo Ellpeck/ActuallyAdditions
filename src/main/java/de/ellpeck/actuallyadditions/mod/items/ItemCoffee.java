@@ -105,7 +105,7 @@ public class ItemCoffee extends ItemBase {
         if (effects != null) {
             for (MobEffectInstance effect : effects) {
                 tooltip.add(Component.translatable(effect.getDescriptionId())
-                        .append(" " + (effect.getAmplifier() + 1) + ", " + StringUtil.formatTickDuration(effect.getDuration(), 20))
+                        .append(" " + (effect.getAmplifier() + 1) + ", " + StringUtil.formatTickDuration(effect.getDuration(), 1))
                         .withStyle(ChatFormatting.GRAY));
             }
         } else {
