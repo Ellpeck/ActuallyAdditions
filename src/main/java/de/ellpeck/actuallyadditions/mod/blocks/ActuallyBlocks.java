@@ -65,7 +65,6 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityXPSolidifier;
 import de.ellpeck.actuallyadditions.registration.AABlockReg;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.SoundType;

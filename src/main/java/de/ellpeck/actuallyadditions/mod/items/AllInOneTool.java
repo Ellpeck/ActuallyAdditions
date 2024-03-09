@@ -1,7 +1,6 @@
 package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.api.ActuallyTags;
-import de.ellpeck.actuallyadditions.mod.items.base.IActuallyItem;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.ItemStack;
@@ -12,7 +11,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.neoforged.neoforge.common.ToolAction;
 import net.neoforged.neoforge.common.ToolActions;
 
-public class AllInOneTool extends DiggerItem implements IActuallyItem {
+public class AllInOneTool extends DiggerItem {
     private final Tier tier;
 
     public AllInOneTool(Tier tier) {
