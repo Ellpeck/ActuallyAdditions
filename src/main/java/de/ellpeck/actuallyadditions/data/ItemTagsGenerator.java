@@ -2,7 +2,9 @@ package de.ellpeck.actuallyadditions.data;
 
 import de.ellpeck.actuallyadditions.api.ActuallyTags;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
+import de.ellpeck.actuallyadditions.mod.items.base.ActuallyItem;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
@@ -41,5 +43,23 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 
         tag(Tags.Items.SLIMEBALLS)
                 .add(ActuallyItems.RICE_SLIMEBALL.get());
+
+        tag(ActuallyTags.Items.CROPS_RICE).add(ActuallyItems.RICE.get());
+        tag(ActuallyTags.Items.CROPS_COFFEE).add(ActuallyItems.COFFEE_BEANS.get());
+        tag(ActuallyTags.Items.CROPS_CANOLA).add(ActuallyItems.CANOLA.get());
+        tag(ActuallyTags.Items.CROPS_FLAX).add(ActuallyItems.FLAX_SEEDS.get());
+        tag(Tags.Items.CROPS).addTags(ActuallyTags.Items.CROPS_RICE, ActuallyTags.Items.CROPS_COFFEE, ActuallyTags.Items.CROPS_CANOLA, ActuallyTags.Items.CROPS_FLAX);
+
+        tag(ActuallyTags.Items.SEEDS_RICE).add(ActuallyItems.RICE_SEEDS.get());
+        tag(ActuallyTags.Items.SEEDS_COFFEE).add(ActuallyItems.COFFEE_BEANS.get());
+        tag(ActuallyTags.Items.SEEDS_CANOLA).add(ActuallyItems.CANOLA_SEEDS.get());
+        tag(ActuallyTags.Items.SEEDS_FLAX).add(ActuallyItems.FLAX_SEEDS.get());
+        tag(Tags.Items.SEEDS).addTags(ActuallyTags.Items.SEEDS_RICE, ActuallyTags.Items.SEEDS_COFFEE, ActuallyTags.Items.SEEDS_CANOLA, ActuallyTags.Items.SEEDS_FLAX);
+
+        tag(ActuallyTags.Items.GEMS_BLACK_QUARTZ).add(ActuallyItems.BLACK_QUARTZ.get());
+        tag(ActuallyTags.Items.ORES_BLACK_QUARTZ).add(ActuallyBlocks.BLACK_QUARTZ_ORE.getItem());
+        tag(Tags.Items.ORES).addTags(ActuallyTags.Items.ORES_BLACK_QUARTZ);
+        tag(Tags.Items.ORES_IN_GROUND_STONE).add(ActuallyBlocks.BLACK_QUARTZ_ORE.getItem());
+        tag(ActuallyTags.Items.STORAGE_BLOCKS_BLACK_QUARTZ).add(ActuallyBlocks.BLACK_QUARTZ.getItem());
     }
 }

@@ -1,0 +1,8 @@
+{
+  "values": [
+    "#forge:seeds/rice",
+    "#forge:seeds/coffee",
+    "#forge:seeds/canola",
+    "#forge:seeds/flax"
+  ]
+}

@@ -6,6 +6,7 @@ import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
+import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
@@ -160,6 +161,11 @@ public class BlockTagsGenerator extends BlockTagsProvider {
                 BlockTags.MINEABLE_WITH_PICKAXE,
                 BlockTags.MINEABLE_WITH_SHOVEL
         );
+
+        this.tag(ActuallyTags.Blocks.ORES_BLACK_QUARTZ).add(ActuallyBlocks.BLACK_QUARTZ_ORE.get());
+        this.tag(Tags.Blocks.ORES).addTags(ActuallyTags.Blocks.ORES_BLACK_QUARTZ);
+        this.tag(Tags.Blocks.ORES_IN_GROUND_STONE).add(ActuallyBlocks.BLACK_QUARTZ_ORE.get());
+        this.tag(ActuallyTags.Blocks.STORAGE_BLOCKS_BLACK_QUARTZ).add(ActuallyBlocks.BLACK_QUARTZ.get());
     }
 
 //    /**
