@@ -174,7 +174,7 @@ public class TileEntityPoweredFurnace extends TileEntityInventoryBase implements
             }
 
             if (changeTo != current) {
-                tile.level.setBlock(tile.worldPosition, state.setValue(BlockStateProperties.LIT, changeTo), Block.UPDATE_ALL);
+                level.setBlock(pos, state.setValue(BlockStateProperties.LIT, changeTo), Block.UPDATE_ALL);
             }
 
             tile.lastSmelted = smelted;
