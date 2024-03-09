@@ -35,16 +35,17 @@ public class BlockCoffeeMachine extends DirectionalBlock.Container {
 
     @Override
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        if (!world.isClientSide) {
+        if (world.isClientSide) {
+            return InteractionResult.SUCCESS;
+        } else {
             TileEntityCoffeeMachine tile = (TileEntityCoffeeMachine) world.getBlockEntity(pos);
             if (tile != null) {
                 if (!this.tryUseItemOnTank(player, hand, tile.tank)) {
                     player.openMenu(tile, pos);
                 }
             }
-            return InteractionResult.PASS;
+            return InteractionResult.CONSUME;
         }
-        return super.use(state, world, pos, player, hand, hit);
     }
 
     @Nullable
