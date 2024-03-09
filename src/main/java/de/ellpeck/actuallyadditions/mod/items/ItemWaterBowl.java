@@ -13,7 +13,7 @@ package de.ellpeck.actuallyadditions.mod.items;
 import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
+import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -49,8 +49,8 @@ public class ItemWaterBowl extends ItemBase {
     public void onPlayerInteractEvent(PlayerInteractEvent.RightClickItem event) {
         if (event.getLevel() != null) {
             if (CommonConfig.Other.WATER_BOWL.get()) {
-                if (StackUtil.isValid(event.getItemStack()) && event.getItemStack().getItem() == Items.BOWL) {
-                    HitResult rayTrace = event.getEntity().pick(8f, 1f, true);
+                if (!event.getItemStack().isEmpty() && event.getItemStack().getItem() == Items.BOWL) {
+                    HitResult rayTrace = event.getEntity().pick(Util.getReachDistance(event.getEntity()), 1f, true);
                     if (rayTrace.getType() != HitResult.Type.BLOCK) {
                         return;
                     }
