@@ -165,7 +165,7 @@ public class ClientEvents {
     @SubscribeEvent
     public void onGameOverlay(RenderGuiOverlayEvent.Post event) {
         Minecraft minecraft = Minecraft.getInstance();
-        if (event.getOverlay() == GuiOverlayManager.findOverlay(new ResourceLocation("crosshair")) && minecraft.screen == null) { //ALL
+        if (event.getOverlay() == GuiOverlayManager.findOverlay(new ResourceLocation("portal")) && minecraft.screen == null) { //ALL
             GuiGraphics guiGraphics = event.getGuiGraphics();
             Player player = minecraft.player;
             if (player == null) {
@@ -202,7 +202,7 @@ public class ClientEvents {
                         if (!stack.isEmpty() && stack.getItem() == CommonConfig.Other.redstoneConfigureItem) {
                             expl = ChatFormatting.GREEN + I18n.get("info." + ActuallyAdditions.MODID + ".redstoneMode.validItem");
                         } else {
-                                expl = ChatFormatting.GRAY.toString() + ChatFormatting.ITALIC + I18n.get("info." + ActuallyAdditions.MODID + ".redstoneMode.invalidItem", I18n.get(CommonConfig.Other.redstoneConfigureItem.asItem().getDescriptionId()));
+                            expl = ChatFormatting.GRAY.toString() + ChatFormatting.ITALIC + I18n.get("info." + ActuallyAdditions.MODID + ".redstoneMode.invalidItem", I18n.get(CommonConfig.Other.redstoneConfigureItem.asItem().getDescriptionId()));
                         }
                         guiGraphics.drawString(font, expl, (int) (event.getWindow().getGuiScaledWidth() / 2f + 5), (int) (event.getWindow().getGuiScaledHeight() / 2f + 15), 0xFFFFFF);
                     }
