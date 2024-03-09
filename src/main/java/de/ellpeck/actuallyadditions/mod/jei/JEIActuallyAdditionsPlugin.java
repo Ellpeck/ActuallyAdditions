@@ -17,6 +17,8 @@ import de.ellpeck.actuallyadditions.mod.crafting.CoffeeIngredientRecipe;
 import de.ellpeck.actuallyadditions.mod.crafting.EmpowererRecipe;
 import de.ellpeck.actuallyadditions.mod.crafting.FermentingRecipe;
 import de.ellpeck.actuallyadditions.mod.crafting.LaserRecipe;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiCoffeeMachine;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiFurnaceDouble;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.jei.coffee.CoffeeMachineCategory;
 import de.ellpeck.actuallyadditions.mod.jei.empowerer.EmpowererRecipeCategory;
@@ -27,6 +29,7 @@ import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.RecipeTypes;
 import mezz.jei.api.helpers.IJeiHelpers;
 import mezz.jei.api.recipe.RecipeType;
+import mezz.jei.api.registration.IGuiHandlerRegistration;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
@@ -88,7 +91,13 @@ public class JEIActuallyAdditionsPlugin implements IModPlugin {
         //registry.addRecipes(ActuallyAdditionsAPI.CRUSHER_RECIPES, CrusherRecipeCategory.NAME);
     }
 
-//    @Override
+    @Override
+    public void registerGuiHandlers(IGuiHandlerRegistration registration) {
+        registration.addRecipeClickArea(GuiCoffeeMachine.class, 53, 42, 22, 16, COFFEE_MACHINE);
+        registration.addRecipeClickArea(GuiFurnaceDouble.class, 51, 40, 74, 22, RecipeTypes.SMELTING);
+    }
+
+    //    @Override
 //    public void register(IModRegistry registry) {
 //        IJeiHelpers helpers = registry.getJeiHelpers();
 //
