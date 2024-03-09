@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBase;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockGetter;
@@ -40,11 +41,14 @@ public class BlockGreenhouseGlass extends BlockBase {
     //
     //        return state != otherState || block != this && super.shouldSideBeRendered(state, world, pos, side);
     //    }
-
+    @Override
+    public boolean skipRendering(BlockState state, BlockState adjacentState, Direction side) {
+        return adjacentState.is(this) ? true : super.skipRendering(state, adjacentState, side);
+    }
 
     @Override
     public RenderShape getRenderShape(BlockState state) {
-        return RenderShape.INVISIBLE;
+        return RenderShape.MODEL;
     }
 
     @Override
