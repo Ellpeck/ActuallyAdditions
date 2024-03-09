@@ -12,7 +12,6 @@ package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -111,8 +110,8 @@ public class ItemFillingWand extends ItemEnergy {
     public void releaseUsing(ItemStack stack, Level world, LivingEntity entity, int timeLeft) {
         if (!world.isClientSide) {
             boolean clear = true;
-            if (entity instanceof Player) {
-                HitResult result = WorldUtil.getNearestBlockWithDefaultReachDistance(world, (Player) entity);
+            if (entity instanceof Player player) {
+                HitResult result = player.pick(8f, 1f, false);
                 if (result instanceof BlockHitResult) {
                     CompoundTag compound = stack.getOrCreateTag();
 
