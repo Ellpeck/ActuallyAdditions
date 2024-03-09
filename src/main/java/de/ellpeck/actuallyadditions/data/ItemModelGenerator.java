@@ -29,11 +29,12 @@ public class ItemModelGenerator extends ItemModelProvider {
     @Override
     protected void registerModels() {
         // Items
-        simpleItem(ActuallyItems.ITEM_BOOKLET); // will require complex I think
-        simpleItem(ActuallyItems.CRATE_KEEPER);
+        simpleTool(ActuallyItems.ITEM_BOOKLET); // will require complex I think
+        simpleTool(ActuallyItems.CRATE_KEEPER);
 
         // All items?
         ActuallyItems.SIMPLE_ITEMS.forEach(this::simpleItem);
+        ActuallyItems.TOOLS.forEach(this::simpleTool);
 
         // Toolsets
 /*        ActuallyItems.ALL_TOOL_SETS.stream()
@@ -93,8 +94,12 @@ public class ItemModelGenerator extends ItemModelProvider {
         getBuilder(path).parent(new ModelFile.UncheckedModelFile(modLoc("block/" + path)));
     }
 
-    private void simpleItem(Supplier<? extends Item> item) {
+    private void simpleTool(Supplier<? extends Item> item) {
         String path = BuiltInRegistries.ITEM.getKey(item.get()).getPath();
         singleTexture(path, mcLoc("item/handheld"), "layer0", modLoc("item/" + path));
+    }
+    private void simpleItem(Supplier<? extends Item> item) {
+        String path = BuiltInRegistries.ITEM.getKey(item.get()).getPath();
+        singleTexture(path, mcLoc("item/generated"), "layer0", modLoc("item/" + path));
     }
 }
