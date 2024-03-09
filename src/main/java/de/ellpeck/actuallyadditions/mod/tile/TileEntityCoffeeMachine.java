@@ -183,7 +183,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
         }
 
         ItemStack input = this.inv.getStackInSlot(SLOT_INPUT);
-        if (StackUtil.isValid(input) && input.getItem() == ActuallyItems.COFFEE_CUP.get() && !StackUtil.isValid(this.inv.getStackInSlot(SLOT_OUTPUT)) && this.coffeeCacheAmount >= CACHE_USE && this.tank.getFluid().getFluid() == Fluids.WATER && this.tank.getFluidAmount() >= WATER_USE) {
+        if (!input.isEmpty() && input.is(ActuallyItems.EMPTY_CUP) && this.inv.getStackInSlot(SLOT_OUTPUT).isEmpty() && this.coffeeCacheAmount >= CACHE_USE && this.tank.getFluid().getFluid() == Fluids.WATER && this.tank.getFluidAmount() >= WATER_USE) {
             if (this.storage.getEnergyStored() >= ENERGY_USED) {
                 if (this.brewTime % 30 == 0) {
                     this.level.playSound(null, this.getBlockPos().getX(), this.getBlockPos().getY(), this.getBlockPos().getZ(), AASounds.COFFEE_MACHINE.get(), SoundSource.BLOCKS, 0.1F, 1.0F);
@@ -193,7 +193,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
                 this.storage.extractEnergyInternal(ENERGY_USED, false);
                 if (this.brewTime >= TIME_USED) {
                     this.brewTime = 0;
-                    ItemStack output = new ItemStack(ActuallyItems.COFFEE_BEANS.get());
+                    ItemStack output = new ItemStack(ActuallyItems.COFFEE_CUP.get());
                     for (int i = 3; i < this.inv.getSlots(); i++) {
                         if (StackUtil.isValid(this.inv.getStackInSlot(i))) {
                             RecipeHolder<CoffeeIngredientRecipe> recipeHolder = ItemCoffee.getIngredientRecipeFromStack(this.inv.getStackInSlot(i));
