@@ -313,10 +313,10 @@ public final class ActuallyBlocks {
         (b) -> new AABlockItem(b, defaultBlockItemProperties));
 
 
-    public static Supplier<Block> CANOLA = BLOCKS.register("canola", () -> new AACrops(defaultCropProps(), ActuallyItems.CANOLA_SEEDS));
-    public static Supplier<Block> RICE = BLOCKS.register("rice", () -> new AACrops(defaultCropProps(), ActuallyItems.RICE_SEEDS));
-    public static Supplier<Block> FLAX = BLOCKS.register("flax", () -> new AACrops(defaultCropProps(), ActuallyItems.FLAX_SEEDS));
-    public static Supplier<Block> COFFEE = BLOCKS.register("coffee", () -> new AACrops(defaultCropProps(), ActuallyItems.COFFEE_BEANS));
+    public static Supplier<AACrops> CANOLA = BLOCKS.register("canola", () -> new AACrops(defaultCropProps(), ActuallyItems.CANOLA_SEEDS));
+    public static Supplier<AACrops> RICE = BLOCKS.register("rice", () -> new AACrops(defaultCropProps(), ActuallyItems.RICE_SEEDS));
+    public static Supplier<AACrops> FLAX = BLOCKS.register("flax", () -> new AACrops(defaultCropProps(), ActuallyItems.FLAX_SEEDS));
+    public static Supplier<AACrops> COFFEE = BLOCKS.register("coffee", () -> new AACrops(defaultCropProps(), ActuallyItems.COFFEE_BEANS));
 
     public static final AABlockReg<BlockGreenhouseGlass, AABlockItem, ?> GREENHOUSE_GLASS = new AABlockReg<>("greenhouse_glass", BlockGreenhouseGlass::new,
         (b) -> new AABlockItem(b, defaultBlockItemProperties));
