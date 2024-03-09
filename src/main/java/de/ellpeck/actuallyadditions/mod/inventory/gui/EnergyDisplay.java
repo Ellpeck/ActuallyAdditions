@@ -71,7 +71,7 @@ public class EnergyDisplay {
         }
 
         if (this.drawTextNextTo) {
-            //this.drawString(mc.font, this.getOverlayText(), barX + 25, barY + 78, StringUtil.DECIMAL_COLOR_WHITE);
+            guiGraphics.drawString(mc.font, this.getOverlayText(), barX + 25, barY + 78, 0xFFFFFF);
         }
     }
 
@@ -80,8 +80,8 @@ public class EnergyDisplay {
             Minecraft mc = Minecraft.getInstance();
 
             List<Component> text = new ArrayList<>();
-            text.add(Component.literal(this.getOverlayText()));
-            guiGraphics.renderComponentTooltip(mc.font, text, mouseX, mouseY); //TODO: Check if this is correct, used to call GuiUtils.drawHoveringText
+            text.add(this.getOverlayText());
+            guiGraphics.renderComponentTooltip(mc.font, text, mouseX, mouseY);
         }
     }
 
@@ -93,11 +93,10 @@ public class EnergyDisplay {
             : 85);
     }
 
-    private String getOverlayText() {
+    private Component getOverlayText() {
         NumberFormat format = NumberFormat.getInstance();
         return Component.translatable("misc.actuallyadditions.power_long",
             format.format(this.rfReference.getEnergyStored()),
-            format.format(this.rfReference.getMaxEnergyStored()))
-            .getString();
+            format.format(this.rfReference.getMaxEnergyStored()));
     }
 }
