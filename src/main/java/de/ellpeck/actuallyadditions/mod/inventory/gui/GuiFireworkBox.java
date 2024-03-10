@@ -10,24 +10,32 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFireworkBox;
+import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityFireworkBox;
+import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractSliderButton;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
-// TODO: FIX ME
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
 @OnlyIn(Dist.CLIENT)
 public class GuiFireworkBox extends AbstractContainerScreen<ContainerFireworkBox> {
 
-    //    private final TileEntityFireworkBox tile;
+    protected final TileEntityFireworkBox tile;
 
     public GuiFireworkBox(ContainerFireworkBox screenContainer, Inventory inv, Component titleIn) {
         super(screenContainer, inv, titleIn);
-        //        this.tile = tile.;
+        this.tile = screenContainer.fireworkbox;
         this.imageWidth = 300;
         this.imageHeight = 120;
     }
@@ -35,21 +43,27 @@ public class GuiFireworkBox extends AbstractContainerScreen<ContainerFireworkBox
     @Override
     public void init() {
         super.init();
-        //
-        //        this.addButton(new CustomSlider(this.guiLeft, this.guiTop, "Value Play", 0F, 5F, this.tile.intValuePlay, IntFormatter.INSTANCE));
-        //        this.addButton(new CustomSlider(this.guiLeft, this.guiTop + 20, "Average Charge Amount", 1F, 4F, this.tile.chargeAmount, IntFormatter.INSTANCE));
-        //        this.addButton(new CustomSlider(this.guiLeft, this.guiTop + 40, "Average Flight Time", 1F, 3F, this.tile.flightTime, IntFormatter.INSTANCE));
-        //        this.addButton(new CustomSlider(this.guiLeft, this.guiTop + 60, "Effect Chance", 0F, 1F, this.tile.trailOrFlickerChance, null));
-        //        this.addButton(new CustomSlider(this.guiLeft, this.guiTop + 80, "Flicker/Trail Ratio", 0F, 1F, this.tile.flickerChance, null));
-        //        this.addButton(new CustomSlider(this.guiLeft, this.guiTop + 100, "Color Amount", 1, 6, this.tile.colorAmount, IntFormatter.INSTANCE));
-        //
-        //        this.addButton(new CustomSlider(this.guiLeft + 150, this.guiTop, "Small Ball", 0F, 1F, this.tile.typeChance0, null));
-        //        this.addButton(new CustomSlider(this.guiLeft + 150, this.guiTop + 20, "Large Ball", 0F, 1F, this.tile.typeChance1, null));
-        //        this.addButton(new CustomSlider(this.guiLeft + 150, this.guiTop + 40, "Star Shape", 0F, 1F, this.tile.typeChance2, null));
-        //        this.addButton(new CustomSlider(this.guiLeft + 150, this.guiTop + 60, "Creeper Shape", 0F, 1F, this.tile.typeChance3, null));
-        //        this.addButton(new CustomSlider(this.guiLeft + 150, this.guiTop + 80, "Burst", 0F, 1F, this.tile.typeChance4, null));
-        //
-        //        this.addButton(new CustomSlider(this, 11, this.guiLeft + 150, this.guiTop + 100, "Area of Effect", 0, 4, this.tile.areaOfEffect, IntFormatter.INSTANCE));
+
+        DecimalFormat intFormatter = new DecimalFormat("0");
+        this.addRenderableWidget(new CustomSlider(this.getGuiLeft(), this.getGuiTop(), Component.literal("Value Play"), 0F, 5F, this.tile.intValuePlay, intFormatter, (slider) -> PacketHandlerHelper.sendNumberPacket(this.tile, slider.getValue(), 0)));
+        this.addRenderableWidget(new CustomSlider(this.getGuiLeft(), this.getGuiTop() + 20, Component.literal("Average Charge Amount"), 1F, 4F, this.tile.chargeAmount, intFormatter, (slider) -> PacketHandlerHelper.sendNumberPacket(this.tile, slider.getValue(), 1)));
+        this.addRenderableWidget(new CustomSlider(this.getGuiLeft(), this.getGuiTop() + 40, Component.literal("Average Flight Time"), 1F, 3F, this.tile.flightTime, intFormatter, (slider) -> PacketHandlerHelper.sendNumberPacket(this.tile, slider.getValue(), 2)));
+        this.addRenderableWidget(new CustomSlider(this.getGuiLeft(), this.getGuiTop() + 60, Component.literal("Effect Chance"), 0F, 1F, this.tile.trailOrFlickerChance, null, (slider) -> PacketHandlerHelper.sendNumberPacket(this.tile, slider.getValue(), 3)));
+        this.addRenderableWidget(new CustomSlider(this.getGuiLeft(), this.getGuiTop() + 80, Component.literal("Flicker/Trail Ratio"), 0F, 1F, this.tile.flickerChance, null, (slider) -> PacketHandlerHelper.sendNumberPacket(this.tile, slider.getValue(), 4)));
+        this.addRenderableWidget(new CustomSlider(this.getGuiLeft(), this.getGuiTop() + 100, Component.literal("Color Amount"), 1, 6, this.tile.colorAmount, intFormatter, (slider) -> PacketHandlerHelper.sendNumberPacket(this.tile, slider.getValue(), 5)));
+
+        this.addRenderableWidget(new CustomSlider(this.getGuiLeft() + 150, this.getGuiTop(), Component.literal("Small Ball"), 0F, 1F, this.tile.typeChance0, null, (slider) -> PacketHandlerHelper.sendNumberPacket(this.tile, slider.getValue(), 6)));
+        this.addRenderableWidget(new CustomSlider(this.getGuiLeft() + 150, this.getGuiTop() + 20, Component.literal("Large Ball"), 0F, 1F, this.tile.typeChance1, null, (slider) -> PacketHandlerHelper.sendNumberPacket(this.tile, slider.getValue(), 7)));
+        this.addRenderableWidget(new CustomSlider(this.getGuiLeft() + 150, this.getGuiTop() + 40, Component.literal("Star Shape"), 0F, 1F, this.tile.typeChance2, null, (slider) -> PacketHandlerHelper.sendNumberPacket(this.tile, slider.getValue(), 8)));
+        this.addRenderableWidget(new CustomSlider(this.getGuiLeft() + 150, this.getGuiTop() + 60, Component.literal("Creeper Shape"), 0F, 1F, this.tile.typeChance3, null, (slider) -> PacketHandlerHelper.sendNumberPacket(this.tile, slider.getValue(), 9)));
+        this.addRenderableWidget(new CustomSlider(this.getGuiLeft() + 150, this.getGuiTop() + 80, Component.literal("Burst"), 0F, 1F, this.tile.typeChance4, null, (slider) -> PacketHandlerHelper.sendNumberPacket(this.tile, slider.getValue(), 10)));
+
+        this.addRenderableWidget(new CustomSlider(this.getGuiLeft() + 150, this.getGuiTop() + 100, Component.literal("Area of Effect"), 0, 4, this.tile.areaOfEffect, intFormatter, (slider) -> PacketHandlerHelper.sendNumberPacket(this.tile, slider.getValue(), 11)));
+    }
+
+    @Override
+    protected void renderLabels(GuiGraphics guiGraphics, int pMouseX, int pMouseY) {
+        AssetUtil.displayNameString(guiGraphics, this.font, this.getXSize(), -10, I18n.get("container." + ActuallyAdditions.MODID + ".fireworkBox"));
     }
 
     @Override
@@ -57,76 +71,104 @@ public class GuiFireworkBox extends AbstractContainerScreen<ContainerFireworkBox
 
     }
 
-    // TODO: FIX;
-    //    @Override
-    //    public void setEntryValue(int id, float value) {
-    //        Button button = this.buttonList.get(id);
-    //        if (button instanceof GuiSlider) {
-    //            if (!((GuiSlider) button).isMouseDown) {
-    //                System.out.println("SETTING VALUE FOR " + id + "!!");
-    //                PacketHandlerHelper.sendNumberPacket(this.tile, value, id);
-    //            }
-    //        }
-    //    }
+    @Override
+    public boolean mouseDragged(double pMouseX, double pMouseY, int pButton, double pDragX, double pDragY) {
+        if (this.getFocused() != null && this.isDragging() && pButton == 0) {
+            return this.getFocused().mouseDragged(pMouseX, pMouseY, pButton, pDragX, pDragY);
+        }
+        return super.mouseDragged(pMouseX, pMouseY, pButton, pDragX, pDragY);
+    }
 
-    //    @Override
-    //    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-    //
-    //    }
-    //
-    //    @Override
-    //    public void drawGuiContainerForegroundLayer(int x, int y) {
-    //        AssetUtil.displayNameString(this.font, this.xSize, -10, this.tile);
-    //    }
-    //
-    //    @Override
-    //    public void setEntryValue(int id, boolean value) {
-
-    //}
-
-    //    @Override
-    //    public void setEntryValue(int id, String value) {
-    //
-    //    }
-
-    // TODO: FIX
     private static class CustomSlider extends AbstractSliderButton {
-        public CustomSlider(int x, int y, int width, int height, Component message, double defaultValue) {
-            super(x, y, width, height, message, defaultValue);
+        private final double min;
+        private final double max;
+        private final DecimalFormat format;
+        private final Component sliderName;
+        private final NumberFormat defaultFormat = new DecimalFormat("0.00000000");
+        protected final CustomSlider.OnApply onApply;
+        private final double stepSize = 0;
+        public CustomSlider(int x, int y, Component message, double min, double max, double defaultValue, DecimalFormat format, CustomSlider.OnApply onApply) {
+            super(x, y, 150, 20, message, defaultValue);
+            this.sliderName = message;
+            this.min = min;
+            this.max = max;
+            this.format = format;
+            this.value = (Mth.clamp((float) value, min, max) - min) / (max - min);
+            this.onApply = onApply;
+
+            this.updateMessage();
+        }
+
+        @Override
+        protected void onDrag(double mouseX, double mouseY, double dragX, double dragY) {
+            super.onDrag(mouseX, mouseY, dragX, dragY);
+            this.setValueFromMouse(mouseX);
+        }
+
+        private void setValueFromMouse(double mouseX) {
+            this.setSliderValue((mouseX - (this.getX() + 4)) / (this.width - 8));
+        }
+
+        public double getValue() {
+            return this.value * (max - min) + min;
+        }
+
+        private void setSliderValue(double value) {
+            double oldValue = this.value;
+            this.value = this.snapToNearest(value);
+            if (!Mth.equal(oldValue, this.value))
+                this.applyValue();
+
+            this.updateMessage();
+        }
+
+        private double snapToNearest(double value) {
+            if (stepSize <= 0D)
+                return Mth.clamp(value, 0D, 1D);
+
+            value = Mth.lerp(Mth.clamp(value, 0D, 1D), this.min, this.max);
+
+            value = (stepSize * Math.round(value / stepSize));
+
+            if (this.min > this.max) {
+                value = Mth.clamp(value, this.max, this.min);
+            } else {
+                value = Mth.clamp(value, this.min, this.max);
+            }
+
+            return Mth.map(value, this.min, this.max, 0D, 1D);
         }
 
 
-        //        private final GuiResponder responder;
-        //
-        //        public CustomSlider(GuiResponder guiResponder, int idIn, int x, int y, String name, float min, float max, float defaultValue, FormatHelper formatter) {
-        //            super(guiResponder, idIn, x, y, name, min, max, defaultValue, formatter);
-        //            this.responder = guiResponder;
-        //        }
-
-        //        @Override
-        public void mouseReleased(int mouseX, int mouseY) {
-            //            super.mouseReleased(mouseX, mouseY);
-            //            this.responder.setEntryValue(this.id, this.getSliderValue());
+        public String getValueString() {
+            if (this.format == null) {
+                if(getValue() == (int) getValue()) {
+                    return String.valueOf((double)((int) getValue()));
+                } else {
+                    return this.defaultFormat.format(this.getValue());
+                }
+            } else {
+                return this.format.format(this.getValue());
+            }
         }
 
         @Override
         protected void updateMessage() {
+            this.setMessage(sliderName.copy().append(": ").append(this.getValueString()));
+        }
 
+        @Override
+        public boolean mouseReleased(double pMouseX, double pMouseY, int pButton) {
+            return super.mouseReleased(pMouseX, pMouseY, pButton);
         }
 
         @Override
         protected void applyValue() {
+            this.onApply.onApply(this);
+        }
 
+        public interface OnApply {
+            void onApply(CustomSlider slider);
         }
     }
-
-    //private static class IntFormatter implements GuiSlider.FormatHelper {
-    //
-    //    public static final IntFormatter INSTANCE = new IntFormatter();
-    //
-    //    @Override
-    //    public String getText(int id, String name, float value) {
-    //        return name + ": " + (int) value;
-    //    }
-    //}
 }
