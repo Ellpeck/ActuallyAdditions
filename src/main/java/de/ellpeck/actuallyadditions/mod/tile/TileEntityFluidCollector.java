@@ -36,7 +36,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
-import net.neoforged.neoforge.fluids.IFluidBlock;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 
 import javax.annotation.Nonnull;
@@ -116,7 +115,7 @@ public class TileEntityFluidCollector extends TileEntityBase implements ISharing
                 Block fluid = stack.getFluid().defaultFluidState().createLegacyBlock().getBlock();
                 if (fluid != null) {
                     BlockPos offsetPos = this.worldPosition.relative(sideToManipulate);
-                    boolean placeable = !(blockToBreak instanceof IFluidBlock) && blockToBreak.defaultBlockState().canBeReplaced();
+                    boolean placeable = !stateToBreak.getFluidState().isSource() && blockToBreak.defaultBlockState().canBeReplaced();
                     if (placeable) {
                         this.tank.drainInternal(FluidType.BUCKET_VOLUME, IFluidHandler.FluidAction.EXECUTE);
                         // TODO: [port] validate this check is still valid.

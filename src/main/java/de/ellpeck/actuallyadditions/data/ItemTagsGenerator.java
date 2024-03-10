@@ -17,7 +17,7 @@ import java.util.concurrent.CompletableFuture;
 
 public class ItemTagsGenerator extends ItemTagsProvider {
     public ItemTagsGenerator(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider,
-                             TagsProvider<Block> blockTagProvider, ExistingFileHelper existingFileHelper) {
+        TagsProvider<Block> blockTagProvider, ExistingFileHelper existingFileHelper) {
         super(packOutput, lookupProvider, blockTagProvider.contentsGetter(), ActuallyAdditions.MODID, existingFileHelper);
     }
 

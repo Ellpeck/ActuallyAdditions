@@ -1,4 +1,4 @@
-// 1.20.4	2024-03-08T17:07:43.7158398	Item Recipes
+// 1.20.4	2024-03-10T13:16:06.5711018	Item Recipes
 d374edde9294d1a224b4b5610b50117a11328c00 data/actuallyadditions/recipes/advanced_coil.json
 f67629e45d152c96f3467a90a67520f78ecf9f07 data/actuallyadditions/recipes/advanced_leaf_blower.json
 d65e5a70232fa2f0e74d2a67c1cd4b0e87124242 data/actuallyadditions/recipes/basic_coil.json
@@ -87,6 +87,8 @@ f6c73cb2e41a8a21e2fda888b28bf52672b33d2e data/actuallyadditions/recipes/rice_sli
 764d4f63e1d978d02419d30d2ad845b914e594c0 data/actuallyadditions/recipes/ring_of_magnetizing.json
 fc0a5281fc77edde16f22165e164f73dd28d7fcd data/actuallyadditions/recipes/single_battery.json
 cb0454ccb8e918d506a1dd488187453678f82751 data/actuallyadditions/recipes/stone_aiot.json
+c57c0ac561f1919f6085f052060ca285a67ac579 data/actuallyadditions/recipes/tagged_slime_block.json
+be5e09790d225ca17dfef8089caece4095f3b6cf data/actuallyadditions/recipes/tagged_sticky_piston.json
 b4aa29ef0d47b557f354a23cb6ee8ef60d273de3 data/actuallyadditions/recipes/teleport_staff.json
 0ec48b429486a03aba107cb8b6dc9e03694ca68f data/actuallyadditions/recipes/tiny_to_charcoal.json
 5745a05f877fce254a1990f1e89f80e91846e270 data/actuallyadditions/recipes/tiny_to_coal.json
@@ -94,5 +96,3 @@ b4aa29ef0d47b557f354a23cb6ee8ef60d273de3 data/actuallyadditions/recipes/teleport
 89c9512eeb746befb1bdc31037baa9bd86220f74 data/actuallyadditions/recipes/triple_battery.json
 0737014abee48f688982412297e04e994aa6f9a6 data/actuallyadditions/recipes/wings_of_the_bats.json
 c80073fcade3cdcb15f28c4a1cb12df4ae6cf4ec data/actuallyadditions/recipes/wooden_aiot.json
-2bd8e4e4ed83a0d870e4509c0e722a9bbfd54a73 data/minecraft/recipes/slime_block.json
-77fa026351592845c5fd6bbe430e6362e755eaaf data/minecraft/recipes/sticky_piston.json
