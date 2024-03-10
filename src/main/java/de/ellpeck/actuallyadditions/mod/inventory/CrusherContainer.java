@@ -12,7 +12,9 @@ package de.ellpeck.actuallyadditions.mod.inventory;
 
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotOutput;
+import de.ellpeck.actuallyadditions.mod.recipe.CrusherRecipeRegistry;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityCrusher;
+import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -62,7 +64,6 @@ public class CrusherContainer extends AbstractContainerMenu {
 
     @Override
     public ItemStack quickMoveStack(Player player, int slot) {
-        /*
         int inventoryStart = this.isDouble
                 ? 6
                 : 3;
@@ -79,7 +80,7 @@ public class CrusherContainer extends AbstractContainerMenu {
             //Slots in Inventory to shift from
             if (slot == TileEntityCrusher.SLOT_OUTPUT_1_1 || slot == TileEntityCrusher.SLOT_OUTPUT_1_2 || this.isDouble && (slot == TileEntityCrusher.SLOT_OUTPUT_2_1 || slot == TileEntityCrusher.SLOT_OUTPUT_2_2)) {
                 if (!this.moveItemStackTo(newStack, inventoryStart, hotbarEnd + 1, true)) {
-                    return StackUtil.getEmpty();
+                    return ItemStack.EMPTY;
                 }
                 theSlot.onQuickCraft(newStack, currentStack);
             }
@@ -90,10 +91,10 @@ public class CrusherContainer extends AbstractContainerMenu {
                     if (!this.moveItemStackTo(newStack, TileEntityCrusher.SLOT_INPUT_1, TileEntityCrusher.SLOT_INPUT_1 + 1, false)) {
                         if (this.isDouble) {
                             if (!this.moveItemStackTo(newStack, TileEntityCrusher.SLOT_INPUT_2, TileEntityCrusher.SLOT_INPUT_2 + 1, false)) {
-                                return StackUtil.getEmpty();
+                                return ItemStack.EMPTY;
                             }
                         } else {
-                            return StackUtil.getEmpty();
+                            return ItemStack.EMPTY;
                         }
                     }
                 }
@@ -101,30 +102,29 @@ public class CrusherContainer extends AbstractContainerMenu {
 
                 else if (slot >= inventoryStart && slot <= inventoryEnd) {
                     if (!this.moveItemStackTo(newStack, hotbarStart, hotbarEnd + 1, false)) {
-                        return StackUtil.getEmpty();
+                        return ItemStack.EMPTY;
                     }
                 } else if (slot >= inventoryEnd + 1 && slot < hotbarEnd + 1 && !this.moveItemStackTo(newStack, inventoryStart, inventoryEnd + 1, false)) {
-                    return StackUtil.getEmpty();
+                    return ItemStack.EMPTY;
                 }
             } else if (!this.moveItemStackTo(newStack, inventoryStart, hotbarEnd + 1, false)) {
-                return StackUtil.getEmpty();
+                return ItemStack.EMPTY;
             }
 
             if (!StackUtil.isValid(newStack)) {
-                theSlot.set(StackUtil.getEmpty());
+                theSlot.set(ItemStack.EMPTY);
             } else {
                 theSlot.setChanged();
             }
 
             if (newStack.getCount() == currentStack.getCount()) {
-                return StackUtil.getEmpty();
+                return ItemStack.EMPTY;
             }
             theSlot.onTake(player, newStack);
 
             return currentStack;
         }
-
-         */
+        
         return ItemStack.EMPTY;
     }
 

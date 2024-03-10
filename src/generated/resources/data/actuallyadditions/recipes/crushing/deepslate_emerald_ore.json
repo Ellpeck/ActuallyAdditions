@@ -1,0 +1,21 @@
+{
+  "type": "actuallyadditions:crushing",
+  "ingredient": {
+    "item": "minecraft:deepslate_emerald_ore"
+  },
+  "result": [
+    {
+      "result": {
+        "Count": 2,
+        "id": "minecraft:emerald"
+      }
+    },
+    {
+      "chance": 0.0,
+      "result": {
+        "Count": 0,
+        "id": "minecraft:air"
+      }
+    }
+  ]
+}

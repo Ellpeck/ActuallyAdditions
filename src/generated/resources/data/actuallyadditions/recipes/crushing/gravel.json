@@ -1,0 +1,21 @@
+{
+  "type": "actuallyadditions:crushing",
+  "ingredient": {
+    "item": "minecraft:gravel"
+  },
+  "result": [
+    {
+      "result": {
+        "Count": 1,
+        "id": "minecraft:flint"
+      }
+    },
+    {
+      "chance": 0.5,
+      "result": {
+        "Count": 1,
+        "id": "minecraft:flint"
+      }
+    }
+  ]
+}

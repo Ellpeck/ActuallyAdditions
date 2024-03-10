@@ -84,7 +84,7 @@ public class CrusherScreen extends AAScreen<CrusherContainer> {
         this.energy.render(guiGraphics, x, y);
 
         if (this.isDouble && this.buttonAutoSplit.isMouseOver(x,y)) {
-            guiGraphics.drawString(font, Component.translatable("info.actuallyadditions.gui.autosplititems." + (tileGrinder.isAutoSplit?"on":"off")).withStyle(ChatFormatting.BOLD), x , y, 0xffffff, false);
+            guiGraphics.drawString(font, Component.translatable("info.actuallyadditions.gui.autosplititems." + (tileGrinder.isAutoSplit?"on":"off")).withStyle(ChatFormatting.BOLD), x , y, 0xffffff);
         }
     }
 
@@ -93,7 +93,7 @@ public class CrusherScreen extends AAScreen<CrusherContainer> {
         guiGraphics.blit(AssetUtil.GUI_INVENTORY_LOCATION, this.leftPos, this.topPos + 93, 0, 0, 176, 86);
 
         ResourceLocation usedLoc = this.isDouble ? RES_LOC_DOUBLE : RES_LOC;
-        guiGraphics.blit(AssetUtil.GUI_INVENTORY_LOCATION, this.leftPos, this.topPos, 0, 0, 176, 93);
+        guiGraphics.blit(usedLoc, this.leftPos, this.topPos, 0, 0, 176, 93);
 
         if (this.tileGrinder.firstCrushTime > 0) {
             int i = this.tileGrinder.getFirstTimeToScale(23);

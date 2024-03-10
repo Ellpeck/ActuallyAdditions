@@ -12,8 +12,10 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class TileEntityCrusherDouble extends TileEntityCrusher {
@@ -33,5 +35,10 @@ public class TileEntityCrusherDouble extends TileEntityCrusher {
         if (t instanceof TileEntityCrusherDouble tile) {
             tile.serverTick();
         }
+    }
+
+    @Override
+    public Component getDisplayName() {
+        return Component.translatable("container.actuallyadditions.crusher_double");
     }
 }

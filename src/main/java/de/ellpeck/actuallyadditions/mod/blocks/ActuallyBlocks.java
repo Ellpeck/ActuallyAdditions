@@ -100,7 +100,7 @@ public final class ActuallyBlocks {
     public static final AABlockReg<BlockFeeder, AABlockItem, TileEntityFeeder> FEEDER = new AABlockReg<>("feeder", BlockFeeder::new, (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityFeeder::new);
     public static final AABlockReg<BlockCrusher, AABlockItem, TileEntityCrusher> CRUSHER = new AABlockReg<>("crusher", () -> new BlockCrusher(false),
         (b) -> new AABlockItem.BlockEntityEnergyItem(b, defaultBlockItemProperties), TileEntityCrusher::new);
-    public static final AABlockReg<BlockCrusher, AABlockItem, TileEntityCrusher> CRUSHER_DOUBLE = new AABlockReg<>("crusher_double", () -> new BlockCrusher(false),
+    public static final AABlockReg<BlockCrusher, AABlockItem, TileEntityCrusher> CRUSHER_DOUBLE = new AABlockReg<>("crusher_double", () -> new BlockCrusher(true),
         (b) -> new AABlockItem.BlockEntityEnergyItem(b, defaultBlockItemProperties), TileEntityCrusherDouble::new);
 
     public static final AABlockReg<BlockEnergizer, AABlockItem, TileEntityEnergizer> ENERGIZER = new AABlockReg<>("energizer", () -> new BlockEnergizer(true),
