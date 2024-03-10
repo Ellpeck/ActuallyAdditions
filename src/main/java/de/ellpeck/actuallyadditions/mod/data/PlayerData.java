@@ -23,9 +23,15 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 public final class PlayerData {
-
+    private static PlayerSave clientData = null;
     public static PlayerSave getDataFromPlayer(Player player) {
-        WorldData worldData = WorldData.get((ServerLevel) player.getCommandSenderWorld());
+        if (!(player.getCommandSenderWorld() instanceof ServerLevel)) {
+            if (clientData == null) {
+                clientData = new PlayerSave(player.getUUID());
+            }
+            return clientData;
+        }
+        WorldData worldData = WorldData.get(player.getCommandSenderWorld());
         ConcurrentHashMap<UUID, PlayerSave> data = worldData.playerSaveData;
         UUID id = player.getUUID();
 
