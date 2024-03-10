@@ -159,7 +159,6 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
                 List<ExperienceOrb> orbs = level.getEntitiesOfClass(ExperienceOrb.class, new AABB(pos.getX() - range, pos.getY() - range, pos.getZ() - range, pos.getX() + 1 + range, pos.getY() + 1 + range, pos.getZ() + 1 + range));
                 if (orbs != null && !orbs.isEmpty()) {
                     for (ExperienceOrb orb : orbs) {
-                        // TODO: [port] validate the getPersistentData is correct
                         if (orb != null && orb.isAlive() && !orb.getPersistentData().getBoolean(ActuallyAdditions.MODID + "FromSolidified")) {
                             tile.singlePointAmount += orb.getValue();
                             orb.discard();
@@ -223,7 +222,7 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
 
     @Override
     public Component getDisplayName() {
-        return Component.empty();
+        return Component.translatable("container.actuallyadditions.experienceSolidifier");
     }
 
     @Nullable
