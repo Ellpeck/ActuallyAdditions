@@ -19,6 +19,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
@@ -66,9 +67,9 @@ public class BlockLavaFactoryController extends DirectionalBlock.Container imple
         if (factory != null) {
             int state = factory.isMultiblock();
             if (state == TileEntityLavaFactoryController.NOT_MULTI) {
-                StringUtil.drawSplitString(minecraft.font, I18n.get("tooltip." + ActuallyAdditions.MODID + ".factory.notPart.desc"), resolution.getGuiScaledWidth() / 2 + 5, resolution.getGuiScaledHeight() / 2 + 5, 200, 0xFFFFFF, true);
+                guiGraphics.drawWordWrap(minecraft.font, Component.translatable("tooltip." + ActuallyAdditions.MODID + ".factory.notPart.desc"), resolution.getGuiScaledWidth() / 2 + 5, resolution.getGuiScaledHeight() / 2 + 5, 200, 0xFFFFFF);
             } else if (state == TileEntityLavaFactoryController.HAS_AIR || state == TileEntityLavaFactoryController.HAS_LAVA) {
-                StringUtil.drawSplitString(minecraft.font, I18n.get("tooltip." + ActuallyAdditions.MODID + ".factory.works.desc"), resolution.getGuiScaledWidth() / 2 + 5, resolution.getGuiScaledHeight() / 2 + 5, 200, 0xFFFFFF, true);
+                guiGraphics.drawWordWrap(minecraft.font, Component.translatable("tooltip." + ActuallyAdditions.MODID + ".factory.working.desc"), resolution.getGuiScaledWidth() / 2 + 5, resolution.getGuiScaledHeight() / 2 + 5, 200, 0xFFFFFF);
             }
         }
     }

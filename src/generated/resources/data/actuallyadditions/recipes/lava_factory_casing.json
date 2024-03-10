@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "actuallyadditions:iron_casing"
+    },
+    "E": {
+      "item": "actuallyadditions:enori_crystal_block"
+    }
+  },
+  "pattern": [
+    "ECE"
+  ],
+  "result": {
+    "count": 32,
+    "item": "actuallyadditions:lava_factory_casing"
+  }
+}
