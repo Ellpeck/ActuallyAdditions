@@ -12,14 +12,19 @@ package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerRangedCollector;
+import de.ellpeck.actuallyadditions.mod.network.PacketClientToServer;
+import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityRangedCollector;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 import javax.annotation.Nonnull;
 
@@ -43,14 +48,14 @@ public class GuiRangedCollector extends AAScreen<ContainerRangedCollector> {
     public void init() {
         super.init();
 
-        //this.filter = new FilterSettingsGui(this.collector.filter, this.leftPos + 3, this.topPos + 6, this.buttonList);
+        this.filter = new FilterSettingsGui(this.collector.filter, this.leftPos + 3, this.topPos + 6, this::addRenderableWidget, this::buttonClicked, 0);
     }
 
     @Override
     public void render(@Nonnull GuiGraphics guiGraphics, int x, int y, float f) {
         super.render(guiGraphics, x, y, f);
 
-        //this.filter.drawHover(matrices, x, y);
+        this.filter.drawHover(guiGraphics, x, y);
     }
 
     @Override
@@ -68,9 +73,16 @@ public class GuiRangedCollector extends AAScreen<ContainerRangedCollector> {
 
         guiGraphics.blit(RES_LOC, this.leftPos, this.topPos, 0, 0, 176, 86);
     }
+    
+    public void buttonClicked(int id) {
+        CompoundTag data = new CompoundTag();
+        data.putInt("ButtonID", id);
+        data.putInt("PlayerID", Minecraft.getInstance().player.getId());
+        data.putString("WorldID", Minecraft.getInstance().level.dimension().location().toString());
+        data.putInt("X", this.collector.getBlockPos().getX());
+        data.putInt("Y", this.collector.getBlockPos().getY());
+        data.putInt("Z", this.collector.getBlockPos().getZ());
+        PacketDistributor.SERVER.noArg().send(new PacketClientToServer(data, PacketHandler.GUI_BUTTON_TO_TILE_HANDLER));
+    }
 
-//    @Override
-//    public void actionPerformed(Button button) {
-//        PacketHandlerHelper.sendButtonPacket(this.collector, button.id);
-//    }
 }

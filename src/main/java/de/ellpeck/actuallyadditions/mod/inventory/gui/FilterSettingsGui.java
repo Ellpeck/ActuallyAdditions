@@ -11,19 +11,15 @@
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.mod.network.PacketClientToServer;
-import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.tile.FilterSettings;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,19 +33,19 @@ public class FilterSettingsGui {
     public Button whitelistButton;
     public Button modButton;
 
-    public FilterSettingsGui(FilterSettings settings, int x, int y, Consumer<AbstractButton> buttonConsumer, int idOffset) {
+    public FilterSettingsGui(FilterSettings settings, int x, int y, Consumer<AbstractButton> buttonConsumer, Consumer<Integer> clickConsumer, int idOffset) {
         this.theSettings = settings;
 
         this.whitelistButton = Button.builder(Component.literal("WH"), $ -> {
             theSettings.isWhitelist = !theSettings.isWhitelist;
-            buttonClicked(idOffset);
+            clickConsumer.accept(idOffset);
         })
                 .bounds(x, y, 16, 12).build();
         buttonConsumer.accept(this.whitelistButton);
         y += 14;
         this.modButton = Button.builder(Component.literal("MO"), $ -> {
             theSettings.respectMod = !theSettings.respectMod;
-            buttonClicked(idOffset + 1);
+            clickConsumer.accept(idOffset + 1);
                 })
                 .bounds(x, y, 16, 12).build();
         buttonConsumer.accept(this.modButton);
@@ -57,13 +53,13 @@ public class FilterSettingsGui {
         this.tick();
     }
 
-    public void buttonClicked(int id) {
+/*    public void buttonClicked(int id) {
         CompoundTag data = new CompoundTag();
         data.putInt("ButtonID", id);
         data.putInt("PlayerID", Minecraft.getInstance().player.getId());
         data.putString("WorldID", Minecraft.getInstance().level.dimension().location().toString());
         PacketDistributor.SERVER.noArg().send(new PacketClientToServer(data, PacketHandler.GUI_BUTTON_TO_CONTAINER_HANDLER));
-    }
+    }*/
 
     public void tick() {
         this.whitelistButton.setMessage(Component.literal("WH").withStyle(this.theSettings.isWhitelist

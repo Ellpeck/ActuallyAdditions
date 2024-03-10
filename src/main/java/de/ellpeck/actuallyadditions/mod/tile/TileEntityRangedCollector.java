@@ -31,6 +31,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
@@ -111,17 +112,17 @@ public class TileEntityRangedCollector extends TileEntityInventoryBase implement
 
     @Override
     public void onButtonPressed(int buttonID, Player player) {
-        //this.filter.onButtonPressed(buttonID);
-    } //TODO
+        this.filter.onButtonPressed(buttonID);
+    }
 
     @Override
     public Component getDisplayName() {
-        return Component.empty();
+        return Component.translatable("container.actuallyadditions.rangedCollector");
     }
 
     @Nullable
     @Override
-    public AbstractContainerMenu createMenu(int windowId, Inventory playerInventory, Player player) {
+    public AbstractContainerMenu createMenu(int windowId, @Nonnull Inventory playerInventory, @Nonnull Player player) {
         return new ContainerRangedCollector(windowId, playerInventory, this);
     }
 }

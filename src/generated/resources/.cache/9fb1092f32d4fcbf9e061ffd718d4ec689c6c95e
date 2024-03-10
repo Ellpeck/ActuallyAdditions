@@ -1,4 +1,4 @@
-// 1.20.4	2024-03-10T22:18:48.1078829	Recipes
+// 1.20.4	2024-03-10T17:08:00.6295462	Recipes
 4d3128b37a7153882a9324cda49b5069207561c5 data/actuallyadditions/recipes/atomic_reconstructor.json
 b0367f5012651764931e8b8fd0c5bcca4e8614c0 data/actuallyadditions/recipes/battery_box.json
 7e05cd54092b998dfdbd2221235dd52576ec79eb data/actuallyadditions/recipes/black_quartz_block.json
@@ -48,6 +48,7 @@ ff81da8a0f6632779414c0512100696a11771814 data/actuallyadditions/recipes/hopping_
 73696fd4e851f440a9850485fc9ad03fc63442a9 data/actuallyadditions/recipes/oil_generator.json
 8c78ebb9351b98ffe368391a391b90385c0b8b7f data/actuallyadditions/recipes/placer.json
 184acfb5fd3799b3fbe35150c67b6530581f8bf1 data/actuallyadditions/recipes/powered_furnace.json
+b81a706a5f635d8a63ffd3034c80838dc10699c9 data/actuallyadditions/recipes/ranged_collector.json
 532a454741e8068941f1f3c44f3be257530db8c3 data/actuallyadditions/recipes/shock_suppressor.json
 7fa363b3afe88f3ffac1b9f85f59c6a291d59544 data/actuallyadditions/recipes/smooth_black_quartz_slab.json
 892f9867958c77a0577adcfd8ce3f8da108ecd3e data/actuallyadditions/recipes/smooth_black_quartz_stair.json

@@ -355,6 +355,15 @@ public class BlockRecipeGenerator extends RecipeProvider {
                 .define('E', ActuallyBlocks.ENORI_CRYSTAL.get())
                 .define('C', ActuallyBlocks.IRON_CASING.get())
                 .save(recipeOutput);
+
+        // Ranged Collector
+        Recipe.shaped(ActuallyBlocks.RANGED_COLLECTOR.getItem())
+                .pattern(" V ", "EHE", " C ")
+                .define('V', ActuallyItems.VOID_CRYSTAL.get())
+                .define('E', Tags.Items.ENDER_PEARLS)
+                .define('H', Items.HOPPER)
+                .define('C', ActuallyBlocks.IRON_CASING.get())
+                .save(recipeOutput);
     }
 
     public static class Recipe {
