@@ -175,27 +175,31 @@ public class TileEntityFluidCollector extends TileEntityBase implements ISharing
     public static <T extends BlockEntity> void serverTick(Level level, BlockPos pos, BlockState state, T t) {
         if (t instanceof TileEntityFluidCollector tile) {
             tile.serverTick();
+        }
+    }
 
-            if (!tile.isRedstonePowered && !tile.isPulseMode) {
-                if (tile.currentTime > 0) {
-                    tile.currentTime--;
-                    if (tile.currentTime <= 0) {
-                        tile.doWork();
-                    }
-                } else {
-                    tile.currentTime = 15;
+    @Override
+    protected void serverTick() {
+        super.serverTick();
+        if (!isRedstonePowered && !isPulseMode) {
+            if (currentTime > 0) {
+                currentTime--;
+                if (currentTime <= 0) {
+                    doWork();
                 }
+            } else {
+                currentTime = 15;
             }
+        }
 
-            if (tile.lastCompare != tile.getComparatorStrength()) {
-                tile.lastCompare = tile.getComparatorStrength();
+        if (lastCompare != getComparatorStrength()) {
+            lastCompare = getComparatorStrength();
 
-                tile.setChanged();
-            }
+            setChanged();
+        }
 
-            if (tile.lastTankAmount != tile.tank.getFluidAmount() && tile.sendUpdateWithInterval()) {
-                tile.lastTankAmount = tile.tank.getFluidAmount();
-            }
+        if (lastTankAmount != tank.getFluidAmount() && sendUpdateWithInterval()) {
+            lastTankAmount = tank.getFluidAmount();
         }
     }
 
