@@ -67,7 +67,7 @@ public class GuiFireworkBox extends AbstractContainerScreen<ContainerFireworkBox
 
     @Override
     protected void renderLabels(GuiGraphics guiGraphics, int pMouseX, int pMouseY) {
-        AssetUtil.displayNameString(guiGraphics, this.font, this.getXSize(), -10, I18n.get("container." + ActuallyAdditions.MODID + ".fireworkBox"));
+        guiGraphics.drawString(font, this.title, (int)(this.getXSize() / 2f - font.width(this.title) / 2f), -10, 0xFFFFFF, false);
     }
 
     @Override
