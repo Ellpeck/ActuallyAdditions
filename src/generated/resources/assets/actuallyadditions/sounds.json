@@ -18,5 +18,10 @@
     "sounds": [
       "actuallyadditions:reconstructor"
     ]
+  },
+  "villager.work_engineer": {
+    "sounds": [
+      "actuallyadditions:coffee_machine"
+    ]
   }
 }

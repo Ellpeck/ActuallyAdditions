@@ -28,6 +28,9 @@ import de.ellpeck.actuallyadditions.mod.event.CommonEvents;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.gen.ActuallyVillages;
 import de.ellpeck.actuallyadditions.mod.gen.modifier.BoolConfigFeatureBiomeModifier;
+import de.ellpeck.actuallyadditions.mod.gen.village.ActuallyPOITypes;
+import de.ellpeck.actuallyadditions.mod.gen.village.ActuallyVillagers;
+import de.ellpeck.actuallyadditions.mod.gen.village.InitVillager;
 import de.ellpeck.actuallyadditions.mod.inventory.ActuallyContainers;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.items.ItemCoffee;
@@ -110,6 +113,8 @@ public class ActuallyAdditions {
         ActuallyTabs.init(eventBus);
         ActuallyRecipes.init(eventBus);
         AASounds.init(eventBus);
+        ActuallyVillagers.init(eventBus);
+        ActuallyPOITypes.init(eventBus);
         ActuallyAttachments.init(eventBus);
         ActuallyContainers.CONTAINERS.register(eventBus);
         ENTITIES.register(eventBus);
@@ -121,6 +126,7 @@ public class ActuallyAdditions {
 
         NeoForge.EVENT_BUS.addListener(this::serverStarted);
         NeoForge.EVENT_BUS.addListener(this::serverStopped);
+        NeoForge.EVENT_BUS.addListener(InitVillager::setupTrades);
         NeoForge.EVENT_BUS.register(new CommonEvents());
 //        NeoForge.EVENT_BUS.register(new DungeonLoot());
         NeoForge.EVENT_BUS.addListener(ActuallyAdditions::reloadEvent);

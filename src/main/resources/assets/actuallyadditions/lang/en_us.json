@@ -26,7 +26,7 @@
   "_comment": "Entities",
   "entity.Villager.actuallyadditions.jammer": "Jam Guy",
   "entity.Villager.actuallyadditions.crystallizer": "Crystallizer",
-  "entity.Villager.actuallyadditions.engineer": "Engineer",
+  "entity.minecraft.villager.actuallyadditions.engineer": "Engineer",
   "_comment": "Banners",
   "item.banner.actuallyadditionsBook.black": "Black Actually Additions Manual Pattern",
   "item.banner.actuallyadditionsBook.red": "Red Actually Additions Manual Pattern",

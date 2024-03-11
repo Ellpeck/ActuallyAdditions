@@ -19,5 +19,6 @@ public class SoundsGenerator extends SoundDefinitionsProvider {
         add(AASounds.CRUSHER, definition().with(sound(new ResourceLocation(ActuallyAdditions.MODID, "crusher"))));
         add(AASounds.COFFEE_MACHINE, definition().with(sound(new ResourceLocation(ActuallyAdditions.MODID, "coffee_machine"))));
         add(AASounds.DUH_DUH_DUH_DUUUH, definition().with(sound(new ResourceLocation(ActuallyAdditions.MODID, "duh_duh_duh_duuuh"))));
+        add(AASounds.VILLAGER_WORK_ENGINEER, definition().with(sound(new ResourceLocation(ActuallyAdditions.MODID, "coffee_machine"))));
     }
 }
