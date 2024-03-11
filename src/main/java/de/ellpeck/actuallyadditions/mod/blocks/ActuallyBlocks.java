@@ -48,7 +48,6 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityLavaFactoryController;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityLeafGenerator;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityLongRangeBreaker;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityOilGenerator;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityPhantomBooster;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityPhantomBreaker;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityPhantomEnergyface;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityPhantomItemface;
@@ -231,8 +230,8 @@ public final class ActuallyBlocks {
         (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityPhantomRedstoneface::new);
     public static final AABlockReg<BlockPhantom, AABlockItem, TileEntityPhantomBreaker> PHANTOM_BREAKER = new AABlockReg<>("phantom_breaker", () -> new BlockPhantom(BlockPhantom.Type.BREAKER),
         (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityPhantomBreaker::new);
-    public static final AABlockReg<BlockPhantomBooster, AABlockItem, TileEntityPhantomBooster> PHANTOM_BOOSTER = new AABlockReg<>("phantom_booster", BlockPhantomBooster::new,
-        (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityPhantomBooster::new);
+    public static final AABlockReg<BlockPhantomBooster, AABlockItem, ?> PHANTOM_BOOSTER = new AABlockReg<>("phantom_booster", BlockPhantomBooster::new,
+        (b) -> new AABlockItem(b, defaultBlockItemProperties));
 
     // Misc Tiles
     public static final AABlockReg<BlockBatteryBox, AABlockItem, TileEntityBatteryBox> BATTERY_BOX = new AABlockReg<>("battery_box", BlockBatteryBox::new,
@@ -376,7 +375,6 @@ public final class ActuallyBlocks {
                 PHANTOM_ENERGYFACE.getTileEntityType(),
                 PHANTOM_REDSTONEFACE.getTileEntityType(),
                 PHANTOM_BREAKER.getTileEntityType(),
-                PHANTOM_BOOSTER.getTileEntityType(),
                 BATTERY_BOX.getTileEntityType(),
                 FIREWORK_BOX.getTileEntityType(),
                 SHOCK_SUPPRESSOR.getTileEntityType(),

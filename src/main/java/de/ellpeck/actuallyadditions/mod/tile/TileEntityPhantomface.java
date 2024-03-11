@@ -16,12 +16,14 @@ import de.ellpeck.actuallyadditions.mod.blocks.BlockPhantom;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.capabilities.ICapabilityInvalidationListener;
 
 public abstract class TileEntityPhantomface extends TileEntityInventoryBase implements IPhantomTile {
     public static final int RANGE = 16;
@@ -32,6 +34,7 @@ public abstract class TileEntityPhantomface extends TileEntityInventoryBase impl
     private BlockPos boundPosBefore;
     private Block boundBlockBefore;
     private int lastStrength;
+    private CapListener capListener = new CapListener(this);
 
     public TileEntityPhantomface(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state, 0);
@@ -48,6 +51,7 @@ public abstract class TileEntityPhantomface extends TileEntityInventoryBase impl
                 break;
             }
         }
+
         return newRange;
     }
 
@@ -90,6 +94,13 @@ public abstract class TileEntityPhantomface extends TileEntityInventoryBase impl
 
         if (this.doesNeedUpdateSend()) {
             this.onUpdateSent();
+
+        if (level instanceof ServerLevel serverLevel) {
+            capListener.disable();
+            capListener = new CapListener(this);
+            if (hasBoundPosition())
+                serverLevel.registerCapabilityListener(boundPosition, capListener);
+            }
         }
 
         int strength = this.getComparatorStrength();
@@ -122,7 +133,6 @@ public abstract class TileEntityPhantomface extends TileEntityInventoryBase impl
         if (this.boundPosition != null) {
             this.level.updateNeighborsAt(this.worldPosition, this.level.getBlockState(this.boundPosition).getBlock());
         }
-
         this.sendUpdate();
         this.setChanged();
     }
@@ -190,5 +200,26 @@ public abstract class TileEntityPhantomface extends TileEntityInventoryBase impl
             }
         }
         return 0;
+    }
+
+    public class CapListener implements ICapabilityInvalidationListener {
+        private boolean valid = true;
+        private final TileEntityPhantomface tile;
+
+        public CapListener(TileEntityPhantomface tile) {
+            this.tile = tile;
+        }
+
+        public void disable() {
+            valid = false;
+        }
+        @Override
+        public boolean onInvalidate() {
+            if (valid && !tile.isRemoved()) {
+                tile.invalidateCapabilities();
+                return true;
+            }
+            return false;
+        }
     }
 }

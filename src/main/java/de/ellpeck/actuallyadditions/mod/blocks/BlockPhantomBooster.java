@@ -10,33 +10,21 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityPhantomBooster;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityTicker;
-import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.VoxelShape;
+import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBase;
 
-import javax.annotation.Nullable;
-
-public class BlockPhantomBooster extends BlockContainerBase {
+public class BlockPhantomBooster extends BlockBase {
 
     public BlockPhantomBooster() {
         super(ActuallyBlocks.defaultPickProps());
     }
 
-    @Nullable
+/*    @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new TileEntityPhantomBooster(pos, state);
-    }
+    }*/
 
-    @Nullable
+/*    @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> entityType) {
         return level.isClientSide? TileEntityPhantomBooster::clientTick : TileEntityPhantomBooster::serverTick;
@@ -45,5 +33,5 @@ public class BlockPhantomBooster extends BlockContainerBase {
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         return VoxelShapes.BOOSTER_SHAPE;
-    }
+    }*/
 }

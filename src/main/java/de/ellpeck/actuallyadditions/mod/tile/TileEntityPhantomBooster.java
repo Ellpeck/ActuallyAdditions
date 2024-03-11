@@ -6,7 +6,8 @@
  * View the source code at https://github.com/Ellpeck/ActuallyAdditions
  *
  * © 2015-2017 Ellpeck
- */
+ *//*
+
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
@@ -34,3 +35,4 @@ public class TileEntityPhantomBooster extends TileEntityBase {
         }
     }
 }
+*/

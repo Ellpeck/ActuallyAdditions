@@ -29,6 +29,7 @@ public final class StringUtil {
     }
 
     // TODO: Move to official
+    @Deprecated
     @OnlyIn(Dist.CLIENT)
     public static void drawSplitString(Font renderer, String strg, int x, int y, int width, int color, boolean shadow) {
 //        ResourcePackList <- holds the correct way

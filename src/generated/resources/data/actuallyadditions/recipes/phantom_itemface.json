@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "actuallyadditions:advanced_coil"
+    },
+    "C": {
+      "tag": "forge:chests/wooden"
+    },
+    "D": {
+      "item": "actuallyadditions:empowered_diamatine_crystal"
+    },
+    "E": {
+      "item": "actuallyadditions:ender_casing"
+    }
+  },
+  "pattern": [
+    " C ",
+    "DED",
+    " A "
+  ],
+  "result": {
+    "item": "actuallyadditions:phantom_itemface"
+  }
+}

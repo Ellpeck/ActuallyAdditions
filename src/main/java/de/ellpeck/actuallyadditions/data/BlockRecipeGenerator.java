@@ -409,6 +409,45 @@ public class BlockRecipeGenerator extends RecipeProvider {
                 .define('L', ItemTags.LEAVES)
                 .define('A', ActuallyItems.ADVANCED_COIL.get())
                 .save(recipeOutput);
+
+        // Phantom Itemface
+        Recipe.shaped(ActuallyBlocks.PHANTOM_ITEMFACE.getItem())
+                .pattern(" C ", "DED", " A ")
+                .define('C', Tags.Items.CHESTS_WOODEN)
+                .define('D', ActuallyItems.EMPOWERED_DIAMATINE_CRYSTAL)
+                .define('E', ActuallyBlocks.ENDER_CASING.get())
+                .define('A', ActuallyItems.ADVANCED_COIL.get())
+                .save(recipeOutput);
+
+        // Phantom Liquiface
+        Recipe.shaped(ActuallyBlocks.PHANTOM_LIQUIFACE.getItem())
+                .pattern("BIB")
+                .define('B', Items.BUCKET)
+                .define('I', ActuallyBlocks.PHANTOM_ITEMFACE.get())
+                .save(recipeOutput);
+
+        // Phantom Energyface
+        Recipe.shaped(ActuallyBlocks.PHANTOM_ENERGYFACE.getItem())
+                .pattern(" R ", "RIR", " R ")
+                .define('R', ActuallyItems.EMPOWERED_RESTONIA_CRYSTAL)
+                .define('I', ActuallyBlocks.PHANTOM_ITEMFACE.get())
+                .save(recipeOutput);
+
+        // Phantom Redstoneface
+        Recipe.shaped(ActuallyBlocks.PHANTOM_REDSTONEFACE.getItem())
+                .pattern("DRD", "RIR", "DRD")
+                .define('D', Tags.Items.DUSTS_REDSTONE)
+                .define('R', ActuallyItems.EMPOWERED_RESTONIA_CRYSTAL)
+                .define('I', ActuallyBlocks.PHANTOM_ITEMFACE.get())
+                .save(recipeOutput);
+
+        // Phantom Booster
+        Recipe.shaped(ActuallyBlocks.PHANTOM_BOOSTER.getItem())
+                .pattern("RDR", "DCD", "RDR")
+                .define('D', ActuallyItems.DIAMATINE_CRYSTAL)
+                .define('R', ActuallyItems.RESTONIA_CRYSTAL)
+                .define('C', ActuallyBlocks.ENDER_CASING.getItem())
+                .save(recipeOutput);
     }
 
     public static class Recipe {
