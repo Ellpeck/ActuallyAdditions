@@ -1,6 +1,5 @@
 package de.ellpeck.actuallyadditions.mod.jei.fermenting;
 
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.crafting.FermentingRecipe;
 import de.ellpeck.actuallyadditions.mod.jei.JEIActuallyAdditionsPlugin;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
@@ -16,14 +15,16 @@ import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.neoforged.neoforge.fluids.FluidStack;
 
 public class FermentingCategory implements IRecipeCategory<FermentingRecipe> {
+    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_fermenting_barrel");
     private final IDrawableStatic background;
     private final IDrawableStatic fluidBackground;
 
     public FermentingCategory(IGuiHelper guiHelper) {
-        background = guiHelper.drawableBuilder(new ResourceLocation(ActuallyAdditions.MODID, "textures/gui/gui_fermenting_barrel.png"), 41, 4, 94, 86).setTextureSize(256,256).build();
+        background = guiHelper.drawableBuilder(RES_LOC, 41, 4, 94, 86).setTextureSize(256,256).build();
 	    fluidBackground = guiHelper.drawableBuilder(AssetUtil.GUI_INVENTORY_LOCATION, 0, 171, 18, 85).build();
     }
 
@@ -49,10 +50,6 @@ public class FermentingCategory implements IRecipeCategory<FermentingRecipe> {
 
 	@Override
 	public void setRecipe(IRecipeLayoutBuilder builder, FermentingRecipe recipe, IFocusGroup focuses) {
-//        int maxFluid = Math.max(FluidType.BUCKET_VOLUME, Math.max(recipe.getInput().getAmount(), recipe.getOutput().getAmount()));
-//		recipe.setInputDisplay(new FluidDisplay(19, 1, recipe.getInput(), maxFluid, false));
-//		recipe.setOutputDisplay(new FluidDisplay(19+38, 1, recipe.getOutput(), maxFluid, false));
-
 		FluidStack input = recipe.getInput();
 		int height = (int)(83D / 1000 * input.getAmount());
 		int offset = 83 - height;
@@ -72,16 +69,14 @@ public class FermentingCategory implements IRecipeCategory<FermentingRecipe> {
 
 	@Override
 	public void draw(FermentingRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
-//		IRecipeCategory.super.draw(recipe, recipeSlotsView, guiGraphics, mouseX, mouseY);
-//		recipe.getInputDisplay().ifPresent(display -> {
-//			display.draw(guiGraphics);
-//			display.render(guiGraphics, (int) mouseX, (int) mouseY);
-//		});
-//
-//		recipe.getOutputDisplay().ifPresent(display -> {
-//			display.draw(guiGraphics);
-//			display.render(guiGraphics, (int) mouseX, (int) mouseY);
-//		});
-		//TODO draw the progress indicator, scaled to the recipe duration.
+		int recipeTime = recipe.getTime();
+		if (recipeTime > 0) {
+			int currentProcessTime = (int) (System.currentTimeMillis() / 50 % recipeTime);
+			if (currentProcessTime > 0) {
+				int i = Mth.ceil((float) (currentProcessTime * 29) / recipeTime);
+				guiGraphics.blit(RES_LOC, 41, 30, 176, 0, 12, i);
+			}
+		}
+
 	}
 }
