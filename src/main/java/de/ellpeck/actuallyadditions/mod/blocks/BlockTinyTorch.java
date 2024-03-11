@@ -43,7 +43,7 @@ public class BlockTinyTorch extends BlockBase {
 
     @Override
     public int getLightEmission(BlockState state, BlockGetter level, BlockPos pos) {
-        return 8;
+        return 12;
     }
 
     @Override
