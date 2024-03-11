@@ -1,6 +1,7 @@
-// 1.20.4	2024-03-09T22:54:38.6848812	Tags for minecraft:item mod id actuallyadditions
+// 1.20.4	2024-03-11T17:20:46.9018598	Tags for minecraft:item mod id actuallyadditions
 87327118c2f16da245b76de4fdcaab149456d9b8 data/actuallyadditions/tags/items/coffee_beans.json
 f3ee78cd8c9563bd1828de2b4b336735f289f9f2 data/actuallyadditions/tags/items/crystals.json
+441008b49b4bab00125100fc969cb6582eff7271 data/actuallyadditions/tags/items/crystal_blocks.json
 7e6e49c3eb5302af147a2d6ba439e83bd4831cbc data/actuallyadditions/tags/items/drills.json
 ae55da193b94fd6375c05d5aa46cafdda9d335cd data/actuallyadditions/tags/items/tiny_coals.json
 31cd008db3c44a9c3f643f296e1c7688ca45e2e5 data/forge/tags/items/crops.json

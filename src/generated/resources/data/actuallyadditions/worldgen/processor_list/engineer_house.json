@@ -1,0 +1,249 @@
+{
+  "processors": [
+    {
+      "processor_type": "minecraft:rule",
+      "rules": [
+        {
+          "input_predicate": {
+            "block": "actuallyadditions:lamp_white",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.0625
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "actuallyadditions:lamp_orange",
+            "Properties": {
+              "lit": "true"
+            }
+          }
+        },
+        {
+          "input_predicate": {
+            "block": "actuallyadditions:lamp_white",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.0625
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "actuallyadditions:lamp_magenta",
+            "Properties": {
+              "lit": "true"
+            }
+          }
+        },
+        {
+          "input_predicate": {
+            "block": "actuallyadditions:lamp_white",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.0625
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "actuallyadditions:lamp_light_blue",
+            "Properties": {
+              "lit": "true"
+            }
+          }
+        },
+        {
+          "input_predicate": {
+            "block": "actuallyadditions:lamp_white",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.0625
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "actuallyadditions:lamp_yellow",
+            "Properties": {
+              "lit": "true"
+            }
+          }
+        },
+        {
+          "input_predicate": {
+            "block": "actuallyadditions:lamp_white",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.0625
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "actuallyadditions:lamp_lime",
+            "Properties": {
+              "lit": "true"
+            }
+          }
+        },
+        {
+          "input_predicate": {
+            "block": "actuallyadditions:lamp_white",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.0625
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "actuallyadditions:lamp_pink",
+            "Properties": {
+              "lit": "true"
+            }
+          }
+        },
+        {
+          "input_predicate": {
+            "block": "actuallyadditions:lamp_white",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.0625
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "actuallyadditions:lamp_gray",
+            "Properties": {
+              "lit": "true"
+            }
+          }
+        },
+        {
+          "input_predicate": {
+            "block": "actuallyadditions:lamp_white",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.0625
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "actuallyadditions:lamp_light_gray",
+            "Properties": {
+              "lit": "true"
+            }
+          }
+        },
+        {
+          "input_predicate": {
+            "block": "actuallyadditions:lamp_white",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.0625
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "actuallyadditions:lamp_cyan",
+            "Properties": {
+              "lit": "true"
+            }
+          }
+        },
+        {
+          "input_predicate": {
+            "block": "actuallyadditions:lamp_white",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.0625
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "actuallyadditions:lamp_purple",
+            "Properties": {
+              "lit": "true"
+            }
+          }
+        },
+        {
+          "input_predicate": {
+            "block": "actuallyadditions:lamp_white",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.0625
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "actuallyadditions:lamp_blue",
+            "Properties": {
+              "lit": "true"
+            }
+          }
+        },
+        {
+          "input_predicate": {
+            "block": "actuallyadditions:lamp_white",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.0625
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "actuallyadditions:lamp_brown",
+            "Properties": {
+              "lit": "true"
+            }
+          }
+        },
+        {
+          "input_predicate": {
+            "block": "actuallyadditions:lamp_white",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.0625
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "actuallyadditions:lamp_green",
+            "Properties": {
+              "lit": "true"
+            }
+          }
+        },
+        {
+          "input_predicate": {
+            "block": "actuallyadditions:lamp_white",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.0625
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "actuallyadditions:lamp_red",
+            "Properties": {
+              "lit": "true"
+            }
+          }
+        },
+        {
+          "input_predicate": {
+            "block": "actuallyadditions:lamp_white",
+            "predicate_type": "minecraft:random_block_match",
+            "probability": 0.0625
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "actuallyadditions:lamp_black",
+            "Properties": {
+              "lit": "true"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

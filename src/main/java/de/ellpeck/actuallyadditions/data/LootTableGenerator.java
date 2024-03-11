@@ -2,13 +2,16 @@ package de.ellpeck.actuallyadditions.data;
 
 
 import com.google.common.collect.ImmutableSet;
+import de.ellpeck.actuallyadditions.api.ActuallyTags;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
+import de.ellpeck.actuallyadditions.mod.misc.DungeonLoot;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.data.loot.LootTableProvider;
+import net.minecraft.data.loot.LootTableSubProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Item;
@@ -19,17 +22,21 @@ import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.ValidationContext;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.entries.TagEntry;
 import net.minecraft.world.level.storage.loot.functions.CopyNbtFunction;
+import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.providers.nbt.ContextNbtProvider;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
 import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -37,7 +44,8 @@ import java.util.stream.Collectors;
 public class LootTableGenerator extends LootTableProvider {
     public LootTableGenerator(PackOutput packOutput) {
         super(packOutput, Set.of(), List.of(
-                new SubProviderEntry(Blocks::new, LootContextParamSets.BLOCK)
+                new SubProviderEntry(Blocks::new, LootContextParamSets.BLOCK),
+                new SubProviderEntry(Dungeon::new, LootContextParamSets.CHEST)
         ));
     }
 
@@ -238,6 +246,29 @@ public class LootTableGenerator extends LootTableProvider {
             );
 
             return ActuallyBlocks.BLOCKS.getEntries().stream().map(DeferredHolder::get).filter(e -> !ignoreForNow.contains(e)).collect(Collectors.toList());
+        }
+    }
+
+    public static class Dungeon implements LootTableSubProvider {
+        @Override
+        public void generate(BiConsumer<ResourceLocation, LootTable.Builder> pOutput) {
+            //                addCrystals = true;
+
+            pOutput.accept(
+                    DungeonLoot.ENGINEER_HOUSE,
+                    LootTable.lootTable()
+                            .withPool(
+                                    LootPool.lootPool()
+                                            .setRolls(UniformGenerator.between(4.0F, 7.0F))
+                                            .add(LootItem.lootTableItem(ActuallyBlocks.WOOD_CASING.getItem()).setWeight(60).apply(SetItemCountFunction.setCount(UniformGenerator.between(3.0F, 10.0F))))
+                                            .add(LootItem.lootTableItem(ActuallyBlocks.IRON_CASING.getItem()).setWeight(40).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))))
+                                            .add(LootItem.lootTableItem(ActuallyItems.BLACK_QUARTZ.get()).setWeight(20).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 5.0F))))
+                                            .add(LootItem.lootTableItem(ActuallyItems.BATS_WING.get()).setWeight(5).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
+                                            .add(LootItem.lootTableItem(ActuallyItems.DRILL_CORE.get()).setWeight(5))
+                                            .add(TagEntry.expandTag(ActuallyTags.Items.CRYSTALS).setWeight(20).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))))
+                                            .add(TagEntry.expandTag(ActuallyTags.Items.CRYSTALS).setWeight(3).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))))
+                            )
+            );
         }
     }
 }

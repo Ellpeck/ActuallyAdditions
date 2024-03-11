@@ -10,13 +10,16 @@
 
 package de.ellpeck.actuallyadditions.mod.misc;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import net.minecraft.resources.ResourceLocation;
+
 // TODO: [port] MOVE OVER TO DATA GENS
 @Deprecated
 public class DungeonLoot {
     //
     //    public static final ResourceLocation JAM_HOUSE = new ResourceLocation(ActuallyAdditions.MODID, "jam_house");
     //    public static final ResourceLocation LUSH_CAVES = new ResourceLocation(ActuallyAdditions.MODID, "lush_caves");
-    //    public static final ResourceLocation ENGINEER_HOUSE = new ResourceLocation(ActuallyAdditions.MODID, "engineer_house");
+        public static final ResourceLocation ENGINEER_HOUSE = new ResourceLocation(ActuallyAdditions.MODID, "engineer_house");
     //
     //    public DungeonLoot() {
     //        LootTableList.register(JAM_HOUSE);

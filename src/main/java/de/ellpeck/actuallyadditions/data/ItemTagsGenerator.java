@@ -39,6 +39,10 @@ public class ItemTagsGenerator extends ItemTagsProvider {
                 .add(ActuallyItems.RESTONIA_CRYSTAL.get(), ActuallyItems.PALIS_CRYSTAL.get(),
                         ActuallyItems.DIAMATINE_CRYSTAL.get(), ActuallyItems.VOID_CRYSTAL.get(),
                         ActuallyItems.EMERADIC_CRYSTAL.get(), ActuallyItems.ENORI_CRYSTAL.get());
+        this.tag(ActuallyTags.Items.CRYSTAL_BLOCKS)
+                .add(ActuallyBlocks.RESTONIA_CRYSTAL.getItem(), ActuallyBlocks.PALIS_CRYSTAL.getItem(),
+                        ActuallyBlocks.DIAMATINE_CRYSTAL.getItem(), ActuallyBlocks.VOID_CRYSTAL.getItem(),
+                        ActuallyBlocks.EMERADIC_CRYSTAL.getItem(), ActuallyBlocks.ENORI_CRYSTAL.getItem());
 
         tag(Tags.Items.SLIMEBALLS)
                 .add(ActuallyItems.RICE_SLIMEBALL.get());

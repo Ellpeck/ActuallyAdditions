@@ -24,6 +24,7 @@ public final class ActuallyTags {
         public static final TagKey<Item> TINY_COALS = tag("tiny_coals");
         public static final TagKey<Item> HOLDS_ITEMS = ItemTags.create(new ResourceLocation("forge", "holds_items"));
         public static final TagKey<Item> CRYSTALS = tag("crystals");
+        public static final TagKey<Item> CRYSTAL_BLOCKS = tag("crystal_blocks");
         public static final TagKey<Item> SEEDS_RICE = ItemTags.create(new ResourceLocation("forge", "seeds/rice"));
         public static final TagKey<Item> SEEDS_COFFEE = ItemTags.create(new ResourceLocation("forge", "seeds/coffee"));
         public static final TagKey<Item> SEEDS_CANOLA = ItemTags.create(new ResourceLocation("forge", "seeds/canola"));
