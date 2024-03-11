@@ -13,7 +13,6 @@ package de.ellpeck.actuallyadditions.mod.items;
 import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -27,14 +26,16 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.EventHooks;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
@@ -42,42 +43,39 @@ public class ItemWaterBowl extends ItemBase {
 
     public ItemWaterBowl() {
         super(ActuallyItems.defaultProps().stacksTo(1));
-        //MinecraftForge.EVENT_BUS.register(this);
+        NeoForge.EVENT_BUS.register(this);
     }
 
     @SubscribeEvent
     public void onPlayerInteractEvent(PlayerInteractEvent.RightClickItem event) {
-        if (event.getLevel() != null) {
-            if (CommonConfig.Other.WATER_BOWL.get()) {
-                if (!event.getItemStack().isEmpty() && event.getItemStack().getItem() == Items.BOWL) {
-                    HitResult rayTrace = event.getEntity().pick(Util.getReachDistance(event.getEntity()), 1f, true);
-                    if (rayTrace.getType() != HitResult.Type.BLOCK) {
-                        return;
-                    }
+        if (event.getLevel() != null && CommonConfig.Other.WATER_BOWL.get()) {
+            if (!event.getItemStack().isEmpty() && event.getItemStack().is(Items.BOWL)) {
+                BlockHitResult trace = getPlayerPOVHitResult(
+                        event.getLevel(), event.getEntity(), ClipContext.Fluid.SOURCE_ONLY //Using pick will also return flowing water
+                );
+                if (trace.getType() != HitResult.Type.BLOCK) {
+                    return;
+                }
 
-                    BlockHitResult trace = (BlockHitResult) rayTrace;
-                    InteractionResultHolder<ItemStack> result = EventHooks.onBucketUse(event.getEntity(), event.getLevel(), event.getItemStack(), trace);
-                    if (result == null) {
-                        if (event.getEntity().mayUseItemAt(trace.getBlockPos().relative(trace.getDirection()), trace.getDirection(), event.getItemStack())) {
-                            BlockState state = event.getLevel().getBlockState(trace.getBlockPos());
-                            Block block = state.getBlock();
+                InteractionResultHolder<ItemStack> result = EventHooks.onBucketUse(event.getEntity(), event.getLevel(), event.getItemStack(), trace);
+                if (result == null) {
+                    if (event.getEntity().mayUseItemAt(trace.getBlockPos().relative(trace.getDirection()), trace.getDirection(), event.getItemStack())) {
+                        BlockState state = event.getLevel().getBlockState(trace.getBlockPos());
 
-                            // TODO: Validate fluid check
-                            if ((block == Blocks.WATER) && state.getValue(BlockStateProperties.LEVEL) == 0) {
-                                event.getEntity().playSound(SoundEvents.BUCKET_FILL, 1.0F, 1.0F);
+                        if (state.getFluidState().is(Fluids.WATER) && state.getValue(BlockStateProperties.LEVEL) == 0) {
+                            event.getEntity().playSound(SoundEvents.BUCKET_FILL, 1.0F, 1.0F);
 
-                                if (!event.getLevel().isClientSide) {
-                                    event.getLevel().setBlock(trace.getBlockPos(), Blocks.AIR.defaultBlockState(), 11);
-                                    ItemStack reduced = StackUtil.shrink(event.getItemStack(), 1);
+                            if (!event.getLevel().isClientSide) {
+                                event.getLevel().setBlock(trace.getBlockPos(), Blocks.AIR.defaultBlockState(), 11);
+                                ItemStack reduced = StackUtil.shrink(event.getItemStack(), 1);
 
-                                    ItemStack bowl = new ItemStack(ActuallyItems.WATER_BOWL.get());
-                                    if (!StackUtil.isValid(reduced)) {
-                                        event.getEntity().setItemInHand(event.getHand(), bowl);
-                                    } else if (!event.getEntity().getInventory().add(bowl.copy())) {
-                                        ItemEntity entityItem = new ItemEntity(event.getLevel(), event.getEntity().getX(), event.getEntity().getY(), event.getEntity().getZ(), bowl.copy());
-                                        entityItem.setPickUpDelay(0);
-                                        event.getLevel().addFreshEntity(entityItem);
-                                    }
+                                ItemStack bowl = new ItemStack(ActuallyItems.WATER_BOWL.get());
+                                if (!StackUtil.isValid(reduced)) {
+                                    event.getEntity().setItemInHand(event.getHand(), bowl);
+                                } else if (!event.getEntity().getInventory().add(bowl.copy())) {
+                                    ItemEntity entityItem = new ItemEntity(event.getLevel(), event.getEntity().getX(), event.getEntity().getY(), event.getEntity().getZ(), bowl.copy());
+                                    entityItem.setPickUpDelay(0);
+                                    event.getLevel().addFreshEntity(entityItem);
                                 }
                             }
                         }
