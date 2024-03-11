@@ -383,6 +383,22 @@ public class BlockRecipeGenerator extends RecipeProvider {
                 .define('C', ActuallyBlocks.CRUSHER.get())
                 .define('I', ActuallyBlocks.IRON_CASING.get())
                 .save(recipeOutput);
+
+        // Energizer
+        Recipe.shaped(ActuallyBlocks.ENERGIZER.getItem())
+                .pattern("R R", "AIA", "R R")
+                .define('R', ActuallyItems.RESTONIA_CRYSTAL.get())
+                .define('A', ActuallyItems.ADVANCED_COIL.get())
+                .define('I', ActuallyBlocks.IRON_CASING.get())
+                .save(recipeOutput);
+
+        // Enervator
+        Recipe.shaped(ActuallyBlocks.ENERVATOR.getItem())
+                .pattern(" R ", "AIA", " R ")
+                .define('R', ActuallyItems.RESTONIA_CRYSTAL.get())
+                .define('A', ActuallyItems.ADVANCED_COIL.get())
+                .define('I', ActuallyBlocks.IRON_CASING.get())
+                .save(recipeOutput);
     }
 
     public static class Recipe {

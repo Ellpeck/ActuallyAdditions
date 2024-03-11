@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "actuallyadditions:advanced_coil"
+    },
+    "I": {
+      "item": "actuallyadditions:iron_casing"
+    },
+    "R": {
+      "item": "actuallyadditions:restonia_crystal"
+    }
+  },
+  "pattern": [
+    " R ",
+    "AIA",
+    " R "
+  ],
+  "result": {
+    "item": "actuallyadditions:enervator"
+  }
+}

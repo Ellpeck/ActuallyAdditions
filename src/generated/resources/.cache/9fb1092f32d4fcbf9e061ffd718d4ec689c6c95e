@@ -1,4 +1,4 @@
-// 1.20.4	2024-03-11T01:01:47.8093462	Recipes
+// 1.20.4	2024-03-11T02:13:51.6169998	Recipes
 4d3128b37a7153882a9324cda49b5069207561c5 data/actuallyadditions/recipes/atomic_reconstructor.json
 b0367f5012651764931e8b8fd0c5bcca4e8614c0 data/actuallyadditions/recipes/battery_box.json
 7e05cd54092b998dfdbd2221235dd52576ec79eb data/actuallyadditions/recipes/black_quartz_block.json
@@ -26,6 +26,8 @@ e091d7dcfe6a654a122b5f072a133ec656d4b8f7 data/actuallyadditions/recipes/crusher_
 f6a581219fbfde8c67edc59318f92cc719597c4f data/actuallyadditions/recipes/dropper.json
 7c9a004460b6eb6c6e07cedfa086294d59e5eec5 data/actuallyadditions/recipes/empowerer.json
 5801963cf623f873cdb254513c1b4b5ec319dd74 data/actuallyadditions/recipes/ender_casing.json
+87c24522b48b28bcf1996e7df01313fead1c1890 data/actuallyadditions/recipes/energizer.json
+f44feb3591a63e24a37bc6bc0463dcd425b29e2b data/actuallyadditions/recipes/enervator.json
 b2eefc77a753cbb650a879a9d30d833fc154dc58 data/actuallyadditions/recipes/ethetic_green_slab.json
 1171daf9cf5402c9c47a9f2f370d5924ebddef5e data/actuallyadditions/recipes/ethetic_green_stairs.json
 0e57ac576603b7c6aeef7709d2e669e3dacbe5f2 data/actuallyadditions/recipes/ethetic_green_wall.json
