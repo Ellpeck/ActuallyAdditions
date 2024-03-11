@@ -18,13 +18,12 @@ import java.util.List;
 
 public class ActuallyPlacedFeatures {
 	public static final ResourceKey<PlacedFeature> PLACED_ORE_BLACK_QUARTZ = PlacementUtils.createKey("actuallyadditions:ore_black_quartz");
-//	public static final ResourceKey<PlacedFeature> PLACED_ORE_BLACK_QUARTZ_BURIED = PlacementUtils.createKey("actuallyadditions:ore_black_quartz_buried");
-	
+
 	public static void bootstrap(BootstapContext<PlacedFeature> context) {
 		HolderGetter<ConfiguredFeature<?, ?>> holdergetter = context.lookup(Registries.CONFIGURED_FEATURE);
 
 		PlacementUtils.register(context, PLACED_ORE_BLACK_QUARTZ, holdergetter.getOrThrow(ActuallyConfiguredFeatures.ORE_BLACK_QUARTZ),
-				commonOrePlacement(8, HeightRangePlacement.triangle(VerticalAnchor.absolute(0), VerticalAnchor.absolute(45))));
+				commonOrePlacement(8, HeightRangePlacement.triangle(VerticalAnchor.absolute(-25), VerticalAnchor.absolute(45))));
 	}
 
 	private static List<PlacementModifier> orePlacement(PlacementModifier modifier, PlacementModifier modifier1) {

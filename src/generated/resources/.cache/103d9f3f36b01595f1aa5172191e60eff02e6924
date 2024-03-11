@@ -1,6 +1,6 @@
-// 1.20.4	2024-03-11T17:48:44.6414485	Registries
+// 1.20.4	2024-03-11T21:40:12.7830455	Registries
 020d2b1f1c21d6c6663ef8126a52e2b9deb0e52e data/actuallyadditions/damage_type/atomicreconstructor.json
 4ba41428fdcf03f52855029153722e22e8702823 data/actuallyadditions/neoforge/biome_modifier/add_black_quartz.json
-3c9f4fbfed04f0e75ea7b370aa2f8acc531a63bb data/actuallyadditions/worldgen/configured_feature/ore_black_quartz.json
-fce2111f746f4c6ddef5444d84a5c2b574efaaa0 data/actuallyadditions/worldgen/placed_feature/ore_black_quartz.json
+80765c24aa747df53139d14a9ac3293b4b3eab16 data/actuallyadditions/worldgen/configured_feature/ore_black_quartz.json
+efb41395b407edbd91712bcb63976de46fed5d04 data/actuallyadditions/worldgen/placed_feature/ore_black_quartz.json
 7cf126882346a296f045db75facf741c77b7d3b1 data/actuallyadditions/worldgen/processor_list/engineer_house.json
