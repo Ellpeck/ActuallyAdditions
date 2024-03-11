@@ -30,17 +30,6 @@ public class BlockGreenhouseGlass extends BlockBase {
         super(ActuallyBlocks.defaultPickProps(0.5F, 10.0F).sound(SoundType.GLASS).randomTicks());
     }
 
-
-    // TODO: [port] figure this out
-    //    @Override
-    //    @Deprecated
-    //    @OnlyIn(Dist.CLIENT)
-    //    public boolean shouldSideBeRendered(BlockState state, IBlockAccess world, BlockPos pos, Direction side) {
-    //        BlockState otherState = world.getBlockState(pos.offset(side));
-    //        Block block = otherState.getBlock();
-    //
-    //        return state != otherState || block != this && super.shouldSideBeRendered(state, world, pos, side);
-    //    }
     @Override
     public boolean skipRendering(BlockState state, BlockState adjacentState, Direction side) {
         return adjacentState.is(this) ? true : super.skipRendering(state, adjacentState, side);
