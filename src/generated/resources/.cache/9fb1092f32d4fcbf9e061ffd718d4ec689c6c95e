@@ -1,4 +1,4 @@
-// 1.20.4	2024-03-11T02:13:51.6169998	Recipes
+// 1.20.4	2024-03-11T22:16:44.4386235	Recipes
 4d3128b37a7153882a9324cda49b5069207561c5 data/actuallyadditions/recipes/atomic_reconstructor.json
 b0367f5012651764931e8b8fd0c5bcca4e8614c0 data/actuallyadditions/recipes/battery_box.json
 7e05cd54092b998dfdbd2221235dd52576ec79eb data/actuallyadditions/recipes/black_quartz_block.json
@@ -49,6 +49,7 @@ ff81da8a0f6632779414c0512100696a11771814 data/actuallyadditions/recipes/hopping_
 4acb117a6727554073a78ed81bcd2b0b1af53bec data/actuallyadditions/recipes/laser_relay_item_advanced.json
 2c37821d291542d4821842501e07bfad38181553 data/actuallyadditions/recipes/lava_factory_casing.json
 76f9eb2b859198eec4c50d992c3715633d5109a8 data/actuallyadditions/recipes/lava_factory_controller.json
+1e3936f80be1540cd3d6ed570c1ed6381227db7d data/actuallyadditions/recipes/leaf_generator.json
 73696fd4e851f440a9850485fc9ad03fc63442a9 data/actuallyadditions/recipes/oil_generator.json
 8c78ebb9351b98ffe368391a391b90385c0b8b7f data/actuallyadditions/recipes/placer.json
 184acfb5fd3799b3fbe35150c67b6530581f8bf1 data/actuallyadditions/recipes/powered_furnace.json

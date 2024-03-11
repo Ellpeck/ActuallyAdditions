@@ -11,11 +11,12 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
-import de.ellpeck.actuallyadditions.mod.config.values.ConfigIntValues;
+import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -24,9 +25,9 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TileEntityLeafGenerator extends TileEntityBase implements ISharingEnergyProvider, IEnergyDisplay {
 
@@ -62,25 +63,19 @@ public class TileEntityLeafGenerator extends TileEntityBase implements ISharingE
 
             if (!tile.isRedstonePowered) {
 
-                if (tile.nextUseCounter >= ConfigIntValues.LEAF_GENERATOR_COOLDOWN.getValue()) {
+                if (tile.nextUseCounter >= CommonConfig.Machines.LEAF_GENERATOR_COOLDOWN.get()) {
                     tile.nextUseCounter = 0;
 
-                    int energyProduced = ConfigIntValues.LEAF_GENERATOR_CF_PER_LEAF.getValue();
+                    int energyProduced = CommonConfig.Machines.LEAF_GENERATOR_CF_PER_LEAF.get();
                     if (energyProduced > 0 && energyProduced <= tile.storage.getMaxEnergyStored() - tile.storage.getEnergyStored()) {
-                        List<BlockPos> breakPositions = new ArrayList<>();
-
-                        int range = ConfigIntValues.LEAF_GENERATOR_AREA.getValue();
-                        for (int reachX = -range; reachX < range + 1; reachX++) {
-                            for (int reachZ = -range; reachZ < range + 1; reachZ++) {
-                                for (int reachY = -range; reachY < range + 1; reachY++) {
-                                    BlockPos offsetPos = pos.offset(reachX, reachY, reachZ);
-                                    Block block = level.getBlockState(offsetPos).getBlock();
-                                    if (block instanceof LeavesBlock) { // TODO: [port] validate tile is a good way of checking if something is a leaf
-                                        breakPositions.add(offsetPos);
-                                    }
-                                }
-                            }
-                        }
+                        int range = CommonConfig.Machines.LEAF_GENERATOR_AREA.get();
+                        List<BlockPos> breakPositions = BlockPos.betweenClosedStream(
+                                pos.offset(-range, -range, -range),
+                                pos.offset(range, range, range)).map(BlockPos::immutable).collect(Collectors.toList());
+                        breakPositions.removeIf(blockPos -> {
+                            BlockState offsetState = level.getBlockState(blockPos);
+                            return !(offsetState.getBlock() instanceof LeavesBlock || offsetState.is(BlockTags.LEAVES));
+                        });
 
                         if (!breakPositions.isEmpty()) {
                             Collections.shuffle(breakPositions);

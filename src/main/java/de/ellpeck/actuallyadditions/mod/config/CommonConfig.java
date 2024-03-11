@@ -42,6 +42,9 @@ public class CommonConfig {
         public static ModConfigSpec.IntValue OIL_GENERATOR_TRANSFER;
         public static ModConfigSpec.IntValue MINER_LENS_ENERGY;
         public static ModConfigSpec.BooleanValue LASER_RELAY_LOSS;
+        public static ModConfigSpec.IntValue LEAF_GENERATOR_COOLDOWN;
+        public static ModConfigSpec.IntValue LEAF_GENERATOR_CF_PER_LEAF;
+        public static ModConfigSpec.IntValue LEAF_GENERATOR_AREA;
 
         public static void build() {
             BUILDER.comment("Machine Settings").push("machineSettings");
@@ -51,6 +54,9 @@ public class CommonConfig {
             OIL_GENERATOR_TRANSFER = BUILDER.comment("The amount of power the oil generator can transfer per tick.").defineInRange("oilGeneratorTransfer", 500, 100, Integer.MAX_VALUE);
             MINER_LENS_ENERGY = BUILDER.comment("The energy use of the Atomic Reconstructor's Mining Lens.").defineInRange("minerLensEnergy", 60000, 1, Integer.MAX_VALUE);
             LASER_RELAY_LOSS = BUILDER.comment("If Energy Laser Relays should have energy loss.").define("laserRelayLoss", true);
+            LEAF_GENERATOR_COOLDOWN = BUILDER.comment("The cooldown between two generation cycles of the Leaf Generator, in ticks").defineInRange("leafGeneratorCooldown", 5, 1, Integer.MAX_VALUE);
+            LEAF_GENERATOR_CF_PER_LEAF = BUILDER.comment("The Leaf Generator's Energy Production in CF/Leaf").defineInRange("leafGeneratorCPPerLeaf", 300, 1, Integer.MAX_VALUE);
+            LEAF_GENERATOR_AREA = BUILDER.comment("The size of the Leaf Generator's harvesting area.  Default is 7x7x7, must be an odd number.").defineInRange("leafGeneratorArea", 7, 1, Integer.MAX_VALUE);
 
             BUILDER.pop();
         }

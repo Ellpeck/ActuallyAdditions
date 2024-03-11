@@ -399,6 +399,16 @@ public class BlockRecipeGenerator extends RecipeProvider {
                 .define('A', ActuallyItems.ADVANCED_COIL.get())
                 .define('I', ActuallyBlocks.IRON_CASING.get())
                 .save(recipeOutput);
+
+        // Leaf-eating Generator
+        Recipe.shaped(ActuallyBlocks.LEAF_GENERATOR.getItem())
+                .pattern("CIC", "ELE", "CAC")
+                .define('C', ActuallyItems.ENORI_CRYSTAL.get())
+                .define('I', ActuallyBlocks.IRON_CASING.get())
+                .define('E', ActuallyBlocks.EMPOWERED_RESTONIA_CRYSTAL.get())
+                .define('L', ItemTags.LEAVES)
+                .define('A', ActuallyItems.ADVANCED_COIL.get())
+                .save(recipeOutput);
     }
 
     public static class Recipe {
