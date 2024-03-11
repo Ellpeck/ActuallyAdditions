@@ -10,19 +10,23 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory;
 
+import com.mojang.datafixers.util.Pair;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotOutput;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityEnervator;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.capabilities.Capabilities;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
@@ -64,13 +68,11 @@ public class ContainerEnervator extends AbstractContainerMenu {
                     return StackUtil.isValid(stack) && stack.getItem() instanceof ArmorItem;
                 }
 
-                // TODO: [port] add this back
-
-                //                @Override
-                //                @OnlyIn(Dist.CLIENT)
-                //                public String getSlotTexture() {
-                //                    return ItemArmor.EMPTY_SLOT_NAMES[slot.getIndex()];
-                //                }
+                @Nullable
+                @Override
+                public Pair<ResourceLocation, ResourceLocation> getNoItemIcon() {
+                    return Pair.of(InventoryMenu.BLOCK_ATLAS, InventoryMenu.TEXTURE_EMPTY_SLOTS[slot.getIndex()]);
+                }
             });
         }
     }

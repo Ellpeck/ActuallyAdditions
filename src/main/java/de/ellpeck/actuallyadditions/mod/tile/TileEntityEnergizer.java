@@ -64,7 +64,7 @@ public class TileEntityEnergizer extends TileEntityInventoryBase implements Menu
         if (t instanceof TileEntityEnergizer tile) {
             tile.serverTick();
 
-            if (StackUtil.isValid(tile.inv.getStackInSlot(0)) && !StackUtil.isValid(tile.inv.getStackInSlot(1))) {
+            if (!tile.inv.getStackInSlot(0).isEmpty() && tile.inv.getStackInSlot(1).isEmpty()) {
                 if (tile.storage.getEnergyStored() > 0) {
                     Optional<IEnergyStorage> capability = Optional.ofNullable(tile.inv.getStackInSlot(0).getCapability(Capabilities.EnergyStorage.ITEM, null));
 
@@ -109,7 +109,7 @@ public class TileEntityEnergizer extends TileEntityInventoryBase implements Menu
 
     @Override
     public Component getDisplayName() {
-        return Component.empty();
+        return Component.translatable("container.actuallyadditions.energizer");
     }
 
     @Nullable
