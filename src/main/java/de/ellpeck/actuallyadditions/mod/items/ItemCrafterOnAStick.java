@@ -17,6 +17,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.CraftingMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -34,7 +35,12 @@ public class ItemCrafterOnAStick extends ItemBase {
     @Override
     public InteractionResultHolder<ItemStack> use(Level world, @Nonnull Player player, @Nonnull InteractionHand hand) {
         if (!world.isClientSide) {
-            player.openMenu(new SimpleMenuProvider((windowId, playerInventory, playerEntity) -> new CraftingMenu(windowId, playerInventory), CONTAINER_TITLE));
+            player.openMenu(new SimpleMenuProvider((windowId, playerInventory, playerEntity) -> new CraftingMenu(windowId, playerInventory, ContainerLevelAccess.create(world, player.blockPosition())){
+                @Override
+                public boolean stillValid(Player playerIn) {
+                    return true;
+                }
+            }, CONTAINER_TITLE));
         }
         return new InteractionResultHolder<>(InteractionResult.SUCCESS, player.getItemInHand(hand));
     }
