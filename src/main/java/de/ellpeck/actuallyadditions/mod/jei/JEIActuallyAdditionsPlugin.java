@@ -77,8 +77,6 @@ public class JEIActuallyAdditionsPlugin implements IModPlugin {
         registry.addRecipeCatalyst(new ItemStack(ActuallyBlocks.CRUSHER.getItem()), CRUSHING);
         registry.addRecipeCatalyst(new ItemStack(ActuallyBlocks.CRUSHER_DOUBLE.getItem()), CRUSHING);
 
-//        registry.addRecipeCatalyst(new ItemStack(ActuallyBlocks.blockAtomicReconstructor.get()), ReconstructorRecipeCategory.NAME);
-//        registry.addRecipeCatalyst(new ItemStack(ActuallyBlocks.blockEmpowerer.get()), EmpowererRecipeCategory.NAME);
 //        registry.addRecipeCatalyst(new ItemStack(ActuallyItems.itemBooklet.get()), BookletRecipeCategory.NAME);
         //        registry.addRecipeCatalyst(new ItemStack(InitBlocks.blockCompost.get()), CompostRecipeCategory.NAME);
     }
@@ -94,7 +92,6 @@ public class JEIActuallyAdditionsPlugin implements IModPlugin {
         registry.addRecipes(PRESSING, level.getRecipeManager().getAllRecipesFor(ActuallyRecipes.Types.PRESSING.get()).stream().map(RecipeHolder::value).toList());
         registry.addRecipes(CRUSHING, level.getRecipeManager().getAllRecipesFor(ActuallyRecipes.Types.CRUSHING.get()).stream().map(RecipeHolder::value).toList());
         //registry.addRecipes(ActuallyAdditionsAPI.BOOKLET_PAGES_WITH_ITEM_OR_FLUID_DATA, BookletRecipeCategory.NAME);
-        //registry.addRecipes(ActuallyAdditionsAPI.CRUSHER_RECIPES, CrusherRecipeCategory.NAME);
     }
 
     @Override
@@ -116,12 +113,6 @@ public class JEIActuallyAdditionsPlugin implements IModPlugin {
 //        registry.handleRecipes(EmpowererRecipe.class, EmpowererRecipeWrapper::new, EmpowererRecipeCategory.NAME);
 //        registry.handleRecipes(CompostRecipe.class, CompostRecipeWrapper::new, CompostRecipeCategory.NAME);
 //
-//
-//
-//        registry.addRecipeClickArea(GuiCoffeeMachine.class, 53, 42, 22, 16, CoffeeMachineRecipeCategory.NAME);
-//        registry.addRecipeClickArea(GuiGrinder.class, 80, 40, 24, 22, CrusherRecipeCategory.NAME);
-//        registry.addRecipeClickArea(GuiGrinder.GuiGrinderDouble.class, 51, 40, 74, 22, CrusherRecipeCategory.NAME);
-//        registry.addRecipeClickArea(GuiFurnaceDouble.class, 51, 40, 74, 22, VanillaRecipeCategoryUid.SMELTING);
 //
 //        IIngredientBlacklist blacklist = helpers.getIngredientBlacklist();
 //        blacklist.addIngredientToBlacklist(new ItemStack(ActuallyBlocks.blockRice.get()));
