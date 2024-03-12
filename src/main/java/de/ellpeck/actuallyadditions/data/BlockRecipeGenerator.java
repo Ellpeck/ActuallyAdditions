@@ -461,6 +461,14 @@ public class BlockRecipeGenerator extends RecipeProvider {
                 .define('B', ActuallyItems.BASIC_COIL)
                 .define('C', ActuallyBlocks.WOOD_CASING.getItem())
                 .save(recipeOutput);
+
+        // Bio Reactor
+        Recipe.shaped(ActuallyBlocks.BIOREACTOR.getItem())
+                .pattern("EIE", "ESE", "EIE")
+                .define('E', ActuallyItems.EMPOWERED_ENORI_CRYSTAL)
+                .define('I', ActuallyBlocks.IRON_CASING.getItem())
+                .define('S', ItemTags.SAPLINGS)
+                .save(recipeOutput);
     }
 
     public static class Recipe {
