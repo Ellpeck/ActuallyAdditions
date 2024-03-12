@@ -1,0 +1,10 @@
+{
+  "type": "actuallyadditions:mining_lens",
+  "ingredient": {
+    "tag": "forge:netherrack"
+  },
+  "result": {
+    "item": "minecraft:ancient_debris"
+  },
+  "weight": 1
+}

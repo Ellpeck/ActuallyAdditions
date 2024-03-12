@@ -66,5 +66,6 @@ public class MiningLensGenerator extends RecipeProvider {
         buildStoneOre(consumer, 30, Items.EMERALD_ORE);
         buildNetherOre(consumer, 3000, Items.NETHER_QUARTZ_ORE);
         buildStoneOre(consumer, 3000, ActuallyBlocks.BLACK_QUARTZ_ORE.getItem());
+        buildNetherOre(consumer, 1, Items.ANCIENT_DEBRIS);
     }
 }
