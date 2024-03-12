@@ -22,6 +22,7 @@ import de.ellpeck.actuallyadditions.mod.jei.crusher.CrusherCategory;
 import de.ellpeck.actuallyadditions.mod.jei.empowerer.EmpowererRecipeCategory;
 import de.ellpeck.actuallyadditions.mod.jei.fermenting.FermentingCategory;
 import de.ellpeck.actuallyadditions.mod.jei.laser.LaserRecipeCategory;
+import de.ellpeck.actuallyadditions.mod.jei.lens.MiningLensRecipeCategory;
 import de.ellpeck.actuallyadditions.mod.jei.pressing.PressingCategory;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
@@ -52,6 +53,7 @@ public class JEIActuallyAdditionsPlugin implements IModPlugin {
     public static final RecipeType<EmpowererRecipe> EMPOWERER = RecipeType.create(ActuallyAdditions.MODID, "empowerer", EmpowererRecipe.class);
     public static final RecipeType<CoffeeIngredientRecipe> COFFEE_MACHINE = RecipeType.create(ActuallyAdditions.MODID, "coffee_machine", CoffeeIngredientRecipe.class);
     public static final RecipeType<CrushingRecipe> CRUSHING = RecipeType.create(ActuallyAdditions.MODID, "crushing", CrushingRecipe.class);
+    public static final RecipeType<MiningLensRecipe> MINING_LENS = RecipeType.create(ActuallyAdditions.MODID, "mining_lens", MiningLensRecipe.class);
 
     @Override
     public void registerCategories(IRecipeCategoryRegistration registry) {
@@ -63,6 +65,7 @@ public class JEIActuallyAdditionsPlugin implements IModPlugin {
         registry.addRecipeCategories(new CoffeeMachineCategory(helpers.getGuiHelper()));
         registry.addRecipeCategories(new PressingCategory(helpers.getGuiHelper()));
         registry.addRecipeCategories(new CrusherCategory(helpers.getGuiHelper()));
+        registry.addRecipeCategories(new MiningLensRecipeCategory(helpers.getGuiHelper()));
     }
 
     @Override
@@ -76,6 +79,7 @@ public class JEIActuallyAdditionsPlugin implements IModPlugin {
         registry.addRecipeCatalyst(new ItemStack(ActuallyBlocks.CANOLA_PRESS.getItem()), PRESSING);
         registry.addRecipeCatalyst(new ItemStack(ActuallyBlocks.CRUSHER.getItem()), CRUSHING);
         registry.addRecipeCatalyst(new ItemStack(ActuallyBlocks.CRUSHER_DOUBLE.getItem()), CRUSHING);
+        registry.addRecipeCatalyst(new ItemStack(ActuallyItems.LENS_OF_THE_MINER.get()), MINING_LENS);
 
 //        registry.addRecipeCatalyst(new ItemStack(ActuallyItems.itemBooklet.get()), BookletRecipeCategory.NAME);
         //        registry.addRecipeCatalyst(new ItemStack(InitBlocks.blockCompost.get()), CompostRecipeCategory.NAME);
@@ -91,6 +95,7 @@ public class JEIActuallyAdditionsPlugin implements IModPlugin {
         registry.addRecipes(COFFEE_MACHINE, level.getRecipeManager().getAllRecipesFor(ActuallyRecipes.Types.COFFEE_INGREDIENT.get()).stream().map(RecipeHolder::value).toList());
         registry.addRecipes(PRESSING, level.getRecipeManager().getAllRecipesFor(ActuallyRecipes.Types.PRESSING.get()).stream().map(RecipeHolder::value).toList());
         registry.addRecipes(CRUSHING, level.getRecipeManager().getAllRecipesFor(ActuallyRecipes.Types.CRUSHING.get()).stream().map(RecipeHolder::value).toList());
+        registry.addRecipes(MINING_LENS, level.getRecipeManager().getAllRecipesFor(ActuallyRecipes.Types.MINING_LENS.get()).stream().map(RecipeHolder::value).toList());
         //registry.addRecipes(ActuallyAdditionsAPI.BOOKLET_PAGES_WITH_ITEM_OR_FLUID_DATA, BookletRecipeCategory.NAME);
     }
 

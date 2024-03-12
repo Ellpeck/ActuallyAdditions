@@ -980,5 +980,7 @@
   "_comment": "JEI",
   "jei.actuallyadditions.coffee.special": "Special Feature",
   "jei.actuallyadditions.coffee.maxAmount": "Max Amount",
-  "jei.actuallyadditions.coffee.extra.milk": "+01:00, -1 Level"
+  "jei.actuallyadditions.coffee.extra.milk": "+01:00, -1 Level",
+  "jei.actuallyadditions.mining_lens": "Lens of the Miner",
+  "jei.actuallyadditions.mining_lens.weight": "Weight:"
 }
