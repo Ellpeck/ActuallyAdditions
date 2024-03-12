@@ -4,7 +4,6 @@
     "item": "minecraft:white_carpet"
   },
   "result": {
-    "count": 1,
-    "result": "minecraft:orange_carpet"
+    "item": "minecraft:orange_carpet"
   }
 }

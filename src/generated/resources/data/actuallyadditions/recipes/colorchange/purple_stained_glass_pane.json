@@ -4,7 +4,6 @@
     "item": "minecraft:cyan_stained_glass_pane"
   },
   "result": {
-    "count": 1,
-    "result": "minecraft:purple_stained_glass_pane"
+    "item": "minecraft:purple_stained_glass_pane"
   }
 }

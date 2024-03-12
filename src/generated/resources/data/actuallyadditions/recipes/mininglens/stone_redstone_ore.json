@@ -4,8 +4,7 @@
     "tag": "forge:stone"
   },
   "result": {
-    "count": 1,
-    "result": "minecraft:redstone_ore"
+    "item": "minecraft:redstone_ore"
   },
   "weight": 200
 }

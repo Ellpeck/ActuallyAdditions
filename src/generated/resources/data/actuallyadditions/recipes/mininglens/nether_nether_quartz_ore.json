@@ -4,8 +4,7 @@
     "tag": "forge:netherrack"
   },
   "result": {
-    "count": 1,
-    "result": "minecraft:nether_quartz_ore"
+    "item": "minecraft:nether_quartz_ore"
   },
   "weight": 3000
 }

@@ -78,7 +78,7 @@ public class ColorChangeRecipe implements Recipe<Container> {
     public static class Serializer implements RecipeSerializer<ColorChangeRecipe> {
         private static final Codec<ColorChangeRecipe> CODEC = RecordCodecBuilder.create(
                 instance -> instance.group(
-                                ItemStack.RESULT_CODEC.fieldOf("result").forGetter(recipe -> recipe.output),
+                                ItemStack.ITEM_WITH_COUNT_CODEC.fieldOf("result").forGetter(recipe -> recipe.output),
                                 Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(recipe -> recipe.input)
                         )
                         .apply(instance, ColorChangeRecipe::new)

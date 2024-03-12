@@ -4,7 +4,6 @@
     "item": "minecraft:red_glazed_terracotta"
   },
   "result": {
-    "count": 1,
-    "result": "minecraft:black_glazed_terracotta"
+    "item": "minecraft:black_glazed_terracotta"
   }
 }

@@ -4,8 +4,7 @@
     "tag": "forge:stone"
   },
   "result": {
-    "count": 1,
-    "result": "minecraft:diamond_ore"
+    "item": "minecraft:diamond_ore"
   },
   "weight": 50
 }

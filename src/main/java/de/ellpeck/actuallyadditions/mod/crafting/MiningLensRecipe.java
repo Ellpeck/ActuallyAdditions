@@ -85,7 +85,7 @@ public class MiningLensRecipe implements Recipe<Container>, WeightedEntry {
                 instance -> instance.group(
                                 Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(recipe -> recipe.input),
                                 Codec.INT.fieldOf("weight").forGetter(recipe -> recipe.weight),
-                                ItemStack.RESULT_CODEC.fieldOf("result").forGetter(recipe -> recipe.output)
+                                ItemStack.ITEM_WITH_COUNT_CODEC.fieldOf("result").forGetter(recipe -> recipe.output)
                         )
                         .apply(instance, MiningLensRecipe::new)
         );

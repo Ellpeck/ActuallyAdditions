@@ -142,7 +142,7 @@ public class EmpowererRecipe implements Recipe<Container> {
     public static class Serializer implements RecipeSerializer<EmpowererRecipe> {
         private static final Codec<EmpowererRecipe> CODEC = RecordCodecBuilder.create(
                 instance -> instance.group(
-                                ItemStack.RESULT_CODEC.fieldOf("result").forGetter(recipe -> recipe.output),
+                                ItemStack.ITEM_WITH_COUNT_CODEC.fieldOf("result").forGetter(recipe -> recipe.output),
                                 Ingredient.CODEC_NONEMPTY.fieldOf("base").forGetter(recipe -> recipe.input),
                                 Ingredient.CODEC_NONEMPTY
                                         .listOf()

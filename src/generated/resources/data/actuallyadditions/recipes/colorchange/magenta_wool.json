@@ -4,7 +4,6 @@
     "item": "minecraft:orange_wool"
   },
   "result": {
-    "count": 1,
-    "result": "minecraft:magenta_wool"
+    "item": "minecraft:magenta_wool"
   }
 }

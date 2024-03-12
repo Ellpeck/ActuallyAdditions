@@ -4,7 +4,6 @@
     "item": "minecraft:white_stained_glass"
   },
   "result": {
-    "count": 1,
-    "result": "minecraft:orange_stained_glass"
+    "item": "minecraft:orange_stained_glass"
   }
 }

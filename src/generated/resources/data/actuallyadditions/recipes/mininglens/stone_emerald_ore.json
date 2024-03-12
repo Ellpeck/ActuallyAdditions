@@ -4,8 +4,7 @@
     "tag": "forge:stone"
   },
   "result": {
-    "count": 1,
-    "result": "minecraft:emerald_ore"
+    "item": "minecraft:emerald_ore"
   },
   "weight": 30
 }
