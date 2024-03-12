@@ -79,7 +79,7 @@ public class GuiLaserRelayItemWhitelist extends AAScreen<ContainerLaserRelayItem
 //            List<String> list = new ArrayList<>();
 //            list.add(TextFormatting.BOLD + StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.smart"));
 //            list.addAll(this.font.listFormattedStringToWidth(StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.smartInfo"), 200));
-//            this.drawHoveringText(list, x, y);
+//            this.drawHoveringText(list, x, y); //renderComponentTooltip
 //        }
 
         this.leftFilter.drawHover(guiGraphics, x, y);

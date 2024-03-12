@@ -61,7 +61,7 @@ public class TexturedButton extends Button {
     public void drawHover(GuiGraphics guiGraphics, int x, int y) {
         if (this.isMouseOver(x, y)) {
             Minecraft mc = Minecraft.getInstance();
-            guiGraphics.renderComponentTooltip(mc.font, this.textList.stream().map(Component::literal).collect(Collectors.toList()), x, y); //TODO: Check if this is correct, used to call GuiUtils.drawHoveringText
+            guiGraphics.renderComponentTooltip(mc.font, this.textList.stream().map(Component::literal).collect(Collectors.toList()), x, y);
         }
     }
 }

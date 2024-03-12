@@ -88,7 +88,7 @@ public class FilterSettingsGui {
         }
         //TODO tooltips still jank
         if (!list.isEmpty()) {
-            guiGraphics.renderComponentTooltip(mc.font, list, mouseX, mouseY); //TODO: Check if this is correct, used to call GuiUtils.drawHoveringText
+            guiGraphics.renderComponentTooltip(mc.font, list, mouseX, mouseY);
         }
     }
 }

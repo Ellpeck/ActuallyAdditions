@@ -64,7 +64,7 @@ public class GuiPhantomPlacer extends AAScreen<ContainerPhantomPlacer> {
 //            List<String> textList = new ArrayList<>();
 //            textList.add(TextFormatting.GOLD + StringUtil.localize(loc + ".1"));
 //            textList.addAll(this.font.listFormattedStringToWidth(StringUtil.localize(loc + ".2"), 200));
-//            this.drawHoveringText(textList, mouseX, mouseY);
+//            this.drawHoveringText(textList, mouseX, mouseY); //renderComponentTooltip
 //        }
     }
 
