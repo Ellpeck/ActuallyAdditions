@@ -1,4 +1,4 @@
-// 1.20.4	2024-03-12T17:03:47.7860358	Recipes
+// 1.20.4	2024-03-12T17:11:30.554907	Recipes
 4d3128b37a7153882a9324cda49b5069207561c5 data/actuallyadditions/recipes/atomic_reconstructor.json
 b0367f5012651764931e8b8fd0c5bcca4e8614c0 data/actuallyadditions/recipes/battery_box.json
 dba5d4a1a79489d5766fad32f912ab1a64618854 data/actuallyadditions/recipes/bio_reactor.json
@@ -42,6 +42,7 @@ e2f9ec08306500d981cad22bc2cf7925712d08de data/actuallyadditions/recipes/fermenti
 2391a543a2e43ff5b87234a71d9bd339f9fa3e9c data/actuallyadditions/recipes/fluid_collector.json
 2614b2743071b86fd6d2cb92063c3e95a959e52c data/actuallyadditions/recipes/fluid_placer.json
 f9fe1f2a3e4a73f9cfd4cda43a19f4730f3f6963 data/actuallyadditions/recipes/greenhouse_glass.json
+31514bc8fb0636aa96e152d2c78ffdb56e0775aa data/actuallyadditions/recipes/heat_collector.json
 ff81da8a0f6632779414c0512100696a11771814 data/actuallyadditions/recipes/hopping_item_interface.json
 48d208a519aaa44547dbca19a57cc66e4e0ab46c data/actuallyadditions/recipes/iron_casing.json
 5d0c6fc708579565c21e0992796ba6f403473ed7 data/actuallyadditions/recipes/item_interface.json
