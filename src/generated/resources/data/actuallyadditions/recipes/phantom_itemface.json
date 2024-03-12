@@ -8,16 +8,16 @@
     "C": {
       "tag": "forge:chests/wooden"
     },
-    "D": {
-      "item": "actuallyadditions:empowered_diamatine_crystal"
-    },
     "E": {
       "item": "actuallyadditions:ender_casing"
+    },
+    "M": {
+      "item": "minecraft:phantom_membrane"
     }
   },
   "pattern": [
     " C ",
-    "DED",
+    "MEM",
     " A "
   ],
   "result": {
