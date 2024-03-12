@@ -262,7 +262,6 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay {
     @OnlyIn(Dist.CLIENT)
     public Component getExtraDisplayString() {
         return Component.translatable("info." + ActuallyAdditions.MODID + ".laserRelay.energy.extra").append(": ").append(Component.translatable(this.mode.name).withStyle(ChatFormatting.DARK_RED));
-
     }
 
     @Override

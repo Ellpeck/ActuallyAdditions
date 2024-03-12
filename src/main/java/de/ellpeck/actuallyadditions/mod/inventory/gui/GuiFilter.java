@@ -37,7 +37,7 @@ public class GuiFilter extends AAScreen<ContainerFilter> {
 
     @Override
     public void renderLabels(@Nonnull GuiGraphics guiGraphics, int x, int y) {
-        AssetUtil.displayNameString(guiGraphics, this.font, this.imageWidth, -10, I18n.get("container." + ActuallyAdditions.MODID + ".filter"));
+        AssetUtil.displayNameString(guiGraphics, this.font, this.imageWidth, -10, this.title.getString());
     }
 
     @Override

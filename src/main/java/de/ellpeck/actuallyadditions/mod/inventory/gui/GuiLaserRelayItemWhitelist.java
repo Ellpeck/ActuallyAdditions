@@ -13,23 +13,36 @@ package de.ellpeck.actuallyadditions.mod.inventory.gui;
 import com.mojang.blaze3d.systems.RenderSystem;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerLaserRelayItemWhitelist;
+import de.ellpeck.actuallyadditions.mod.network.PacketClientToServer;
+import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
+import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayItemAdvanced;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.resources.language.I18n;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.FormattedText;
+import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.entity.player.Inventory;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
 
 @OnlyIn(Dist.CLIENT)
 public class GuiLaserRelayItemWhitelist extends AAScreen<ContainerLaserRelayItemWhitelist> {
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_laser_relay_item_whitelist");
+    private final Component inboundText = Component.translatable("info." + ActuallyAdditions.MODID + ".gui.inbound");
+    private final Component outboundText = Component.translatable("info." + ActuallyAdditions.MODID + ".gui.outbound");
     private final TileEntityLaserRelayItemAdvanced tile;
 
     private FilterSettingsGui leftFilter;
@@ -57,43 +70,53 @@ public class GuiLaserRelayItemWhitelist extends AAScreen<ContainerLaserRelayItem
     public void init() {
         super.init();
 
-//        this.leftFilter = new FilterSettingsGui(this.tile.leftFilter, this.leftPos + 3, this.topPos + 6, this.buttonList);
-//        this.rightFilter = new FilterSettingsGui(this.tile.rightFilter, this.leftPos + 157, this.topPos + 6, this.buttonList);
-//
-//        this.buttonSmartWhitelistLeft = new Buttons.SmallerButton(2, this.leftPos + 3, this.topPos + 79, "S");
-//        this.buttonSmartWhitelistRight = new Buttons.SmallerButton(3, this.leftPos + 157, this.topPos + 79, "S");
-//        this.addButton(this.buttonSmartWhitelistLeft);
-//        this.addButton(this.buttonSmartWhitelistRight);
+        this.leftFilter = new FilterSettingsGui(this.tile.leftFilter, this.leftPos + 3, this.topPos + 6, this::addRenderableWidget, this::buttonClicked,  0);
+        this.rightFilter = new FilterSettingsGui(this.tile.rightFilter, this.leftPos + 157, this.topPos + 6, this::addRenderableWidget, this::buttonClicked,  4);
+
+        this.buttonSmartWhitelistLeft = this.addRenderableWidget(Button.builder(
+                        Component.literal("S"),
+                        (button) -> {
+                            PacketHandlerHelper.sendButtonPacket(this.tile, 2);
+                        }).bounds(this.leftPos + 3, this.topPos + 79, 16, 16)
+                .build());
+
+        this.buttonSmartWhitelistRight = this.addRenderableWidget(Button.builder(
+                        Component.literal("S"),
+                        (button) -> {
+                            PacketHandlerHelper.sendButtonPacket(this.tile, 3);
+                        }).bounds(this.leftPos + 157, this.topPos + 79, 16, 16)
+                .build());
     }
-//
-//    @Override
-//    public void actionPerformed(Button button) {
-//        PacketHandlerHelper.sendButtonPacket(this.tile, button.id);
-//    }
+
+    public void buttonClicked(int id) {
+        CompoundTag data = new CompoundTag();
+        data.putInt("ButtonID", id);
+        data.putInt("PlayerID", Minecraft.getInstance().player.getId());
+        data.putString("WorldID", Minecraft.getInstance().level.dimension().location().toString());
+        PacketDistributor.SERVER.noArg().send(new PacketClientToServer(data, PacketHandler.GUI_BUTTON_TO_CONTAINER_HANDLER));
+    }
 
     @Override
-    public void render(@Nonnull GuiGraphics guiGraphics, int x, int y, float f) {
-        super.render(guiGraphics, x, y, f);
-//
-//        if (this.buttonSmartWhitelistLeft.isMouseOver() || this.buttonSmartWhitelistRight.isMouseOver()) {
-//            List<String> list = new ArrayList<>();
-//            list.add(TextFormatting.BOLD + StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.smart"));
-//            list.addAll(this.font.listFormattedStringToWidth(StringUtil.localize("info." + ActuallyAdditions.MODID + ".gui.smartInfo"), 200));
-//            this.drawHoveringText(list, x, y); //renderComponentTooltip
-//        }
+    public void render(@Nonnull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+        super.render(guiGraphics, mouseX, mouseY, partialTicks);
 
-        this.leftFilter.drawHover(guiGraphics, x, y);
-        this.rightFilter.drawHover(guiGraphics, x, y);
+        if (this.buttonSmartWhitelistLeft.isMouseOver(mouseX, mouseY) || this.buttonSmartWhitelistRight.isMouseOver(mouseX, mouseY)) {
+            List<FormattedCharSequence> list = new ArrayList<>();
+            list.add(Component.translatable("info." + ActuallyAdditions.MODID + ".gui.smart").withStyle(ChatFormatting.BOLD).getVisualOrderText());
+            list.addAll(this.font.split(Component.translatable("info." + ActuallyAdditions.MODID + ".gui.smartInfo"), 200));
+            guiGraphics.renderTooltip(this.font, list, mouseX, mouseY); //renderTooltip
+        }
+
+        this.leftFilter.drawHover(guiGraphics, mouseX, mouseY);
+        this.rightFilter.drawHover(guiGraphics, mouseX, mouseY);
     }
 
     @Override
     public void renderLabels(@Nonnull GuiGraphics guiGraphics, int x, int y) {
-        AssetUtil.displayNameString(guiGraphics, this.font, this.imageWidth, -10, this.tile);
+        AssetUtil.displayNameString(guiGraphics, this.font, this.imageWidth, -10, this.title.getString());
 
-        String s1 = I18n.get("info." + ActuallyAdditions.MODID + ".gui.inbound");
-        String s2 = I18n.get("info." + ActuallyAdditions.MODID + ".gui.outbound");
-        guiGraphics.drawString(font, s1, 46 - this.font.width(s1) / 2, 80, 0x404040, false);
-        guiGraphics.drawString(font, s2, 131 - this.font.width(s2) / 2, 80, 0x404040, false);
+        guiGraphics.drawString(font, inboundText, 46 - this.font.width(inboundText) / 2, 80, 0x404040, false);
+        guiGraphics.drawString(font, outboundText, 131 - this.font.width(outboundText) / 2, 80, 0x404040, false);
     }
 
     @Override
@@ -103,6 +126,5 @@ public class GuiLaserRelayItemWhitelist extends AAScreen<ContainerLaserRelayItem
         guiGraphics.blit(AssetUtil.GUI_INVENTORY_LOCATION, this.leftPos, this.topPos + 93, 0, 0, 176, 86);
 
         guiGraphics.blit(RES_LOC, this.leftPos, this.topPos, 0, 0, 176, 93);
-
     }
 }

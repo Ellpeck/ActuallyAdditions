@@ -23,8 +23,8 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.api.distmarker.Dist;
@@ -58,7 +58,7 @@ public class RenderBatteryBox implements BlockEntityRenderer<TileEntityBatteryBo
             Font font = Minecraft.getInstance().font;
 
             String energyTotal = Lang.cleanEnergyValues(cap, false);
-            String energyName = I18n.get("misc.actuallyadditions.power_name_long");
+            Component energyName = Component.translatable("misc.actuallyadditions.power_name_long");
             float backgroundOpacity = Minecraft.getInstance().options.getBackgroundOpacity(0.25F);
             int j = (int) (backgroundOpacity * 255.0F) << 24;
 

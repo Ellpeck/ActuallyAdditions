@@ -19,7 +19,6 @@ import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -69,7 +68,7 @@ public class CoffeeMachineCategory implements IRecipeCategory<CoffeeIngredientRe
 		Minecraft mc = Minecraft.getInstance();
 		if (!Strings.isNullOrEmpty(recipe.getExtraText())) {
 			guiGraphics.drawString(mc.font, Component.translatable("jei." + ActuallyAdditions.MODID + ".coffee.special").append( ":"), 2, 4, 4210752, false);
-			guiGraphics.drawString(mc.font, I18n.get(recipe.getExtraText()), 2, 16, 4210752, false);
+			guiGraphics.drawString(mc.font, Component.literal(recipe.getExtraText()), 2, 16, 4210752, false);
 		}
 
 		if (recipe.getMaxAmplifier() > 0) {

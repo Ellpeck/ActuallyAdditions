@@ -24,7 +24,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
@@ -193,16 +192,17 @@ public class ClientEvents {
 
                 if (tileHit instanceof TileEntityBase base) {
 	                if (base.isRedstoneToggle()) {
-                        String strg = String.format("%s: %s", I18n.get("info." + ActuallyAdditions.MODID + ".redstoneMode"), ChatFormatting.DARK_RED + I18n.get("info." + ActuallyAdditions.MODID + ".redstoneMode." + (base.isPulseMode
+                        Component component = Component.translatable("info." + ActuallyAdditions.MODID + ".redstoneMode").append(": ")
+                                .append(Component.translatable("info." + ActuallyAdditions.MODID + ".redstoneMode." + (base.isPulseMode
                             ? "pulse"
-                            : "deactivation")) + ChatFormatting.RESET);
-                        guiGraphics.drawString(font, strg, (int) (event.getWindow().getGuiScaledWidth() / 2f + 5), (int) (event.getWindow().getGuiScaledHeight() / 2f + 5), 0xFFFFFF);
+                            : "deactivation")).withStyle(ChatFormatting.DARK_RED));
+                        guiGraphics.drawString(font, component, (int) (event.getWindow().getGuiScaledWidth() / 2f + 5), (int) (event.getWindow().getGuiScaledHeight() / 2f + 5), 0xFFFFFF);
 
-                        String expl;
+                        Component expl;
                         if (!stack.isEmpty() && stack.getItem() == CommonConfig.Other.redstoneConfigureItem) {
-                            expl = ChatFormatting.GREEN + I18n.get("info." + ActuallyAdditions.MODID + ".redstoneMode.validItem");
+                            expl = Component.translatable("info." + ActuallyAdditions.MODID + ".redstoneMode.validItem").withStyle(ChatFormatting.GREEN);
                         } else {
-                            expl = ChatFormatting.GRAY.toString() + ChatFormatting.ITALIC + I18n.get("info." + ActuallyAdditions.MODID + ".redstoneMode.invalidItem", I18n.get(CommonConfig.Other.redstoneConfigureItem.asItem().getDescriptionId()));
+                            expl = Component.translatable("info." + ActuallyAdditions.MODID + ".redstoneMode.invalidItem", Component.translatable(CommonConfig.Other.redstoneConfigureItem.asItem().getDescriptionId()).getString()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC);
                         }
                         guiGraphics.drawString(font, expl, (int) (event.getWindow().getGuiScaledWidth() / 2f + 5), (int) (event.getWindow().getGuiScaledHeight() / 2f + 15), 0xFFFFFF);
                     }

@@ -19,7 +19,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -154,7 +153,7 @@ public class BlockPhantom extends BlockContainerBase implements IHudDisplay {
         BlockEntity tile = minecraft.level.getBlockEntity(pos);
         if (tile != null) {
             if (tile instanceof IPhantomTile phantom) {
-                guiGraphics.drawString(minecraft.font, ChatFormatting.GOLD + I18n.get("tooltip." + ActuallyAdditions.MODID + ".blockPhantomRange.desc") + ": " + phantom.getRange(), resolution.getGuiScaledWidth() / 2 + 5, resolution.getGuiScaledHeight() / 2 - 40, ChatFormatting.WHITE.getColor());
+                guiGraphics.drawString(minecraft.font, Component.translatable("tooltip." + ActuallyAdditions.MODID + ".blockPhantomRange.desc").append(": " + phantom.getRange()).withStyle(ChatFormatting.GOLD), resolution.getGuiScaledWidth() / 2 + 5, resolution.getGuiScaledHeight() / 2 - 40, ChatFormatting.WHITE.getColor());
                 if (phantom.hasBoundPosition()) {
                     int distance = Mth.ceil(new Vec3(pos.getX(), pos.getY(), pos.getZ()).distanceTo(new Vec3(phantom.getBoundPosition().getX(), phantom.getBoundPosition().getY(), phantom.getBoundPosition().getZ())));
                     BlockState state = minecraft.level.getBlockState(phantom.getBoundPosition());
@@ -171,7 +170,7 @@ public class BlockPhantom extends BlockContainerBase implements IHudDisplay {
                         drawWordWrap(guiGraphics, minecraft.font, Component.translatable("tooltip.actuallyadditions.phantom.connectedNoRange.desc"), resolution.getGuiScaledWidth() / 2 + 5, resolution.getGuiScaledHeight() / 2 + 25, 200, 0xFFFFFF, true);
                     }
                 } else {
-                    guiGraphics.drawString(minecraft.font, ChatFormatting.RED + I18n.get("tooltip.actuallyadditions.phantom.notConnected.desc"), resolution.getGuiScaledWidth() / 2 + 5, resolution.getGuiScaledHeight() / 2 + 25, ChatFormatting.WHITE.getColor());
+                    guiGraphics.drawString(minecraft.font, Component.translatable("tooltip.actuallyadditions.phantom.notConnected.desc").withStyle(ChatFormatting.RED), resolution.getGuiScaledWidth() / 2 + 5, resolution.getGuiScaledHeight() / 2 + 25, ChatFormatting.WHITE.getColor());
                 }
             }
         }

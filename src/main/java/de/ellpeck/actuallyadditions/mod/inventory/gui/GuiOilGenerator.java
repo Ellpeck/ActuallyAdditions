@@ -16,7 +16,6 @@ import de.ellpeck.actuallyadditions.mod.inventory.ContainerOilGenerator;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityOilGenerator;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
@@ -70,7 +69,7 @@ public class GuiOilGenerator extends AAScreen<ContainerOilGenerator> {
         }
 
         if (this.generator.maxBurnTime > 0 && this.generator.currentEnergyProduce > 0) {
-            guiGraphics.drawCenteredString(this.font, this.generator.currentEnergyProduce + " " + I18n.get("misc.actuallyadditions.energy_tick"), this.leftPos + 87, this.topPos + 65, 0xFFFFFF);
+            guiGraphics.drawCenteredString(this.font, Component.literal(this.generator.currentEnergyProduce + " ").append(Component.translatable("misc.actuallyadditions.energy_tick")), this.leftPos + 87, this.topPos + 65, 0xFFFFFF);
             guiGraphics.drawCenteredString(this.font, "for " + this.generator.maxBurnTime + " t", this.leftPos + 87, this.topPos + 75, 0xFFFFFF);
             PoseStack poseStack = guiGraphics.pose();
             poseStack.pushPose();
