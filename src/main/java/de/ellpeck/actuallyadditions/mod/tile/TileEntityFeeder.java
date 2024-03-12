@@ -130,7 +130,7 @@ public class TileEntityFeeder extends TileEntityInventoryBase implements MenuPro
 
     @Override
     public Component getDisplayName() {
-        return Component.empty();
+        return Component.translatable("container.actuallyadditions.feeder");
     }
 
     @Nullable
