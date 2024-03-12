@@ -33,10 +33,7 @@ public class ParticleBeam extends Particle {
         public void begin(BufferBuilder buffer, TextureManager textureManager) {
             RenderSystem.disableCull();
             RenderSystem.enableBlend();
-            RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.SRC_ALPHA);
-            RenderSystem.enableDepthTest();
-            RenderSystem.depthFunc(515);
-            RenderSystem.depthMask(false);
+            RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE);
         }
 
         @Override
