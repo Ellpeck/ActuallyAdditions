@@ -54,7 +54,7 @@ public class TileEntityBioReactor extends TileEntityInventoryBase implements Men
     }
 
     public static boolean isValidItem(ItemStack stack) {
-        if (StackUtil.isValid(stack)) {
+        if (!stack.isEmpty()) {
             Item item = stack.getItem();
             if (item.isEdible()) {
                 return true;
@@ -85,7 +85,7 @@ public class TileEntityBioReactor extends TileEntityInventoryBase implements Men
                 if (!tile.isRedstonePowered && tile.storage.getEnergyStored() < tile.storage.getMaxEnergyStored()) {
                     for (int i = 0; i < tile.inv.getSlots(); i++) {
                         ItemStack stack = tile.inv.getStackInSlot(i);
-                        if (StackUtil.isValid(stack)) {
+                        if (!stack.isEmpty()) {
                             Item item = stack.getItem();
                             if (isValidItem(stack) && (types == null || !types.contains(item))) {
                                 if (types == null) {
@@ -187,7 +187,7 @@ public class TileEntityBioReactor extends TileEntityInventoryBase implements Men
 
     @Override
     public Component getDisplayName() {
-        return Component.empty();
+        return Component.translatable("container.actuallyadditions.bioReactor");
     }
 
     @Nullable

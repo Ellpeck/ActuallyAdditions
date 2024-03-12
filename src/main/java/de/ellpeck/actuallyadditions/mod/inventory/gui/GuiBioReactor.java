@@ -44,7 +44,7 @@ public class GuiBioReactor extends AAScreen<ContainerBioReactor> {
     @Override
     public void render(@Nonnull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
-        //this.energy.render(mouseX, mouseY);
+        this.energy.render(guiGraphics, mouseX, mouseY);
     }
 
     @Override
@@ -61,9 +61,9 @@ public class GuiBioReactor extends AAScreen<ContainerBioReactor> {
         }
 
         if (this.tile.producePerTick > 0) {
-            guiGraphics.drawCenteredString(this.font, this.tile.producePerTick + " " + I18n.get("actuallyadditions.cft"), this.leftPos + 87, this.topPos + 86, 0xFFFFFF);
+            guiGraphics.drawCenteredString(this.font, Component.literal(this.tile.producePerTick + " ").append(Component.translatable("misc.actuallyadditions.energy_tick")), this.leftPos + 87, this.topPos + 86, 0xFFFFFF);
         }
 
-        //this.energy.draw();
+        this.energy.draw(guiGraphics);
     }
 }
