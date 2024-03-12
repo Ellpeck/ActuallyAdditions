@@ -1,6 +1,7 @@
 package de.ellpeck.actuallyadditions.data;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.crafting.MiningLensRecipe;
 import de.ellpeck.actuallyadditions.mod.util.NoAdvRecipeOutput;
 import net.minecraft.data.PackOutput;
@@ -64,5 +65,6 @@ public class MiningLensGenerator extends RecipeProvider {
         buildStoneOre(consumer, 200, Items.REDSTONE_ORE);
         buildStoneOre(consumer, 30, Items.EMERALD_ORE);
         buildNetherOre(consumer, 3000, Items.NETHER_QUARTZ_ORE);
+        buildStoneOre(consumer, 3000, ActuallyBlocks.BLACK_QUARTZ_ORE.getItem());
     }
 }
