@@ -1,0 +1,16 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "elementalcraft"
+    }
+  ],
+  "type": "actuallyadditions:mining_lens",
+  "ingredient": {
+    "tag": "forge:stone"
+  },
+  "result": {
+    "item": "elementalcraft:inert_crystal_ore"
+  },
+  "weight": 500
+}

@@ -1,0 +1,16 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ],
+  "type": "actuallyadditions:mining_lens",
+  "ingredient": {
+    "tag": "forge:stone"
+  },
+  "result": {
+    "item": "mekanism:florite_ore"
+  },
+  "weight": 1000
+}

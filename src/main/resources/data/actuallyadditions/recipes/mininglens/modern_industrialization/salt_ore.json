@@ -1,0 +1,16 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "modern_industrialization"
+    }
+  ],
+  "type": "actuallyadditions:mining_lens",
+  "ingredient": {
+    "tag": "forge:stone"
+  },
+  "result": {
+    "item": "modern_industrialization:salt_ore"
+  },
+  "weight": 500
+}

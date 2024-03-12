@@ -1,0 +1,10 @@
+{
+  "type": "actuallyadditions:mining_lens",
+  "ingredient": {
+    "tag": "forge:stone"
+  },
+  "result": {
+    "item": "actuallyadditions:black_quartz_ore"
+  },
+  "weight": 3000
+}
