@@ -101,6 +101,7 @@ public abstract class TileEntityPhantomface extends TileEntityInventoryBase impl
             if (hasBoundPosition())
                 serverLevel.registerCapabilityListener(boundPosition, capListener);
             }
+            invalidateCapabilities();
         }
 
         int strength = this.getComparatorStrength();

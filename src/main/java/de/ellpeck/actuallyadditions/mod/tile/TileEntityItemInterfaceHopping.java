@@ -24,7 +24,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.AABB;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.IItemHandler;
@@ -126,7 +125,8 @@ public class TileEntityItemInterfaceHopping extends TileEntityItemInterface {
         }
 
         BlockState state = this.level.getBlockState(this.getBlockPos());
-        Direction facing = state.getValue(BlockStateProperties.FACING);
+        //Direction facing = state.getValue(BlockStateProperties.FACING);
+        Direction facing = Direction.DOWN; //TODO temp, facing missing
 
         BlockPos toPos = this.getBlockPos().relative(facing);
         if (this.level.isLoaded(toPos)) {
