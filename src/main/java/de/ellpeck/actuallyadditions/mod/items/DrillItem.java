@@ -174,7 +174,7 @@ public class DrillItem extends ItemEnergy {
     @Override
     public InteractionResultHolder<ItemStack> use(Level world, @Nonnull Player player, @Nonnull InteractionHand hand) {
         if (!world.isClientSide && player.isShiftKeyDown() && hand == InteractionHand.MAIN_HAND) {
-            player.openMenu(new SimpleMenuProvider((id, inv, p) -> new ContainerDrill(id, inv), Component.literal("")));
+            player.openMenu(new SimpleMenuProvider((id, inv, p) -> new ContainerDrill(id, inv), Component.translatable("container." + ActuallyAdditions.MODID + ".drill")));
 //            player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.DRILL.ordinal(), world, (int) player.posX, (int) player.posY, (int) player.posZ);
         }
         return new InteractionResultHolder<>(InteractionResult.PASS, player.getItemInHand(hand));
