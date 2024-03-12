@@ -22,6 +22,7 @@ import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -251,14 +252,14 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public String getExtraDisplayString() {
-        return I18n.get("info." + ActuallyAdditions.MODID + ".laserRelay.fluid.extra") + ": " + ChatFormatting.DARK_RED + I18n.get(this.mode.name) + ChatFormatting.RESET;
+    public Component getExtraDisplayString() {
+        return Component.translatable("info." + ActuallyAdditions.MODID + ".laserRelay.fluid.extra").append(": ").append(Component.translatable(this.mode.name).withStyle(ChatFormatting.DARK_RED));
     }
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public String getCompassDisplayString() {
-        return ChatFormatting.GREEN + I18n.get("info." + ActuallyAdditions.MODID + ".laserRelay.energy.display");
+    public Component getCompassDisplayString() {
+        return Component.translatable("info." + ActuallyAdditions.MODID + ".laserRelay.energy.display").withStyle(ChatFormatting.GREEN);
     }
 
     @Override

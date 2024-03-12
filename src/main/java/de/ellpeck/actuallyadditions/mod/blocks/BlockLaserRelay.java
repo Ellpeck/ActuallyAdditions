@@ -34,6 +34,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -214,14 +215,14 @@ public class BlockLaserRelay extends FullyDirectionalBlock.Container implements 
                     BlockEntity tile = minecraft.level.getBlockEntity(pos);
                     if (tile instanceof TileEntityLaserRelay relay) {
 
-	                    String strg = relay.getExtraDisplayString();
+	                    Component strg = relay.getExtraDisplayString();
                         guiGraphics.drawString(minecraft.font, strg, (int) (resolution.getGuiScaledWidth() / 2f + 5), (int) (resolution.getGuiScaledHeight() / 2f + 5), 0xFFFFFF);
 
-                        String expl;
+                        Component expl;
                         if (compass) {
                             expl = relay.getCompassDisplayString();
                         } else {
-                            expl = ChatFormatting.GRAY.toString() + ChatFormatting.ITALIC + I18n.get("info." + ActuallyAdditions.MODID + ".laserRelay.mode.noCompasss", I18n.get(CommonConfig.Other.relayConfigureItem.getDescriptionId()));
+                            expl = Component.translatable("info." + ActuallyAdditions.MODID + ".laserRelay.mode.noCompasss", Component.translatable(CommonConfig.Other.relayConfigureItem.getDescriptionId()).getString()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC);
                         }
 
                         guiGraphics.drawString(minecraft.font, expl, (int) (resolution.getGuiScaledWidth() / 2f + 5), (int) (resolution.getGuiScaledHeight() / 2f + 15), 0xFFFFFF);

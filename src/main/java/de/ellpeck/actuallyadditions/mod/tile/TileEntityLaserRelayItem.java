@@ -23,6 +23,7 @@ import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -158,14 +159,14 @@ public class TileEntityLaserRelayItem extends TileEntityLaserRelay {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public String getExtraDisplayString() {
-        return I18n.get("info." + ActuallyAdditions.MODID + ".laserRelay.item.extra") + ": " + ChatFormatting.DARK_RED + this.getPriority() + ChatFormatting.RESET;
+    public Component getExtraDisplayString() {
+        return Component.translatable("info." + ActuallyAdditions.MODID + ".laserRelay.item.extra").append(": ").append(Component.literal(String.valueOf(this.getPriority())).withStyle(ChatFormatting.DARK_RED));
     }
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public String getCompassDisplayString() {
-        return ChatFormatting.GREEN + I18n.get("info." + ActuallyAdditions.MODID + ".laserRelay.item.display.1") + "\n" + I18n.get("info." + ActuallyAdditions.MODID + ".laserRelay.item.display.2");
+    public Component getCompassDisplayString() {
+        return Component.translatable("info." + ActuallyAdditions.MODID + ".laserRelay.item.display.1").append("\n").append(Component.translatable("info." + ActuallyAdditions.MODID + ".laserRelay.item.display.2")).withStyle(ChatFormatting.GREEN);
     }
 
     @Override

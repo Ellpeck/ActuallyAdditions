@@ -22,6 +22,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -200,10 +201,10 @@ public abstract class TileEntityLaserRelay extends TileEntityInventoryBase {
     }
 
     @OnlyIn(Dist.CLIENT)
-    public abstract String getExtraDisplayString();
+    public abstract Component getExtraDisplayString();
 
     @OnlyIn(Dist.CLIENT)
-    public abstract String getCompassDisplayString();
+    public abstract Component getCompassDisplayString();
 
     public abstract void onCompassAction(Player player);
 
