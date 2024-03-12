@@ -75,7 +75,8 @@ public abstract class TileEntityBase extends BlockEntity {
 
     @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        this.readSyncableNBT(pkt.getTag(), NBTType.SYNC);
+        if (pkt.getTag() != null) //TODO: pkt.getTag() is nullable. Hopping Item Interface will throw in the log when placed because of this
+            this.readSyncableNBT(pkt.getTag(), NBTType.SYNC);
     }
 
     @Override
