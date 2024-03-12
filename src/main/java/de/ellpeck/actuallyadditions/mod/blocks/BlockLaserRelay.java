@@ -209,7 +209,7 @@ public class BlockLaserRelay extends FullyDirectionalBlock.Container implements 
         BlockPos pos = ((BlockHitResult) rayCast).getBlockPos();
         if (minecraft.level != null) {
             boolean wearing = ItemEngineerGoggles.isWearing(player);
-            if (wearing || StackUtil.isValid(stack)) {
+            if (wearing || !stack.isEmpty()) {
                 boolean compass = stack.getItem() == CommonConfig.Other.relayConfigureItem;
                 if (wearing || compass || stack.getItem() instanceof ItemLaserWrench) {
                     BlockEntity tile = minecraft.level.getBlockEntity(pos);
