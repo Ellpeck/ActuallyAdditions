@@ -28,7 +28,7 @@ public class MultiMessageDamageSource extends DamageSource {
 
 	@Override
 	public Component getLocalizedDeathMessage(LivingEntity entity) {
-		String locTag = "death." + ActuallyAdditions.MODID + "." + this.getMsgId() + "." + (entity.level().random.nextInt(this.messageCount) + 1);
+		String locTag = "death." + this.getMsgId() + "." + (entity.level().random.nextInt(this.messageCount) + 1);
 		return Component.translatable(locTag, entity.getName());
 	}
 }
