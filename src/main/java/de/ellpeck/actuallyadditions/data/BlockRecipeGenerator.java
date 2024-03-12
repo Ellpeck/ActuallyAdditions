@@ -416,9 +416,9 @@ public class BlockRecipeGenerator extends RecipeProvider {
 
         // Phantom Itemface
         Recipe.shaped(ActuallyBlocks.PHANTOM_ITEMFACE.getItem())
-                .pattern(" C ", "DED", " A ")
+                .pattern(" C ", "MEM", " A ")
                 .define('C', Tags.Items.CHESTS_WOODEN)
-                .define('D', ActuallyItems.EMPOWERED_DIAMATINE_CRYSTAL)
+                .define('M', Items.PHANTOM_MEMBRANE)
                 .define('E', ActuallyBlocks.ENDER_CASING.get())
                 .define('A', ActuallyItems.ADVANCED_COIL.get())
                 .save(recipeOutput);
@@ -478,6 +478,13 @@ public class BlockRecipeGenerator extends RecipeProvider {
                 .define('A', ActuallyItems.ADVANCED_COIL)
                 .define('E', ActuallyItems.ENORI_CRYSTAL)
                 .define('C', ActuallyBlocks.IRON_CASING.get())
+                .save(recipeOutput);
+
+        // Long-Range Breaker
+        Recipe.shaped(ActuallyBlocks.LONG_RANGE_BREAKER.getItem())
+                .pattern("AAA", " V ")
+                .define('A', ActuallyBlocks.BREAKER.get())
+                .define('V', ActuallyItems.VOID_CRYSTAL)
                 .save(recipeOutput);
     }
 

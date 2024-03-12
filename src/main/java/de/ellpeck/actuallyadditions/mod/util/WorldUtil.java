@@ -37,6 +37,8 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.util.FakePlayer;
 import net.neoforged.neoforge.common.util.FakePlayerFactory;
 import net.neoforged.neoforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.event.EventHooks;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.level.BlockEvent.BreakEvent;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
@@ -259,7 +261,9 @@ public final class WorldUtil {
             BlockState state = level.getBlockState(pos);
 
             BreakEvent event = new BreakEvent(level, pos, state, fake);
-            if (!NeoForge.EVENT_BUS.post(event).isCanceled()) {
+            NeoForge.EVENT_BUS.post(event);
+            if (!event.isCanceled()) {
+                return EventHooks.doPlayerHarvestCheck(fake, state, true) ? 1F : 0F;
                 //return ForgeEventFactory.fireBlockHarvesting(drops, world, pos, state, 0, 1, false, fake); //TODO what?!
             }
         }

@@ -11,7 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
-import de.ellpeck.actuallyadditions.mod.config.values.ConfigStringListValues;
+import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerMiner;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
@@ -37,6 +37,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.TierSortingRegistry;
 import net.neoforged.neoforge.common.util.FakePlayerFactory;
 import net.neoforged.neoforge.energy.IEnergyStorage;
@@ -145,7 +146,7 @@ public class TileEntityVerticalDigger extends TileEntityInventoryBase implements
             ItemStack stack = block.getCloneItemStack(state, new BlockHitResult(new Vec3(0, 0, 0), Direction.DOWN, pos, false), this.level, pos, FakePlayerFactory.getMinecraft((ServerLevel) this.level));
             if (!state.isAir()) {
                 //block.getHarvestLevel(state) <= DrillItem.HARVEST_LEVEL
-                if (TierSortingRegistry.isCorrectTierForDrops(Tiers.NETHERITE, state) && state.getDestroySpeed(this.level, pos) >= 0F && !(block instanceof IFluidBlock) && this.isMinable(block, stack)) {
+                if (TierSortingRegistry.isCorrectTierForDrops(Tiers.NETHERITE, state) && state.getDestroySpeed(this.level, pos) >= 0F && !(block instanceof IFluidBlock) && this.isMinable(state, stack)) {
                     List<ItemStack> drops = Block.getDrops(state, (ServerLevel) this.level, pos, this.level.getBlockEntity(pos));
                     float chance = WorldUtil.fireFakeHarvestEventsForDropChance(this, drops, this.level, pos);
 
@@ -170,26 +171,20 @@ public class TileEntityVerticalDigger extends TileEntityInventoryBase implements
         return false;
     }
 
-    private boolean isMinable(Block block, ItemStack stack) {
-        if (block != null) {
+    private boolean isMinable(BlockState state, ItemStack stack) {
+        Block block = state.getBlock();
+        if (!state.isEmpty()) {
             if (!this.isBlacklisted(block)) {
                 if (!this.onlyMineOres) {
                     return true;
                 } else {
-                    if (StackUtil.isValid(stack)) {
-                        // TODO: [port] come back and see if there is a tag for this
-
-                        //                        int[] ids = OreDictionary.getOreIDs(stack);
-                        //                        for (int id : ids) {
-                        //                            String name = OreDictionary.getOreName(id);
-                        //                            if (name.startsWith("ore") || name.startsWith("denseore")) {
-                        //                                return true;
-                        //                            }
-                        //                        }
-
+                    if (!stack.isEmpty()) {
+                        if (stack.is(Tags.Items.ORES) || state.is(Tags.Blocks.ORES)) { // Check both the block and item tags
+                            return true;
+                        }
                         String reg = BuiltInRegistries.BLOCK.getKey(block).toString();
                         if (!reg.isEmpty()) {
-                            for (String string : ConfigStringListValues.MINER_EXTRA_WHITELIST.getValue()) {
+                            for (String string : CommonConfig.Machines.MINER_EXTRA_WHITELIST.get()) {
                                 if (reg.equals(string)) {
                                     return true;
                                 }
@@ -210,7 +205,7 @@ public class TileEntityVerticalDigger extends TileEntityInventoryBase implements
     private boolean isBlacklisted(Block block) {
         String reg = BuiltInRegistries.BLOCK.getKey(block).toString();
         if (!reg.isEmpty()) {
-            for (String string : ConfigStringListValues.MINER_BLACKLIST.getValue()) {
+            for (String string : CommonConfig.Machines.MINER_BLACKLIST.get()) {
                 if (reg.equals(string)) {
                     return true;
                 }
@@ -253,7 +248,7 @@ public class TileEntityVerticalDigger extends TileEntityInventoryBase implements
 
     @Override
     public Component getDisplayName() {
-        return Component.empty();
+        return Component.translatable("container.actuallyadditions.vertical_digger");
     }
 
     @Nullable

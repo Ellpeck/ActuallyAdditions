@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "actuallyadditions:breaker"
+    },
+    "V": {
+      "item": "actuallyadditions:void_crystal"
+    }
+  },
+  "pattern": [
+    "AAA",
+    " V "
+  ],
+  "result": {
+    "item": "actuallyadditions:long_range_breaker"
+  }
+}

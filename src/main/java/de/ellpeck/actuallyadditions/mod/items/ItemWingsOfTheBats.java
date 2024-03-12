@@ -90,7 +90,7 @@ public class ItemWingsOfTheBats extends ItemBase {
 
         if (event.getEntity().level() != null && !event.getEntity().level().isClientSide && source instanceof Player) {
             //Drop Wings from Bats
-            if (ConfigBoolValues.DO_BAT_DROPS.isEnabled() && event.getEntity() instanceof Bat) {
+            if (ConfigBoolValues.DO_BAT_DROPS.isEnabled() && event.getEntity() instanceof Bat) { //TODO: Change to CommonConfig
                 int looting = event.getLootingLevel();
 
                 Iterable<ItemStack> equip = source.getHandSlots();
