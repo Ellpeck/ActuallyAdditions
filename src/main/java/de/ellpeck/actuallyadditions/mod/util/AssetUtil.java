@@ -22,7 +22,6 @@ import de.ellpeck.actuallyadditions.mod.blocks.render.RenderTypes;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketServerToClient;
 import de.ellpeck.actuallyadditions.mod.particle.ParticleBeam;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
@@ -37,14 +36,12 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -244,13 +241,8 @@ public final class AssetUtil {
     @OnlyIn(Dist.CLIENT)
     public static void spawnLaserWithTimeClient(double startX, double startY, double startZ, double endX, double endY, double endZ, int color, int maxAge, double rotationTime, float size, float alpha) {
         Minecraft mc = Minecraft.getInstance();
-        BlockEntity tile = mc.level.getBlockEntity(BlockPos.containing(startX, startY, startZ));
-        if (tile instanceof TileEntityAtomicReconstructor) {
-            ((TileEntityAtomicReconstructor) tile).resetBeam(maxAge, color);
-        } else {
-            if (mc.player != null && mc.player.distanceToSqr(startX, startY, startZ) <= 64 || mc.player.distanceToSqr(endX, endY, endZ) <= 64) {
-                mc.level.addParticle(ParticleBeam.Factory.createData(endX, endY, endZ, color, alpha, maxAge, rotationTime, size), startX, startY, startZ, 0, 0, 0);
-            }
+        if (mc.player != null && mc.player.distanceToSqr(startX, startY, startZ) <= 64 || mc.player.distanceToSqr(endX, endY, endZ) <= 64) {
+            mc.level.addParticle(ParticleBeam.Factory.createData(endX, endY, endZ, color, alpha, maxAge, rotationTime, size), startX, startY, startZ, 0, 0, 0);
         }
     }
 /*    @OnlyIn(Dist.CLIENT)
