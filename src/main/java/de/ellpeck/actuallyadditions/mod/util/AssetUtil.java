@@ -10,22 +10,25 @@
 
 package de.ellpeck.actuallyadditions.mod.util;
 
-import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.BufferBuilder;
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.blaze3d.vertex.VertexFormat;
 import com.mojang.math.Axis;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.render.RenderTypes;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketServerToClient;
+import de.ellpeck.actuallyadditions.mod.particle.ParticleBeam;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
+import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.ItemRenderer;
@@ -242,14 +245,13 @@ public final class AssetUtil {
     public static void spawnLaserWithTimeClient(double startX, double startY, double startZ, double endX, double endY, double endZ, int color, int maxAge, double rotationTime, float size, float alpha) {
         Minecraft mc = Minecraft.getInstance();
         BlockEntity tile = mc.level.getBlockEntity(BlockPos.containing(startX, startY, startZ));
-        if(tile instanceof TileEntityAtomicReconstructor)
+        if (tile instanceof TileEntityAtomicReconstructor) {
             ((TileEntityAtomicReconstructor) tile).resetBeam(maxAge, color);
-
-
-/*        if (mc.player.distanceToSqr(startX, startY, startZ) <= 64 || mc.player.distanceToSqr(endX, endY, endZ) <= 64) {
-            Particle fx = new ParticleBeam(mc.level, startX, startY, startZ, endX, endY, endZ, color, maxAge, rotationTime, size, alpha);
-            mc.level.addParticle((IParticleData) fx, startX, startY, startZ, 0, 0, 0);
-        }*/
+        } else {
+            if (mc.player != null && mc.player.distanceToSqr(startX, startY, startZ) <= 64 || mc.player.distanceToSqr(endX, endY, endZ) <= 64) {
+                mc.level.addParticle(ParticleBeam.Factory.createData(endX, endY, endZ, color, alpha, maxAge, rotationTime, size), startX, startY, startZ, 0, 0, 0);
+            }
+        }
     }
 /*    @OnlyIn(Dist.CLIENT)
     public static void renderLaser(MatrixStack matrixStack, IRenderTypeBuffer buffer, float x, float y, float z, float tx, float ty, float tz, float rotation, int color, float beamWidth) {
@@ -332,11 +334,10 @@ public final class AssetUtil {
     //Thanks to feldim2425 for this.
     //I can't do rendering code. Ever.
     @OnlyIn(Dist.CLIENT)
-    public static void renderLaser(double firstX, double firstY, double firstZ, double secondX, double secondY, double secondZ, double rotationTime, float alpha, double beamWidth, float[] color) {
-        Tesselator tessy = Tesselator.getInstance();
-        BufferBuilder render = tessy.getBuilder();
+    public static void renderLaserParticle(VertexConsumer builder, Camera camera, double firstX, double firstY, double firstZ, double secondX, double secondY, double secondZ, float rotationTime, float a, float beamWidth, float[] color) {
         Level world = Minecraft.getInstance().level;
 
+        Vec3 cam = camera.getPosition();
         float r = color[0];
         float g = color[1];
         float b = color[2];
@@ -345,107 +346,60 @@ public final class AssetUtil {
         Vec3 vec2 = new Vec3(secondX, secondY, secondZ);
         Vec3 combinedVec = vec2.subtract(vec1);
 
-        double rot = rotationTime > 0
-                ? 360D * (world.getGameTime() % rotationTime / rotationTime)
-                : 0;
-        double pitch = Math.atan2(combinedVec.y, Math.sqrt(combinedVec.x * combinedVec.x + combinedVec.z * combinedVec.z));
-        double yaw = Math.atan2(-combinedVec.z, combinedVec.x);
+        int lightmap = LightTexture.pack(MAX_LIGHT_X, MAX_LIGHT_Y);
 
-        double length = combinedVec.length();
+        double roll = rotationTime > 0 ? 360D * (world.getGameTime() % rotationTime / rotationTime) : 0;
+        double pitch = Math.toDegrees(Math.atan2(combinedVec.y, Math.sqrt(combinedVec.x * combinedVec.x + combinedVec.z * combinedVec.z)));
+        double yaw = Math.toDegrees(Math.atan2(-combinedVec.z, combinedVec.x)) - 90;
 
-//        GlStateManager._pushMatrix();
+        float length = (float) combinedVec.length();
 
-/*        GlStateManager._disableLighting();
-        GlStateManager._enableBlend();
-        GlStateManager._blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE);
-        int func = GL11.glGetInteger(GL11.GL_ALPHA_TEST_FUNC);
-        float ref = GL11.glGetFloat(GL11.GL_ALPHA_TEST_REF);
-        GlStateManager._alphaFunc(GL11.GL_ALWAYS, 0);
-        GlStateManager.translate(firstX - TileEntityRendererDispatcher.staticPlayerX, firstY - TileEntityRendererDispatcher.staticPlayerY, firstZ - TileEntityRendererDispatcher.staticPlayerZ);
-        GlStateManager.rotate((float) (180 * yaw / Math.PI), 0, 1, 0);
-        GlStateManager.rotate((float) (180 * pitch / Math.PI), 0, 0, 1);
-        GlStateManager.rotate((float) rot, 1, 0, 0);*/
+        PoseStack matrixStack = new PoseStack();
+        matrixStack.pushPose();
 
-        /*if(r != r2 || g != g2 || b != b2){
-            render.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
-            Minecraft.getInstance().renderEngine.bindTexture(ClientUtil.LIGHT_BEAM_GRADIENT);
+        matrixStack.translate(firstX - cam.x, firstY - cam.y, firstZ - cam.z);
 
-            render.pos(length, -beamWidth, beamWidth).tex(0, 0).color(r, g, b, alpha).endVertex();
-            render.pos(length, beamWidth, beamWidth).tex(0, 1).color(r, g, b, alpha).endVertex();
-            render.pos(0, beamWidth, beamWidth).tex(1, 1).color(r, g, b, alpha).endVertex();
-            render.pos(0, -beamWidth, beamWidth).tex(1, 0).color(r, g, b, alpha).endVertex();
+        matrixStack.mulPose(Axis.YP.rotationDegrees((float)yaw));
+        matrixStack.mulPose(Axis.XP.rotationDegrees((float)pitch));
+        matrixStack.mulPose(Axis.ZP.rotationDegrees((float)roll));
 
-            render.pos(length, -beamWidth, beamWidth).tex(1, 0).color(r2, g2, b2, alpha).endVertex();
-            render.pos(length, beamWidth, beamWidth).tex(1, 1).color(r2, g2, b2, alpha).endVertex();
-            render.pos(0, beamWidth, beamWidth).tex(0, 1).color(r2, g2, b2, alpha).endVertex();
-            render.pos(0, -beamWidth, beamWidth).tex(0, 0).color(r2, g2, b2, alpha).endVertex();
+        Matrix4f matrix = matrixStack.last().pose();
 
-            render.pos(length, beamWidth, -beamWidth).tex(0, 0).color(r, g, b, alpha).endVertex();
-            render.pos(length, -beamWidth, -beamWidth).tex(0, 1).color(r, g, b, alpha).endVertex();
-            render.pos(0, -beamWidth, -beamWidth).tex(1, 1).color(r, g, b, alpha).endVertex();
-            render.pos(0, beamWidth, -beamWidth).tex(1, 0).color(r, g, b, alpha).endVertex();
+        RenderSystem.setShader(GameRenderer::getPositionColorLightmapShader);
+        Tesselator.getInstance().getBuilder().begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR_LIGHTMAP);
 
-            render.pos(length, beamWidth, -beamWidth).tex(1, 0).color(r2, g2, b2, alpha).endVertex();
-            render.pos(length, -beamWidth, -beamWidth).tex(1, 1).color(r2, g2, b2, alpha).endVertex();
-            render.pos(0, -beamWidth, -beamWidth).tex(0, 1).color(r2, g2, b2, alpha).endVertex();
-            render.pos(0, beamWidth, -beamWidth).tex(0, 0).color(r2, g2, b2, alpha).endVertex();
+        TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(FORGE_WHITE);
+        float minU = sprite.getU0();
+        float maxU = sprite.getU1();
+        float minV = sprite.getV0();
+        float maxV = sprite.getV1();
 
-            render.pos(length, beamWidth, beamWidth).tex(0, 0).color(r, g, b, alpha).endVertex();
-            render.pos(length, beamWidth, -beamWidth).tex(0, 1).color(r, g, b, alpha).endVertex();
-            render.pos(0, beamWidth, -beamWidth).tex(1, 1).color(r, g, b, alpha).endVertex();
-            render.pos(0, beamWidth, beamWidth).tex(1, 0).color(r, g, b, alpha).endVertex();
-
-            render.pos(length, beamWidth, beamWidth).tex(1, 0).color(r2, g2, b2, alpha).endVertex();
-            render.pos(length, beamWidth, -beamWidth).tex(1, 1).color(r2, g2, b2, alpha).endVertex();
-            render.pos(0, beamWidth, -beamWidth).tex(0, 1).color(r2, g2, b2, alpha).endVertex();
-            render.pos(0, beamWidth, beamWidth).tex(0, 0).color(r2, g2, b2, alpha).endVertex();
-
-            render.pos(length, -beamWidth, -beamWidth).tex(0, 0).color(r, g, b, alpha).endVertex();
-            render.pos(length, -beamWidth, beamWidth).tex(0, 1).color(r, g, b, alpha).endVertex();
-            render.pos(0, -beamWidth, beamWidth).tex(1, 1).color(r, g, b, alpha).endVertex();
-            render.pos(0, -beamWidth, -beamWidth).tex(1, 0).color(r, g, b, alpha).endVertex();
-
-            render.pos(length, -beamWidth, -beamWidth).tex(1, 0).color(r2, g2, b2, alpha).endVertex();
-            render.pos(length, -beamWidth, beamWidth).tex(1, 1).color(r2, g2, b2, alpha).endVertex();
-            render.pos(0, -beamWidth, beamWidth).tex(0, 1).color(r2, g2, b2, alpha).endVertex();
-            render.pos(0, -beamWidth, -beamWidth).tex(0, 0).color(r2, g2, b2, alpha).endVertex();
-            tessy.draw();
+        //Draw laser tube faces
+        for (int i = 1; i < 4; i++) {
+            float width = beamWidth * (i / 4.0f);
+            //top
+            builder.vertex(matrix, -width, width, 0.0f).color(r, g, b, a).uv(minU, maxV).uv2(lightmap).endVertex();
+            builder.vertex(matrix, width, width, 0.0f).color(r, g, b, a).uv(maxU, maxV).uv2(lightmap).endVertex();
+            builder.vertex(matrix, width, width, -length).color(r, g, b, a).uv(maxU, minV).uv2(lightmap).endVertex();
+            builder.vertex(matrix, -width, width, -length).color(r, g, b, a).uv(minU, minV).uv2(lightmap).endVertex();
+            //bottom
+            builder.vertex(matrix, -width, -width, 0.0f).color(r, g, b, a).uv(minU, maxV).uv2(lightmap).endVertex();
+            builder.vertex(matrix, -width, -width, -length).color(r, g, b, a).uv(minU, minV).uv2(lightmap).endVertex();
+            builder.vertex(matrix, width, -width, -length).color(r, g, b, a).uv(maxU, minV).uv2(lightmap).endVertex();
+            builder.vertex(matrix, width, -width, 0.0f).color(r, g, b, a).uv(maxU, maxV).uv2(lightmap).endVertex();
+            //left
+            builder.vertex(matrix, -width, width, 0.0f).color(r, g, b, a).uv(maxU, maxV).uv2(lightmap).endVertex();
+            builder.vertex(matrix, -width, -width, 0.0f).color(r, g, b, a).uv(maxU, maxV).uv2(lightmap).endVertex();
+            builder.vertex(matrix, -width, -width, -length).color(r, g, b, a).uv(minU, minV).uv2(lightmap).endVertex();
+            builder.vertex(matrix, -width, width, -length).color(r, g, b, a).uv(minU, minV).uv2(lightmap).endVertex();
+            //right
+            builder.vertex(matrix, width, width, 0.0f).color(r, g, b, a).uv(maxU, maxV).uv2(lightmap).endVertex();
+            builder.vertex(matrix, width, -width, 0.0f).color(r, g, b, a).uv(maxU, maxV).uv2(lightmap).endVertex();
+            builder.vertex(matrix, width, -width, -length).color(r, g, b, a).uv(minU, minV).uv2(lightmap).endVertex();
+            builder.vertex(matrix, width, width, -length).color(r, g, b, a).uv(minU, minV).uv2(lightmap).endVertex();
         }
-        else{*/
-        //GlStateManager.disableTexture2D();
-        //render.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_LMAP_COLOR);
-        for (double i = 0; i < 4; i++) {
-            double width = beamWidth * (i / 4.0);
-            render.vertex(length, width, width).uv(0, 0).uv2(MAX_LIGHT_X, MAX_LIGHT_Y).color(r, g, b, alpha).endVertex();
-            render.vertex(0, width, width).uv(0, 0).uv2(MAX_LIGHT_X, MAX_LIGHT_Y).color(r, g, b, alpha).endVertex();
-            render.vertex(0, -width, width).uv(0, 0).uv2(MAX_LIGHT_X, MAX_LIGHT_Y).color(r, g, b, alpha).endVertex();
-            render.vertex(length, -width, width).uv(0, 0).uv2(MAX_LIGHT_X, MAX_LIGHT_Y).color(r, g, b, alpha).endVertex();
-
-            render.vertex(length, -width, -width).uv(0, 0).uv2(MAX_LIGHT_X, MAX_LIGHT_Y).color(r, g, b, alpha).endVertex();
-            render.vertex(0, -width, -width).uv(0, 0).uv2(MAX_LIGHT_X, MAX_LIGHT_Y).color(r, g, b, alpha).endVertex();
-            render.vertex(0, width, -width).uv(0, 0).uv2(MAX_LIGHT_X, MAX_LIGHT_Y).color(r, g, b, alpha).endVertex();
-            render.vertex(length, width, -width).uv(0, 0).uv2(MAX_LIGHT_X, MAX_LIGHT_Y).color(r, g, b, alpha).endVertex();
-
-            render.vertex(length, width, -width).uv(0, 0).uv2(MAX_LIGHT_X, MAX_LIGHT_Y).color(r, g, b, alpha).endVertex();
-            render.vertex(0, width, -width).uv(0, 0).uv2(MAX_LIGHT_X, MAX_LIGHT_Y).color(r, g, b, alpha).endVertex();
-            render.vertex(0, width, width).uv(0, 0).uv2(MAX_LIGHT_X, MAX_LIGHT_Y).color(r, g, b, alpha).endVertex();
-            render.vertex(length, width, width).uv(0, 0).uv2(MAX_LIGHT_X, MAX_LIGHT_Y).color(r, g, b, alpha).endVertex();
-
-            render.vertex(length, -width, width).uv(0, 0).uv2(MAX_LIGHT_X, MAX_LIGHT_Y).color(r, g, b, alpha).endVertex();
-            render.vertex(0, -width, width).uv(0, 0).uv2(MAX_LIGHT_X, MAX_LIGHT_Y).color(r, g, b, alpha).endVertex();
-            render.vertex(0, -width, -width).uv(0, 0).uv2(MAX_LIGHT_X, MAX_LIGHT_Y).color(r, g, b, alpha).endVertex();
-            render.vertex(length, -width, -width).uv(0, 0).uv2(MAX_LIGHT_X, MAX_LIGHT_Y).color(r, g, b, alpha).endVertex();
-        }
-        tessy.end();
-
-        //GlStateManager.enableTexture2D();
-        //}
-
-        //GlStateManager._alphaFunc(func, ref);
-        //GlStateManager._blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
-        GlStateManager._disableBlend();
-//        GlStateManager._enableLighting();
-//        GlStateManager._popMatrix();
+        matrixStack.popPose();
+        Tesselator.getInstance().end();
     }
 
     @OnlyIn(Dist.CLIENT)
