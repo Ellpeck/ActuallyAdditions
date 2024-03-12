@@ -543,6 +543,14 @@ public class ItemRecipeGenerator extends RecipeProvider {
         SimpleCookingRecipeBuilder.smelting(Ingredient.of(ActuallyItems.RICE_DOUGH), RecipeCategory.FOOD, Items.BREAD, 0.35F, 200)
             .unlockedBy("", has(Items.AIR))
             .save(recipeOutput, new ResourceLocation(ActuallyAdditions.MODID, "rice_dough_smelting"));
+
+        // Black Quartz Ore
+        SimpleCookingRecipeBuilder.smelting(Ingredient.of(ActuallyBlocks.BLACK_QUARTZ_ORE.getItem()), RecipeCategory.MISC, ActuallyItems.BLACK_QUARTZ.get(), 0.7F, 200)
+            .unlockedBy("", has(Items.AIR))
+            .save(recipeOutput, new ResourceLocation(ActuallyAdditions.MODID, "black_quartz_ore_smelting"));
+        SimpleCookingRecipeBuilder.blasting(Ingredient.of(ActuallyBlocks.BLACK_QUARTZ_ORE.getItem()), RecipeCategory.MISC, ActuallyItems.BLACK_QUARTZ.get(), 0.7F, 100)
+            .unlockedBy("", has(Items.AIR))
+            .save(recipeOutput, new ResourceLocation(ActuallyAdditions.MODID, "black_quartz_ore_blasting"));
     }
 
     protected void generateAOIT(RecipeOutput consumer) {

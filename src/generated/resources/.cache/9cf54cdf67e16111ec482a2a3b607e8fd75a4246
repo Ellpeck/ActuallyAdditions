@@ -1,7 +1,9 @@
-// 1.20.4	2024-03-10T13:16:06.5711018	Item Recipes
+// 1.20.4	2024-03-12T13:22:03.427249	Item Recipes
 d374edde9294d1a224b4b5610b50117a11328c00 data/actuallyadditions/recipes/advanced_coil.json
 f67629e45d152c96f3467a90a67520f78ecf9f07 data/actuallyadditions/recipes/advanced_leaf_blower.json
 d65e5a70232fa2f0e74d2a67c1cd4b0e87124242 data/actuallyadditions/recipes/basic_coil.json
+ffba076ef8dfa9a7053dd1d194f92fabc3932319 data/actuallyadditions/recipes/black_quartz_ore_blasting.json
+473d892c0e99d5e2381ba850583ee3aa2f8c57f4 data/actuallyadditions/recipes/black_quartz_ore_smelting.json
 b59bc713a54b6398730e5a1ef105479a7e58cf3e data/actuallyadditions/recipes/booklet.json
 29e79a47f752d85438b06efefdc1eef2e09c0be6 data/actuallyadditions/recipes/canola_seeds.json
 3ba50983b327aa3df390a73583cd99dc06c8efd9 data/actuallyadditions/recipes/charcoal_to_tiny.json
