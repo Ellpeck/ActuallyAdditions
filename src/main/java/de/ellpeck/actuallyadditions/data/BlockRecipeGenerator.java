@@ -5,7 +5,11 @@ import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.util.NoAdvRecipeOutput;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.recipes.*;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
@@ -447,6 +451,15 @@ public class BlockRecipeGenerator extends RecipeProvider {
                 .define('D', ActuallyItems.DIAMATINE_CRYSTAL)
                 .define('R', ActuallyItems.RESTONIA_CRYSTAL)
                 .define('C', ActuallyBlocks.ENDER_CASING.getItem())
+                .save(recipeOutput);
+
+        // Automatic Feeder
+        Recipe.shaped(ActuallyBlocks.FEEDER.getItem())
+                .pattern("PGP", "BCB", "PGP")
+                .define('P', ItemTags.PLANKS)
+                .define('G', Items.GOLDEN_CARROT)
+                .define('B', ActuallyItems.BASIC_COIL)
+                .define('C', ActuallyBlocks.WOOD_CASING.getItem())
                 .save(recipeOutput);
     }
 

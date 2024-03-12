@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "actuallyadditions:basic_coil"
+    },
+    "C": {
+      "item": "actuallyadditions:wood_casing"
+    },
+    "G": {
+      "item": "minecraft:golden_carrot"
+    },
+    "P": {
+      "tag": "minecraft:planks"
+    }
+  },
+  "pattern": [
+    "PGP",
+    "BCB",
+    "PGP"
+  ],
+  "result": {
+    "item": "actuallyadditions:feeder"
+  }
+}
