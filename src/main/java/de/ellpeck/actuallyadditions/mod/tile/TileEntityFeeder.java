@@ -86,12 +86,12 @@ public class TileEntityFeeder extends TileEntityInventoryBase implements MenuPro
             int range = 5;
             ItemStack stack = tile.inv.getStackInSlot(0);
             if (!stack.isEmpty() && tile.currentTimer >= TIME) {
-                List<Animal> animals = level.getEntitiesOfClass(Animal.class, new AABB(tile.worldPosition.getX() - range, tile.worldPosition.getY() - range, tile.worldPosition.getZ() - range, tile.worldPosition.getX() + range, tile.worldPosition.getY() + range, tile.worldPosition.getZ() + range));
+                List<Animal> animals = level.getEntitiesOfClass(Animal.class, new AABB(pos).inflate(range));
                 tile.currentAnimalAmount = animals.size();
                 if (tile.currentAnimalAmount >= 2 && tile.currentAnimalAmount < THRESHOLD) {
-                    Optional<Animal> opt = animals.stream().filter((e) -> canBeFed(stack, e)).findAny();
+                    Optional<Animal> opt = animals.stream().filter((e) -> tile.canBeFed(stack, e)).findAny();
                     if (opt.isPresent()) {
-                        feedAnimal(opt.get());
+                        tile.feedAnimal(opt.get());
                         stack.shrink(1);
                         tile.currentTimer = 0;
                         tile.setChanged();
@@ -110,7 +110,7 @@ public class TileEntityFeeder extends TileEntityInventoryBase implements MenuPro
         return (slot, automation) -> !automation;
     }
 
-    private static void feedAnimal(Animal animal) {
+    private void feedAnimal(Animal animal) {
         animal.setInLove(null);
         for (int i = 0; i < 7; i++) {
             double d = animal.level().random.nextGaussian() * 0.02D;
@@ -120,7 +120,7 @@ public class TileEntityFeeder extends TileEntityInventoryBase implements MenuPro
         }
     }
 
-    private static boolean canBeFed(ItemStack stack, Animal animal) {
+    private boolean canBeFed(ItemStack stack, Animal animal) {
         if (animal instanceof Horse && ((Horse) animal).isTamed()) {
             Item item = stack.getItem();
             return animal.getAge() == 0 && !animal.isInLove() && (item == Items.GOLDEN_APPLE || item == Items.GOLDEN_CARROT);

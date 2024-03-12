@@ -24,6 +24,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
 import javax.annotation.Nonnull;
+import java.util.List;
 
 @OnlyIn(Dist.CLIENT)
 public class GuiFeeder extends AAScreen<ContainerFeeder> {
@@ -42,12 +43,15 @@ public class GuiFeeder extends AAScreen<ContainerFeeder> {
     public void render(@Nonnull GuiGraphics guiGraphics, int x, int y, float f) {
         super.render(guiGraphics, x, y, f);
         if (x >= this.leftPos + 69 && y >= this.topPos + 30 && x <= this.leftPos + 69 + 10 && y <= this.topPos + 30 + 10) {
-            String[] array = new String[]{this.tileFeeder.currentAnimalAmount + " " + I18n.get("info." + ActuallyAdditions.MODID + ".gui.animals"), this.tileFeeder.currentAnimalAmount >= 2 && this.tileFeeder.currentAnimalAmount < TileEntityFeeder.THRESHOLD
-                ? I18n.get("info." + ActuallyAdditions.MODID + ".gui.enoughToBreed")
+            List<Component> array = List.of(
+                    Component.literal(this.tileFeeder.currentAnimalAmount + " ").append(Component.translatable("info." + ActuallyAdditions.MODID + ".gui.animals")),
+                    this.tileFeeder.currentAnimalAmount >= 2 && this.tileFeeder.currentAnimalAmount < TileEntityFeeder.THRESHOLD
+                ? Component.translatable("info." + ActuallyAdditions.MODID + ".gui.enoughToBreed")
                 : this.tileFeeder.currentAnimalAmount >= TileEntityFeeder.THRESHOLD
-                    ? I18n.get("info." + ActuallyAdditions.MODID + ".gui.tooMany")
-                    : I18n.get("info." + ActuallyAdditions.MODID + ".gui.notEnough")};
-            //this.drawHoveringText(Arrays.asList(array), x, y);
+                    ? Component.translatable("info." + ActuallyAdditions.MODID + ".gui.tooMany")
+                    : Component.translatable("info." + ActuallyAdditions.MODID + ".gui.notEnough")
+            );
+            guiGraphics.renderComponentTooltip(this.font, array, x, y);
         }
     }
 
