@@ -1,4 +1,4 @@
-// 1.20.4	2024-03-12T13:22:03.427249	Item Recipes
+// 1.20.4	2024-03-13T15:31:38.1701841	Item Recipes
 d374edde9294d1a224b4b5610b50117a11328c00 data/actuallyadditions/recipes/advanced_coil.json
 f67629e45d152c96f3467a90a67520f78ecf9f07 data/actuallyadditions/recipes/advanced_leaf_blower.json
 d65e5a70232fa2f0e74d2a67c1cd4b0e87124242 data/actuallyadditions/recipes/basic_coil.json
@@ -82,6 +82,7 @@ bbda1becc270cf13e6b1d8e6d873aafa0951552d data/actuallyadditions/recipes/lens_of_
 80a2e4f402acab5da96bdf3acd459fce0f930c08 data/actuallyadditions/recipes/quintuple_battery.json
 c6ff81ba878c02651a9353e490b3a8f9897a5410 data/actuallyadditions/recipes/rice_dough.json
 bc69015bae99ad4bb1a613a7367469d4401f83ae data/actuallyadditions/recipes/rice_dough_smelting.json
+36eb3f29269e14cac10af27e6cd070209446a7b8 data/actuallyadditions/recipes/rice_paper.json
 5958ff2fb37430660fb22012212336320ee83dd8 data/actuallyadditions/recipes/rice_seeds.json
 f6c73cb2e41a8a21e2fda888b28bf52672b33d2e data/actuallyadditions/recipes/rice_slime.json
 319b2d0423b79497837f5a3f940011b3bccf09f3 data/actuallyadditions/recipes/rice_slime_potion.json

@@ -180,12 +180,12 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .define('S', ActuallyItems.ENORI_CRYSTAL.get()).save(recipeOutput);
 
 
-/*        //Rice Recipes
+        //Rice Recipes
         Recipe.shaped(Items.PAPER, 3)
             .pattern("R  ")
             .pattern(" R ")
             .pattern("  R")
-            .define('R', TheFoods.RICE).save(consumer); //TODO foods need worked on still.*/
+            .define('R', ActuallyItems.RICE).save(recipeOutput, new ResourceLocation(ActuallyAdditions.MODID, "rice_paper"));
 
         Recipe.shaped(ActuallyItems.RICE_SLIMEBALL.get())
             .requiresBook()
