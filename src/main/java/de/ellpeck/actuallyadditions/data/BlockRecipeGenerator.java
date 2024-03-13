@@ -89,6 +89,15 @@ public class BlockRecipeGenerator extends RecipeProvider {
             .define('D', ActuallyTags.Items.DRILLS)
             .save(recipeOutput);
 
+        // Player Interface
+        Recipe.shaped(ActuallyBlocks.PLAYER_INTERFACE.getItem())
+            .pattern("CWC", "ECE", "CAC")
+            .define('C', ActuallyBlocks.ENDER_CASING.getItem())
+            .define('W', Items.WITHER_SKELETON_SKULL)
+            .define('E', ActuallyItems.EMPOWERED_DIAMATINE_CRYSTAL)
+            .define('A', ActuallyItems.ADVANCED_COIL)
+            .save(recipeOutput);
+
         //Black Quartz Wall
         Recipe.wall(ActuallyBlocks.BLACK_QUARTZ_WALL.getItem(), ActuallyBlocks.BLACK_QUARTZ_PILLAR.get(), recipeOutput);
 
