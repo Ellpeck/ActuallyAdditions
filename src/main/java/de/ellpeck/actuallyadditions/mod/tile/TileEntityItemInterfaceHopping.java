@@ -24,6 +24,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.AABB;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.IItemHandler;
@@ -61,7 +62,7 @@ public class TileEntityItemInterfaceHopping extends TileEntityItemInterface {
                         List<ItemEntity> items = level.getEntities(EntityType.ITEM, axisAlignedBB, EntitySelector.ENTITY_STILL_ALIVE);
                         if (items != null && !items.isEmpty()) {
                             for (ItemEntity item : items) {
-                                if (item != null && item.isAlive()) {
+                                if (item != null) {
                                     if (ActuallyAdditions.commonCapsLoaded) {
                                         Object slotless = tile.itemHandler.getSlotlessHandler();
                                         // TODO: [port] add back?
@@ -78,11 +79,12 @@ public class TileEntityItemInterfaceHopping extends TileEntityItemInterface {
 
                                     Optional<IItemHandler> handler = Optional.ofNullable(tile.itemHandler.getNormalHandler());
                                     handler.ifPresent(cap -> {
+                                        System.out.println(cap.getSlots());
                                         for (int i = 0; i < cap.getSlots(); i++) {
                                             ItemStack left = cap.insertItem(i, item.getItem(), false);
                                             item.setItem(left);
 
-                                            if (!StackUtil.isValid(left)) {
+                                            if (left.isEmpty()) {
                                                 item.discard();
                                                 break;
                                             }
@@ -125,8 +127,7 @@ public class TileEntityItemInterfaceHopping extends TileEntityItemInterface {
         }
 
         BlockState state = this.level.getBlockState(this.getBlockPos());
-        //Direction facing = state.getValue(BlockStateProperties.FACING);
-        Direction facing = Direction.DOWN; //TODO temp, facing missing
+        Direction facing = state.getValue(BlockStateProperties.FACING_HOPPER);
 
         BlockPos toPos = this.getBlockPos().relative(facing);
         if (this.level.isLoaded(toPos)) {

@@ -1,0 +1,12 @@
+{
+  "type": "actuallyadditions:bat_loot",
+  "conditions": [
+    {
+      "condition": "minecraft:killed_by_player"
+    },
+    {
+      "condition": "neoforge:loot_table_id",
+      "loot_table_id": "minecraft:entities/bat"
+    }
+  ]
+}
