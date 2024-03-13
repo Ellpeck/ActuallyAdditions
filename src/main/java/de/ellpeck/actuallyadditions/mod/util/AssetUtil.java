@@ -36,13 +36,19 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.client.ClientHooks;
@@ -422,5 +428,44 @@ public final class AssetUtil {
             return new float[]{255.0f - (pos -= 85.0f) * 3.0f, 0.0f, pos * 3.0f};
         }
         return new float[]{0.0f, (pos -= 170.0f) * 3.0f, 255.0f - pos * 3.0f};
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public static void renderHitOutline(PoseStack poseStack, VertexConsumer consumer, Entity entity,
+                                        double camX, double camY, double camZ, Level level, BlockPos pos, BlockState state) {
+        renderShape(poseStack, consumer, state.getShape(level, pos, CollisionContext.of(entity)),
+                (double) pos.getX() - camX,
+                (double) pos.getY() - camY,
+                (double) pos.getZ() - camZ,
+                0.0F,
+                0.0F,
+                0.0F,
+                0.4F
+        );
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    private static void renderShape(PoseStack poseStack, VertexConsumer consumer, VoxelShape shape,
+                                    double x, double y, double z, float red, float green, float blue, float alpha) {
+        PoseStack.Pose posestack$pose = poseStack.last();
+        shape.forAllEdges(
+                (minX, minY, minZ, maxX, maxY, maxZ) -> {
+                    float f = (float) (maxX - minX);
+                    float f1 = (float) (maxY - minY);
+                    float f2 = (float) (maxZ - minZ);
+                    float f3 = Mth.sqrt(f * f + f1 * f1 + f2 * f2);
+                    f /= f3;
+                    f1 /= f3;
+                    f2 /= f3;
+                    consumer.vertex(posestack$pose.pose(), (float) (minX + x), (float) (minY + y), (float) (minZ + z))
+                            .color(red, green, blue, alpha)
+                            .normal(posestack$pose.normal(), f, f1, f2)
+                            .endVertex();
+                    consumer.vertex(posestack$pose.pose(), (float) (maxX + x), (float) (maxY + y), (float) (maxZ + z))
+                            .color(red, green, blue, alpha)
+                            .normal(posestack$pose.normal(), f, f1, f2)
+                            .endVertex();
+                }
+        );
     }
 }

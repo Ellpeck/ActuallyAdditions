@@ -54,6 +54,7 @@ import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.IItemHandlerModifiable;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DrillItem extends ItemEnergy {
@@ -455,6 +456,77 @@ public class DrillItem extends ItemEnergy {
             }
         }
         return true;
+    }
+
+    /**
+     * Generate a list of block positions that can be broken taking radius, poker and side into account
+     * @param stack The Drill
+     * @param radius The Radius to break Blocks in (0 means only 1 Block will be broken!)
+     * @param world The World
+     * @param aPos The position of the block being broken
+     * @param side The side of the block being broken
+     * @param player The Player who breaks the Blocks
+     * @return A list of block positions that can be broken
+     */
+    public List<BlockPos> gatherBreakingPositions(ItemStack stack, int radius, Level world, BlockPos aPos, Direction side, Player player) {
+        int energyStored = this.getEnergyStored(stack);
+        List<BlockPos> positions = new ArrayList<>();
+
+        int xRange = radius;
+        int yRange = radius;
+        int zRange = 0;
+
+        //Corrects Blocks to hit depending on Side of original Block hit
+        if (side.getAxis() == Direction.Axis.Y) {
+            zRange = radius;
+            yRange = 0;
+        }
+        if (side.getAxis() == Direction.Axis.X) {
+            xRange = 0;
+            zRange = radius;
+        }
+
+        //Not defined later because main Block is getting broken below
+        BlockState state = world.getBlockState(aPos);
+        float mainHardness = state.getDestroySpeed(world, aPos);
+
+        //Break Middle Block first
+        int use = this.getEnergyUsePerBlock(stack);
+        if (energyStored < use) {
+            return positions;
+        }
+
+        if (radius == 2 && side.getAxis() != Direction.Axis.Y) {
+            aPos = aPos.above();
+            BlockState theState = world.getBlockState(aPos);
+            if (theState.getDestroySpeed(world, aPos) <= mainHardness + 5.0F) {
+                positions.add(aPos.immutable());
+            }
+        }
+
+        //Break Blocks around
+        if (radius > 0 && mainHardness >= 0.2F) {
+            for (int xPos = aPos.getX() - xRange; xPos <= aPos.getX() + xRange; xPos++) {
+                for (int yPos = aPos.getY() - yRange; yPos <= aPos.getY() + yRange; yPos++) {
+                    for (int zPos = aPos.getZ() - zRange; zPos <= aPos.getZ() + zRange; zPos++) {
+                        if (!(aPos.getX() == xPos && aPos.getY() == yPos && aPos.getZ() == zPos)) {
+                            if (energyStored >= use) {
+                                //Only break Blocks around that are (about) as hard or softer
+                                BlockPos thePos = new BlockPos(xPos, yPos, zPos);
+                                BlockState theState = world.getBlockState(thePos);
+                                if (theState.getDestroySpeed(world, thePos) <= mainHardness + 5.0F) {
+                                    energyStored -= use;
+                                    positions.add(thePos.immutable());
+                                }
+                            } else {
+                                return positions;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return positions;
     }
 
     /**

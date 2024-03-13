@@ -12,33 +12,45 @@ package de.ellpeck.actuallyadditions.mod.event;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.IHudDisplay;
 import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import de.ellpeck.actuallyadditions.mod.data.WorldData;
 import de.ellpeck.actuallyadditions.mod.inventory.gui.EnergyDisplay;
+import de.ellpeck.actuallyadditions.mod.items.DrillItem;
+import de.ellpeck.actuallyadditions.mod.items.ItemDrillUpgrade;
 import de.ellpeck.actuallyadditions.mod.tile.IEnergyDisplay;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
+import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.client.event.RenderGuiOverlayEvent;
+import net.neoforged.neoforge.client.event.RenderHighlightEvent;
 import net.neoforged.neoforge.client.gui.overlay.GuiOverlayManager;
 import net.neoforged.neoforge.event.TickEvent;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
+
+import java.util.List;
 
 @OnlyIn(Dist.CLIENT)
 public class ClientEvents {
@@ -226,6 +238,46 @@ public class ClientEvents {
             }
         }
     }
+
+    @SubscribeEvent
+    public void renderBlockHighlight(RenderHighlightEvent.Block event) {
+        Minecraft mc = Minecraft.getInstance();
+        Player player = mc.player;
+        if (mc.player == null)
+            return;
+
+        ItemStack stack = player.getMainHandItem();
+        if (stack.getItem() instanceof DrillItem drillItem) {
+            if (!player.isShiftKeyDown() && drillItem.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.THREE_BY_THREE)) {
+                Level level = player.level();
+                Vec3 vec3 = event.getCamera().getPosition();
+                double d0 = vec3.x();
+                double d1 = vec3.y();
+                double d2 = vec3.z();
+                BlockHitResult blockHitResult = event.getTarget();
+                BlockPos targetPos = blockHitResult.getBlockPos();
+                BlockState blockState = level.getBlockState(targetPos);
+                VertexConsumer lineConsumer = event.getMultiBufferSource().getBuffer(RenderType.lines());
+                if (stack.isCorrectToolForDrops(blockState)) {
+                    int radius = 0;
+                    if (drillItem.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FIVE_BY_FIVE)) {
+                        radius = 2;
+                    } else if (drillItem.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.THREE_BY_THREE)) {
+                        radius = 1;
+                    }
+                    if (radius == 0) return; //No radius, no need to render extra hitboxes
+
+                    List<BlockPos> coords = drillItem.gatherBreakingPositions(stack, radius, level, targetPos, blockHitResult.getDirection(), player);
+                    for (BlockPos blockPos : coords) {
+                        if (blockPos.equals(targetPos)) continue; //Let the original event draw this one!
+                        AssetUtil.renderHitOutline(event.getPoseStack(), lineConsumer, player, d0, d1, d2, level, blockPos, level.getBlockState(blockPos));
+                    }
+                }
+            }
+        }
+    }
+
+
 
 /*    @SubscribeEvent //TODO someday move the laser rendering to a new system
     public void onRenderStage(final RenderLevelStageEvent event) {
