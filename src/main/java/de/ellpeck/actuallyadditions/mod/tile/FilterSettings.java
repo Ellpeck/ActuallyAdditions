@@ -21,7 +21,7 @@ import net.minecraft.world.item.ItemStack;
 
 public class FilterSettings {
     public final ItemStackHandlerAA filterInventory;
-    public boolean isWhitelist;
+    public boolean isAllowFilter;
     public boolean respectMod;
     private boolean lastWhitelist;
     private boolean lastRespectMod;
@@ -40,7 +40,7 @@ public class FilterSettings {
             }
         };
 
-        this.isWhitelist = defaultWhitelist;
+        this.isAllowFilter = defaultWhitelist;
         this.respectMod = defaultRespectMod;
     }
 
@@ -82,7 +82,7 @@ public class FilterSettings {
 
     public void writeToNBT(CompoundTag tag, String name) {
         CompoundTag compound = new CompoundTag();
-        compound.putBoolean("Whitelist", this.isWhitelist);
+        compound.putBoolean("Whitelist", this.isAllowFilter);
         compound.putBoolean("Mod", this.respectMod);
         compound.put("Items", filterInventory.serializeNBT());
         tag.put(name, compound);
@@ -90,30 +90,30 @@ public class FilterSettings {
 
     public void readFromNBT(CompoundTag tag, String name) {
         CompoundTag compound = tag.getCompound(name);
-        this.isWhitelist = compound.getBoolean("Whitelist");
+        this.isAllowFilter = compound.getBoolean("Whitelist");
         this.respectMod = compound.getBoolean("Mod");
         this.filterInventory.deserializeNBT(compound.getCompound("Items"));
     }
 
     public boolean needsUpdateSend() {
-        return this.lastWhitelist != this.isWhitelist || this.lastRespectMod != this.respectMod;
+        return this.lastWhitelist != this.isAllowFilter || this.lastRespectMod != this.respectMod;
     }
 
     public void updateLasts() {
-        this.lastWhitelist = this.isWhitelist;
+        this.lastWhitelist = this.isAllowFilter;
         this.lastRespectMod = this.respectMod;
     }
 
     public void onButtonPressed(int id) {
         if (id == Buttons.WHITELIST.ordinal()) {
-            this.isWhitelist = !this.isWhitelist;
+            this.isAllowFilter = !this.isAllowFilter;
         } else if (id == Buttons.MOD.ordinal()) {
             this.respectMod = !this.respectMod;
         }
     }
 
     public boolean check(ItemStack stack) {
-        return !this.needsCheck() || check(stack, this.filterInventory, this.isWhitelist, this.respectMod);
+        return !this.needsCheck() || check(stack, this.filterInventory, this.isAllowFilter, this.respectMod);
     }
 
     public boolean needsCheck() {
@@ -122,6 +122,6 @@ public class FilterSettings {
                 return true;
             }
         }
-        return this.isWhitelist;
+        return this.isAllowFilter;
     }
 }

@@ -30,18 +30,18 @@ public class FilterSettingsGui {
 
     private final FilterSettings theSettings;
 
-    public Button whitelistButton;
+    public Button allowButton;
     public Button modButton;
 
     public FilterSettingsGui(FilterSettings settings, int x, int y, Consumer<AbstractButton> buttonConsumer, Consumer<Integer> clickConsumer, int idOffset) {
         this.theSettings = settings;
 
-        this.whitelistButton = Button.builder(Component.literal("WH"), $ -> {
-            theSettings.isWhitelist = !theSettings.isWhitelist;
+        this.allowButton = Button.builder(Component.literal("A"), $ -> {
+            theSettings.isAllowFilter = !theSettings.isAllowFilter;
             clickConsumer.accept(idOffset);
         })
                 .bounds(x, y, 16, 12).build();
-        buttonConsumer.accept(this.whitelistButton);
+        buttonConsumer.accept(this.allowButton);
         y += 14;
         this.modButton = Button.builder(Component.literal("MO"), $ -> {
             theSettings.respectMod = !theSettings.respectMod;
@@ -62,9 +62,10 @@ public class FilterSettingsGui {
     }*/
 
     public void tick() {
-        this.whitelistButton.setMessage(Component.literal("WH").withStyle(this.theSettings.isWhitelist
-            ? ChatFormatting.DARK_GREEN
-            : ChatFormatting.RED));
+        if (this.theSettings.isAllowFilter)
+            this.allowButton.setMessage(Component.literal("A").withStyle(ChatFormatting.DARK_GREEN));
+        else
+            this.allowButton.setMessage(Component.literal("D").withStyle(ChatFormatting.RED));
         this.modButton.setMessage(Component.literal("MO").withStyle(this.theSettings.respectMod
             ? ChatFormatting.DARK_GREEN
             : ChatFormatting.RED));
@@ -73,11 +74,11 @@ public class FilterSettingsGui {
     public void drawHover(GuiGraphics guiGraphics, int mouseX, int mouseY) {
         Minecraft mc = Minecraft.getInstance();
         List<Component> list = new ArrayList<>();
-        if (this.whitelistButton.isMouseOver(mouseX, mouseY)) {
-            list.add((this.theSettings.isWhitelist
-                ? Component.translatable("info." + ActuallyAdditions.MODID + ".gui.whitelist")
-                : Component.translatable("info." + ActuallyAdditions.MODID + ".gui.blacklist")).withStyle(ChatFormatting.BOLD));
-            list.add(Component.translatable("info." + ActuallyAdditions.MODID + ".gui.whitelistInfo"));
+        if (this.allowButton.isMouseOver(mouseX, mouseY)) {
+            list.add((this.theSettings.isAllowFilter
+                ? Component.translatable("info." + ActuallyAdditions.MODID + ".gui.allow")
+                : Component.translatable("info." + ActuallyAdditions.MODID + ".gui.deny")).withStyle(ChatFormatting.BOLD));
+            list.add(Component.translatable("info." + ActuallyAdditions.MODID + ".gui.filterInfo"));
         } else if (this.modButton.isMouseOver(mouseX, mouseY)) {
             list.add((this.theSettings.respectMod
                 ? Component.translatable("info." + ActuallyAdditions.MODID + ".gui.respectMod")
