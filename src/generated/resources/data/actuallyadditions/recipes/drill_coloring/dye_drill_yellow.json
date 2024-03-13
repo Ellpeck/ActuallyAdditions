@@ -1,0 +1,20 @@
+{
+  "type": "actuallyadditions:copy_nbt_shapeless",
+  "value": {
+    "category": "misc",
+    "ingredients": [
+      {
+        "type": "actuallyadditions:target_nbt",
+        "value": {
+          "tag": "actuallyadditions:drills"
+        }
+      },
+      {
+        "tag": "forge:dyes/yellow"
+      }
+    ],
+    "result": {
+      "item": "actuallyadditions:drill_yellow"
+    }
+  }
+}

@@ -2,11 +2,13 @@ package de.ellpeck.actuallyadditions.mod.crafting;
 
 import com.mojang.serialization.Codec;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import org.jetbrains.annotations.Nullable;
 
+import javax.annotation.Nonnull;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
@@ -34,7 +36,7 @@ public class TargetNBTIngredient extends Ingredient {
     public static TargetNBTIngredient of(ItemStack itemStack) {
         return new TargetNBTIngredient(Stream.of(new ItemValue(itemStack)));
     }
-    public static TargetNBTIngredient of(TagKey tag) {
+    public static TargetNBTIngredient of(@Nonnull TagKey<Item> tag) {
         return new TargetNBTIngredient(Stream.of(new TagValue(tag)));
     }
 }

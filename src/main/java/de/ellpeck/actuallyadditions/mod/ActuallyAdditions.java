@@ -68,8 +68,8 @@ import net.neoforged.neoforge.event.server.ServerStoppedEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.function.Supplier;
 
@@ -86,7 +86,7 @@ public class ActuallyAdditions {
     public static final String GUIFACTORY = "de.ellpeck.actuallyadditions.mod.config.GuiFactory";
     public static final String DEPS = "required:forge@[14.23.5.2836,);before:craftingtweaks;after:fastbench@[1.3.2,)";
 
-    public static final Logger LOGGER = LogManager.getLogger(NAME);
+    public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
 
     private static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(BuiltInRegistries.ENTITY_TYPE, MODID);
     public static final Supplier<EntityType<EntityWorm>> ENTITY_WORM = ENTITIES.register("worm", () -> EntityType.Builder.of(EntityWorm::new, MobCategory.MISC).build(MODID + ":worm"));
