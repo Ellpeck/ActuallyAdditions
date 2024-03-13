@@ -43,7 +43,7 @@ public class ItemGrowthRing extends ItemEnergy {
 	    ItemStack equipped = player.getMainHandItem();
 
         int energyUse = 300;
-        if (StackUtil.isValid(equipped) && equipped == stack && this.getEnergyStored(stack) >= energyUse) {
+        if (!equipped.isEmpty() && equipped == stack && this.getEnergyStored(stack) >= energyUse) {
             List<BlockPos> blocks = new ArrayList<>();
 
             //Adding all possible Blocks
