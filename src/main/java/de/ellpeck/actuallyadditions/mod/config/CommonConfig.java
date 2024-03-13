@@ -87,6 +87,7 @@ public class CommonConfig {
         public static ModConfigSpec.BooleanValue DO_UPDATE_CHECK;
         public static ModConfigSpec.BooleanValue UPDATE_CHECK_VERSION_SPECIFIC;
         public static ModConfigSpec.BooleanValue DO_CAT_DROPS;
+        public static ModConfigSpec.BooleanValue DO_BAT_DROPS;
         public static ModConfigSpec.IntValue FUR_CHANCE;
         public static ModConfigSpec.BooleanValue WORMS;
         public static ModConfigSpec.IntValue WORMS_DIE_TIME;
@@ -120,6 +121,9 @@ public class CommonConfig {
 
             DO_CAT_DROPS = BUILDER.comment("If true, Cats drop Hairy Balls Occasionally.")
                 .define("doCatDrops", true);
+
+            DO_BAT_DROPS = BUILDER.comment("Should Bat wings drop from Bats?")
+                .define("doBatDrops", true);
 
             FUR_CHANCE = BUILDER.comment("The 1/n drop chance, per tick, for a fur ball to be dropped.")
                 .defineInRange("furDropChance", 5000, 1, Integer.MAX_VALUE);

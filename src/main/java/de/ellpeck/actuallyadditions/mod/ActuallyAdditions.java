@@ -35,6 +35,7 @@ import de.ellpeck.actuallyadditions.mod.inventory.ActuallyContainers;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.items.ItemCoffee;
 import de.ellpeck.actuallyadditions.mod.items.Worm;
+import de.ellpeck.actuallyadditions.mod.lootmodifier.ActuallyLootModifiers;
 import de.ellpeck.actuallyadditions.mod.misc.BannerHelper;
 import de.ellpeck.actuallyadditions.mod.misc.apiimpl.LaserRelayConnectionHandler;
 import de.ellpeck.actuallyadditions.mod.misc.apiimpl.MethodHandler;
@@ -116,6 +117,7 @@ public class ActuallyAdditions {
         ActuallyVillagers.init(eventBus);
         ActuallyPOITypes.init(eventBus);
         ActuallyAttachments.init(eventBus);
+        ActuallyLootModifiers.init(eventBus);
         ActuallyContainers.CONTAINERS.register(eventBus);
         ENTITIES.register(eventBus);
         CONDITION_CODECS.register(eventBus);

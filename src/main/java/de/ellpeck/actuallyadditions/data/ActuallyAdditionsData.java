@@ -66,6 +66,8 @@ public class ActuallyAdditionsData {
 
         generator.addProvider(true, new PachouliGenerator(packOutput));
 
+        generator.addProvider(true, new GlobalLootModifierGenerator(packOutput));
+
         generator.addProvider(event.includeServer(), new DatapackBuiltinEntriesProvider(
                 packOutput, patchedProvider, Set.of(ActuallyAdditions.MODID)));
     }
