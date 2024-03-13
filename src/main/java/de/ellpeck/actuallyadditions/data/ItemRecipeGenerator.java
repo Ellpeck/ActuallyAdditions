@@ -10,7 +10,12 @@ import de.ellpeck.actuallyadditions.mod.util.NoAdvRecipeOutput;
 import de.ellpeck.actuallyadditions.mod.util.RecipeInjector;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.recipes.*;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.data.recipes.ShapelessRecipeBuilder;
+import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
@@ -551,6 +556,24 @@ public class ItemRecipeGenerator extends RecipeProvider {
         SimpleCookingRecipeBuilder.blasting(Ingredient.of(ActuallyBlocks.BLACK_QUARTZ_ORE.getItem()), RecipeCategory.MISC, ActuallyItems.BLACK_QUARTZ.get(), 0.7F, 100)
             .unlockedBy("", has(Items.AIR))
             .save(recipeOutput, new ResourceLocation(ActuallyAdditions.MODID, "black_quartz_ore_blasting"));
+
+        //Patterns
+        Recipe.shapeless(ActuallyItems.DRILL_PATTERN.get())
+                .requires(ActuallyItems.DRILL_CORE.get())
+                .requires(Items.PAPER)
+                .save(recipeOutput);
+        Recipe.shapeless(ActuallyItems.LEAF_BLO_PATTERN.get())
+                .requires(ActuallyItems.LEAF_BLOWER.get())
+                .requires(Items.PAPER)
+                .save(recipeOutput);
+        Recipe.shapeless(ActuallyItems.PHAN_CON_PATTERN.get())
+                .requires(ActuallyItems.PHANTOM_CONNECTOR.get())
+                .requires(Items.PAPER)
+                .save(recipeOutput);
+        Recipe.shapeless(ActuallyItems.BOOK_PATTERN.get())
+                .requires(ActuallyItems.ITEM_BOOKLET.get())
+                .requires(Items.PAPER)
+                .save(recipeOutput);
     }
 
     protected void generateAOIT(RecipeOutput consumer) {

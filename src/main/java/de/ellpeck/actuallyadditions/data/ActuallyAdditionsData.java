@@ -48,6 +48,7 @@ public class ActuallyAdditionsData {
         generator.addProvider(true, new ItemTagsGenerator(packOutput, lookupProvider, generatorBlockTags, helper));
         generator.addProvider(true, new PoiTypeTagsGenerator(packOutput, lookupProvider, helper));
         generator.addProvider(true, new DamageTypeTagsGenerator(packOutput, lookupProvider, helper));
+        generator.addProvider(true, new BannerPatternTagsGenerator(packOutput, lookupProvider, helper));
 
         generator.addProvider(true, new BlockStateGenerator(packOutput, helper));
         generator.addProvider(true, new ItemModelGenerator(packOutput, helper));

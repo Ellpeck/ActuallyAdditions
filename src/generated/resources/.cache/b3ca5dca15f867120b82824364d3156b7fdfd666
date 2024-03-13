@@ -1,4 +1,4 @@
-// 1.20.4	2024-03-09T15:15:51.411672	Item Models: actuallyadditions
+// 1.20.4	2024-03-13T16:28:37.0564484	Item Models: actuallyadditions
 34463d3d2ae3fafaaea338e7ffc03cd139d3cfeb assets/actuallyadditions/models/item/advanced_coil.json
 24594fc68e66011dc2d7b79b92c94b387e710318 assets/actuallyadditions/models/item/advanced_leaf_blower.json
 ba2d814e269cdef72e1045f200b3c20ed6961517 assets/actuallyadditions/models/item/atomic_reconstructor.json
@@ -21,6 +21,7 @@ c8974657e959db31495382cf6a86a3367df5d8c9 assets/actuallyadditions/models/item/bl
 74aaa894cd68cf64f8ad5aac0e7c0b26cdb0a021 assets/actuallyadditions/models/item/black_quartz_stair.json
 7e8476e561bd4854b54ce79cb798fd9b2915efb4 assets/actuallyadditions/models/item/black_quartz_wall.json
 a921bf283b5864b283ffff0737d8c3c89487dd08 assets/actuallyadditions/models/item/booklet.json
+e02c1dcb56bd16fe497ed8a4f19c52233aa9b20e assets/actuallyadditions/models/item/book_pattern.json
 8f1232a569a12d54b1053fae05dc85d23b28ed42 assets/actuallyadditions/models/item/breaker.json
 a311a3b7ad53f4b3e248939aecb41edbc5539a64 assets/actuallyadditions/models/item/canola.json
 fa77f5b54168ff7c11c5ce9fbe342eb7298a9ec8 assets/actuallyadditions/models/item/canola_oil_bucket.json
@@ -59,6 +60,7 @@ ec5271390d19a8f654a039ce484c687f23a67ef5 assets/actuallyadditions/models/item/dr
 d1a9bbc0f92cf264b361cd392b192e5eba191b15 assets/actuallyadditions/models/item/drill_lime.json
 b451f12814595ac7b06ffee06eaa93249c2c0075 assets/actuallyadditions/models/item/drill_magenta.json
 c5be173ce3f3c5fdc376eacbefb2e3d913a2ecc4 assets/actuallyadditions/models/item/drill_orange.json
+65f60912d49440c97977e319e6ffdbfe68aae594 assets/actuallyadditions/models/item/drill_pattern.json
 26a3683600670d1733f0e0be80528e1b01d1c94a assets/actuallyadditions/models/item/drill_pink.json
 086647e21977dff542f6cb09c4b0f3f826f874c5 assets/actuallyadditions/models/item/drill_purple.json
 a1dae4b66cce762b355ef2b5bbf399693f09b141 assets/actuallyadditions/models/item/drill_red.json
@@ -157,6 +159,7 @@ a20fa6e1df0a18526f8cac045b6e0f4fcb4bf30c assets/actuallyadditions/models/item/la
 05e3583ade09c7d90ddb536c5be6d3df1ce786c7 assets/actuallyadditions/models/item/lava_factory_casing.json
 34573ebef541f5d9f7d62ba95205f81e1de234b4 assets/actuallyadditions/models/item/lava_factory_controller.json
 df17f763590bf5c883eec492e4ab4d8dc4bdeb97 assets/actuallyadditions/models/item/leaf_blower.json
+040d94359f68325e207c6635117a777a3b612c7e assets/actuallyadditions/models/item/leaf_blo_pattern.json
 4a349378c423823c42c3075e145ca6e5b31631ad assets/actuallyadditions/models/item/leaf_generator.json
 c86d9a24e157d61bd56b0c4dd847e93c21f9406a assets/actuallyadditions/models/item/lens.json
 e3504dd0c16703f516932406b6ac26fdac7f30b1 assets/actuallyadditions/models/item/lens_of_certain_death.json
@@ -180,6 +183,7 @@ b393ea03ae008aca117e8f7aa5a2d69ef36b827b assets/actuallyadditions/models/item/ph
 57c38461980802bef0a353a335eb470d36afd803 assets/actuallyadditions/models/item/phantom_liquiface.json
 974194113a4b6bf1e101cc4a2b826cdc067204ef assets/actuallyadditions/models/item/phantom_placer.json
 3eb4d917b6a1ad3a5512b505853cb2bc361e9942 assets/actuallyadditions/models/item/phantom_redstoneface.json
+57dd3274f49361ca5954d8202453c12a250f1241 assets/actuallyadditions/models/item/phan_con_pattern.json
 bc0ddfda095c4b5ee092c5a3e4d0b6ba920c2d63 assets/actuallyadditions/models/item/placer.json
 39c58314ca0c6a71223dd2e52e91ec1371831a74 assets/actuallyadditions/models/item/player_interface.json
 6bd69a7b1644ed47ebc115b3e3168f78b47a5609 assets/actuallyadditions/models/item/player_probe.json

@@ -118,6 +118,7 @@ public class ActuallyAdditions {
         ActuallyPOITypes.init(eventBus);
         ActuallyAttachments.init(eventBus);
         ActuallyLootModifiers.init(eventBus);
+        BannerHelper.init(eventBus);
         ActuallyContainers.CONTAINERS.register(eventBus);
         ENTITIES.register(eventBus);
         CONDITION_CODECS.register(eventBus);
@@ -161,7 +162,6 @@ public class ActuallyAdditions {
         commonCapsLoaded = false; // Loader.isModLoaded("commoncapabilities");
 
         new UpdateChecker();
-        BannerHelper.init();
         InitEntities.init(); // todo: [port] replace
         //AAWorldGen gen = new AAWorldGen();
         ItemCoffee.initIngredients();
