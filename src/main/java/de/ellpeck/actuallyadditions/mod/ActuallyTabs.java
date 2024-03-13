@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 public class ActuallyTabs {
 	public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, ActuallyAdditions.MODID);
 
-	public static final Supplier<CreativeModeTab> GROUP = CREATIVE_MODE_TABS.register("tab", () -> CreativeModeTab.builder()
+	public static final Supplier<CreativeModeTab> GROUP = CREATIVE_MODE_TABS.register("tab", () -> CreativeModeTab.builder() // TODO coherently order them :P
 			.icon(() -> ActuallyItems.ITEM_BOOKLET.get().getDefaultInstance())
 			.withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
 			.title(Component.translatable("itemGroup.actuallyadditions"))
@@ -34,6 +34,7 @@ public class ActuallyTabs {
 						CustomEnergyStorage storage = new CustomEnergyStorage(itemEnergy.maxPower, itemEnergy.transfer, itemEnergy.transfer);
 						storage.setEnergyStored(itemEnergy.maxPower);
 						stack.setData(ActuallyAttachments.ENERGY_STORAGE.get(), storage);
+						stack.getOrCreateTag().putBoolean("Charged", true);
 					}
 				});
 				stacks.addAll(charged);

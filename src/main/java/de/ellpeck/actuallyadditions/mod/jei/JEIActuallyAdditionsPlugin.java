@@ -17,6 +17,7 @@ import de.ellpeck.actuallyadditions.mod.inventory.gui.CrusherScreen;
 import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiCoffeeMachine;
 import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiFurnaceDouble;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
+import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
 import de.ellpeck.actuallyadditions.mod.jei.coffee.CoffeeMachineCategory;
 import de.ellpeck.actuallyadditions.mod.jei.crusher.CrusherCategory;
 import de.ellpeck.actuallyadditions.mod.jei.empowerer.EmpowererRecipeCategory;
@@ -29,15 +30,14 @@ import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.RecipeTypes;
 import mezz.jei.api.helpers.IJeiHelpers;
 import mezz.jei.api.recipe.RecipeType;
-import mezz.jei.api.registration.IGuiHandlerRegistration;
-import mezz.jei.api.registration.IRecipeCatalystRegistration;
-import mezz.jei.api.registration.IRecipeCategoryRegistration;
-import mezz.jei.api.registration.IRecipeRegistration;
+import mezz.jei.api.registration.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
+
+import javax.annotation.Nonnull;
 
 @JeiPlugin
 public class JEIActuallyAdditionsPlugin implements IModPlugin {
@@ -54,6 +54,14 @@ public class JEIActuallyAdditionsPlugin implements IModPlugin {
     public static final RecipeType<CoffeeIngredientRecipe> COFFEE_MACHINE = RecipeType.create(ActuallyAdditions.MODID, "coffee_machine", CoffeeIngredientRecipe.class);
     public static final RecipeType<CrushingRecipe> CRUSHING = RecipeType.create(ActuallyAdditions.MODID, "crushing", CrushingRecipe.class);
     public static final RecipeType<MiningLensRecipe> MINING_LENS = RecipeType.create(ActuallyAdditions.MODID, "mining_lens", MiningLensRecipe.class);
+
+    @Override
+    public void registerItemSubtypes(@Nonnull ISubtypeRegistration reg) {
+        ActuallyItems.ITEMS.getEntries().forEach(entry -> {
+            if (entry.get() instanceof ItemEnergy)
+                reg.useNbtForSubtypes(entry.get());
+        });
+    }
 
     @Override
     public void registerCategories(IRecipeCategoryRegistration registry) {

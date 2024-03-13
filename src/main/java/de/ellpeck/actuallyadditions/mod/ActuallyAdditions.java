@@ -163,10 +163,8 @@ public class ActuallyAdditions {
 
         new UpdateChecker();
         InitEntities.init(); // todo: [port] replace
-        //AAWorldGen gen = new AAWorldGen();
         ItemCoffee.initIngredients();
         CrusherCrafting.init();
-        //LensMining.init();
     }
 
     private void onConfigReload(ModConfigEvent event) {
