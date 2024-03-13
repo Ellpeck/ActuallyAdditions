@@ -10,6 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.ShapedRecipe;
+import net.neoforged.neoforge.attachment.AttachmentInternals;
 
 import javax.annotation.Nullable;
 
@@ -43,6 +44,9 @@ public class RecipeKeepDataShaped extends ShapedRecipe {
 
         if (!datasource.isEmpty() && datasource.hasTag())
             craftingResult.setTag(datasource.getTag().copy());
+
+        if (!datasource.isEmpty())
+            AttachmentInternals.copyStackAttachments(datasource, craftingResult);
 
         return craftingResult;
     }
