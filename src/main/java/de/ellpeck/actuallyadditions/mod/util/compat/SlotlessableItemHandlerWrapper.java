@@ -16,6 +16,7 @@ public class SlotlessableItemHandlerWrapper {
     //TODO: Check if we need this wrapper at all? The previous implementation used CommonCapabilities ISlotlessItemhandler
 
     private final IItemHandler normalHandler;
+    @Deprecated
     private final Object slotlessHandler;
 
     public SlotlessableItemHandlerWrapper(IItemHandler normalHandler, Object slotlessHandler) {
@@ -27,6 +28,7 @@ public class SlotlessableItemHandlerWrapper {
         return this.normalHandler;
     }
 
+    @Deprecated
     public Object getSlotlessHandler() {
         return this.slotlessHandler;
     }
