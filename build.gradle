@@ -37,6 +37,14 @@ runs {
         // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
         systemProperty 'neoforge.enabledGameTestNamespaces', "actuallyadditions"
     }
+    client2 {
+        configure ("client")
+
+        programArguments.addAll '--username', 'Dev2'
+
+        // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
+        systemProperty 'neoforge.enabledGameTestNamespaces', "actuallyadditions"
+    }
 
     server {
         systemProperty 'neoforge.enabledGameTestNamespaces', "actuallyadditions"

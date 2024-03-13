@@ -131,7 +131,7 @@ public class TileEntityPlayerInterface extends TileEntityBase implements IEnergy
         super.readSyncableNBT(compound, type);
 
         this.storage.readFromNBT(compound);
-        if (compound.contains("PlayerLeast") && type != NBTType.SAVE_BLOCK) {
+        if (compound.contains("Player") && type != NBTType.SAVE_BLOCK) {
             this.connectedPlayer = compound.getUUID("Player");
             this.playerName = compound.getString("PlayerName");
         }

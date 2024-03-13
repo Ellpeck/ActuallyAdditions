@@ -44,18 +44,18 @@ public class ItemPlayerProbe extends ItemBase {
     public void inventoryTick(ItemStack stack, Level world, Entity entity, int itemSlot, boolean isSelected) {
         if (!world.isClientSide) {
             CompoundTag compound = stack.getOrCreateTag();
-            if (compound.contains("UUIDMost")) {
+            if (compound.contains("UUID")) {
                 UUID id = compound.getUUID("UUID");
                 Player player = world.getPlayerByUUID(id);
                 if (player != null) {
                     if (player.isShiftKeyDown()) {
-                        ItemPhantomConnector.clearStorage(stack, "UUIDLeast", "UUIDMost", "Name");
+                        ItemPhantomConnector.clearStorage(stack, "UUID", "Name");
                         ((Player) entity).displayClientMessage(Component.translatable("tooltip." + ActuallyAdditions.MODID + ".playerProbe.disconnect.1"), false);
                         player.displayClientMessage(Component.translatable("tooltip." + ActuallyAdditions.MODID + ".playerProbe.notice"), false);
                         //TheAchievements.GET_UNPROBED.get(player);
                     }
                 } else {
-                    ItemPhantomConnector.clearStorage(stack, "UUIDLeast", "UUIDMost", "Name");
+                    ItemPhantomConnector.clearStorage(stack, "UUID", "Name");
                     ((Player) entity).displayClientMessage(Component.translatable("tooltip." + ActuallyAdditions.MODID + ".playerProbe.disconnect.2"), false);
                 }
             }
@@ -71,17 +71,16 @@ public class ItemPlayerProbe extends ItemBase {
 
         ItemStack stack = player.getItemInHand(context.getHand());
         BlockEntity tile = context.getLevel().getBlockEntity(context.getClickedPos());
-        if (tile instanceof TileEntityPlayerInterface) {
+        if (tile instanceof TileEntityPlayerInterface face) {
             CompoundTag compound = stack.getOrCreateTag();
-            if (compound.contains("UUIDMost")) {
+            if (compound.contains("UUID")) {
                 if (!context.getLevel().isClientSide) {
-                    TileEntityPlayerInterface face = (TileEntityPlayerInterface) tile;
                     face.connectedPlayer = compound.getUUID("UUID");
                     face.playerName = compound.getString("Name");
                     face.setChanged();
                     face.sendUpdate();
 
-                    ItemPhantomConnector.clearStorage(stack, "UUIDLeast", "UUIDMost", "Name");
+                    ItemPhantomConnector.clearStorage(stack, "UUID", "Name");
                 }
                 return InteractionResult.SUCCESS;
             }
