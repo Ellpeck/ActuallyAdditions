@@ -40,9 +40,9 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Optional;
 
-public class ItemFillingWand extends ItemEnergy {
+public class Filler extends ItemEnergy {
 
-    public ItemFillingWand() {
+    public Filler() {
         super(500000, 1000);
     }
 
@@ -143,7 +143,7 @@ public class ItemFillingWand extends ItemEnergy {
 
             if (isSelected) {
                 if (entity instanceof Player player && stack.hasTag()) {
-	                boolean creative = player.isCreative();
+                    boolean creative = player.isCreative();
 
                     CompoundTag compound = stack.getOrCreateTag();
 

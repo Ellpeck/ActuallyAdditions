@@ -103,7 +103,7 @@ public final class ActuallyItems {
     public static final DeferredItem<ItemEngineerGoggles> ENGINEERS_GOGGLES = ITEMS.register("engineers_goggles", () -> new ItemEngineerGoggles(false));
     public static final DeferredItem<ItemLaserRelayUpgrade> LASER_UPGRADE_RANGE = ITEMS.register("laser_upgrade_range", ItemLaserRelayUpgrade::new);
     public static final DeferredItem<ItemLaserRelayUpgrade> LASER_UPGRADE_INVISIBILITY = ITEMS.register("laser_upgrade_invisibility", ItemLaserRelayUpgrade::new);
-    public static final DeferredItem<ItemFillingWand> HANDHELD_FILLER = ITEMS.register("handheld_filler", ItemFillingWand::new);
+    public static final DeferredItem<Filler> HANDHELD_FILLER = ITEMS.register("handheld_filler", Filler::new);
     public static final DeferredItem<Sack> TRAVELERS_SACK = ITEMS.register("travelers_sack", () -> new Sack(false));
     public static final DeferredItem<Sack> VOID_SACK = ITEMS.register("void_sack", () -> new Sack(true));
     public static final DeferredItem<Worm> WORM = ITEMS.register("worm", Worm::new);
