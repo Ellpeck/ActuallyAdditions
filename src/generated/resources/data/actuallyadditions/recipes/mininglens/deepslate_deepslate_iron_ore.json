@@ -1,0 +1,10 @@
+{
+  "type": "actuallyadditions:mining_lens",
+  "ingredient": {
+    "item": "minecraft:deepslate"
+  },
+  "result": {
+    "item": "minecraft:deepslate_iron_ore"
+  },
+  "weight": 3000
+}
