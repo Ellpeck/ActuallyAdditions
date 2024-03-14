@@ -50,6 +50,7 @@ import de.ellpeck.actuallyadditions.mod.misc.special.SpecialRenderInit;
 import de.ellpeck.actuallyadditions.mod.particle.ActuallyParticles;
 import de.ellpeck.actuallyadditions.mod.particle.ParticleBeam;
 import de.ellpeck.actuallyadditions.mod.particle.ParticleLaserItem;
+import de.ellpeck.actuallyadditions.mod.patchouli.PatchouliPages;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.multiplayer.ClientPacketListener;
@@ -102,6 +103,8 @@ public class ActuallyAdditionsClient {
                         (stack, level, entity, tintIndex) -> "snail mail".equalsIgnoreCase(stack.getHoverName().getString()) ? 1F : 0F));
 
         setupRenderLayers();
+        
+        PatchouliPages.init();
     }
 
     private static void setupRenderLayers() {

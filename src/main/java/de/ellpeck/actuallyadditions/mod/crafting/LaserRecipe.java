@@ -3,6 +3,7 @@ package de.ellpeck.actuallyadditions.mod.crafting;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
+import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.Container;
@@ -45,6 +46,11 @@ public class LaserRecipe implements Recipe<Container> {
 
     public Ingredient getInput() {
         return itemIngredient;
+    }
+
+    @Override
+    public ItemStack getToastSymbol() {
+        return new ItemStack(ActuallyBlocks.ATOMIC_RECONSTRUCTOR.get());
     }
 
     //nah

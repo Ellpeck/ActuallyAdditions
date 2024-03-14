@@ -1,0 +1,101 @@
+{
+  "category": "actuallyadditions:getting_started",
+  "icon": "actuallyadditions:booklet",
+  "name": "booklet.actuallyadditions.chapter.crystals",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "booklet.actuallyadditions.chapter.crystals.text.1"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "booklet.actuallyadditions.chapter.crystals.text.2"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "booklet.actuallyadditions.chapter.crystals.text.3"
+    },
+    {
+      "type": "patchouli:image",
+      "border": false,
+      "images": [
+        "actuallyadditions:textures/gui/booklet/page_atomic_reconstructor.png"
+      ]
+    },
+    {
+      "type": "patchouli:text",
+      "text": "booklet.actuallyadditions.chapter.crystals.text.5"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "actuallyadditions:atomic_reconstructor",
+      "text": "booklet.actuallyadditions.chapter.crystals.text.6"
+    },
+    {
+      "type": "actuallyadditions:reconstructor",
+      "recipe": "actuallyadditions:laser/crystalize_restonia_crystal_block",
+      "recipe2": "actuallyadditions:laser/crystalize_restonia_crystal",
+      "text": "booklet.actuallyadditions.reconstructor_recipe"
+    },
+    {
+      "type": "actuallyadditions:reconstructor",
+      "recipe": "actuallyadditions:laser/crystalize_palis_crystal_block",
+      "recipe2": "actuallyadditions:laser/crystalize_palis_crystal",
+      "text": "booklet.actuallyadditions.reconstructor_recipe"
+    },
+    {
+      "type": "actuallyadditions:reconstructor",
+      "recipe": "actuallyadditions:laser/crystalize_diamatine_crystal_block",
+      "recipe2": "actuallyadditions:laser/crystalize_diamatine_crystal",
+      "text": "booklet.actuallyadditions.reconstructor_recipe"
+    },
+    {
+      "type": "actuallyadditions:reconstructor",
+      "recipe": "actuallyadditions:laser/crystalize_void_crystal_block",
+      "recipe2": "actuallyadditions:laser/crystalize_void_crystal",
+      "text": "booklet.actuallyadditions.reconstructor_recipe"
+    },
+    {
+      "type": "actuallyadditions:reconstructor",
+      "recipe": "actuallyadditions:laser/crystalize_emeradic_crystal_block",
+      "recipe2": "actuallyadditions:laser/crystalize_emeradic_crystal",
+      "text": "booklet.actuallyadditions.reconstructor_recipe"
+    },
+    {
+      "type": "actuallyadditions:reconstructor",
+      "recipe": "actuallyadditions:laser/crystalize_enori_crystal_block",
+      "recipe2": "actuallyadditions:laser/crystalize_enori_crystal",
+      "text": "booklet.actuallyadditions.reconstructor_recipe"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "actuallyadditions:decompress/restonia_crystal",
+      "recipe2": "actuallyadditions:compress/restonia_crystal_block"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "actuallyadditions:decompress/palis_crystal",
+      "recipe2": "actuallyadditions:compress/palis_crystal_block"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "actuallyadditions:decompress/diamatine_crystal",
+      "recipe2": "actuallyadditions:compress/diamatine_crystal_block"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "actuallyadditions:decompress/void_crystal",
+      "recipe2": "actuallyadditions:compress/void_crystal_block"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "actuallyadditions:decompress/emeradic_crystal",
+      "recipe2": "actuallyadditions:compress/emeradic_crystal_block"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "actuallyadditions:decompress/enori_crystal",
+      "recipe2": "actuallyadditions:compress/enori_crystal_block"
+    }
+  ]
+}
