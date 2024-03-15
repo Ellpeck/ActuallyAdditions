@@ -87,7 +87,7 @@ public class ItemCoffee extends ItemBase {
         applyPotionEffectsFromStack(stack, livingEntity);
         theStack.setDamageValue(theStack.getDamageValue() + 1);
         if (theStack.getMaxDamage() - theStack.getDamageValue() < 0) {
-            return new ItemStack(ActuallyItems.COFFEE_CUP.get());
+            return new ItemStack(ActuallyItems.EMPTY_CUP.get());
         } else {
             return theStack;
         }
