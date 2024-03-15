@@ -35,7 +35,7 @@ import net.neoforged.api.distmarker.OnlyIn;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ItemCoffee extends ItemBase {
+public class ItemCoffee extends ItemBase { //TODO: Do we want to change the saturation? Currently it's 5.0F which becomes 40 in game. That's a lot of saturation.
     private static final FoodProperties FOOD = new FoodProperties.Builder().nutrition(8).saturationMod(5.0F).alwaysEat().build();
 
     public ItemCoffee() {
