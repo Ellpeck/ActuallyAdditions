@@ -163,7 +163,6 @@ public class ActuallyAdditions {
 
         new UpdateChecker();
         InitEntities.init(); // todo: [port] replace
-        ItemCoffee.initIngredients();
         CrusherCrafting.init();
     }
 

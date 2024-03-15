@@ -42,25 +42,6 @@ public class ItemCoffee extends ItemBase { //TODO: Do we want to change the satu
         super(ActuallyItems.defaultProps().food(FOOD).durability(3));
     }
 
-    public static void initIngredients() {
-//        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new MilkIngredient(Ingredient.of(Items.MILK_BUCKET)));
-//        //Pam's Soy Milk (For Jemx because he's lactose intolerant. YER HAPPY NAO!?)
-//        if (ModList.get().isLoaded("harvestcraft")) {
-//            Item item = ItemUtil.getItemFromName("harvestcraft:soymilkitem");
-//            if (item != null) {
-//                ActuallyAdditionsAPI.addCoffeeMachineIngredient(new MilkIngredient(Ingredient.of(item)));
-//            }
-//        }
-//
-//        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(Ingredient.of(Items.SUGAR), 4, new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 30, 0)));
-//        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(Ingredient.of(Items.MAGMA_CREAM), 2, new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 20, 0)));
-//        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(Ingredient.of(Items.PUFFERFISH), 2, new MobEffectInstance(MobEffects.WATER_BREATHING, 10, 0)));
-//        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(Ingredient.of(Items.GOLDEN_CARROT), 2, new MobEffectInstance(MobEffects.NIGHT_VISION, 30, 0)));
-//        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(Ingredient.of(Items.GHAST_TEAR), 3, new MobEffectInstance(MobEffects.REGENERATION, 5, 0)));
-//        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(Ingredient.of(Items.BLAZE_POWDER), 4, new MobEffectInstance(MobEffects.DAMAGE_BOOST, 15, 0)));
-//        ActuallyAdditionsAPI.addCoffeeMachineIngredient(new CoffeeIngredient(Ingredient.of(Items.FERMENTED_SPIDER_EYE), 2, new MobEffectInstance(MobEffects.INVISIBILITY, 25, 0)));
-    }
-
     @Nullable
     public static RecipeHolder<CoffeeIngredientRecipe> getIngredientRecipeFromStack(ItemStack stack) {
         for (RecipeHolder<CoffeeIngredientRecipe> recipeHolder : ActuallyAdditionsAPI.COFFEE_MACHINE_INGREDIENTS) {
