@@ -1,19 +1,19 @@
 # Remove
-- [ ] Lush caves
+- [x] Lush caves
 - [x] 11 lens (lens of disruption)
-- [ ] Smiley cloud
+- [x] Smiley cloud
 - [x] Occasional solidified XP drop from mobs
 - [x] Treasure chests
 - [x] Composter and bio-mash, biomass, bio coal and fertilizer
 - [x] Charcoal blocks
 - [x] Ender pearl blocks
 - [x] ESDs
-- [ ] Fishing nets
-- [ ] Solar panels
+- [x] Fishing nets
+- [x] Solar panels
 - [X] Item repairers
 - [x] Knife (food can just be crafted normally)
 - [X] Black lotuses and black dye
-- [ ] Chest to storage crate upgrade (makes little sense with the way they are being changed), keep the other ones though
+- [x] Chest to storage crate upgrade (makes little sense with the way they are being changed), keep the other ones though
 - [x] Ring of liquid banning
 - [x] Emerald and obsidian armor and tools
 - [x] Black quartz armor and tools
@@ -22,8 +22,8 @@
 - [x] Jam villager and jams
 - [x] Potion rings
 - [x] Fur balls
-- [ ] The food (except for stuff used elsewhere like the coffee)
-- [ ] The weird rainbow colored item names, except for the crystals which should keep their color-matching names
+- [x] The food (except for stuff used elsewhere like the coffee)
+- [x] The weird rainbow colored item names, except for the crystals which should keep their color-matching names
 
 # Change
 - [ ] Make crystal clusters spawn in amethyst nodes in 1.18, leave unused in 1.16 (same with crystal shards)
@@ -52,44 +52,44 @@
 # Keep As Is
 - [X] Battery box
 - [ ] Item interfaces and item laser system
-- [ ] Farmer
+- [x] Farmer
 - [x] Empowerer and display stands
 - [x] Tiny torch
 - [ ] Shock absorber
-- [ ] Player interface
+- [x] Player interface
 - [ ] Vertical digger
-- [ ] Atomic reconstructor
-- [ ] Ranged collector
+- [x] Atomic reconstructor
+- [x] Ranged collector
 - [ ] Breakers, placers and long-range breakers, as well as fluid variants
 - [ ] Leaf-eating generator
 - [ ] Lamps and lamp controller
 - [ ] Lava factory controller
-- [ ] The entire canola system
-- [ ] Phantomfaces and their variants
+- [x] The entire canola system
+- [x] Phantomfaces and their variants
 - [ ] Feeder
 - [ ] Crusher and double crusher
 - [ ] Heat collectors
 - [x] Precision dropper
 - [x] Engineer's goggles
 - [ ] Laser relay modifiers and wrench
-- [ ] Handheld filler
-- [ ] Sacks
-- [ ] Player probe
-- [ ] Item filter
+- [x] Handheld filler
+- [x] Sacks
+- [x] Player probe
+- [x] Item filter
 - [ ] Water bowl
 - [x] Tiny coal and charcoal
-- [ ] Rice slimeballs
+- [x] Rice slimeballs
 - [ ] Storage crate keeper
-- [ ] Color, detonation, certain death, killer and disenchanting lenses
+- [x] Color, detonation, certain death, killer and disenchanting lenses
 - [ ] Storage crate upgrades, except for the "chest to storage crate" one
 - [ ] Ring of growth
-- [ ] Ring of magnetization
+- [x] Ring of magnetization
 - [x] Teleport staff
 - [ ] Wings of the Bats and wing items dropped from bats
-- [ ] Drills and drill upgrades
-- [ ] Batteries
+- [x] Drills and drill upgrades
+- [x] Batteries
 - [x] Crafting table on a stick
 - [x] Leaf blowers
 - [ ] The book
 - [x] The Crystal Flux name and rainbow effect
-- [ ] Engineer's village house and engineer villager
+- [x] Engineer's village house and engineer villager
