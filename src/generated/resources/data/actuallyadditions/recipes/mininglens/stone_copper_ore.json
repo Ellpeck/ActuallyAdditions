@@ -1,0 +1,10 @@
+{
+  "type": "actuallyadditions:mining_lens",
+  "ingredient": {
+    "tag": "forge:stone"
+  },
+  "result": {
+    "item": "minecraft:copper_ore"
+  },
+  "weight": 5000
+}
