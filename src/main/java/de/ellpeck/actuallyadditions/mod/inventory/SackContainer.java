@@ -11,7 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.inventory;
 
 import de.ellpeck.actuallyadditions.api.ActuallyTags;
-import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotDeletion;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotFilter;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotImmovable;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
@@ -46,22 +45,13 @@ public class SackContainer extends AbstractContainerMenu implements IButtonReact
     }
 
     public SackContainer(int windowId, Inventory playerInventory, UUID uuid, ItemStackHandlerAA handler) {
-        super(ActuallyContainers.BAG_CONTAINER.get(), windowId);
+        super(ActuallyContainers.SACK_CONTAINER.get(), windowId);
 
         this.inventory = playerInventory;
         this.bagInventory = handler;
 
         for (int row = 0; row < 4; row++) {
             this.addSlot(new SlotFilter(this.filter, row, 155, 10 + row * 18));
-        }
-
-        if (false) { // TODO isvoid, move to its own container
-            this.addSlot(new SlotDeletion(this.bagInventory, 0, 64, 65) {
-                @Override
-                public boolean mayPlace(ItemStack stack) {
-                    return SackContainer.this.filter.check(stack);
-                }
-            });
         }
 
         // Sack inventory
@@ -94,7 +84,6 @@ public class SackContainer extends AbstractContainerMenu implements IButtonReact
 
         ItemStack stack = playerInventory.getSelected();
         if (!stack.isEmpty() && stack.getItem() instanceof Sack) {
-            //DrillItem.loadSlotsFromNBT(this.bagInventory, playerInventory.getSelected());
             if (stack.hasTag()) {
                 CompoundTag compound = stack.getOrCreateTag();
                 this.filter.readFromNBT(compound, "Filter");
@@ -102,46 +91,6 @@ public class SackContainer extends AbstractContainerMenu implements IButtonReact
             }
         }
     }
-
-/*    @Override
-    public void broadcastChanges() { // TODO is this needed anymore?
-        super.broadcastChanges();
-
-        if (this.filter.needsUpdateSend() || this.autoInsert != this.oldAutoInsert) {
-            for (ContainerListener listener : this..containerListeners) {
-                listener.setContainerData(this, 0, this.filter.isWhitelist
-                    ? 1
-                    : 0);
-                listener.setContainerData(this, 1, this.filter.respectMeta
-                    ? 1
-                    : 0);
-                listener.setContainerData(this, 2, this.filter.respectNBT
-                    ? 1
-                    : 0);
-                listener.setContainerData(this, 3, this.filter.respectOredict);
-                listener.setContainerData(this, 4, this.autoInsert
-                    ? 1
-                    : 0);
-                listener.setContainerData(this, 5, this.filter.respectMod
-                    ? 1
-                    : 0);
-            }
-            this.filter.updateLasts();
-            this.oldAutoInsert = this.autoInsert;
-        }
-    }
-
-    @Override
-    @OnlyIn(Dist.CLIENT)
-    public void setData(int id, int data) {
-        if (id == 0) {
-            this.filter.isWhitelist = data == 1;
-        } else if (id == 1) {
-            this.autoInsert = data == 1;
-        } else if (id == 2) {
-            this.filter.respectMod = data == 1;
-        }
-    }*/
 
     @Override
     public ItemStack quickMoveStack(@Nonnull Player player, int slot) {

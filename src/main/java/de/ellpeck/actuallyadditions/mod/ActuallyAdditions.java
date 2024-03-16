@@ -33,7 +33,6 @@ import de.ellpeck.actuallyadditions.mod.gen.village.ActuallyVillagers;
 import de.ellpeck.actuallyadditions.mod.gen.village.InitVillager;
 import de.ellpeck.actuallyadditions.mod.inventory.ActuallyContainers;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
-import de.ellpeck.actuallyadditions.mod.items.ItemCoffee;
 import de.ellpeck.actuallyadditions.mod.items.Worm;
 import de.ellpeck.actuallyadditions.mod.lootmodifier.ActuallyLootModifiers;
 import de.ellpeck.actuallyadditions.mod.misc.BannerHelper;
@@ -142,6 +141,7 @@ public class ActuallyAdditions {
 
         if (FMLEnvironment.dist.isClient()) {
 	        eventBus.addListener(ActuallyAdditionsClient::setup);
+            eventBus.addListener(ActuallyAdditionsClient::setupMenus);
 	        eventBus.addListener(ActuallyAdditionsClient::setupSpecialRenders);
 	        eventBus.addListener(ActuallyAdditionsClient::registerParticleFactories);
             eventBus.register(new ClientRegistryHandler());

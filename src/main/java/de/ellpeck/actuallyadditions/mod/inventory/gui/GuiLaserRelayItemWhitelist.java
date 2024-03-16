@@ -68,8 +68,8 @@ public class GuiLaserRelayItemWhitelist extends AAScreen<ContainerLaserRelayItem
     public void init() {
         super.init();
 
-        this.leftFilter = new FilterSettingsGui(this.tile.leftFilter, this.leftPos + 3, this.topPos + 6, this::addRenderableWidget, this::buttonClicked,  0);
-        this.rightFilter = new FilterSettingsGui(this.tile.rightFilter, this.leftPos + 157, this.topPos + 6, this::addRenderableWidget, this::buttonClicked,  4);
+        this.leftFilter = new FilterSettingsGui(this.tile.leftFilter, this.leftPos + 3, this.topPos + 6, true, this::addRenderableWidget, this::buttonClicked,  0);
+        this.rightFilter = new FilterSettingsGui(this.tile.rightFilter, this.leftPos + 157, this.topPos + 6, true, this::addRenderableWidget, this::buttonClicked,  4);
 
         this.buttonSmartWhitelistLeft = this.addRenderableWidget(Button.builder(
                         Component.literal("S"),

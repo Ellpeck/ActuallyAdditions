@@ -45,23 +45,21 @@ public class SlotFilter extends SlotItemHandlerUnconditioned {
     }
 
     private void slotClick(Player player, ItemStack cursorItem) {
-        ItemStack heldStack = cursorItem;
         ItemStack stackInSlot = this.getItem();
-
-        if (StackUtil.isValid(stackInSlot) && !StackUtil.isValid(heldStack)) {
+        if (!stackInSlot.isEmpty() && cursorItem.isEmpty()) {
             if (isFilter(stackInSlot)) {
-                player.getInventory().setPickedItem(stackInSlot);
+                player.containerMenu.setCarried(stackInSlot);
             }
 
             this.set(ItemStack.EMPTY);
-        } else if (StackUtil.isValid(heldStack)) {
+        } else if (StackUtil.isValid(cursorItem)) {
             if (!isFilter(stackInSlot)) {
-                ItemStack s = heldStack.copy();
+                ItemStack s = cursorItem.copy();
                 s.setCount(1);
                 this.set(s);
 
-                if (isFilter(heldStack)) {
-                    heldStack.shrink(1);
+                if (isFilter(cursorItem)) {
+                    cursorItem.shrink(1);
                 }
             }
         }

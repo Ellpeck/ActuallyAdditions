@@ -1,4 +1,4 @@
-// 1.20.4	2024-03-14T17:01:13.6665594	Item Recipes
+// 1.20.4	2024-03-16T12:15:55.7079887	Item Recipes
 d374edde9294d1a224b4b5610b50117a11328c00 data/actuallyadditions/recipes/advanced_coil.json
 f67629e45d152c96f3467a90a67520f78ecf9f07 data/actuallyadditions/recipes/advanced_leaf_blower.json
 d65e5a70232fa2f0e74d2a67c1cd4b0e87124242 data/actuallyadditions/recipes/basic_coil.json
@@ -118,5 +118,6 @@ b4aa29ef0d47b557f354a23cb6ee8ef60d273de3 data/actuallyadditions/recipes/teleport
 5745a05f877fce254a1990f1e89f80e91846e270 data/actuallyadditions/recipes/tiny_to_coal.json
 91bebb02fc416a650eea26c2d87049de91866cf0 data/actuallyadditions/recipes/travelers_sack.json
 89c9512eeb746befb1bdc31037baa9bd86220f74 data/actuallyadditions/recipes/triple_battery.json
+babb9a9e8a18d124c235df9214265c84738b0c1d data/actuallyadditions/recipes/void_sack.json
 0737014abee48f688982412297e04e994aa6f9a6 data/actuallyadditions/recipes/wings_of_the_bats.json
 c80073fcade3cdcb15f28c4a1cb12df4ae6cf4ec data/actuallyadditions/recipes/wooden_aiot.json

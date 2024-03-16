@@ -48,7 +48,7 @@ public class GuiRangedCollector extends AAScreen<ContainerRangedCollector> {
     public void init() {
         super.init();
 
-        this.filter = new FilterSettingsGui(this.collector.filter, this.leftPos + 3, this.topPos + 6, this::addRenderableWidget, this::buttonClicked, 0);
+        this.filter = new FilterSettingsGui(this.collector.filter, this.leftPos + 3, this.topPos + 6, true, this::addRenderableWidget, this::buttonClicked, 0);
     }
 
     @Override

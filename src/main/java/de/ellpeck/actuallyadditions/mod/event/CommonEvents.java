@@ -16,7 +16,6 @@ import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData;
 import de.ellpeck.actuallyadditions.mod.data.WorldData;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
-import de.ellpeck.actuallyadditions.mod.items.DrillItem;
 import de.ellpeck.actuallyadditions.mod.items.Sack;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.sack.SackManager;
@@ -68,53 +67,57 @@ public class CommonEvents {
                     if (i != player.getInventory().selected) {
 
                         ItemStack invStack = player.getInventory().getItem(i);
-                        if (StackUtil.isValid(invStack) && invStack.getItem() instanceof Sack && invStack.hasTag()) {
+                        if (StackUtil.isValid(invStack) && (invStack.getItem() instanceof Sack) && invStack.hasTag()) {
                             if (invStack.getOrCreateTag().getBoolean("AutoInsert")) {
                                 boolean changed = false;
-
                                 boolean isVoid = ((Sack) invStack.getItem()).isVoid;
-                                var optHandler = SackManager.get().getHandler(invStack);
-
-                                if (optHandler.isEmpty())
-                                    continue;
-
-                                ItemStackHandlerAA inv = optHandler.get();
 
                                 FilterSettings filter = new FilterSettings(4, false, false);
                                 filter.readFromNBT(invStack.getOrCreateTag(), "Filter");
-                                if (filter.check(stack)) {
-                                    if (isVoid) {
+
+                                if (isVoid) {
+                                    if (filter.check(stack)) {
                                         stack.setCount(0);
                                         changed = true;
-                                    } else {
-                                        for (int j = 0; j < inv.getSlots(); j++) {
-                                            ItemStack bagStack = inv.getStackInSlot(j);
-                                            if (StackUtil.isValid(bagStack)) {
-                                                if (ItemUtil.canBeStacked(bagStack, stack)) {
-                                                    int maxTransfer = Math.min(stack.getCount(), stack.getMaxStackSize() - bagStack.getCount());
-                                                    if (maxTransfer > 0) {
-                                                        inv.setStackInSlot(j, StackUtil.grow(bagStack, maxTransfer));
-                                                        stack.shrink(maxTransfer);
-                                                        changed = true;
-                                                    }
-                                                }
-                                            } else {
-                                                inv.setStackInSlot(j, stack.copy());
-                                                stack.setCount(0);
-                                                changed = true;
-                                            }
+                                    }
+                                }
+                                else {
+                                    var optHandler = SackManager.get().getHandler(invStack);
 
-                                            if (!StackUtil.isValid(stack)) {
-                                                break;
+                                    if (optHandler.isEmpty())
+                                        continue;
+
+                                    ItemStackHandlerAA inv = optHandler.get();
+
+                                    if (filter.check(stack)) {
+                                            for (int j = 0; j < inv.getSlots(); j++) {
+                                                ItemStack bagStack = inv.getStackInSlot(j);
+                                                if (StackUtil.isValid(bagStack)) {
+                                                    if (ItemUtil.canBeStacked(bagStack, stack)) {
+                                                        int maxTransfer = Math.min(stack.getCount(), stack.getMaxStackSize() - bagStack.getCount());
+                                                        if (maxTransfer > 0) {
+                                                            inv.setStackInSlot(j, StackUtil.grow(bagStack, maxTransfer));
+                                                            stack.shrink(maxTransfer);
+                                                            changed = true;
+                                                        }
+                                                    }
+                                                } else {
+                                                    inv.setStackInSlot(j, stack.copy());
+                                                    stack.setCount(0);
+                                                    changed = true;
+                                                }
+
+                                                if (stack.isEmpty()) {
+                                                    break;
+                                                }
                                             }
-                                        }
                                     }
                                 }
 
                                 if (changed) {
-                                    if (!isVoid) {
+/*                                    if (!isVoid) {
                                         DrillItem.writeSlotsToNBT(inv, invStack);
-                                    }
+                                    }*/
                                     event.setResult(Event.Result.ALLOW);
                                 }
                             }

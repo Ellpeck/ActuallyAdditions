@@ -109,12 +109,12 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .define('V', ActuallyBlocks.VOID_CRYSTAL.getItem()).save(recipeOutput);
 
         //Void Bag
-/*        Recipe.shapeless(ActuallyItems.VOID_SACK.get())
+        Recipe.shapeless(ActuallyItems.VOID_SACK.get())
             .requires(ActuallyItems.TRAVELERS_SACK.get())
             .requires(Tags.Items.ENDER_PEARLS)
             .requires(Tags.Items.OBSIDIAN)
             .requires(ActuallyBlocks.VOID_CRYSTAL.getItem())
-            .save(recipeOutput);*/ //TODO not done yet
+            .save(recipeOutput);
 
         //Lens
         Recipe.shaped(ActuallyItems.LENS.get())

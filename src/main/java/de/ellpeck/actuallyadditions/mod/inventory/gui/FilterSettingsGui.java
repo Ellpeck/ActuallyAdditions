@@ -33,7 +33,7 @@ public class FilterSettingsGui {
     public Button whitelistButton;
     public Button modButton;
 
-    public FilterSettingsGui(FilterSettings settings, int x, int y, Consumer<AbstractButton> buttonConsumer, Consumer<Integer> clickConsumer, int idOffset) {
+    public FilterSettingsGui(FilterSettings settings, int x, int y, boolean vertical, Consumer<AbstractButton> buttonConsumer, Consumer<Integer> clickConsumer, int idOffset) {
         this.theSettings = settings;
 
         this.whitelistButton = Button.builder(Component.literal("WH"), $ -> {
@@ -42,7 +42,10 @@ public class FilterSettingsGui {
         })
                 .bounds(x, y, 16, 12).build();
         buttonConsumer.accept(this.whitelistButton);
-        y += 14;
+        if (vertical)
+            y += 14;
+        else
+            x += 18;
         this.modButton = Button.builder(Component.literal("MO"), $ -> {
             theSettings.respectMod = !theSettings.respectMod;
             clickConsumer.accept(idOffset + 1);
