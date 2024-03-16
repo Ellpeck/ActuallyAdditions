@@ -65,6 +65,7 @@ public class MiningLensGenerator extends RecipeProvider {
 
     private void buildMiningLens(RecipeOutput consumer) {
         buildStoneOre(consumer, 5000, Items.COAL_ORE);
+        buildStoneOre(consumer, 5000, Items.COPPER_ORE);
         buildStoneOre(consumer, 3000, Items.IRON_ORE);
         buildStoneOre(consumer, 500, Items.GOLD_ORE);
         buildNetherOre(consumer, 500, Items.NETHER_GOLD_ORE);
@@ -78,6 +79,7 @@ public class MiningLensGenerator extends RecipeProvider {
 
         buildDeepSlateOre(consumer, 2000, Items.DEEPSLATE_COAL_ORE);
         buildDeepSlateOre(consumer, 3000, Items.DEEPSLATE_IRON_ORE);
+        buildDeepSlateOre(consumer, 3000, Items.DEEPSLATE_COPPER_ORE);
         buildDeepSlateOre(consumer, 500, Items.DEEPSLATE_GOLD_ORE);
         buildDeepSlateOre(consumer, 50, Items.DEEPSLATE_DIAMOND_ORE);
         buildDeepSlateOre(consumer, 250, Items.DEEPSLATE_LAPIS_ORE);
