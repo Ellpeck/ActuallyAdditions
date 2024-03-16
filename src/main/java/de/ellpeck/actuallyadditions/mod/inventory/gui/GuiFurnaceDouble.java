@@ -11,7 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFurnaceDouble;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityPoweredFurnace;
@@ -26,7 +25,6 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
 import javax.annotation.Nonnull;
-import java.util.Collections;
 
 @OnlyIn(Dist.CLIENT)
 public class GuiFurnaceDouble extends AAScreen<ContainerFurnaceDouble> {
@@ -50,9 +48,7 @@ public class GuiFurnaceDouble extends AAScreen<ContainerFurnaceDouble> {
         this.energy.render(guiGraphics, x, y);
 
         if (this.buttonAutoSplit.isMouseOver(x, y)) {
-            guiGraphics.renderComponentTooltip(font, Collections.singletonList(this.tileFurnace.isAutoSplit
-                ? Component.translatable("info." + ActuallyAdditions.MODID + ".gui.autoSplitItems.on").withStyle(ChatFormatting.BOLD)
-                : Component.translatable("info." + ActuallyAdditions.MODID + ".gui.autoSplitItems.off").withStyle(ChatFormatting.BOLD)), x, y);
+            guiGraphics.renderTooltip(font, Component.translatable("info.actuallyadditions.gui.autosplititems." + (tileFurnace.isAutoSplit?"on":"off")), x, y);
         }
     }
 
@@ -61,7 +57,7 @@ public class GuiFurnaceDouble extends AAScreen<ContainerFurnaceDouble> {
         super.init();
         this.energy = new EnergyDisplay(this.leftPos + 27, this.topPos + 5, this.tileFurnace.storage);
         this.buttonAutoSplit = Button.builder(Component.literal("S"), (button) -> PacketHandlerHelper.sendButtonPacket(this.tileFurnace, 0))
-                .bounds(this.getGuiLeft(), 30, 16, 16).build();
+                .bounds(this.getGuiLeft(), this.topPos + 5, 16, 16).build();
         buttonAutoSplit.setFGColor(this.tileFurnace.isAutoSplit ? ChatFormatting.DARK_GREEN.getColor() : ChatFormatting.RED.getColor());
         this.addRenderableWidget(this.buttonAutoSplit);
     }
