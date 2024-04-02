@@ -36,6 +36,8 @@ public class ItemModelGenerator extends ItemModelProvider {
         ActuallyItems.SIMPLE_ITEMS.forEach(this::simpleItem);
         ActuallyItems.TOOLS.forEach(this::simpleTool);
 
+        singleTexture("item_tag", mcLoc("item/generated"), "layer0", mcLoc("item/paper"));
+
         // Toolsets
 /*        ActuallyItems.ALL_TOOL_SETS.stream()
             .map(ToolSet::getItemGroup)

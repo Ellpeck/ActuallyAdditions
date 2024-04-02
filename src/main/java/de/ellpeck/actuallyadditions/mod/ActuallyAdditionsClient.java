@@ -66,6 +66,7 @@ public class ActuallyAdditionsClient {
         evt.register(ActuallyContainers.PHANTOM_PLACER_CONTAINER.get(), GuiPhantomPlacer::new);
         evt.register(ActuallyContainers.RANGED_COLLECTOR_CONTAINER.get(), GuiRangedCollector::new);
         evt.register(ActuallyContainers.XPSOLIDIFIER_CONTAINER.get(), GuiXPSolidifier::new);
+        evt.register(ActuallyContainers.ITEM_TAG_CONTAINER.get(), ItemTagScreen::new);
     }
 
     public static void setup(FMLClientSetupEvent event) {

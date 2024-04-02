@@ -38,6 +38,6 @@ public class ActuallyContainers {
     public static final Supplier<MenuType<ContainerPhantomPlacer>> PHANTOM_PLACER_CONTAINER = CONTAINERS.register("phantom_placer_container", () -> IMenuTypeExtension.create(ContainerPhantomPlacer::fromNetwork));
     public static final Supplier<MenuType<ContainerRangedCollector>> RANGED_COLLECTOR_CONTAINER = CONTAINERS.register("ranged_collector_container", () -> IMenuTypeExtension.create(ContainerRangedCollector::fromNetwork));
     public static final Supplier<MenuType<ContainerXPSolidifier>> XPSOLIDIFIER_CONTAINER = CONTAINERS.register("xpsolidifier_container", () -> IMenuTypeExtension.create(ContainerXPSolidifier::fromNetwork));
-
+    public static final Supplier<MenuType<ItemTagContainer>> ITEM_TAG_CONTAINER = CONTAINERS.register("item_tag_container", () -> IMenuTypeExtension.create(ItemTagContainer::fromNetwork));
 }
 

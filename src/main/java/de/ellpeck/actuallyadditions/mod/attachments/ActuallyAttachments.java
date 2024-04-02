@@ -17,6 +17,9 @@ public class ActuallyAttachments {
 	public static final Supplier<AttachmentType<CustomEnergyStorage>> ENERGY_STORAGE = ATTACHMENT_TYPES.register(
 			"energy", ActuallyAttachments.itemEnergyStorageAttachment());
 
+	public static final Supplier<AttachmentType<ItemTagAttachment>> ITEM_TAG = ATTACHMENT_TYPES.register(
+			"item_tag", () -> AttachmentType.serializable(ItemTagAttachment::new).build());
+
 	/*
 	 * This is a supplier for an attachment type that can be used to attach an energy storage to an item.
 	 * Implementation is based on EnderIO's https://github.com/Team-EnderIO/EnderIO/blob/e1f022df745131ed5fea718bd860880a5785d4c7/src/core/java/com/enderio/core/common/attachment/AttachmentUtil.java#L47-L60

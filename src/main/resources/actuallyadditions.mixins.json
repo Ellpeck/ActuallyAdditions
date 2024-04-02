@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8.5",
+  "compatibilityLevel": "JAVA_17",
+  "package": "de.ellpeck.actuallyadditions.mixin",
+  "target": "@env(DEFAULT)",
+  "mixins": [
+    "AnvilMixin",
+    "ItemCombinerMenuAccessor"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

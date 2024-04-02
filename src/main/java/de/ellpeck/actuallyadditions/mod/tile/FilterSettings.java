@@ -10,9 +10,11 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import de.ellpeck.actuallyadditions.mod.attachments.ActuallyAttachments;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFilter;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotFilter;
 import de.ellpeck.actuallyadditions.mod.items.DrillItem;
+import de.ellpeck.actuallyadditions.mod.items.ItemTag;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -61,7 +63,19 @@ public class FilterSettings {
                                 return whitelist;
                             }
                         }
-                    } else if (areEqualEnough(slot, stack, mod)) {
+                    }
+                    else if (slot.getItem() instanceof ItemTag) {
+                        var data = slot.getExistingData(ActuallyAttachments.ITEM_TAG);
+                        if (data.isPresent()) {
+                            var tag = data.get().getTag();
+                            if (tag.isPresent()) {
+                                if (stack.is(tag.get())) {
+                                    return whitelist;
+                                }
+                            }
+                        }
+                    }
+                    else if (areEqualEnough(slot, stack, mod)) {
                         return whitelist;
                     }
                 }

@@ -12,6 +12,8 @@ authors="Ellpeck"
 description='''
 Do you want Automation? Wireless Transport? Better Machines? A cup o\' Coffee? Chests? Better Hoppers? Leaf Blowers? Faster Growth? Plants? Well, Actually Additions has all that and a lot more!
 '''
+[[mixins]]
+config = "actuallyadditions.mixins.json"
 
 [[dependencies.actuallyadditions]]
     modId="neoforge"

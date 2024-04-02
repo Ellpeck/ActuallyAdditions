@@ -397,6 +397,7 @@
   "item.actuallyadditions.phan_con_pattern.desc": "Phantom Connector",
   "item.actuallyadditions.book_pattern": "Banner Pattern",
   "item.actuallyadditions.book_pattern.desc": "Book",
+  "item.actuallyadditions.item_tag" : "Item Tag",
   "_comment": "Tooltips",
   "tooltip.actuallyadditions.onSuffix.desc": "On",
   "tooltip.actuallyadditions.phantom.connected.desc": "<Block connected!>",
@@ -443,6 +444,7 @@
   "tooltip.actuallyadditions.item_filling_wand.selected_block": "Selected Block: %s",
   "tooltip.actuallyadditions.item_filling_wand.selected_block.none": "None",
   "tooltip.actuallyadditions.coffeeCup.noEffect": "No Effects",
+  "tooltip.actuallyadditions.item_tag.no_tag": "Use Anvil to set tag.",
   "_comment": "Gui Information",
   "info.actuallyadditions.gui.animals": "Animals",
   "info.actuallyadditions.gui.enoughToBreed": "Enough to breed!",
@@ -985,5 +987,6 @@
   "jei.actuallyadditions.coffee.maxAmount": "Max Amount",
   "jei.actuallyadditions.coffee.extra.milk": "+01:00, -1 Level",
   "jei.actuallyadditions.mining_lens": "Lens of the Miner",
-  "jei.actuallyadditions.mining_lens.weight": "Weight:"
+  "jei.actuallyadditions.mining_lens.weight": "Weight:",
+  "container.actuallyadditions.item_tag": "Item Tag"
 }
