@@ -64,6 +64,9 @@ public class BlockEnergizer extends BlockContainerBase {
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-        return VoxelShapes.ENERGIZER_SHAPE;
+        if (this.isEnergizer) {
+            return VoxelShapes.ENERGIZER_SHAPE;
+        }
+        return VoxelShapes.ENERVATOR_SHAPE;
     }
 }

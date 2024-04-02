@@ -51,8 +51,9 @@ public class BlockFeeder extends BlockContainerBase {
         return this.openGui(worldIn, player, pos, TileEntityFeeder.class);
     }
 
-    @Override
-    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-        return VoxelShapes.FEEDER_SHAPE;
-    }
+    // TODO (Rid): Remove Shape
+//    @Override
+//    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+//        return VoxelShapes.FEEDER_SHAPE;
+//    }
 }
