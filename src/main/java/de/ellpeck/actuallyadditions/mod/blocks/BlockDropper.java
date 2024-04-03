@@ -16,12 +16,15 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 import javax.annotation.Nullable;
 
@@ -50,5 +53,23 @@ public class BlockDropper extends FullyDirectionalBlock.Container {
         }
 
         return this.openGui(world, player, pos, TileEntityDropper.class);
+    }
+
+    @Override
+    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+        switch (state.getValue(FACING)) {
+            case UP:
+                return VoxelShapes.BlockBreakerShapes.SHAPE_U;
+            case DOWN:
+                return VoxelShapes.BlockBreakerShapes.SHAPE_D;
+            case EAST:
+                return VoxelShapes.BlockBreakerShapes.SHAPE_E;
+            case SOUTH:
+                return VoxelShapes.BlockBreakerShapes.SHAPE_S;
+            case WEST:
+                return VoxelShapes.BlockBreakerShapes.SHAPE_W;
+            default:
+                return VoxelShapes.BlockBreakerShapes.SHAPE_N;
+        }
     }
 }

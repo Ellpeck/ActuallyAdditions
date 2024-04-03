@@ -103,18 +103,17 @@ public class BlockCrusher extends BlockContainerBase {
                 : 0;
     }
 
-    // TODO (Rid): Remove Shape
-//    @Override
-//    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-//        switch (state.getValue(HORIZONTAL_FACING)) {
-//            case EAST:
-//                return VoxelShapes.GrinderShapes.SHAPE_E;
-//            case SOUTH:
-//                return VoxelShapes.GrinderShapes.SHAPE_S;
-//            case WEST:
-//                return VoxelShapes.GrinderShapes.SHAPE_W;
-//            default:
-//                return VoxelShapes.GrinderShapes.SHAPE_N;
-//        }
-//    }
+    @Override
+    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+        switch (state.getValue(HORIZONTAL_FACING)) {
+            case EAST:
+                return VoxelShapes.GrinderShapes.SHAPE_E;
+            case SOUTH:
+                return VoxelShapes.GrinderShapes.SHAPE_S;
+            case WEST:
+                return VoxelShapes.GrinderShapes.SHAPE_W;
+            default:
+                return VoxelShapes.GrinderShapes.SHAPE_N;
+        }
+    }
 }

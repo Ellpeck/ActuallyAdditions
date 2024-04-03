@@ -51,18 +51,17 @@ public class BlockFarmer extends DirectionalBlock.Container {
         return this.openGui(worldIn, player, pos, TileEntityFarmer.class);
     }
 
-    // TODO (Rid): Remove Shape
-//    @Override
-//    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-//        switch (state.getValue(FACING)) {
-//            case EAST:
-//                return VoxelShapes.FarmerShapes.SHAPE_E;
-//            case SOUTH:
-//                return VoxelShapes.FarmerShapes.SHAPE_S;
-//            case WEST:
-//                return VoxelShapes.FarmerShapes.SHAPE_W;
-//            default:
-//                return VoxelShapes.FarmerShapes.SHAPE_N;
-//        }
-//    }
+    @Override
+    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+        switch (state.getValue(FACING)) {
+            case EAST:
+                return VoxelShapes.FarmerShapes.SHAPE_E;
+            case SOUTH:
+                return VoxelShapes.FarmerShapes.SHAPE_S;
+            case WEST:
+                return VoxelShapes.FarmerShapes.SHAPE_W;
+            default:
+                return VoxelShapes.FarmerShapes.SHAPE_N;
+        }
+    }
 }

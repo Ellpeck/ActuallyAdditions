@@ -29,6 +29,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -39,6 +40,8 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
@@ -89,6 +92,24 @@ public class BlockAtomicReconstructor extends FullyDirectionalBlock.Container im
             return InteractionResult.FAIL;
         }
         return InteractionResult.CONSUME;
+    }
+
+    @Override
+    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+        switch (state.getValue(FACING)) {
+            case UP:
+                return VoxelShapes.AtomicReconstructorShapes.SHAPE_U;
+            case DOWN:
+                return VoxelShapes.AtomicReconstructorShapes.SHAPE_D;
+            case EAST:
+                return VoxelShapes.AtomicReconstructorShapes.SHAPE_E;
+            case SOUTH:
+                return VoxelShapes.AtomicReconstructorShapes.SHAPE_S;
+            case WEST:
+                return VoxelShapes.AtomicReconstructorShapes.SHAPE_W;
+            default:
+                return VoxelShapes.AtomicReconstructorShapes.SHAPE_N;
+        }
     }
 
     @Nullable

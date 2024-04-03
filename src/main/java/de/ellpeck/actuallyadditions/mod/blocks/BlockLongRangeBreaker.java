@@ -55,22 +55,21 @@ public class BlockLongRangeBreaker extends FullyDirectionalBlock.Container {
         return this.openGui(world, player, pos, TileEntityLongRangeBreaker.class);
     }
 
-    // TODO (Rid) - Remove Shape
-//    @Override
-//    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-//        switch (state.getValue(FACING)) {
-//            case UP:
-//                return VoxelShapes.DirectionalBlockBreakerShapes.SHAPE_U;
-//            case DOWN:
-//                return VoxelShapes.DirectionalBlockBreakerShapes.SHAPE_D;
-//            case EAST:
-//                return VoxelShapes.DirectionalBlockBreakerShapes.SHAPE_E;
-//            case SOUTH:
-//                return VoxelShapes.DirectionalBlockBreakerShapes.SHAPE_S;
-//            case WEST:
-//                return VoxelShapes.DirectionalBlockBreakerShapes.SHAPE_W;
-//            default:
-//                return VoxelShapes.DirectionalBlockBreakerShapes.SHAPE_N;
-//        }
-//    }
+    @Override
+    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+        switch (state.getValue(FACING)) {
+            case UP:
+                return VoxelShapes.BlockBreakerShapes.SHAPE_U;
+            case DOWN:
+                return VoxelShapes.BlockBreakerShapes.SHAPE_D;
+            case EAST:
+                return VoxelShapes.BlockBreakerShapes.SHAPE_E;
+            case SOUTH:
+                return VoxelShapes.BlockBreakerShapes.SHAPE_S;
+            case WEST:
+                return VoxelShapes.BlockBreakerShapes.SHAPE_W;
+            default:
+                return VoxelShapes.BlockBreakerShapes.SHAPE_N;
+        }
+    }
 }
