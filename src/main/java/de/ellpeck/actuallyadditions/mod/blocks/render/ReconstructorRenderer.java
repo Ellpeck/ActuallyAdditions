@@ -50,7 +50,7 @@ public class ReconstructorRenderer implements BlockEntityRenderer<TileEntityAtom
         }
 
         matrices.pushPose();
-        matrices.translate(0.5F, 0.5F, 0.5F);
+        matrices.translate(0.5F, 0.5F, 0.45F);
 
         matrices.mulPose(Axis.YP.rotationDegrees(rot));
         matrices.mulPose(Axis.XP.rotationDegrees(pitch));

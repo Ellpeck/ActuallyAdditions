@@ -31,18 +31,19 @@ import java.util.stream.Stream;
 public class CrystalClusterBlock extends FullyDirectionalBlock {
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
 
-    public static final VoxelShape CRYSTAL_SHAPE = Stream.of(
-        Block.box(5, 4, 5, 10, 19, 10), Block.box(4, 0, 4, 11, 5, 11),
-        Block.box(3, 0, 3, 5, 4, 5), Block.box(10, 0, 3, 12, 2, 5),
-        Block.box(12, 0, 4, 13, 1, 5), Block.box(11, 0, 5, 12, 1, 6),
-        Block.box(10, 0, 10, 12, 3, 12), Block.box(3, 0, 10, 5, 1, 12),
-        Block.box(9, 0, 3, 10, 3, 4), Block.box(8, 0, 2, 11, 1, 4),
-        Block.box(4, 0, 2, 5, 2, 3), Block.box(5, 0, 3, 7, 1, 4),
-        Block.box(2, 0, 4, 4, 1, 6), Block.box(3, 0, 5, 4, 3, 6.5),
-        Block.box(3, 0, 9, 4, 2, 10), Block.box(2, 0, 8, 4, 1, 10),
-        Block.box(5, 0, 11, 7, 2, 13), Block.box(7, 0, 11, 11, 1, 13),
-        Block.box(10, 0, 9, 13, 1, 11), Block.box(11, 0, 7, 12, 3, 9)
-    ).reduce((v1, v2) -> Shapes.join(v1, v2, BooleanOp.OR) ).get();
+    // TODO: Remove - Duplicate
+//    public static final VoxelShape CRYSTAL_SHAPE = Stream.of(
+//        Block.box(5, 4, 5, 10, 19, 10), Block.box(4, 0, 4, 11, 5, 11),
+//        Block.box(3, 0, 3, 5, 4, 5), Block.box(10, 0, 3, 12, 2, 5),
+//        Block.box(12, 0, 4, 13, 1, 5), Block.box(11, 0, 5, 12, 1, 6),
+//        Block.box(10, 0, 10, 12, 3, 12), Block.box(3, 0, 10, 5, 1, 12),
+//        Block.box(9, 0, 3, 10, 3, 4), Block.box(8, 0, 2, 11, 1, 4),
+//        Block.box(4, 0, 2, 5, 2, 3), Block.box(5, 0, 3, 7, 1, 4),
+//        Block.box(2, 0, 4, 4, 1, 6), Block.box(3, 0, 5, 4, 3, 6.5),
+//        Block.box(3, 0, 9, 4, 2, 10), Block.box(2, 0, 8, 4, 1, 10),
+//        Block.box(5, 0, 11, 7, 2, 13), Block.box(7, 0, 11, 11, 1, 13),
+//        Block.box(10, 0, 9, 13, 1, 11), Block.box(11, 0, 7, 12, 3, 9)
+//    ).reduce((v1, v2) -> Shapes.join(v1, v2, BooleanOp.OR) ).get();
 
     public CrystalClusterBlock(Crystals crystal) {
         super(Block.Properties.of()
@@ -60,6 +61,6 @@ public class CrystalClusterBlock extends FullyDirectionalBlock {
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-        return CRYSTAL_SHAPE;
+        return VoxelShapes.CRYSTAL_CLUSTER_SHAPE;
     }
 }

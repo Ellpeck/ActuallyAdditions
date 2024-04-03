@@ -59,17 +59,17 @@ public class BlockLongRangeBreaker extends FullyDirectionalBlock.Container {
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         switch (state.getValue(FACING)) {
             case UP:
-                return VoxelShapes.DirectionalBlockBreakerShapes.SHAPE_U;
+                return VoxelShapes.BlockBreakerShapes.SHAPE_U;
             case DOWN:
-                return VoxelShapes.DirectionalBlockBreakerShapes.SHAPE_D;
+                return VoxelShapes.BlockBreakerShapes.SHAPE_D;
             case EAST:
-                return VoxelShapes.DirectionalBlockBreakerShapes.SHAPE_E;
+                return VoxelShapes.BlockBreakerShapes.SHAPE_E;
             case SOUTH:
-                return VoxelShapes.DirectionalBlockBreakerShapes.SHAPE_S;
+                return VoxelShapes.BlockBreakerShapes.SHAPE_S;
             case WEST:
-                return VoxelShapes.DirectionalBlockBreakerShapes.SHAPE_W;
+                return VoxelShapes.BlockBreakerShapes.SHAPE_W;
             default:
-                return VoxelShapes.DirectionalBlockBreakerShapes.SHAPE_N;
+                return VoxelShapes.BlockBreakerShapes.SHAPE_N;
         }
     }
 }
