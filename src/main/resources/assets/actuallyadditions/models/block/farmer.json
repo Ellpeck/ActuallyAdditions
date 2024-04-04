@@ -5,9 +5,9 @@
 		"5": "actuallyadditions:block/farmer_top_animation",
 		"7": "actuallyadditions:block/farmer_front_animation",
 		"8": "actuallyadditions:block/base_texture_back",
+		"particle": "actuallyadditions:block/base_texture_small",
 		"base": "actuallyadditions:block/base_texture",
-		"side": "actuallyadditions:block/farmer_side",
-		"particle": "actuallyadditions:block/base_texture_small"
+		"side": "actuallyadditions:block/base_texture_vent"
 	},
 	"elements": [
 		{
@@ -223,7 +223,7 @@
 			"to": [2, 15, 14],
 			"faces": {
 				"east": {"uv": [0, 0, 12, 15], "texture": "#missing"},
-				"west": {"uv": [2, 1, 14, 16], "texture": "#side"},
+				"west": {"uv": [2, 1, 14, 16], "texture": "#base"},
 				"up": {"uv": [1, 2, 2, 14], "texture": "#base"},
 				"down": {"uv": [14, 2, 15, 14], "texture": "#base", "cullface": "down"}
 			}
