@@ -3,6 +3,7 @@
 	"textures": {
 		"3": "actuallyadditions:block/base_texture_small",
 		"4": "actuallyadditions:block/bioreactor_top_animation",
+		"5": "actuallyadditions:block/base_texture_vent",
 		"base": "actuallyadditions:block/base_texture",
 		"particle": "actuallyadditions:block/bioreactor_side",
 		"side": "actuallyadditions:block/bioreactor_side",
@@ -232,7 +233,7 @@
 			"faces": {
 				"north": {"uv": [0, 0, 14, 15], "texture": "#base"},
 				"east": {"uv": [1, 1, 2, 16], "texture": "#base"},
-				"south": {"uv": [1, 1, 15, 16], "texture": "#base"},
+				"south": {"uv": [1, 1, 15, 16], "texture": "#5"},
 				"west": {"uv": [14, 1, 15, 16], "texture": "#base"},
 				"up": {"uv": [1, 14, 15, 15], "texture": "#base"},
 				"down": {"uv": [1, 14, 15, 15], "texture": "#base", "cullface": "down"}

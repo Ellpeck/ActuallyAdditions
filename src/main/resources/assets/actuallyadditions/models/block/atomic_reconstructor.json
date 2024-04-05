@@ -1,6 +1,7 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
+		"3": "actuallyadditions:block/base_texture_arrow",
 		"base": "actuallyadditions:block/base_texture",
 		"particle": "actuallyadditions:block/atomic_reconstructor_front",
 		"front": "actuallyadditions:block/atomic_reconstructor_front",
@@ -141,7 +142,7 @@
 			"faces": {
 				"north": {"uv": [1, 1, 15, 15], "texture": "#base"},
 				"east": {"uv": [1, 1, 15, 2], "rotation": 270, "texture": "#base"},
-				"south": {"uv": [1, 1, 15, 15], "texture": "#base"},
+				"south": {"uv": [1, 1, 15, 15], "texture": "#3"},
 				"west": {"uv": [1, 1, 15, 2], "rotation": 90, "texture": "#base"},
 				"up": {"uv": [1, 1, 15, 2], "texture": "#base"},
 				"down": {"uv": [1, 1, 15, 2], "texture": "#base"}
@@ -151,7 +152,7 @@
 			"from": [1, 1, 1],
 			"to": [15, 15, 2],
 			"faces": {
-				"north": {"uv": [1, 1, 15, 15], "texture": "#base"},
+				"north": {"uv": [1, 1, 15, 15], "texture": "#3"},
 				"east": {"uv": [1, 14, 15, 15], "rotation": 270, "texture": "#base"},
 				"south": {"uv": [1, 1, 15, 15], "texture": "#base"},
 				"west": {"uv": [1, 14, 15, 15], "rotation": 90, "texture": "#base"},

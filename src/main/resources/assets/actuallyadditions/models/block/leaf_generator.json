@@ -3,6 +3,7 @@
 	"textures": {
 		"3": "actuallyadditions:block/base_texture_large",
 		"4": "actuallyadditions:block/leaf_gen_animated",
+		"5": "actuallyadditions:block/base_texture_vent",
 		"base": "actuallyadditions:block/base_texture",
 		"front": "actuallyadditions:block/base_texture_back",
 		"particle": "actuallyadditions:block/leaf_gen_front",
@@ -149,7 +150,7 @@
 			"from": [14, 0, 2],
 			"to": [15, 15, 14],
 			"faces": {
-				"east": {"uv": [2, 1, 14, 16], "texture": "#base"},
+				"east": {"uv": [2, 1, 14, 16], "texture": "#5"},
 				"west": {"uv": [0, 0, 12, 15], "texture": "#base"},
 				"up": {"uv": [1, 2, 2, 14], "texture": "#base"},
 				"down": {"uv": [2, 1, 14, 2], "rotation": 270, "texture": "#base", "cullface": "down"}
