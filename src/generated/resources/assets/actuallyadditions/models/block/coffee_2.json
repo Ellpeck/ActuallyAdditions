@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/crop",
   "textures": {
-    "crop": "actuallyadditions:block/coffee_stage_3"
+    "crop": "actuallyadditions:block/coffee_stage_2"
   }
 }

@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/crop",
   "textures": {
-    "crop": "actuallyadditions:block/flax_stage_3"
+    "crop": "actuallyadditions:block/flax_stage_2"
   }
 }
