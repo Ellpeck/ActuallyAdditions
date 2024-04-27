@@ -41,7 +41,7 @@ public final class ActuallyItems {
 
     // MISC ITEMS
     public static final DeferredItem<ItemBase> CANOLA = ITEMS.register("canola", () -> new ItemBase());
-    public static final DeferredItem<ItemCoffee> COFFEE_CUP = ITEMS.register("coffee_cup", () -> new ItemCoffee());
+    public static final DeferredItem<ItemCoffee> COFFEE_CUP = ITEMS.register("coffee_cup", ItemCoffee::new);
     public static final DeferredItem<ItemBase> RING = ITEMS.register("ring", () -> new ItemBase());
     public static final DeferredItem<ItemBase> BASIC_COIL = ITEMS.register("basic_coil", () -> new ItemBase());
     public static final DeferredItem<ItemBase> ADVANCED_COIL = ITEMS.register("advanced_coil", () -> new ItemBase());
@@ -49,13 +49,13 @@ public final class ActuallyItems {
     public static final DeferredItem<ItemBase> RICE_DOUGH = ITEMS.register("rice_dough", () -> new ItemBase());
     public static final DeferredItem<ItemBase> TINY_COAL = ITEMS.register("tiny_coal", () -> new ItemBase() {
         @Override
-        public int getBurnTime(ItemStack itemStack, @Nullable RecipeType<?> recipeType) {
+        public int getBurnTime(@Nonnull ItemStack itemStack, @Nullable RecipeType<?> recipeType) {
             return 200;
         }
     });
     public static final DeferredItem<ItemBase> TINY_CHARCOAL = ITEMS.register("tiny_charcoal", () -> new ItemBase() {
         @Override
-        public int getBurnTime(ItemStack itemStack, @Nullable RecipeType<?> recipeType) {
+        public int getBurnTime(@Nonnull ItemStack itemStack, @Nullable RecipeType<?> recipeType) {
             return 200;
         }
     });
