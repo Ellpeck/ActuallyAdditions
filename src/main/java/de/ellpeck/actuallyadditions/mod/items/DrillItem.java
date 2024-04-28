@@ -124,27 +124,9 @@ public class DrillItem extends ItemEnergy {
                 if (!equip.isEmpty() && equip != stack) {
                     ItemStack toPlaceStack = equip;
 
-//                    WorldUtil.setHandItemWithoutAnnoyingSound(player, hand, toPlaceStack);
-
-                    //tryPlaceItemIntoWorld could throw an Exception
-                    try {
-                        //Places the Block into the World
-	                    BlockHitResult result = new BlockHitResult(context.getClickLocation(), context.getClickedFace(), context.getClickedPos(), context.isInside());
-	                    if (toPlaceStack.useOn(new UseOnContext(level, player, hand, toPlaceStack, result)) != InteractionResult.FAIL) {
-                            if (!player.isCreative()) {
-//                                WorldUtil.setHandItemWithoutAnnoyingSound(player, hand, toPlaceStack.copy());
-                            }
-                        }
-                    }
-                    //Notify the Player and log the Exception
-                    catch (Exception e) {
-                        ActuallyAdditions.LOGGER.error("Player " + player.getName() + " who should place a Block using a Drill at " + player.getX() + ", " + player.getY() + ", " + player.getZ() + " in World " + context.getLevel().dimension() + " threw an Exception! Don't let that happen again!");
-                    }
-
-//                    player.getInventory().setItem(slot, player.getItemInHand(hand));
-//                    WorldUtil.setHandItemWithoutAnnoyingSound(player, hand, stack);
-
-                    return InteractionResult.sidedSuccess(level.isClientSide);
+	                //Places the Block into the World
+	                BlockHitResult result = new BlockHitResult(context.getClickLocation(), context.getClickedFace(), context.getClickedPos(), context.isInside());
+	                return toPlaceStack.useOn(new UseOnContext(level, player, hand, toPlaceStack, result));
                 }
             }
         }
