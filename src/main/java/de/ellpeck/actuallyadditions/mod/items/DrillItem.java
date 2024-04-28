@@ -111,6 +111,7 @@ public class DrillItem extends ItemEnergy {
     @Nonnull
     @Override
     public InteractionResult useOn(UseOnContext context) {
+		Level level = context.getLevel();
         Player player = context.getPlayer();
         InteractionHand hand = context.getHand();
 
@@ -121,16 +122,17 @@ public class DrillItem extends ItemEnergy {
             if (slot >= 0 && slot < 9) { // TODO: validate... old = PlayerInventory.getHotbarSize(); new = 9
                 ItemStack equip = player.getInventory().getItem(slot);
                 if (!equip.isEmpty() && equip != stack) {
-                    ItemStack toPlaceStack = equip.copy();
+                    ItemStack toPlaceStack = equip;
 
-                    WorldUtil.setHandItemWithoutAnnoyingSound(player, hand, toPlaceStack);
+//                    WorldUtil.setHandItemWithoutAnnoyingSound(player, hand, toPlaceStack);
 
                     //tryPlaceItemIntoWorld could throw an Exception
                     try {
                         //Places the Block into the World
-                        if (toPlaceStack.useOn(context) != InteractionResult.FAIL) {
+	                    BlockHitResult result = new BlockHitResult(context.getClickLocation(), context.getClickedFace(), context.getClickedPos(), context.isInside());
+	                    if (toPlaceStack.useOn(new UseOnContext(level, player, hand, toPlaceStack, result)) != InteractionResult.FAIL) {
                             if (!player.isCreative()) {
-                                WorldUtil.setHandItemWithoutAnnoyingSound(player, hand, toPlaceStack.copy());
+//                                WorldUtil.setHandItemWithoutAnnoyingSound(player, hand, toPlaceStack.copy());
                             }
                         }
                     }
@@ -139,8 +141,8 @@ public class DrillItem extends ItemEnergy {
                         ActuallyAdditions.LOGGER.error("Player " + player.getName() + " who should place a Block using a Drill at " + player.getX() + ", " + player.getY() + ", " + player.getZ() + " in World " + context.getLevel().dimension() + " threw an Exception! Don't let that happen again!");
                     }
 
-                    player.getInventory().setItem(slot, player.getItemInHand(hand));
-                    WorldUtil.setHandItemWithoutAnnoyingSound(player, hand, stack);
+//                    player.getInventory().setItem(slot, player.getItemInHand(hand));
+//                    WorldUtil.setHandItemWithoutAnnoyingSound(player, hand, stack);
 
                     return InteractionResult.SUCCESS;
                 }
