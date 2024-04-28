@@ -144,7 +144,7 @@ public class DrillItem extends ItemEnergy {
 //                    player.getInventory().setItem(slot, player.getItemInHand(hand));
 //                    WorldUtil.setHandItemWithoutAnnoyingSound(player, hand, stack);
 
-                    return InteractionResult.SUCCESS;
+                    return InteractionResult.sidedSuccess(level.isClientSide);
                 }
             }
         }
