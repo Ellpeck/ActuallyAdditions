@@ -1,4 +1,4 @@
-// 1.20.4	2024-03-11T19:15:36.5038055	Loot Tables
+// 1.20.4	2024-04-28T16:44:33.1316406	Loot Tables
 f6655bb234dbcf1041fe8ad95c976ddddda2b02a data/actuallyadditions/loot_tables/blocks/atomic_reconstructor.json
 e15c868b26b669c30365bfb93e7d9274e07df16d data/actuallyadditions/loot_tables/blocks/battery_box.json
 745d64af3b0203a138f9eca7de21ed4988b35c95 data/actuallyadditions/loot_tables/blocks/bio_reactor.json
@@ -25,6 +25,7 @@ b598ece027ef00e9ed0457a7f9542ebe8b89538c data/actuallyadditions/loot_tables/bloc
 6416e24b52f6a361efa8c9955b20fdeb1c623d79 data/actuallyadditions/loot_tables/blocks/coal_generator.json
 afab93747299dba6783292e5949ea7e0cd5d5b13 data/actuallyadditions/loot_tables/blocks/coffee.json
 ef604b6cc4ac21ee792ab7df41b77578b4d213db data/actuallyadditions/loot_tables/blocks/coffee_machine.json
+fa895b25a0816ca506f7031ec3861cfd4de04f28 data/actuallyadditions/loot_tables/blocks/crate_small.json
 7767779372fd1929d1d818e00d8a3d869f2d4a87 data/actuallyadditions/loot_tables/blocks/crusher.json
 9f549621d659a42dcb71516dd1d97cb347611094 data/actuallyadditions/loot_tables/blocks/crusher_double.json
 25b7a44418e2858552dd5150d67bffe1f30269a8 data/actuallyadditions/loot_tables/blocks/diamatine_crystal_block.json

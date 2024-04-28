@@ -27,6 +27,7 @@ import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -109,40 +110,34 @@ public class BlockPhantom extends BlockContainerBase implements IHudDisplay {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> entityType) {
-        switch (this.type) {
-            case PLACER:
-                return level.isClientSide? TileEntityPhantomPlacer::clientTick : TileEntityPhantomPlacer::serverTick;
-            case BREAKER:
-                return level.isClientSide? TileEntityPhantomBreaker::clientTick : TileEntityPhantomBreaker::serverTick;
-            case LIQUIFACE:
-                return level.isClientSide? TileEntityPhantomLiquiface::clientTick : TileEntityPhantomLiquiface::serverTick;
-            case ENERGYFACE:
-                return level.isClientSide? TileEntityPhantomEnergyface::clientTick : TileEntityPhantomEnergyface::serverTick;
-            case REDSTONEFACE:
-                return level.isClientSide? TileEntityPhantomRedstoneface::clientTick : TileEntityPhantomRedstoneface::serverTick;
-            default:
-                return level.isClientSide? TileEntityPhantomItemface::clientTick : TileEntityPhantomItemface::serverTick;
-        }
+        return switch (this.type) {
+            case PLACER, BREAKER ->
+                    level.isClientSide ? TileEntityPhantomPlacer::clientTick : TileEntityPhantomPlacer::serverTick;
+            case LIQUIFACE ->
+                    level.isClientSide ? TileEntityPhantomLiquiface::clientTick : TileEntityPhantomLiquiface::serverTick;
+            case ENERGYFACE ->
+                    level.isClientSide ? TileEntityPhantomEnergyface::clientTick : TileEntityPhantomEnergyface::serverTick;
+            case REDSTONEFACE ->
+                    level.isClientSide ? TileEntityPhantomRedstoneface::clientTick : TileEntityPhantomRedstoneface::serverTick;
+            default ->
+                    level.isClientSide ? TileEntityPhantomItemface::clientTick : TileEntityPhantomItemface::serverTick;
+        };
     }
 
-    // TODO: [port] validate this works
     @Override
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
         if (this.tryToggleRedstone(world, pos, player)) {
-            return InteractionResult.PASS;
+            return InteractionResult.SUCCESS;
         }
-/*
         if (!world.isClientSide) {
-            TileEntity tile = world.getBlockEntity(pos);
-            if (tile instanceof IPhantomTile && ((IPhantomTile) tile).getGuiID() != -1) {
-                NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) tile, pos);
+            BlockEntity tile = world.getBlockEntity(pos);
+            if (tile instanceof MenuProvider menuProvider) {
+                player.openMenu(menuProvider, pos);
             }
         }
-*/
-        return InteractionResult.PASS;
+        return InteractionResult.SUCCESS;
     }
 
-    // TODO: [port] fix all of this, it's a mess
     @Override
     @OnlyIn(Dist.CLIENT)
     public void displayHud(GuiGraphics guiGraphics, Minecraft minecraft, Player player, ItemStack stack, HitResult rayCast, Window resolution) {
@@ -163,10 +158,8 @@ public class BlockPhantom extends BlockContainerBase implements IHudDisplay {
                     drawWordWrap(guiGraphics, minecraft.font, Component.translatable("tooltip.actuallyadditions.phantom.blockInfo.desc", name, phantom.getBoundPosition().getX(), phantom.getBoundPosition().getY(), phantom.getBoundPosition().getZ(), distance), resolution.getGuiScaledWidth() / 2 + 5, resolution.getGuiScaledHeight() / 2 - 30, 200, 0xFFFFFF, true);
 
                     if (phantom.isBoundThingInRange()) {
-                        //StringUtil.drawSplitString(minecraft.font, ChatFormatting.DARK_GREEN + I18n.get("tooltip.actuallyadditions.phantom.connectedRange.desc"), resolution.getGuiScaledWidth() / 2 + 5, resolution.getGuiScaledHeight() / 2 + 25, 200, 0xFFFFFF, true);
                         drawWordWrap(guiGraphics, minecraft.font, Component.translatable("tooltip.actuallyadditions.phantom.connectedRange.desc"), resolution.getGuiScaledWidth() / 2 + 5, resolution.getGuiScaledHeight() / 2 + 25, 200, 0xFFFFFF, true);
                     } else {
-                        //StringUtil.drawSplitString(minecraft.font, ChatFormatting.DARK_RED + I18n.get("tooltip.actuallyadditions.phantom.connectedNoRange.desc"), resolution.getGuiScaledWidth() / 2 + 5, resolution.getGuiScaledHeight() / 2 + 25, 200, 0xFFFFFF, true);
                         drawWordWrap(guiGraphics, minecraft.font, Component.translatable("tooltip.actuallyadditions.phantom.connectedNoRange.desc"), resolution.getGuiScaledWidth() / 2 + 5, resolution.getGuiScaledHeight() / 2 + 25, 200, 0xFFFFFF, true);
                     }
                 } else {

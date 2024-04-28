@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -41,6 +42,7 @@ public class ItemDrillUpgrade extends ItemBase {
         ItemStack stack = player.getItemInHand(hand);
         if (!world.isClientSide && this.type == UpgradeType.PLACER) {
             this.setSlotToPlaceFrom(stack, player.getInventory().selected);
+            player.sendSystemMessage(Component.literal("Set the slot to place from to " + (player.getInventory().selected + 1)));
             return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
         }
         return new InteractionResultHolder<>(InteractionResult.FAIL, stack);

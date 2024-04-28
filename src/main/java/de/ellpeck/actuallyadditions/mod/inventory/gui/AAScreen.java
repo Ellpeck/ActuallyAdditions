@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -19,6 +20,8 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import javax.annotation.Nonnull;
 
 public abstract class AAScreen<T extends AbstractContainerMenu> extends AbstractContainerScreen<T> {
+    //TODO standardize this to dunswe?
+    public static final String[] SIDES = { I18n.get("info.actuallyadditions.gui.disabled"), I18n.get("info.actuallyadditions.gui.up"), I18n.get("info.actuallyadditions.gui.down"), I18n.get("info.actuallyadditions.gui.north"), I18n.get("info.actuallyadditions.gui.east"), I18n.get("info.actuallyadditions.gui.south"), I18n.get("info.actuallyadditions.gui.west") };
 
     public AAScreen(T container, Inventory inventory, Component pTitle) {
         super(container, inventory, pTitle);

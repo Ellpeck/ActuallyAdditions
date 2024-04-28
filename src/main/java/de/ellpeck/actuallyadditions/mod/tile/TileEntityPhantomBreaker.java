@@ -15,27 +15,16 @@ import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.state.BlockState;
+
+import javax.annotation.Nonnull;
 
 public class TileEntityPhantomBreaker extends TileEntityPhantomPlacer {
 
     public TileEntityPhantomBreaker(BlockPos pos, BlockState state) {
         super(ActuallyBlocks.PHANTOM_BREAKER.getTileEntityType(), pos, state, 9);
         this.isBreaker = true;
-    }
-
-    public static <T extends BlockEntity> void clientTick(Level level, BlockPos pos, BlockState state, T t) {
-        if (t instanceof TileEntityPhantomBreaker tile) {
-            tile.clientTick();
-        }
-    }
-
-    public static <T extends BlockEntity> void serverTick(Level level, BlockPos pos, BlockState state, T t) {
-        if (t instanceof TileEntityPhantomBreaker tile) {
-            tile.serverTick();
-        }
     }
 
     @Override
@@ -48,4 +37,9 @@ public class TileEntityPhantomBreaker extends TileEntityPhantomPlacer {
         return ItemStackHandlerAA.REMOVE_TRUE;
     }
 
+    @Nonnull
+    @Override
+    public Component getDisplayName() {
+        return Component.translatable("container.actuallyadditions.phantomBreaker");
+    }
 }

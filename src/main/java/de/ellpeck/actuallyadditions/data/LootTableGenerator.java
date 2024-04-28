@@ -102,6 +102,7 @@ public class LootTableGenerator extends LootTableProvider {
             this.dropSelf(ActuallyBlocks.BREAKER.get());
             this.dropSelf(ActuallyBlocks.PLACER.get());
             this.dropSelf(ActuallyBlocks.DROPPER.get());
+            this.dropSelf(ActuallyBlocks.CRATE_SMALL.get());
             this.dropSelf(ActuallyBlocks.FLUID_PLACER.get());
             this.dropSelf(ActuallyBlocks.FLUID_COLLECTOR.get());
             this.dropSelf(ActuallyBlocks.COFFEE_MACHINE.get());

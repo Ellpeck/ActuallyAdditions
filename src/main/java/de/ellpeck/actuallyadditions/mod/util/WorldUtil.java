@@ -214,6 +214,7 @@ public final class WorldUtil {
         return false;
     }
 
+    //TODO standardize this to dunswe?
     public static Direction getDirectionBySidesInOrder(int side) {
         switch (side) {
             case 0:
