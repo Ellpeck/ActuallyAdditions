@@ -3,7 +3,7 @@ plugins {
     id 'eclipse'
     id 'idea'
     id 'maven-publish'
-    id 'net.neoforged.gradle.userdev' version '7.0.96'
+    id 'net.neoforged.gradle.userdev' version '7.0.134'
 }
 
 def buildSuffix = System.getenv('BUILD_NUMBER') ? "-b${System.getenv('BUILD_NUMBER')}" : ""
