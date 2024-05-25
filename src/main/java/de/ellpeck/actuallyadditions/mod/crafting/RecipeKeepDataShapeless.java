@@ -21,7 +21,7 @@ import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.ShapelessRecipe;
-import net.neoforged.neoforge.attachment.AttachmentInternals;
+import net.neoforged.neoforge.attachment.AttachmentUtils;
 
 public class RecipeKeepDataShapeless extends ShapelessRecipe {
     public static String NAME = "copy_nbt_shapeless";
@@ -69,7 +69,7 @@ public class RecipeKeepDataShapeless extends ShapelessRecipe {
         }
 
         if (!datasource.isEmpty())
-            AttachmentInternals.copyStackAttachments(datasource, result);
+            AttachmentUtils.copyStackAttachments(datasource, result);
 
         return result;
     }
