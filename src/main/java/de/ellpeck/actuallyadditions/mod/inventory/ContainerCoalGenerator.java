@@ -63,7 +63,7 @@ public class ContainerCoalGenerator extends AbstractContainerMenu {
             //Other Slots in Inventory excluded
             if (slot >= inventoryStart) {
                 //Shift from Inventory
-                if (CommonHooks.getBurnTime(newStack, null) > 0) {
+                if (newStack.getBurnTime(null) > 0) {
                     if (!this.moveItemStackTo(newStack, 0, 1, false)) {
                         return ItemStack.EMPTY;
                     }
