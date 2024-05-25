@@ -17,6 +17,7 @@ import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
 
+//TODO: We're using Patchouli API for the new booklets. Do we still need this?
 public abstract class GuiBookletBase extends Screen {
 
     protected GuiBookletBase(Component titleIn) {

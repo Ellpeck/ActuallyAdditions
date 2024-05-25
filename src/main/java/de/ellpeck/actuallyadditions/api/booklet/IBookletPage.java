@@ -19,6 +19,7 @@ import net.neoforged.neoforge.fluids.FluidStack;
 
 import java.util.List;
 
+//TODO: We're using Patchouli API for the new booklets. Do we still need this?
 public interface IBookletPage {
 
     void getItemStacksForPage(List<ItemStack> list);
