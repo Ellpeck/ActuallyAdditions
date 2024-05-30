@@ -93,9 +93,9 @@ public class FilterSettings {
     }
 
     private static boolean areEqualEnough(ItemStack first, ItemStack second, boolean mod, boolean damage, boolean nbt) {
-        if (mod && checkMod(first, second) && checkDamage(first, second, damage)) {
-            return true;
-        }
+        if (mod)
+            return checkMod(first, second) && checkDamage(first, second, damage);
+
         return checkItem(first, second, nbt) && checkDamage(first, second, damage);
     }
 
