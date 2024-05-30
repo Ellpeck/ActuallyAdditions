@@ -35,8 +35,8 @@ import java.util.Optional;
 
 public class TileEntityLaserRelayItemAdvanced extends TileEntityLaserRelayItem implements IButtonReactor, MenuProvider {
 
-    public FilterSettings leftFilter = new FilterSettings(12, true, false);
-    public FilterSettings rightFilter = new FilterSettings(12, true, false);
+    public FilterSettings leftFilter = new FilterSettings(12, true, false, false, false);
+    public FilterSettings rightFilter = new FilterSettings(12, true, false, false, false);
 
     public TileEntityLaserRelayItemAdvanced(BlockPos pos, BlockState state) {
         super(ActuallyBlocks.LASER_RELAY_ITEM_ADVANCED.getTileEntityType(), pos, state);
@@ -118,7 +118,7 @@ public class TileEntityLaserRelayItemAdvanced extends TileEntityLaserRelayItem i
         ItemStack copy = stack.copy();
         copy.setCount(1);
 
-        if (!FilterSettings.check(copy, usedSettings.filterInventory, true, usedSettings.respectMod)) {
+        if (!FilterSettings.check(copy, usedSettings.filterInventory, true, usedSettings.respectMod, usedSettings.matchDamage, usedSettings.matchNBT)) {
             for (int k = 0; k < usedSettings.filterInventory.getSlots(); k++) {
                 ItemStack slot = usedSettings.filterInventory.getStackInSlot(k);
                 if (!slot.isEmpty()) {

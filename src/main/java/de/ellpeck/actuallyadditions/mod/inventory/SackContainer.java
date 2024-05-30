@@ -32,7 +32,7 @@ import java.util.UUID;
 
 public class SackContainer extends AbstractContainerMenu implements IButtonReactor {
 
-    public final FilterSettings filter = new FilterSettings(4, false,false);
+    public final FilterSettings filter = new FilterSettings(4, false,false, false, false);
     private final ItemStackHandlerAA bagInventory;
     private final Inventory inventory;
     public boolean autoInsert;

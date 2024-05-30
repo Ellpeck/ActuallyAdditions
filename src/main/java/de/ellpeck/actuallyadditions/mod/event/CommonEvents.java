@@ -79,7 +79,7 @@ public class CommonEvents {
                                 boolean changed = false;
                                 boolean isVoid = ((Sack) invStack.getItem()).isVoid;
 
-                                FilterSettings filter = new FilterSettings(4, false, false);
+                                FilterSettings filter = new FilterSettings(4, false, false, false, false);
                                 filter.readFromNBT(invStack.getOrCreateTag(), "Filter");
 
                                 if (isVoid) {
