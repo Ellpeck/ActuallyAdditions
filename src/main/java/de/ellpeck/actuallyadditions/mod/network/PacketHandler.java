@@ -83,8 +83,8 @@ public final class PacketHandler {
 //            Particle fx = new ParticleLaserItem(mc.level, outX, outY, outZ, stack, 0.025, inX, inY, inZ);
             //mc.effectRenderer.addEffect(fx); //TODO
 
-            mc.level.addParticle(ParticleLaserItem.Factory.createData(stack, outX, outY, outZ),
-                    inX, inY, inZ, 0, 0.025, 0);
+            mc.level.addParticle(ParticleLaserItem.Factory.createData(stack, inX, inY, inZ),
+                    outX, outY, outZ, 0, 0.025, 0);
         }
     };
     public static final IDataHandler GUI_BUTTON_TO_TILE_HANDLER = (compound, context) -> {
