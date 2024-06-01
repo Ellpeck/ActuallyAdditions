@@ -35,6 +35,7 @@ import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 public class RenderLaserRelay implements BlockEntityRenderer<TileEntityLaserRelay> {
@@ -124,5 +125,15 @@ public class RenderLaserRelay implements BlockEntityRenderer<TileEntityLaserRela
     @Override
     public boolean shouldRenderOffScreen(TileEntityLaserRelay tile) {
         return true;
+    }
+
+    @Override
+    public AABB getRenderBoundingBox(TileEntityLaserRelay blockEntity) {
+        return INFINITE_EXTENT_AABB;
+    }
+
+    @Override
+    public int getViewDistance() {
+        return 32;
     }
 }
