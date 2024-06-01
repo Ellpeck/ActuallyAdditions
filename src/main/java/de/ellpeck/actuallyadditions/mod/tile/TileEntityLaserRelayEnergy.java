@@ -260,13 +260,13 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay {
     @Override
     @OnlyIn(Dist.CLIENT)
     public Component getExtraDisplayString() {
-        return Component.translatable("info." + ActuallyAdditions.MODID + ".laserRelay.energy.extra").append(": ").append(Component.translatable(this.mode.name).withStyle(ChatFormatting.DARK_RED));
+        return Component.translatable("info.actuallyadditions.laserRelay.energy.extra").append(": ").append(Component.translatable(this.mode.name).withStyle(ChatFormatting.DARK_RED));
     }
 
     @Override
     @OnlyIn(Dist.CLIENT)
     public Component getCompassDisplayString() {
-        return Component.translatable("info." + ActuallyAdditions.MODID + ".laserRelay.energy.display").withStyle(ChatFormatting.GREEN);
+        return Component.translatable("info.actuallyadditions.laserRelay.energy.display").withStyle(ChatFormatting.GREEN);
     }
 
     @Override
@@ -296,9 +296,9 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay {
     }
 
     public enum Mode {
-        BOTH("info." + ActuallyAdditions.MODID + ".laserRelay.mode.both"),
-        OUTPUT_ONLY("info." + ActuallyAdditions.MODID + ".laserRelay.mode.outputOnly"),
-        INPUT_ONLY("info." + ActuallyAdditions.MODID + ".laserRelay.mode.inputOnly");
+        BOTH("info.actuallyadditions.laserRelay.mode.both"),
+        OUTPUT_ONLY("info.actuallyadditions.laserRelay.mode.outputOnly"),
+        INPUT_ONLY("info.actuallyadditions.laserRelay.mode.inputOnly");
 
         public final String name;
 

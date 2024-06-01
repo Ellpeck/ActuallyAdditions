@@ -60,7 +60,7 @@
 //    @Override
 //    public List<String> getTooltipStrings(int mouseX, int mouseY) {
 //        if (this.theButton.isMouseOver()) {
-//            return Collections.singletonList(StringUtil.localize("booklet." + ActuallyAdditions.MODID + ".clickToSeeRecipe"));
+//            return Collections.singletonList(StringUtil.localize("booklet.actuallyadditions.clickToSeeRecipe"));
 //        } else {
 //            return Collections.emptyList();
 //        }

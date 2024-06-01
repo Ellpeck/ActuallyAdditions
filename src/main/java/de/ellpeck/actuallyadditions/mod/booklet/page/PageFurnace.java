@@ -59,7 +59,7 @@
 //        gui.getMinecraft().getTextureManager().bind(GuiBooklet.RES_LOC_GADGETS);
 //        GuiUtils.drawTexturedModalRect(startX + 23, startY + 10, 0, 146, 80, 26, 0);
 //
-//        gui.renderScaledAsciiString("(" + StringUtil.localize("booklet." + ActuallyAdditions.MODID + ".furnaceRecipe") + ")", startX + 32, startY + 42, 0, false, gui.getMediumFontSize());
+//        gui.renderScaledAsciiString("(" + StringUtil.localize("booklet.actuallyadditions.furnaceRecipe") + ")", startX + 32, startY + 42, 0, false, gui.getMediumFontSize());
 //
 //        PageTextOnly.renderTextToPage(gui, this, startX + 6, startY + 57);
 //    }

@@ -76,7 +76,7 @@
 //        int conf = config.getValue();
 //        if (conf <= 0) {
 //            try {
-//                return Float.parseFloat(StringUtil.localize("booklet." + ActuallyAdditions.MODID + ".fontSize." + lang));
+//                return Float.parseFloat(StringUtil.localize("booklet.actuallyadditions.fontSize." + lang));
 //            } catch (Exception e) {
 //                return defaultValue;
 //            }
@@ -185,7 +185,7 @@
 //            //            this.font.setUnicodeFlag(true);
 //
 //            if (!this.searchField.isFocused() && (this.searchField.getValue() == null || this.searchField.getValue().isEmpty())) {
-//                this.font.draw(matrices, TextFormatting.ITALIC + StringUtil.localize("info." + ActuallyAdditions.MODID + ".booklet.searchField"), this.guiLeft + this.xSize + 2, this.guiTop + this.ySize - 40 + 2, 0xFFFFFF);
+//                this.font.draw(matrices, TextFormatting.ITALIC + StringUtil.localize("info.actuallyadditions.booklet.searchField"), this.guiLeft + this.xSize + 2, this.guiTop + this.ySize - 40 + 2, 0xFFFFFF);
 //            }
 //
 //            this.searchField.render(matrices, mouseX, mouseY, partialTicks);

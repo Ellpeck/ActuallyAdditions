@@ -34,7 +34,7 @@
 //
 //        if (this.visible) {
 //            if (this.isHovered || this.isTrials) {
-//                this.drawCenteredString(minecraft.font, StringUtil.localize("booklet." + ActuallyAdditions.MODID + ".trialsButton.name"), this.x + (this.width - 8) / 2, this.y + (this.height - 8) / 2, 14737632);
+//                this.drawCenteredString(minecraft.font, StringUtil.localize("booklet.actuallyadditions.trialsButton.name"), this.x + (this.width - 8) / 2, this.y + (this.height - 8) / 2, 14737632);
 //            }
 //        }
 //    }

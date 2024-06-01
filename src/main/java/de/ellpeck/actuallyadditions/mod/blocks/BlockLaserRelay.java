@@ -221,7 +221,7 @@ public class BlockLaserRelay extends FullyDirectionalBlock.Container implements 
                         if (compass) {
                             expl = relay.getCompassDisplayString();
                         } else {
-                            expl = Component.translatable("info." + ActuallyAdditions.MODID + ".laserRelay.mode.noCompasss", Component.translatable(CommonConfig.Other.relayConfigureItem.getDescriptionId()).getString()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC);
+                            expl = Component.translatable("info.actuallyadditions.laserRelay.mode.noCompasss", Component.translatable(CommonConfig.Other.relayConfigureItem.getDescriptionId()).getString()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC);
                         }
 
                         guiGraphics.drawString(minecraft.font, expl, (int) (resolution.getGuiScaledWidth() / 2f + 5), (int) (resolution.getGuiScaledHeight() / 2f + 15), 0xFFFFFF);

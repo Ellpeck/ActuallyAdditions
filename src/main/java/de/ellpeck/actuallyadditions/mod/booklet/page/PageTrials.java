@@ -66,7 +66,7 @@
 //    @Override
 //    @OnlyIn(Dist.CLIENT)
 //    protected String getLocalizationKey() {
-//        return "booklet." + ActuallyAdditions.MODID + ".trials." + this.chapter.getIdentifier() + ".text." + this.localizationKey;
+//        return "booklet.actuallyadditions.trials." + this.chapter.getIdentifier() + ".text." + this.localizationKey;
 //    }
 //
 //    @Override
@@ -99,9 +99,9 @@
 //
 //            boolean completed = data.completedTrials.contains(this.chapter.getIdentifier());
 //            if (completed) {
-//                this.button.displayString = TextFormatting.DARK_GREEN + StringUtil.localize("booklet." + ActuallyAdditions.MODID + ".trialFinishButton.completed.name");
+//                this.button.displayString = TextFormatting.DARK_GREEN + StringUtil.localize("booklet.actuallyadditions.trialFinishButton.completed.name");
 //            } else {
-//                this.button.displayString = TextFormatting.DARK_RED + StringUtil.localize("booklet." + ActuallyAdditions.MODID + ".trialFinishButton.uncompleted.name");
+//                this.button.displayString = TextFormatting.DARK_RED + StringUtil.localize("booklet.actuallyadditions.trialFinishButton.uncompleted.name");
 //            }
 //
 //        }

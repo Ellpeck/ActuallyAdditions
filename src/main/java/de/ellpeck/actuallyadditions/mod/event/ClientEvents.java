@@ -105,30 +105,30 @@ public class ClientEvents {
         //                    // TODO: [port] come back to this and see if we can re-add it
         //                    //OreDict Names
         //                    //                    int[] oreIDs = OreDictionary.getOreIDs(event.getItemStack());
-        //                    //                    event.getToolTip().add(ADVANCED_INFO_HEADER_PRE + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".oredictName.desc") + ":");
+        //                    //                    event.getToolTip().add(ADVANCED_INFO_HEADER_PRE + StringUtil.localize("tooltip.actuallyadditions.oredictName.desc") + ":");
         //                    //                    if (oreIDs.length > 0) {
         //                    //                        for (int oreID : oreIDs) {
         //                    //                            event.getToolTip().add(ADVANCED_INFO_TEXT_PRE + OreDictionary.getOreName(oreID));
         //                    //                        }
         //                    //                    } else {
-        //                    //                        event.getToolTip().add(ADVANCED_INFO_TEXT_PRE + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".noOredictNameAvail.desc"));
+        //                    //                        event.getToolTip().add(ADVANCED_INFO_TEXT_PRE + StringUtil.localize("tooltip.actuallyadditions.noOredictNameAvail.desc"));
         //                    //                    }
         //
         //                    //Code Name
-        //                    event.getToolTip().add(ADVANCED_INFO_HEADER_PRE + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".codeName.desc") + ":");
+        //                    event.getToolTip().add(ADVANCED_INFO_HEADER_PRE + StringUtil.localize("tooltip.actuallyadditions.codeName.desc") + ":");
         //                    event.getToolTip().add(ADVANCED_INFO_TEXT_PRE + Item.REGISTRY.getNameForObject(event.getItemStack().getItem()));
         //
         //                    //Base Item's Unlocalized Name
         //                    String baseName = event.getItemStack().getItem().getTranslationKey();
         //                    if (baseName != null) {
-        //                        event.getToolTip().add(ADVANCED_INFO_HEADER_PRE + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".baseUnlocName.desc") + ":");
+        //                        event.getToolTip().add(ADVANCED_INFO_HEADER_PRE + StringUtil.localize("tooltip.actuallyadditions.baseUnlocName.desc") + ":");
         //                        event.getToolTip().add(ADVANCED_INFO_TEXT_PRE + baseName);
         //                    }
         //
         //                    //Metadata
         //                    int meta = event.getItemStack().getItemDamage();
         //                    int max = event.getItemStack().getMaxDamage();
-        //                    event.getToolTip().add(ADVANCED_INFO_HEADER_PRE + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".meta.desc") + ":");
+        //                    event.getToolTip().add(ADVANCED_INFO_HEADER_PRE + StringUtil.localize("tooltip.actuallyadditions.meta.desc") + ":");
         //                    event.getToolTip().add(ADVANCED_INFO_TEXT_PRE + meta + (max > 0
         //                        ? "/" + max
         //                        : ""));
@@ -136,14 +136,14 @@ public class ClientEvents {
         //                    //Unlocalized Name
         //                    String metaName = event.getItemStack().getItem().getTranslationKey(event.getItemStack());
         //                    if (metaName != null && baseName != null && !metaName.equals(baseName)) {
-        //                        event.getToolTip().add(ADVANCED_INFO_HEADER_PRE + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".unlocName.desc") + ":");
+        //                        event.getToolTip().add(ADVANCED_INFO_HEADER_PRE + StringUtil.localize("tooltip.actuallyadditions.unlocName.desc") + ":");
         //                        event.getToolTip().add(ADVANCED_INFO_TEXT_PRE + metaName);
         //                    }
         //
         //                    //NBT
         //                    CompoundNBT compound = event.getItemStack().getTagCompound();
         //                    if (compound != null && !compound.isEmpty()) {
-        //                        event.getToolTip().add(ADVANCED_INFO_HEADER_PRE + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".nbt.desc") + ":");
+        //                        event.getToolTip().add(ADVANCED_INFO_HEADER_PRE + StringUtil.localize("tooltip.actuallyadditions.nbt.desc") + ":");
         //                        if (Screen.hasShiftDown()) {
         //                            int limit = ConfigIntValues.CTRL_INFO_NBT_CHAR_LIMIT.getValue();
         //                            String compoundStrg = compound.toString();
@@ -157,16 +157,16 @@ public class ClientEvents {
         //                            }
         //                            event.getToolTip().add(ADVANCED_INFO_TEXT_PRE + compoundDisplay);
         //                        } else {
-        //                            event.getToolTip().add(ADVANCED_INFO_TEXT_PRE + TextFormatting.ITALIC + "[" + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".pressShift.desc") + "]");
+        //                            event.getToolTip().add(ADVANCED_INFO_TEXT_PRE + TextFormatting.ITALIC + "[" + StringUtil.localize("tooltip.actuallyadditions.pressShift.desc") + "]");
         //                        }
         //                    }
         //
         //                    //Disabling Info
-        //                    event.getToolTip().add(TextFormatting.ITALIC + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".disablingInfo.desc"));
+        //                    event.getToolTip().add(TextFormatting.ITALIC + StringUtil.localize("tooltip.actuallyadditions.disablingInfo.desc"));
         //
         //                } else {
         //                    if (ConfigBoolValues.CTRL_INFO_FOR_EXTRA_INFO.isEnabled()) {
-        //                        event.getToolTip().add(TextFormatting.DARK_GRAY + "" + TextFormatting.ITALIC + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".ctrlForMoreInfo.desc"));
+        //                        event.getToolTip().add(TextFormatting.DARK_GRAY + "" + TextFormatting.ITALIC + StringUtil.localize("tooltip.actuallyadditions.ctrlForMoreInfo.desc"));
         //                    }
         //                }
         //            }
@@ -204,17 +204,17 @@ public class ClientEvents {
 
                 if (tileHit instanceof TileEntityBase base) {
 	                if (base.isRedstoneToggle()) {
-                        Component component = Component.translatable("info." + ActuallyAdditions.MODID + ".redstoneMode").append(": ")
-                                .append(Component.translatable("info." + ActuallyAdditions.MODID + ".redstoneMode." + (base.isPulseMode
+                        Component component = Component.translatable("info.actuallyadditions.redstoneMode").append(": ")
+                                .append(Component.translatable("info.actuallyadditions.redstoneMode." + (base.isPulseMode
                             ? "pulse"
                             : "deactivation")).withStyle(ChatFormatting.DARK_RED));
                         guiGraphics.drawString(font, component, (int) (event.getWindow().getGuiScaledWidth() / 2f + 5), (int) (event.getWindow().getGuiScaledHeight() / 2f + 5), 0xFFFFFF);
 
                         Component expl;
                         if (!stack.isEmpty() && stack.getItem() == CommonConfig.Other.redstoneConfigureItem) {
-                            expl = Component.translatable("info." + ActuallyAdditions.MODID + ".redstoneMode.validItem").withStyle(ChatFormatting.GREEN);
+                            expl = Component.translatable("info.actuallyadditions.redstoneMode.validItem").withStyle(ChatFormatting.GREEN);
                         } else {
-                            expl = Component.translatable("info." + ActuallyAdditions.MODID + ".redstoneMode.invalidItem", Component.translatable(CommonConfig.Other.redstoneConfigureItem.asItem().getDescriptionId()).getString()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC);
+                            expl = Component.translatable("info.actuallyadditions.redstoneMode.invalidItem", Component.translatable(CommonConfig.Other.redstoneConfigureItem.asItem().getDescriptionId()).getString()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC);
                         }
                         guiGraphics.drawString(font, expl, (int) (event.getWindow().getGuiScaledWidth() / 2f + 5), (int) (event.getWindow().getGuiScaledHeight() / 2f + 15), 0xFFFFFF);
                     }

@@ -153,7 +153,7 @@ public abstract class TileEntityBase extends BlockEntity {
 
     @Deprecated
     public String getNameForTranslation() {
-        return "removeme";// "container." + ActuallyAdditions.MODID + "." + this.name + ".name";
+        return "removeme";// "container.actuallyadditions." + this.name + ".name";
     }
 
     //    @Override

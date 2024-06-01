@@ -148,7 +148,7 @@ public class BlockPhantom extends BlockContainerBase implements IHudDisplay {
         BlockEntity tile = minecraft.level.getBlockEntity(pos);
         if (tile != null) {
             if (tile instanceof IPhantomTile phantom) {
-                guiGraphics.drawString(minecraft.font, Component.translatable("tooltip." + ActuallyAdditions.MODID + ".blockPhantomRange.desc").append(": " + phantom.getRange()).withStyle(ChatFormatting.GOLD), resolution.getGuiScaledWidth() / 2 + 5, resolution.getGuiScaledHeight() / 2 - 40, ChatFormatting.WHITE.getColor());
+                guiGraphics.drawString(minecraft.font, Component.translatable("tooltip.actuallyadditions.blockPhantomRange.desc").append(": " + phantom.getRange()).withStyle(ChatFormatting.GOLD), resolution.getGuiScaledWidth() / 2 + 5, resolution.getGuiScaledHeight() / 2 - 40, ChatFormatting.WHITE.getColor());
                 if (phantom.hasBoundPosition()) {
                     int distance = Mth.ceil(new Vec3(pos.getX(), pos.getY(), pos.getZ()).distanceTo(new Vec3(phantom.getBoundPosition().getX(), phantom.getBoundPosition().getY(), phantom.getBoundPosition().getZ())));
                     BlockState state = minecraft.level.getBlockState(phantom.getBoundPosition());

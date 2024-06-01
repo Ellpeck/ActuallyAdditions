@@ -175,9 +175,9 @@
 //                ? ((BlockGiantChest) this.block).type
 //                : -1;
 //            if (type == 2) {
-//                tooltip.add(TextFormatting.ITALIC + StringUtil.localize("container." + ActuallyAdditions.MODID + ".giantChestLarge.desc"));
+//                tooltip.add(TextFormatting.ITALIC + StringUtil.localize("container.actuallyadditions.giantChestLarge.desc"));
 //            } else if (type == 0) {
-//                tooltip.add(TextFormatting.ITALIC + StringUtil.localize("container." + ActuallyAdditions.MODID + ".giantChest.desc"));
+//                tooltip.add(TextFormatting.ITALIC + StringUtil.localize("container.actuallyadditions.giantChest.desc"));
 //            }
 //        }
 //

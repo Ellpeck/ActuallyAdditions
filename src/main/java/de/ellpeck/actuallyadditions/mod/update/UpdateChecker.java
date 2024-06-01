@@ -44,11 +44,11 @@ public class UpdateChecker {
         if (Minecraft.getInstance().player != null) {
             Player player = Minecraft.getInstance().player;
             if (UpdateChecker.checkFailed) {
-                player.displayClientMessage(Component.translatable("info." + ActuallyAdditions.MODID + ".update.failed"), false);
+                player.displayClientMessage(Component.translatable("info.actuallyadditions.update.failed"), false);
             } else if (UpdateChecker.needsUpdateNotify) {
-                player.displayClientMessage(Component.translatable("info." + ActuallyAdditions.MODID + ".update.generic"), false);
-                player.displayClientMessage(Component.translatable("info." + ActuallyAdditions.MODID + ".update.versionCompare", ActuallyAdditions.VERSION, UpdateChecker.updateVersionString), false);
-                player.displayClientMessage(Component.translatable("info." + ActuallyAdditions.MODID + ".update.buttons", UpdateChecker.CHANGELOG_LINK, UpdateChecker.DOWNLOAD_LINK), false);
+                player.displayClientMessage(Component.translatable("info.actuallyadditions.update.generic"), false);
+                player.displayClientMessage(Component.translatable("info.actuallyadditions.update.versionCompare", ActuallyAdditions.VERSION, UpdateChecker.updateVersionString), false);
+                player.displayClientMessage(Component.translatable("info.actuallyadditions.update.buttons", UpdateChecker.CHANGELOG_LINK, UpdateChecker.DOWNLOAD_LINK), false);
             }
             if (threadFinished) {
                 NeoForge.EVENT_BUS.unregister(this);

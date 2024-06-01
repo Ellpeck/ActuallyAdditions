@@ -187,7 +187,7 @@ public abstract class BlockContainerBase extends Block implements EntityBlock {
         if (!player.isCreative()) {
             BlockEntity tile = world.getBlockEntity(pos);
             if (tile instanceof TileEntityBase && ((TileEntityBase) tile).stopFromDropping) {
-                player.displayClientMessage(Component.translatable("info." + ActuallyAdditions.MODID + ".machineBroke").withStyle(ChatFormatting.RED), false);
+                player.displayClientMessage(Component.translatable("info.actuallyadditions.machineBroke").withStyle(ChatFormatting.RED), false);
             }
         }
         return theState;

@@ -130,7 +130,7 @@
 //        int height = 3;
 ///*
 //        if (recipe instanceof BlankRecipe) {
-//            this.recipeTypeLocKey = "tooltip." + ActuallyAdditions.MODID + ".disabled";
+//            this.recipeTypeLocKey = "tooltip.actuallyadditions.disabled";
 //            gui.addOrModifyItemRenderer(recipe.getResultItem(), startX + 100, startY + 25, 1F, false);
 //            return;
 //        } else if (recipe instanceof ShapedRecipes) {
@@ -138,13 +138,13 @@
 //            width = shaped.recipeWidth;
 //            height = shaped.recipeHeight;
 //            ings = shaped.recipeItems.toArray(new Ingredient[shaped.recipeItems.size()]);
-//            this.recipeTypeLocKey = "booklet." + ActuallyAdditions.MODID + ".shapedRecipe";
+//            this.recipeTypeLocKey = "booklet.actuallyadditions.shapedRecipe";
 //        } else if (recipe instanceof ShapelessRecipes) {
 //            ShapelessRecipes shapeless = (ShapelessRecipes) recipe;
 //            for (int i = 0; i < shapeless.recipeItems.size(); i++) {
 //                ings[i] = shapeless.recipeItems.get(i);
 //            }
-//            this.recipeTypeLocKey = "booklet." + ActuallyAdditions.MODID + ".shapelessRecipe";
+//            this.recipeTypeLocKey = "booklet.actuallyadditions.shapelessRecipe";
 //        } else if (recipe instanceof ShapedOreRecipe) {
 //            ShapedOreRecipe shaped = (ShapedOreRecipe) recipe;
 //            try {
@@ -156,13 +156,13 @@
 //            for (int i = 0; i < shaped.getIngredients().size(); i++) {
 //                ings[i] = shaped.getIngredients().get(i);
 //            }
-//            this.recipeTypeLocKey = "booklet." + ActuallyAdditions.MODID + ".shapedOreRecipe";
+//            this.recipeTypeLocKey = "booklet.actuallyadditions.shapedOreRecipe";
 //        } else if (recipe instanceof ShapelessOreRecipe) {
 //            ShapelessOreRecipe shapeless = (ShapelessOreRecipe) recipe;
 //            for (int i = 0; i < shapeless.getIngredients().size(); i++) {
 //                ings[i] = shapeless.getIngredients().get(i);
 //            }
-//            this.recipeTypeLocKey = "booklet." + ActuallyAdditions.MODID + ".shapelessOreRecipe";
+//            this.recipeTypeLocKey = "booklet.actuallyadditions.shapelessOreRecipe";
 //        }
 //
 //

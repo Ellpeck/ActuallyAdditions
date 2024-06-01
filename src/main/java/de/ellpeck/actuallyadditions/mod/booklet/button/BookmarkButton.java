@@ -100,15 +100,15 @@
 //                IBookletChapter chapter = this.assignedPage.getChapter();
 //
 //                list.add(TextFormatting.GOLD + chapter.getLocalizedName() + ", Page " + (chapter.getPageIndex(this.assignedPage) + 1));
-//                list.add(StringUtil.localize("booklet." + ActuallyAdditions.MODID + ".bookmarkButton.bookmark.openDesc"));
-//                list.add(TextFormatting.ITALIC + StringUtil.localize("booklet." + ActuallyAdditions.MODID + ".bookmarkButton.bookmark.removeDesc"));
+//                list.add(StringUtil.localize("booklet.actuallyadditions.bookmarkButton.bookmark.openDesc"));
+//                list.add(TextFormatting.ITALIC + StringUtil.localize("booklet.actuallyadditions.bookmarkButton.bookmark.removeDesc"));
 //            } else {
-//                list.add(TextFormatting.GOLD + StringUtil.localize("booklet." + ActuallyAdditions.MODID + ".bookmarkButton.noBookmark.name"));
+//                list.add(TextFormatting.GOLD + StringUtil.localize("booklet.actuallyadditions.bookmarkButton.noBookmark.name"));
 //
 //                if (this.booklet instanceof GuiPage) {
-//                    list.add(StringUtil.localize("booklet." + ActuallyAdditions.MODID + ".bookmarkButton.noBookmark.pageDesc"));
+//                    list.add(StringUtil.localize("booklet.actuallyadditions.bookmarkButton.noBookmark.pageDesc"));
 //                } else {
-//                    list.add(StringUtil.localize("booklet." + ActuallyAdditions.MODID + ".bookmarkButton.noBookmark.notPageDesc"));
+//                    list.add(StringUtil.localize("booklet.actuallyadditions.bookmarkButton.noBookmark.notPageDesc"));
 //                }
 //            }
 //

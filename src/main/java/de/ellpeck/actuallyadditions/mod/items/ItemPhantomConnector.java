@@ -93,7 +93,7 @@ public class ItemPhantomConnector extends ItemBase {
                             ((TileEntityBase) tile).sendUpdate();
                         }
                         clearStorage(stack, "XCoordOfTileStored", "YCoordOfTileStored", "ZCoordOfTileStored", "WorldOfTileStored");
-                        context.getPlayer().displayClientMessage(Component.translatable("tooltip." + ActuallyAdditions.MODID + ".phantom.connected.desc"), true);
+                        context.getPlayer().displayClientMessage(Component.translatable("tooltip.actuallyadditions.phantom.connected.desc"), true);
                         return InteractionResult.SUCCESS;
                     }
                     return InteractionResult.FAIL;
@@ -101,7 +101,7 @@ public class ItemPhantomConnector extends ItemBase {
             }
             //Storing Connections
             storeConnection(stack, pos.getX(), pos.getY(), pos.getZ(), context.getLevel());
-            context.getPlayer().displayClientMessage(Component.translatable("tooltip." + ActuallyAdditions.MODID + ".phantom.stored.desc"), true);
+            context.getPlayer().displayClientMessage(Component.translatable("tooltip.actuallyadditions.phantom.stored.desc"), true);
         }
         return InteractionResult.SUCCESS;
     }
@@ -117,11 +117,11 @@ public class ItemPhantomConnector extends ItemBase {
     public void appendHoverText(ItemStack stack, @Nullable Level playerIn, List<Component> list, TooltipFlag advanced) {
         BlockPos coords = getStoredPosition(stack);
         if (coords != null) {
-            list.add(Component.translatable("tooltip." + ActuallyAdditions.MODID + ".boundTo.desc").append(":"));
+            list.add(Component.translatable("tooltip.actuallyadditions.boundTo.desc").append(":"));
             list.add(Component.literal("X: " + coords.getX()));
             list.add(Component.literal("Y: " + coords.getY()));
             list.add(Component.literal("Z: " + coords.getZ()));
-            list.add(Component.translatable("tooltip." + ActuallyAdditions.MODID + ".clearStorage.desc").withStyle(ChatFormatting.ITALIC));
+            list.add(Component.translatable("tooltip.actuallyadditions.clearStorage.desc").withStyle(ChatFormatting.ITALIC));
         }
     }
 }

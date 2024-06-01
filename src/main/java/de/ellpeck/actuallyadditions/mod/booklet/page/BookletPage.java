@@ -88,7 +88,7 @@
 //
 //    @OnlyIn(Dist.CLIENT)
 //    protected String getLocalizationKey() {
-//        return "booklet." + ActuallyAdditions.MODID + ".chapter." + this.chapter.getIdentifier() + ".text." + this.localizationKey;
+//        return "booklet.actuallyadditions.chapter." + this.chapter.getIdentifier() + ".text." + this.localizationKey;
 //    }
 //
 //    @Override

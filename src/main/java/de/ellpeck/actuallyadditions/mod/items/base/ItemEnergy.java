@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.mod.attachments.ActuallyAttachments;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.tile.CustomEnergyStorage;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
@@ -56,7 +57,8 @@ public abstract class ItemEnergy extends ItemBase {
         if(storage != null) {
             int energy = storage.getEnergyStored();
             NumberFormat format = NumberFormat.getInstance();
-            tooltip.add(Component.translatable("misc.actuallyadditions.power_long", format.format(energy), format.format(storage.getMaxEnergyStored())));
+            tooltip.add(Component.translatable("misc.actuallyadditions.power_long", format.format(energy), format.format(storage.getMaxEnergyStored()))
+                    .withStyle(ChatFormatting.GRAY));
         }
     }
 
@@ -64,18 +66,6 @@ public abstract class ItemEnergy extends ItemBase {
     public boolean isFoil(ItemStack stack) {
         return false;
     }
-
-//    @Override
-//    public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
-//        super.fillItemCategory(group, items);
-//        if (!this.allowdedIn(group)) {
-//            return;
-//        }
-//
-//        ItemStack charged = new ItemStack(this);
-//        charged.getOrCreateTag().putDouble("Energy", this.getMaxEnergyStored(charged));
-//        items.add(charged);
-//    }
 
     @Override
     public boolean isBarVisible(ItemStack itemStack) {

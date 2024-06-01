@@ -75,7 +75,7 @@
 //        if (this.getMinecraft().level.random.nextFloat() <= 0.1) {
 //            flavor = MathHelper.nextInt(this.getMinecraft().level.random, 2, 7);
 //        }
-//        this.bookletName = "info." + ActuallyAdditions.MODID + ".booklet.manualName.1." + flavor;
+//        this.bookletName = "info.actuallyadditions.booklet.manualName.1." + flavor;
 //
 //        String usedQuote = QUOTES[this.getMinecraft().level.random.nextInt(QUOTES.length)];
 //        String[] quoteSplit = usedQuote.split("@");
@@ -127,20 +127,20 @@
 //            if (Util.isDevVersion()) {
 //                this.bookletEdition = "Dev's Edition";
 //            } else {
-//                this.bookletEdition = StringUtil.localize("info." + ActuallyAdditions.MODID + ".booklet.edition") + " " + Util.getMajorModVersion();
+//                this.bookletEdition = StringUtil.localize("info.actuallyadditions.booklet.edition") + " " + Util.getMajorModVersion();
 //            }
 //        }
 //
 //        List<String> configText = new ArrayList<>();
-//        configText.add(TextFormatting.GOLD + StringUtil.localize("booklet." + ActuallyAdditions.MODID + ".configButton.name"));
-//        //configText.addAll(this.font.listFormattedStringToWidth(StringUtil.localizeFormatted("booklet." + ActuallyAdditions.MODID + ".configButton.desc", ActuallyAdditions.NAME).replaceAll("\\\\n", "\n"), 200)); //TODO wut
+//        configText.add(TextFormatting.GOLD + StringUtil.localize("booklet.actuallyadditions.configButton.name"));
+//        //configText.addAll(this.font.listFormattedStringToWidth(StringUtil.localizeFormatted("booklet.actuallyadditions.configButton.desc", ActuallyAdditions.NAME).replaceAll("\\\\n", "\n"), 200)); //TODO wut
 //        this.configButton = new TexturedButton(RES_LOC_GADGETS, this.guiLeft + 16, this.guiTop + this.ySize - 30, 188, 14, 16, 16, configText, btn -> {
 //        });
 //        this.addButton(this.configButton);
 //
 //        List<String> achievementText = new ArrayList<>();
-//        achievementText.add(TextFormatting.GOLD + StringUtil.localize("booklet." + ActuallyAdditions.MODID + ".achievementButton.name"));
-//        //achievementText.addAll(this.font.listFormattedStringToWidth(StringUtil.localizeFormatted("booklet." + ActuallyAdditions.MODID + ".achievementButton.desc", ActuallyAdditions.NAME), 200)); //TODO wut
+//        achievementText.add(TextFormatting.GOLD + StringUtil.localize("booklet.actuallyadditions.achievementButton.name"));
+//        //achievementText.addAll(this.font.listFormattedStringToWidth(StringUtil.localizeFormatted("booklet.actuallyadditions.achievementButton.desc", ActuallyAdditions.NAME), 200)); //TODO wut
 //        //this.achievementButton = new TexturedButton(RES_LOC_GADGETS, -389, this.guiLeft+36, this.guiTop+this.ySize-30, 204, 14, 16, 16, achievementText);
 //        //this.addButton(this.achievementButton);
 //
@@ -213,7 +213,7 @@
 //
 //        String strg = TextFormatting.DARK_GREEN + StringUtil.localize(this.bookletName);
 //        this.font.draw(stack, strg, this.guiLeft + 72 - this.font.width(strg) / 2 - 3, this.guiTop + 19, 0);
-//        strg = TextFormatting.DARK_GREEN + StringUtil.localize("info." + ActuallyAdditions.MODID + ".booklet.manualName.2");
+//        strg = TextFormatting.DARK_GREEN + StringUtil.localize("info.actuallyadditions.booklet.manualName.2");
 //        this.font.draw(stack, strg, this.guiLeft + 72 - this.font.width(strg) / 2 - 3, this.guiTop + 19 + this.font.lineHeight, 0);
 //
 //        strg = TextFormatting.GOLD + TextFormatting.ITALIC.toString() + this.bookletEdition;

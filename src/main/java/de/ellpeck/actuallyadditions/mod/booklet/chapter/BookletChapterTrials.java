@@ -31,7 +31,7 @@
 //    @Override
 //    @OnlyIn(Dist.CLIENT)
 //    public String getLocalizedName() {
-//        return StringUtil.localize("booklet." + ActuallyAdditions.MODID + ".trials." + this.getIdentifier() + ".name");
+//        return StringUtil.localize("booklet.actuallyadditions.trials." + this.getIdentifier() + ".name");
 //    }
 //
 //    @Override

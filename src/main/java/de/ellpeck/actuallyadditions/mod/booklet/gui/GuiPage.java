@@ -119,7 +119,7 @@
 //
 //        List<String> links = this.getWebLinks();
 //        if (links != null && !links.isEmpty()) {
-//            this.buttonViewOnline = new TexturedButton(RES_LOC_GADGETS, this.guiLeft + this.xSize - 24, this.guiTop + this.ySize - 25, 0, 172, 16, 16, Collections.singletonList(TextFormatting.GOLD + StringUtil.localize("booklet." + ActuallyAdditions.MODID + ".onlineButton.name")), btn -> {
+//            this.buttonViewOnline = new TexturedButton(RES_LOC_GADGETS, this.guiLeft + this.xSize - 24, this.guiTop + this.ySize - 25, 0, 172, 16, 16, Collections.singletonList(TextFormatting.GOLD + StringUtil.localize("booklet.actuallyadditions.onlineButton.name")), btn -> {
 //            });
 //            this.addButton(this.buttonViewOnline);
 //        }

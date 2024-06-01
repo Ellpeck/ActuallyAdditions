@@ -32,13 +32,13 @@ public class CoffeeIngredientGenerator extends RecipeProvider {
 
     @Override
     protected void buildRecipes(@Nonnull RecipeOutput recipeOutput) {
-        buildIngredient(recipeOutput, Items.MILK_BUCKET, 0, "jei." + ActuallyAdditions.MODID + ".coffee.extra.milk");
+        buildIngredient(recipeOutput, Items.MILK_BUCKET, 0, "jei.actuallyadditions.coffee.extra.milk");
 
         //Pam's puts milk in a tag, so we'll use that
         TagKey<Item> milkTag = ItemTags.create(new ResourceLocation("forge", "milk"));
         RecipeOutput tagOutput = recipeOutput.withConditions(new NotCondition(new TagEmptyCondition(milkTag.location())));
         buildIngredient(tagOutput, new ResourceLocation(ActuallyAdditions.MODID, "coffee_ingredient/milk_tagged"),
-                Ingredient.of(milkTag), 0, "jei." + ActuallyAdditions.MODID + ".coffee.extra.milk");
+                Ingredient.of(milkTag), 0, "jei.actuallyadditions.coffee.extra.milk");
 
         buildIngredient(recipeOutput, Items.SUGAR, 4, new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 30, 0));
         buildIngredient(recipeOutput, Items.MAGMA_CREAM, 2, new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 20, 0));

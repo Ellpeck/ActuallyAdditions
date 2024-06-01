@@ -53,7 +53,7 @@
 //        gui.getMinecraft().getTextureManager().bind(GuiBooklet.RES_LOC_GADGETS);
 //        GuiUtils.drawTexturedModalRect(startX + 5, startY + 10, 117, 74, 116, 72, 0);
 //
-//        gui.renderScaledAsciiString("(" + StringUtil.localize("booklet." + ActuallyAdditions.MODID + ".empowererRecipe") + ")", startX + 6, startY + 85, 0, false, gui.getMediumFontSize());
+//        gui.renderScaledAsciiString("(" + StringUtil.localize("booklet.actuallyadditions.empowererRecipe") + ")", startX + 6, startY + 85, 0, false, gui.getMediumFontSize());
 //
 //        PageTextOnly.renderTextToPage(gui, this, startX + 6, startY + 100);
 //        if (this.recipe != null) {

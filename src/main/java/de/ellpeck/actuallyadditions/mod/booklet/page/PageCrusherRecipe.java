@@ -44,7 +44,7 @@
 //        gui.getMinecraft().getTextureManager().bind(GuiBooklet.RES_LOC_GADGETS);
 //        GuiUtils.drawTexturedModalRect(startX + 38, startY + 6, 136, 0, 52, 74, 0);
 //
-//        gui.renderScaledAsciiString("(" + StringUtil.localize("booklet." + ActuallyAdditions.MODID + ".crusherRecipe") + ")", startX + 36, startY + 85, 0, false, gui.getMediumFontSize());
+//        gui.renderScaledAsciiString("(" + StringUtil.localize("booklet.actuallyadditions.crusherRecipe") + ")", startX + 36, startY + 85, 0, false, gui.getMediumFontSize());
 //
 //        PageTextOnly.renderTextToPage(gui, this, startX + 6, startY + 100);
 //

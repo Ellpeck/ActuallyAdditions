@@ -136,7 +136,7 @@
 //        String entity = this.getStoredEntity(stack);
 //        if (entity != null) {
 //            list.add("Entity: " + entity);
-//            list.add(TextFormatting.ITALIC + StringUtil.localize("tooltip." + ActuallyAdditions.MODID + ".clearStorage.desc"));
+//            list.add(TextFormatting.ITALIC + StringUtil.localize("tooltip.actuallyadditions.clearStorage.desc"));
 //        }
 //    }
 //}

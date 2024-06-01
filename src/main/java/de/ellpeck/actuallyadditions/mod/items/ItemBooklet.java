@@ -91,11 +91,11 @@ public class ItemBooklet extends ItemBase implements IHudDisplay {
     @OnlyIn(Dist.CLIENT)
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level playerIn, List<Component> tooltip, TooltipFlag advanced) {
-        tooltip.add(Component.translatable("tooltip." + ActuallyAdditions.MODID + ".item_booklet.desc").withStyle(ChatFormatting.GRAY));
+        tooltip.add(Component.translatable("tooltip.actuallyadditions.item_booklet.desc").withStyle(ChatFormatting.GRAY));
 
         // TODO: this is bad
         for (int i = 1; i <= 4; i++) {
-            tooltip.add(Component.translatable("tooltip." + ActuallyAdditions.MODID + ".item_booklet.sub." + i).withStyle(i == 4
+            tooltip.add(Component.translatable("tooltip.actuallyadditions.item_booklet.sub." + i).withStyle(i == 4
                     ? ChatFormatting.GOLD
                     : ChatFormatting.RESET).withStyle(i == 4
                     ? ChatFormatting.ITALIC
@@ -116,8 +116,8 @@ public class ItemBooklet extends ItemBase implements IHudDisplay {
 //                    IBookletPage page = BookletUtils.findFirstPageForStack(blockStack);
 //                    if (page != null) {
 //                        String strg1 = page.getChapter().getLocalizedName();
-//                        String strg2 = StringUtil.localize("info." + ActuallyAdditions.MODID + ".booklet.hudDisplay.page") + " " + (page.getChapter().getPageIndex(page) + 1);
-//                        String strg3 = StringUtil.localize("info." + ActuallyAdditions.MODID + ".booklet.hudDisplay.open");
+//                        String strg2 = StringUtil.localize("info.actuallyadditions.booklet.hudDisplay.page") + " " + (page.getChapter().getPageIndex(page) + 1);
+//                        String strg3 = StringUtil.localize("info.actuallyadditions.booklet.hudDisplay.open");
 //
 //                        AssetUtil.renderStackToGui(StackUtil.isValid(page.getChapter().getDisplayItemStack())
 //                            ? page.getChapter().getDisplayItemStack()
@@ -126,9 +126,9 @@ public class ItemBooklet extends ItemBase implements IHudDisplay {
 //                        minecraft.font.drawShadow(TextFormatting.YELLOW + "" + TextFormatting.ITALIC + strg2, resolution.getGuiScaledWidth() / 2 - minecraft.font.width(strg2) / 2, height + 30, StringUtil.DECIMAL_COLOR_WHITE);
 //                        minecraft.font.drawShadow(TextFormatting.GOLD + strg3, resolution.getGuiScaledWidth() / 2 - minecraft.font.width(strg3) / 2, height + 60, StringUtil.DECIMAL_COLOR_WHITE);
 //                    } else {
-//                        String strg1 = TextFormatting.DARK_RED + StringUtil.localize("info." + ActuallyAdditions.MODID + ".booklet.hudDisplay.noInfo");
-//                        String strg2 = TextFormatting.DARK_GREEN + "" + TextFormatting.ITALIC + StringUtil.localize("info." + ActuallyAdditions.MODID + ".booklet.hudDisplay.noInfo.desc.1");
-//                        String strg3 = TextFormatting.DARK_GREEN + "" + TextFormatting.ITALIC + StringUtil.localize("info." + ActuallyAdditions.MODID + ".booklet.hudDisplay.noInfo.desc.2");
+//                        String strg1 = TextFormatting.DARK_RED + StringUtil.localize("info.actuallyadditions.booklet.hudDisplay.noInfo");
+//                        String strg2 = TextFormatting.DARK_GREEN + "" + TextFormatting.ITALIC + StringUtil.localize("info.actuallyadditions.booklet.hudDisplay.noInfo.desc.1");
+//                        String strg3 = TextFormatting.DARK_GREEN + "" + TextFormatting.ITALIC + StringUtil.localize("info.actuallyadditions.booklet.hudDisplay.noInfo.desc.2");
 //
 //                        minecraft.font.drawShadow(strg1, resolution.getGuiScaledWidth() / 2 - minecraft.font.width(strg1) / 2, height + 30, StringUtil.DECIMAL_COLOR_WHITE);
 //                        minecraft.font.drawShadow(strg2, resolution.getGuiScaledWidth() / 2 - minecraft.font.width(strg2) / 2, height + 50, StringUtil.DECIMAL_COLOR_WHITE);

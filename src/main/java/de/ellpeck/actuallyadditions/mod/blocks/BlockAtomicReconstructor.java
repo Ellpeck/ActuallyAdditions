@@ -184,7 +184,7 @@ public class BlockAtomicReconstructor extends FullyDirectionalBlock.Container im
                     energy = BET.getInt("Energy");
                 }
                 NumberFormat format = NumberFormat.getInstance();
-                pTooltip.add(Component.translatable("misc.actuallyadditions.power_single", format.format(energy)));
+                pTooltip.add(Component.translatable("misc.actuallyadditions.power_single", format.format(energy)).withStyle(ChatFormatting.GRAY));
 
                 if (BET.contains("IsPulseMode")) {
                     pTooltip.add(Component.translatable("info.actuallyadditions.redstoneMode").append(": ")

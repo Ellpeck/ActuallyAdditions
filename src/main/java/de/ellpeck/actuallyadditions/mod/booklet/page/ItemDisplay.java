@@ -73,7 +73,7 @@
 //            }
 //
 //            if (this.page != null && this.page != this.gui.pages[0] && this.page != this.gui.pages[1]) {
-//                list.add(TextFormatting.GOLD + StringUtil.localize("booklet." + ActuallyAdditions.MODID + ".clickToSeeRecipe"));
+//                list.add(TextFormatting.GOLD + StringUtil.localize("booklet.actuallyadditions.clickToSeeRecipe"));
 //            }
 //
 //            GuiUtils.drawHoveringText(list, mouseX, mouseY, mc.displayWidth, mc.displayHeight, -1, mc.font);
