@@ -2,7 +2,7 @@
 	"credit": "Made with Blockbench",
 	"textures": {
 		"base": "actuallyadditions:block/base_texture",
-		"back": "actuallyadditions:block/farmer_side",
+		"back": "actuallyadditions:block/firework_box_side",
 		"particle": "actuallyadditions:block/firework_box_side",
 		"side": "actuallyadditions:block/firework_box_side",
 		"top": "actuallyadditions:block/firework_box_top"
