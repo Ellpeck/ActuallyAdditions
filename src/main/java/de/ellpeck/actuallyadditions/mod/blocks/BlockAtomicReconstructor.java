@@ -64,7 +64,7 @@ public class BlockAtomicReconstructor extends FullyDirectionalBlock.Container im
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         ItemStack heldItem = player.getItemInHand(hand);
         if (this.tryToggleRedstone(world, pos, player)) {
-            return InteractionResult.CONSUME;
+            return InteractionResult.SUCCESS;
         }
         if (!world.isClientSide) {
             TileEntityAtomicReconstructor reconstructor = (TileEntityAtomicReconstructor) world.getBlockEntity(pos);

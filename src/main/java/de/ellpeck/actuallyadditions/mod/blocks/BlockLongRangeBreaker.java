@@ -49,7 +49,7 @@ public class BlockLongRangeBreaker extends FullyDirectionalBlock.Container {
     @Override
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
         if (this.tryToggleRedstone(world, pos, player)) {
-            return InteractionResult.PASS;
+            return InteractionResult.SUCCESS;
         }
 
         return this.openGui(world, player, pos, TileEntityLongRangeBreaker.class);

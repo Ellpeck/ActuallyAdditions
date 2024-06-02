@@ -57,7 +57,7 @@ public class BlockBreaker extends FullyDirectionalBlock.Container {
     @Override
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
         if (this.tryToggleRedstone(world, pos, player)) {
-            return InteractionResult.CONSUME;
+            return InteractionResult.SUCCESS;
         }
 
         return this.openGui(world, player, pos, TileEntityBreaker.class);
