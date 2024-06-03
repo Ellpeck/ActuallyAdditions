@@ -10,7 +10,9 @@
 
 package de.ellpeck.actuallyadditions.mod.entity;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
+import de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer.DefaultFarmerBehavior;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
@@ -78,7 +80,9 @@ public class EntityWorm extends Entity {
         if (waterTicket != null)
             waterTicket.invalidate();
 
-        waterTicket = FarmlandWaterManager.addAABBTicket(this.level(), new AABB(getX() - 2, getY() - 1.5, getZ() - 2, getX() + 2, getY(), getZ() + 2));
+        AABB aabb = new AABB(getX() - 1.5, getY() - 1.5, getZ() - 1.0, getX() + 1.5, getY() + 0.5, getZ() + 1.5);
+        //ActuallyAdditions.LOGGER.info("Worm AABB: " + aabb);
+        waterTicket = FarmlandWaterManager.addAABBTicket(this.level(), aabb);
     }
 
     @Override
@@ -101,21 +105,11 @@ public class EntityWorm extends Entity {
 
                         if (canWormify(this.level(), pos, state)) {
                             boolean isFarmland = block instanceof FarmBlock;
-
-/*                            if (!isFarmland || state.getValue(FarmlandBlock.MOISTURE) < 7) {
+                            if (!isFarmland) {
                                 if (isMiddlePose || this.level().random.nextFloat() >= 0.45F) {
-
-                                    if (!isFarmland) {
-                                        DefaultFarmerBehavior.useHoeAt(this.level, pos);
-                                    }
-                                    state = this.level().getBlockState(pos);
-                                    isFarmland = state.getBlock() instanceof FarmlandBlock;
-
-                                    if (isFarmland) {
-                                        this.level().setBlock(pos, state.setValue(FarmlandBlock.MOISTURE, 7), 2);
-                                    }
+                                    DefaultFarmerBehavior.useHoeAt(this.level(), pos);
                                 }
-                            }*/
+                            }
 
                             if (isFarmland && this.level().random.nextFloat() >= 0.95F) {
                                 BlockPos plant = pos.above();
