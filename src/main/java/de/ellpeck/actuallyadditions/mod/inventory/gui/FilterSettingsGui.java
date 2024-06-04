@@ -112,11 +112,11 @@ public class FilterSettingsGui {
                 ? Component.translatable("info.actuallyadditions.gui.respectMod")
                 : Component.translatable("info.actuallyadditions.gui.ignoreMod")).withStyle(ChatFormatting.BOLD));
             list.add(Component.translatable("info.actuallyadditions.gui.respectModInfo"));
-        } else if (this.modButton.isMouseOver(mouseX, mouseY)) {
+        } else if (this.damageButton.isMouseOver(mouseX, mouseY)) {
             list.add((this.theSettings.matchDamage
                     ? Component.translatable("info.actuallyadditions.gui.respectDamage")
                     : Component.translatable("info.actuallyadditions.gui.ignoreDamage")).withStyle(ChatFormatting.BOLD));
-        } else if (this.modButton.isMouseOver(mouseX, mouseY)) {
+        } else if (this.nbtButton.isMouseOver(mouseX, mouseY)) {
             list.add((this.theSettings.matchNBT
                     ? Component.translatable("info.actuallyadditions.gui.respectNBT")
                     : Component.translatable("info.actuallyadditions.gui.ignoreNBT")).withStyle(ChatFormatting.BOLD));

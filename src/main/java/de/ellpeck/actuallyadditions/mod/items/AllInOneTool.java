@@ -24,7 +24,8 @@ public class AllInOneTool extends DiggerItem {
         ToolActions.PICKAXE_DIG,
         ToolActions.SHOVEL_DIG,
         ToolActions.HOE_TILL,
-        ToolActions.SHOVEL_FLATTEN
+        ToolActions.SHOVEL_FLATTEN,
+        ToolActions.AXE_STRIP
     );
 
     public AllInOneTool(Tier tier) {
@@ -56,13 +57,13 @@ public class AllInOneTool extends DiggerItem {
         }
 
         // Player not sneaking? Act as a Hoe to the block, else, Act as a shovel
-        if (!context.getPlayer().isCrouching()) {
-            BlockState toolModifiedState = context.getLevel().getBlockState(context.getClickedPos()).getToolModifiedState(context, ToolActions.HOE_TILL, false);
-            ActuallyAdditions.LOGGER.info("Tool Modified State: " + toolModifiedState);
-            return Items.IRON_HOE.useOn(context);
+        if (context.getPlayer().isCrouching()) {
+            return Items.IRON_SHOVEL.useOn(context);
         }
-
-        return Items.IRON_SHOVEL.useOn(context);
+        InteractionResult tmp = Items.IRON_AXE.useOn(context);
+        if (tmp != InteractionResult.SUCCESS)
+            return tmp;
+        return Items.IRON_HOE.useOn(context);
     }
 
     @Override
