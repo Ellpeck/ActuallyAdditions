@@ -112,6 +112,7 @@ public class FilterSettingsGui {
                 ? Component.translatable("info.actuallyadditions.gui.respectMod")
                 : Component.translatable("info.actuallyadditions.gui.ignoreMod")).withStyle(ChatFormatting.BOLD));
             list.add(Component.translatable("info.actuallyadditions.gui.respectModInfo"));
+            list.add(Component.translatable("info.actuallyadditions.gui.respectModInfo2"));
         } else if (this.damageButton.isMouseOver(mouseX, mouseY)) {
             list.add((this.theSettings.matchDamage
                     ? Component.translatable("info.actuallyadditions.gui.respectDamage")
