@@ -97,6 +97,8 @@ public class GuiLaserRelayItemWhitelist extends AAScreen<ContainerLaserRelayItem
     @Override
     public void render(@Nonnull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
+        this.leftFilter.drawHover(guiGraphics, mouseX, mouseY);
+        this.rightFilter.drawHover(guiGraphics, mouseX, mouseY);
 
         if (this.buttonSmartWhitelistLeft.isMouseOver(mouseX, mouseY) || this.buttonSmartWhitelistRight.isMouseOver(mouseX, mouseY)) {
             List<FormattedCharSequence> list = new ArrayList<>();
@@ -104,9 +106,6 @@ public class GuiLaserRelayItemWhitelist extends AAScreen<ContainerLaserRelayItem
             list.addAll(this.font.split(Component.translatable("info.actuallyadditions.gui.smartInfo"), 200));
             guiGraphics.renderTooltip(this.font, list, mouseX, mouseY); //renderTooltip
         }
-
-        this.leftFilter.drawHover(guiGraphics, mouseX, mouseY);
-        this.rightFilter.drawHover(guiGraphics, mouseX, mouseY);
     }
 
     @Override

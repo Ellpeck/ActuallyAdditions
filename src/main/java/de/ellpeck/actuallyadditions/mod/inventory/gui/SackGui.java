@@ -88,8 +88,8 @@ public class SackGui extends AAScreen<SackContainer> {
             text.add(Component.literal("Auto-Insert " + (this.container.autoInsert
                 ? "On"
                 : "Off")).withStyle(ChatFormatting.BOLD));
-            text.add(Component.literal("Turn this on to make items that get picked up automatically go into the bag.")); //TODO how to word wrap these to 200?
-            text.add(Component.literal("Note that this WON'T work when you are holding the bag in your hand.").withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC)); //TODO this too
+            text.add(Component.literal("Turn this on to make items that get picked up automatically go into the sack.")); //TODO how to word wrap these to 200?
+            text.add(Component.literal("Note that this WON'T work when you are holding the sack in your hand.").withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC)); //TODO this too
             guiGraphics.renderTooltip(font, text, Optional.empty(), mouseX, mouseY); //TODO i have no idea what im doing here...
         }
     }
