@@ -11,6 +11,11 @@
 package de.ellpeck.actuallyadditions.mod.blocks;
 
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBase;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class BlockPhantomBooster extends BlockBase {
 
@@ -29,9 +34,9 @@ public class BlockPhantomBooster extends BlockBase {
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> entityType) {
         return level.isClientSide? TileEntityPhantomBooster::clientTick : TileEntityPhantomBooster::serverTick;
     }
-
+*/
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         return VoxelShapes.BOOSTER_SHAPE;
-    }*/
+    }
 }
