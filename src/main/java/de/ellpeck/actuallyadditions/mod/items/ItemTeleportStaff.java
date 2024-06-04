@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
@@ -34,11 +35,15 @@ public class ItemTeleportStaff extends ItemEnergy {
         ItemStack stack = player.getItemInHand(hand);
         if (!world.isClientSide) {
             HitResult rayTraceResult = player.pick(100,1F,false);
-            if (rayTraceResult.getType() == HitResult.Type.BLOCK || player.getXRot() >= -5) {
+            if (rayTraceResult.getType() == HitResult.Type.BLOCK || rayTraceResult.getType() == HitResult.Type.MISS) {
                 Vec3 location = rayTraceResult.getLocation();
                 Vec3 pos = Vec3.atBottomCenterOf(BlockPos.containing(location.x, location.y, location.z));
                 int baseUse = 200;
-                int use = baseUse + (int) (baseUse * player.blockPosition().distSqr(BlockPos.containing(pos.x, pos.y, pos.z)));
+                int use = baseUse + (int) (baseUse * Math.sqrt(player.blockPosition().distManhattan(BlockPos.containing(pos.x, pos.y, pos.z))));
+                ActuallyAdditions.LOGGER.info("Use: " + use + " Energy: " + this.getEnergyStored(stack));
+                ActuallyAdditions.LOGGER.info("Distance: " + Math.sqrt(player.blockPosition().distSqr(BlockPos.containing(pos.x, pos.y, pos.z))));
+                ActuallyAdditions.LOGGER.info("Player: " + player.blockPosition());
+                ActuallyAdditions.LOGGER.info("Pos: " + pos);
                 if (this.getEnergyStored(stack) >= use) {
                     ((ServerPlayer) player).connection.teleport(pos.x, pos.y + 1F, pos.z, player.getYRot(), player.getXRot());
                     player.removeVehicle();
