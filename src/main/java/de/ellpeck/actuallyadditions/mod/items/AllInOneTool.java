@@ -61,7 +61,7 @@ public class AllInOneTool extends DiggerItem {
             return Items.IRON_SHOVEL.useOn(context);
         }
         InteractionResult tmp = Items.IRON_AXE.useOn(context);
-        if (tmp != InteractionResult.SUCCESS)
+        if (tmp == InteractionResult.SUCCESS)
             return tmp;
         return Items.IRON_HOE.useOn(context);
     }

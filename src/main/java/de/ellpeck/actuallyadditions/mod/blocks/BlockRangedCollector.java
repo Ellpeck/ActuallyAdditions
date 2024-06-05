@@ -55,8 +55,8 @@ public class BlockRangedCollector extends BlockContainerBase {
         return this.openGui(world, player, pos, TileEntityRangedCollector.class);
     }
     
-    @Override
+/*    @Override
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         return VoxelShapes.COLLECTOR_SHAPE;
-    }
+    }*/
 }

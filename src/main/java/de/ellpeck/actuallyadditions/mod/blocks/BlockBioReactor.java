@@ -53,7 +53,7 @@ public class BlockBioReactor extends DirectionalBlock.Container {
         return this.openGui(world, player, pos, TileEntityBioReactor.class);
     }
 
-    @Override
+/*    @Override
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         switch (state.getValue(HORIZONTAL_FACING)) {
             case EAST:
@@ -65,5 +65,5 @@ public class BlockBioReactor extends DirectionalBlock.Container {
             default:
                 return VoxelShapes.BioReactorShapes.SHAPE_N;
         }
-    }
+    }*/
 }

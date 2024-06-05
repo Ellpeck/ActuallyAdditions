@@ -44,7 +44,7 @@ public class BlockLeafGenerator extends DirectionalBlock.Container {
         return level.isClientSide? TileEntityLeafGenerator::clientTick : TileEntityLeafGenerator::serverTick;
     }
 
-    @Override
+/*    @Override
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         switch (state.getValue(FACING)) {
             case EAST:
@@ -56,5 +56,5 @@ public class BlockLeafGenerator extends DirectionalBlock.Container {
             default:
                 return VoxelShapes.LeafGeneratorShapes.SHAPE_N;
         }
-    }
+    }*/
 }

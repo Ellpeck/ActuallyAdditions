@@ -96,7 +96,7 @@ public class BlockPoweredFurnace extends DirectionalBlock.Container {
         tooltip.add(Component.translatable("tooltip.actuallyadditions.previouslyDoubleFurnace").withStyle(ChatFormatting.ITALIC));
     }
 
-    @Override
+/*    @Override
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         switch (state.getValue(HORIZONTAL_FACING)) {
             case EAST:
@@ -108,5 +108,5 @@ public class BlockPoweredFurnace extends DirectionalBlock.Container {
             default:
                 return VoxelShapes.FurnaceDoubleShapes.SHAPE_N;
         }
-    }
+    }*/
 }

@@ -41,8 +41,8 @@ public class BlockItemInterface extends BlockContainerBase {
         return level.isClientSide? TileEntityItemInterface::clientTick : TileEntityItemInterface::serverTick;
     }
 
-    @Override
+/*    @Override
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         return VoxelShapes.ITEM_VIEWER_SHAPE;
-    }
+    }*/
 }

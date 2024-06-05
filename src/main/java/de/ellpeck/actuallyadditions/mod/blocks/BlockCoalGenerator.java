@@ -65,7 +65,7 @@ public class BlockCoalGenerator extends DirectionalBlock.Container {
         return this.openGui(world, player, pos, TileEntityCoalGenerator.class);
     }
 
-    @Override
+/*    @Override
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         switch (state.getValue(FACING)) {
             case EAST:
@@ -77,5 +77,10 @@ public class BlockCoalGenerator extends DirectionalBlock.Container {
             default:
                 return VoxelShapes.CoalGeneratorShapes.NORTH;
         }
+    }*/
+
+    @Override
+    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+        return VoxelShapes.SIMPLE_GENERATOR_SHAPE;
     }
 }

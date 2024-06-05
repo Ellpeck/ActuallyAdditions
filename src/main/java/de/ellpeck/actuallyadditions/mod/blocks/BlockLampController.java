@@ -75,7 +75,7 @@ public class BlockLampController extends FullyDirectionalBlock {
         }
     }
 
-    @Override
+/*    @Override
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         switch (state.getValue(FACING)) {
             case EAST:
@@ -87,5 +87,5 @@ public class BlockLampController extends FullyDirectionalBlock {
             default:
                 return VoxelShapes.LampPowererShapes.SHAPE_N;
         }
-    }
+    }*/
 }

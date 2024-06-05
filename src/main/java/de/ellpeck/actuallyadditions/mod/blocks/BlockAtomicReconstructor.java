@@ -94,7 +94,7 @@ public class BlockAtomicReconstructor extends FullyDirectionalBlock.Container im
         return InteractionResult.CONSUME;
     }
 
-    @Override
+/*    @Override
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         switch (state.getValue(FACING)) {
             case UP:
@@ -110,7 +110,7 @@ public class BlockAtomicReconstructor extends FullyDirectionalBlock.Container im
             default:
                 return VoxelShapes.AtomicReconstructorShapes.SHAPE_N;
         }
-    }
+    }*/
 
     @Nullable
     @Override

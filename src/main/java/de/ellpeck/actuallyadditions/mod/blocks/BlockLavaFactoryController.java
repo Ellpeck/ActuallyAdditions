@@ -72,7 +72,7 @@ public class BlockLavaFactoryController extends DirectionalBlock.Container imple
         }
     }
 
-    @Override
+/*    @Override
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         switch (state.getValue(FACING)) {
             case EAST:
@@ -84,5 +84,5 @@ public class BlockLavaFactoryController extends DirectionalBlock.Container imple
             default:
                 return VoxelShapes.LavaFactoryShapes.SHAPE_N;
         }
-    }
+    }*/
 }

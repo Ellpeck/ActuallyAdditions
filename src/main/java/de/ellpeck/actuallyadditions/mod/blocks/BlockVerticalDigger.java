@@ -76,7 +76,7 @@ public class BlockVerticalDigger extends DirectionalBlock.Container implements I
         }
     }
 
-    @Override
+/*    @Override
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         switch (state.getValue(FACING)) {
             case NORTH:
@@ -90,5 +90,5 @@ public class BlockVerticalDigger extends DirectionalBlock.Container implements I
             default:
                 return VoxelShapes.MinerShapes.SHAPE_N;
         }
-    }
+    }*/
 }

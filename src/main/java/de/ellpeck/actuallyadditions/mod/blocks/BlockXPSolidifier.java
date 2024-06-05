@@ -50,8 +50,8 @@ public class BlockXPSolidifier extends DirectionalBlock.Container {
         return this.openGui(worldIn, player, pos, TileEntityXPSolidifier.class);
     }
 
-    @Override
+/*    @Override
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         return VoxelShapes.SOLIDIFIER_SHAPE;
-    }
+    }*/
 }

@@ -103,7 +103,7 @@ public class BlockCrusher extends BlockContainerBase {
                 : 0;
     }
 
-    @Override
+/*    @Override
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         switch (state.getValue(HORIZONTAL_FACING)) {
             case EAST:
@@ -115,5 +115,5 @@ public class BlockCrusher extends BlockContainerBase {
             default:
                 return VoxelShapes.GrinderShapes.SHAPE_N;
         }
-    }
+    }*/
 }

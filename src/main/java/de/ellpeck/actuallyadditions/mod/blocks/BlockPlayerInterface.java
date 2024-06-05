@@ -87,8 +87,8 @@ public class BlockPlayerInterface extends BlockContainerBase implements IHudDisp
         }
     }
     
-    @Override
+/*    @Override
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         return VoxelShapes.PLAYER_INTERFACE_SHAPE;
-    }
+    }*/
 }

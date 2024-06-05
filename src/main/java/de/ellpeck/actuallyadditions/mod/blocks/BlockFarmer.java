@@ -51,7 +51,7 @@ public class BlockFarmer extends DirectionalBlock.Container {
         return this.openGui(worldIn, player, pos, TileEntityFarmer.class);
     }
 
-    @Override
+/*    @Override
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         switch (state.getValue(FACING)) {
             case EAST:
@@ -63,5 +63,5 @@ public class BlockFarmer extends DirectionalBlock.Container {
             default:
                 return VoxelShapes.FarmerShapes.SHAPE_N;
         }
-    }
+    }*/
 }

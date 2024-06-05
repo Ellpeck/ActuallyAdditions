@@ -72,7 +72,7 @@ public class BlockFluidCollector extends FullyDirectionalBlock.Container {
         return this.openGui(world, player, pos, TileEntityFluidCollector.class);
     }
 
-    @Nonnull
+/*    @Nonnull
     @Override
     public VoxelShape getShape(BlockState state, @Nonnull BlockGetter worldIn, @Nonnull BlockPos pos, @Nonnull CollisionContext context) {
         switch (state.getValue(FACING)) {
@@ -89,5 +89,5 @@ public class BlockFluidCollector extends FullyDirectionalBlock.Container {
             default:
                 return VoxelShapes.FluidCollectorShapes.SHAPE_N;
         }
-    }
+    }*/
 }
