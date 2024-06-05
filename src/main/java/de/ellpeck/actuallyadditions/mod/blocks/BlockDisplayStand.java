@@ -104,11 +104,15 @@ public class BlockDisplayStand extends BlockContainerBase {
 		return InteractionResult.CONSUME;
 	}
 
-	@Override
+/*	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
 		if (this.isEmpowerer) {
 			return VoxelShapes.EMPOWERER_SHAPE;
 		}
 		return VoxelShapes.DISPLAY_STAND_SHAPE;
+	}*/
+	@Override
+	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+		return VoxelShapes.SIMPLE_STAND_SHAPE;
 	}
 }

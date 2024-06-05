@@ -140,6 +140,10 @@ public class VoxelShapes {
             Block.box(11, 7, 3, 12, 9, 4),
             Block.box(4, 7, 3, 5, 9, 4)
     ).reduce((v1, v2) -> Shapes.join(v1, v2, BooleanOp.OR)).get();
+    static final VoxelShape SIMPLE_STAND_SHAPE = Stream.of(
+            Block.box(0, 0, 0, 16, 8, 16),
+            Block.box(5, 8, 5, 11, 9, 11)
+    ).reduce((v1, v2) -> Shapes.join(v1, v2, BooleanOp.OR)).get();
     static final VoxelShape ENERGIZER_SHAPE = Stream.of(
             Block.box(0, 1, 15, 1, 15, 16),
             Block.box(0, 15, 0, 1, 16, 16),
@@ -299,12 +303,21 @@ public class VoxelShapes {
         static final VoxelShape WEST = Stream.of(Block.box(0, 15, 15, 16, 16, 16), Block.box(0, 15, 0, 16, 16, 1), Block.box(0, 15, 1, 1, 16, 15), Block.box(15, 15, 1, 16, 16, 15), Block.box(15, 1, 15, 16, 15, 16), Block.box(15, 1, 0, 16, 15, 1), Block.box(0, 1, 0, 1, 15, 1), Block.box(0, 1, 15, 1, 15, 16), Block.box(2, 0, 2, 14, 1, 14), Block.box(6, 14, 5, 7, 15, 11), Block.box(8, 14, 5, 9, 15, 11), Block.box(10, 14, 5, 14, 15, 11), Block.box(2, 14, 5, 5, 15, 11), Block.box(2, 14, 2, 14, 15, 5), Block.box(2, 14, 11, 14, 15, 14), Block.box(2, 0, 14, 14, 15, 15), Block.box(2, 0, 1, 14, 15, 2), Block.box(14, 0, 1, 15, 15, 15), Block.box(0, 11, 3, 1, 12, 13), Block.box(1, 3, 10, 2, 8, 11), Block.box(1, 3, 5, 2, 8, 6), Block.box(1, 8, 3, 2, 15, 13), Block.box(1, 0, 3, 2, 3, 13), Block.box(1, 0, 13, 2, 15, 15), Block.box(1, 0, 1, 2, 15, 3), Block.box(5, 13, 5, 10, 14, 11), Block.box(2, 3, 2, 3, 8, 14), Block.box(15, 0, 15, 16, 1, 16), Block.box(15, 0, 0, 16, 1, 1), Block.box(0, 0, 0, 1, 1, 1), Block.box(0, 0, 15, 1, 1, 16)).reduce((v1, v2) -> Shapes.join(v1, v2, BooleanOp.OR)).get();
     }
 
-    static final VoxelShape SIMPLE_GENERATOR_SHAPE = Stream.of(
+/*    static final VoxelShape SIMPLE_GENERATOR_SHAPE = Stream.of(
             Block.box(0, 1, 0, 16, 16, 16),
             Block.box(0, 0, 0, 1, 1, 1),
             Block.box(0, 0, 15, 1, 1, 16),
             Block.box(15, 0, 0, 16, 1, 1),
             Block.box(15, 0, 15, 16, 1, 16)
+    ).reduce((v1, v2) -> Shapes.join(v1, v2, BooleanOp.OR)).get();*/
+
+    static final VoxelShape SIMPLE_GENERATOR_SHAPE = Stream.of(
+            Block.box(1, 0, 1, 15, 15, 15), // Inner Cube
+            Block.box(0, 15, 0, 16, 16, 16), // Top Plate
+            Block.box(0, 0, 0, 1, 15, 1),
+            Block.box(0, 0, 15, 1, 15, 16),
+            Block.box(15, 0, 0, 16, 15, 1),
+            Block.box(15, 0, 15, 16, 15, 16)
     ).reduce((v1, v2) -> Shapes.join(v1, v2, BooleanOp.OR)).get();
 
     static class CoffeeMachineShapes {
