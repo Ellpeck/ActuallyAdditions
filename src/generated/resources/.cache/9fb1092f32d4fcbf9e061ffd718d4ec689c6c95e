@@ -1,4 +1,4 @@
-// 1.20.4	2024-04-28T16:44:33.1452594	Recipes
+// 1.20.4	2024-06-10T15:07:52.0533266	Recipes
 4d3128b37a7153882a9324cda49b5069207561c5 data/actuallyadditions/recipes/atomic_reconstructor.json
 b0367f5012651764931e8b8fd0c5bcca4e8614c0 data/actuallyadditions/recipes/battery_box.json
 dba5d4a1a79489d5766fad32f912ab1a64618854 data/actuallyadditions/recipes/bio_reactor.json
@@ -50,7 +50,7 @@ ff81da8a0f6632779414c0512100696a11771814 data/actuallyadditions/recipes/hopping_
 92323ba7b5459abe64c06fff502d44384f64f361 data/actuallyadditions/recipes/laser_relay_advanced.json
 31a2978ae8260ead579c6c920be0e40c6036498d data/actuallyadditions/recipes/laser_relay_extreme.json
 4acb117a6727554073a78ed81bcd2b0b1af53bec data/actuallyadditions/recipes/laser_relay_item_advanced.json
-2c37821d291542d4821842501e07bfad38181553 data/actuallyadditions/recipes/lava_factory_casing.json
+65e62221d2e703218b3eb63ccd9499644e5851c4 data/actuallyadditions/recipes/lava_factory_casing.json
 76f9eb2b859198eec4c50d992c3715633d5109a8 data/actuallyadditions/recipes/lava_factory_controller.json
 1e3936f80be1540cd3d6ed570c1ed6381227db7d data/actuallyadditions/recipes/leaf_generator.json
 11a57ce2eea04fed226a817a3995acd406bb2efb data/actuallyadditions/recipes/long_range_breaker.json

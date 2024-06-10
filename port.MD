@@ -33,7 +33,7 @@
 - [ ] Change "whitelist" and "blacklist" in item filters to "allow" and "deny" or something similar
 - [ ] Change the recipe for the XP solidifier so that it's craftable even with solidified XP removed from mobs
 - [ ] Add off-hand slots to energizer and enervator
-- [ ] Change the recipe of casings (the lava factory ones) to give only 4, and rename them to "Lava Factory Casing"
+- [x] Change the recipe of casings (the lava factory ones) to give only 4, and rename them to "Lava Factory Casing"
 - [x] Make coal generator create half as much CF, we don't want this to be a main power source for people( Flanks: already dropped to 20fe/t)
 - [x] Make black quartz drop the items directly, unless silk-touched
 - [ ] Make storage crates work as follows, recipes unchanged:
@@ -43,32 +43,32 @@
 - [ ] Rename powered furnace to double powered furnace and add a second block which is a single powered furnace, make recipes work similarly to crusher and double crusher
 - [ ] Make greenhouse glass less OP and potentially more difficult to craft
 - [ ] Improve the coffee maker's ui by putting the water meter actually into the ui
-- [ ] Rename phantom boosters to range boosters (since they work for other stuff too)
-- [ ] Make worms use that new forge event/hook to keep the ground watered instead of trying to re-water it every few ticks
+- [x] Rename phantom boosters to range boosters (since they work for other stuff too)
+- [x] Make worms use that new forge event/hook to keep the ground watered instead of trying to re-water it every few ticks
 - [x] Give ender star an enchantment glint
 - [ ] Make miner lens far more expensive to use, mmm power creep
 - [x] Make coffee beans and seeds be the same item or I might get killed by someone finally
 
 # Keep As Is
 - [X] Battery box
-- [ ] Item interfaces and item laser system
+- [x] Item interfaces and item laser system
 - [x] Farmer
 - [x] Empowerer and display stands
 - [x] Tiny torch
-- [ ] Shock absorber
+- [x] Shock absorber
 - [x] Player interface
-- [ ] Vertical digger
+- [x] Vertical digger
 - [x] Atomic reconstructor
 - [x] Ranged collector
-- [ ] Breakers, placers and long-range breakers, as well as fluid variants
-- [ ] Leaf-eating generator
+- [x] Breakers, placers and long-range breakers, as well as fluid variants
+- [x] Leaf-eating generator
 - [ ] Lamps and lamp controller
-- [ ] Lava factory controller
+- [x] Lava factory controller
 - [x] The entire canola system
 - [x] Phantomfaces and their variants
-- [ ] Feeder
-- [ ] Crusher and double crusher
-- [ ] Heat collectors
+- [x] Feeder
+- [x] Crusher and double crusher
+- [x] Heat collectors
 - [x] Precision dropper
 - [x] Engineer's goggles
 - [ ] Laser relay modifiers and wrench
@@ -76,13 +76,13 @@
 - [x] Sacks
 - [x] Player probe
 - [x] Item filter
-- [ ] Water bowl
+- [x] Water bowl
 - [x] Tiny coal and charcoal
 - [x] Rice slimeballs
 - [ ] Storage crate keeper
 - [x] Color, detonation, certain death, killer and disenchanting lenses
 - [ ] Storage crate upgrades, except for the "chest to storage crate" one
-- [ ] Ring of growth
+- [x] Ring of growth
 - [x] Ring of magnetization
 - [x] Teleport staff
 - [ ] Wings of the Bats and wing items dropped from bats
