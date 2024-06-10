@@ -1,3 +1,37 @@
+# 1.2.13+mc1.20.4
+* Beta
+* Massive update porting the mod to 1.20.4 NeoForge from 1.12.2, list is non-exhaustive, and some features may not be implemented yet.
+* The following systems / items are removed.
+    * Lush Caves
+    * The number 11 lens.
+    * Smiley Cloud
+    * Solidified XP dropping from mobs.
+    * Treasure chests.
+    * Composter, bio-mash, biomass, bio coal, and fertilizer.
+    * Charcoal blocks.
+    * Ender pearl blocks.
+    * ESD's
+    * Fishing Nets
+    * Solar Panels
+    * Item Repairer
+    * Knives
+    * Black lotuses and black dye.
+    * Ring of liquid banning.
+    * Emerald and obsidian armor and tools.
+    * Black quartz armor and tools.
+    * Crystal armor and tools.
+    * Resonant rice.
+    * Jam Villager and jams.
+    * Potion rings.
+    * Fur balls.
+    * Most of the foods.
+* Changes
+  * All recipes and conversion systems are now Json recipe based, and can be modified with datapacks, negating the need for most of the API.
+  * Black quartz ore now behaves like normal ores.
+  * New models / textures for almost every block and item in the mod.
+
+
+
 # 1.12.2-r152
 * CrankySupertoon: Fixed Crystal Flux Localization
 * Falcion: Updated russian translation
