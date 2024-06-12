@@ -1,0 +1,21 @@
+{
+  "type": "actuallyadditions:crushing",
+  "ingredient": {
+    "item": "minecraft:copper_ore"
+  },
+  "result": [
+    {
+      "result": {
+        "Count": 2,
+        "id": "minecraft:raw_copper"
+      }
+    },
+    {
+      "chance": 0.05,
+      "result": {
+        "Count": 1,
+        "id": "minecraft:raw_gold"
+      }
+    }
+  ]
+}
