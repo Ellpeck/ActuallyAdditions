@@ -408,7 +408,7 @@
   "tooltip.actuallyadditions.phantom.notConnected.desc": "This isn't connected to anything!",
   "tooltip.actuallyadditions.phantom.blockInfo.desc": "The connected Block is %s at %s, %s, %s that is %s Blocks away.",
   "tooltip.actuallyadditions.factory.notPart.desc": "The Controller isn't part of the right Multi-Block! Look at the Controller's Description!",
-  "tooltip.actuallyadditions.factory.working": "This Lava Factory is complete and can produce Lava!",
+  "tooltip.actuallyadditions.factory.working.desc": "This Lava Factory is complete and can produce Lava!",
   "tooltip.actuallyadditions.oredictName.desc": "OreDictionary Entries",
   "tooltip.actuallyadditions.noOredictNameAvail.desc": "None",
   "tooltip.actuallyadditions.codeName.desc": "Code Name",
