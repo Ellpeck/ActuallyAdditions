@@ -68,7 +68,7 @@ public class CoffeeMachineCategory implements IRecipeCategory<CoffeeIngredientRe
 		Minecraft mc = Minecraft.getInstance();
 		if (!Strings.isNullOrEmpty(recipe.getExtraText())) {
 			guiGraphics.drawString(mc.font, Component.translatable("jei.actuallyadditions.coffee.special").append( ":"), 2, 4, 4210752, false);
-			guiGraphics.drawString(mc.font, Component.literal(recipe.getExtraText()), 2, 16, 4210752, false);
+			guiGraphics.drawString(mc.font, Component.translatable(recipe.getExtraText()), 2, 16, 4210752, false);
 		}
 
 		if (recipe.getMaxAmplifier() > 0) {
