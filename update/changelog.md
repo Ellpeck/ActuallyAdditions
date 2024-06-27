@@ -1,3 +1,10 @@
+# 1.2.14+mc1.20.4
+* Fixed Drill attributes going haywire.
+* Fixed missing Crushing recipes for copper / some others.
+* Fixed Hopping item interfaces not rendering properly next to blocks.
+* Fixed a broken coffee maker tooltip
+* Fixed broken lava factory tooltip.
+
 # 1.2.13+mc1.20.4
 * Beta
 * Massive update porting the mod to 1.20.4 NeoForge from 1.12.2, list is non-exhaustive, and some features may not be implemented yet.

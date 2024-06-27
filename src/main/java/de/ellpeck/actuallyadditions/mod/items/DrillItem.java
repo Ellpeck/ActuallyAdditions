@@ -62,8 +62,15 @@ public class DrillItem extends ItemEnergy {
     private static final int ENERGY_USE = 100;
     private static final List<ToolAction> ACTIONS = List.of(ToolActions.SHOVEL_DIG, ToolActions.PICKAXE_DIG);
 
+    private final Multimap<Attribute, AttributeModifier> attributes_unpowered = ArrayListMultimap.create();
+    private final Multimap<Attribute, AttributeModifier> attributes_powered = ArrayListMultimap.create();
+
     public DrillItem() {
         super(ActuallyItems.defaultProps().defaultDurability(0).stacksTo(1), 250000, 1000);
+        attributes_powered.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Drill Modifier", 8.0F, AttributeModifier.Operation.ADDITION));
+        attributes_powered.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID,"Tool Modifier", 1.5F, AttributeModifier.Operation.ADDITION));
+        attributes_unpowered.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Drill Modifier", 0.1F, AttributeModifier.Operation.ADDITION));
+        attributes_unpowered.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID,"Tool Modifier", 1.5F, AttributeModifier.Operation.ADDITION));
     }
 
     @Override
@@ -180,16 +187,13 @@ public class DrillItem extends ItemEnergy {
     @Nonnull
     @Override
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(@Nonnull EquipmentSlot slot, @Nonnull ItemStack stack) {
-        Multimap<Attribute, AttributeModifier> map = ArrayListMultimap.create();
-
         if (slot == EquipmentSlot.MAINHAND) {
-            map.put(Attributes.ATTACK_DAMAGE, new AttributeModifier("Drill Modifier", this.getEnergyStored(stack) >= ENERGY_USE
-                    ? 8.0F
-                    : 0.1F, AttributeModifier.Operation.ADDITION));
-            map.put(Attributes.ATTACK_SPEED, new AttributeModifier("Tool Modifier", 1.5F, AttributeModifier.Operation.ADDITION));
+            return this.getEnergyStored(stack) >= ENERGY_USE
+                    ? this.attributes_powered
+                    : this.attributes_unpowered;
         }
-
-        return map;
+        else
+            return super.getDefaultAttributeModifiers(slot);
     }
 
 
