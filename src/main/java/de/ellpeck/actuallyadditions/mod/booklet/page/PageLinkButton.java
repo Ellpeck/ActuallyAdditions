@@ -36,7 +36,7 @@
 //    }
 //
 //    @Override
-//    @OnlyIn(Dist.CLIENT)
+//    
 //    public void init(GuiBookletBase gui, int startX, int startY) {
 //        super.init(gui, startX, startY);
 //
@@ -44,14 +44,14 @@
 //    }
 //
 //    @Override
-//    @OnlyIn(Dist.CLIENT)
+//    
 //    public void drawScreenPre(GuiBookletBase gui, int startX, int startY, int mouseX, int mouseY, float partialTicks) {
 //        super.drawScreenPre(gui, startX, startY, mouseX, mouseY, partialTicks);
 //        PageTextOnly.renderTextToPage(gui, this, startX + 6, startY + 5);
 //    }
 //
 //    @Override
-//    @OnlyIn(Dist.CLIENT)
+//    
 //    public void actionPerformed(GuiBookletBase gui, Button button) {
 //        if (button.id == this.buttonId) {
 //            if (Desktop.isDesktopSupported()) {

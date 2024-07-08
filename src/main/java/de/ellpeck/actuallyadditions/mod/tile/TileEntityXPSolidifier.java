@@ -19,6 +19,7 @@ import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
@@ -115,15 +116,15 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
     }
 
     @Override
-    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
-        super.writeSyncableNBT(compound, type);
+    public void writeSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
+        super.writeSyncableNBT(compound, lookupProvider, type);
         compound.putInt("Amount", this.amount);
         compound.putInt("SinglePointAmount", this.singlePointAmount);
     }
 
     @Override
-    public void readSyncableNBT(CompoundTag compound, NBTType type) {
-        super.readSyncableNBT(compound, type);
+    public void readSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
+        super.readSyncableNBT(compound, lookupProvider, type);
         this.amount = compound.getInt("Amount");
         this.singlePointAmount = compound.getInt("SinglePointAmount");
     }

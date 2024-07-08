@@ -19,7 +19,7 @@
 //        };
 //    }
 //
-//    @OnlyIn(Dist.CLIENT)
+//    
 //    public static Gui getFastBenchGui(PlayerEntity p, World world) {
 //        return new GuiFastBench(p.inventory, world, BlockPos.ORIGIN);
 //    }

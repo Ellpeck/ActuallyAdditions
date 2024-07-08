@@ -13,7 +13,6 @@ import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.neoforged.neoforge.fluids.FluidStack;
 
@@ -23,7 +22,7 @@ public class PressingCategory implements IRecipeCategory<PressingRecipe> {
     private final IDrawableStatic fluidBackground;
 
     public PressingCategory(IGuiHelper guiHelper) {
-        background = guiHelper.drawableBuilder(new ResourceLocation(ActuallyAdditions.MODID, "textures/gui/gui_canola_press.png"), 41, 4, 93, 85).setTextureSize(256,256).build();
+        background = guiHelper.drawableBuilder(ActuallyAdditions.modLoc("textures/gui/gui_canola_press.png"), 41, 4, 93, 85).setTextureSize(256,256).build();
         fluidBackground = guiHelper.drawableBuilder(AssetUtil.GUI_INVENTORY_LOCATION, 0, 171, 18, 85).build();
     }
     @Override

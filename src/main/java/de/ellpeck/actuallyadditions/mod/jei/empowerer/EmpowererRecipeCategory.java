@@ -24,13 +24,13 @@ import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
 public class EmpowererRecipeCategory implements IRecipeCategory<EmpowererRecipe> {
 
-    public static final ResourceLocation ID = new ResourceLocation(ActuallyAdditions.MODID, "empowerer_jei");
+    public static final ResourceLocation ID = ActuallyAdditions.modLoc("empowerer_jei");
 
     private final IDrawableStatic background;
 
@@ -65,7 +65,7 @@ public class EmpowererRecipeCategory implements IRecipeCategory<EmpowererRecipe>
 		if (level == null) {
 			throw new NullPointerException("level must not be null.");
 		}
-		RegistryAccess registryAccess = level.registryAccess();
+		HolderLookup.Provider registries = level.registryAccess();
 
 		builder.addSlot(RecipeIngredientRole.INPUT, 32, 32).addIngredients(recipe.getInput());
 		builder.addSlot(RecipeIngredientRole.INPUT, 2, 32).addIngredients(recipe.getStandOne());
@@ -73,6 +73,6 @@ public class EmpowererRecipeCategory implements IRecipeCategory<EmpowererRecipe>
 		builder.addSlot(RecipeIngredientRole.INPUT, 62, 32).addIngredients(recipe.getStandThree());
 		builder.addSlot(RecipeIngredientRole.INPUT, 32, 62).addIngredients(recipe.getStandFour());
 
-		builder.addSlot(RecipeIngredientRole.OUTPUT, 113, 32).addItemStack(recipe.getResultItem(registryAccess));
+		builder.addSlot(RecipeIngredientRole.OUTPUT, 113, 32).addItemStack(recipe.getResultItem(registries));
 	}
 }

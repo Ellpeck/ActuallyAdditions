@@ -29,8 +29,8 @@ public class CanolaSeed extends ItemBase {
                 BlockState state = entity.level().getBlockState(pos);
                 Block block = state.getBlock();
 
-                if (block instanceof LiquidBlock && state.getFluidState().isSource()) {
-                    Fluid fluid = ((LiquidBlock) block).getFluid();
+                if (block instanceof LiquidBlock liquidBlock && state.getFluidState().isSource()) {
+                    Fluid fluid = liquidBlock.fluid;
                     if (fluid != null && fluid == (empowered
                         ? InitFluids.CRYSTALLIZED_OIL.get()
                         : InitFluids.REFINED_CANOLA_OIL.get())) {

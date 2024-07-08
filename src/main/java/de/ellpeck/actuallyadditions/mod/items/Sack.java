@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
+import de.ellpeck.actuallyadditions.mod.components.ActuallyComponents;
 import de.ellpeck.actuallyadditions.mod.inventory.SackContainer;
 import de.ellpeck.actuallyadditions.mod.inventory.VoidSackContainer;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
@@ -17,7 +18,6 @@ import de.ellpeck.actuallyadditions.mod.sack.SackData;
 import de.ellpeck.actuallyadditions.mod.sack.SackManager;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -116,13 +116,8 @@ public class Sack extends ItemBase {
     public static SackData getData(ItemStack stack) {
         if (!(stack.getItem() instanceof Sack))
             return null;
-        UUID uuid;
-        CompoundTag tag = stack.getOrCreateTag();
-        if (!tag.contains("UUID")) {
-            uuid = UUID.randomUUID();
-            tag.putUUID("UUID", uuid);
-        } else
-            uuid = tag.getUUID("UUID");
+        UUID uuid = stack.getOrDefault(ActuallyComponents.UUID.get(), UUID.randomUUID());
+        stack.set(ActuallyComponents.UUID.get(), uuid);
         return SackManager.get().getOrCreateSack(uuid);
     }
 }

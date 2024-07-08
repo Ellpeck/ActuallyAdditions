@@ -12,7 +12,6 @@ package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.crafting.CoffeeIngredientRecipe;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import net.minecraft.ChatFormatting;
@@ -27,16 +26,13 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
 public class ItemCoffee extends ItemBase { //TODO: Do we want to change the saturation? Currently it's 5.0F which becomes 40 in game. That's a lot of saturation.
-    private static final FoodProperties FOOD = new FoodProperties.Builder().nutrition(8).saturationMod(5.0F).alwaysEat().build();
+    private static final FoodProperties FOOD = new FoodProperties.Builder().nutrition(8).saturationModifier(5.0F).alwaysEdible().build();
 
     public ItemCoffee() {
         super(ActuallyItems.defaultProps().food(FOOD).durability(3));
@@ -79,9 +75,8 @@ public class ItemCoffee extends ItemBase { //TODO: Do we want to change the satu
         return UseAnim.DRINK;
     }
 
-    @OnlyIn(Dist.CLIENT)
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level playerIn, List<Component> tooltip, TooltipFlag advanced) {
+    public void appendHoverText(ItemStack stack, TooltipContext pContext, List<Component> tooltip, TooltipFlag advanced) {
         MobEffectInstance[] effects = ActuallyAdditionsAPI.methodHandler.getEffectsFromStack(stack);
         if (effects != null) {
             for (MobEffectInstance effect : effects) {
@@ -99,10 +94,10 @@ public class ItemCoffee extends ItemBase { //TODO: Do we want to change the satu
         return false;
     }
 
-    @Override
-    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-        return false;
-    }
+//    @Override
+//    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+//        return false;
+//    }
 
     public static class MilkIngredient extends CoffeeIngredient {
 

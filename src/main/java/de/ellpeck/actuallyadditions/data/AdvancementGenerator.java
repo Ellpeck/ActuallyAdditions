@@ -35,7 +35,7 @@ public class AdvancementGenerator extends AdvancementProvider {
 					.display(new DisplayInfo(ActuallyItems.ITEM_BOOKLET.get().getDefaultInstance(),
 							Component.translatable("achievement.actuallyadditions.openBooklet"),
 							Component.translatable("achievement.actuallyadditions.openBooklet.desc"),
-							Optional.of(new ResourceLocation("textures/gui/advancements/backgrounds/stone.png")), AdvancementType.TASK, true, true, false))
+							Optional.of(ResourceLocation.tryParse("textures/gui/advancements/backgrounds/stone.png")), AdvancementType.TASK, true, true, false))
 					.addCriterion("right_click", CriteriaTriggers.IMPOSSIBLE.createCriterion(new ImpossibleTrigger.TriggerInstance()))
 					.save(consumer, "actuallyadditions:root");
 
@@ -46,7 +46,7 @@ public class AdvancementGenerator extends AdvancementProvider {
 					.display(new DisplayInfo(ActuallyBlocks.PHANTOM_ITEMFACE.get().asItem().getDefaultInstance(),
 							Component.translatable("achievement.actuallyadditions.craftPhantomface"),
 							Component.translatable("achievement.actuallyadditions.craftPhantomface.desc"),
-							Optional.of(new ResourceLocation("textures/blocks/stone.png")), AdvancementType.TASK, true, true, false))
+							Optional.of(ResourceLocation.tryParse("textures/blocks/stone.png")), AdvancementType.TASK, true, true, false))
 					.addCriterion("phantom_face", InventoryChangeTrigger.TriggerInstance.hasItems(ActuallyBlocks.PHANTOM_ITEMFACE.get()))
 					.save(consumer, "actuallyadditions:craft_phantom_face");
 

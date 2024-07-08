@@ -14,7 +14,54 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.AACrops;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.Crystals;
-import de.ellpeck.actuallyadditions.mod.tile.*;
+import de.ellpeck.actuallyadditions.mod.tile.CrateBE;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityBatteryBox;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityBioReactor;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityBreaker;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityCanolaPress;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityCoalGenerator;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityCoffeeMachine;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityCrusher;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityCrusherDouble;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityDisplayStand;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityDropper;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityEmpowerer;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityEnergizer;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityEnervator;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityFarmer;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityFeeder;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityFermentingBarrel;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityFireworkBox;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityFluidCollector;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityFluidPlacer;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityHeatCollector;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityItemInterface;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityItemInterfaceHopping;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayEnergy;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayEnergyAdvanced;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayEnergyExtreme;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayFluids;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayItem;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayItemAdvanced;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityLavaFactoryController;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityLeafGenerator;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityLongRangeBreaker;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityOilGenerator;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityPhantomBreaker;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityPhantomEnergyface;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityPhantomItemface;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityPhantomLiquiface;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityPhantomPlacer;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityPhantomRedstoneface;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityPlacer;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityPlayerInterface;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityPoweredFurnace;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityRangedCollector;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityShockSuppressor;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityVerticalDigger;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityXPSolidifier;
 import de.ellpeck.actuallyadditions.registration.AABlockReg;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.Item;
@@ -252,13 +299,13 @@ public final class ActuallyBlocks {
 
 
     //Stairs
-    public static final AABlockReg<StairBlock, AABlockItem, ?> ETHETIC_GREEN_STAIRS = new AABlockReg<>("ethetic_green_stairs", () -> new StairBlock(() -> ETHETIC_GREEN_BLOCK.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(ETHETIC_GREEN_BLOCK.get())), (b) -> new AABlockItem(b, defaultBlockItemProperties));
-    public static final AABlockReg<StairBlock, AABlockItem, ?> ETHETIC_WHITE_STAIRS = new AABlockReg<>("ethetic_white_stairs", () -> new StairBlock(() -> ETHETIC_WHITE_BLOCK.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(ETHETIC_WHITE_BLOCK.get())), (b) -> new AABlockItem(b, defaultBlockItemProperties));
-    public static final AABlockReg<StairBlock, AABlockItem, ?> BLACK_QUARTZ_STAIR = new AABlockReg<>("black_quartz_stair", () -> new StairBlock(() -> BLACK_QUARTZ.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(BLACK_QUARTZ.get())), (b) -> new AABlockItem(b, defaultBlockItemProperties));
-    public static final AABlockReg<StairBlock, AABlockItem, ?> CHISELED_BLACK_QUARTZ_STAIR = new AABlockReg<>("chiseled_black_quartz_stair", () -> new StairBlock(() -> CHISELED_BLACK_QUARTZ.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(CHISELED_BLACK_QUARTZ.get())), (b) -> new AABlockItem(b, defaultBlockItemProperties));
-    public static final AABlockReg<StairBlock, AABlockItem, ?> BLACK_QUARTZ_PILLAR_STAIR = new AABlockReg<>("black_quartz_pillar_stair", () -> new StairBlock(() -> BLACK_QUARTZ_PILLAR.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(BLACK_QUARTZ_PILLAR.get())), (b) -> new AABlockItem(b, defaultBlockItemProperties));
-    public static final AABlockReg<StairBlock, AABlockItem, ?> SMOOTH_BLACK_QUARTZ_STAIR = new AABlockReg<>("smooth_black_quartz_stair", () -> new StairBlock(() -> BLACK_QUARTZ_PILLAR.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(BLACK_QUARTZ_PILLAR.get())), (b) -> new AABlockItem(b, defaultBlockItemProperties));
-    public static final AABlockReg<StairBlock, AABlockItem, ?> BLACK_QUARTZ_BRICK_STAIR = new AABlockReg<>("black_quartz_brick_stair", () -> new StairBlock(() -> BLACK_QUARTZ_PILLAR.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(BLACK_QUARTZ_PILLAR.get())), (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<StairBlock, AABlockItem, ?> ETHETIC_GREEN_STAIRS = new AABlockReg<>("ethetic_green_stairs", () -> new StairBlock(ETHETIC_GREEN_BLOCK.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(ETHETIC_GREEN_BLOCK.get())), (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<StairBlock, AABlockItem, ?> ETHETIC_WHITE_STAIRS = new AABlockReg<>("ethetic_white_stairs", () -> new StairBlock(ETHETIC_WHITE_BLOCK.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(ETHETIC_WHITE_BLOCK.get())), (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<StairBlock, AABlockItem, ?> BLACK_QUARTZ_STAIR = new AABlockReg<>("black_quartz_stair", () -> new StairBlock(BLACK_QUARTZ.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(BLACK_QUARTZ.get())), (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<StairBlock, AABlockItem, ?> CHISELED_BLACK_QUARTZ_STAIR = new AABlockReg<>("chiseled_black_quartz_stair", () -> new StairBlock(CHISELED_BLACK_QUARTZ.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(CHISELED_BLACK_QUARTZ.get())), (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<StairBlock, AABlockItem, ?> BLACK_QUARTZ_PILLAR_STAIR = new AABlockReg<>("black_quartz_pillar_stair", () -> new StairBlock(BLACK_QUARTZ_PILLAR.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(BLACK_QUARTZ_PILLAR.get())), (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<StairBlock, AABlockItem, ?> SMOOTH_BLACK_QUARTZ_STAIR = new AABlockReg<>("smooth_black_quartz_stair", () -> new StairBlock(BLACK_QUARTZ_PILLAR.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(BLACK_QUARTZ_PILLAR.get())), (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<StairBlock, AABlockItem, ?> BLACK_QUARTZ_BRICK_STAIR = new AABlockReg<>("black_quartz_brick_stair", () -> new StairBlock(BLACK_QUARTZ_PILLAR.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(BLACK_QUARTZ_PILLAR.get())), (b) -> new AABlockItem(b, defaultBlockItemProperties));
 
 
 

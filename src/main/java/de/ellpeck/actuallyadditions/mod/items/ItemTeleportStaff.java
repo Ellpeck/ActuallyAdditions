@@ -49,7 +49,7 @@ public class ItemTeleportStaff extends ItemEnergy {
                     player.removeVehicle();
                     world.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, 1.0F);
                     if (!player.isCreative()) {
-                        this.extractEnergyInternal(stack, use, false);
+                        this.extractEnergy(stack, use, false);
                         player.getCooldowns().addCooldown(this, 50);
                     }
                     return InteractionResultHolder.success(stack);

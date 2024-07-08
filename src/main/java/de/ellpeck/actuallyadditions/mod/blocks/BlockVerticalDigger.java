@@ -16,11 +16,9 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityVerticalDigger;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -28,10 +26,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 
@@ -43,8 +37,8 @@ public class BlockVerticalDigger extends DirectionalBlock.Container implements I
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-        return this.openGui(worldIn, player, pos, TileEntityVerticalDigger.class);
+    protected InteractionResult useWithoutItem(BlockState pState, Level world, BlockPos pos, Player player, BlockHitResult pHitResult) {
+        return this.openGui(world, player, pos, TileEntityVerticalDigger.class);
     }
 
     @Nullable
@@ -60,7 +54,7 @@ public class BlockVerticalDigger extends DirectionalBlock.Container implements I
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
+    
     public void displayHud(GuiGraphics guiGraphics, Minecraft minecraft, Player player, ItemStack stack, HitResult rayCast, Window resolution) {
         if (!(rayCast instanceof BlockHitResult)) {
             return;

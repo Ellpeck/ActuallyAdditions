@@ -10,19 +10,18 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks.base;
 
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityInventoryBase;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -56,6 +55,18 @@ public abstract class BlockContainerBase extends Block implements EntityBlock {
         }
 
         return InteractionResult.SUCCESS;
+    }
+
+    public ItemInteractionResult openGui2(Level world, Player player, BlockPos pos, Class<? extends MenuProvider> expectedInstance) {
+        if (!world.isClientSide) {
+            BlockEntity tile = world.getBlockEntity(pos);
+            if (expectedInstance.isInstance(tile)) {
+                player.openMenu((MenuProvider) tile, pos);
+            }
+            return ItemInteractionResult.SUCCESS;
+        }
+
+        return ItemInteractionResult.SUCCESS;
     }
 
     private void dropInventory(Level world, BlockPos position) {
@@ -172,13 +183,13 @@ public abstract class BlockContainerBase extends Block implements EntityBlock {
 
     @Override
     public void setPlacedBy(Level world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
-        if (stack.hasTag()) {
-            BlockEntity tile = world.getBlockEntity(pos);
-            if (tile instanceof TileEntityBase base) {
-                CompoundTag compound = stack.getOrCreateTag().getCompound("Data");
-                base.readSyncableNBT(compound, TileEntityBase.NBTType.SAVE_BLOCK);
-            }
-        }
+//        if (stack.hasTag()) {
+//            BlockEntity tile = world.getBlockEntity(pos);
+//            if (tile instanceof TileEntityBase base) {
+//                CompoundTag compound = stack.get(DataComponents.BLOCK_ENTITY_DATA).getCompound("Data");
+//                base.readSyncableNBT(compound, world.registryAccess(), TileEntityBase.NBTType.SAVE_BLOCK); TODO: Check if this is still required
+//            }
+//        }
     }
 
     @Override

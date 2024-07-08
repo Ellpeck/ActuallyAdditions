@@ -1,23 +1,24 @@
 package de.ellpeck.actuallyadditions.mod.crafting;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.random.Weight;
 import net.minecraft.util.random.WeightedEntry;
-import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeInput;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
-public class MiningLensRecipe implements Recipe<Container>, WeightedEntry {
+public class MiningLensRecipe implements Recipe<RecipeInput>, WeightedEntry {
     public static final String NAME = "mining_lens";
 
     private final int weight;
@@ -45,7 +46,7 @@ public class MiningLensRecipe implements Recipe<Container>, WeightedEntry {
     }
 
     @Override
-    public boolean matches(Container pInv, Level pLevel) {
+    public boolean matches(RecipeInput pInv, Level pLevel) {
         return false;
     }
 
@@ -56,7 +57,7 @@ public class MiningLensRecipe implements Recipe<Container>, WeightedEntry {
 
     @Nonnull
     @Override
-    public ItemStack assemble(Container pInv, RegistryAccess pRegistryAccess) {
+    public ItemStack assemble(RecipeInput pInv, HolderLookup.Provider provider) {
         return ItemStack.EMPTY;
     }
 
@@ -66,7 +67,7 @@ public class MiningLensRecipe implements Recipe<Container>, WeightedEntry {
     }
 
     @Override
-    public ItemStack getResultItem(RegistryAccess pRegistryAccess) {
+    public ItemStack getResultItem(HolderLookup.Provider provider) {
         return output;
     }
 
@@ -81,14 +82,27 @@ public class MiningLensRecipe implements Recipe<Container>, WeightedEntry {
     }
 
     public static class Serializer implements RecipeSerializer<MiningLensRecipe> {
-        private static final Codec<MiningLensRecipe> CODEC = RecordCodecBuilder.create(
+        private static final MapCodec<MiningLensRecipe> CODEC = RecordCodecBuilder.mapCodec(
                 instance -> instance.group(
                                 Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(recipe -> recipe.input),
                                 Codec.INT.fieldOf("weight").forGetter(recipe -> recipe.weight),
-                                ItemStack.ITEM_WITH_COUNT_CODEC.fieldOf("result").forGetter(recipe -> recipe.output)
+                                ItemStack.STRICT_CODEC.fieldOf("result").forGetter(recipe -> recipe.output)
                         )
                         .apply(instance, MiningLensRecipe::new)
         );
+        public static final StreamCodec<RegistryFriendlyByteBuf, MiningLensRecipe> STREAM_CODEC = StreamCodec.of(
+                MiningLensRecipe.Serializer::toNetwork, MiningLensRecipe.Serializer::fromNetwork
+        );
+
+        @Override
+        public MapCodec<MiningLensRecipe> codec() {
+            return CODEC;
+        }
+
+        @Override
+        public StreamCodec<RegistryFriendlyByteBuf, MiningLensRecipe> streamCodec() {
+            return STREAM_CODEC;
+        }
 
 //        @Override
 //        public MiningLensRecipe fromJson(@Nonnull ResourceLocation pRecipeId, @Nonnull JsonObject pJson) {
@@ -100,26 +114,17 @@ public class MiningLensRecipe implements Recipe<Container>, WeightedEntry {
 //            return new MiningLensRecipe(pRecipeId, ingredient, weight, result);
 //        }
 
-
-        @Override
-        public Codec<MiningLensRecipe> codec() {
-            return CODEC;
-        }
-
-        @Nullable
-        @Override
-        public MiningLensRecipe fromNetwork(@Nonnull FriendlyByteBuf pBuffer) {
-            Ingredient ingredient = Ingredient.fromNetwork(pBuffer);
+        public static MiningLensRecipe fromNetwork(@Nonnull RegistryFriendlyByteBuf pBuffer) {
+            Ingredient ingredient = Ingredient.CONTENTS_STREAM_CODEC.decode(pBuffer);
             int weight = pBuffer.readInt();
-            ItemStack result = pBuffer.readItem();
+            ItemStack result = ItemStack.STREAM_CODEC.decode(pBuffer);
             return new MiningLensRecipe(ingredient, weight, result);
         }
 
-        @Override
-        public void toNetwork(@Nonnull FriendlyByteBuf pBuffer, MiningLensRecipe pRecipe) {
-            pRecipe.input.toNetwork(pBuffer);
+        public static void toNetwork(@Nonnull RegistryFriendlyByteBuf pBuffer, MiningLensRecipe pRecipe) {
+            Ingredient.CONTENTS_STREAM_CODEC.encode(pBuffer, pRecipe.input);
             pBuffer.writeInt(pRecipe.weight);
-            pBuffer.writeItem(pRecipe.output);
+            ItemStack.STREAM_CODEC.encode(pBuffer, pRecipe.output);
         }
     }
 }

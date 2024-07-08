@@ -43,8 +43,8 @@ public final class ConfigValues {
 //
 //        String[] conf = ConfigStringListValues.CONFIGURE_ITEMS.getValue();
 //        if (conf.length == 2) {
-//            itemRedstoneTorchConfigurator = Item.REGISTRY.getObject(new ResourceLocation(conf[0]));
-//            itemCompassConfigurator = Item.REGISTRY.getObject(new ResourceLocation(conf[1]));
+//            itemRedstoneTorchConfigurator = Item.REGISTRY.getObject(ResourceLocation.tryParse(conf[0]));
+//            itemCompassConfigurator = Item.REGISTRY.getObject(ResourceLocation.tryParse(conf[1]));
 //        }
 //
 //        if (itemRedstoneTorchConfigurator == null || itemCompassConfigurator == null) {

@@ -46,7 +46,7 @@
 //
 //public class VillageComponentEngineerHouse extends StructureVillagePieces.House1 {
 //
-//    private static final ResourceLocation STRUCTURE_RES_LOC = new ResourceLocation(ActuallyAdditions.MODID, "andrew_period_house");
+//    private static final ResourceLocation STRUCTURE_RES_LOC = ActuallyAdditions.modLoc("andrew_period_house");
 //
 //    private static final int X_SIZE = 13;
 //    private static final int Y_SIZE = 11;

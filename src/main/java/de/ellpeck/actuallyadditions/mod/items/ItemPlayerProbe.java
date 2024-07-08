@@ -10,11 +10,10 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.components.ActuallyComponents;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityPlayerInterface;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -26,10 +25,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
-import javax.annotation.Nullable;
 import java.util.List;
 import java.util.UUID;
 
@@ -43,19 +39,18 @@ public class ItemPlayerProbe extends ItemBase {
     @Override
     public void inventoryTick(ItemStack stack, Level world, Entity entity, int itemSlot, boolean isSelected) {
         if (!world.isClientSide) {
-            CompoundTag compound = stack.getOrCreateTag();
-            if (compound.contains("UUID")) {
-                UUID id = compound.getUUID("UUID");
-                Player player = world.getPlayerByUUID(id);
+            UUID uuid = stack.get(ActuallyComponents.UUID);
+            if (uuid != null) {
+                Player player = world.getPlayerByUUID(uuid);
                 if (player != null) {
                     if (player.isShiftKeyDown()) {
-                        ItemPhantomConnector.clearStorage(stack, "UUID", "Name");
+                        ItemPhantomConnector.clearStorage(stack, ActuallyComponents.UUID.get(), ActuallyComponents.NAME.get());
                         ((Player) entity).displayClientMessage(Component.translatable("tooltip.actuallyadditions.playerProbe.disconnect.1"), false);
                         player.displayClientMessage(Component.translatable("tooltip.actuallyadditions.playerProbe.notice"), false);
                         //TheAchievements.GET_UNPROBED.get(player);
                     }
                 } else {
-                    ItemPhantomConnector.clearStorage(stack, "UUID", "Name");
+                    ItemPhantomConnector.clearStorage(stack, ActuallyComponents.UUID.get(), ActuallyComponents.NAME.get());
                     ((Player) entity).displayClientMessage(Component.translatable("tooltip.actuallyadditions.playerProbe.disconnect.2"), false);
                 }
             }
@@ -72,15 +67,16 @@ public class ItemPlayerProbe extends ItemBase {
         ItemStack stack = player.getItemInHand(context.getHand());
         BlockEntity tile = context.getLevel().getBlockEntity(context.getClickedPos());
         if (tile instanceof TileEntityPlayerInterface face) {
-            CompoundTag compound = stack.getOrCreateTag();
-            if (compound.contains("UUID")) {
+            UUID uuid = stack.get(ActuallyComponents.UUID);
+            String name = stack.get(ActuallyComponents.NAME);
+            if (uuid != null) {
                 if (!context.getLevel().isClientSide) {
-                    face.connectedPlayer = compound.getUUID("UUID");
-                    face.playerName = compound.getString("Name");
+                    face.connectedPlayer = uuid;
+                    face.playerName = name;
                     face.setChanged();
                     face.sendUpdate();
 
-                    ItemPhantomConnector.clearStorage(stack, "UUID", "Name");
+                    ItemPhantomConnector.clearStorage(stack, ActuallyComponents.UUID.get(), ActuallyComponents.NAME.get());
                 }
                 return InteractionResult.SUCCESS;
             }
@@ -96,9 +92,8 @@ public class ItemPlayerProbe extends ItemBase {
                 if (entity instanceof Player playerHit) {
 
 	                if (!playerHit.isShiftKeyDown()) {
-                        CompoundTag compound = stack.getOrCreateTag();
-                        compound.putString("Name", playerHit.getName().getString());
-                        compound.putUUID("UUID", playerHit.getUUID());
+                        stack.set(ActuallyComponents.UUID, playerHit.getUUID());
+                        stack.set(ActuallyComponents.NAME, playerHit.getName().getString());
                         return InteractionResult.SUCCESS;
                     }
                 }
@@ -107,11 +102,11 @@ public class ItemPlayerProbe extends ItemBase {
         return InteractionResult.FAIL;
     }
 
-    @OnlyIn(Dist.CLIENT)
+    
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level playerIn, List<Component> tooltip, TooltipFlag advanced) {
-        if (stack.getOrCreateTag().contains("Name")) {
-            String name = stack.getOrCreateTag().getString("Name");
+    public void appendHoverText(ItemStack stack, TooltipContext pContext, List<Component> tooltip, TooltipFlag advanced) {
+        String name = stack.get(ActuallyComponents.NAME);
+        if (name != null) {
             tooltip.add(Component.translatable("tooltip.actuallyadditions.playerProbe.probing").append(": " + name));
         }
     }

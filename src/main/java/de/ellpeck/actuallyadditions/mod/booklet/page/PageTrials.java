@@ -26,7 +26,7 @@
 //public class PageTrials extends BookletPage {
 //
 //    private final int buttonId;
-//    @OnlyIn(Dist.CLIENT)
+//    
 //    private Button button;
 //
 //    public PageTrials(int localizationKey, boolean button, boolean text) {
@@ -45,7 +45,7 @@
 //    }
 //
 //    @Override
-//    @OnlyIn(Dist.CLIENT)
+//    
 //    public void init(GuiBookletBase gui, int startX, int startY) {
 //        super.init(gui, startX, startY);
 //
@@ -57,20 +57,20 @@
 //    }
 //
 //    @Override
-//    @OnlyIn(Dist.CLIENT)
+//    
 //    public void drawScreenPre(GuiBookletBase gui, int startX, int startY, int mouseX, int mouseY, float partialTicks) {
 //        super.drawScreenPre(gui, startX, startY, mouseX, mouseY, partialTicks);
 //        PageTextOnly.renderTextToPage(gui, this, startX + 6, startY + 5);
 //    }
 //
 //    @Override
-//    @OnlyIn(Dist.CLIENT)
+//    
 //    protected String getLocalizationKey() {
 //        return "booklet.actuallyadditions.trials." + this.chapter.getIdentifier() + ".text." + this.localizationKey;
 //    }
 //
 //    @Override
-//    @OnlyIn(Dist.CLIENT)
+//    
 //    public void actionPerformed(GuiBookletBase gui, Button button) {
 //        if (this.buttonId >= 0 && button.id == this.buttonId) {
 //            PlayerEntity player = Minecraft.getInstance().player;
@@ -91,7 +91,7 @@
 //        }
 //    }
 //
-//    @OnlyIn(Dist.CLIENT)
+//    
 //    private void updateButton() {
 //        if (this.buttonId >= 0 && this.button != null) {
 //            PlayerEntity player = Minecraft.getInstance().player;

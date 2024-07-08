@@ -20,13 +20,11 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 public final class PacketHandlerHelper {
 
-    @OnlyIn(Dist.CLIENT)
+    
     public static void sendButtonPacket(BlockEntity tile, int buttonId) {
         CompoundTag compound = new CompoundTag();
         BlockPos pos = tile.getBlockPos();
@@ -36,7 +34,7 @@ public final class PacketHandlerHelper {
         compound.putString("WorldID", tile.getLevel().dimension().location().toString());
         compound.putInt("PlayerID", Minecraft.getInstance().player.getId());
         compound.putInt("ButtonID", buttonId);
-        PacketDistributor.SERVER.noArg().send(new PacketClientToServer(compound, PacketHandler.GUI_BUTTON_TO_TILE_HANDLER));
+        PacketDistributor.sendToServer(new PacketClientToServer(compound, PacketHandler.GUI_BUTTON_TO_TILE_HANDLER));
     }
 
     public static void syncPlayerData(Player player, boolean log) {
@@ -52,7 +50,7 @@ public final class PacketHandlerHelper {
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
+    
     public static void sendPlayerDataToServer(boolean log, int type) {
         CompoundTag compound = new CompoundTag();
         compound.putBoolean("Log", log);
@@ -84,11 +82,11 @@ public final class PacketHandlerHelper {
                 }
             }
 
-            PacketDistributor.SERVER.noArg().send(new PacketClientToServer(compound, PacketHandler.PLAYER_DATA_TO_SERVER));
+            PacketDistributor.sendToServer(new PacketClientToServer(compound, PacketHandler.PLAYER_DATA_TO_SERVER));
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
+    
     public static void sendNumberPacket(BlockEntity tile, double number, int id) {
         CompoundTag compound = new CompoundTag();
         compound.putInt("X", tile.getBlockPos().getX());
@@ -98,6 +96,6 @@ public final class PacketHandlerHelper {
         compound.putInt("PlayerID", Minecraft.getInstance().player.getId());
         compound.putInt("NumberID", id);
         compound.putDouble("Number", number);
-        PacketDistributor.SERVER.noArg().send(new PacketClientToServer(compound, PacketHandler.GUI_NUMBER_TO_TILE_HANDLER));
+        PacketDistributor.sendToServer(new PacketClientToServer(compound, PacketHandler.GUI_NUMBER_TO_TILE_HANDLER));
     }
 }

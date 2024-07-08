@@ -26,7 +26,7 @@
 //
 //import java.io.IOException;
 //
-//@OnlyIn(Dist.CLIENT)
+//
 //public class GuiGiantChest extends GuiWtfMojang {
 //
 //    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_giant_chest");

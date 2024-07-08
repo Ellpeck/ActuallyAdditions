@@ -20,6 +20,7 @@ import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -29,7 +30,6 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Tiers;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -38,10 +38,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.Tags;
-import net.neoforged.neoforge.common.TierSortingRegistry;
 import net.neoforged.neoforge.common.util.FakePlayerFactory;
 import net.neoforged.neoforge.energy.IEnergyStorage;
-import net.neoforged.neoforge.fluids.IFluidBlock;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -65,8 +63,8 @@ public class TileEntityVerticalDigger extends TileEntityInventoryBase implements
     }
 
     @Override
-    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
-        super.writeSyncableNBT(compound, type);
+    public void writeSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
+        super.writeSyncableNBT(compound, lookupProvider, type);
         this.storage.writeToNBT(compound);
         if (type != NBTType.SAVE_BLOCK) {
             compound.putInt("CheckX", this.checkX);
@@ -79,8 +77,8 @@ public class TileEntityVerticalDigger extends TileEntityInventoryBase implements
     }
 
     @Override
-    public void readSyncableNBT(CompoundTag compound, NBTType type) {
-        super.readSyncableNBT(compound, type);
+    public void readSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
+        super.readSyncableNBT(compound, lookupProvider, type);
         this.storage.readFromNBT(compound);
         if (type != NBTType.SAVE_BLOCK) {
             this.checkX = compound.getInt("CheckX");
@@ -146,7 +144,7 @@ public class TileEntityVerticalDigger extends TileEntityInventoryBase implements
             ItemStack stack = block.getCloneItemStack(state, new BlockHitResult(new Vec3(0, 0, 0), Direction.DOWN, pos, false), this.level, pos, FakePlayerFactory.getMinecraft((ServerLevel) this.level));
             if (!state.isAir()) {
                 //block.getHarvestLevel(state) <= DrillItem.HARVEST_LEVEL
-                if (TierSortingRegistry.isCorrectTierForDrops(Tiers.NETHERITE, state) && state.getDestroySpeed(this.level, pos) >= 0F && !(block instanceof IFluidBlock) && this.isMinable(state, stack)) {
+                if (stack.isCorrectToolForDrops(state) && state.getDestroySpeed(this.level, pos) >= 0F && this.isMinable(state, stack)) {
                     List<ItemStack> drops = Block.getDrops(state, (ServerLevel) this.level, pos, this.level.getBlockEntity(pos));
                     float chance = WorldUtil.fireFakeHarvestEventsForDropChance(this, drops, this.level, pos);
 
@@ -158,7 +156,7 @@ public class TileEntityVerticalDigger extends TileEntityInventoryBase implements
                             StackUtil.addAll(this.inv, drops, false);
                             this.setChanged();
 
-                            this.storage.extractEnergyInternal(actualUse, false);
+                            this.storage.extractEnergy(actualUse, false);
                             this.shootParticles(pos.getX(), pos.getY(), pos.getZ());
                         } else {
                             return false;

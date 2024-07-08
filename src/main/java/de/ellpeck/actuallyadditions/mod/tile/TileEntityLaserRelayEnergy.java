@@ -13,13 +13,13 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import de.ellpeck.actuallyadditions.api.laser.IConnectionPair;
 import de.ellpeck.actuallyadditions.api.laser.LaserType;
 import de.ellpeck.actuallyadditions.api.laser.Network;
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
@@ -28,8 +28,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 
@@ -258,13 +256,13 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay {
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
+    
     public Component getExtraDisplayString() {
         return Component.translatable("info.actuallyadditions.laserRelay.energy.extra").append(": ").append(Component.translatable(this.mode.name).withStyle(ChatFormatting.DARK_RED));
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
+    
     public Component getCompassDisplayString() {
         return Component.translatable("info.actuallyadditions.laserRelay.energy.display").withStyle(ChatFormatting.GREEN);
     }
@@ -275,8 +273,8 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay {
     }
 
     @Override
-    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
-        super.writeSyncableNBT(compound, type);
+    public void writeSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
+        super.writeSyncableNBT(compound, lookupProvider, type);
 
         if (type != NBTType.SAVE_BLOCK) {
             compound.putString("Mode", this.mode.toString());
@@ -284,8 +282,8 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay {
     }
 
     @Override
-    public void readSyncableNBT(CompoundTag compound, NBTType type) {
-        super.readSyncableNBT(compound, type);
+    public void readSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
+        super.readSyncableNBT(compound, lookupProvider, type);
 
         if (type != NBTType.SAVE_BLOCK) {
             String modeStrg = compound.getString("Mode");

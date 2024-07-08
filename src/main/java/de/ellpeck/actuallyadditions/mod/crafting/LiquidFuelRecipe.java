@@ -1,12 +1,14 @@
 package de.ellpeck.actuallyadditions.mod.crafting;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.Container;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeInput;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
@@ -14,7 +16,7 @@ import net.neoforged.neoforge.fluids.FluidStack;
 
 import javax.annotation.Nonnull;
 
-public class LiquidFuelRecipe implements Recipe<Container> {
+public class LiquidFuelRecipe implements Recipe<RecipeInput> {
     public static String NAME = "liquid_fuel";
     private FluidStack fuel;
     private int burnTime;
@@ -41,12 +43,12 @@ public class LiquidFuelRecipe implements Recipe<Container> {
     }
 
     @Override
-    public boolean matches(@Nonnull Container pInv,@Nonnull Level pLevel) {
+    public boolean matches(@Nonnull RecipeInput pInv,@Nonnull Level pLevel) {
         return false;
     }
 
     public boolean matches(FluidStack stack) {
-        return this.fuel.isFluidEqual(stack);
+        return FluidStack.isSameFluidSameComponents(this.fuel, stack);
     }
 
     @Override
@@ -64,7 +66,7 @@ public class LiquidFuelRecipe implements Recipe<Container> {
 
     @Nonnull
     @Override
-    public ItemStack assemble(Container pInv, RegistryAccess pRegistryAccess) {
+    public ItemStack assemble(RecipeInput pInv, HolderLookup.Provider provider) {
         return ItemStack.EMPTY;
     }
 
@@ -75,7 +77,7 @@ public class LiquidFuelRecipe implements Recipe<Container> {
 
     @Nonnull
     @Override
-    public ItemStack getResultItem(RegistryAccess pRegistryAccess) {
+    public ItemStack getResultItem(HolderLookup.Provider provider) {
         return ItemStack.EMPTY;
     }
 
@@ -92,7 +94,7 @@ public class LiquidFuelRecipe implements Recipe<Container> {
     }
 
     public static class Serializer implements RecipeSerializer<LiquidFuelRecipe> {
-        private static final Codec<LiquidFuelRecipe> CODEC = RecordCodecBuilder.create(
+        private static final MapCodec<LiquidFuelRecipe> CODEC = RecordCodecBuilder.mapCodec(
                 instance -> instance.group(
                                 FluidStack.CODEC.fieldOf("fuel").forGetter(recipe -> recipe.fuel),
                                 Codec.INT.fieldOf("total_energy").forGetter(recipe -> recipe.totalEnergy),
@@ -100,13 +102,26 @@ public class LiquidFuelRecipe implements Recipe<Container> {
                         )
                         .apply(instance, LiquidFuelRecipe::new)
         );
+        public static final StreamCodec<RegistryFriendlyByteBuf, LiquidFuelRecipe> STREAM_CODEC = StreamCodec.of(
+                LiquidFuelRecipe.Serializer::toNetwork, LiquidFuelRecipe.Serializer::fromNetwork
+        );
+
+        @Override
+        public MapCodec<LiquidFuelRecipe> codec() {
+            return CODEC;
+        }
+
+        @Override
+        public StreamCodec<RegistryFriendlyByteBuf, LiquidFuelRecipe> streamCodec() {
+            return STREAM_CODEC;
+        }
 
 //        @Nonnull
 //        @Override
 //        public LiquidFuelRecipe fromJson(@Nonnull ResourceLocation pId, JsonObject pJson) {
 //            JsonObject ingredient = pJson.getAsJsonObject("ingredient");
 //
-//            ResourceLocation fluidRes = new ResourceLocation(GsonHelper.getAsString(ingredient, "fluid"));
+//            ResourceLocation fluidRes = ResourceLocation.tryParse(GsonHelper.getAsString(ingredient, "fluid"));
 //            Fluid fluid = BuiltInRegistries.FLUIDS.getValue(fluidRes);
 //            if (fluid == null)
 //                throw new JsonParseException("Unknown fluid '" + fluidRes + "'");
@@ -119,22 +134,15 @@ public class LiquidFuelRecipe implements Recipe<Container> {
 //            return new LiquidFuelRecipe(pId, input, totalEnergy, burnTime);
 //        }
 
-        @Override
-        public Codec<LiquidFuelRecipe> codec() {
-            return CODEC;
-        }
-
-        @Override
-        public LiquidFuelRecipe fromNetwork(@Nonnull FriendlyByteBuf pBuffer) {
-            FluidStack input = FluidStack.readFromPacket(pBuffer);
+        public static LiquidFuelRecipe fromNetwork(@Nonnull RegistryFriendlyByteBuf pBuffer) {
+            FluidStack input = FluidStack.STREAM_CODEC.decode(pBuffer);
             int totalEnergy = pBuffer.readInt();
             int burnTime = pBuffer.readInt();
             return new LiquidFuelRecipe(input, totalEnergy, burnTime);
         }
 
-        @Override
-        public void toNetwork(@Nonnull FriendlyByteBuf pBuffer, LiquidFuelRecipe pRecipe) {
-            pRecipe.fuel.writeToPacket(pBuffer);
+        public static void toNetwork(@Nonnull RegistryFriendlyByteBuf pBuffer, LiquidFuelRecipe pRecipe) {
+            FluidStack.STREAM_CODEC.encode(pBuffer, pRecipe.fuel);
             pBuffer.writeInt(pRecipe.totalEnergy);
             pBuffer.writeInt(pRecipe.burnTime);
         }

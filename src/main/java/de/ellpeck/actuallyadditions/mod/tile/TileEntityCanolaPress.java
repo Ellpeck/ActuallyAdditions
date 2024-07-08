@@ -13,7 +13,6 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.crafting.PressingRecipe;
-import de.ellpeck.actuallyadditions.mod.crafting.SingleItem;
 import de.ellpeck.actuallyadditions.mod.fluids.OutputOnlyFluidTank;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerCanolaPress;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
@@ -21,6 +20,7 @@ import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
@@ -29,11 +29,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
@@ -58,39 +57,39 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements Me
         super(ActuallyBlocks.CANOLA_PRESS.getTileEntityType(), pos, state, 1);
     }
 
-    @OnlyIn(Dist.CLIENT)
+    
     public int getTankScaled(int i) {
         return this.tank.getFluidAmount() * i / this.tank.getCapacity();
     }
 
-    @OnlyIn(Dist.CLIENT)
+    
     public int getProcessScaled(int i) {
         return this.currentProcessTime * i / TIME;
     }
 
-    @OnlyIn(Dist.CLIENT)
+    
     public int getEnergyScaled(int i) {
         return this.storage.getEnergyStored() * i / this.storage.getMaxEnergyStored();
     }
 
     @Override
-    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
+    public void writeSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
         if (type != NBTType.SAVE_BLOCK) {
             compound.putInt("ProcessTime", this.currentProcessTime);
         }
         this.storage.writeToNBT(compound);
-        this.tank.writeToNBT(compound);
-        super.writeSyncableNBT(compound, type);
+        this.tank.writeToNBT(lookupProvider, compound);
+        super.writeSyncableNBT(compound, lookupProvider, type);
     }
 
     @Override
-    public void readSyncableNBT(CompoundTag compound, NBTType type) {
+    public void readSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
         if (type != NBTType.SAVE_BLOCK) {
             this.currentProcessTime = compound.getInt("ProcessTime");
         }
         this.storage.readFromNBT(compound);
-        this.tank.readFromNBT(compound);
-        super.readSyncableNBT(compound, type);
+        this.tank.readFromNBT(lookupProvider, compound);
+        super.readSyncableNBT(compound, lookupProvider, type);
     }
 
     public static <T extends BlockEntity> void clientTick(Level level, BlockPos pos, BlockState state, T t) {
@@ -106,10 +105,10 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements Me
             Optional<RecipeHolder<PressingRecipe>> recipe = getRecipeForInput(tile.inv.getStackInSlot(0));
             recipe.ifPresent(h -> {
                 PressingRecipe r = h.value();
-                if ((r.getOutput().isFluidEqual(tile.tank.getFluid()) || tile.tank.isEmpty()) && r.getOutput().getAmount() <= tile.tank.getCapacity() - tile.tank.getFluidAmount()) {
+                if ((FluidStack.isSameFluid(r.getOutput(), tile.tank.getFluid()) || tile.tank.isEmpty()) && r.getOutput().getAmount() <= tile.tank.getCapacity() - tile.tank.getFluidAmount()) {
                     if (tile.storage.getEnergyStored() >= ENERGY_USE) {
                         tile.currentProcessTime++;
-                        tile.storage.extractEnergyInternal(ENERGY_USE, false);
+                        tile.storage.extractEnergy(ENERGY_USE, false);
                         if (tile.currentProcessTime >= TIME) {
                             tile.currentProcessTime = 0;
 
@@ -137,7 +136,7 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements Me
     }
 
     public static Optional<RecipeHolder<PressingRecipe>> getRecipeForInput(ItemStack stack) {
-        return ActuallyAdditionsAPI.PRESSING_RECIPES.stream().filter(recipe -> recipe.value().matches(new SingleItem(stack), null)).findFirst();
+        return ActuallyAdditionsAPI.PRESSING_RECIPES.stream().filter(recipe -> recipe.value().matches(new SingleRecipeInput(stack), null)).findFirst();
     }
 
     @Override

@@ -31,7 +31,7 @@
 //
 //import java.io.IOException;
 //
-//@OnlyIn(Dist.CLIENT)
+//
 //public class GuiSmileyCloud extends GuiWtfMojang {
 //
 //    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_smiley_cloud");
@@ -122,6 +122,6 @@
 //        compound.putInt("PlayerID", Minecraft.getInstance().player.getEntityId());
 //        compound.putInt("TextID", textID);
 //        compound.setString("Text", text);
-//        PacketDistributor.SERVER.noArg().send(new PacketClientToServer(compound, PacketHandler.GUI_STRING_TO_TILE_HANDLER));
+//        PacketDistributor.sendToServer(new PacketClientToServer(compound, PacketHandler.GUI_STRING_TO_TILE_HANDLER));
 //    }
 //}

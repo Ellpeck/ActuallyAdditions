@@ -17,6 +17,8 @@ import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
@@ -31,7 +33,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.common.IPlantable;
+import net.neoforged.neoforge.common.SpecialPlantable;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 
 import javax.annotation.Nullable;
@@ -56,7 +58,7 @@ public class TileEntityBioReactor extends TileEntityInventoryBase implements Men
     public static boolean isValidItem(ItemStack stack) {
         if (!stack.isEmpty()) {
             Item item = stack.getItem();
-            if (item.isEdible()) {
+            if (stack.has(DataComponents.FOOD)) {
                 return true;
             } else if (item instanceof BlockItem) {
                 return isValid(Block.byItem(item));
@@ -66,7 +68,7 @@ public class TileEntityBioReactor extends TileEntityInventoryBase implements Men
     }
 
     private static boolean isValid(Object o) {
-        return o instanceof IPlantable || o instanceof BonemealableBlock;
+        return o instanceof SpecialPlantable || o instanceof BonemealableBlock;
     }
 
     public static <T extends BlockEntity> void clientTick(Level level, BlockPos pos, BlockState state, T t) {
@@ -114,7 +116,7 @@ public class TileEntityBioReactor extends TileEntityInventoryBase implements Men
                 }
             } else {
                 tile.burnTime--;
-                tile.storage.receiveEnergyInternal(tile.producePerTick, false);
+                tile.storage.receiveEnergy(tile.producePerTick, false);
             }
 
             if ((tile.lastBurnTime != tile.burnTime || tile.lastProducePerTick != tile.producePerTick) && tile.sendUpdateWithInterval()) {
@@ -125,8 +127,8 @@ public class TileEntityBioReactor extends TileEntityInventoryBase implements Men
     }
 
     @Override
-    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
-        super.writeSyncableNBT(compound, type);
+    public void writeSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
+        super.writeSyncableNBT(compound, lookupProvider, type);
 
         this.storage.writeToNBT(compound);
         compound.putInt("BurnTime", this.burnTime);
@@ -135,8 +137,8 @@ public class TileEntityBioReactor extends TileEntityInventoryBase implements Men
     }
 
     @Override
-    public void readSyncableNBT(CompoundTag compound, NBTType type) {
-        super.readSyncableNBT(compound, type);
+    public void readSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
+        super.readSyncableNBT(compound, lookupProvider, type);
 
         this.storage.readFromNBT(compound);
         this.burnTime = compound.getInt("BurnTime");

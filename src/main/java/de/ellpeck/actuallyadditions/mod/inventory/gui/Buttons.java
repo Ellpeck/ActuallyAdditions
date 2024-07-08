@@ -8,13 +8,11 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 import javax.annotation.Nonnull;
 
 public class Buttons {
-    @OnlyIn(Dist.CLIENT)
+    
     @Deprecated(forRemoval = true) //Vanilla's Button class can render small just fine and even allows text scrolling
     public static class SmallerButton extends Button {
 
@@ -60,7 +58,7 @@ public class Buttons {
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
+    
     public static class TinyButton extends Button {
 
         public final ResourceLocation resLoc = AssetUtil.getGuiLocation("gui_inputter");

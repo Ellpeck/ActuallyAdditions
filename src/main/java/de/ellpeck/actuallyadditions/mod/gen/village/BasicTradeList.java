@@ -17,6 +17,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.trading.ItemCost;
 import net.minecraft.world.item.trading.MerchantOffer;
 import org.jetbrains.annotations.Nullable;
 
@@ -67,7 +68,7 @@ public class BasicTradeList implements VillagerTrades.ItemListing {
 		in.setCount(this.inputAmount.getPrice(random));
 		ItemStack out = this.stack.copy();
 		out.setCount(this.outputAmount.getPrice(random));
-		return new MerchantOffer(in, out, this.maxUses, this.villagerXp, this.priceMultiplier);
+		return new MerchantOffer(new ItemCost(in.getItem(), in.getCount()), out, this.maxUses, this.villagerXp, this.priceMultiplier);
 	}
 
 	public static class PriceRange extends Tuple<Integer, Integer> {

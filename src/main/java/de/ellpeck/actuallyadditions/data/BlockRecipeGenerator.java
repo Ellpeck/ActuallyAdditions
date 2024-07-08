@@ -4,6 +4,7 @@ import de.ellpeck.actuallyadditions.api.ActuallyTags;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.util.NoAdvRecipeOutput;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
@@ -17,10 +18,11 @@ import net.neoforged.neoforge.common.Tags;
 
 import javax.annotation.Nonnull;
 import java.util.Arrays;
+import java.util.concurrent.CompletableFuture;
 
 public class BlockRecipeGenerator extends RecipeProvider {
-    public BlockRecipeGenerator(PackOutput packOutput) {
-        super(packOutput);
+    public BlockRecipeGenerator(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+        super(packOutput, lookupProvider);
     }
 
     @Override
@@ -57,7 +59,7 @@ public class BlockRecipeGenerator extends RecipeProvider {
         //Fireworks Box
         Recipe.shaped(ActuallyBlocks.FIREWORK_BOX.getItem())
                 .pattern("GFG", "SAS", "CCC")
-                .define('G', Tags.Items.GUNPOWDER)
+                .define('G', Tags.Items.GUNPOWDERS)
                 .define('S', Tags.Items.RODS_WOODEN)
                 .define('A', ActuallyBlocks.IRON_CASING.get())
                 .define('F', Items.FIREWORK_ROCKET)
@@ -68,7 +70,7 @@ public class BlockRecipeGenerator extends RecipeProvider {
         Recipe.shaped(ActuallyBlocks.SHOCK_SUPPRESSOR.getItem())
             .pattern("OAO", "ACA", "OAO")
             .define('A', ActuallyItems.EMPOWERED_VOID_CRYSTAL.get())
-            .define('O', Tags.Items.OBSIDIAN)
+            .define('O', Tags.Items.OBSIDIANS)
             .define('C', ActuallyItems.ADVANCED_COIL.get())
             .save(recipeOutput);
 
@@ -173,7 +175,7 @@ public class BlockRecipeGenerator extends RecipeProvider {
         Recipe.shaped(ActuallyBlocks.LASER_RELAY.getItem(), 4)
                 .pattern("OBO", "RCR", "OBO")
                 .define('B', Tags.Items.STORAGE_BLOCKS_REDSTONE)
-                .define('O', Tags.Items.OBSIDIAN)
+                .define('O', Tags.Items.OBSIDIANS)
                 .define('R', ActuallyItems.RESTONIA_CRYSTAL.get())
                 .define('C', ActuallyItems.ADVANCED_COIL.get())
                 .save(recipeOutput);
@@ -247,7 +249,7 @@ public class BlockRecipeGenerator extends RecipeProvider {
         //Canola Press
         Recipe.shaped(ActuallyBlocks.CANOLA_PRESS.getItem())
             .pattern("CEC","CXC","CAC")
-            .define('C', Tags.Items.COBBLESTONE)
+            .define('C', Tags.Items.COBBLESTONES)
             .define('E', ActuallyItems.ENORI_CRYSTAL)
             .define('X', ActuallyItems.CANOLA)
             .define('A', ActuallyItems.ADVANCED_COIL)
@@ -265,7 +267,7 @@ public class BlockRecipeGenerator extends RecipeProvider {
         //Oil Generator
         Recipe.shaped(ActuallyBlocks.OIL_GENERATOR.getItem())
             .pattern("CIC","CAC","CIC")
-            .define('C', Tags.Items.COBBLESTONE)
+            .define('C', Tags.Items.COBBLESTONES)
             .define('A', ActuallyItems.CANOLA)
             .define('I', ActuallyBlocks.IRON_CASING.getItem())
             .save(recipeOutput);
@@ -273,7 +275,7 @@ public class BlockRecipeGenerator extends RecipeProvider {
         //Coal generator.
         Recipe.shaped(ActuallyBlocks.COAL_GENERATOR.getItem())
             .pattern("CIC","CAC","CIC")
-            .define('C', Tags.Items.COBBLESTONE)
+            .define('C', Tags.Items.COBBLESTONES)
             .define('A', Items.COAL)
             .define('I', ActuallyBlocks.IRON_CASING.getItem())
             .save(recipeOutput);
@@ -281,7 +283,7 @@ public class BlockRecipeGenerator extends RecipeProvider {
         // Auto breaker.
         Recipe.shaped(ActuallyBlocks.BREAKER.getItem())
             .pattern("CCC","CXV","CCC")
-            .define('C', Tags.Items.COBBLESTONE)
+            .define('C', Tags.Items.COBBLESTONES)
             .define('V', ActuallyItems.VOID_CRYSTAL)
             .define('X', ActuallyItems.BASIC_COIL)
             .save(recipeOutput);
@@ -289,7 +291,7 @@ public class BlockRecipeGenerator extends RecipeProvider {
         // Auto placer.
         Recipe.shaped(ActuallyBlocks.PLACER.getItem())
             .pattern("CCC", "CXP", "CCC")
-            .define('C', Tags.Items.COBBLESTONE)
+            .define('C', Tags.Items.COBBLESTONES)
             .define('P', ActuallyItems.PALIS_CRYSTAL)
             .define('X', ActuallyItems.BASIC_COIL)
             .save(recipeOutput);
@@ -297,7 +299,7 @@ public class BlockRecipeGenerator extends RecipeProvider {
         // Dropper
         Recipe.shaped(ActuallyBlocks.DROPPER.getItem())
             .pattern("CPC", "CDA", "CPC")
-            .define('C', Tags.Items.COBBLESTONE)
+            .define('C', Tags.Items.COBBLESTONES)
             .define('P', ActuallyItems.PALIS_CRYSTAL)
             .define('D', Items.DROPPER)
             .define('A', ActuallyItems.ADVANCED_COIL)
@@ -332,7 +334,7 @@ public class BlockRecipeGenerator extends RecipeProvider {
                 .pattern("EXC", "FIF", "CXE")
                 .define('E', ActuallyItems.ENORI_CRYSTAL)
                 .define('X', ActuallyItems.BASIC_COIL)
-                .define('C', Tags.Items.COBBLESTONE)
+                .define('C', Tags.Items.COBBLESTONES)
                 .define('F', Items.FURNACE)
                 .define('I', ActuallyBlocks.IRON_CASING.getItem())
                 .save(recipeOutput);
@@ -340,7 +342,7 @@ public class BlockRecipeGenerator extends RecipeProvider {
         // Greenhouse glass
         Recipe.shaped(ActuallyBlocks.GREENHOUSE_GLASS.getItem(), 2)
                 .pattern("GSG", "SES", "GSG")
-                .define('G', Tags.Items.GLASS)
+                .define('G', Tags.Items.GLASS_BLOCKS)
                 .define('S', ItemTags.SAPLINGS)
                 .define('E', ActuallyItems.EMPOWERED_PALIS_CRYSTAL)
                 .save(recipeOutput);
@@ -393,7 +395,7 @@ public class BlockRecipeGenerator extends RecipeProvider {
                 .pattern("RFC", "BIB", "CFR")
                 .define('R', ActuallyItems.RESTONIA_CRYSTAL.get())
                 .define('F', Items.FLINT)
-                .define('C', Tags.Items.COBBLESTONE)
+                .define('C', Tags.Items.COBBLESTONES)
                 .define('I', ActuallyBlocks.IRON_CASING.get())
                 .define('B', ActuallyItems.BASIC_COIL.get())
                 .save(recipeOutput);
@@ -401,7 +403,7 @@ public class BlockRecipeGenerator extends RecipeProvider {
         // Double Crusher
         Recipe.shaped(ActuallyBlocks.CRUSHER_DOUBLE.getItem())
                 .pattern("SAS", "CIC", "SAS")
-                .define('S', Tags.Items.COBBLESTONE)
+                .define('S', Tags.Items.COBBLESTONES)
                 .define('A', ActuallyItems.ADVANCED_COIL.get())
                 .define('C', ActuallyBlocks.CRUSHER.get())
                 .define('I', ActuallyBlocks.IRON_CASING.get())

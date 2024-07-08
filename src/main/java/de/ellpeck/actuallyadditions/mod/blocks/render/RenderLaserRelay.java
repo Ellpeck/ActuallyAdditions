@@ -129,7 +129,7 @@ public class RenderLaserRelay implements BlockEntityRenderer<TileEntityLaserRela
 
     @Override
     public AABB getRenderBoundingBox(TileEntityLaserRelay blockEntity) {
-        return INFINITE_EXTENT_AABB;
+        return new AABB(Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY);
     }
 
     @Override

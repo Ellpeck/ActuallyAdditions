@@ -5,9 +5,8 @@ import de.ellpeck.actuallyadditions.mod.gen.modifier.BoolConfigFeatureBiomeModif
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.GenerationStep;
@@ -17,9 +16,9 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 public class ActuallyBiomeModifiers {
 	protected static final ResourceKey<BiomeModifier> ADD_BLACK_QUARTZ_ORE_MODIFIER = ResourceKey.create(NeoForgeRegistries.Keys.BIOME_MODIFIERS,
-			new ResourceLocation(ActuallyAdditions.MODID, "add_black_quartz"));
+			ActuallyAdditions.modLoc("add_black_quartz"));
 
-	public static void bootstrap(BootstapContext<BiomeModifier> context) {
+	public static void bootstrap(BootstrapContext<BiomeModifier> context) {
 		HolderGetter<Biome> biomeGetter = context.lookup(Registries.BIOME);
 		HolderGetter<PlacedFeature> placedGetter = context.lookup(Registries.PLACED_FEATURE);
 

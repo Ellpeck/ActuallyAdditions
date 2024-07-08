@@ -35,7 +35,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 public class TileEntityItemInterface extends TileEntityBase {
 
@@ -164,7 +163,7 @@ public class TileEntityItemInterface extends TileEntityBase {
     public void doItemParticle(ItemStack stack, BlockPos input, BlockPos output) {
         if (!this.level.isClientSide) {
             CompoundTag compound = new CompoundTag();
-            stack.save(compound);
+            stack.save(this.level.registryAccess(), compound);
 
             compound.putDouble("InX", input.getX());
             compound.putDouble("InY", input.getY());

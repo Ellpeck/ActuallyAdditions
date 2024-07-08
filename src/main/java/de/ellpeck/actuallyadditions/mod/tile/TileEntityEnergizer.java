@@ -17,12 +17,14 @@ import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -43,15 +45,15 @@ public class TileEntityEnergizer extends TileEntityInventoryBase implements Menu
     }
 
     @Override
-    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
+    public void writeSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
         this.storage.writeToNBT(compound);
-        super.writeSyncableNBT(compound, type);
+        super.writeSyncableNBT(compound, lookupProvider, type);
     }
 
     @Override
-    public void readSyncableNBT(CompoundTag compound, NBTType type) {
+    public void readSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
         this.storage.readFromNBT(compound);
-        super.readSyncableNBT(compound, type);
+        super.readSyncableNBT(compound, lookupProvider, type);
     }
 
     public static <T extends BlockEntity> void clientTick(Level level, BlockPos pos, BlockState state, T t) {
@@ -72,7 +74,7 @@ public class TileEntityEnergizer extends TileEntityInventoryBase implements Menu
                     boolean canTakeUp = capability.map(cap -> cap.getEnergyStored() >= cap.getMaxEnergyStored()).orElse(false);
 
                     if (received > 0) {
-                        tile.storage.extractEnergyInternal(received, false);
+                        tile.storage.extractEnergy(received, false);
                     }
 
                     if (canTakeUp) {
@@ -95,7 +97,7 @@ public class TileEntityEnergizer extends TileEntityInventoryBase implements Menu
 
     @Override
     public IRemover getRemover() {
-        return (slot, automation) -> !EnchantmentHelper.hasBindingCurse(this.inv.getStackInSlot(slot)) && !automation || slot == 1;
+        return (slot, automation) -> !(EnchantmentHelper.has(this.inv.getStackInSlot(slot), EnchantmentEffectComponents.PREVENT_ARMOR_CHANGE)) && !automation || slot == 1;
     }
 
     public int getEnergyScaled(int i) {

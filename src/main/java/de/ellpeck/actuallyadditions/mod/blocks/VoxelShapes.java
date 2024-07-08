@@ -5,7 +5,6 @@ import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import java.awt.*;
 import java.util.Optional;
 import java.util.stream.Stream;
 

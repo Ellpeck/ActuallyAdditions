@@ -27,7 +27,7 @@ import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
-import net.neoforged.neoforge.event.entity.living.LivingEvent;
+import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 public class ItemWingsOfTheBats extends ItemBase {
 
@@ -88,12 +88,12 @@ public class ItemWingsOfTheBats extends ItemBase {
     public void onEntityDropEvent(LivingDropsEvent event) {
         Entity source = event.getSource().getEntity();
 
-        if (event.getEntity().level() != null && !event.getEntity().level().isClientSide && source instanceof Player) {
+        if (event.getEntity().level() != null && !event.getEntity().level().isClientSide && source instanceof Player player) {
             //Drop Wings from Bats
             if (ConfigBoolValues.DO_BAT_DROPS.isEnabled() && event.getEntity() instanceof Bat) { //TODO: Change to CommonConfig
-                int looting = event.getLootingLevel();
+                int looting = 1; //event.getLootingLevel(); TODO: Looting is gone from LivingDropsEvent
 
-                Iterable<ItemStack> equip = source.getHandSlots();
+                Iterable<ItemStack> equip = player.getHandSlots();
                 for (ItemStack stack : equip) {
                     // Todo: [port] this might not work anymore due to the way things are checked
                     if (StackUtil.isValid(stack) && ItemWingsOfTheBats.THE_BAT_BAT.equalsIgnoreCase(stack.getHoverName().getString()) && stack.getItem() instanceof SwordItem) {
@@ -111,7 +111,7 @@ public class ItemWingsOfTheBats extends ItemBase {
     }
 
     @SubscribeEvent
-    public void livingUpdateEvent(LivingEvent.LivingTickEvent event) {
+    public void livingUpdateEvent(PlayerTickEvent.Post event) {
         if (event.getEntity() instanceof Player player) {
 
 	        if (false &&!player.isCreative() && !player.isSpectator()) { //TODO disabled for now.

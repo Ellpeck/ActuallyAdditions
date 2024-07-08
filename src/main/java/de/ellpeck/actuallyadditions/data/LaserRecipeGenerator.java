@@ -5,6 +5,7 @@ import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.crafting.LaserRecipe;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.util.NoAdvRecipeOutput;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeOutput;
@@ -19,10 +20,11 @@ import net.minecraft.world.level.ItemLike;
 import net.neoforged.neoforge.common.Tags;
 
 import javax.annotation.Nonnull;
+import java.util.concurrent.CompletableFuture;
 
 public class LaserRecipeGenerator extends RecipeProvider {
-    public LaserRecipeGenerator(PackOutput packOutput) {
-        super(packOutput);
+    public LaserRecipeGenerator(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+        super(packOutput, lookupProvider);
     }
 
     @Override
@@ -62,7 +64,7 @@ public class LaserRecipeGenerator extends RecipeProvider {
         laserRecipe(recipeOutput, ActuallyBlocks.LASER_RELAY.getItem(), ActuallyBlocks.LASER_RELAY_ITEM.getItem(), 2000);
 
         //Misc
-        laserRecipe(recipeOutput, Items.SOUL_SAND, Tags.Items.SAND, 20000);
+        laserRecipe(recipeOutput, Items.SOUL_SAND, Tags.Items.SANDS, 20000);
         laserRecipe(recipeOutput, Items.LEATHER, Items.ROTTEN_FLESH, 20000);
         laserRecipe(recipeOutput, Items.NETHER_WART, Items.RED_MUSHROOM, 150000);
         laserRecipe(recipeOutput, Items.PRISMARINE_SHARD, Items.QUARTZ, 30000);
@@ -73,27 +75,27 @@ public class LaserRecipeGenerator extends RecipeProvider {
     }
 
     private void laserRecipe(RecipeOutput consumer, ItemLike output, Ingredient input, int energy) {
-        ResourceLocation id = new ResourceLocation(ActuallyAdditions.MODID, "laser/" + BuiltInRegistries.ITEM.getKey(output.asItem()).getPath());
+        ResourceLocation id = ActuallyAdditions.modLoc("laser/" + BuiltInRegistries.ITEM.getKey(output.asItem()).getPath());
         consumer.accept(id, new LaserRecipe(output.asItem().getDefaultInstance(), input, energy), null);
     }
     private void laserRecipe(RecipeOutput consumer, ItemLike output, TagKey<Item> input, int energy) {
-        ResourceLocation id = new ResourceLocation(ActuallyAdditions.MODID, "laser/" + BuiltInRegistries.ITEM.getKey(output.asItem()).getPath());
+        ResourceLocation id = ActuallyAdditions.modLoc("laser/" + BuiltInRegistries.ITEM.getKey(output.asItem()).getPath());
         consumer.accept(id, new LaserRecipe(output.asItem().getDefaultInstance(), Ingredient.of(input), energy), null);
     }
     private void laserRecipe(RecipeOutput consumer, ItemLike output, ItemLike input, int energy) {
-        ResourceLocation id = new ResourceLocation(ActuallyAdditions.MODID, "laser/" + BuiltInRegistries.ITEM.getKey(output.asItem()).getPath());
+        ResourceLocation id = ActuallyAdditions.modLoc("laser/" + BuiltInRegistries.ITEM.getKey(output.asItem()).getPath());
         consumer.accept(id, new LaserRecipe(output.asItem().getDefaultInstance(), Ingredient.of(input), energy), null);;
     }
     private void laserCrystalizeRecipe(RecipeOutput consumer, ItemLike output, Ingredient input, int energy) {
-        ResourceLocation id = new ResourceLocation(ActuallyAdditions.MODID, "laser/crystalize_" + BuiltInRegistries.ITEM.getKey(output.asItem()).getPath());
+        ResourceLocation id = ActuallyAdditions.modLoc("laser/crystalize_" + BuiltInRegistries.ITEM.getKey(output.asItem()).getPath());
         consumer.accept(id, new LaserRecipe(output.asItem().getDefaultInstance(), input, energy), null);
     }
     private void laserCrystalizeRecipe(RecipeOutput consumer, ItemLike output, TagKey<Item> input, int energy) {
-        ResourceLocation id = new ResourceLocation(ActuallyAdditions.MODID, "laser/crystalize_" + BuiltInRegistries.ITEM.getKey(output.asItem()).getPath());
+        ResourceLocation id = ActuallyAdditions.modLoc("laser/crystalize_" + BuiltInRegistries.ITEM.getKey(output.asItem()).getPath());
         consumer.accept(id, new LaserRecipe(output.asItem().getDefaultInstance(), Ingredient.of(input), energy), null);
     }
     private void laserCrystalizeRecipe(RecipeOutput consumer, ItemLike output, ItemLike input, int energy) {
-        ResourceLocation id = new ResourceLocation(ActuallyAdditions.MODID, "laser/crystalize_" + BuiltInRegistries.ITEM.getKey(output.asItem()).getPath());
+        ResourceLocation id = ActuallyAdditions.modLoc("laser/crystalize_" + BuiltInRegistries.ITEM.getKey(output.asItem()).getPath());
         consumer.accept(id, new LaserRecipe(output.asItem().getDefaultInstance(), Ingredient.of(input), energy), null);
     }
 }

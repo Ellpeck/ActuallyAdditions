@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory;
 
-import de.ellpeck.actuallyadditions.mod.crafting.SingleItem;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotOutput;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityPoweredFurnace;
@@ -23,6 +22,7 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.item.crafting.SmeltingRecipe;
 
 import javax.annotation.Nonnull;
@@ -79,7 +79,7 @@ public class ContainerFurnaceDouble extends AbstractContainerMenu {
             //Other Slots in Inventory excluded
             else if (slot >= inventoryStart) {
                 // TODO: VALIDATE
-                RecipeHolder<SmeltingRecipe> recipeHolder = this.furnace.getLevel().getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SingleItem(newStack), this.furnace.getLevel()).orElse(null);
+                RecipeHolder<SmeltingRecipe> recipeHolder = this.furnace.getLevel().getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SingleRecipeInput(newStack), this.furnace.getLevel()).orElse(null);
                 if (recipeHolder == null) {
                     return ItemStack.EMPTY;
                 }

@@ -1,6 +1,6 @@
 package de.ellpeck.actuallyadditions.mod.inventory;
 
-import de.ellpeck.actuallyadditions.mod.attachments.ActuallyAttachments;
+import de.ellpeck.actuallyadditions.mod.components.ActuallyComponents;
 import de.ellpeck.actuallyadditions.mod.items.ItemTag;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import net.minecraft.network.FriendlyByteBuf;
@@ -34,9 +34,6 @@ public class ItemTagContainer extends AbstractContainerMenu implements IButtonRe
     @Override
     public void onButtonPressed(int buttonID, Player player) {
         ItemStack stack = player.getInventory().getSelected();
-        stack.getExistingData(ActuallyAttachments.ITEM_TAG).ifPresent(data -> {
-            data.setTag(null);
-            stack.setData(ActuallyAttachments.ITEM_TAG, data);
-        });
+	    stack.remove(ActuallyComponents.ITEM_TAG);
     }
 }

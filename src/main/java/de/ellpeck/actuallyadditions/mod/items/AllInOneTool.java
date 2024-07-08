@@ -1,7 +1,6 @@
 package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.api.ActuallyTags;
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.ItemStack;
@@ -9,9 +8,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.common.ItemAbilities;
 import net.neoforged.neoforge.common.ToolAction;
-import net.neoforged.neoforge.common.ToolActions;
 
 import java.util.List;
 
@@ -19,13 +17,13 @@ public class AllInOneTool extends DiggerItem {
     private final Tier tier;
 
     private static List<ToolAction> ACTIONS = List.of(
-        ToolActions.AXE_DIG,
-        ToolActions.HOE_DIG,
-        ToolActions.PICKAXE_DIG,
-        ToolActions.SHOVEL_DIG,
-        ToolActions.HOE_TILL,
-        ToolActions.SHOVEL_FLATTEN,
-        ToolActions.AXE_STRIP
+        ItemAbilities.AXE_DIG,
+        ItemAbilities.HOE_DIG,
+        ItemAbilities.PICKAXE_DIG,
+        ItemAbilities.SHOVEL_DIG,
+        ItemAbilities.HOE_TILL,
+        ItemAbilities.SHOVEL_FLATTEN,
+        ItemAbilities.AXE_STRIP
     );
 
     public AllInOneTool(Tier tier) {

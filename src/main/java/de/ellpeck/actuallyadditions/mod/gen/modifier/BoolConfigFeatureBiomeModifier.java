@@ -1,6 +1,6 @@
 package de.ellpeck.actuallyadditions.mod.gen.modifier;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import net.minecraft.core.Holder;
@@ -33,7 +33,7 @@ public record BoolConfigFeatureBiomeModifier(HolderSet<Biome> biomes, HolderSet<
 	}
 
 	@Override
-	public Codec<? extends BiomeModifier> codec() {
+	public MapCodec<? extends BiomeModifier> codec() {
 		return ActuallyAdditions.BOOL_CONFIG_MODIFIER.get();
 	}
 }

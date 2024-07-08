@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.items.metalists;
 
+import net.minecraft.core.Holder;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.ItemStack;
@@ -124,15 +125,15 @@ public enum ThePotionRings {
     public final String name;
     public final int color;
     public final Rarity rarity;
-    public final MobEffect effect;
+    public final Holder<MobEffect> effect;
     public final int normalAmplifier;
     public final int advancedAmplifier;
     public final int activeTime;
     public final boolean needsWaitBeforeActivating;
     public final ItemStack craftingItem;
 
-    ThePotionRings(int color, MobEffect effect, int normalAmplifier, int advancedAmplifier, int activeTime, boolean needsWaitBeforeActivating, Rarity rarity, ItemStack craftingItem) {
-        this.name = effect.getDisplayName().getString();
+    ThePotionRings(int color, Holder<MobEffect> effect, int normalAmplifier, int advancedAmplifier, int activeTime, boolean needsWaitBeforeActivating, Rarity rarity, ItemStack craftingItem) {
+        this.name = effect.value().getDisplayName().getString();
         this.color = color;
         this.rarity = rarity;
         this.effect = effect;

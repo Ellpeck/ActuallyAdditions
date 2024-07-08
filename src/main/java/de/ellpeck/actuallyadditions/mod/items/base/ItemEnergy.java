@@ -10,7 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.items.base;
 
-import de.ellpeck.actuallyadditions.mod.attachments.ActuallyAttachments;
+import de.ellpeck.actuallyadditions.mod.components.ActuallyComponents;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.tile.CustomEnergyStorage;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
@@ -20,15 +20,11 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.Level;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.energy.EnergyStorage;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 
-import javax.annotation.Nullable;
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.Optional;
@@ -49,10 +45,9 @@ public abstract class ItemEnergy extends ItemBase {
         this.transfer = transfer;
     }
 
-    @OnlyIn(Dist.CLIENT)
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-        super.appendHoverText(stack, worldIn, tooltip, flagIn);
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flagIn) {
+        super.appendHoverText(stack, context, tooltip, flagIn);
         IEnergyStorage storage = stack.getCapability(Capabilities.EnergyStorage.ITEM);
         if(storage != null) {
             int energy = storage.getEnergyStored();
@@ -104,14 +99,14 @@ public abstract class ItemEnergy extends ItemBase {
     @Deprecated
     public int receiveEnergyInternal(ItemStack stack, int maxReceive, boolean simulate) {
         return Optional.ofNullable(stack.getCapability(Capabilities.EnergyStorage.ITEM))
-            .map(cap -> ((CustomEnergyStorage) cap).receiveEnergyInternal(maxReceive, simulate))
+            .map(cap -> cap.receiveEnergy(maxReceive, simulate))
             .orElse(0);
     }
 
     public int extractEnergyInternal(ItemStack stack, int maxExtract, boolean simulate) {
         return Optional.ofNullable(stack.getCapability(Capabilities.EnergyStorage.ITEM))
             .map(cap -> cap instanceof EnergyStorage
-                ? ((CustomEnergyStorage) cap).extractEnergyInternal(maxExtract, simulate)
+                ? cap.extractEnergy(maxExtract, simulate)
                 : 0)
             .orElse(0);
     }
@@ -141,8 +136,8 @@ public abstract class ItemEnergy extends ItemBase {
             .orElse(0);
     }
 
-	public IEnergyStorage getEnergyStorage(ItemStack stack) {
-		return stack.getData(ActuallyAttachments.ENERGY_STORAGE);
+	public int getEnergyStorage(ItemStack stack) {
+		return stack.getOrDefault(ActuallyComponents.ENERGY_STORAGE, 0);
 	}
 
 //    @Override TODO: Register Energy cap/attachment

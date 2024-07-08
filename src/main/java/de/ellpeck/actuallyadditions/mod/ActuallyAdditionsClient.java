@@ -11,12 +11,42 @@
 package de.ellpeck.actuallyadditions.mod;
 
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
-import de.ellpeck.actuallyadditions.mod.blocks.render.*;
+import de.ellpeck.actuallyadditions.mod.blocks.render.ReconstructorRenderer;
+import de.ellpeck.actuallyadditions.mod.blocks.render.RenderBatteryBox;
+import de.ellpeck.actuallyadditions.mod.blocks.render.RenderDisplayStand;
+import de.ellpeck.actuallyadditions.mod.blocks.render.RenderEmpowerer;
+import de.ellpeck.actuallyadditions.mod.blocks.render.RenderLaserRelay;
 import de.ellpeck.actuallyadditions.mod.entity.RenderWorm;
 import de.ellpeck.actuallyadditions.mod.event.ClientEvents;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.inventory.ActuallyContainers;
-import de.ellpeck.actuallyadditions.mod.inventory.gui.*;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.CrusherScreen;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiBioReactor;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiBreaker;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiCanolaPress;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiCoalGenerator;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiCoffeeMachine;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiDirectionalBreaker;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiDrill;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiDropper;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiEnergizer;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiEnervator;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiFarmer;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiFeeder;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiFermentingBarrel;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiFilter;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiFireworkBox;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiFluidCollector;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiFurnaceDouble;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiLaserRelayItemWhitelist;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiMiner;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiOilGenerator;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiPhantomPlacer;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiRangedCollector;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiXPSolidifier;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.ItemTagScreen;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.SackGui;
+import de.ellpeck.actuallyadditions.mod.inventory.gui.VoidSackGui;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.misc.special.SpecialRenderInit;
 import de.ellpeck.actuallyadditions.mod.particle.ActuallyParticles;
@@ -30,7 +60,6 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.protocol.game.ServerboundPlayerActionPacket;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.BlockHitResult;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
@@ -75,7 +104,7 @@ public class ActuallyAdditionsClient {
         NeoForge.EVENT_BUS.register(new SpecialRenderInit());
 
         event.enqueueWork(() ->
-                ItemProperties.register(ActuallyItems.WORM.get(), new ResourceLocation(ActuallyAdditions.MODID, "snail"),
+                ItemProperties.register(ActuallyItems.WORM.get(), ActuallyAdditions.modLoc("snail"),
                         (stack, level, entity, tintIndex) -> "snail mail".equalsIgnoreCase(stack.getHoverName().getString()) ? 1F : 0F));
 
         setupRenderLayers();

@@ -14,7 +14,7 @@ import de.ellpeck.actuallyadditions.mod.blocks.base.BlockBase;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.DyeItem;
@@ -66,18 +66,18 @@ public class BlockColoredLamp extends BlockBase {
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult pHitResult) {
         ItemStack stack = player.getItemInHand(hand);
         //Turning On
         if (hand == InteractionHand.MAIN_HAND && stack.isEmpty()) {
             world.setBlock(pos, this.defaultBlockState().setValue(LIT, !state.getValue(LIT)), Block.UPDATE_INVISIBLE);
-            return InteractionResult.PASS;
+            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
 
         if (StackUtil.isValid(stack) && stack.getItem() instanceof DyeItem) {
             DyeColor color = DyeColor.getColor(stack);
             if (color == null) {
-                return InteractionResult.FAIL;
+                return ItemInteractionResult.FAIL;
             }
 
             Block newColor = COLOR_TO_LAMP.get(color).get();
@@ -88,7 +88,7 @@ public class BlockColoredLamp extends BlockBase {
                 }
             }
         }
-        return super.use(state, world, pos, player, hand, hit);
+        return super.useItemOn(pStack, state, world, pos, player, hand, pHitResult);
     }
 
     @Override

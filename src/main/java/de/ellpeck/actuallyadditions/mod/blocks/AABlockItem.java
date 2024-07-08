@@ -1,12 +1,12 @@
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemNameBlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.block.Block;
 
 import javax.annotation.Nullable;
@@ -35,14 +35,14 @@ public class AABlockItem extends BlockItem {
         }
 
         @Override
-        public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltip, TooltipFlag pFlag) {
-            super.appendHoverText(pStack, pLevel, pTooltip, pFlag);
+        public void appendHoverText(ItemStack pStack, @Nullable TooltipContext pContext, List<Component> pTooltip, TooltipFlag pFlag) {
+            super.appendHoverText(pStack, pContext, pTooltip, pFlag);
 
-            if (pStack.hasTag() && pStack.getTag().contains("BlockEntityTag")) {
-                CompoundTag BET = pStack.getTag().getCompound("BlockEntityTag");
+            if (pStack.has(DataComponents.BLOCK_ENTITY_DATA)) {
+                CustomData customData = pStack.get(DataComponents.BLOCK_ENTITY_DATA);
                 int energy = 0;
-                if (BET.contains("Energy")) {
-                    energy = BET.getInt("Energy");
+                if (customData.contains("Energy")) {
+                    energy = customData.copyTag().getInt("Energy");
                 }
                 NumberFormat format = NumberFormat.getInstance();
                 pTooltip.add(Component.translatable("misc.actuallyadditions.power_single", format.format(energy)));

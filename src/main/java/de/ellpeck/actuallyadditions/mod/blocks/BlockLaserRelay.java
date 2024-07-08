@@ -14,7 +14,6 @@ import com.mojang.blaze3d.platform.Window;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.laser.IConnectionPair;
 import de.ellpeck.actuallyadditions.api.laser.Network;
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.FullyDirectionalBlock;
 import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import de.ellpeck.actuallyadditions.mod.items.ItemEngineerGoggles;
@@ -35,7 +34,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -49,8 +48,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -99,14 +96,14 @@ public class BlockLaserRelay extends FullyDirectionalBlock.Container implements 
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult pHitResult) {
         ItemStack stack = player.getItemInHand(hand);
         BlockEntity tile = world.getBlockEntity(pos);
         if (tile instanceof TileEntityLaserRelay relay) {
 
             if (!stack.isEmpty()) {
                 if (stack.getItem() instanceof ItemLaserWrench) {
-                    return InteractionResult.FAIL;
+                    return ItemInteractionResult.FAIL;
                 } else if (stack.getItem() == CommonConfig.Other.relayConfigureItem) {
                     if (!world.isClientSide) {
                         relay.onCompassAction(player);
@@ -120,7 +117,7 @@ public class BlockLaserRelay extends FullyDirectionalBlock.Container implements 
                         relay.sendUpdate();
                     }
 
-                    return InteractionResult.SUCCESS;
+                    return ItemInteractionResult.SUCCESS;
                 } else if (stack.getItem() instanceof ItemLaserRelayUpgrade) {
                     ItemStack inRelay = relay.inv.getStackInSlot(0);
                     if (inRelay.isEmpty()) {
@@ -133,7 +130,7 @@ public class BlockLaserRelay extends FullyDirectionalBlock.Container implements 
                             set.setCount(1);
                             relay.inv.setStackInSlot(0, set);
                         }
-                        return InteractionResult.PASS;
+                        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
                     }
 
                 }
@@ -149,15 +146,15 @@ public class BlockLaserRelay extends FullyDirectionalBlock.Container implements 
                             player.spawnAtLocation(inRelay, 0);
                         }
                     }
-                    return InteractionResult.PASS;
+                    return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
                 }
             }
 
             if (relay instanceof TileEntityLaserRelayItemAdvanced) {
-                return this.openGui(world, player, pos, TileEntityLaserRelayItemAdvanced.class);
+                return this.openGui2(world, player, pos, TileEntityLaserRelayItemAdvanced.class);
             }
         }
-        return InteractionResult.FAIL;
+        return ItemInteractionResult.FAIL;
     }
 
     @Nullable
@@ -199,7 +196,7 @@ public class BlockLaserRelay extends FullyDirectionalBlock.Container implements 
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
+    
     public void displayHud(GuiGraphics guiGraphics, Minecraft minecraft, Player player, ItemStack stack, HitResult rayCast, Window resolution) {
         if (!(rayCast instanceof BlockHitResult)) {
             return;

@@ -5,6 +5,7 @@ import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.crafting.CrushingRecipe;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.util.NoAdvRecipeOutput;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeOutput;
@@ -15,10 +16,11 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 
 import javax.annotation.Nonnull;
+import java.util.concurrent.CompletableFuture;
 
 public class CrushingRecipeGenerator extends RecipeProvider {
-    public CrushingRecipeGenerator(PackOutput packOutput) {
-        super(packOutput);
+    public CrushingRecipeGenerator(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+        super(packOutput, lookupProvider);
     }
 
     @Override
@@ -163,7 +165,7 @@ public class CrushingRecipeGenerator extends RecipeProvider {
         }
 
         public void save(RecipeOutput consumer, String name) {
-            ResourceLocation res = new ResourceLocation(ActuallyAdditions.MODID, "crushing/" + name);
+            ResourceLocation res = ActuallyAdditions.modLoc("crushing/" + name);
             if (results.size() != 2)
                 throw new IllegalStateException("invalid result count: " + results.size() + ", recipe: " + name.toString());
 

@@ -41,7 +41,7 @@
 //        Item i = rec.getRecipeOutput().getItem();
 //        if (i instanceof IDisableableItem && ((IDisableableItem) i).isDisabled()) rec = new BlankRecipe();
 //        if (rec.getRegistryName() == null) {
-//            RECIPE_LIST.add(rec.setRegistryName(new ResourceLocation(MODID, name)));
+//            RECIPE_LIST.add(rec.setRegistryName(ResourceLocation.tryParse(MODID, name)));
 //        } else {
 //            RECIPE_LIST.add(rec);
 //        }
@@ -53,7 +53,7 @@
 //     */
 //    public static void addOldShaped(ItemStack stack, Object... input) {
 //        ShapedPrimer primer = CraftingHelper.parseShaped(input);
-//        addRecipe(j++, new ShapedRecipes(new ResourceLocation(MODID, "recipes" + j).toString(), primer.width, primer.height, primer.input, stack));
+//        addRecipe(j++, new ShapedRecipes(ResourceLocation.tryParse(MODID, "recipes" + j).toString(), primer.width, primer.height, primer.input, stack));
 //    }
 //
 //    /*
@@ -61,7 +61,7 @@
 //     */
 //    public static void addOldShaped(String group, ItemStack stack, Object... input) {
 //        ShapedPrimer primer = CraftingHelper.parseShaped(input);
-//        addRecipe(j++, new ShapedRecipes(new ResourceLocation(MODID, group).toString(), primer.width, primer.height, primer.input, stack));
+//        addRecipe(j++, new ShapedRecipes(ResourceLocation.tryParse(MODID, group).toString(), primer.width, primer.height, primer.input, stack));
 //    }
 //
 //    /*
@@ -69,25 +69,25 @@
 //     */
 //    public static void addOldShaped(String name, String group, ItemStack stack, Object... input) {
 //        ShapedPrimer primer = CraftingHelper.parseShaped(input);
-//        addRecipe(j++, new ShapedRecipes(new ResourceLocation(MODID, group).toString(), primer.width, primer.height, primer.input, stack).setRegistryName(MODID, name));
+//        addRecipe(j++, new ShapedRecipes(ResourceLocation.tryParse(MODID, group).toString(), primer.width, primer.height, primer.input, stack).setRegistryName(MODID, name));
 //    }
 //
 //    /*
 //     * This adds a shapeless recipe to the list of crafting recipes, using the forge format.
 //     */
 //    public static void addOldShapeless(ItemStack stack, Object... input) {
-//        addRecipe(j++, new ShapelessRecipes(new ResourceLocation(MODID, "recipes" + j).toString(), stack, createInput(input)));
+//        addRecipe(j++, new ShapelessRecipes(ResourceLocation.tryParse(MODID, "recipes" + j).toString(), stack, createInput(input)));
 //    }
 //
 //    /*
 //     * This adds a shapeless recipe to the list of crafting recipes, using the forge format, with a custom group.
 //     */
 //    public static void addOldShapeless(String group, ItemStack stack, Object... input) {
-//        addRecipe(j++, new ShapelessRecipes(new ResourceLocation(MODID, group).toString(), stack, createInput(input)));
+//        addRecipe(j++, new ShapelessRecipes(ResourceLocation.tryParse(MODID, group).toString(), stack, createInput(input)));
 //    }
 //
 //    public static void addOldShapeless(String name, String group, ItemStack stack, Object... input) {
-//        addRecipe(j++, new ShapelessRecipes(new ResourceLocation(MODID, group).toString(), stack, createInput(input)).setRegistryName(MODID, name));
+//        addRecipe(j++, new ShapelessRecipes(ResourceLocation.tryParse(MODID, group).toString(), stack, createInput(input)).setRegistryName(MODID, name));
 //    }
 //
 //    /*

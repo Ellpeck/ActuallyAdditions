@@ -2,24 +2,25 @@ package de.ellpeck.actuallyadditions.mod.crafting;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.Container;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeInput;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EmpowererRecipe implements Recipe<Container> {
+public class EmpowererRecipe implements Recipe<RecipeInput> {
     public static String NAME = "empowering";
     protected final Ingredient input;
     protected final ItemStack output;
@@ -47,7 +48,7 @@ public class EmpowererRecipe implements Recipe<Container> {
         boolean[] unused = {true, true, true, true};
         for (ItemStack s : stacks) {
             if (unused[0] && this.modifiers.get(0).test(s)) {
-                matches.add(this.modifiers.get(0));
+                matches.add(this.modifiers.getFirst());
                 unused[0] = false;
             } else if (unused[1] && this.modifiers.get(1).test(s)) {
                 matches.add(this.modifiers.get(1));
@@ -65,7 +66,7 @@ public class EmpowererRecipe implements Recipe<Container> {
     }
 
     @Override
-    public boolean matches(@Nonnull Container pInv, @Nonnull Level pLevel) {
+    public boolean matches(@Nonnull RecipeInput pInv, @Nonnull Level pLevel) {
         return false;
     }
 
@@ -76,7 +77,7 @@ public class EmpowererRecipe implements Recipe<Container> {
 
     @Override
     @Nonnull
-    public ItemStack assemble(Container pInv, RegistryAccess pRegistryAccess) {
+    public ItemStack assemble(RecipeInput pInv, HolderLookup.Provider provider) {
         return output.copy();
     }
 
@@ -87,7 +88,7 @@ public class EmpowererRecipe implements Recipe<Container> {
 
     @Override
     @Nonnull
-    public ItemStack getResultItem(RegistryAccess pRegistryAccess) {
+    public ItemStack getResultItem(HolderLookup.Provider provider) {
         return output;
     }
 
@@ -112,7 +113,7 @@ public class EmpowererRecipe implements Recipe<Container> {
     }
 
     public Ingredient getStandOne() {
-        return this.modifiers.get(0);
+        return this.modifiers.getFirst();
     }
 
     public Ingredient getStandTwo() {
@@ -140,9 +141,9 @@ public class EmpowererRecipe implements Recipe<Container> {
     }
 
     public static class Serializer implements RecipeSerializer<EmpowererRecipe> {
-        private static final Codec<EmpowererRecipe> CODEC = RecordCodecBuilder.create(
+        private static final MapCodec<EmpowererRecipe> CODEC = RecordCodecBuilder.mapCodec(
                 instance -> instance.group(
-                                ItemStack.ITEM_WITH_COUNT_CODEC.fieldOf("result").forGetter(recipe -> recipe.output),
+                                ItemStack.STRICT_CODEC.fieldOf("result").forGetter(recipe -> recipe.output),
                                 Ingredient.CODEC_NONEMPTY.fieldOf("base").forGetter(recipe -> recipe.input),
                                 Ingredient.CODEC_NONEMPTY
                                         .listOf()
@@ -168,13 +169,21 @@ public class EmpowererRecipe implements Recipe<Container> {
                         )
                         .apply(instance, EmpowererRecipe::new)
         );
+        public static final StreamCodec<RegistryFriendlyByteBuf, EmpowererRecipe> STREAM_CODEC = StreamCodec.of(
+                EmpowererRecipe.Serializer::toNetwork, EmpowererRecipe.Serializer::fromNetwork
+        );
 
         @Override
-        public Codec<EmpowererRecipe> codec() {
+        public MapCodec<EmpowererRecipe> codec() {
             return CODEC;
         }
 
-        //        @Override
+        @Override
+        public StreamCodec<RegistryFriendlyByteBuf, EmpowererRecipe> streamCodec() {
+            return STREAM_CODEC;
+        }
+
+//        @Override
 //        @Nonnull
 //        public EmpowererRecipe fromJson(@Nonnull ResourceLocation pRecipeId, @Nonnull JsonObject pJson) {
 //            Ingredient base = Ingredient.fromJson(GsonHelper.getAsJsonObject(pJson, "base"));
@@ -196,16 +205,14 @@ public class EmpowererRecipe implements Recipe<Container> {
 //            return new EmpowererRecipe(pRecipeId, result, base, mod1, mod2, mod3, mod4, energy, color, time);
 //        }
 
-        @Nullable
-        @Override
-        public EmpowererRecipe fromNetwork(FriendlyByteBuf pBuffer) {
-            ItemStack result = pBuffer.readItem();
-            Ingredient input = Ingredient.fromNetwork(pBuffer);
+        public static EmpowererRecipe fromNetwork(RegistryFriendlyByteBuf pBuffer) {
+            ItemStack result = ItemStack.STREAM_CODEC.decode(pBuffer);
+            Ingredient input = Ingredient.CONTENTS_STREAM_CODEC.decode(pBuffer);
 
             int i = pBuffer.readVarInt();
             NonNullList<Ingredient> nonnulllist = NonNullList.withSize(i, Ingredient.EMPTY);
             for (int j = 0; j < nonnulllist.size(); ++j) {
-                nonnulllist.set(j, Ingredient.fromNetwork(pBuffer));
+                nonnulllist.set(j, Ingredient.CONTENTS_STREAM_CODEC.decode(pBuffer));
             }
 
             int energy = pBuffer.readInt();
@@ -215,13 +222,12 @@ public class EmpowererRecipe implements Recipe<Container> {
             return new EmpowererRecipe(result, input, nonnulllist, energy, color, time);
         }
 
-        @Override
-        public void toNetwork(FriendlyByteBuf pBuffer, EmpowererRecipe pRecipe) {
-            pBuffer.writeItem(pRecipe.output);
-            pRecipe.input.toNetwork(pBuffer);
+        public static void toNetwork(RegistryFriendlyByteBuf pBuffer, EmpowererRecipe pRecipe) {
+            ItemStack.STREAM_CODEC.encode(pBuffer, pRecipe.output);
+            Ingredient.CONTENTS_STREAM_CODEC.encode(pBuffer, pRecipe.input);
             pBuffer.writeVarInt(pRecipe.modifiers.size());
             for (Ingredient modifier : pRecipe.modifiers) {
-                modifier.toNetwork(pBuffer);
+                Ingredient.CONTENTS_STREAM_CODEC.encode(pBuffer, modifier);
             }
             pBuffer.writeInt(pRecipe.energyPerStand);
             pBuffer.writeInt(pRecipe.particleColor);

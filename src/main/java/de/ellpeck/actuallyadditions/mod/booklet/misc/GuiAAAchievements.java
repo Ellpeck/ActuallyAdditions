@@ -27,7 +27,7 @@ import java.io.IOException;
 /**
  * (Partially excerpted from Botania by Vazkii with permission, thanks!)
  *
-@OnlyIn(Dist.CLIENT)
+
 public class GuiAAAchievements extends GuiAchievements{
 
     public GuiAAAchievements(GuiScreen screen, StatisticsManager statistics){

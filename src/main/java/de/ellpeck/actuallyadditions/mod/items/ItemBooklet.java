@@ -20,7 +20,6 @@ import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.PlayerAdvancements;
 import net.minecraft.server.ServerAdvancementManager;
 import net.minecraft.server.level.ServerPlayer;
@@ -33,15 +32,12 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class ItemBooklet extends ItemBase implements IHudDisplay {
 
-    @OnlyIn(Dist.CLIENT)
+
     public static IBookletPage forcedPage;
 
     public ItemBooklet() {
@@ -72,12 +68,12 @@ public class ItemBooklet extends ItemBase implements IHudDisplay {
             ServerPlayer serverPlayer = (ServerPlayer) player;
             PlayerAdvancements advancements = serverPlayer.getAdvancements();
             ServerAdvancementManager manager = player.getServer().getAdvancements();
-            AdvancementHolder advancement = manager.get(new ResourceLocation(ActuallyAdditions.MODID, "root"));
+            AdvancementHolder advancement = manager.get(ActuallyAdditions.modLoc("root"));
             if (advancement != null && !advancements.getOrStartProgress(advancement).isDone()) {
                 advancements.award(advancement, "right_click");
             }
         } else {
-            vazkii.patchouli.api.PatchouliAPI.get().openBookGUI(new ResourceLocation(ActuallyAdditions.MODID, "booklet"));
+            vazkii.patchouli.api.PatchouliAPI.get().openBookGUI(ActuallyAdditions.modLoc("booklet"));
         }
 //        player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.BOOK.ordinal(), world, (int) player.posX, (int) player.posY, (int) player.posZ);
 //
@@ -88,9 +84,9 @@ public class ItemBooklet extends ItemBase implements IHudDisplay {
         return InteractionResultHolder.success(player.getItemInHand(hand));
     }
 
-    @OnlyIn(Dist.CLIENT)
+
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level playerIn, List<Component> tooltip, TooltipFlag advanced) {
+    public void appendHoverText(ItemStack stack, TooltipContext pContext, List<Component> tooltip, TooltipFlag advanced) {
         tooltip.add(Component.translatable("tooltip.actuallyadditions.item_booklet.desc").withStyle(ChatFormatting.GRAY));
 
         // TODO: this is bad
@@ -104,7 +100,7 @@ public class ItemBooklet extends ItemBase implements IHudDisplay {
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
+
     public void displayHud(GuiGraphics guiGraphics, Minecraft minecraft, Player player, ItemStack stack, HitResult rayCast, Window resolution) {
 //        if (rayCast != null && rayCast.getBlockPos() != null) {
 //            BlockState state = minecraft.level.getBlockState(rayCast.getBlockPos());

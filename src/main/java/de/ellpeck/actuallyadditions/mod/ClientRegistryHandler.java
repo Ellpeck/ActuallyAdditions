@@ -49,7 +49,7 @@ public class ClientRegistryHandler {
 
     @SubscribeEvent
     public void onModelBake(BakingCompleted e) {
-        //        ModelResourceLocation mrl = new ModelResourceLocation(new ResourceLocation(ActuallyAdditions.MODID, "block_compost"), "normal");
+        //        ModelResourceLocation mrl = new ModelResourceLocation(ActuallyAdditions.modLoc("block_compost"), "normal");
         //        CompostModel.compostBase = e.getModelRegistry().getObject(mrl);
         //        e.getModelRegistry().putObject(mrl, new ActualCompostModel());
     }

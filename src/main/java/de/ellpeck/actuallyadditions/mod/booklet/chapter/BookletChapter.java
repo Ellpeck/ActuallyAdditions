@@ -57,13 +57,13 @@
 //    }
 //
 //    @Override
-//    @OnlyIn(Dist.CLIENT)
+//    
 //    public String getLocalizedName() {
 //        return StringUtil.localize("booklet.actuallyadditions.chapter." + this.getIdentifier() + ".name");
 //    }
 //
 //    @Override
-//    @OnlyIn(Dist.CLIENT)
+//    
 //    public String getLocalizedNameWithFormatting() {
 //        return this.color + this.getLocalizedName();
 //    }

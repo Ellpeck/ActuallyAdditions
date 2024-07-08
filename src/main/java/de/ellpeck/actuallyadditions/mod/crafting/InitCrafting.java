@@ -43,7 +43,7 @@ public final class InitCrafting {
         //        ActuallyAdditionsAPI.addFarmerBehavior(new EnderlillyFarmerBehavior());
         //        ActuallyAdditionsAPI.addFarmerBehavior(new RedOrchidFarmerBehavior());
 
-        //new RecipePotionRingCharging(new ResourceLocation(ActuallyAdditions.MODID, "potion_ring_charging"));
-        //new RecipeBioMash(new ResourceLocation(ActuallyAdditions.MODID, "bio_mash"));
+        //new RecipePotionRingCharging(ActuallyAdditions.modLoc("potion_ring_charging"));
+        //new RecipeBioMash(ActuallyAdditions.modLoc("bio_mash"));
     }
 }

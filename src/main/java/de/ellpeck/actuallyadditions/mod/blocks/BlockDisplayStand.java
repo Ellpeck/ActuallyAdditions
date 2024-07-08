@@ -18,7 +18,7 @@ import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
@@ -61,7 +61,7 @@ public class BlockDisplayStand extends BlockContainerBase {
 	}
 
 	@Override
-	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+	protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult pHitResult) {
 		ItemStack heldItem = player.getItemInHand(hand);
 		if (!world.isClientSide) {
 			TileEntityInventoryBase stand = (TileEntityInventoryBase) world.getBlockEntity(pos);
@@ -76,7 +76,7 @@ public class BlockDisplayStand extends BlockContainerBase {
 							heldItem.shrink(1);
 						else
 							player.swing(hand, true);
-						return InteractionResult.SUCCESS;
+						return ItemInteractionResult.SUCCESS;
 					} else if (ItemUtil.canBeStacked(heldItem, stackThere)) {
 						int maxTransfer = Math.min(stackThere.getCount(), heldItem.getMaxStackSize() - heldItem.getCount());
 						if (maxTransfer > 0) {
@@ -87,21 +87,21 @@ public class BlockDisplayStand extends BlockContainerBase {
 							ItemStack newStackThere = stackThere.copy();
 							newStackThere.shrink(maxTransfer);
 							stand.inv.setStackInSlot(0, newStackThere);
-							return InteractionResult.SUCCESS;
+							return ItemInteractionResult.SUCCESS;
 						}
 					}
 				} else {
 					if (!stackThere.isEmpty() && hand == InteractionHand.MAIN_HAND) {
 						player.setItemInHand(hand, stackThere.copy());
 						stand.inv.setStackInSlot(0, ItemStack.EMPTY);
-						return InteractionResult.CONSUME;
+						return ItemInteractionResult.CONSUME;
 					}
 				}
 			}
-			return InteractionResult.FAIL;
+			return ItemInteractionResult.FAIL;
 		}
 
-		return InteractionResult.CONSUME;
+		return ItemInteractionResult.CONSUME;
 	}
 
 /*	@Override

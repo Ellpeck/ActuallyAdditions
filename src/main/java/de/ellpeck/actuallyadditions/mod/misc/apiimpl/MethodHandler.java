@@ -146,7 +146,7 @@ public class MethodHandler implements IMethodHandler {
         while (counter > 0) {
             CompoundTag compound = tag.getCompound(counter + "");
             String id =  compound.getString("ID");
-            ResourceLocation effectID = id.isEmpty() ? new ResourceLocation("speed") : ResourceLocation.tryParse(id);
+            ResourceLocation effectID = id.isEmpty() ? ResourceLocation.tryParse("speed") : ResourceLocation.tryParse(id);
             MobEffect effect = BuiltInRegistries.MOB_EFFECT.get(effectID);
             if (effect == null) {
                 ActuallyAdditions.LOGGER.error("Unable to find effect with ID: {}, defaulting to speed", effectID);

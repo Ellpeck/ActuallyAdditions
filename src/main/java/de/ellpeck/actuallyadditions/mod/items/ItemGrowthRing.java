@@ -11,7 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
-import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
@@ -23,7 +22,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.GrassBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.common.IPlantable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +55,7 @@ public class ItemGrowthRing extends ItemEnergy {
                             int theZ = Mth.floor(player.getZ() + z);
                             BlockPos posInQuestion = new BlockPos(theX, theY, theZ);
                             Block theBlock = world.getBlockState(posInQuestion).getBlock();
-                            if ((theBlock instanceof BonemealableBlock || theBlock instanceof IPlantable) && !(theBlock instanceof GrassBlock)) {
+                            if ((theBlock instanceof BonemealableBlock /*|| theBlock instanceof IPlantable*/) && !(theBlock instanceof GrassBlock)) {
                                 blocks.add(posInQuestion);
                             }
                         }
@@ -80,7 +78,7 @@ public class ItemGrowthRing extends ItemEnergy {
                             }
 
                             if (!player.isCreative()) {
-                                this.extractEnergyInternal(stack, energyUse, false);
+                                this.extractEnergy(stack, energyUse, false);
                             }
                         } else {
                             break;

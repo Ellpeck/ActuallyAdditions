@@ -19,16 +19,15 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 
-@OnlyIn(Dist.CLIENT)
+
 public class RenderWorm extends EntityRenderer<EntityWorm> {
 
     private ItemStack stack;
@@ -39,7 +38,7 @@ public class RenderWorm extends EntityRenderer<EntityWorm> {
 
         stack = new ItemStack(ActuallyItems.WORM.get());
         snailStack = new ItemStack(ActuallyItems.WORM.get());
-        snailStack.setHoverName(Component.literal("Snail Mail"));
+        snailStack.set(DataComponents.CUSTOM_NAME, Component.literal("Snail Mail"));
     }
 
     @Override

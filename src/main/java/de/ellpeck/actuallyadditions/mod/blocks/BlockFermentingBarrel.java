@@ -16,7 +16,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -55,21 +55,21 @@ public class BlockFermentingBarrel extends BlockContainerBase {
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult pHitResult) {
         TileEntityFermentingBarrel tile = (TileEntityFermentingBarrel) world.getBlockEntity(pos);
         if (tile == null)
-            return InteractionResult.PASS; //TODO this logic all needs to be rechecked...
+            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION; //TODO this logic all needs to be rechecked...
         if (world.isClientSide)
-            return InteractionResult.SUCCESS;
+            return ItemInteractionResult.SUCCESS;
         if (!player.isShiftKeyDown()) {
             if (FluidUtil.interactWithFluidHandler(player, hand, tile.tanks)) {
                 ItemStack stack = player.getItemInHand(hand);
                 world.playSound(null, pos, stack.getItem() == Items.BUCKET ? SoundEvents.BUCKET_EMPTY:SoundEvents.BUCKET_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
             } else
                 player.openMenu(tile, pos);
-            return InteractionResult.SUCCESS;
+            return ItemInteractionResult.SUCCESS;
         }
-        return InteractionResult.PASS;
+        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 
     @Override

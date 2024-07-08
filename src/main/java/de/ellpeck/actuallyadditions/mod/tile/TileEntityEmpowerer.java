@@ -18,6 +18,7 @@ import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -95,7 +96,7 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase {
                         boolean done = tile.processTime >= recipe.getTime();
 
                         for (TileEntityDisplayStand stand : stands) {
-                            stand.storage.extractEnergyInternal(recipe.getEnergyPerStand() / recipe.getTime(), false);
+                            stand.storage.extractEnergy(recipe.getEnergyPerStand() / recipe.getTime(), false);
 
                             if (done) {
                                 stand.inv.getStackInSlot(0).shrink(1);
@@ -148,8 +149,8 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase {
     }
 
     @Override
-    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
-        super.writeSyncableNBT(compound, type);
+    public void writeSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
+        super.writeSyncableNBT(compound, lookupProvider, type);
         if (type == NBTType.SAVE_TILE) {
             compound.putInt("ProcessTime", this.processTime);
         }
@@ -162,14 +163,14 @@ public class TileEntityEmpowerer extends TileEntityInventoryBase {
     }
 
     @Override
-    public void readSyncableNBT(CompoundTag compound, NBTType type) {
-        super.readSyncableNBT(compound, type);
+    public void readSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
+        super.readSyncableNBT(compound, lookupProvider, type);
         if (type == NBTType.SAVE_TILE) {
             this.processTime = compound.getInt("ProcessTime");
         }
         if (type == NBTType.SYNC && compound.contains("CurrentRecipe")) {
             if (!compound.getString("CurrentRecipe").isEmpty()) {
-                ResourceLocation id = new ResourceLocation(compound.getString("CurrentRecipe"));
+                ResourceLocation id = ResourceLocation.tryParse(compound.getString("CurrentRecipe"));
                 for (RecipeHolder<EmpowererRecipe> empowererRecipe : ActuallyAdditionsAPI.EMPOWERER_RECIPES) {
                     if (empowererRecipe.id().equals(id)) {
                         this.currentRecipe = empowererRecipe;

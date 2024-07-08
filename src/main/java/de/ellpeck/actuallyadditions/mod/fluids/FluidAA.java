@@ -24,7 +24,7 @@ import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.common.SoundActions;
 import net.neoforged.neoforge.fluids.BaseFlowingFluid;
@@ -56,8 +56,8 @@ public class FluidAA implements Supplier<Fluid> {
 
     public FluidAA(String fluidName, String textureName) {
         this.name = fluidName;
-        this.stillTexture = new ResourceLocation(ActuallyAdditions.MODID, "block/" + textureName + "_still");
-        this.flowingTexture = new ResourceLocation(ActuallyAdditions.MODID, "block/" + textureName + "_flowing");
+        this.stillTexture = ActuallyAdditions.modLoc("block/" + textureName + "_still");
+        this.flowingTexture = ActuallyAdditions.modLoc("block/" + textureName + "_flowing");
         this.fluidType = InitFluids.FLUID_TYPES.register(name, () -> new FluidType(createTypeProperties()) {
             @Override
             public void initializeClient(Consumer<IClientFluidTypeExtensions> consumer) {
@@ -78,8 +78,8 @@ public class FluidAA implements Supplier<Fluid> {
 
         source = InitFluids.FLUIDS.register(name, () ->  new BaseFlowingFluid.Source(createProperties(fluidType, source, flowing, bucket, fluidBlock)));
         flowing = InitFluids.FLUIDS.register(name + "_flowing", () -> new BaseFlowingFluid.Flowing(createProperties(fluidType, source, flowing, bucket, fluidBlock)));
-        fluidBlock = ActuallyBlocks.BLOCKS.register(name, () -> new LiquidBlock(source, BlockBehaviour.Properties.ofFullCopy(Blocks.WATER)));
-        bucket = ActuallyItems.ITEMS.register(name + "_bucket", () -> new BucketItem(source, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
+        fluidBlock = ActuallyBlocks.BLOCKS.register(name, () -> new LiquidBlock(source.get(), BlockBehaviour.Properties.ofFullCopy(Blocks.WATER)));
+        bucket = ActuallyItems.ITEMS.register(name + "_bucket", () -> new BucketItem(source.get(), new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
     }
 
     public FluidType getFluidType() {
@@ -107,7 +107,7 @@ public class FluidAA implements Supplier<Fluid> {
         return FluidType.Properties.create()
                 .canSwim(true)
                 .canDrown(true)
-                .pathType(BlockPathTypes.LAVA)
+                .pathType(PathType.LAVA)
                 .sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL)
                 .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY);
     }

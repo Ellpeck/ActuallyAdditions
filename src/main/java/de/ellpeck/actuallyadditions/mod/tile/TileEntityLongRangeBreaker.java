@@ -17,6 +17,7 @@ import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -48,8 +49,8 @@ public class TileEntityLongRangeBreaker extends TileEntityInventoryBase implemen
     }
 
     @Override
-    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
-        super.writeSyncableNBT(compound, type);
+    public void writeSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
+        super.writeSyncableNBT(compound, lookupProvider, type);
         this.storage.writeToNBT(compound);
         if (type != NBTType.SAVE_BLOCK) {
             compound.putInt("CurrentTime", this.currentTime);
@@ -57,8 +58,8 @@ public class TileEntityLongRangeBreaker extends TileEntityInventoryBase implemen
     }
 
     @Override
-    public void readSyncableNBT(CompoundTag compound, NBTType type) {
-        super.readSyncableNBT(compound, type);
+    public void readSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
+        super.readSyncableNBT(compound, lookupProvider, type);
         this.storage.readFromNBT(compound);
         if (type != NBTType.SAVE_BLOCK) {
             this.currentTime = compound.getInt("CurrentTime");
@@ -110,7 +111,7 @@ public class TileEntityLongRangeBreaker extends TileEntityInventoryBase implemen
                             this.level.levelEvent(2001, coordsBlock, Block.getId(this.level.getBlockState(coordsBlock)));
                             this.level.setBlockAndUpdate(coordsBlock, Blocks.AIR.defaultBlockState());
                             StackUtil.addAll(this.inv, drops, false);
-                            this.storage.extractEnergyInternal(ENERGY_USE, false);
+                            this.storage.extractEnergy(ENERGY_USE, false);
                             this.setChanged();
                         }
                     }

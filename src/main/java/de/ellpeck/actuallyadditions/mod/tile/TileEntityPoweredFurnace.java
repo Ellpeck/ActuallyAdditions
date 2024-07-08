@@ -11,7 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
-import de.ellpeck.actuallyadditions.mod.crafting.SingleItem;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFurnaceDouble;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
@@ -20,6 +19,7 @@ import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
@@ -29,6 +29,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -92,8 +93,8 @@ public class TileEntityPoweredFurnace extends TileEntityInventoryBase implements
     }
 
     @Override
-    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
-        super.writeSyncableNBT(compound, type);
+    public void writeSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
+        super.writeSyncableNBT(compound, lookupProvider, type);
         if (type != NBTType.SAVE_BLOCK) {
             compound.putInt("FirstSmeltTime", this.firstSmeltTime);
             compound.putInt("SecondSmeltTime", this.secondSmeltTime);
@@ -103,8 +104,8 @@ public class TileEntityPoweredFurnace extends TileEntityInventoryBase implements
     }
 
     @Override
-    public void readSyncableNBT(CompoundTag compound, NBTType type) {
-        super.readSyncableNBT(compound, type);
+    public void readSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
+        super.readSyncableNBT(compound, lookupProvider, type);
         if (type != NBTType.SAVE_BLOCK) {
             this.firstSmeltTime = compound.getInt("FirstSmeltTime");
             this.secondSmeltTime = compound.getInt("SecondSmeltTime");
@@ -140,7 +141,7 @@ public class TileEntityPoweredFurnace extends TileEntityInventoryBase implements
                         tile.finishBurning(SLOT_INPUT_1, SLOT_OUTPUT_1);
                         tile.firstSmeltTime = 0;
                     }
-                    tile.storage.extractEnergyInternal(ENERGY_USE, false);
+                    tile.storage.extractEnergy(ENERGY_USE, false);
                 }
                 smelted = true;
             } else {
@@ -154,7 +155,7 @@ public class TileEntityPoweredFurnace extends TileEntityInventoryBase implements
                         tile.finishBurning(SLOT_INPUT_2, SLOT_OUTPUT_2);
                         tile.secondSmeltTime = 0;
                     }
-                    tile.storage.extractEnergyInternal(ENERGY_USE, false);
+                    tile.storage.extractEnergy(ENERGY_USE, false);
                 }
                 smelted = true;
             } else {
@@ -193,11 +194,11 @@ public class TileEntityPoweredFurnace extends TileEntityInventoryBase implements
     }
 
     public Optional<ItemStack> getOutputForInput(ItemStack stack) {
-        return level.getServer().getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SingleItem(stack), level).map(recipe -> recipe.value().getResultItem(this.level.registryAccess()));
+        return level.getServer().getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SingleRecipeInput(stack), level).map(recipe -> recipe.value().getResultItem(this.level.registryAccess()));
     }
 
     public Optional<RecipeHolder<SmeltingRecipe>> getRecipeForInput(ItemStack stack) {
-        return level.getServer().getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SingleItem(stack), level);
+        return level.getServer().getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SingleRecipeInput(stack), level);
     }
 
     @Override

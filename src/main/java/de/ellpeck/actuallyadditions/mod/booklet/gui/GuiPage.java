@@ -35,7 +35,7 @@
 //import java.util.Collections;
 //import java.util.List;
 //
-//@OnlyIn(Dist.CLIENT)
+//
 //public class GuiPage extends GuiBooklet {
 //
 //    public final IBookletPage[] pages = new IBookletPage[2];

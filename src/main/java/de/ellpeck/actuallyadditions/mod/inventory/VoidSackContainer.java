@@ -7,7 +7,6 @@ import de.ellpeck.actuallyadditions.mod.items.Sack;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.tile.FilterSettings;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -65,11 +64,11 @@ public class VoidSackContainer extends AbstractContainerMenu implements IButtonR
 
         ItemStack stack = inventory.getSelected();
         if (!stack.isEmpty() && stack.getItem() instanceof Sack) {
-            if (stack.hasTag()) {
-                CompoundTag compound = stack.getOrCreateTag();
-                this.filter.readFromNBT(compound, "Filter");
-                this.autoInsert = compound.getBoolean("AutoInsert");
-            }
+//            if (stack.hasTag()) { TODO: IMPORTANT! RE_ENABLE FILTER READ
+//                CompoundTag compound = stack.getOrCreateTag();
+//                this.filter.readFromNBT(compound, "Filter");
+//                this.autoInsert = compound.getBoolean("AutoInsert");
+//            }
         }
     }
 
@@ -87,11 +86,11 @@ public class VoidSackContainer extends AbstractContainerMenu implements IButtonR
     @Override
     public void removed(@Nonnull Player player) {
         ItemStack stack = this.inventory.getSelected();
-        if (!stack.isEmpty() && stack.getItem() instanceof Sack) {
-            CompoundTag compound = stack.getOrCreateTag();
-            this.filter.writeToNBT(compound, "Filter");
-            compound.putBoolean("AutoInsert", this.autoInsert);
-        }
+//        if (!stack.isEmpty() && stack.getItem() instanceof Sack) {
+//            CompoundTag compound = stack.getOrCreateTag();
+//            this.filter.writeToNBT(compound, "Filter"); TODO: IMPORTANT! RE_ENABLE FILTER READ
+//            compound.putBoolean("AutoInsert", this.autoInsert);
+//        }
         super.removed(player);
     }
 

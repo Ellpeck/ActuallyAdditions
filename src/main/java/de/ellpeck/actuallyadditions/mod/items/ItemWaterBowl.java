@@ -10,13 +10,14 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
+import de.ellpeck.actuallyadditions.mod.components.ActuallyComponents;
+import de.ellpeck.actuallyadditions.mod.components.LastXY;
 import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -36,7 +37,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.event.EventHooks;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
 public class ItemWaterBowl extends ItemBase {
@@ -57,26 +57,23 @@ public class ItemWaterBowl extends ItemBase {
                     return;
                 }
 
-                InteractionResultHolder<ItemStack> result = EventHooks.onBucketUse(event.getEntity(), event.getLevel(), event.getItemStack(), trace);
-                if (result == null) {
-                    if (event.getEntity().mayUseItemAt(trace.getBlockPos().relative(trace.getDirection()), trace.getDirection(), event.getItemStack())) {
-                        BlockState state = event.getLevel().getBlockState(trace.getBlockPos());
+                if (event.getEntity().mayUseItemAt(trace.getBlockPos().relative(trace.getDirection()), trace.getDirection(), event.getItemStack())) {
+                    BlockState state = event.getLevel().getBlockState(trace.getBlockPos());
 
-                        if (state.getFluidState().is(Fluids.WATER) && state.getValue(BlockStateProperties.LEVEL) == 0) {
-                            event.getEntity().playSound(SoundEvents.BUCKET_FILL, 1.0F, 1.0F);
+                    if (state.getFluidState().is(Fluids.WATER) && state.getValue(BlockStateProperties.LEVEL) == 0) {
+                        event.getEntity().playSound(SoundEvents.BUCKET_FILL, 1.0F, 1.0F);
 
-                            if (!event.getLevel().isClientSide) {
-                                event.getLevel().setBlock(trace.getBlockPos(), Blocks.AIR.defaultBlockState(), 11);
-                                ItemStack reduced = StackUtil.shrink(event.getItemStack(), 1);
+                        if (!event.getLevel().isClientSide) {
+                            event.getLevel().setBlock(trace.getBlockPos(), Blocks.AIR.defaultBlockState(), 11);
+                            ItemStack reduced = StackUtil.shrink(event.getItemStack(), 1);
 
-                                ItemStack bowl = new ItemStack(ActuallyItems.WATER_BOWL.get());
-                                if (!StackUtil.isValid(reduced)) {
-                                    event.getEntity().setItemInHand(event.getHand(), bowl);
-                                } else if (!event.getEntity().getInventory().add(bowl.copy())) {
-                                    ItemEntity entityItem = new ItemEntity(event.getLevel(), event.getEntity().getX(), event.getEntity().getY(), event.getEntity().getZ(), bowl.copy());
-                                    entityItem.setPickUpDelay(0);
-                                    event.getLevel().addFreshEntity(entityItem);
-                                }
+                            ItemStack bowl = new ItemStack(ActuallyItems.WATER_BOWL.get());
+                            if (!StackUtil.isValid(reduced)) {
+                                event.getEntity().setItemInHand(event.getHand(), bowl);
+                            } else if (!event.getEntity().getInventory().add(bowl.copy())) {
+                                ItemEntity entityItem = new ItemEntity(event.getLevel(), event.getEntity().getX(), event.getEntity().getY(), event.getEntity().getZ(), bowl.copy());
+                                entityItem.setPickUpDelay(0);
+                                event.getLevel().addFreshEntity(entityItem);
                             }
                         }
                     }
@@ -90,10 +87,6 @@ public class ItemWaterBowl extends ItemBase {
         ItemStack stack = player.getItemInHand(hand);
 
         HitResult trace = player.pick(8.0D, 1.0F, false);
-        InteractionResultHolder<ItemStack> result = EventHooks.onBucketUse(player, world, stack, trace);
-        if (result != null) {
-            return result;
-        }
 
         if (trace == null) {
             return InteractionResultHolder.pass(stack);
@@ -131,10 +124,10 @@ public class ItemWaterBowl extends ItemBase {
                     int lastX = 0;
                     int lastY = 0;
 
-                    if (stack.hasTag()) {
-                        CompoundTag compound = stack.getOrCreateTag();
-                        lastX = compound.getInt("lastX");
-                        lastY = compound.getInt("lastY");
+                    if (stack.has(ActuallyComponents.LAST_XY)) {
+                        LastXY lastXY = stack.get(ActuallyComponents.LAST_XY);
+                        lastX = lastXY.x();
+                        lastY = lastXY.y();
                     }
 
                     boolean change = false;
@@ -150,9 +143,7 @@ public class ItemWaterBowl extends ItemBase {
                     }
 
                     if (change || lastX == 0 || lastY == 0) {
-                        CompoundTag compound = stack.getOrCreateTag();
-                        compound.putInt("lastX", (int) entity.getX());
-                        compound.putInt("lastY", (int) entity.getY());
+                        stack.set(ActuallyComponents.LAST_XY, new LastXY((int) entity.getX(), (int) entity.getY()));
                     }
                 }
             }

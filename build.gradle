@@ -3,7 +3,7 @@ plugins {
     id 'eclipse'
     id 'idea'
     id 'maven-publish'
-    id 'net.neoforged.gradle.userdev' version '7.0.134'
+    id 'net.neoforged.gradle.userdev' version '7.0.153'
 }
 
 def buildSuffix = System.getenv('BUILD_NUMBER') ? "-b${System.getenv('BUILD_NUMBER')}" : ""
@@ -14,7 +14,7 @@ base {
     archivesName = "ActuallyAdditions"
 }
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
 if (rootProject.file('src/main/resources/META-INF/accesstransformer.cfg').exists()) {
     minecraft.accessTransformers.file rootProject.file('src/main/resources/META-INF/accesstransformer.cfg')
@@ -83,12 +83,12 @@ dependencies {
     runtimeOnly "mezz.jei:jei-${game_version}-neoforge:${jei_version}"
 
     compileOnly "vazkii.patchouli:Patchouli:${patchouli_version}"
-    runtimeOnly "vazkii.patchouli:Patchouli:${patchouli_version}"
+//    runtimeOnly "vazkii.patchouli:Patchouli:${patchouli_version}"
     compileOnly "xyz.brassgoggledcoders:PatchouliProvider:${patchouli_provider_version}"
-    runtimeOnly "xyz.brassgoggledcoders:PatchouliProvider:${patchouli_provider_version}"
+//    runtimeOnly "xyz.brassgoggledcoders:PatchouliProvider:${patchouli_provider_version}"
 
-    runtimeOnly "curse.maven:jade-324717:5109393"
-    runtimeOnly "curse.maven:mekanism-268560:5155329"
+    runtimeOnly "curse.maven:jade-324717:5427817"
+    runtimeOnly "curse.maven:mekanism-268560:5433143"
 }
 
 jar {
@@ -172,6 +172,10 @@ publishing {
     }
 }
 
-tasks.withType(JavaCompile).configureEach {
-    options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
+// IDEA no longer automatically downloads sources/javadoc jars for dependencies, so we need to explicitly enable the behavior.
+idea {
+    module {
+        downloadSources = true
+        downloadJavadoc = true
+    }
 }

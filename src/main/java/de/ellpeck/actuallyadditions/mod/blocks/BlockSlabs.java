@@ -145,7 +145,7 @@
 //        }
 //
 //        @Override
-//        @OnlyIn(Dist.CLIENT)
+//        
 //        public boolean canPlaceBlockOnSide(World worldIn, BlockPos pos, Direction side, PlayerEntity player, ItemStack stack) {
 //            BlockState state = worldIn.getBlockState(pos);
 //

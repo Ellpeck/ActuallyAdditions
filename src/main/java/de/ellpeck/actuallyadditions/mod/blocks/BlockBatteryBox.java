@@ -15,7 +15,7 @@ import de.ellpeck.actuallyadditions.mod.items.ItemBattery;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBatteryBox;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
@@ -58,7 +58,7 @@ public class BlockBatteryBox extends BlockContainerBase {
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult pHitResult) {
         BlockEntity tile = world.getBlockEntity(pos);
         if (tile instanceof TileEntityBatteryBox box) {
 	        ItemStack stack = player.getItemInHand(hand);
@@ -67,17 +67,17 @@ public class BlockBatteryBox extends BlockContainerBase {
                 if (stack.getItem() instanceof ItemBattery && box.inv.getStackInSlot(0).isEmpty()) {
                     box.inv.setStackInSlot(0, stack.copy());
                     player.setItemInHand(hand, ItemStack.EMPTY);
-                    return InteractionResult.SUCCESS;
+                    return ItemInteractionResult.SUCCESS;
                 }
             } else {
                 ItemStack inSlot = box.inv.getStackInSlot(0);
                 if (!inSlot.isEmpty()) {
                     player.setItemInHand(hand, inSlot.copy());
                     box.inv.setStackInSlot(0, ItemStack.EMPTY);
-                    return InteractionResult.SUCCESS;
+                    return ItemInteractionResult.SUCCESS;
                 }
             }
         }
-        return InteractionResult.PASS;
+        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 }

@@ -34,13 +34,13 @@
 //
 //    @Override
 //    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
-//        super.writeSyncableNBT(compound, type);
+//        super.writeSyncableNBT(compound, lookupProvider, type);
 //        this.storage.writeToNBT(compound);
 //    }
 //
 //    @Override
 //    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
-//        super.readSyncableNBT(compound, type);
+//        super.readSyncableNBT(compound, lookupProvider, type);
 //        this.storage.readFromNBT(compound);
 //    }
 //
@@ -51,7 +51,7 @@
 //            int power = this.getPowerToGenerate(PRODUCE);
 //            if (this.level.isDay() && power > 0) {
 //                if (power <= this.storage.getMaxEnergyStored() - this.storage.getEnergyStored()) {
-//                    this.storage.receiveEnergyInternal(power, false);
+//                    this.storage.receiveEnergy(power, false);
 //                    this.setChanged();
 //                }
 //            }

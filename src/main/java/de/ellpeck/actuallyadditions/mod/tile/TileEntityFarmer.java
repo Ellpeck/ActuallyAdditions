@@ -23,6 +23,7 @@ import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -57,7 +58,7 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
     }
 
     @Override
-    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
+    public void writeSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
         if (type != NBTType.SAVE_BLOCK) {
             compound.putInt("WaitTime", this.waitTime);
         }
@@ -66,11 +67,11 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
             compound.putInt("CheckY", this.checkY);
         }
         this.storage.writeToNBT(compound);
-        super.writeSyncableNBT(compound, type);
+        super.writeSyncableNBT(compound, lookupProvider, type);
     }
 
     @Override
-    public void readSyncableNBT(CompoundTag compound, NBTType type) {
+    public void readSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
         if (type != NBTType.SAVE_BLOCK) {
             this.waitTime = compound.getInt("WaitTime");
         }
@@ -79,7 +80,7 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
             this.checkY = compound.getInt("CheckY");
         }
         this.storage.readFromNBT(compound);
-        super.readSyncableNBT(compound, type);
+        super.readSyncableNBT(compound, lookupProvider, type);
     }
 
     public static <T extends BlockEntity> void clientTick(Level level, BlockPos pos, BlockState state, T t) {
@@ -212,7 +213,7 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
 
     @Override
     public void extractEnergy(int amount) {
-        this.storage.extractEnergyInternal(amount, false);
+        this.storage.extractEnergy(amount, false);
     }
 
     @Override

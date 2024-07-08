@@ -11,7 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFeeder;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityFeeder;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
@@ -19,13 +18,11 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 import javax.annotation.Nonnull;
 import java.util.List;
 
-@OnlyIn(Dist.CLIENT)
+
 public class GuiFeeder extends AAScreen<ContainerFeeder> {
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_feeder");

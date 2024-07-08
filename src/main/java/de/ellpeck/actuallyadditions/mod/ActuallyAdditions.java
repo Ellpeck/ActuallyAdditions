@@ -11,12 +11,13 @@
 package de.ellpeck.actuallyadditions.mod;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.ActuallyTags;
 import de.ellpeck.actuallyadditions.api.farmer.IFarmerBehavior;
-import de.ellpeck.actuallyadditions.mod.attachments.ActuallyAttachments;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
+import de.ellpeck.actuallyadditions.mod.components.ActuallyComponents;
 import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import de.ellpeck.actuallyadditions.mod.config.conditions.BoolConfigCondition;
 import de.ellpeck.actuallyadditions.mod.crafting.ActuallyRecipes;
@@ -35,7 +36,6 @@ import de.ellpeck.actuallyadditions.mod.inventory.ActuallyContainers;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.items.Worm;
 import de.ellpeck.actuallyadditions.mod.lootmodifier.ActuallyLootModifiers;
-import de.ellpeck.actuallyadditions.mod.misc.BannerHelper;
 import de.ellpeck.actuallyadditions.mod.misc.apiimpl.LaserRelayConnectionHandler;
 import de.ellpeck.actuallyadditions.mod.misc.apiimpl.MethodHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
@@ -51,13 +51,13 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
+import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.ModLoadingContext;
+import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.config.ModConfigEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.conditions.ICondition;
 import net.neoforged.neoforge.common.world.BiomeModifier;
@@ -90,12 +90,12 @@ public class ActuallyAdditions {
     private static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(BuiltInRegistries.ENTITY_TYPE, MODID);
     public static final Supplier<EntityType<EntityWorm>> ENTITY_WORM = ENTITIES.register("worm", () -> EntityType.Builder.of(EntityWorm::new, MobCategory.MISC).build(MODID + ":worm"));
 
-    private static final DeferredRegister<Codec<? extends ICondition>> CONDITION_CODECS = DeferredRegister.create(NeoForgeRegistries.Keys.CONDITION_CODECS, MODID);
-    public static final DeferredHolder<Codec<? extends ICondition>, Codec<BoolConfigCondition>> BOOL_CONFIG_CONDITION = CONDITION_CODECS.register("bool_config_condition", () -> BoolConfigCondition.CODEC);
+    private static final DeferredRegister<MapCodec<? extends ICondition>> CONDITION_CODECS = DeferredRegister.create(NeoForgeRegistries.Keys.CONDITION_CODECS, MODID);
+    public static final DeferredHolder<MapCodec<? extends ICondition>, MapCodec<BoolConfigCondition>> BOOL_CONFIG_CONDITION = CONDITION_CODECS.register("bool_config_condition", () -> BoolConfigCondition.CODEC);
 
-    public static final DeferredRegister<Codec<? extends BiomeModifier>> BIOME_MODIFIER_SERIALIZERS = DeferredRegister.create(NeoForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, MODID);
-    public static final Supplier<Codec<BoolConfigFeatureBiomeModifier>> BOOL_CONFIG_MODIFIER = BIOME_MODIFIER_SERIALIZERS.register("bool_config_feature_modifier", () ->
-            RecordCodecBuilder.create(builder -> builder.group(
+    public static final DeferredRegister<MapCodec<? extends BiomeModifier>> BIOME_MODIFIER_SERIALIZERS = DeferredRegister.create(NeoForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, MODID);
+    public static final Supplier<MapCodec<BoolConfigFeatureBiomeModifier>> BOOL_CONFIG_MODIFIER = BIOME_MODIFIER_SERIALIZERS.register("bool_config_feature_modifier", () ->
+            RecordCodecBuilder.mapCodec(builder -> builder.group(
                     Biome.LIST_CODEC.fieldOf("biomes").forGetter(BoolConfigFeatureBiomeModifier::biomes),
                     PlacedFeature.LIST_CODEC.fieldOf("features").forGetter(BoolConfigFeatureBiomeModifier::features),
                     GenerationStep.Decoration.CODEC.fieldOf("step").forGetter(BoolConfigFeatureBiomeModifier::step),
@@ -105,8 +105,8 @@ public class ActuallyAdditions {
 
     public static boolean commonCapsLoaded;
 
-    public ActuallyAdditions(IEventBus eventBus) {
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CommonConfig.COMMON_CONFIG);
+    public ActuallyAdditions(IEventBus eventBus, ModContainer container, Dist dist) {
+        container.registerConfig(ModConfig.Type.COMMON, CommonConfig.COMMON_CONFIG);
 
         ActuallyBlocks.init(eventBus);
         ActuallyItems.init(eventBus);
@@ -115,9 +115,8 @@ public class ActuallyAdditions {
         AASounds.init(eventBus);
         ActuallyVillagers.init(eventBus);
         ActuallyPOITypes.init(eventBus);
-        ActuallyAttachments.init(eventBus);
+        ActuallyComponents.init(eventBus);
         ActuallyLootModifiers.init(eventBus);
-        BannerHelper.init(eventBus);
         ActuallyContainers.CONTAINERS.register(eventBus);
         ENTITIES.register(eventBus);
         CONDITION_CODECS.register(eventBus);
@@ -139,7 +138,7 @@ public class ActuallyAdditions {
         eventBus.addListener(PacketHandler::register);
         eventBus.addListener(this::setup);
 
-        if (FMLEnvironment.dist.isClient()) {
+        if (dist.isClient()) {
 	        eventBus.addListener(ActuallyAdditionsClient::setup);
             eventBus.addListener(ActuallyAdditionsClient::setupMenus);
 	        eventBus.addListener(ActuallyAdditionsClient::setupSpecialRenders);
@@ -167,8 +166,8 @@ public class ActuallyAdditions {
     }
 
     private void onConfigReload(ModConfigEvent event) {
-        Item item1 = BuiltInRegistries.ITEM.get(new ResourceLocation(CommonConfig.Other.REDSTONECONFIGURATOR.get()));
-        Item item2 = BuiltInRegistries.ITEM.get(new ResourceLocation(CommonConfig.Other.RELAYCONFIGURATOR.get()));
+        Item item1 = BuiltInRegistries.ITEM.get(ResourceLocation.tryParse(CommonConfig.Other.REDSTONECONFIGURATOR.get()));
+        Item item2 = BuiltInRegistries.ITEM.get(ResourceLocation.tryParse(CommonConfig.Other.RELAYCONFIGURATOR.get()));
         CommonConfig.Other.redstoneConfigureItem = item1 != null?item1: Items.AIR;
         CommonConfig.Other.relayConfigureItem = item2 != null?item2: Items.AIR;
     }
@@ -187,5 +186,9 @@ public class ActuallyAdditions {
     public void serverStopped(ServerStoppedEvent event) {
         // TODO: [port] check if this is needed
         WorldData.clear();
+    }
+
+    public static ResourceLocation modLoc(String path) {
+        return ResourceLocation.fromNamespaceAndPath(MODID, path);
     }
 }

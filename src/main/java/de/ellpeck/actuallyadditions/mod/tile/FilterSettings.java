@@ -10,18 +10,21 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import de.ellpeck.actuallyadditions.mod.attachments.ActuallyAttachments;
+import de.ellpeck.actuallyadditions.mod.components.ActuallyComponents;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFilter;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotFilter;
 import de.ellpeck.actuallyadditions.mod.items.DrillItem;
 import de.ellpeck.actuallyadditions.mod.items.ItemTag;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.item.Item;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.ItemStack;
 
 public class FilterSettings {
+
     public final ItemStackHandlerAA filterInventory;
     public boolean isWhitelist;
     public boolean respectMod;
@@ -73,13 +76,11 @@ public class FilterSettings {
                         }
                     }
                     else if (slot.getItem() instanceof ItemTag) {
-                        var data = slot.getExistingData(ActuallyAttachments.ITEM_TAG);
-                        if (data.isPresent()) {
-                            var tag = data.get().getTag();
-                            if (tag.isPresent()) {
-                                if (stack.is(tag.get())) {
-                                    return whitelist;
-                                }
+                        var tagLocation = slot.get(ActuallyComponents.ITEM_TAG);
+                        if (tagLocation != null) {
+                            var tag = TagKey.create(Registries.ITEM,tagLocation);
+                            if (stack.is(tag)) {
+                                return whitelist;
                             }
                         }
                     }
@@ -104,30 +105,30 @@ public class FilterSettings {
     }
 
     public static boolean checkItem(ItemStack first, ItemStack second, boolean nbt) {
-        return nbt? ItemStack.isSameItemSameTags(first, second) : ItemStack.isSameItem(first, second);
+        return nbt? ItemStack.isSameItemSameComponents(first, second) : ItemStack.isSameItem(first, second);
     }
 
     public static boolean checkMod(ItemStack first, ItemStack second) {
         return BuiltInRegistries.ITEM.getKey(first.getItem()).getNamespace().equals(BuiltInRegistries.ITEM.getKey(second.getItem()).getNamespace());
     }
 
-    public void writeToNBT(CompoundTag tag, String name) {
-        CompoundTag compound = new CompoundTag();
-        compound.putBoolean("Whitelist", this.isWhitelist);
-        compound.putBoolean("Mod", this.respectMod);
-        compound.putBoolean("Damage", this.matchDamage);
-        compound.putBoolean("NBT", this.matchNBT);
-        compound.put("Items", filterInventory.serializeNBT());
-        tag.put(name, compound);
+    public void writeToNBT(HolderLookup.Provider provider, CompoundTag tag, String name) {
+//        CompoundTag compound = new CompoundTag(); TODO: IMPORTANT! FIX THE FILTER SETTINGS!!!
+//        compound.putBoolean("Whitelist", this.isWhitelist);
+//        compound.putBoolean("Mod", this.respectMod);
+//        compound.putBoolean("Damage", this.matchDamage);
+//        compound.putBoolean("NBT", this.matchNBT);
+//        compound.put("Items", filterInventory.serializeNBT());
+//        tag.put(name, compound);
     }
 
-    public void readFromNBT(CompoundTag tag, String name) {
-        CompoundTag compound = tag.getCompound(name);
-        this.isWhitelist = compound.getBoolean("Whitelist");
-        this.respectMod = compound.getBoolean("Mod");
-        this.matchDamage = compound.getBoolean("Damage");
-        this.matchNBT = compound.getBoolean("NBT");
-        this.filterInventory.deserializeNBT(compound.getCompound("Items"));
+    public void readFromNBT(HolderLookup.Provider provider, CompoundTag tag, String name) {
+//        CompoundTag compound = tag.getCompound(name);
+//        this.isWhitelist = compound.getBoolean("Whitelist");
+//        this.respectMod = compound.getBoolean("Mod");
+//        this.matchDamage = compound.getBoolean("Damage");
+//        this.matchNBT = compound.getBoolean("NBT");
+//        this.filterInventory.deserializeNBT(compound.getCompound("Items"));
     }
 
     public boolean needsUpdateSend() {

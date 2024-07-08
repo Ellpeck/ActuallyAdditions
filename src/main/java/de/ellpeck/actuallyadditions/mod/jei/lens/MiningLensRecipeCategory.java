@@ -27,7 +27,7 @@ import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 
@@ -66,13 +66,13 @@ public class MiningLensRecipeCategory implements IRecipeCategory<MiningLensRecip
         if (level == null) {
             throw new NullPointerException("level must not be null.");
         }
-        RegistryAccess registryAccess = level.registryAccess();
+        HolderLookup.Provider registries = level.registryAccess();
 
         builder.addSlot(RecipeIngredientRole.INPUT, 5, 19).addIngredients(recipe.getInput());
         builder.addSlot(RecipeIngredientRole.INPUT, 27, 20).addItemStack(RECONSTRUCTOR);
         builder.addSlot(RecipeIngredientRole.INPUT, 43, 20).addItemStack(new ItemStack(ActuallyItems.LENS_OF_THE_MINER.get()));
 
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 66, 19).addItemStack(recipe.getResultItem(registryAccess));
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 66, 19).addItemStack(recipe.getResultItem(registries));
     }
 
     @Override

@@ -72,7 +72,7 @@ public class BlockShockSuppressor extends Block implements EntityBlock {
 
                     for (BlockPos pos : posesToRemove) {
                         if (suppressor.storage.getEnergyStored() >= use) {
-                            suppressor.storage.extractEnergyInternal(use, false);
+                            suppressor.storage.extractEnergy(use, false);
                             affectedBlocks.remove(pos);
                         } else {
                             break;
@@ -80,7 +80,7 @@ public class BlockShockSuppressor extends Block implements EntityBlock {
                     }
                     for (Entity entity : entitiesToRemove) {
                         if (suppressor.storage.getEnergyStored() >= use) {
-                            suppressor.storage.extractEnergyInternal(use, false);
+                            suppressor.storage.extractEnergy(use, false);
                             affectedEntities.remove(entity);
                         } else {
                             break;

@@ -51,7 +51,7 @@
 //    }
 //
 //    @Override
-//    @OnlyIn(Dist.CLIENT)
+//    
 //    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> list) {
 //        if (this.isInCreativeTab(tab)) {
 //            for (int j = 0; j < BlockCrystal.ALL_CRYSTALS.length; j++) {
@@ -68,7 +68,7 @@
 //    }
 //
 //    @Override
-//    @OnlyIn(Dist.CLIENT)
+//    
 //    public IItemColor getItemColor() {
 //        return (stack, tintIndex) -> {
 //            int damage = stack.getItemDamage();

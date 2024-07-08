@@ -1,26 +1,27 @@
 package de.ellpeck.actuallyadditions.mod.crafting;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.Container;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipeInput;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.Optional;
 
 
-public class LaserRecipe implements Recipe<Container> {
+public class LaserRecipe implements Recipe<RecipeInput> {
     public static String NAME = "laser";
     private ItemStack result;
     private Ingredient itemIngredient;
@@ -55,7 +56,7 @@ public class LaserRecipe implements Recipe<Container> {
 
     //nah
     @Override
-    public boolean matches(Container pInv, Level pLevel) {
+    public boolean matches(RecipeInput pInv, Level pLevel) {
         return false;
     }
 
@@ -65,7 +66,7 @@ public class LaserRecipe implements Recipe<Container> {
     }
 
     @Override
-    public ItemStack assemble(Container pInv, RegistryAccess pRegistryAccess) {
+    public ItemStack assemble(RecipeInput pInv, HolderLookup.Provider provider) {
         return result.copy();
     }
 
@@ -75,7 +76,7 @@ public class LaserRecipe implements Recipe<Container> {
     }
 
     @Override
-    public ItemStack getResultItem(RegistryAccess pRegistryAccess) {
+    public ItemStack getResultItem(HolderLookup.Provider provider) {
         return result;
     }
 
@@ -98,14 +99,27 @@ public class LaserRecipe implements Recipe<Container> {
     }
 
     public static class Serializer implements RecipeSerializer<LaserRecipe> {
-        private static final Codec<LaserRecipe> CODEC = RecordCodecBuilder.create(
+        private static final MapCodec<LaserRecipe> CODEC = RecordCodecBuilder.mapCodec(
                 instance -> instance.group(
-                                ItemStack.RESULT_CODEC.fieldOf("result").forGetter(recipe -> recipe.result),
+                                ItemStack.STRICT_CODEC.fieldOf("result").forGetter(recipe -> recipe.result),
                                 Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(recipe -> recipe.itemIngredient),
                                 Codec.INT.fieldOf("energy").forGetter(recipe -> recipe.energy)
                         )
                         .apply(instance, LaserRecipe::new)
         );
+        public static final StreamCodec<RegistryFriendlyByteBuf, LaserRecipe> STREAM_CODEC = StreamCodec.of(
+                LaserRecipe.Serializer::toNetwork, LaserRecipe.Serializer::fromNetwork
+        );
+
+        @Override
+        public MapCodec<LaserRecipe> codec() {
+            return CODEC;
+        }
+
+        @Override
+        public StreamCodec<RegistryFriendlyByteBuf, LaserRecipe> streamCodec() {
+            return STREAM_CODEC;
+        }
 
 //        @Override
 //        public LaserRecipe fromJson(@Nonnull ResourceLocation pRecipeId, @Nonnull JsonObject pJson) {
@@ -117,26 +131,17 @@ public class LaserRecipe implements Recipe<Container> {
 //            return new LaserRecipe(pRecipeId, result, ingredient, energy);
 //        }
 
-
-        @Override
-        public Codec<LaserRecipe> codec() {
-            return CODEC;
-        }
-
-        @Nullable
-        @Override
-        public LaserRecipe fromNetwork(@Nonnull FriendlyByteBuf pBuffer) {
-            Ingredient ingredient = Ingredient.fromNetwork(pBuffer);
+        public static LaserRecipe fromNetwork(@Nonnull RegistryFriendlyByteBuf pBuffer) {
+            Ingredient ingredient = Ingredient.CONTENTS_STREAM_CODEC.decode(pBuffer);
             int energy = pBuffer.readInt();
-            ItemStack result = pBuffer.readItem();
+            ItemStack result = ItemStack.STREAM_CODEC.decode(pBuffer);
             return new LaserRecipe(result, ingredient, energy);
         }
 
-        @Override
-        public void toNetwork(@Nonnull FriendlyByteBuf pBuffer, LaserRecipe pRecipe) {
-            pRecipe.itemIngredient.toNetwork(pBuffer);
+        public static void toNetwork(@Nonnull RegistryFriendlyByteBuf pBuffer, LaserRecipe pRecipe) {
+            Ingredient.CONTENTS_STREAM_CODEC.encode(pBuffer, pRecipe.itemIngredient);
             pBuffer.writeInt(pRecipe.energy);
-            pBuffer.writeItem(pRecipe.result);
+            ItemStack.STREAM_CODEC.encode(pBuffer, pRecipe.result);
         }
     }
 }

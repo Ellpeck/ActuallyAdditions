@@ -2,6 +2,7 @@ package de.ellpeck.actuallyadditions.data;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.crafting.CoffeeIngredientRecipe;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeOutput;
@@ -19,10 +20,11 @@ import net.neoforged.neoforge.common.conditions.NotCondition;
 import net.neoforged.neoforge.common.conditions.TagEmptyCondition;
 
 import javax.annotation.Nonnull;
+import java.util.concurrent.CompletableFuture;
 
 public class CoffeeIngredientGenerator extends RecipeProvider {
-    public CoffeeIngredientGenerator(PackOutput packOutput) {
-        super(packOutput);
+    public CoffeeIngredientGenerator(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+        super(packOutput, lookupProvider);
     }
 
     @Override
@@ -35,9 +37,9 @@ public class CoffeeIngredientGenerator extends RecipeProvider {
         buildIngredient(recipeOutput, Items.MILK_BUCKET, 0, "jei.actuallyadditions.coffee.extra.milk");
 
         //Pam's puts milk in a tag, so we'll use that
-        TagKey<Item> milkTag = ItemTags.create(new ResourceLocation("forge", "milk"));
+        TagKey<Item> milkTag = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "milk"));
         RecipeOutput tagOutput = recipeOutput.withConditions(new NotCondition(new TagEmptyCondition(milkTag.location())));
-        buildIngredient(tagOutput, new ResourceLocation(ActuallyAdditions.MODID, "coffee_ingredient/milk_tagged"),
+        buildIngredient(tagOutput, ActuallyAdditions.modLoc("coffee_ingredient/milk_tagged"),
                 Ingredient.of(milkTag), 0, "jei.actuallyadditions.coffee.extra.milk");
 
         buildIngredient(recipeOutput, Items.SUGAR, 4, new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 30, 0));
@@ -54,7 +56,7 @@ public class CoffeeIngredientGenerator extends RecipeProvider {
     }
 
     private void buildIngredient(RecipeOutput recipeOutput, ItemLike ingredient, int maxAmplifier, String extraText, MobEffectInstance... effects) {
-        ResourceLocation id = new ResourceLocation(ActuallyAdditions.MODID, "coffee_ingredient/" + getItemName(ingredient));
+        ResourceLocation id = ActuallyAdditions.modLoc("coffee_ingredient/" + getItemName(ingredient));
         NonNullList<CoffeeIngredientRecipe.EffectInstance> instances = NonNullList.create();
         for (MobEffectInstance effect : effects) {
             instances.add(new CoffeeIngredientRecipe.EffectInstance(effect));

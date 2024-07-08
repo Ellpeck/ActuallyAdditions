@@ -11,7 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerLaserRelayItemWhitelist;
 import de.ellpeck.actuallyadditions.mod.network.PacketClientToServer;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
@@ -27,15 +26,13 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.entity.player.Inventory;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
-@OnlyIn(Dist.CLIENT)
+
 public class GuiLaserRelayItemWhitelist extends AAScreen<ContainerLaserRelayItemWhitelist> {
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_laser_relay_item_whitelist");
@@ -91,7 +88,7 @@ public class GuiLaserRelayItemWhitelist extends AAScreen<ContainerLaserRelayItem
         data.putInt("ButtonID", id);
         data.putInt("PlayerID", Minecraft.getInstance().player.getId());
         data.putString("WorldID", Minecraft.getInstance().level.dimension().location().toString());
-        PacketDistributor.SERVER.noArg().send(new PacketClientToServer(data, PacketHandler.GUI_BUTTON_TO_CONTAINER_HANDLER));
+        PacketDistributor.sendToServer(new PacketClientToServer(data, PacketHandler.GUI_BUTTON_TO_CONTAINER_HANDLER));
     }
 
     @Override

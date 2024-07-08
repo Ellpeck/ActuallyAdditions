@@ -27,7 +27,7 @@
 //import java.io.IOException;
 //import java.util.List;
 //
-//@OnlyIn(Dist.CLIENT)
+//
 //public class GuiEntry extends GuiBooklet {
 //
 //    //The page in the entry. Say you have 2 more chapters than fit on one double page, then those 2 would be displayed on entryPage 1 instead.

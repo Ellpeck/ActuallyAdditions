@@ -16,7 +16,7 @@ import de.ellpeck.actuallyadditions.mod.crafting.ColorChangeRecipe;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
@@ -81,8 +81,8 @@ public class LensColor extends Lens {
         return false;
     }
 
-    private ItemStack tryConvert(ItemStack stack, RegistryAccess registryAccess) {
-        return ColorChangeRecipe.getRecipeForStack(stack).map(recipe -> recipe.value().getResultItem(registryAccess)).orElse(ItemStack.EMPTY);
+    private ItemStack tryConvert(ItemStack stack, HolderLookup.Provider registries) {
+        return ColorChangeRecipe.getRecipeForStack(stack).map(recipe -> recipe.value().getResultItem(registries)).orElse(ItemStack.EMPTY);
     }
 
     @Override

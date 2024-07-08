@@ -27,7 +27,7 @@
 //
 //import java.util.Locale;
 //
-//@OnlyIn(Dist.CLIENT)
+//
 //public class RenderSmileyCloud extends TileEntitySpecialRenderer<TileEntitySmileyCloud> {
 //
 //    @Override

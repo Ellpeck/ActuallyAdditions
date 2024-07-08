@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFeeder;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -54,8 +55,8 @@ public class TileEntityFeeder extends TileEntityInventoryBase implements MenuPro
     }
 
     @Override
-    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
-        super.writeSyncableNBT(compound, type);
+    public void writeSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
+        super.writeSyncableNBT(compound, lookupProvider, type);
         compound.putInt("Timer", this.currentTimer);
         if (type == NBTType.SYNC) {
             compound.putInt("Animals", this.currentAnimalAmount);
@@ -63,8 +64,8 @@ public class TileEntityFeeder extends TileEntityInventoryBase implements MenuPro
     }
 
     @Override
-    public void readSyncableNBT(CompoundTag compound, NBTType type) {
-        super.readSyncableNBT(compound, type);
+    public void readSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
+        super.readSyncableNBT(compound, lookupProvider, type);
         this.currentTimer = compound.getInt("Timer");
         if (type == NBTType.SYNC) {
             this.currentAnimalAmount = compound.getInt("Animals");

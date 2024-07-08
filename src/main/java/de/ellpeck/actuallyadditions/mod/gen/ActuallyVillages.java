@@ -67,23 +67,23 @@ public class ActuallyVillages {
 
 		//Add Engineer house to villages
 		addBuildingToPool(templatePoolRegistry, processorListRegistry,
-				new ResourceLocation("minecraft:village/plains/houses"),
+				ResourceLocation.tryParse("minecraft:village/plains/houses"),
 				ActuallyAdditions.MODID + ":andrew_period_house", 10);
 
 		addBuildingToPool(templatePoolRegistry, processorListRegistry,
-				new ResourceLocation("minecraft:village/snowy/houses"),
+				ResourceLocation.tryParse("minecraft:village/snowy/houses"),
 				ActuallyAdditions.MODID + ":andrew_period_house", 10);
 
 		addBuildingToPool(templatePoolRegistry, processorListRegistry,
-				new ResourceLocation("minecraft:village/savanna/houses"),
+				ResourceLocation.tryParse("minecraft:village/savanna/houses"),
 				ActuallyAdditions.MODID + ":andrew_period_house", 10);
 
 		addBuildingToPool(templatePoolRegistry, processorListRegistry,
-				new ResourceLocation("minecraft:village/taiga/houses"),
+				ResourceLocation.tryParse("minecraft:village/taiga/houses"),
 				ActuallyAdditions.MODID + ":andrew_period_house", 10);
 
 		addBuildingToPool(templatePoolRegistry, processorListRegistry,
-				new ResourceLocation("minecraft:village/desert/houses"),
+				ResourceLocation.tryParse("minecraft:village/desert/houses"),
 				ActuallyAdditions.MODID + ":andrew_period_house", 50);
 
 		//Add Actually Additions crops to village farms
@@ -94,21 +94,21 @@ public class ActuallyVillages {
 				new ProcessorRule(new RandomBlockMatchTest(Blocks.WHEAT, 0.05F), AlwaysTrueTest.INSTANCE, ActuallyBlocks.FLAX.get().defaultBlockState())
 		));
 
-		addNewRuleToProcessorList(new ResourceLocation("minecraft:farm_plains"), cropProcessor, processorListRegistry);
-		addNewRuleToProcessorList(new ResourceLocation("minecraft:farm_savanna"), cropProcessor, processorListRegistry);
-		addNewRuleToProcessorList(new ResourceLocation("minecraft:farm_snowy"), cropProcessor, processorListRegistry);
-		addNewRuleToProcessorList(new ResourceLocation("minecraft:farm_taiga"), cropProcessor, processorListRegistry);
-		addNewRuleToProcessorList(new ResourceLocation("minecraft:farm_desert"), cropProcessor, processorListRegistry);
+		addNewRuleToProcessorList(ResourceLocation.tryParse("minecraft:farm_plains"), cropProcessor, processorListRegistry);
+		addNewRuleToProcessorList(ResourceLocation.tryParse("minecraft:farm_savanna"), cropProcessor, processorListRegistry);
+		addNewRuleToProcessorList(ResourceLocation.tryParse("minecraft:farm_snowy"), cropProcessor, processorListRegistry);
+		addNewRuleToProcessorList(ResourceLocation.tryParse("minecraft:farm_taiga"), cropProcessor, processorListRegistry);
+		addNewRuleToProcessorList(ResourceLocation.tryParse("minecraft:farm_desert"), cropProcessor, processorListRegistry);
 
 		// Can target other mod's processor lists
-		addNewRuleToProcessorList(new ResourceLocation("repurposed_structures:villages/badlands/crop_replacement"), cropProcessor, processorListRegistry);
-		addNewRuleToProcessorList(new ResourceLocation("repurposed_structures:villages/birch/crop_randomizer"), cropProcessor, processorListRegistry);
-		addNewRuleToProcessorList(new ResourceLocation("repurposed_structures:villages/dark_forest/crop_randomizer"), cropProcessor, processorListRegistry);
-		addNewRuleToProcessorList(new ResourceLocation("repurposed_structures:villages/giant_taiga/crop_randomizer"), cropProcessor, processorListRegistry);
-		addNewRuleToProcessorList(new ResourceLocation("repurposed_structures:villages/jungle/crop_randomizer"), cropProcessor, processorListRegistry);
-		addNewRuleToProcessorList(new ResourceLocation("repurposed_structures:villages/mountains/crop_randomizer"), cropProcessor, processorListRegistry);
-		addNewRuleToProcessorList(new ResourceLocation("repurposed_structures:villages/oak/crop_randomizer"), cropProcessor, processorListRegistry);
-		addNewRuleToProcessorList(new ResourceLocation("repurposed_structures:villages/swamp/crop_randomizer"), cropProcessor, processorListRegistry);
+		addNewRuleToProcessorList(ResourceLocation.tryParse("repurposed_structures:villages/badlands/crop_replacement"), cropProcessor, processorListRegistry);
+		addNewRuleToProcessorList(ResourceLocation.tryParse("repurposed_structures:villages/birch/crop_randomizer"), cropProcessor, processorListRegistry);
+		addNewRuleToProcessorList(ResourceLocation.tryParse("repurposed_structures:villages/dark_forest/crop_randomizer"), cropProcessor, processorListRegistry);
+		addNewRuleToProcessorList(ResourceLocation.tryParse("repurposed_structures:villages/giant_taiga/crop_randomizer"), cropProcessor, processorListRegistry);
+		addNewRuleToProcessorList(ResourceLocation.tryParse("repurposed_structures:villages/jungle/crop_randomizer"), cropProcessor, processorListRegistry);
+		addNewRuleToProcessorList(ResourceLocation.tryParse("repurposed_structures:villages/mountains/crop_randomizer"), cropProcessor, processorListRegistry);
+		addNewRuleToProcessorList(ResourceLocation.tryParse("repurposed_structures:villages/oak/crop_randomizer"), cropProcessor, processorListRegistry);
+		addNewRuleToProcessorList(ResourceLocation.tryParse("repurposed_structures:villages/swamp/crop_randomizer"), cropProcessor, processorListRegistry);
 	}
 
 	private static void addNewRuleToProcessorList(ResourceLocation targetProcessorList, StructureProcessor processorToAdd, Registry<StructureProcessorList> processorListRegistry) {

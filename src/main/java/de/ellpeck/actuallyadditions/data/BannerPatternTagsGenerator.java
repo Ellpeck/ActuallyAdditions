@@ -18,9 +18,9 @@ public class BannerPatternTagsGenerator extends BannerPatternTagsProvider {
 
 	@Override
 	protected void addTags(HolderLookup.Provider pProvider) {
-		this.tag(ActuallyTags.BannerPatterns.PATTERN_DRILL).add(BannerHelper.DRILL.getKey());
-		this.tag(ActuallyTags.BannerPatterns.PATTERN_LEAF_BLO).add(BannerHelper.LEAF_BLO.getKey());
-		this.tag(ActuallyTags.BannerPatterns.PATTERN_PHAN_CON).add(BannerHelper.PHAN_CON.getKey());
-		this.tag(ActuallyTags.BannerPatterns.PATTERN_BOOK).add(BannerHelper.BOOK.getKey());
+		this.tag(ActuallyTags.BannerPatterns.PATTERN_DRILL).add(BannerHelper.DRILL);
+		this.tag(ActuallyTags.BannerPatterns.PATTERN_LEAF_BLO).add(BannerHelper.LEAF_BLO);
+		this.tag(ActuallyTags.BannerPatterns.PATTERN_PHAN_CON).add(BannerHelper.PHAN_CON);
+		this.tag(ActuallyTags.BannerPatterns.PATTERN_BOOK).add(BannerHelper.BOOK);
 	}
 }

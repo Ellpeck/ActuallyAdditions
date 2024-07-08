@@ -16,19 +16,20 @@ import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 
 import java.util.List;
-import java.util.Map;
 
 public class LensDisenchanting extends Lens {
 
@@ -53,7 +54,7 @@ public class LensDisenchanting extends Lens {
                                     return false;
                                 }
                             } else {
-                                Map<Enchantment, Integer> enchants = EnchantmentHelper.getEnchantments(stack);
+                                ItemEnchantments enchants = stack.getAllEnchantments(tile.getWorldObject().registryAccess().lookupOrThrow(Registries.ENCHANTMENT));
                                 if (enchants != null && !enchants.isEmpty()) {
                                     if (toDisenchant == null) {
                                         toDisenchant = item;
@@ -70,21 +71,20 @@ public class LensDisenchanting extends Lens {
                     ItemStack disenchantStack = toDisenchant.getItem();
                     ItemStack bookStack = book.getItem();
 
-                    Map<Enchantment, Integer> enchants = EnchantmentHelper.getEnchantments(disenchantStack);
+                    ItemEnchantments enchants = disenchantStack.getAllEnchantments(tile.getWorldObject().registryAccess().lookupOrThrow(Registries.ENCHANTMENT));
                     if (!enchants.isEmpty()) {
-                        Enchantment enchant = enchants.keySet().iterator().next();
-                        int level = enchants.get(enchant);
+                        Holder<Enchantment> enchant = enchants.keySet().iterator().next();
+                        int level = enchants.getLevel(enchant);
 
                         ItemStack newDisenchantStack = disenchantStack.copy();
                         ItemStack newBookStack;
                         if (bookStack.getItem() == Items.BOOK) {
-                            newBookStack = new ItemStack(Items.ENCHANTED_BOOK);
+                            newBookStack = EnchantedBookItem.createForEnchantment(new EnchantmentInstance(enchant, level));
                         } else {
                             newBookStack = bookStack.copy();
                         }
 
-                        ItemUtil.removeEnchantment(newDisenchantStack, enchant);
-                        EnchantedBookItem.addEnchantment(newBookStack, new EnchantmentInstance(enchant, level));
+                        ItemUtil.removeEnchantment(newDisenchantStack, enchant, tile.getWorldObject().registryAccess());
 
                         ItemEntity disenchanted = new ItemEntity(toDisenchant.getCommandSenderWorld(), toDisenchant.getX(), toDisenchant.getY(), toDisenchant.getZ(), newDisenchantStack);
                         ItemEntity newBook = new ItemEntity(book.getCommandSenderWorld(), book.getX(), book.getY(), book.getZ(), newBookStack);

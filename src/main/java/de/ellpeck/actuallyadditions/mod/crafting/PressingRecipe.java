@@ -1,13 +1,14 @@
 package de.ellpeck.actuallyadditions.mod.crafting;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.Container;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeInput;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
@@ -16,7 +17,7 @@ import net.neoforged.neoforge.fluids.FluidStack;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class PressingRecipe implements Recipe<Container> {
+public class PressingRecipe implements Recipe<RecipeInput> {
     public static final String NAME = "pressing";
     private final Ingredient input;
     private final FluidStack output;
@@ -27,7 +28,7 @@ public class PressingRecipe implements Recipe<Container> {
     }
 
     @Override
-    public boolean matches(@Nonnull Container pInv, @Nullable Level pLevel) {
+    public boolean matches(@Nonnull RecipeInput pInv, @Nullable Level pLevel) {
         return input.test(pInv.getItem(0));
     }
 
@@ -41,7 +42,7 @@ public class PressingRecipe implements Recipe<Container> {
     }
 
     @Override
-    public ItemStack assemble(Container pInv, RegistryAccess pRegistryAccess) {
+    public ItemStack assemble(RecipeInput pInv, HolderLookup.Provider provider) {
         return ItemStack.EMPTY;
     }
 
@@ -55,7 +56,7 @@ public class PressingRecipe implements Recipe<Container> {
     }
 
     @Override
-    public ItemStack getResultItem(RegistryAccess pRegistryAccess) {
+    public ItemStack getResultItem(HolderLookup.Provider provider) {
         return ItemStack.EMPTY;
     }
 
@@ -70,20 +71,33 @@ public class PressingRecipe implements Recipe<Container> {
     }
 
     public static class Serializer implements RecipeSerializer<PressingRecipe> {
-        private static final Codec<PressingRecipe> CODEC = RecordCodecBuilder.create(
+        private static final MapCodec<PressingRecipe> CODEC = RecordCodecBuilder.mapCodec(
                 instance -> instance.group(
                                 Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(recipe -> recipe.input),
                                 FluidStack.CODEC.fieldOf("fluid").forGetter(recipe -> recipe.output)
                         )
                         .apply(instance, PressingRecipe::new)
         );
+        public static final StreamCodec<RegistryFriendlyByteBuf, PressingRecipe> STREAM_CODEC = StreamCodec.of(
+                PressingRecipe.Serializer::toNetwork, PressingRecipe.Serializer::fromNetwork
+        );
+
+        @Override
+        public MapCodec<PressingRecipe> codec() {
+            return CODEC;
+        }
+
+        @Override
+        public StreamCodec<RegistryFriendlyByteBuf, PressingRecipe> streamCodec() {
+            return STREAM_CODEC;
+        }
 
 //        @Nonnull
 //        @Override
 //        public PressingRecipe fromJson(@Nonnull ResourceLocation pRecipeId, @Nonnull JsonObject pJson) {
 //            Ingredient ingredient = Ingredient.fromJson(GsonHelper.getAsJsonObject(pJson, "ingredient"));
 //            JsonObject result = pJson.getAsJsonObject("result");
-//            ResourceLocation fluidRes = new ResourceLocation(GsonHelper.getAsString(result, "fluid"));
+//            ResourceLocation fluidRes = ResourceLocation.tryParse(GsonHelper.getAsString(result, "fluid"));
 //            int fluidAmount = GsonHelper.getAsInt(result, "amount");
 //            Fluid fluid = BuiltInRegistries.FLUIDS.getValue(fluidRes);
 //            if(fluid == null)
@@ -93,24 +107,16 @@ public class PressingRecipe implements Recipe<Container> {
 //            return new PressingRecipe(pRecipeId, ingredient, output);
 //        }
 
-        @Override
-        public Codec<PressingRecipe> codec() {
-            return CODEC;
-        }
-
-        @Nullable
-        @Override
-        public PressingRecipe fromNetwork(@Nonnull FriendlyByteBuf pBuffer) {
-            Ingredient ingredient = Ingredient.fromNetwork(pBuffer);
-            FluidStack output = FluidStack.readFromPacket(pBuffer);
+        public static PressingRecipe fromNetwork(@Nonnull RegistryFriendlyByteBuf pBuffer) {
+            Ingredient ingredient = Ingredient.CONTENTS_STREAM_CODEC.decode(pBuffer);
+            FluidStack output = FluidStack.STREAM_CODEC.decode(pBuffer);
 
             return new PressingRecipe(ingredient, output);
         }
 
-        @Override
-        public void toNetwork(@Nonnull FriendlyByteBuf pBuffer, @Nonnull PressingRecipe pRecipe) {
-            pRecipe.input.toNetwork(pBuffer);
-            pRecipe.output.writeToPacket(pBuffer);
+        public static void toNetwork(@Nonnull RegistryFriendlyByteBuf pBuffer, @Nonnull PressingRecipe pRecipe) {
+            Ingredient.CONTENTS_STREAM_CODEC.encode(pBuffer, pRecipe.input);
+            FluidStack.STREAM_CODEC.encode(pBuffer, pRecipe.output);
         }
     }
 }

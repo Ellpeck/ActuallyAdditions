@@ -48,7 +48,7 @@
 //        this.color = TextFormatting.RESET;
 //    }
 //
-//    @OnlyIn(Dist.CLIENT)
+//    
 //    private static boolean fitsFilter(IBookletPage page, String searchBarText) {
 //        Minecraft mc = Minecraft.getInstance();
 //
@@ -96,13 +96,13 @@
 //    }
 //
 //    @Override
-//    @OnlyIn(Dist.CLIENT)
+//    
 //    public String getLocalizedName() {
 //        return StringUtil.localize("booklet.actuallyadditions.indexEntry." + this.getIdentifier() + ".name");
 //    }
 //
 //    @Override
-//    @OnlyIn(Dist.CLIENT)
+//    
 //    public String getLocalizedNameWithFormatting() {
 //        return this.color + this.getLocalizedName();
 //    }
@@ -113,7 +113,7 @@
 //    }
 //
 //    @Override
-//    @OnlyIn(Dist.CLIENT)
+//    
 //    public List<IBookletChapter> getChaptersForDisplay(String searchBarText) {
 //        if (searchBarText != null && !searchBarText.isEmpty()) {
 //            String search = searchBarText.toLowerCase(Locale.ROOT);
@@ -144,7 +144,7 @@
 //    }
 //
 //    @Override
-//    @OnlyIn(Dist.CLIENT)
+//    
 //    public boolean visibleOnFrontPage() {
 //        return true;
 //    }

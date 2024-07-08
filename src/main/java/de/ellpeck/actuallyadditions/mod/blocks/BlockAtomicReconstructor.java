@@ -19,17 +19,17 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -40,10 +40,6 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -61,10 +57,10 @@ public class BlockAtomicReconstructor extends FullyDirectionalBlock.Container im
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult pHitResult) {
         ItemStack heldItem = player.getItemInHand(hand);
         if (this.tryToggleRedstone(world, pos, player)) {
-            return InteractionResult.SUCCESS;
+            return ItemInteractionResult.SUCCESS;
         }
         if (!world.isClientSide) {
             TileEntityAtomicReconstructor reconstructor = (TileEntityAtomicReconstructor) world.getBlockEntity(pos);
@@ -78,20 +74,20 @@ public class BlockAtomicReconstructor extends FullyDirectionalBlock.Container im
                         if (!player.isCreative()) {
                             heldItem.shrink(1);
                         }
-                        return InteractionResult.CONSUME;
+                        return ItemInteractionResult.CONSUME;
                     }
                 } else {
                     ItemStack slot = reconstructor.inv.getStackInSlot(0);
                     if (!slot.isEmpty() && hand == InteractionHand.MAIN_HAND) {
                         player.setItemInHand(hand, slot.copy());
                         reconstructor.inv.setStackInSlot(0, ItemStack.EMPTY);
-                        return InteractionResult.CONSUME;
+                        return ItemInteractionResult.CONSUME;
                     }
                 }
             }
-            return InteractionResult.FAIL;
+            return ItemInteractionResult.FAIL;
         }
-        return InteractionResult.CONSUME;
+        return ItemInteractionResult.CONSUME;
     }
 
 /*    @Override
@@ -125,7 +121,7 @@ public class BlockAtomicReconstructor extends FullyDirectionalBlock.Container im
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
+    
     public void displayHud(GuiGraphics guiGraphics, Minecraft minecraft, Player player, ItemStack stack, HitResult rayCast, Window resolution) {
         if (!(rayCast instanceof BlockHitResult) || minecraft.level == null) {
             return;
@@ -158,10 +154,10 @@ public class BlockAtomicReconstructor extends FullyDirectionalBlock.Container im
             block = blockIn;
         }
 
-        @OnlyIn(Dist.CLIENT)
+        
         @Override
-        public void appendHoverText(@Nonnull ItemStack pStack, @Nullable Level pLevel, @Nonnull List<Component> pTooltip, @Nonnull TooltipFlag pFlag) {
-            super.appendHoverText(pStack, pLevel, pTooltip, pFlag);
+        public void appendHoverText(@Nonnull ItemStack pStack, @Nullable TooltipContext context, @Nonnull List<Component> pTooltip, @Nonnull TooltipFlag pFlag) {
+            super.appendHoverText(pStack, context, pTooltip, pFlag);
 
             long sysTime = System.currentTimeMillis();
 
@@ -177,18 +173,18 @@ public class BlockAtomicReconstructor extends FullyDirectionalBlock.Container im
             String base = block.getDescriptionId() + ".info.";
             pTooltip.add(Component.translatable(base + "1." + this.toPick1).append(" ").append(Component.translatable(base + "2." + this.toPick2)).withStyle(s -> s.withColor(ChatFormatting.GRAY)));
 
-            if (pStack.hasTag() && pStack.getTag().contains("BlockEntityTag")) {
-                CompoundTag BET = pStack.getTag().getCompound("BlockEntityTag");
+            if (pStack.has(DataComponents.CUSTOM_DATA) ) {
+                CustomData customData = pStack.get(DataComponents.CUSTOM_DATA);
                 int energy = 0;
-                if (BET.contains("Energy")) {
-                    energy = BET.getInt("Energy");
+                if (customData.contains("Energy")) {
+                    energy = customData.copyTag().getInt("Energy");
                 }
                 NumberFormat format = NumberFormat.getInstance();
                 pTooltip.add(Component.translatable("misc.actuallyadditions.power_single", format.format(energy)).withStyle(ChatFormatting.GRAY));
 
-                if (BET.contains("IsPulseMode")) {
+                if (customData.contains("IsPulseMode")) {
                     pTooltip.add(Component.translatable("info.actuallyadditions.redstoneMode").append(": ")
-                            .append(Component.translatable(BET.getBoolean("IsPulseMode")?"info.actuallyadditions.redstoneMode.pulse":"info.actuallyadditions.redstoneMode.deactivation").withStyle($ -> $.withColor(ChatFormatting.RED))));
+                            .append(Component.translatable(customData.copyTag().getBoolean("IsPulseMode")?"info.actuallyadditions.redstoneMode.pulse":"info.actuallyadditions.redstoneMode.deactivation").withStyle($ -> $.withColor(ChatFormatting.RED))));
                 }
             }
         }

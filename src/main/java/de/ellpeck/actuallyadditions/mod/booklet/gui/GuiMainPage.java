@@ -35,7 +35,7 @@
 //import java.util.List;
 //
 ////TODO Fix achievement button
-//@OnlyIn(Dist.CLIENT)
+//
 //public class GuiMainPage extends GuiBooklet {
 //
 //

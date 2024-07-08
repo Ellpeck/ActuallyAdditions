@@ -35,7 +35,7 @@
 //import java.util.List;
 //import java.util.stream.Collectors;
 //
-//@OnlyIn(Dist.CLIENT)
+//
 //public class BookmarkButton extends Button {
 //
 //    private final GuiBooklet booklet;

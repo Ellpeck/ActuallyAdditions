@@ -22,14 +22,12 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 import javax.annotation.Nonnull;
 
 
-@OnlyIn(Dist.CLIENT)
+
 public class GuiRangedCollector extends AAScreen<ContainerRangedCollector> {
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_ranged_collector");
@@ -82,7 +80,7 @@ public class GuiRangedCollector extends AAScreen<ContainerRangedCollector> {
         data.putInt("X", this.collector.getBlockPos().getX());
         data.putInt("Y", this.collector.getBlockPos().getY());
         data.putInt("Z", this.collector.getBlockPos().getZ());
-        PacketDistributor.SERVER.noArg().send(new PacketClientToServer(data, PacketHandler.GUI_BUTTON_TO_TILE_HANDLER));
+        PacketDistributor.sendToServer(new PacketClientToServer(data, PacketHandler.GUI_BUTTON_TO_TILE_HANDLER));
     }
 
 }

@@ -1,24 +1,25 @@
 package de.ellpeck.actuallyadditions.mod.crafting;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.Container;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.Level;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Optional;
 
-public class ColorChangeRecipe implements Recipe<Container> {
+public class ColorChangeRecipe implements Recipe<SingleRecipeInput> {
     public static final String NAME = "color_change";
 
     private final Ingredient input;
@@ -30,8 +31,8 @@ public class ColorChangeRecipe implements Recipe<Container> {
     }
 
     @Override
-    public boolean matches(@Nonnull Container pInv, @Nonnull Level pLevel) {
-        return input.test(pInv.getItem(0));
+    public boolean matches(@Nonnull SingleRecipeInput input, @Nonnull Level pLevel) {
+        return this.input.test(input.getItem(0));
     }
 
     public boolean matches(ItemStack stack) {
@@ -45,7 +46,7 @@ public class ColorChangeRecipe implements Recipe<Container> {
 
     @Nonnull
     @Override
-    public ItemStack assemble(Container pInv, RegistryAccess pRegistryAccess) {
+    public ItemStack assemble(SingleRecipeInput input, HolderLookup.Provider provider) {
         return output.copy();
     }
 
@@ -60,7 +61,7 @@ public class ColorChangeRecipe implements Recipe<Container> {
 
     @Nonnull
     @Override
-    public ItemStack getResultItem(RegistryAccess pRegistryAccess) {
+    public ItemStack getResultItem(HolderLookup.Provider provider) {
         return output.copy();
     }
 
@@ -76,40 +77,38 @@ public class ColorChangeRecipe implements Recipe<Container> {
     }
 
     public static class Serializer implements RecipeSerializer<ColorChangeRecipe> {
-        private static final Codec<ColorChangeRecipe> CODEC = RecordCodecBuilder.create(
+        private static final MapCodec<ColorChangeRecipe> CODEC = RecordCodecBuilder.mapCodec(
                 instance -> instance.group(
-                                ItemStack.ITEM_WITH_COUNT_CODEC.fieldOf("result").forGetter(recipe -> recipe.output),
+                                ItemStack.STRICT_CODEC.fieldOf("result").forGetter(recipe -> recipe.output),
                                 Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(recipe -> recipe.input)
                         )
                         .apply(instance, ColorChangeRecipe::new)
         );
-
-//        @Override
-//        public ColorChangeRecipe fromJson(@Nonnull ResourceLocation pRecipeId, @Nonnull JsonObject pJson) {
-//            Ingredient ingredient = Ingredient.fromJson(GsonHelper.getAsJsonObject(pJson, "ingredient"));
-//            JsonObject resultObject = GsonHelper.getAsJsonObject(pJson, "result");
-//            ItemStack result = new ItemStack(GsonHelper.getAsItem(resultObject, "item"));
-//
-//            return new ColorChangeRecipe(pRecipeId, result, ingredient);
-//        }
+        public static final StreamCodec<RegistryFriendlyByteBuf, ColorChangeRecipe> STREAM_CODEC = StreamCodec.of(
+                ColorChangeRecipe.Serializer::toNetwork, ColorChangeRecipe.Serializer::fromNetwork
+        );
 
         @Override
-        public Codec<ColorChangeRecipe> codec() {
+        public MapCodec<ColorChangeRecipe> codec() {
             return CODEC;
         }
 
-        @Nullable
         @Override
-        public ColorChangeRecipe fromNetwork(@Nonnull FriendlyByteBuf pBuffer) {
-            Ingredient ingredient = Ingredient.fromNetwork(pBuffer);
-            ItemStack result = pBuffer.readItem();
+        public StreamCodec<RegistryFriendlyByteBuf, ColorChangeRecipe> streamCodec() {
+            return STREAM_CODEC;
+        }
+
+        @Nullable
+        public static ColorChangeRecipe fromNetwork(@Nonnull RegistryFriendlyByteBuf pBuffer) {
+            Ingredient ingredient = Ingredient.CONTENTS_STREAM_CODEC.decode(pBuffer);
+
+            ItemStack result = ItemStack.STREAM_CODEC.decode(pBuffer);
             return new ColorChangeRecipe(result, ingredient);
         }
 
-        @Override
-        public void toNetwork(@Nonnull FriendlyByteBuf pBuffer, ColorChangeRecipe pRecipe) {
-            pRecipe.input.toNetwork(pBuffer);
-            pBuffer.writeItem(pRecipe.output);
+        public static void toNetwork(@Nonnull RegistryFriendlyByteBuf pBuffer, ColorChangeRecipe pRecipe) {
+            Ingredient.CONTENTS_STREAM_CODEC.encode(pBuffer, pRecipe.input);
+            ItemStack.STREAM_CODEC.encode(pBuffer, pRecipe.output);
         }
     }
 }

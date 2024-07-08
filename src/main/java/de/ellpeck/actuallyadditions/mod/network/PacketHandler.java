@@ -23,7 +23,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
@@ -32,12 +31,9 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.neoforge.network.PacketDistributor;
-import net.neoforged.neoforge.network.event.RegisterPayloadHandlerEvent;
-import net.neoforged.neoforge.network.handling.PlayPayloadContext;
-import net.neoforged.neoforge.network.registration.IPayloadRegistrar;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
+import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,30 +43,30 @@ public final class PacketHandler {
     public static final List<IDataHandler> DATA_HANDLERS = new ArrayList<>();
     public static final IDataHandler LASER_HANDLER = new IDataHandler() {
         @Override
-        @OnlyIn(Dist.CLIENT)
-        public void handleData(CompoundTag compound, PlayPayloadContext context) {
+        
+        public void handleData(CompoundTag compound, IPayloadContext context) {
             AssetUtil.spawnLaserWithTimeClient(compound.getDouble("StartX"), compound.getDouble("StartY"), compound.getDouble("StartZ"), compound.getDouble("EndX"), compound.getDouble("EndY"), compound.getDouble("EndZ"), compound.getInt("Color"), compound.getInt("MaxAge"), compound.getDouble("RotationTime"), compound.getFloat("Size"), compound.getFloat("Alpha"));
         }
     };
     public static final IDataHandler TILE_ENTITY_HANDLER = new IDataHandler() {
         @Override
-        @OnlyIn(Dist.CLIENT)
-        public void handleData(CompoundTag compound, PlayPayloadContext context) {
+        
+        public void handleData(CompoundTag compound, IPayloadContext context) {
             Level world = Minecraft.getInstance().level;
             if (world != null) {
                 BlockEntity tile = world.getBlockEntity(new BlockPos(compound.getInt("X"), compound.getInt("Y"), compound.getInt("Z")));
                 if (tile instanceof TileEntityBase) {
-                    ((TileEntityBase) tile).readSyncableNBT(compound.getCompound("Data"), TileEntityBase.NBTType.SYNC);
+                    ((TileEntityBase) tile).readSyncableNBT(compound.getCompound("Data"), world.registryAccess(), TileEntityBase.NBTType.SYNC);
                 }
             }
         }
     };
     public static final IDataHandler LASER_PARTICLE_HANDLER = new IDataHandler() {
         @Override
-        @OnlyIn(Dist.CLIENT)
-        public void handleData(CompoundTag compound, PlayPayloadContext context) {
+        
+        public void handleData(CompoundTag compound, IPayloadContext context) {
             Minecraft mc = Minecraft.getInstance();
-            ItemStack stack = ItemStack.of(compound);
+            ItemStack stack = ItemStack.parseOptional(context.player().registryAccess(), compound);
 
             double inX = compound.getDouble("InX") + 0.5;
             double inY = compound.getDouble("InY") + 0.78;
@@ -88,9 +84,9 @@ public final class PacketHandler {
         }
     };
     public static final IDataHandler GUI_BUTTON_TO_TILE_HANDLER = (compound, context) -> {
-        if (context.player().isPresent()) {
-            Player player = context.player().get();
-            Level level = player.getServer().getLevel(ResourceKey.create(Registries.DIMENSION, new ResourceLocation(compound.getString("WorldID"))));
+        if (context.player() != null) {
+            Player player = context.player();
+            Level level = player.getServer().getLevel(ResourceKey.create(Registries.DIMENSION, ResourceLocation.tryParse(compound.getString("WorldID"))));
             BlockEntity tile = level.getBlockEntity(new BlockPos(compound.getInt("X"), compound.getInt("Y"), compound.getInt("Z")));
 
             if (tile instanceof IButtonReactor reactor) {
@@ -102,9 +98,9 @@ public final class PacketHandler {
         }
     };
     public static final IDataHandler GUI_BUTTON_TO_CONTAINER_HANDLER = (compound, context) -> {
-        if (context.player().isPresent()) {
-            Player player = context.player().get();
-            Level level = player.getServer().getLevel(ResourceKey.create(Registries.DIMENSION, new ResourceLocation(compound.getString("WorldID"))));
+        if (context.player() != null) {
+            Player player = context.player();
+            Level level = player.getServer().getLevel(ResourceKey.create(Registries.DIMENSION, ResourceLocation.tryParse(compound.getString("WorldID"))));
             Entity entity = level.getEntity(compound.getInt("PlayerID"));
             if (entity instanceof Player p) {
                 AbstractContainerMenu container = p.containerMenu;
@@ -115,9 +111,9 @@ public final class PacketHandler {
         }
     };
     public static final IDataHandler GUI_NUMBER_TO_TILE_HANDLER = (compound, context) -> {
-        if (context.player().isPresent()) {
-            Player player = context.player().get();
-            Level level = player.getServer().getLevel(ResourceKey.create(Registries.DIMENSION, new ResourceLocation(compound.getString("WorldID"))));
+        if (context.player() != null) {
+            Player player = context.player();
+            Level level = player.getServer().getLevel(ResourceKey.create(Registries.DIMENSION, ResourceLocation.tryParse(compound.getString("WorldID"))));
             BlockEntity tile = level.getBlockEntity(new BlockPos(compound.getInt("X"), compound.getInt("Y"), compound.getInt("Z")));
 
             if (tile instanceof INumberReactor reactor) {
@@ -126,9 +122,9 @@ public final class PacketHandler {
         }
     };
     public static final IDataHandler GUI_STRING_TO_TILE_HANDLER = (compound, context) -> {
-        if (context.player().isPresent()) {
-            Player player = context.player().get();
-            Level level = player.getServer().getLevel(ResourceKey.create(Registries.DIMENSION, new ResourceLocation(compound.getString("WorldID"))));
+        if (context.player() != null) {
+            Player player = context.player();
+            Level level = player.getServer().getLevel(ResourceKey.create(Registries.DIMENSION, ResourceLocation.tryParse(compound.getString("WorldID"))));
             BlockEntity tile = level.getBlockEntity(new BlockPos(compound.getInt("X"), compound.getInt("Y"), compound.getInt("Z")));
 
             if (tile instanceof IStringReactor reactor) {
@@ -138,10 +134,10 @@ public final class PacketHandler {
     };
     public static final IDataHandler SYNC_PLAYER_DATA = new IDataHandler() {
         @Override
-        @OnlyIn(Dist.CLIENT)
-        public void handleData(CompoundTag compound, PlayPayloadContext context) {
+        
+        public void handleData(CompoundTag compound, IPayloadContext context) {
             CompoundTag dataTag = compound.getCompound("Data");
-            Player player = context.player().orElse(null); //ActuallyAdditions.PROXY.getCurrentPlayer();
+            Player player = context.player(); //ActuallyAdditions.PROXY.getCurrentPlayer();
 
             if (player != null) {
                 PlayerData.getDataFromPlayer(player).readFromNBT(dataTag, false);
@@ -155,8 +151,8 @@ public final class PacketHandler {
         }
     };
     public static final IDataHandler PLAYER_DATA_TO_SERVER = (compound, context) -> {
-        if (context.player().isPresent()) {
-            Level level = context.player().get().getServer().getLevel(ResourceKey.create(Registries.DIMENSION, new ResourceLocation(compound.getString("World"))));
+        if (context.player() != null) {
+            Level level = context.player().getServer().getLevel(ResourceKey.create(Registries.DIMENSION, ResourceLocation.tryParse(compound.getString("World"))));
             Player player = level.getServer().getPlayerList().getPlayer(compound.getUUID("UUID"));
             if (player != null) {
                 PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(player);
@@ -184,13 +180,11 @@ public final class PacketHandler {
         }
     };
 
-    public static void register(final RegisterPayloadHandlerEvent event) {
-        final IPayloadRegistrar registrar = event.registrar(ActuallyAdditions.MODID);
+    public static void register(final RegisterPayloadHandlersEvent event) {
+        final PayloadRegistrar registrar = event.registrar(ActuallyAdditions.MODID);
 
-        registrar.play(PacketServerToClient.ID, PacketServerToClient::new, handler -> handler
-                .client(PacketServerToClient::handle));
-        registrar.play(PacketClientToServer.ID, PacketClientToServer::new, handler -> handler
-                .server(PacketClientToServer::handle));
+        registrar.playToClient(PacketServerToClient.ID, PacketServerToClient.CODEC, PacketServerToClient::handle);
+        registrar.playToServer(PacketClientToServer.ID, PacketClientToServer.CODEC, PacketClientToServer::handle);
 
         DATA_HANDLERS.add(LASER_HANDLER);
         DATA_HANDLERS.add(TILE_ENTITY_HANDLER);
@@ -201,9 +195,5 @@ public final class PacketHandler {
         DATA_HANDLERS.add(GUI_BUTTON_TO_CONTAINER_HANDLER);
         DATA_HANDLERS.add(LASER_PARTICLE_HANDLER);
         DATA_HANDLERS.add(PLAYER_DATA_TO_SERVER);
-    }
-
-    public static void send(CustomPacketPayload msg, PacketDistributor.PacketTarget target) {
-        target.send(msg);
     }
 }

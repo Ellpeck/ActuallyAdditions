@@ -10,7 +10,11 @@
 
 package de.ellpeck.actuallyadditions.mod.util;
 
+import de.ellpeck.actuallyadditions.mod.components.ActuallyComponents;
+import net.minecraft.core.Holder;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
@@ -18,13 +22,12 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-
-import java.util.Map;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
 
 public final class ItemUtil {
 
     public static Item getItemFromName(String name) {
-        return BuiltInRegistries.ITEM.get(new ResourceLocation(name));
+        return BuiltInRegistries.ITEM.get(ResourceLocation.tryParse(name));
     }
 
     //    public static boolean contains(ItemStack[] array, ItemStack stack, boolean checkWildcard) {
@@ -60,26 +63,28 @@ public final class ItemUtil {
     //    }
 
     @Deprecated
-    public static void addEnchantment(ItemStack stack, Enchantment e, int level) {
-        if (!EnchantmentHelper.getEnchantments(stack).containsKey(e)) {
+    public static void addEnchantment(ItemStack stack, Holder<Enchantment> e, int level, RegistryAccess lookup) {
+        if (!(stack.getAllEnchantments(lookup.lookupOrThrow(Registries.ENCHANTMENT)).getLevel(e) > 0)) {
             stack.enchant(e, level);
         }
     }
 
     // TODO: [port] ensure this still works :D
-    public static void removeEnchantment(ItemStack stack, Enchantment e) {
-        Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(stack);
-        enchantments.remove(e);
+    public static void removeEnchantment(ItemStack stack, Holder<Enchantment> e, RegistryAccess registryAccess) {
+        ItemEnchantments enchantments = stack.getAllEnchantments(registryAccess.lookupOrThrow(Registries.ENCHANTMENT));
+        ItemEnchantments.Mutable itemenchantments$mutable = new ItemEnchantments.Mutable(enchantments);
 
-        EnchantmentHelper.setEnchantments(enchantments, stack);
+        itemenchantments$mutable.removeIf((enchantment) -> enchantment == e);
+
+        EnchantmentHelper.setEnchantments(stack, itemenchantments$mutable.toImmutable());
     }
 
     public static boolean canBeStacked(ItemStack stack1, ItemStack stack2) {
-        return ItemStack.isSameItemSameTags(stack1, stack2);
+        return ItemStack.isSameItemSameComponents(stack1, stack2);
     }
 
     public static boolean isEnabled(ItemStack stack) {
-        return stack.getOrCreateTag().getBoolean("IsEnabled");
+        return stack.getOrDefault(ActuallyComponents.ENABLED, false);
     }
 
     public static void changeEnabled(Player player, InteractionHand hand) {
@@ -88,6 +93,6 @@ public final class ItemUtil {
 
     public static void changeEnabled(ItemStack stack) {
         boolean isEnabled = isEnabled(stack);
-        stack.getOrCreateTag().putBoolean("IsEnabled", !isEnabled);
+        stack.set(ActuallyComponents.ENABLED, !isEnabled);
     }
 }

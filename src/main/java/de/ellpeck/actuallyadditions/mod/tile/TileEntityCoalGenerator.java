@@ -19,6 +19,7 @@ import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -31,9 +32,6 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.neoforge.common.CommonHooks;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 
 import javax.annotation.Nullable;
@@ -53,18 +51,18 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
         super(ActuallyBlocks.COAL_GENERATOR.getTileEntityType(), pos, state, 1);
     }
 
-    @OnlyIn(Dist.CLIENT)
+    
     public int getEnergyScaled(int i) {
         return this.storage.getEnergyStored() * i / this.storage.getMaxEnergyStored();
     }
 
-    @OnlyIn(Dist.CLIENT)
+    
     public int getBurningScaled(int i) {
         return this.currentBurnTime * i / this.maxBurnTime;
     }
 
     @Override
-    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
+    public void writeSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
         if (type != NBTType.SAVE_BLOCK) {
             compound.putInt("BurnTime", this.currentBurnTime);
             compound.putInt("MaxBurnTime", this.maxBurnTime);
@@ -72,16 +70,16 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
                 compound.putString("currentRecipe", currentRecipe.id().toString());
         }
         this.storage.writeToNBT(compound);
-        super.writeSyncableNBT(compound, type);
+        super.writeSyncableNBT(compound, lookupProvider, type);
     }
 
     @Override
-    public void readSyncableNBT(CompoundTag compound, NBTType type) {
+    public void readSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
         if (type != NBTType.SAVE_BLOCK) {
             this.currentBurnTime = compound.getInt("BurnTime");
             this.maxBurnTime = compound.getInt("MaxBurnTime");
             if (compound.contains("currentRecipe")) {
-                ResourceLocation id = new ResourceLocation(compound.getString("currentRecipe"));
+                ResourceLocation id = ResourceLocation.tryParse(compound.getString("currentRecipe"));
                 for (RecipeHolder<SolidFuelRecipe> fuelRecipe : ActuallyAdditionsAPI.SOLID_FUEL_RECIPES) {
                     if (fuelRecipe.id().equals(id)) {
                         this.currentRecipe = fuelRecipe;
@@ -91,7 +89,7 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
             }
         }
         this.storage.readFromNBT(compound);
-        super.readSyncableNBT(compound, type);
+        super.readSyncableNBT(compound, lookupProvider, type);
     }
 
     public static <T extends BlockEntity> void clientTick(Level level, BlockPos pos, BlockState state, T t) {
@@ -110,7 +108,7 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
                 tile.currentBurnTime--;
                 int produce = tile.currentRecipe.value().getTotalEnergy() / tile.currentRecipe.value().getBurnTime();
                 if (produce > 0) {
-                    tile.storage.receiveEnergyInternal(produce, false);
+                    tile.storage.receiveEnergy(produce, false);
                 }
             }
 
@@ -162,7 +160,7 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
             if (!automation) {
                 return true;
             }
-            return CommonHooks.getBurnTime(this.inv.getStackInSlot(0), null) <= 0;
+            return this.inv.getStackInSlot(0).getBurnTime(null) <= 0;
         };
     }
 

@@ -23,6 +23,7 @@ import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundSource;
@@ -36,8 +37,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
@@ -90,31 +89,31 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
         super(ActuallyBlocks.COFFEE_MACHINE.getTileEntityType(), pos, state, 11);
     }
 
-    @OnlyIn(Dist.CLIENT)
+    
     public int getCoffeeScaled(int i) {
         return this.coffeeCacheAmount * i / COFFEE_CACHE_MAX_AMOUNT;
     }
 
-    @OnlyIn(Dist.CLIENT)
+    
     public int getWaterScaled(int i) {
         return this.tank.getFluidAmount() * i / this.tank.getCapacity();
     }
 
-    @OnlyIn(Dist.CLIENT)
+    
     public int getEnergyScaled(int i) {
         return this.storage.getEnergyStored() * i / this.storage.getMaxEnergyStored();
     }
 
-    @OnlyIn(Dist.CLIENT)
+    
     public int getBrewScaled(int i) {
         return this.brewTime * i / TIME_USED;
     }
 
     @Override
-    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
-        super.writeSyncableNBT(compound, type);
+    public void writeSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
+        super.writeSyncableNBT(compound, lookupProvider, type);
         this.storage.writeToNBT(compound);
-        this.tank.writeToNBT(compound);
+        this.tank.writeToNBT(lookupProvider, compound);
         compound.putInt("Cache", this.coffeeCacheAmount);
         if (type != NBTType.SAVE_BLOCK) {
             compound.putInt("Time", this.brewTime);
@@ -122,10 +121,10 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     }
 
     @Override
-    public void readSyncableNBT(CompoundTag compound, NBTType type) {
-        super.readSyncableNBT(compound, type);
+    public void readSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
+        super.readSyncableNBT(compound, lookupProvider, type);
         this.storage.readFromNBT(compound);
-        this.tank.readFromNBT(compound);
+        this.tank.readFromNBT(lookupProvider, compound);
         this.coffeeCacheAmount = compound.getInt("Cache");
         if (type != NBTType.SAVE_BLOCK) {
             this.brewTime = compound.getInt("Time");
@@ -190,7 +189,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
                 }
 
                 this.brewTime++;
-                this.storage.extractEnergyInternal(ENERGY_USED, false);
+                this.storage.extractEnergy(ENERGY_USED, false);
                 if (this.brewTime >= TIME_USED) {
                     this.brewTime = 0;
                     ItemStack output = new ItemStack(ActuallyItems.COFFEE_CUP.get());

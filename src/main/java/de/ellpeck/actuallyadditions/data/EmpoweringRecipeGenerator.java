@@ -6,6 +6,7 @@ import de.ellpeck.actuallyadditions.mod.crafting.EmpowererRecipe;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.Crystals;
 import de.ellpeck.actuallyadditions.mod.util.NoAdvRecipeOutput;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
@@ -21,9 +22,11 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.neoforged.neoforge.common.Tags;
 
+import java.util.concurrent.CompletableFuture;
+
 public class EmpoweringRecipeGenerator extends RecipeProvider {
-    public EmpoweringRecipeGenerator(PackOutput packOutput) {
-        super(packOutput);
+    public EmpoweringRecipeGenerator(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+        super(packOutput, lookupProvider);
     }
 
     @Override
@@ -72,23 +75,23 @@ public class EmpoweringRecipeGenerator extends RecipeProvider {
                 .addModifier(Tags.Items.DYES_GRAY)
                 .addModifier(Items.SNOWBALL)
                 .addModifier(Items.STONE_BUTTON)
-                .addModifier(Tags.Items.COBBLESTONE).save(recipeOutput, "enori");
+                .addModifier(Tags.Items.COBBLESTONES).save(recipeOutput, "enori");
         EmpoweringBuilder.builder(ActuallyBlocks.EMPOWERED_ENORI_CRYSTAL.get(), ActuallyBlocks.ENORI_CRYSTAL.get(), 50000, 500, Crystals.IRON.conversionColorParticles)
                 .addModifier(Tags.Items.DYES_GRAY)
                 .addModifier(Items.SNOWBALL)
                 .addModifier(Items.STONE_BUTTON)
-                .addModifier(Tags.Items.COBBLESTONE).save(recipeOutput, "enori_block");
+                .addModifier(Tags.Items.COBBLESTONES).save(recipeOutput, "enori_block");
 
         EmpoweringBuilder.builder(ActuallyItems.EMPOWERED_VOID_CRYSTAL.get(), ActuallyItems.VOID_CRYSTAL.get(), 5000, 50, Crystals.COAL.conversionColorParticles)
                 .addModifier(Tags.Items.DYES_BLACK)
                 .addModifier(ItemTags.COALS)
                 .addModifier(Items.FLINT)
-                .addModifier(Tags.Items.STONE).save(recipeOutput, "void");
+                .addModifier(Tags.Items.STONES).save(recipeOutput, "void");
         EmpoweringBuilder.builder(ActuallyBlocks.EMPOWERED_VOID_CRYSTAL.get(), ActuallyBlocks.VOID_CRYSTAL.get(), 50000, 500, Crystals.COAL.conversionColorParticles)
                 .addModifier(Tags.Items.DYES_BLACK)
                 .addModifier(ItemTags.COALS)
                 .addModifier(Items.FLINT)
-                .addModifier(Tags.Items.STONE).save(recipeOutput, "void_block");
+                .addModifier(Tags.Items.STONES).save(recipeOutput, "void_block");
 
         EmpoweringBuilder.builder(ActuallyItems.EMPOWERED_EMERADIC_CRYSTAL.get(), ActuallyItems.EMERADIC_CRYSTAL.get(), 5000, 50, Crystals.EMERALD.conversionColorParticles)
                 .addModifier(Tags.Items.DYES_LIME)
@@ -159,7 +162,7 @@ public class EmpoweringRecipeGenerator extends RecipeProvider {
         }
 
         public void save(RecipeOutput consumer, String name) {
-            ResourceLocation res = new ResourceLocation(ActuallyAdditions.MODID, "empowering/" + name);
+            ResourceLocation res = ActuallyAdditions.modLoc("empowering/" + name);
             if (modifiers.size() != 4)
                 throw new IllegalStateException("invalid modifier count: " + modifiers.size() + ", recipe: " + res);
 

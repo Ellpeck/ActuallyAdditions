@@ -12,9 +12,13 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 
 import com.mojang.blaze3d.platform.Window;
 import de.ellpeck.actuallyadditions.api.tile.IPhantomTile;
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
-import de.ellpeck.actuallyadditions.mod.tile.*;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityPhantomBreaker;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityPhantomEnergyface;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityPhantomItemface;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityPhantomLiquiface;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityPhantomPlacer;
+import de.ellpeck.actuallyadditions.mod.tile.TileEntityPhantomRedstoneface;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -26,7 +30,7 @@ import net.minecraft.network.chat.FormattedText;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -41,8 +45,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 
@@ -125,9 +127,9 @@ public class BlockPhantom extends BlockContainerBase implements IHudDisplay {
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
+    protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult pHitResult) {
         if (this.tryToggleRedstone(world, pos, player)) {
-            return InteractionResult.SUCCESS;
+            return ItemInteractionResult.SUCCESS;
         }
         if (!world.isClientSide) {
             BlockEntity tile = world.getBlockEntity(pos);
@@ -135,11 +137,11 @@ public class BlockPhantom extends BlockContainerBase implements IHudDisplay {
                 player.openMenu(menuProvider, pos);
             }
         }
-        return InteractionResult.SUCCESS;
+        return ItemInteractionResult.SUCCESS;
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
+    
     public void displayHud(GuiGraphics guiGraphics, Minecraft minecraft, Player player, ItemStack stack, HitResult rayCast, Window resolution) {
         if (!(rayCast instanceof BlockHitResult)) {
             return;
@@ -169,7 +171,7 @@ public class BlockPhantom extends BlockContainerBase implements IHudDisplay {
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
+    
     public static void drawWordWrap(GuiGraphics gg, Font font, FormattedText text, int x, int y, int width, int color, boolean shadow) {
         for (FormattedCharSequence line : font.split(text, width)) {
             gg.drawString(font, line, x, y, color, shadow);

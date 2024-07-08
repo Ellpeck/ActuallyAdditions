@@ -23,8 +23,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import net.neoforged.bus.api.Event;
-import net.neoforged.neoforge.common.ToolActions;
+import net.neoforged.neoforge.common.ItemAbilities;
 import net.neoforged.neoforge.event.level.BlockEvent;
 
 import java.util.List;
@@ -60,10 +59,10 @@ public class Worm extends ItemBase {
     }
 
     public static void onHoe(BlockEvent.BlockToolModificationEvent event) {
-        if (event.getToolAction() == ToolActions.HOE_TILL) {
+        if (event.getItemAbility() == ItemAbilities.HOE_TILL) {
             Level level = event.getPlayer().level();
 
-            if (level.isClientSide || !CommonConfig.Other.WORMS.get() || event.getResult() == Event.Result.DENY)
+            if (level.isClientSide || !CommonConfig.Other.WORMS.get())
                 return;
 
             BlockPos pos = event.getContext().getClickedPos();

@@ -10,18 +10,19 @@
 
 package de.ellpeck.actuallyadditions.mod.crafting;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.ShapelessRecipe;
-import net.neoforged.neoforge.attachment.AttachmentUtils;
 
 public class RecipeKeepDataShapeless extends ShapelessRecipe {
     public static String NAME = "copy_nbt_shapeless";
@@ -38,21 +39,21 @@ public class RecipeKeepDataShapeless extends ShapelessRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingContainer pContainer, RegistryAccess pRegistryAccess) {
-        ItemStack result = super.assemble(pContainer, pRegistryAccess);
+    public ItemStack assemble(CraftingInput pContainer, HolderLookup.Provider provider) {
+        ItemStack result = super.assemble(pContainer, provider);
 
         TargetNBTIngredient donorIngredient = null;
         ItemStack datasource = ItemStack.EMPTY;
         NonNullList<Ingredient> ingredients = getIngredients();
         for (Ingredient ingredient : ingredients) {
-            if (ingredient instanceof TargetNBTIngredient) {
-                donorIngredient = (TargetNBTIngredient) ingredient;
+            if (ingredient.getCustomIngredient() instanceof TargetNBTIngredient) {
+                donorIngredient = (TargetNBTIngredient)ingredient.getCustomIngredient();
                 break;
             }
         }
 
         if (donorIngredient != null && !pContainer.isEmpty()) {
-            for (int i = 0; i < pContainer.getContainerSize(); i++) {
+            for (int i = 0; i < pContainer.size(); i++) {
                 final ItemStack item = pContainer.getItem(i);
                 if (!item.isEmpty() && donorIngredient.test(item)) {
                     datasource = item;
@@ -61,35 +62,39 @@ public class RecipeKeepDataShapeless extends ShapelessRecipe {
             }
         }
 
-        if (!datasource.isEmpty() && datasource.hasTag())
-            result.setTag(datasource.getTag().copy());
+        if (!datasource.isEmpty() && !datasource.getComponents().isEmpty())
+            result.applyComponents(datasource.getComponents());
         else {
             ActuallyAdditions.LOGGER.info("AA.KeepDataShapeless missing TargetNBTIngredient");
             return ItemStack.EMPTY;
         }
 
-        if (!datasource.isEmpty())
-            AttachmentUtils.copyStackAttachments(datasource, result);
-
         return result;
     }
 
     public static class Serializer implements RecipeSerializer<RecipeKeepDataShapeless> {
-        public static final Codec<RecipeKeepDataShapeless> CODEC = ShapelessRecipe.Serializer.CODEC.xmap(RecipeKeepDataShapeless::new, $ -> $);
+        public static final MapCodec<RecipeKeepDataShapeless> CODEC = ShapelessRecipe.Serializer.CODEC.xmap(RecipeKeepDataShapeless::new, $ -> $);
+        public static final StreamCodec<RegistryFriendlyByteBuf, RecipeKeepDataShapeless> STREAM_CODEC = StreamCodec.of(
+                RecipeKeepDataShapeless.Serializer::toNetwork, RecipeKeepDataShapeless.Serializer::fromNetwork
+        );
+
         @Override
-        public Codec<RecipeKeepDataShapeless> codec() {
+        public MapCodec<RecipeKeepDataShapeless> codec() {
             return CODEC;
         }
 
         @Override
-        public RecipeKeepDataShapeless fromNetwork(FriendlyByteBuf pBuffer) {
-            return new RecipeKeepDataShapeless(RecipeSerializer.SHAPELESS_RECIPE.fromNetwork(pBuffer));
+        public StreamCodec<RegistryFriendlyByteBuf, RecipeKeepDataShapeless> streamCodec() {
+            return STREAM_CODEC;
         }
 
-        @Override
-        public void toNetwork(net.minecraft.network.FriendlyByteBuf pBuffer, RecipeKeepDataShapeless pRecipe) {
+        public static RecipeKeepDataShapeless fromNetwork(RegistryFriendlyByteBuf pBuffer) {
+            return new RecipeKeepDataShapeless(RecipeSerializer.SHAPELESS_RECIPE.streamCodec().decode((pBuffer)));
+        }
+
+        public static void toNetwork(RegistryFriendlyByteBuf pBuffer, RecipeKeepDataShapeless pRecipe) {
             try {
-                RecipeSerializer.SHAPELESS_RECIPE.toNetwork(pBuffer, pRecipe);
+                RecipeSerializer.SHAPELESS_RECIPE.streamCodec().encode(pBuffer, pRecipe);
             }
             catch (Exception e) {
                 ActuallyAdditions.LOGGER.info("Failed to serialize " + NAME + " Recipe to packet: " + e.getMessage());

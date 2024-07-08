@@ -152,7 +152,7 @@ public final class ActuallyAdditionsAPI {
      * @param outputTwoChance The chance of the second stack (0 won't occur at all, 100 will all the time)
      */
     public static void addCrusherRecipe(ItemStack input, ItemStack outputOne, ItemStack outputTwo, int outputTwoChance) {
-        ResourceLocation id = new ResourceLocation(ActuallyAdditions.MODID, BuiltInRegistries.ITEM.getKey(input.getItem()).getPath() + "_crushing");
+        ResourceLocation id = ActuallyAdditions.modLoc(BuiltInRegistries.ITEM.getKey(input.getItem()).getPath() + "_crushing");
         CRUSHER_RECIPES.add(new RecipeHolder<>(id, new CrushingRecipe(Ingredient.of(input), outputOne, 1.0f, outputTwo.isEmpty()
             ? ItemStack.EMPTY
             : outputTwo, outputTwoChance)));
@@ -167,7 +167,7 @@ public final class ActuallyAdditionsAPI {
      * @param outputTwoChance The chance of the second stack (0 won't occur at all, 100 will all the time)
      */
     public static void addCrusherRecipe(Ingredient input, ItemStack outputOne, ItemStack outputTwo, int outputTwoChance) {
-        ResourceLocation id = new ResourceLocation(ActuallyAdditions.MODID, BuiltInRegistries.ITEM.getKey(input.getItems()[0].getItem()).getPath() + "_crushing");
+        ResourceLocation id = ActuallyAdditions.modLoc(BuiltInRegistries.ITEM.getKey(input.getItems()[0].getItem()).getPath() + "_crushing");
         CRUSHER_RECIPES.add(new RecipeHolder<>(id, new CrushingRecipe(input, outputOne, 1.0f, outputTwo.isEmpty()
                 ? ItemStack.EMPTY
                 : outputTwo, outputTwoChance)));

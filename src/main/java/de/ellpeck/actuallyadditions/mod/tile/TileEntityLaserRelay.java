@@ -20,6 +20,7 @@ import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import io.netty.util.internal.ConcurrentSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
@@ -27,8 +28,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.items.IItemHandler;
 
 public abstract class TileEntityLaserRelay extends TileEntityInventoryBase {
@@ -50,8 +49,8 @@ public abstract class TileEntityLaserRelay extends TileEntityInventoryBase {
     }
 
     @Override
-    public void readSyncableNBT(CompoundTag compound, NBTType type) {
-        super.readSyncableNBT(compound, type);
+    public void readSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
+        super.readSyncableNBT(compound, lookupProvider, type);
 
         if (type == NBTType.SYNC) {
             ActuallyAdditionsAPI.connectionHandler.removeRelayFromNetwork(this.worldPosition, this.level);
@@ -70,8 +69,8 @@ public abstract class TileEntityLaserRelay extends TileEntityInventoryBase {
     }
 
     @Override
-    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
-        super.writeSyncableNBT(compound, type);
+    public void writeSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
+        super.writeSyncableNBT(compound, lookupProvider, type);
 
         if (type == NBTType.SYNC) {
             ListTag list = new ListTag();
@@ -137,7 +136,7 @@ public abstract class TileEntityLaserRelay extends TileEntityInventoryBase {
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
+    
     public void renderParticles(){
         if(this.world.rand.nextInt(8) == 0){
             PlayerEntity player = Minecraft.getInstance().player;
@@ -176,7 +175,7 @@ public abstract class TileEntityLaserRelay extends TileEntityInventoryBase {
     }
 
 //    @Override TODO: Fix the renderBoundingBox
-//    @OnlyIn(Dist.CLIENT)
+//    
 //    public AABB getRenderBoundingBox() {
 //        return INFINITE_EXTENT_AABB;
 //    }
@@ -200,10 +199,10 @@ public abstract class TileEntityLaserRelay extends TileEntityInventoryBase {
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
+    
     public abstract Component getExtraDisplayString();
 
-    @OnlyIn(Dist.CLIENT)
+    
     public abstract Component getCompassDisplayString();
 
     public abstract void onCompassAction(Player player);

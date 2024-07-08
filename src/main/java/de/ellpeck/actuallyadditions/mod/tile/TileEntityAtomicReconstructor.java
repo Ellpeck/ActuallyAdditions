@@ -22,6 +22,7 @@ import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
@@ -88,8 +89,8 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     }
 
     @Override
-    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
-        super.writeSyncableNBT(compound, type);
+    public void writeSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
+        super.writeSyncableNBT(compound, lookupProvider, type);
         if (type != NBTType.SAVE_BLOCK) {
             compound.putInt("CurrentTime", this.currentTime);
             compound.putInt("Counter", this.counter);
@@ -103,8 +104,8 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
     }
 
     @Override
-    public void readSyncableNBT(CompoundTag compound, NBTType type) {
-        super.readSyncableNBT(compound, type);
+    public void readSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
+        super.readSyncableNBT(compound, lookupProvider, type);
         if (type != NBTType.SAVE_BLOCK) {
             this.currentTime = compound.getInt("CurrentTime");
             this.counter = compound.getInt("Counter");
@@ -183,7 +184,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
 
     @Override
     public void extractEnergy(int amount) {
-        this.storage.extractEnergyInternal(amount, false);
+        this.storage.extractEnergy(amount, false);
     }
 
     @Override

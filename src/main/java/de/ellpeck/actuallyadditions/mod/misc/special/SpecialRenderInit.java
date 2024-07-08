@@ -47,7 +47,7 @@ public class SpecialRenderInit {
                 }
 
                 // TODO: remove tolowercase hack
-                ResourceLocation resLoc = new ResourceLocation(itemName.toLowerCase());
+                ResourceLocation resLoc = ResourceLocation.tryParse(itemName.toLowerCase());
                 ItemStack stack = findItem(resLoc);
 
                 //TODO Remove this block once the transition to 1.11 is done and the special people stuff file has been converted to snake_case
@@ -61,7 +61,7 @@ public class SpecialRenderInit {
                             convertedItemName += c;
                         }
                     }
-                    stack = findItem(new ResourceLocation(convertedItemName));
+                    stack = findItem(ResourceLocation.tryParse(convertedItemName));
                 }
 
                 if (StackUtil.isValid(stack)) {

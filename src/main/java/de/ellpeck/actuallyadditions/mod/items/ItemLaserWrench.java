@@ -11,7 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.components.ActuallyComponents;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelay;
 import net.minecraft.ChatFormatting;
@@ -24,8 +24,6 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 import java.util.List;
 
@@ -58,7 +56,7 @@ public class ItemLaserWrench extends ItemBase {
 	                        int lowestRange = Math.min(relay.getMaxRange(), savedRelay.getMaxRange());
                             int range = lowestRange * lowestRange;
                             if (ItemPhantomConnector.getStoredWorld(stack) == world.dimension() && savedRelay.type == relay.type && distanceSq <= range && ActuallyAdditionsAPI.connectionHandler.addConnection(savedPos, pos, relay.type, world, false, true)) {
-                                ItemPhantomConnector.clearStorage(stack, "XCoordOfTileStored", "YCoordOfTileStored", "ZCoordOfTileStored", "WorldOfTileStored");
+                                ItemPhantomConnector.clearStorage(stack, ActuallyComponents.POSITION.get(), ActuallyComponents.LEVEL.get());
 
                                 ((TileEntityLaserRelay) savedTile).sendUpdate();
                                 relay.sendUpdate();
@@ -70,7 +68,7 @@ public class ItemLaserWrench extends ItemBase {
                         }
 
                         player.displayClientMessage(Component.translatable("tooltip.actuallyadditions.laser.cantConnect.desc"), false);
-                        ItemPhantomConnector.clearStorage(stack, "XCoordOfTileStored", "YCoordOfTileStored", "ZCoordOfTileStored", "WorldOfTileStored");
+                        ItemPhantomConnector.clearStorage(stack, ActuallyComponents.POSITION.get(), ActuallyComponents.LEVEL.get());
                     }
                 }
             }
@@ -86,9 +84,8 @@ public class ItemLaserWrench extends ItemBase {
     //        return new CompoundNBT();
     //    }
 
-    @OnlyIn(Dist.CLIENT)
     @Override
-    public void appendHoverText(ItemStack stack, Level playerIn, List<Component> list, TooltipFlag advanced) {
+    public void appendHoverText(ItemStack stack, TooltipContext playerIn, List<Component> list, TooltipFlag advanced) {
         BlockPos coords = ItemPhantomConnector.getStoredPosition(stack);
         if (coords != null) {
             list.add(Component.translatable("tooltip.actuallyadditions.boundTo.desc").append(":"));

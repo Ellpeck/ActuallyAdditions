@@ -40,7 +40,7 @@
 //    }
 //
 //    @Override
-//    @OnlyIn(Dist.CLIENT)
+//    
 //    public void drawScreenPre(GuiBookletBase gui, int startX, int startY, int mouseX, int mouseY, float partialTicks) {
 //        super.drawScreenPre(gui, startX, startY, mouseX, mouseY, partialTicks);
 //

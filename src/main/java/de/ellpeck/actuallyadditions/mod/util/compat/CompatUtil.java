@@ -24,7 +24,7 @@
 //
 //    static boolean fb = Loader.isModLoaded("fastbench");
 //
-//    @OnlyIn(Dist.CLIENT)
+//    
 //    public static Object getCrafterGuiElement(PlayerEntity player, World world, int x, int y, int z) {
 //        if (fb) {
 //            return CompatFastBench.getFastBenchGui(player, world);

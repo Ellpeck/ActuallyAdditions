@@ -24,6 +24,7 @@ import de.ellpeck.actuallyadditions.mod.util.Util;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -49,7 +50,9 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.neoforged.neoforge.common.*;
+import net.neoforged.neoforge.common.CommonHooks;
+import net.neoforged.neoforge.common.ItemAbilities;
+import net.neoforged.neoforge.common.ItemAbility;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.IItemHandlerModifiable;
 
@@ -60,24 +63,24 @@ import java.util.List;
 public class DrillItem extends ItemEnergy {
     public static final int HARVEST_LEVEL = 4;
     private static final int ENERGY_USE = 100;
-    private static final List<ToolAction> ACTIONS = List.of(ToolActions.SHOVEL_DIG, ToolActions.PICKAXE_DIG);
+    private static final List<ItemAbility> ACTIONS = List.of(ItemAbilities.SHOVEL_DIG, ItemAbilities.PICKAXE_DIG);
 
-    private final Multimap<Attribute, AttributeModifier> attributes_unpowered = ArrayListMultimap.create();
-    private final Multimap<Attribute, AttributeModifier> attributes_powered = ArrayListMultimap.create();
+    private final Multimap<Holder<Attribute>, AttributeModifier> attributes_unpowered = ArrayListMultimap.create();
+    private final Multimap<Holder<Attribute>, AttributeModifier> attributes_powered = ArrayListMultimap.create();
 
     public DrillItem() {
-        super(ActuallyItems.defaultProps().defaultDurability(0).stacksTo(1), 250000, 1000);
-        attributes_powered.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Drill Modifier", 8.0F, AttributeModifier.Operation.ADDITION));
-        attributes_powered.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID,"Tool Modifier", 1.5F, AttributeModifier.Operation.ADDITION));
-        attributes_unpowered.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Drill Modifier", 0.1F, AttributeModifier.Operation.ADDITION));
-        attributes_unpowered.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID,"Tool Modifier", 1.5F, AttributeModifier.Operation.ADDITION));
+        super(ActuallyItems.defaultProps().durability(0).stacksTo(1), 250000, 1000);
+        attributes_powered.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ActuallyAdditions.modLoc("drill_speed_powered"), 8.0F, AttributeModifier.Operation.ADD_VALUE));
+        attributes_powered.put(Attributes.ATTACK_SPEED, new AttributeModifier(ActuallyAdditions.modLoc("drill_speed_powered"), 1.5F, AttributeModifier.Operation.ADD_VALUE));
+        attributes_unpowered.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ActuallyAdditions.modLoc("drill_attack"), 0.1F, AttributeModifier.Operation.ADD_VALUE));
+        attributes_unpowered.put(Attributes.ATTACK_SPEED, new AttributeModifier(ActuallyAdditions.modLoc("drill_speed"), 1.5F, AttributeModifier.Operation.ADD_VALUE));
     }
 
     @Override
-    public boolean canPerformAction(@Nonnull ItemStack stack, @Nonnull ToolAction toolAction) {
+    public boolean canPerformAction(@Nonnull ItemStack stack, @Nonnull ItemAbility toolAction) {
         return ACTIONS.contains(toolAction);
     }
-    @Override
+
     public boolean isCorrectToolForDrops(@Nonnull BlockState pBlock) {
         Tier tier = Tiers.NETHERITE; //Use Nettherite as the tier as it has the same harvest level as the drill
         if (TierSortingRegistry.isTierSorted(tier)) {

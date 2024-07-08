@@ -1,17 +1,20 @@
 package de.ellpeck.actuallyadditions.mod.crafting;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.Level;
 
-public class SolidFuelRecipe implements Recipe<SingleItem> {
+public class SolidFuelRecipe implements Recipe<SingleRecipeInput> {
     public static String NAME = "solid_fuel";
     private Ingredient itemIngredient;
     private int burnTime;
@@ -32,8 +35,8 @@ public class SolidFuelRecipe implements Recipe<SingleItem> {
     }
 
     @Override
-    public boolean matches(SingleItem pInv, Level pLevel) {
-        return itemIngredient.test(pInv.getItem());
+    public boolean matches(SingleRecipeInput pInv, Level pLevel) {
+        return itemIngredient.test(pInv.getItem(0));
     }
 
     public boolean matches(ItemStack stack) {
@@ -46,7 +49,7 @@ public class SolidFuelRecipe implements Recipe<SingleItem> {
     }
 
     @Override
-    public ItemStack assemble(SingleItem pInv, RegistryAccess registryAccess) {
+    public ItemStack assemble(SingleRecipeInput pInv, HolderLookup.Provider registries) {
         return ItemStack.EMPTY;
     }
 
@@ -56,7 +59,7 @@ public class SolidFuelRecipe implements Recipe<SingleItem> {
     }
 
     @Override
-    public ItemStack getResultItem(RegistryAccess pRegistryAccess) {
+    public ItemStack getResultItem(HolderLookup.Provider provider) {
         return ItemStack.EMPTY;
     }
 
@@ -71,7 +74,7 @@ public class SolidFuelRecipe implements Recipe<SingleItem> {
     }
 
     public static class Serializer implements RecipeSerializer<SolidFuelRecipe> {
-        private static final Codec<SolidFuelRecipe> CODEC = RecordCodecBuilder.create(
+        private static final MapCodec<SolidFuelRecipe> CODEC = RecordCodecBuilder.mapCodec(
                 instance -> instance.group(
                                 Ingredient.CODEC_NONEMPTY.fieldOf("item").forGetter(recipe -> recipe.itemIngredient),
                                 Codec.INT.fieldOf("total_energy").forGetter(recipe -> recipe.totalEnergy),
@@ -79,6 +82,19 @@ public class SolidFuelRecipe implements Recipe<SingleItem> {
                         )
                         .apply(instance, SolidFuelRecipe::new)
         );
+        public static final StreamCodec<RegistryFriendlyByteBuf, SolidFuelRecipe> STREAM_CODEC = StreamCodec.of(
+                SolidFuelRecipe.Serializer::toNetwork, SolidFuelRecipe.Serializer::fromNetwork
+        );
+
+        @Override
+        public MapCodec<SolidFuelRecipe> codec() {
+            return CODEC;
+        }
+
+        @Override
+        public StreamCodec<RegistryFriendlyByteBuf, SolidFuelRecipe> streamCodec() {
+            return STREAM_CODEC;
+        }
 
 //        @Override
 //        public SolidFuelRecipe fromJson(ResourceLocation pId, JsonObject pJson) {
@@ -88,23 +104,15 @@ public class SolidFuelRecipe implements Recipe<SingleItem> {
 //            return new SolidFuelRecipe(pId, itemIngredient, totalEnergy, burnTime);
 //        }
 
-
-        @Override
-        public Codec<SolidFuelRecipe> codec() {
-            return CODEC;
-        }
-
-        @Override
-        public SolidFuelRecipe fromNetwork(FriendlyByteBuf pBuffer) {
-            Ingredient itemIngredient = Ingredient.fromNetwork(pBuffer);
+        public static SolidFuelRecipe fromNetwork(RegistryFriendlyByteBuf pBuffer) {
+            Ingredient itemIngredient = Ingredient.CONTENTS_STREAM_CODEC.decode(pBuffer);
             int totalEnergy = pBuffer.readInt();
             int burnTime = pBuffer.readInt();
             return new SolidFuelRecipe(itemIngredient, totalEnergy, burnTime);
         }
 
-        @Override
-        public void toNetwork(FriendlyByteBuf pBuffer, SolidFuelRecipe pRecipe) {
-            pRecipe.itemIngredient.toNetwork(pBuffer);
+        public static void toNetwork(RegistryFriendlyByteBuf pBuffer, SolidFuelRecipe pRecipe) {
+            Ingredient.CONTENTS_STREAM_CODEC.encode(pBuffer, pRecipe.itemIngredient);
             pBuffer.writeInt(pRecipe.totalEnergy);
             pBuffer.writeInt(pRecipe.burnTime);
         }

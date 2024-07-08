@@ -62,7 +62,7 @@
 //                        compound.removeTag("SpawnData");
 //                        logic.readFromNBT(compound);
 //
-//                        logic.setEntityId(new ResourceLocation(entity));
+//                        logic.setEntityId(ResourceLocation.tryParse(entity));
 //
 //                        tile.markDirty();
 //

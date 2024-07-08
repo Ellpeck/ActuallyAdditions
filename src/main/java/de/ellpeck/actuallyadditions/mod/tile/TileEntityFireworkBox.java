@@ -13,10 +13,12 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFireworkBox;
 import de.ellpeck.actuallyadditions.mod.network.gui.INumberReactor;
+import it.unimi.dsi.fastutil.ints.IntList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.util.random.Weight;
@@ -30,6 +32,8 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.FireworkExplosion;
+import net.minecraft.world.item.component.Fireworks;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -63,8 +67,8 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisp
     }
 
     @Override
-    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
-        super.writeSyncableNBT(compound, type);
+    public void writeSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
+        super.writeSyncableNBT(compound, lookupProvider, type);
         this.storage.writeToNBT(compound);
 
         if (type != NBTType.SAVE_BLOCK) {
@@ -84,8 +88,8 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisp
     }
 
     @Override
-    public void readSyncableNBT(CompoundTag compound, NBTType type) {
-        super.readSyncableNBT(compound, type);
+    public void readSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
+        super.readSyncableNBT(compound, lookupProvider, type);
         this.storage.readFromNBT(compound);
 
         if (type != NBTType.SAVE_BLOCK) {
@@ -170,32 +174,27 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisp
     }
 
     private ItemStack makeFirework() {
-        ListTag list = new ListTag();
+        List<FireworkExplosion> explosions = new ArrayList<>();
         for (int i = 0; i < this.getRandomWithPlay(this.chargeAmount); i++) {
-            list.add(this.makeFireworkCharge());
+            explosions.add(this.makeFireworkCharge());
         }
 
-        CompoundTag compound1 = new CompoundTag();
-        compound1.put("Explosions", list);
-        compound1.putByte("Flight", (byte) this.getRandomWithPlay(this.flightTime));
-
-        CompoundTag compound = new CompoundTag();
-        compound.put("Fireworks", compound1);
-
         ItemStack firework = new ItemStack(Items.FIREWORK_ROCKET);
-        firework.setTag(compound);
+        Fireworks fireworks = new Fireworks(1, explosions);
+        firework.set(DataComponents.FIREWORKS, fireworks);
 
         return firework;
     }
 
-    private CompoundTag makeFireworkCharge() {
-        CompoundTag compound = new CompoundTag();
+    private FireworkExplosion makeFireworkCharge() {
+        boolean flicker = false;
+        boolean trail = false;
 
         if (this.level.random.nextFloat() <= this.trailOrFlickerChance) {
             if (this.level.random.nextFloat() <= this.flickerChance) {
-                compound.putBoolean("Flicker", true);
+                flicker = true;
             } else {
-                compound.putBoolean("Trail", true);
+                trail = true;
             }
         }
 
@@ -204,11 +203,8 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisp
         for (int i = 0; i < colors.length; i++) {
             colors[i] = DyeColor.values()[this.level.random.nextInt(DyeColor.values().length)].getFireworkColor();
         }
-        compound.putIntArray("Colors", colors);
 
-        compound.putByte("Type", (byte) this.getRandomType());
-
-        return compound;
+        return new FireworkExplosion(FireworkExplosion.Shape.byId((byte) this.getRandomType()), IntList.of(colors), IntList.of(), trail, flicker);
     }
 
     private int getRandomWithPlay(int value) {
@@ -263,7 +259,7 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisp
         if (this.storage.getEnergyStored() >= USE_PER_SHOT) {
             this.spawnFireworks(this.level, this.worldPosition.getX(), this.worldPosition.getY(), this.worldPosition.getZ());
 
-            this.storage.extractEnergyInternal(USE_PER_SHOT, false);
+            this.storage.extractEnergy(USE_PER_SHOT, false);
         }
     }
 

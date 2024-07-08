@@ -24,7 +24,7 @@
 //        super(localizationKey);
 //    }
 //
-//    @OnlyIn(Dist.CLIENT)
+//    
 //    public static void renderTextToPage(GuiBookletBase gui, BookletPage page, int x, int y) {
 //        String text = page.getInfoText();
 //        if (text != null && !text.isEmpty()) {
@@ -33,7 +33,7 @@
 //    }
 //
 //    @Override
-//    @OnlyIn(Dist.CLIENT)
+//    
 //    public void drawScreenPre(GuiBookletBase gui, int startX, int startY, int mouseX, int mouseY, float partialTicks) {
 //        super.drawScreenPre(gui, startX, startY, mouseX, mouseY, partialTicks);
 //        renderTextToPage(gui, this, startX + 6, startY + 5);

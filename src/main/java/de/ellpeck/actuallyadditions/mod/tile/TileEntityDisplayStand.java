@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -50,7 +51,7 @@ public class TileEntityDisplayStand extends TileEntityInventoryBase implements I
                     int energy = item.getUsePerTick(tile.inv.getStackInSlot(0), tile, tile.ticksElapsed);
                     if (tile.storage.getEnergyStored() >= energy) {
                         if (item.update(tile.inv.getStackInSlot(0), tile, tile.ticksElapsed)) {
-                            tile.storage.extractEnergyInternal(energy, false);
+                            tile.storage.extractEnergy(energy, false);
                         }
                     }
                 }
@@ -68,14 +69,14 @@ public class TileEntityDisplayStand extends TileEntityInventoryBase implements I
     }
 
     @Override
-    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
-        super.writeSyncableNBT(compound, type);
+    public void writeSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
+        super.writeSyncableNBT(compound, lookupProvider, type);
         this.storage.writeToNBT(compound);
     }
 
     @Override
-    public void readSyncableNBT(CompoundTag compound, NBTType type) {
-        super.readSyncableNBT(compound, type);
+    public void readSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
+        super.readSyncableNBT(compound, lookupProvider, type);
         this.storage.readFromNBT(compound);
     }
 

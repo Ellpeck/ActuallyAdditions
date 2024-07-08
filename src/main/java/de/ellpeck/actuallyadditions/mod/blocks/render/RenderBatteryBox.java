@@ -27,14 +27,12 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import org.joml.Matrix4f;
 
 import java.util.Optional;
 
-@OnlyIn(Dist.CLIENT)
+
 public class RenderBatteryBox implements BlockEntityRenderer<TileEntityBatteryBox> {
     public RenderBatteryBox(BlockEntityRendererProvider.Context context) {
     }

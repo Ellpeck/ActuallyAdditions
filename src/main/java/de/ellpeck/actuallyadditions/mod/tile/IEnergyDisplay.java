@@ -10,14 +10,11 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
-
 public interface IEnergyDisplay {
 
-    @OnlyIn(Dist.CLIENT)
+    
     CustomEnergyStorage getEnergyStorage();
 
-    @OnlyIn(Dist.CLIENT)
+    
     boolean needsHoldShift();
 }

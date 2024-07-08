@@ -14,8 +14,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.resources.language.I18n;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 @Deprecated
 public final class StringUtil {
@@ -23,14 +21,14 @@ public final class StringUtil {
     /**
      * Localizes a given formatted String with the given Replacements
      */
-    @OnlyIn(Dist.CLIENT)
+    
     public static String localizeFormatted(String text, Object... replace) {
         return I18n.get(text, replace);
     }
 
     // TODO: Move to official
     @Deprecated
-    @OnlyIn(Dist.CLIENT)
+    
     public static void drawSplitString(Font renderer, String strg, int x, int y, int width, int color, boolean shadow) {
 //        ResourcePackList <- holds the correct way
 //        List<String> list = renderer.listFormattedStringToWidth(strg, width);
@@ -40,7 +38,7 @@ public final class StringUtil {
 //        }
     }
 
-//    @OnlyIn(Dist.CLIENT)
+//    
 //    public static void renderSplitScaledAsciiString(FontRenderer font, String text, int x, int y, int color, boolean shadow, float scale, int length) {
 //        List<String> lines = font.listFormattedStringToWidth(text, (int) (length / scale));
 //        for (int i = 0; i < lines.size(); i++) {
@@ -48,7 +46,7 @@ public final class StringUtil {
 //        }
 //    }
 
-    @OnlyIn(Dist.CLIENT)
+    
     public static void renderScaledString(GuiGraphics guiGraphics, Font font, String text, float x, float y, int color, boolean shadow, float scale) {
         PoseStack matrices = guiGraphics.pose();
         matrices.pushPose();

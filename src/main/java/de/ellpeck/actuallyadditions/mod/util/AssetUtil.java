@@ -49,8 +49,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.client.ClientHooks;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.joml.Matrix4f;
@@ -61,22 +59,22 @@ public final class AssetUtil {
     public static final int MAX_LIGHT_Y = 0xF000F0;
 
     public static final ResourceLocation GUI_INVENTORY_LOCATION = getGuiLocation("gui_inventory");
-    private static final ResourceLocation FORGE_WHITE = new ResourceLocation("forge", "white");
+    private static final ResourceLocation FORGE_WHITE = ResourceLocation.tryParse("forge", "white");
 
     public static ResourceLocation getGuiLocation(String file) {
-        return new ResourceLocation(ActuallyAdditions.MODID, "textures/gui/" + file + ".png");
+        return ActuallyAdditions.modLoc("textures/gui/" + file + ".png");
     }
 
     public static ResourceLocation getBookletGuiLocation(String file) {
         return getGuiLocation("booklet/" + file);
     }
 
-    @OnlyIn(Dist.CLIENT)
+    
     public static void displayNameString(GuiGraphics guiGraphics, Font font, int xSize, int yPositionOfMachineText, String text) {
         guiGraphics.drawString(font, text, xSize / 2f - font.width(text) / 2f, yPositionOfMachineText, 0xFFFFFF, false);
     }
 
-    @OnlyIn(Dist.CLIENT)
+    
     public static void displayNameString(GuiGraphics guiGraphics, Font font, int xSize, int yPositionOfMachineText, TileEntityBase tile) {
         displayNameString(guiGraphics, font, xSize, yPositionOfMachineText, I18n.get(tile.getNameForTranslation()));
     }
@@ -85,7 +83,7 @@ public final class AssetUtil {
     //        renderItemInWorld(new ItemStack(block, 1, meta), combinedLightIn, combinedOverlayIn, matrices, buffer);
     //    }
 
-    @OnlyIn(Dist.CLIENT)
+    
     public static void renderItemInWorld(ItemStack stack, int combinedLight, int combinedOverlay, PoseStack matrices, MultiBufferSource buffer) {
         if (!stack.isEmpty()) {
             Minecraft.getInstance().getItemRenderer().renderStatic(
@@ -94,7 +92,7 @@ public final class AssetUtil {
         }
     }
 
-    //    @OnlyIn(Dist.CLIENT)
+    //    
     //    public static void renderStateInWorld(BlockState state, IWorldReader world, BlockPos pos, float brightness) {
     //        Minecraft.getInstance().getTextureManager().bindTexture(PlayerContainer.LOCATION_BLOCKS_TEXTURE);
     //        IBakedModel model = Minecraft.getInstance().getBlockRendererDispatcher().getModelForState(state);
@@ -108,7 +106,7 @@ public final class AssetUtil {
     //        Minecraft.getInstance().getBlockRendererDispatcher().getBlockModelRenderer().renderModelBrightnessColor(state, model, brightness, r, g, b);
     //    }
 
-    @OnlyIn(Dist.CLIENT)
+    
     public static void renderItemWithoutScrewingWithColors(ItemStack stack, PoseStack matrices, int combinedOverlay, int combinedLight) {
         if (StackUtil.isValid(stack)) {
             Minecraft mc = Minecraft.getInstance();
@@ -136,7 +134,7 @@ public final class AssetUtil {
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
+    
     public static void renderStackToGui(ItemStack stack, int x, int y, float scale) {
 /*        GlStateManager._pushMatrix();
         GlStateManager._enableBlend();
@@ -159,7 +157,7 @@ public final class AssetUtil {
     }
 
     //Copied from Gui.class and changed
-    @OnlyIn(Dist.CLIENT)
+    
     public static void drawHorizontalGradientRect(int left, int top, int right, int bottom, int startColor, int endColor, float zLevel) {
 /*        float f = (startColor >> 24 & 255) / 255.0F;
         float f1 = (startColor >> 16 & 255) / 255.0F;
@@ -188,7 +186,7 @@ public final class AssetUtil {
         GlStateManager.enableTexture2D();*/
     }
 
-//    @OnlyIn(Dist.CLIENT)
+//    
 //    public static void renderNameTag(String tag, double x, double y, double z) {
 //        FontRenderer fontrenderer = Minecraft.getInstance().font;
 //        float f = 1.6F;
@@ -244,20 +242,20 @@ public final class AssetUtil {
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
+    
     public static void spawnLaserWithTimeClient(double startX, double startY, double startZ, double endX, double endY, double endZ, int color, int maxAge, double rotationTime, float size, float alpha) {
         Minecraft mc = Minecraft.getInstance();
         if (mc.player != null && mc.player.distanceToSqr(startX, startY, startZ) <= 64 || mc.player.distanceToSqr(endX, endY, endZ) <= 64) {
             mc.level.addParticle(ParticleBeam.Factory.createData(endX, endY, endZ, color, alpha, maxAge, rotationTime, size), startX, startY, startZ, 0, 0, 0);
         }
     }
-/*    @OnlyIn(Dist.CLIENT)
+/*    
     public static void renderLaser(MatrixStack matrixStack, IRenderTypeBuffer buffer, float x, float y, float z, float tx, float ty, float tz, float rotation, int color, float beamWidth) {
 
 
     }*/
 
-    @OnlyIn(Dist.CLIENT)
+    
     public static void renderLaser(PoseStack matrixStack, MultiBufferSource buffer, float offX, float offY, float offZ, float yaw, float pitch, float length, float rotationTime, int color, float alpha, float beamWidth) {
         Level world = Minecraft.getInstance().level;
 /*        int r = (color >> 16) & 0xFF;
@@ -331,7 +329,7 @@ public final class AssetUtil {
 
     //Thanks to feldim2425 for this.
     //I can't do rendering code. Ever.
-    @OnlyIn(Dist.CLIENT)
+    
     public static void renderLaserParticle(VertexConsumer builder, Camera camera, double firstX, double firstY, double firstZ, double secondX, double secondY, double secondZ, float rotationTime, float a, float beamWidth, float[] color) {
         Level world = Minecraft.getInstance().level;
 
@@ -400,7 +398,7 @@ public final class AssetUtil {
         Tesselator.getInstance().end();
     }
 
-    @OnlyIn(Dist.CLIENT)
+    
     public static void renderTextInWorld(GuiGraphics guiGraphics, double offsetX, double offsetY, double offsetZ, NonNullList<String> text, int color) {
         PoseStack matrices = guiGraphics.pose();
         matrices.pushPose();
@@ -430,7 +428,7 @@ public final class AssetUtil {
         return new float[]{0.0f, (pos -= 170.0f) * 3.0f, 255.0f - pos * 3.0f};
     }
 
-    @OnlyIn(Dist.CLIENT)
+    
     public static void renderHitOutline(PoseStack poseStack, VertexConsumer consumer, Entity entity,
                                         double camX, double camY, double camZ, Level level, BlockPos pos, BlockState state) {
         renderShape(poseStack, consumer, state.getShape(level, pos, CollisionContext.of(entity)),
@@ -444,7 +442,7 @@ public final class AssetUtil {
         );
     }
 
-    @OnlyIn(Dist.CLIENT)
+    
     private static void renderShape(PoseStack poseStack, VertexConsumer consumer, VoxelShape shape,
                                     double x, double y, double z, float red, float green, float blue, float alpha) {
         PoseStack.Pose posestack$pose = poseStack.last();

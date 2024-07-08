@@ -21,6 +21,7 @@ import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundSource;
@@ -70,25 +71,25 @@ public class TileEntityCrusher extends TileEntityInventoryBase implements IButto
     }
 
     @Override
-    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
+    public void writeSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
         if (type != NBTType.SAVE_BLOCK) {
             compound.putInt("FirstCrushTime", this.firstCrushTime);
             compound.putInt("SecondCrushTime", this.secondCrushTime);
             compound.putBoolean("IsAutoSplit", this.isAutoSplit);
         }
         this.storage.writeToNBT(compound);
-        super.writeSyncableNBT(compound, type);
+        super.writeSyncableNBT(compound, lookupProvider, type);
     }
 
     @Override
-    public void readSyncableNBT(CompoundTag compound, NBTType type) {
+    public void readSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
         if (type != NBTType.SAVE_BLOCK) {
             this.firstCrushTime = compound.getInt("FirstCrushTime");
             this.secondCrushTime = compound.getInt("SecondCrushTime");
             this.isAutoSplit = compound.getBoolean("IsAutoSplit");
         }
         this.storage.readFromNBT(compound);
-        super.readSyncableNBT(compound, type);
+        super.readSyncableNBT(compound, lookupProvider, type);
     }
 
     public static <T extends BlockEntity> void clientTick(Level level, BlockPos pos, BlockState state, T t) {
@@ -130,7 +131,7 @@ public class TileEntityCrusher extends TileEntityInventoryBase implements IButto
                     finishCrushing(SLOT_INPUT_1, SLOT_OUTPUT_1_1, SLOT_OUTPUT_1_2);
                     firstCrushTime = 0;
                 }
-                storage.extractEnergyInternal(ENERGY_USE, false);
+                storage.extractEnergy(ENERGY_USE, false);
             }
             crushed = storage.getEnergyStored() >= ENERGY_USE;
         } else {
@@ -148,7 +149,7 @@ public class TileEntityCrusher extends TileEntityInventoryBase implements IButto
                         finishCrushing(SLOT_INPUT_2, SLOT_OUTPUT_2_1, SLOT_OUTPUT_2_2);
                         secondCrushTime = 0;
                     }
-                    storage.extractEnergyInternal(ENERGY_USE, false);
+                    storage.extractEnergy(ENERGY_USE, false);
                 }
                 crushed = storage.getEnergyStored() >= ENERGY_USE;
             } else {

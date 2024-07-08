@@ -4,15 +4,19 @@ package de.ellpeck.actuallyadditions.data;
 import com.google.common.collect.ImmutableSet;
 import de.ellpeck.actuallyadditions.api.ActuallyTags;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
+import de.ellpeck.actuallyadditions.mod.components.ActuallyComponents;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.misc.DungeonLoot;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.WritableRegistry;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.data.loot.LootTableSubProvider;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -23,50 +27,50 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.ValidationContext;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.entries.TagEntry;
-import net.minecraft.world.level.storage.loot.functions.CopyNbtFunction;
+import net.minecraft.world.level.storage.loot.functions.CopyComponentsFunction;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
-import net.minecraft.world.level.storage.loot.providers.nbt.ContextNbtProvider;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
-import javax.annotation.Nonnull;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class LootTableGenerator extends LootTableProvider {
-    public LootTableGenerator(PackOutput packOutput) {
+    public LootTableGenerator(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider) {
         super(packOutput, Set.of(), List.of(
                 new SubProviderEntry(Blocks::new, LootContextParamSets.BLOCK),
                 new SubProviderEntry(Dungeon::new, LootContextParamSets.CHEST)
-        ));
+        ), lookupProvider);
     }
 
     @Override
-    protected void validate(Map<ResourceLocation, LootTable> map, @Nonnull ValidationContext validationtracker) {
-        map.forEach((name, table) -> table.validate(validationtracker));
+    protected void validate(WritableRegistry<LootTable> writableregistry, ValidationContext validationcontext, ProblemReporter.Collector problemreporter$collector) {
+        super.validate(writableregistry, validationcontext, problemreporter$collector);
     }
 
     public static class Blocks extends BlockLootSubProvider {
 
-        protected Blocks() {
-            super(Set.of(), FeatureFlags.REGISTRY.allFlags());
+        protected Blocks(HolderLookup.Provider lookupProvider) {
+            super(Set.of(), FeatureFlags.REGISTRY.allFlags(), lookupProvider);
         }
 
         @Override
         protected void generate() {
-            CopyNbtFunction.Builder copyEnergy = CopyNbtFunction.copyData(ContextNbtProvider.BLOCK_ENTITY).copy("Energy", "BlockEntityTag.Energy");
-            CopyNbtFunction.Builder copyPulseMode = CopyNbtFunction.copyData(ContextNbtProvider.BLOCK_ENTITY).copy("IsPulseMode", "BlockEntityTag.IsPulseMode");
+            CopyComponentsFunction.Builder copyEnergy = CopyComponentsFunction.copyComponents(CopyComponentsFunction.Source.BLOCK_ENTITY)
+                    .include(ActuallyComponents.ENERGY_STORAGE.get());
+            CopyComponentsFunction.Builder copyPulseMode = CopyComponentsFunction.copyComponents(CopyComponentsFunction.Source.BLOCK_ENTITY)
+                    .include(ActuallyComponents.PULSE_MODE.get());
 
             //Special Drops
-            dropNBT(ActuallyBlocks.ATOMIC_RECONSTRUCTOR, $ -> $.apply(copyEnergy).apply(copyPulseMode));
+            dropComponents(ActuallyBlocks.ATOMIC_RECONSTRUCTOR, $ -> $.apply(copyEnergy).apply(copyPulseMode));
             dropKeepEnergy(ActuallyBlocks.DISPLAY_STAND);
             dropKeepEnergy(ActuallyBlocks.COAL_GENERATOR);
             dropKeepEnergy(ActuallyBlocks.OIL_GENERATOR);
@@ -214,7 +218,7 @@ public class LootTableGenerator extends LootTableProvider {
 
         }
 
-        private void dropNBT(Supplier<? extends Block> blockSupplier, Consumer<LootPool.Builder> lootFunctionProvider) {
+        private void dropComponents(Supplier<? extends Block> blockSupplier, Consumer<LootPool.Builder> lootFunctionProvider) {
             LootPool.Builder lootpool = LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(blockSupplier.get()));
 
             lootFunctionProvider.accept(lootpool);
@@ -222,7 +226,8 @@ public class LootTableGenerator extends LootTableProvider {
             add(blockSupplier.get(), LootTable.lootTable().withPool(applyExplosionCondition(ActuallyBlocks.ATOMIC_RECONSTRUCTOR.get(), lootpool)));
         }
         private void dropKeepEnergy(Supplier<? extends Block> blockSupplier) {
-            dropNBT(blockSupplier, $ -> $.apply(CopyNbtFunction.copyData(ContextNbtProvider.BLOCK_ENTITY).copy("Energy", "BlockEntityTag.Energy")));
+            dropComponents(blockSupplier, $ -> $.apply(CopyComponentsFunction.copyComponents(CopyComponentsFunction.Source.BLOCK_ENTITY)
+                    .include(ActuallyComponents.ENERGY_STORAGE.get())));
         }
 
 /*        // This isn't quite right :cry: fortune doesn't change it
@@ -251,8 +256,12 @@ public class LootTableGenerator extends LootTableProvider {
     }
 
     public static class Dungeon implements LootTableSubProvider {
+        public Dungeon(HolderLookup.Provider provider) {
+
+        }
+
         @Override
-        public void generate(BiConsumer<ResourceLocation, LootTable.Builder> pOutput) {
+        public void generate(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> pOutput) {
             //                addCrystals = true;
 
             pOutput.accept(

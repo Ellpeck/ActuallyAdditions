@@ -38,7 +38,7 @@
 //import java.util.List;
 //import java.util.stream.Collectors;
 //
-//@OnlyIn(Dist.CLIENT)
+//
 //public abstract class GuiBooklet extends GuiBookletBase {
 //
 //    public static final int BUTTONS_PER_PAGE = 12;

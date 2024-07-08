@@ -17,6 +17,7 @@ import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -33,7 +34,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.util.FakePlayer;
 import net.neoforged.neoforge.common.util.FakePlayerFactory;
-import net.neoforged.neoforge.fluids.IFluidBlock;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -54,16 +54,16 @@ public class TileEntityBreaker extends TileEntityInventoryBase implements MenuPr
     }
 
     @Override
-    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
-        super.writeSyncableNBT(compound, type);
+    public void writeSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
+        super.writeSyncableNBT(compound, lookupProvider, type);
         if (type != NBTType.SAVE_BLOCK) {
             compound.putInt("CurrentTime", this.currentTime);
         }
     }
 
     @Override
-    public void readSyncableNBT(CompoundTag compound, NBTType type) {
-        super.readSyncableNBT(compound, type);
+    public void readSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
+        super.readSyncableNBT(compound, lookupProvider, type);
         if (type != NBTType.SAVE_BLOCK) {
             this.currentTime = compound.getInt("CurrentTime");
         }
@@ -103,7 +103,7 @@ public class TileEntityBreaker extends TileEntityInventoryBase implements MenuPr
         BlockState stateToBreak = this.level.getBlockState(breakCoords);
         Block blockToBreak = stateToBreak.getBlock();
 
-        if (!this.isPlacer && blockToBreak != Blocks.AIR && !(blockToBreak instanceof IFluidBlock) && stateToBreak.getDestroySpeed(this.level, breakCoords) >= 0.0F) {
+        if (!this.isPlacer && blockToBreak != Blocks.AIR && stateToBreak.getDestroySpeed(this.level, breakCoords) >= 0.0F) {
             List<ItemStack> drops = Block.getDrops(stateToBreak, (ServerLevel) this.level, breakCoords, this.level.getBlockEntity(breakCoords));
             FakePlayer fake = FakePlayerFactory.getMinecraft((ServerLevel) this.level);
             if (stateToBreak.canHarvestBlock(this.level, breakCoords, fake)) { //TODO might double check this is right mikey

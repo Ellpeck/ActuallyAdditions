@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.api.tile.IPhantomTile;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.blocks.BlockPhantom;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
@@ -21,8 +22,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.capabilities.ICapabilityInvalidationListener;
 
 public abstract class TileEntityPhantomface extends TileEntityInventoryBase implements IPhantomTile {
@@ -56,8 +55,8 @@ public abstract class TileEntityPhantomface extends TileEntityInventoryBase impl
     }
 
     @Override
-    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
-        super.writeSyncableNBT(compound, type);
+    public void writeSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
+        super.writeSyncableNBT(compound, lookupProvider, type);
         if (type != NBTType.SAVE_BLOCK) {
             compound.putInt("Range", this.range);
             if (this.boundPosition != null) {
@@ -69,8 +68,8 @@ public abstract class TileEntityPhantomface extends TileEntityInventoryBase impl
     }
 
     @Override
-    public void readSyncableNBT(CompoundTag compound, NBTType type) {
-        super.readSyncableNBT(compound, type);
+    public void readSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
+        super.readSyncableNBT(compound, lookupProvider, type);
         if (type != NBTType.SAVE_BLOCK) {
             int x = compound.getInt("xOfTileStored");
             int y = compound.getInt("yOfTileStored");
@@ -150,7 +149,7 @@ public abstract class TileEntityPhantomface extends TileEntityInventoryBase impl
         return false;
     }
 
-    @OnlyIn(Dist.CLIENT)
+    
     public void renderParticles() {
         if (this.level.random.nextInt(2) == 0) {
             double d1 = this.boundPosition.getY() + this.level.random.nextFloat();
@@ -203,7 +202,7 @@ public abstract class TileEntityPhantomface extends TileEntityInventoryBase impl
         return 0;
     }
 
-    public class CapListener implements ICapabilityInvalidationListener {
+    public static class CapListener implements ICapabilityInvalidationListener {
         private boolean valid = true;
         private final TileEntityPhantomface tile;
 

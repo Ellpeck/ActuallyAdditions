@@ -14,11 +14,9 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.event.TickEvent;
 
 public class UpdateChecker {
 
@@ -38,9 +36,9 @@ public class UpdateChecker {
 //        }
     }
 
-    @OnlyIn(Dist.CLIENT)
+    
     @SubscribeEvent(receiveCanceled = true)
-    public void onTick(TickEvent.ClientTickEvent event) {
+    public void onTick(ClientTickEvent.Pre event) {
         if (Minecraft.getInstance().player != null) {
             Player player = Minecraft.getInstance().player;
             if (UpdateChecker.checkFailed) {

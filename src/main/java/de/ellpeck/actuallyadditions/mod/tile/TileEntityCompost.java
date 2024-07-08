@@ -46,7 +46,7 @@
 //
 //    @Override
 //    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
-//        super.writeSyncableNBT(compound, type);
+//        super.writeSyncableNBT(compound, lookupProvider, type);
 //        if (type != NBTType.SAVE_BLOCK) {
 //            compound.putInt("ConversionTime", this.conversionTime);
 //        }
@@ -59,7 +59,7 @@
 //
 //    @Override
 //    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
-//        super.readSyncableNBT(compound, type);
+//        super.readSyncableNBT(compound, lookupProvider, type);
 //        if (type != NBTType.SAVE_BLOCK) {
 //            this.conversionTime = compound.getInt("ConversionTime");
 //        }

@@ -11,21 +11,30 @@
 package de.ellpeck.actuallyadditions.mod.misc;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.block.entity.BannerPattern;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredRegister;
 
 public final class BannerHelper {
-    public static final DeferredRegister<BannerPattern> BANNER_PATTERNS = DeferredRegister.create(BuiltInRegistries.BANNER_PATTERN, ActuallyAdditions.MODID);
 
-    public static DeferredHolder<BannerPattern, BannerPattern> DRILL = BANNER_PATTERNS.register("drill", () -> new BannerPattern(ActuallyAdditions.MODID + ":drill"));
-    public static DeferredHolder<BannerPattern, BannerPattern> LEAF_BLO = BANNER_PATTERNS.register("leaf_blo", () -> new BannerPattern(ActuallyAdditions.MODID + ":leaf_blo"));
-    public static DeferredHolder<BannerPattern, BannerPattern> PHAN_CON = BANNER_PATTERNS.register("phan_con", () -> new BannerPattern(ActuallyAdditions.MODID + ":phan_con"));
-    public static DeferredHolder<BannerPattern, BannerPattern> BOOK = BANNER_PATTERNS.register("book", () -> new BannerPattern(ActuallyAdditions.MODID + ":book"));
+    public static ResourceKey<BannerPattern> DRILL = create("drill");
+    public static ResourceKey<BannerPattern> LEAF_BLO = create("leaf_blo");
+    public static ResourceKey<BannerPattern> PHAN_CON = create("phan_con");
+    public static ResourceKey<BannerPattern> BOOK = create("book");
 
-    public static void init(IEventBus eventBus) {
-        BANNER_PATTERNS.register(eventBus);
+    private static ResourceKey<BannerPattern> create(String pName) {
+        return ResourceKey.create(Registries.BANNER_PATTERN, ActuallyAdditions.modLoc(pName));
+    }
+
+    public static void bootstrap(BootstrapContext<BannerPattern> pContext) {
+        register(pContext, DRILL);
+        register(pContext, LEAF_BLO);
+        register(pContext, PHAN_CON);
+        register(pContext, BOOK);
+    }
+
+    public static void register(BootstrapContext<BannerPattern> pContext, ResourceKey<BannerPattern> pResourceKey) {
+        pContext.register(pResourceKey, new BannerPattern(pResourceKey.location(), "block.minecraft.banner." + pResourceKey.location().toShortLanguageKey()));
     }
 }

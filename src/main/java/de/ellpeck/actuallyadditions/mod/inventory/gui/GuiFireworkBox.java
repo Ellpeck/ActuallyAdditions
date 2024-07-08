@@ -21,13 +21,11 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
-@OnlyIn(Dist.CLIENT)
+
 public class GuiFireworkBox extends AbstractContainerScreen<ContainerFireworkBox> {
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_firework_box");

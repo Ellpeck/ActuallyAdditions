@@ -21,7 +21,7 @@
 //import net.minecraftforge.api.distmarker.OnlyIn;
 //
 //
-//@OnlyIn(Dist.CLIENT)
+//
 //public class GuiRepairer extends GuiWtfMojang {
 //
 //    private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_repairer");

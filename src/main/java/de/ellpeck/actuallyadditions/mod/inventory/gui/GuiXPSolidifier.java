@@ -20,11 +20,8 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 
-@OnlyIn(Dist.CLIENT)
 public class GuiXPSolidifier extends AAScreen<ContainerXPSolidifier> {
 
     private static final ResourceLocation RES_LOC = AssetUtil.getGuiLocation("gui_xp_solidifier");

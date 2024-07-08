@@ -84,7 +84,7 @@
 //    }
 //
 //    @Override
-//    @OnlyIn(Dist.CLIENT)
+//    
 //    @Deprecated
 //    public boolean shouldSideBeRendered(BlockState blockState, IBlockAccess blockAccess, BlockPos pos, Direction side) {
 //        return side != Direction.DOWN || super.shouldSideBeRendered(blockState, blockAccess, pos, side);
@@ -108,7 +108,7 @@
 //    }
 //
 //    @Override
-//    @OnlyIn(Dist.CLIENT)
+//    
 //    public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> list) {
 //        list.add(new ItemStack(this, 1, 0));
 //    }

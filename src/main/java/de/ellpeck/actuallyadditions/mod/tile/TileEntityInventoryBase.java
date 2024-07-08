@@ -16,6 +16,7 @@ import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.world.item.ItemStack;
@@ -34,14 +35,14 @@ public abstract class TileEntityInventoryBase extends TileEntityBase {
         this.inv = new TileStackHandler(slots);
     }
 
-    public static void saveSlots(IItemHandler slots, CompoundTag compound) {
+    public static void saveSlots(IItemHandler slots, CompoundTag compound, HolderLookup.Provider provider) {
         if (slots != null && slots.getSlots() > 0) {
             ListTag tagList = new ListTag();
             for (int i = 0; i < slots.getSlots(); i++) {
                 ItemStack slot = slots.getStackInSlot(i);
                 CompoundTag tagCompound = new CompoundTag();
                 if (StackUtil.isValid(slot)) {
-                    slot.save(tagCompound);
+                    slot.save(provider, tagCompound);
                 }
                 tagList.add(tagCompound);
             }
@@ -49,23 +50,23 @@ public abstract class TileEntityInventoryBase extends TileEntityBase {
         }
     }
 
-    public static void loadSlots(IItemHandlerModifiable slots, CompoundTag compound) {
+    public static void loadSlots(IItemHandlerModifiable slots, CompoundTag compound, HolderLookup.Provider provider) {
         if (slots != null && slots.getSlots() > 0) {
             ListTag tagList = compound.getList("Items", 10);
             for (int i = 0; i < slots.getSlots(); i++) {
                 CompoundTag tagCompound = tagList.getCompound(i);
                 slots.setStackInSlot(i, tagCompound.contains("id")
-                    ? ItemStack.of(tagCompound)
+                    ? ItemStack.parseOptional(provider, tagCompound)
                     : ItemStack.EMPTY);
             }
         }
     }
 
     @Override
-    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
-        super.writeSyncableNBT(compound, type);
+    public void writeSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
+        super.writeSyncableNBT(compound, lookupProvider, type);
         if (type == NBTType.SAVE_TILE || type == NBTType.SYNC && this.shouldSyncSlots()) {
-            saveSlots(this.inv, compound);
+            saveSlots(this.inv, compound, lookupProvider);
         }
     }
 
@@ -105,10 +106,10 @@ public abstract class TileEntityInventoryBase extends TileEntityBase {
     }
 
     @Override
-    public void readSyncableNBT(CompoundTag compound, NBTType type) {
-        super.readSyncableNBT(compound, type);
+    public void readSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
+        super.readSyncableNBT(compound, lookupProvider, type);
         if (type == NBTType.SAVE_TILE || type == NBTType.SYNC && this.shouldSyncSlots()) {
-            loadSlots(this.inv, compound);
+            loadSlots(this.inv, compound, lookupProvider);
         }
     }
 

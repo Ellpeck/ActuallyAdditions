@@ -2,31 +2,34 @@ package de.ellpeck.actuallyadditions.mod.crafting;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.Container;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipeInput;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class CoffeeIngredientRecipe implements Recipe<Container> {
+public class CoffeeIngredientRecipe implements Recipe<RecipeInput> {
 	public static final String NAME = "coffee_ingredient";
 
 	protected final Ingredient ingredient;
@@ -42,7 +45,7 @@ public class CoffeeIngredientRecipe implements Recipe<Container> {
 		this.instances = effectInstances;
 		List<MobEffectInstance> instances = new ArrayList<>();
 		for (EffectInstance instance : effectInstances) {
-			MobEffect effect = BuiltInRegistries.MOB_EFFECT.get(instance.effect());
+			Holder<MobEffect> effect = BuiltInRegistries.MOB_EFFECT.getHolder(instance.effect()).orElse(null);
 			if (effect == null) break;
 			instances.add(new MobEffectInstance(effect, instance.duration, instance.amplifier));
 		}
@@ -67,7 +70,7 @@ public class CoffeeIngredientRecipe implements Recipe<Container> {
 	}
 
 	@Override
-	public boolean matches(Container container, Level level) {
+	public boolean matches(RecipeInput container, Level level) {
 		return false;
 	}
 
@@ -76,8 +79,8 @@ public class CoffeeIngredientRecipe implements Recipe<Container> {
 	}
 
 	@Override
-	public ItemStack assemble(Container container, RegistryAccess registryAccess) {
-		return getResultItem(registryAccess);
+	public ItemStack assemble(RecipeInput container, HolderLookup.Provider registries) {
+		return getResultItem(registries);
 	}
 
 	@Override
@@ -86,7 +89,7 @@ public class CoffeeIngredientRecipe implements Recipe<Container> {
 	}
 
 	@Override
-	public ItemStack getResultItem(RegistryAccess registryAccess) {
+	public ItemStack getResultItem(HolderLookup.Provider registries) {
 		return ItemStack.EMPTY;
 	}
 
@@ -114,7 +117,7 @@ public class CoffeeIngredientRecipe implements Recipe<Container> {
 	}
 
 	public record EffectInstance(ResourceLocation effect, int duration, int amplifier) { //Simplified record for the effect instance
-		public static final EffectInstance EMPTY = new EffectInstance(new ResourceLocation("darkness"), 0, 0);
+		public static final EffectInstance EMPTY = new EffectInstance(ResourceLocation.tryParse("darkness"), 0, 0);
 		public static final Codec<EffectInstance> CODEC = RecordCodecBuilder.create(
 				instance -> instance.group(
 								ResourceLocation.CODEC.fieldOf("effect").forGetter(effect -> effect.effect),
@@ -125,7 +128,7 @@ public class CoffeeIngredientRecipe implements Recipe<Container> {
 		);
 
 		public EffectInstance(MobEffectInstance effect) {
-			this(BuiltInRegistries.MOB_EFFECT.getKey(effect.getEffect()), effect.getDuration(), effect.getAmplifier());
+			this(BuiltInRegistries.MOB_EFFECT.getKey(effect.getEffect().value()), effect.getDuration(), effect.getAmplifier());
 		}
 
 		public static EffectInstance fromNetwork(FriendlyByteBuf pBuffer) {
@@ -143,7 +146,7 @@ public class CoffeeIngredientRecipe implements Recipe<Container> {
 	}
 
 	public static class Serializer implements RecipeSerializer<CoffeeIngredientRecipe> {
-		private static final Codec<CoffeeIngredientRecipe> CODEC = RecordCodecBuilder.create(
+		private static final MapCodec<CoffeeIngredientRecipe> CODEC = RecordCodecBuilder.mapCodec(
 				instance -> instance.group(
 								Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(recipe -> recipe.ingredient),
 								EffectInstance.CODEC
@@ -166,16 +169,22 @@ public class CoffeeIngredientRecipe implements Recipe<Container> {
 						)
 						.apply(instance, CoffeeIngredientRecipe::new)
 		);
+		public static final StreamCodec<RegistryFriendlyByteBuf, CoffeeIngredientRecipe> STREAM_CODEC = StreamCodec.of(
+				CoffeeIngredientRecipe.Serializer::toNetwork, CoffeeIngredientRecipe.Serializer::fromNetwork
+		);
 
 		@Override
-		public Codec<CoffeeIngredientRecipe> codec() {
+		public MapCodec<CoffeeIngredientRecipe> codec() {
 			return CODEC;
 		}
 
-		@Nullable
 		@Override
-		public CoffeeIngredientRecipe fromNetwork(@Nonnull FriendlyByteBuf pBuffer) {
-			Ingredient ingredient = Ingredient.fromNetwork(pBuffer);
+		public StreamCodec<RegistryFriendlyByteBuf, CoffeeIngredientRecipe> streamCodec() {
+			return STREAM_CODEC;
+		}
+
+		public static CoffeeIngredientRecipe fromNetwork(@Nonnull RegistryFriendlyByteBuf pBuffer) {
+			Ingredient ingredient = Ingredient.CONTENTS_STREAM_CODEC.decode(pBuffer);
 			int i = pBuffer.readVarInt();
 			NonNullList<EffectInstance> list = NonNullList.withSize(i, EffectInstance.EMPTY);
 			for (int j = 0; j < list.size(); ++j) {
@@ -186,9 +195,8 @@ public class CoffeeIngredientRecipe implements Recipe<Container> {
 			return new CoffeeIngredientRecipe(ingredient, list, maxAmplifier, extraText);
 		}
 
-		@Override
-		public void toNetwork(@Nonnull FriendlyByteBuf pBuffer, CoffeeIngredientRecipe pRecipe) {
-			pRecipe.ingredient.toNetwork(pBuffer);
+		public static void toNetwork(@Nonnull RegistryFriendlyByteBuf pBuffer, CoffeeIngredientRecipe pRecipe) {
+			Ingredient.CONTENTS_STREAM_CODEC.encode(pBuffer, pRecipe.ingredient);
 			pBuffer.writeVarInt(pRecipe.instances.size());
 			for (EffectInstance effect : pRecipe.instances) {
 				effect.toNetwork(pBuffer);

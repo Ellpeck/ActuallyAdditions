@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.Level;
@@ -40,14 +41,14 @@ public class TileEntityLeafGenerator extends TileEntityBase implements ISharingE
     }
 
     @Override
-    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
-        super.writeSyncableNBT(compound, type);
+    public void writeSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
+        super.writeSyncableNBT(compound, lookupProvider, type);
         this.storage.writeToNBT(compound);
     }
 
     @Override
-    public void readSyncableNBT(CompoundTag compound, NBTType type) {
-        super.readSyncableNBT(compound, type);
+    public void readSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
+        super.readSyncableNBT(compound, lookupProvider, type);
         this.storage.readFromNBT(compound);
     }
 
@@ -79,13 +80,13 @@ public class TileEntityLeafGenerator extends TileEntityBase implements ISharingE
 
                         if (!breakPositions.isEmpty()) {
                             Collections.shuffle(breakPositions);
-                            BlockPos theCoord = breakPositions.get(0);
+                            BlockPos theCoord = breakPositions.getFirst();
 
                             level.levelEvent(2001, theCoord, Block.getId(level.getBlockState(theCoord)));
 
                             level.setBlockAndUpdate(theCoord, Blocks.AIR.defaultBlockState());
 
-                            tile.storage.receiveEnergyInternal(energyProduced, false);
+                            tile.storage.receiveEnergy(energyProduced, false);
 
                             AssetUtil.spawnLaserWithTimeServer(level, pos.getX(), pos.getY(), pos.getZ(), theCoord.getX(), theCoord.getY(), theCoord.getZ(), 0x3EA34A, 25, 0, 0.075F, 0.8F);
                         }

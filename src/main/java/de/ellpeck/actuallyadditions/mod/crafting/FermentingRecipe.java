@@ -1,13 +1,15 @@
 package de.ellpeck.actuallyadditions.mod.crafting;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import de.ellpeck.actuallyadditions.mod.inventory.gui.FluidDisplay;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.Container;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeInput;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
@@ -17,7 +19,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Optional;
 
-public class FermentingRecipe implements Recipe<Container> {
+public class FermentingRecipe implements Recipe<RecipeInput> {
     public static final String NAME = "fermenting";
     private final FluidStack input;
     private final FluidStack output;
@@ -33,11 +35,12 @@ public class FermentingRecipe implements Recipe<Container> {
     }
 
     public boolean matches(FluidStack stack) {
-        return stack.isFluidEqual(this.input);
+        return FluidStack.isSameFluidSameComponents(stack, this.input);
     }
 
     public boolean matches(FluidStack input, FluidStack output) {
-        return input.isFluidEqual(this.input) && (output.isEmpty() || output.isFluidEqual(this.output) && input.getAmount() >= this.input.getAmount());
+        return FluidStack.isSameFluidSameComponents(input, this.input) && (output.isEmpty() ||
+                FluidStack.isSameFluidSameComponents(output, this.output) && input.getAmount() >= this.input.getAmount());
     }
 
     public Optional<FluidDisplay> getInputDisplay() {
@@ -69,7 +72,7 @@ public class FermentingRecipe implements Recipe<Container> {
     }
 
     @Override
-    public boolean matches(Container pInv, Level pLevel) {
+    public boolean matches(RecipeInput pInv, Level pLevel) {
         return false;
     }
 
@@ -80,7 +83,7 @@ public class FermentingRecipe implements Recipe<Container> {
 
     @Nonnull
     @Override
-    public ItemStack assemble(Container pInv, RegistryAccess pRegistryAccess) {
+    public ItemStack assemble(RecipeInput pInv, HolderLookup.Provider registries) {
         return ItemStack.EMPTY;
     }
 
@@ -91,7 +94,7 @@ public class FermentingRecipe implements Recipe<Container> {
 
     @Nonnull
     @Override
-    public ItemStack getResultItem(RegistryAccess pRegistryAccess) {
+    public ItemStack getResultItem(HolderLookup.Provider registries) {
         return ItemStack.EMPTY;
     }
 
@@ -108,7 +111,7 @@ public class FermentingRecipe implements Recipe<Container> {
     }
 
     public static class Serializer implements RecipeSerializer<FermentingRecipe> {
-        private static final Codec<FermentingRecipe> CODEC = RecordCodecBuilder.create(
+        private static final MapCodec<FermentingRecipe> CODEC = RecordCodecBuilder.mapCodec(
                 instance -> instance.group(
                                 FluidStack.CODEC.fieldOf("ingredient").forGetter(recipe -> recipe.input),
                                 FluidStack.CODEC.fieldOf("result").forGetter(recipe -> recipe.output),
@@ -116,52 +119,32 @@ public class FermentingRecipe implements Recipe<Container> {
                         )
                         .apply(instance, FermentingRecipe::new)
         );
-
-//        @Nonnull
-//        @Override
-//        public FermentingRecipe fromJson(@Nonnull ResourceLocation pRecipeId, @Nonnull JsonObject pJson) {
-//            JsonObject ingredient = pJson.getAsJsonObject("ingredient");
-//
-//            ResourceLocation fluidRes = new ResourceLocation(GsonHelper.getAsString(ingredient, "fluid"));
-//            Fluid fluid = BuiltInRegistries.FLUIDS.getValue(fluidRes);
-//            if (fluid == null)
-//                throw new JsonParseException("Unknown fluid '" + fluidRes + "'");
-//            int inputAmount = GsonHelper.getAsInt(ingredient, "amount", 80);
-//            FluidStack input = new FluidStack(fluid, inputAmount);
-//
-//            JsonObject result = pJson.getAsJsonObject("result");
-//            ResourceLocation fluidOutputRes = new ResourceLocation(GsonHelper.getAsString(result, "fluid"));
-//            int outputAmount = GsonHelper.getAsInt(result, "amount");
-//            Fluid fluidOutput = BuiltInRegistries.FLUIDS.getValue(fluidOutputRes);
-//            if(fluidOutput == null)
-//                throw new JsonParseException("Unknown fluid '" + fluidRes + "'");
-//            FluidStack output = new FluidStack(fluidOutput, outputAmount);
-//
-//            int time = GsonHelper.getAsInt(pJson, "time", 100);
-//
-//            return new FermentingRecipe(pRecipeId, input, output, time);
-//        }
-
+        public static final StreamCodec<RegistryFriendlyByteBuf, FermentingRecipe> STREAM_CODEC = StreamCodec.of(
+                FermentingRecipe.Serializer::toNetwork, FermentingRecipe.Serializer::fromNetwork
+        );
 
         @Override
-        public Codec<FermentingRecipe> codec() {
+        public MapCodec<FermentingRecipe> codec() {
             return CODEC;
         }
 
-        @Nullable
         @Override
-        public FermentingRecipe fromNetwork(@Nonnull FriendlyByteBuf pBuffer) {
-            FluidStack input = FluidStack.readFromPacket(pBuffer);
-            FluidStack output = FluidStack.readFromPacket(pBuffer);
+        public StreamCodec<RegistryFriendlyByteBuf, FermentingRecipe> streamCodec() {
+            return STREAM_CODEC;
+        }
+
+        @Nullable
+        public static FermentingRecipe fromNetwork(@Nonnull RegistryFriendlyByteBuf pBuffer) {
+            FluidStack input = FluidStack.STREAM_CODEC.decode(pBuffer);
+            FluidStack output = FluidStack.STREAM_CODEC.decode(pBuffer);
             int time = pBuffer.readInt();
 
             return new FermentingRecipe(input, output, time);
         }
 
-        @Override
-        public void toNetwork(@Nonnull FriendlyByteBuf pBuffer, @Nonnull FermentingRecipe pRecipe) {
-            pRecipe.input.writeToPacket(pBuffer);
-            pRecipe.output.writeToPacket(pBuffer);
+        public static void toNetwork(@Nonnull RegistryFriendlyByteBuf pBuffer, @Nonnull FermentingRecipe pRecipe) {
+            FluidStack.STREAM_CODEC.encode(pBuffer, pRecipe.input);
+            FluidStack.STREAM_CODEC.encode(pBuffer, pRecipe.output);
             pBuffer.writeInt(pRecipe.time);
         }
     }

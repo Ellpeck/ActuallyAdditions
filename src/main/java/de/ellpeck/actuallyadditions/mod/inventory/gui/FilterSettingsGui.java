@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.tile.FilterSettings;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -18,14 +17,12 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-@OnlyIn(Dist.CLIENT)
+
 public class FilterSettingsGui {
 
     private final FilterSettings theSettings;

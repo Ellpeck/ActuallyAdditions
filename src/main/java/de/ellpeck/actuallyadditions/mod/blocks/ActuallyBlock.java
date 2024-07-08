@@ -6,8 +6,6 @@ import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
-import java.util.function.Supplier;
-
 /**
  * Using a custom class here to declare common rules between all of our blocks.
  * This also provides a simple instance of check for our blocks.
@@ -30,7 +28,7 @@ public class ActuallyBlock extends Block implements IActuallyBlock {
     }
 
     public static class Stairs extends StairBlock implements IActuallyBlock {
-        public Stairs(Supplier<BlockState> state, Properties properties) {
+        public Stairs(BlockState state, Properties properties) {
             super(state, properties);
         }
 

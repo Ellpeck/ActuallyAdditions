@@ -3,7 +3,6 @@ package de.ellpeck.actuallyadditions.mod.jei.coffee;
 import com.google.common.base.Strings;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.ActuallyTags;
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.crafting.CoffeeIngredientRecipe;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.jei.JEIActuallyAdditionsPlugin;

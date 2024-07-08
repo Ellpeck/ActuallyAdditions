@@ -13,13 +13,16 @@ package de.ellpeck.actuallyadditions.mod.network;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
-import net.neoforged.neoforge.network.handling.PlayPayloadContext;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
 import org.apache.commons.lang3.tuple.Pair;
 
 public record PacketClientToServer(CompoundTag data, IDataHandler handler) implements CustomPacketPayload {
-    public static final ResourceLocation ID = new ResourceLocation(ActuallyAdditions.MODID, "client_to_server");
+    public static final StreamCodec<FriendlyByteBuf, PacketClientToServer> CODEC = CustomPacketPayload.codec(
+            PacketClientToServer::write,
+            PacketClientToServer::new);
+    public static final Type<PacketClientToServer> ID = new Type<>(ActuallyAdditions.modLoc("client_to_server"));
 
     public PacketClientToServer(Pair<CompoundTag, IDataHandler> data) {
         this(data.getLeft(), data.getRight());
@@ -48,8 +51,8 @@ public record PacketClientToServer(CompoundTag data, IDataHandler handler) imple
         buf.writeInt(PacketHandler.DATA_HANDLERS.indexOf(handler));
     }
 
-    public static void handle(final PacketClientToServer message, final PlayPayloadContext context) {
-        context.workHandler().submitAsync(
+    public static void handle(final PacketClientToServer message, final IPayloadContext context) {
+        context.enqueueWork(
                 () -> {
                     if (message.data != null && message.handler != null) {
                         message.handler.handleData(message.data, context);
@@ -59,7 +62,7 @@ public record PacketClientToServer(CompoundTag data, IDataHandler handler) imple
     }
 
     @Override
-    public ResourceLocation id() {
+    public Type<? extends CustomPacketPayload> type() {
         return ID;
     }
 }

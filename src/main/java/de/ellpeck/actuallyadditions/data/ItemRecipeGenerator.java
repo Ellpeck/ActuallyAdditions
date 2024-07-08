@@ -10,7 +10,9 @@ import de.ellpeck.actuallyadditions.mod.crafting.TargetNBTIngredient;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.util.NoAdvRecipeOutput;
 import de.ellpeck.actuallyadditions.mod.util.RecipeInjector;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
@@ -29,16 +31,18 @@ import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.item.crafting.ShapelessRecipe;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.ItemLike;
+import net.neoforged.neoforge.common.CommonHooks;
 import net.neoforged.neoforge.common.Tags;
-import net.neoforged.neoforge.common.crafting.NBTIngredient;
+import net.neoforged.neoforge.common.crafting.DataComponentIngredient;
 import net.neoforged.neoforge.registries.DeferredItem;
 
 import javax.annotation.Nonnull;
 import java.util.Arrays;
+import java.util.concurrent.CompletableFuture;
 
 public class ItemRecipeGenerator extends RecipeProvider {
-    public ItemRecipeGenerator(PackOutput packOutput) {
-        super(packOutput);
+    public ItemRecipeGenerator(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+        super(packOutput, lookupProvider);
     }
 
     @Override
@@ -48,6 +52,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
 
     @Override
     protected void buildRecipes(@Nonnull RecipeOutput output) {
+        var enchantmentLookup = CommonHooks.resolveLookup(Registries.ENCHANTMENT);
         var recipeOutput = new NoAdvRecipeOutput(output);
 
         generateAOIT(recipeOutput);
@@ -58,7 +63,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .pattern("IGI")
             .define('R', ActuallyItems.RESTONIA_CRYSTAL.get())
             .define('I', Items.IRON_BARS)
-            .define('G', Tags.Items.GLASS).save(recipeOutput);
+            .define('G', Tags.Items.GLASS_BLOCKS).save(recipeOutput);
 
         //Advanced Goggles
         Recipe.shaped(ActuallyItems.ENGINEERS_GOGGLES_ADVANCED.get())
@@ -74,7 +79,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .pattern("GGG")
             .pattern("RCR")
             .pattern("GGG")
-            .define('G', Tags.Items.GLASS_BLACK)
+            .define('G', Items.BLACK_STAINED_GLASS)
             .define('R', ActuallyItems.VOID_CRYSTAL.get())
             .define('C', ActuallyItems.ADVANCED_COIL.get()).save(recipeOutput);
 
@@ -103,8 +108,8 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .pattern("SLS")
             .pattern("SCS")
             .pattern("LVL")
-            .define('S', Tags.Items.STRING)
-            .define('L', Tags.Items.LEATHER)
+            .define('S', Tags.Items.STRINGS)
+            .define('L', Tags.Items.LEATHERS)
             .define('C', Tags.Items.CHESTS_WOODEN)
             .define('V', ActuallyBlocks.VOID_CRYSTAL.getItem()).save(recipeOutput);
 
@@ -112,7 +117,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
         Recipe.shapeless(ActuallyItems.VOID_SACK.get())
             .requires(ActuallyItems.TRAVELERS_SACK.get())
             .requires(Tags.Items.ENDER_PEARLS)
-            .requires(Tags.Items.OBSIDIAN)
+            .requires(Tags.Items.OBSIDIANS)
             .requires(ActuallyBlocks.VOID_CRYSTAL.getItem())
             .save(recipeOutput);
 
@@ -121,7 +126,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .pattern("GGG")
             .pattern("GBG")
             .pattern("GGG")
-            .define('G', Tags.Items.GLASS)
+            .define('G', Tags.Items.GLASS_BLOCKS)
             .define('B', ActuallyItems.BLACK_QUARTZ.get()).save(recipeOutput);
 
         //Booklet
@@ -130,8 +135,8 @@ public class ItemRecipeGenerator extends RecipeProvider {
 
 
         //Clearing NBT Storage
-        Recipe.shapeless(ActuallyItems.LASER_WRENCH.get()).ingredients(ActuallyItems.LASER_WRENCH.get()).name(new ResourceLocation(ActuallyAdditions.MODID, "laser_wrench_nbt")).save(recipeOutput);
-        Recipe.shapeless(ActuallyItems.PHANTOM_CONNECTOR.get()).ingredients(ActuallyItems.PHANTOM_CONNECTOR.get()).name(new ResourceLocation(ActuallyAdditions.MODID, "phantom_clearing")).save(recipeOutput);
+        Recipe.shapeless(ActuallyItems.LASER_WRENCH.get()).ingredients(ActuallyItems.LASER_WRENCH.get()).name(ActuallyAdditions.modLoc("laser_wrench_nbt")).save(recipeOutput);
+        Recipe.shapeless(ActuallyItems.PHANTOM_CONNECTOR.get()).ingredients(ActuallyItems.PHANTOM_CONNECTOR.get()).name(ActuallyAdditions.modLoc("phantom_clearing")).save(recipeOutput);
 
         //Disenchanting Lens
         Recipe.shapeless(ActuallyItems.LENS_OF_DISENCHANTING.get())
@@ -156,12 +161,13 @@ public class ItemRecipeGenerator extends RecipeProvider {
 
         //Killer Lens
         ItemStack enchantedBook = new ItemStack(Items.ENCHANTED_BOOK);
-        enchantedBook.enchant(Enchantments.SHARPNESS, 5);
+        if (enchantmentLookup != null) {
+            enchantedBook.enchant(enchantmentLookup.getOrThrow(Enchantments.SHARPNESS), 5);
+        }
         Recipe.shapeless(ActuallyItems.LENS_OF_THE_KILLER.get())
-            .requires(Items.DIAMOND_SWORD)
-            .requires(ActuallyItems.LENS_OF_CERTAIN_DEATH.get())
-            .requires(NBTIngredient.of(true, enchantedBook)).save(recipeOutput);
-
+                .requires(Items.DIAMOND_SWORD)
+                .requires(ActuallyItems.LENS_OF_CERTAIN_DEATH.get())
+                .requires(DataComponentIngredient.of(true, enchantedBook)).save(recipeOutput);
 
         //Filter
         Recipe.shaped(ActuallyItems.FILTER.get())
@@ -194,7 +200,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .pattern("R  ")
             .pattern(" R ")
             .pattern("  R")
-            .define('R', ActuallyItems.RICE).save(recipeOutput, new ResourceLocation(ActuallyAdditions.MODID, "rice_paper"));
+            .define('R', ActuallyItems.RICE).save(recipeOutput, ActuallyAdditions.modLoc("rice_paper"));
 
         Recipe.shaped(ActuallyItems.RICE_SLIMEBALL.get())
             .requiresBook()
@@ -203,7 +209,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .pattern(" R ")
             .define('R', ActuallyItems.RICE_DOUGH.get())
             .define('B', Items.WATER_BUCKET)
-            .save(recipeOutput, new ResourceLocation(ActuallyAdditions.MODID, "rice_slime"));
+            .save(recipeOutput, ActuallyAdditions.modLoc("rice_slime"));
 
         Recipe.shaped(ActuallyItems.RICE_SLIMEBALL.get())
             .requiresBook()
@@ -212,7 +218,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .pattern(" R ")
             .define('R', ActuallyItems.RICE_DOUGH.get())
             .define('B', Items.POTION)
-            .save(recipeOutput, new ResourceLocation(ActuallyAdditions.MODID, "rice_slime_potion"));
+            .save(recipeOutput, ActuallyAdditions.modLoc("rice_slime_potion"));
 
         //Leaf Blower
         Recipe.shaped(ActuallyItems.LEAF_BLOWER.get())
@@ -357,7 +363,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .pattern("CEC")
             .pattern("RAR")
             .pattern("CEC")
-            .define('C', Tags.Items.COBBLESTONE)
+            .define('C', Tags.Items.COBBLESTONES)
             .define('E', Items.PAPER)
             .define('A', ActuallyItems.BASIC_COIL.get())
             .define('R', ActuallyItems.ENORI_CRYSTAL.get()).save(recipeOutput);
@@ -460,15 +466,15 @@ public class ItemRecipeGenerator extends RecipeProvider {
 
         Recipe.shapeless(ActuallyItems.TINY_COAL.get(), 8)
                 .requires(Items.COAL)
-                .save(boolConsumer, new ResourceLocation(ActuallyAdditions.MODID, "coal_to_tiny"));
+                .save(boolConsumer, ActuallyAdditions.modLoc("coal_to_tiny"));
         Recipe.shapeless(ActuallyItems.TINY_CHARCOAL.get(), 8)
-                .requires(Items.CHARCOAL).save(boolConsumer, new ResourceLocation(ActuallyAdditions.MODID, "charcoal_to_tiny"));
+                .requires(Items.CHARCOAL).save(boolConsumer, ActuallyAdditions.modLoc("charcoal_to_tiny"));
         Recipe.shaped(Items.COAL)
                 .pattern("CCC", "C C", "CCC").define('C', ActuallyItems.TINY_COAL.get())
-                .save(boolConsumer, new ResourceLocation(ActuallyAdditions.MODID, "tiny_to_coal"));
+                .save(boolConsumer, ActuallyAdditions.modLoc("tiny_to_coal"));
         Recipe.shaped(Items.CHARCOAL)
                 .pattern("CCC", "C C", "CCC").define('C', ActuallyItems.TINY_CHARCOAL.get())
-                .save(boolConsumer, new ResourceLocation(ActuallyAdditions.MODID, "tiny_to_charcoal"));
+                .save(boolConsumer, ActuallyAdditions.modLoc("tiny_to_charcoal"));
 
         //Canola Seeds
         Recipe.shapeless(ActuallyItems.CANOLA_SEEDS.get())
@@ -496,7 +502,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
         //Cup
         Recipe.shaped(ActuallyItems.EMPTY_CUP.get())
                 .pattern("S S", "SCS", "SSS")
-                .define('S', Tags.Items.STONE)
+                .define('S', Tags.Items.STONES)
                 .define('C', ActuallyItems.COFFEE_BEANS.get())
                 .save(recipeOutput);
 
@@ -528,13 +534,13 @@ public class ItemRecipeGenerator extends RecipeProvider {
                 .pattern("R", "P")
                 .define('R', Tags.Items.SLIMEBALLS)
                 .define('P', Items.PISTON)
-                .save(recipeOutput, new ResourceLocation(ActuallyAdditions.MODID, "tagged_sticky_piston"));
+                .save(recipeOutput, ActuallyAdditions.modLoc("tagged_sticky_piston"));
 
         // Slime block from tagged balls
         Recipe.shaped(Items.SLIME_BLOCK)
                 .pattern("RRR", "RRR", "RRR")
                 .define('R', Tags.Items.SLIMEBALLS)
-                .save(recipeOutput, new ResourceLocation(ActuallyAdditions.MODID, "tagged_slime_block"));
+                .save(recipeOutput, ActuallyAdditions.modLoc("tagged_slime_block"));
 
         //Shards
         addShard(recipeOutput, ActuallyItems.VOID_CRYSTAL_SHARD, ActuallyItems.VOID_CRYSTAL);
@@ -576,15 +582,15 @@ public class ItemRecipeGenerator extends RecipeProvider {
 
         SimpleCookingRecipeBuilder.smelting(Ingredient.of(ActuallyItems.RICE_DOUGH), RecipeCategory.FOOD, Items.BREAD, 0.35F, 200)
             .unlockedBy("", has(Items.AIR))
-            .save(recipeOutput, new ResourceLocation(ActuallyAdditions.MODID, "rice_dough_smelting"));
+            .save(recipeOutput, ActuallyAdditions.modLoc("rice_dough_smelting"));
 
         // Black Quartz Ore
         SimpleCookingRecipeBuilder.smelting(Ingredient.of(ActuallyBlocks.BLACK_QUARTZ_ORE.getItem()), RecipeCategory.MISC, ActuallyItems.BLACK_QUARTZ.get(), 0.7F, 200)
             .unlockedBy("", has(Items.AIR))
-            .save(recipeOutput, new ResourceLocation(ActuallyAdditions.MODID, "black_quartz_ore_smelting"));
+            .save(recipeOutput, ActuallyAdditions.modLoc("black_quartz_ore_smelting"));
         SimpleCookingRecipeBuilder.blasting(Ingredient.of(ActuallyBlocks.BLACK_QUARTZ_ORE.getItem()), RecipeCategory.MISC, ActuallyItems.BLACK_QUARTZ.get(), 0.7F, 100)
             .unlockedBy("", has(Items.AIR))
-            .save(recipeOutput, new ResourceLocation(ActuallyAdditions.MODID, "black_quartz_ore_blasting"));
+            .save(recipeOutput, ActuallyAdditions.modLoc("black_quartz_ore_blasting"));
 
         //Patterns
         Recipe.shapeless(ActuallyItems.DRILL_PATTERN.get())
@@ -616,9 +622,9 @@ public class ItemRecipeGenerator extends RecipeProvider {
 
     private static void dyeDrill(DeferredItem<? extends Item> result, TagKey<Item> dyeItem, RecipeOutput recipeOutput) {
         Recipe.shapeless(result.get())
-                .requires(TargetNBTIngredient.of(ActuallyTags.Items.DRILLS))
+                .requires(Ingredient.of(ActuallyTags.Items.DRILLS)) //TargetNBTIngredient
                 .requires(dyeItem)
-                .save(new RecipeInjector<ShapelessRecipe>(recipeOutput, RecipeKeepDataShapeless::new), new ResourceLocation(ActuallyAdditions.MODID, "drill_coloring/dye_" + BuiltInRegistries.ITEM.getKey(result.get()).getPath()));
+                .save(new RecipeInjector<ShapelessRecipe>(recipeOutput, RecipeKeepDataShapeless::new), ActuallyAdditions.modLoc("drill_coloring/dye_" + BuiltInRegistries.ITEM.getKey(result.get()).getPath()));
     }
 
     public static void addPaxel(RecipeOutput consumer, DeferredItem<? extends Item> output, Item axe, Item pickaxe, Item sword, Item shovel, Item hoe) {
@@ -643,11 +649,11 @@ public class ItemRecipeGenerator extends RecipeProvider {
 
     public static void decompress(RecipeOutput consumer, ItemLike output, ItemLike input) {
         ResourceLocation key = BuiltInRegistries.ITEM.getKey(output.asItem());
-        Recipe.shapeless(output, 9).requires(input).save(consumer, new ResourceLocation(key.getNamespace(), "decompress/" + key.getPath()));
+        Recipe.shapeless(output, 9).requires(input).save(consumer, ResourceLocation.fromNamespaceAndPath(key.getNamespace(), "decompress/" + key.getPath()));
     }
     public static void compress(RecipeOutput consumer, ItemLike output, ItemLike input) {
         ResourceLocation key = BuiltInRegistries.ITEM.getKey(output.asItem());
-        Recipe.shaped(output).pattern("xxx","xxx", "xxx").define('x', input).save(consumer, new ResourceLocation(key.getNamespace(), "compress/" + key.getPath()));
+        Recipe.shaped(output).pattern("xxx","xxx", "xxx").define('x', input).save(consumer, ResourceLocation.fromNamespaceAndPath(key.getNamespace(), "compress/" + key.getPath()));
     }
     public static void addShard(RecipeOutput consumer, DeferredItem<? extends Item> shard, DeferredItem<? extends Item> crystal) {
         compress(consumer, crystal, shard);

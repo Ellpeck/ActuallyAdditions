@@ -16,6 +16,7 @@ import de.ellpeck.actuallyadditions.api.ActuallyTags;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.AABlockItem;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
+import de.ellpeck.actuallyadditions.mod.components.ActuallyComponents;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
 import de.ellpeck.actuallyadditions.mod.items.lens.ItemLens;
@@ -27,6 +28,7 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
+import net.neoforged.neoforge.energy.ComponentEnergyStorage;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -241,7 +243,9 @@ public final class ActuallyItems {
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
         for (DeferredHolder<Item, ? extends Item> holder : ITEMS.getEntries()) {
             if (holder.get() instanceof ItemEnergy energyItem) {
-                event.registerItem(Capabilities.EnergyStorage.ITEM, (stack, context) -> energyItem.getEnergyStorage(stack), holder.get());
+                event.registerItem(Capabilities.EnergyStorage.ITEM, (stack, context) ->
+                        new ComponentEnergyStorage(stack, ActuallyComponents.ENERGY_STORAGE.get(), energyItem.maxPower)
+                );
             }
         }
     }

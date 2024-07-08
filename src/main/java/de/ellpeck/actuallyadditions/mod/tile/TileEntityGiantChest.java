@@ -37,7 +37,7 @@
 //
 //    @Override
 //    public void writeSyncableNBT(CompoundNBT compound, NBTType type) {
-//        super.writeSyncableNBT(compound, type);
+//        super.writeSyncableNBT(compound, lookupProvider, type);
 //
 //        if (this.lootTable != null) {
 //            compound.setString("LootTable", this.lootTable.toString());
@@ -46,10 +46,10 @@
 //
 //    @Override
 //    public void readSyncableNBT(CompoundNBT compound, NBTType type) {
-//        super.readSyncableNBT(compound, type);
+//        super.readSyncableNBT(compound, lookupProvider, type);
 //
 //        if (compound.hasKey("LootTable")) {
-//            this.lootTable = new ResourceLocation(compound.getString("LootTable"));
+//            this.lootTable = ResourceLocation.tryParse(compound.getString("LootTable"));
 //        }
 //    }
 //

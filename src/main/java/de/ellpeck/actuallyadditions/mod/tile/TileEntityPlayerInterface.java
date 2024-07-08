@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -95,7 +96,7 @@ public class TileEntityPlayerInterface extends TileEntityBase implements IEnergy
                             int received = Optional.ofNullable(slot.getCapability(Capabilities.EnergyStorage.ITEM))
                                     .map(cap -> cap.receiveEnergy(tile.storage.getEnergyStored(), false)).orElse(0);
                             if (received > 0) {
-                                tile.storage.extractEnergyInternal(received, false);
+                                tile.storage.extractEnergy(received, false);
                             }
                         }
                     } else {
@@ -116,8 +117,8 @@ public class TileEntityPlayerInterface extends TileEntityBase implements IEnergy
     }
 
     @Override
-    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
-        super.writeSyncableNBT(compound, type);
+    public void writeSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
+        super.writeSyncableNBT(compound, lookupProvider, type);
 
         this.storage.writeToNBT(compound);
         if (this.connectedPlayer != null && type != NBTType.SAVE_BLOCK) {
@@ -127,8 +128,8 @@ public class TileEntityPlayerInterface extends TileEntityBase implements IEnergy
     }
 
     @Override
-    public void readSyncableNBT(CompoundTag compound, NBTType type) {
-        super.readSyncableNBT(compound, type);
+    public void readSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
+        super.readSyncableNBT(compound, lookupProvider, type);
 
         this.storage.readFromNBT(compound);
         if (compound.contains("Player") && type != NBTType.SAVE_BLOCK) {

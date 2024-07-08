@@ -119,7 +119,7 @@ public final class ItemCrafting {
     //
     //        for (int i = 0; i < 16; i++) {
     //            if (i != TheColoredLampColors.LIGHT_BLUE.ordinal()) {
-    //                new RecipeKeepDataShapeless(new ResourceLocation(ActuallyAdditions.MODID, "dril_color_change" + i), new ItemStack(InitItems.itemDrill, 1, i), new ItemStack(InitItems.itemDrill, 1, Util.WILDCARD), lightBlueDrill.copy(), "dye" + TheColoredLampColors.values()[i].oreName);
+    //                new RecipeKeepDataShapeless(ActuallyAdditions.modLoc("dril_color_change" + i), new ItemStack(InitItems.itemDrill, 1, i), new ItemStack(InitItems.itemDrill, 1, Util.WILDCARD), lightBlueDrill.copy(), "dye" + TheColoredLampColors.values()[i].oreName);
     //                RECIPES_DRILL_COLORING.add(RecipeUtil.lastIRecipe());
     //            }
     //        }
@@ -169,7 +169,7 @@ public final class ItemCrafting {
     //        recipeBattery = RecipeUtil.lastIRecipe();
     //
     //        //Double Battery
-    //        new RecipeKeepDataShaped(new ResourceLocation(ActuallyAdditions.MODID, "double_battery"), new ItemStack(InitItems.itemBatteryDouble), new ItemStack(InitItems.itemBattery), " R ", "ICI", "III", 'R', new ItemStack(InitItems.itemBattery), 'I', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal()), 'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()));
+    //        new RecipeKeepDataShaped(ActuallyAdditions.modLoc("double_battery"), new ItemStack(InitItems.itemBatteryDouble), new ItemStack(InitItems.itemBattery), " R ", "ICI", "III", 'R', new ItemStack(InitItems.itemBattery), 'I', new ItemStack(InitItems.itemCrystal, 1, TheCrystals.IRON.ordinal()), 'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()));
     //        recipeBatteryDouble = RecipeUtil.lastIRecipe();
     //
     //        //Magnet Ring
@@ -185,15 +185,15 @@ public final class ItemCrafting {
     //        recipeWaterRing = RecipeUtil.lastIRecipe();
     //
     //        //Triple Battery
-    //        new RecipeKeepDataShaped(new ResourceLocation(ActuallyAdditions.MODID, "triple_battery"), new ItemStack(InitItems.itemBatteryTriple), new ItemStack(InitItems.itemBatteryDouble), " R ", "ICI", "III", 'R', new ItemStack(InitItems.itemBatteryDouble), 'I', new ItemStack(InitItems.itemCrystalEmpowered, 1, TheCrystals.IRON.ordinal()), 'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()));
+    //        new RecipeKeepDataShaped(ActuallyAdditions.modLoc("triple_battery"), new ItemStack(InitItems.itemBatteryTriple), new ItemStack(InitItems.itemBatteryDouble), " R ", "ICI", "III", 'R', new ItemStack(InitItems.itemBatteryDouble), 'I', new ItemStack(InitItems.itemCrystalEmpowered, 1, TheCrystals.IRON.ordinal()), 'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()));
     //        recipeBatteryTriple = RecipeUtil.lastIRecipe();
     //
     //        //Quadruple Battery
-    //        new RecipeKeepDataShaped(new ResourceLocation(ActuallyAdditions.MODID, "quadruple_battery"), new ItemStack(InitItems.itemBatteryQuadruple), new ItemStack(InitItems.itemBatteryTriple), " R ", "ICI", "III", 'R', new ItemStack(InitItems.itemBatteryTriple), 'I', new ItemStack(InitItems.itemCrystalEmpowered, 1, TheCrystals.IRON.ordinal()), 'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()));
+    //        new RecipeKeepDataShaped(ActuallyAdditions.modLoc("quadruple_battery"), new ItemStack(InitItems.itemBatteryQuadruple), new ItemStack(InitItems.itemBatteryTriple), " R ", "ICI", "III", 'R', new ItemStack(InitItems.itemBatteryTriple), 'I', new ItemStack(InitItems.itemCrystalEmpowered, 1, TheCrystals.IRON.ordinal()), 'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()));
     //        recipeBatteryQuadruple = RecipeUtil.lastIRecipe();
     //
     //        //Quintuple Battery
-    //        new RecipeKeepDataShaped(new ResourceLocation(ActuallyAdditions.MODID, "quintuple_battery"), new ItemStack(InitItems.itemBatteryQuintuple), new ItemStack(InitItems.itemBatteryQuadruple), " R ", "ICI", "III", 'R', new ItemStack(InitItems.itemBatteryQuadruple), 'I', new ItemStack(InitItems.itemCrystalEmpowered, 1, TheCrystals.DIAMOND.ordinal()), 'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()));
+    //        new RecipeKeepDataShaped(ActuallyAdditions.modLoc("quintuple_battery"), new ItemStack(InitItems.itemBatteryQuintuple), new ItemStack(InitItems.itemBatteryQuadruple), " R ", "ICI", "III", 'R', new ItemStack(InitItems.itemBatteryQuadruple), 'I', new ItemStack(InitItems.itemCrystalEmpowered, 1, TheCrystals.DIAMOND.ordinal()), 'C', new ItemStack(InitItems.itemMisc, 1, TheMiscItems.COIL_ADVANCED.ordinal()));
     //        recipeBatteryQuintuple = RecipeUtil.lastIRecipe();
     //
     //        //Bat Wings

@@ -66,11 +66,11 @@ public class ItemModelGenerator extends ItemModelProvider {
 
         String wormpath = ActuallyItems.WORM.getId().getPath();
         singleTexture(wormpath, mcLoc("item/handheld"), "layer0", modLoc("item/" + wormpath))
-                .override().predicate(new ResourceLocation(ActuallyAdditions.MODID, "snail"), 1F)
+                .override().predicate(ActuallyAdditions.modLoc("snail"), 1F)
                 .model(singleTexture("snail", mcLoc("item/handheld"), "layer0", modLoc("item/snail"))).end();
 /*        withExistingParent(wormpath, mcLoc("item/handheld"))
                 .texture("layer0", modLoc("item/" + wormpath))
-                .override().predicate(new ResourceLocation(ActuallyAdditions.MODID, "snail"), 1F)
+                .override().predicate(ActuallyAdditions.modLoc("snail"), 1F)
                 .model(getBuilder("snail").parent(getExistingFile(mcLoc("item/handheld"))).texture("layer0", "item/snail")).end();*/
 
         String torchPath = BuiltInRegistries.ITEM.getKey(ActuallyBlocks.TINY_TORCH.getItem()).getPath();
@@ -87,7 +87,7 @@ public class ItemModelGenerator extends ItemModelProvider {
         if (block.get() instanceof WallBlock) {
             String name = path;
             path = "block/" + path.replace("_wall", "_block");
-            withExistingParent(name, new ResourceLocation("block/wall_inventory"))
+            withExistingParent(name, ResourceLocation.tryParse("block/wall_inventory"))
                 .texture("wall", modLoc(path));
             return;
         }

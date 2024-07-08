@@ -13,14 +13,17 @@ package de.ellpeck.actuallyadditions.mod.network;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
-import net.neoforged.neoforge.network.handling.PlayPayloadContext;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
 import org.apache.commons.lang3.tuple.Pair;
 
 
 public record PacketServerToClient(CompoundTag data, IDataHandler handler) implements CustomPacketPayload {
-    public static final ResourceLocation ID = new ResourceLocation(ActuallyAdditions.MODID, "server_to_client");
+    public static final StreamCodec<FriendlyByteBuf, PacketServerToClient> CODEC = CustomPacketPayload.codec(
+            PacketServerToClient::write,
+            PacketServerToClient::new);
+    public static final Type<PacketServerToClient> ID = new Type<>(ActuallyAdditions.modLoc("server_to_client"));
 
     public PacketServerToClient(Pair<CompoundTag, IDataHandler> data) {
         this(data.getLeft(), data.getRight());
@@ -48,14 +51,13 @@ public record PacketServerToClient(CompoundTag data, IDataHandler handler) imple
         buf.writeNbt(data);
         buf.writeInt(PacketHandler.DATA_HANDLERS.indexOf(handler));
     }
-
     @Override
-    public ResourceLocation id() {
+    public Type<? extends CustomPacketPayload> type() {
         return ID;
     }
 
-    public static void handle(final PacketServerToClient message, final PlayPayloadContext context) {
-        context.workHandler().submitAsync(
+    public static void handle(final PacketServerToClient message, final IPayloadContext context) {
+        context.enqueueWork(
             () -> {
                 if (message.data != null && message.handler != null) {
                     message.handler.handleData(message.data, context);

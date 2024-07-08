@@ -58,7 +58,7 @@ public class ItemLeafBlower extends ItemBase implements IDisplayStandItem {
     }
 
     @Override
-    public int getUseDuration(@Nonnull ItemStack stack) {
+    public int getUseDuration(ItemStack stack, LivingEntity livingEntity) {
         return Integer.MAX_VALUE;
     }
 
@@ -69,7 +69,7 @@ public class ItemLeafBlower extends ItemBase implements IDisplayStandItem {
 
     private boolean doUpdate(Level world, int x, int y, int z, int time, ItemStack stack) {
         if (!world.isClientSide) {
-            if (time <= this.getUseDuration(stack) && (this.isAdvanced || time % 3 == 0)) {
+            if (time <= this.getUseDuration(stack, null) && (this.isAdvanced || time % 3 == 0)) {
                 //Breaks the Blocks
                 boolean broke = this.breakStuff(world, x, y, z);
                 //Plays a Minecart sounds (It really sounds like a Leaf Blower!)
@@ -114,7 +114,7 @@ public class ItemLeafBlower extends ItemBase implements IDisplayStandItem {
         if (!breakPositions.isEmpty()) {
             Collections.shuffle(breakPositions);
 
-            BlockPos pos = breakPositions.get(0);
+            BlockPos pos = breakPositions.getFirst();
             BlockState theState = world.getBlockState(pos);
 
             world.destroyBlock(pos, true);

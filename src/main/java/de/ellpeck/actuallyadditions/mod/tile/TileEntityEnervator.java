@@ -16,6 +16,7 @@ import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
@@ -41,15 +42,15 @@ public class TileEntityEnervator extends TileEntityInventoryBase implements ISha
     }
 
     @Override
-    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
+    public void writeSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
         this.storage.writeToNBT(compound);
-        super.writeSyncableNBT(compound, type);
+        super.writeSyncableNBT(compound, lookupProvider, type);
     }
 
     @Override
-    public void readSyncableNBT(CompoundTag compound, NBTType type) {
+    public void readSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
         this.storage.readFromNBT(compound);
-        super.readSyncableNBT(compound, type);
+        super.readSyncableNBT(compound, lookupProvider, type);
     }
 
     public static <T extends BlockEntity> void clientTick(Level level, BlockPos pos, BlockState state, T t) {
@@ -71,7 +72,7 @@ public class TileEntityEnervator extends TileEntityInventoryBase implements ISha
                     boolean canTakeUp = capability.map(cap -> cap.getEnergyStored() <= 0).orElse(false);
 
                     if (extracted > 0) {
-                        tile.storage.receiveEnergyInternal(extracted, false);
+                        tile.storage.receiveEnergy(extracted, false);
                     }
 
                     if (canTakeUp) {

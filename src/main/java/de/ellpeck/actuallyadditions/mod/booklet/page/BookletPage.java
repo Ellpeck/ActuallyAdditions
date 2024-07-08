@@ -66,7 +66,7 @@
 //    }
 //
 //    @Override
-//    @OnlyIn(Dist.CLIENT)
+//    
 //    public String getInfoText() {
 //        if (this.hasNoText) {
 //            return null;
@@ -86,55 +86,55 @@
 //        return base;
 //    }
 //
-//    @OnlyIn(Dist.CLIENT)
+//    
 //    protected String getLocalizationKey() {
 //        return "booklet.actuallyadditions.chapter." + this.chapter.getIdentifier() + ".text." + this.localizationKey;
 //    }
 //
 //    @Override
-//    @OnlyIn(Dist.CLIENT)
+//    
 //    public void mouseClicked(GuiBookletBase gui, int mouseX, int mouseY, int mouseButton) {
 //
 //    }
 //
 //    @Override
-//    @OnlyIn(Dist.CLIENT)
+//    
 //    public void mouseReleased(GuiBookletBase gui, int mouseX, int mouseY, int state) {
 //
 //    }
 //
 //    @Override
-//    @OnlyIn(Dist.CLIENT)
+//    
 //    public void mouseClickMove(GuiBookletBase gui, int mouseX, int mouseY, int clickedMouseButton, long timeSinceLastClick) {
 //
 //    }
 //
 //    @Override
-//    @OnlyIn(Dist.CLIENT)
+//    
 //    public void actionPerformed(GuiBookletBase gui, Button button) {
 //
 //    }
 //
 //    @Override
-//    @OnlyIn(Dist.CLIENT)
+//    
 //    public void init(GuiBookletBase gui, int startX, int startY) {
 //
 //    }
 //
 //    @Override
-//    @OnlyIn(Dist.CLIENT)
+//    
 //    public void updateScreen(GuiBookletBase gui, int startX, int startY, int pageTimer) {
 //
 //    }
 //
 //    @Override
-//    @OnlyIn(Dist.CLIENT)
+//    
 //    public void drawScreenPre(GuiBookletBase gui, int startX, int startY, int mouseX, int mouseY, float partialTicks) {
 //
 //    }
 //
 //    @Override
-//    @OnlyIn(Dist.CLIENT)
+//    
 //    public void drawScreenPost(GuiBookletBase gui, int startX, int startY, int mouseX, int mouseY, float partialTicks) {
 //
 //    }

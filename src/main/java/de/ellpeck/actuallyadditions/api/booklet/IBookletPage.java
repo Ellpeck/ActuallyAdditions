@@ -13,8 +13,6 @@ package de.ellpeck.actuallyadditions.api.booklet;
 import de.ellpeck.actuallyadditions.api.booklet.internal.GuiBookletBase;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.fluids.FluidStack;
 
 import java.util.List;
@@ -30,31 +28,31 @@ public interface IBookletPage {
 
     void setChapter(IBookletChapter chapter);
 
-    @OnlyIn(Dist.CLIENT)
+    
     String getInfoText();
 
-    @OnlyIn(Dist.CLIENT)
+    
     void mouseClicked(GuiBookletBase gui, int mouseX, int mouseY, int mouseButton);
 
-    @OnlyIn(Dist.CLIENT)
+    
     void mouseReleased(GuiBookletBase gui, int mouseX, int mouseY, int state);
 
-    @OnlyIn(Dist.CLIENT)
+    
     void mouseClickMove(GuiBookletBase gui, int mouseX, int mouseY, int clickedMouseButton, long timeSinceLastClick);
 
-    @OnlyIn(Dist.CLIENT)
+    
     void actionPerformed(GuiBookletBase gui, Button button);
 
-    @OnlyIn(Dist.CLIENT)
+    
     void init(GuiBookletBase gui, int startX, int startY);
 
-    @OnlyIn(Dist.CLIENT)
+    
     void updateScreen(GuiBookletBase gui, int startX, int startY, int pageTimer);
 
-    @OnlyIn(Dist.CLIENT)
+    
     void drawScreenPre(GuiBookletBase gui, int startX, int startY, int mouseX, int mouseY, float partialTicks);
 
-    @OnlyIn(Dist.CLIENT)
+    
     void drawScreenPost(GuiBookletBase gui, int startX, int startY, int mouseX, int mouseY, float partialTicks);
 
     boolean shouldBeOnLeftSide();

@@ -15,17 +15,15 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityFluidCollector;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityFluidPlacer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.fluids.FluidUtil;
 
 import javax.annotation.Nonnull;
@@ -58,18 +56,18 @@ public class BlockFluidCollector extends FullyDirectionalBlock.Container {
 
     @Nonnull
     @Override
-    public InteractionResult use(@Nonnull BlockState state, @Nonnull Level world, @Nonnull BlockPos pos, @Nonnull Player player, @Nonnull InteractionHand handIn, @Nonnull BlockHitResult hit) {
+    protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult pHitResult) {
         if (world.isClientSide)
-            return InteractionResult.SUCCESS;
+            return ItemInteractionResult.SUCCESS;
 
         if (this.tryToggleRedstone(world, pos, player)) {
-            return InteractionResult.CONSUME;
+            return ItemInteractionResult.CONSUME;
         }
-        if (FluidUtil.interactWithFluidHandler(player, handIn, world, pos, hit.getDirection())) {
-            return InteractionResult.SUCCESS;
+        if (FluidUtil.interactWithFluidHandler(player, hand, world, pos, pHitResult.getDirection())) {
+            return ItemInteractionResult.SUCCESS;
         }
 
-        return this.openGui(world, player, pos, TileEntityFluidCollector.class);
+        return this.openGui2(world, player, pos, TileEntityFluidCollector.class);
     }
 
 /*    @Nonnull

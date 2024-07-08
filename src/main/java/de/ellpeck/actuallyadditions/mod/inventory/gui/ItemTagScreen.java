@@ -57,7 +57,7 @@ public class ItemTagScreen extends AAScreen<ItemTagContainer> {
 
         if (valid) {
             this.tagBox.setTextColor(0x00FF00);
-            TagKey<Item> tagKey = TagKey.create(Registries.ITEM, new ResourceLocation(text));
+            TagKey<Item> tagKey = TagKey.create(Registries.ITEM, ResourceLocation.tryParse(text));
             Optional<HolderSet.Named<Item>> optionalNamed = BuiltInRegistries.ITEM.getTag(tagKey);
 
             if (optionalNamed.isPresent()) {
@@ -86,14 +86,14 @@ public class ItemTagScreen extends AAScreen<ItemTagContainer> {
             data.putInt("PlayerID", Minecraft.getInstance().player.getId());
             data.putString("WorldID", Minecraft.getInstance().level.dimension().location().toString());
             data.putString("Tag", tagBox.getValue());
-            PacketDistributor.SERVER.noArg().send(new PacketClientToServer(data, PacketHandler.GUI_BUTTON_TO_CONTAINER_HANDLER));
+            PacketDistributor.sendToServer(new PacketClientToServer(data, PacketHandler.GUI_BUTTON_TO_CONTAINER_HANDLER));
             this.minecraft.player.closeContainer();
         }
 
         return tagBox.keyPressed(pKeyCode, pScanCode, pModifiers) || tagBox.canConsumeInput() || super.keyPressed(pKeyCode, pScanCode, pModifiers);
     }
     private boolean validateTag(String tag) {
-        return ResourceLocation.isValidResourceLocation(tag);
+        return ResourceLocation.tryParse(tag) != null;
         //return !tag.matches("^[a-z0-9_\\-]+:[a-z0-9_\\-]+(/[a-z0-9_\\-]+)*$");
     }
 }

@@ -4,21 +4,22 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.crafting.ColorChangeRecipe;
 import de.ellpeck.actuallyadditions.mod.util.NoAdvRecipeOutput;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 
 import javax.annotation.Nonnull;
+import java.util.concurrent.CompletableFuture;
 
 public class ColorChangeGenerator extends RecipeProvider {
-    public ColorChangeGenerator(PackOutput packOutput) {
-        super(packOutput);
+    public ColorChangeGenerator(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+        super(packOutput, lookupProvider);
     }
 
     @Override
@@ -195,15 +196,15 @@ public class ColorChangeGenerator extends RecipeProvider {
 
 
     private void changeColor(RecipeOutput consumer, ItemLike output, Ingredient input) {
-        consumer.accept(new ResourceLocation(ActuallyAdditions.MODID, "colorchange/" + BuiltInRegistries.ITEM.getKey(output.asItem()).getPath()),
+        consumer.accept(ActuallyAdditions.modLoc("colorchange/" + BuiltInRegistries.ITEM.getKey(output.asItem()).getPath()),
                 new ColorChangeRecipe(output.asItem().getDefaultInstance(), input), null);
     }
     private void changeColor(RecipeOutput consumer, ItemLike output, ItemLike input) {
-        consumer.accept(new ResourceLocation(ActuallyAdditions.MODID, "colorchange/" + BuiltInRegistries.ITEM.getKey(output.asItem()).getPath()),
+        consumer.accept(ActuallyAdditions.modLoc("colorchange/" + BuiltInRegistries.ITEM.getKey(output.asItem()).getPath()),
                 new ColorChangeRecipe(output.asItem().getDefaultInstance(), Ingredient.of(input)), null);
     }
     private void changeColor(RecipeOutput consumer, ItemLike output, ItemStack input) {
-        consumer.accept(new ResourceLocation(ActuallyAdditions.MODID, "colorchange/" + BuiltInRegistries.ITEM.getKey(output.asItem()).getPath()),
+        consumer.accept(ActuallyAdditions.modLoc("colorchange/" + BuiltInRegistries.ITEM.getKey(output.asItem()).getPath()),
                 new ColorChangeRecipe(output.asItem().getDefaultInstance(), Ingredient.of(input)), null);
     }
 }

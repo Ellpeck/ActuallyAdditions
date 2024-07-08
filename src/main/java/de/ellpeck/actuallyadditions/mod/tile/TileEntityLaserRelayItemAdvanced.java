@@ -19,6 +19,7 @@ import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
 import de.ellpeck.actuallyadditions.mod.util.compat.SlotlessableItemHandlerWrapper;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
@@ -72,19 +73,19 @@ public class TileEntityLaserRelayItemAdvanced extends TileEntityLaserRelayItem i
     }
 
     @Override
-    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
-        super.writeSyncableNBT(compound, type);
+    public void writeSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
+        super.writeSyncableNBT(compound, lookupProvider, type);
 
-        this.leftFilter.writeToNBT(compound, "LeftFilter");
-        this.rightFilter.writeToNBT(compound, "RightFilter");
+        this.leftFilter.writeToNBT(lookupProvider, compound, "LeftFilter");
+        this.rightFilter.writeToNBT(lookupProvider, compound, "RightFilter");
     }
 
     @Override
-    public void readSyncableNBT(CompoundTag compound, NBTType type) {
-        super.readSyncableNBT(compound, type);
+    public void readSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
+        super.readSyncableNBT(compound, lookupProvider, type);
 
-        this.leftFilter.readFromNBT(compound, "LeftFilter");
-        this.rightFilter.readFromNBT(compound, "RightFilter");
+        this.leftFilter.readFromNBT(lookupProvider, compound, "LeftFilter");
+        this.rightFilter.readFromNBT(lookupProvider, compound, "RightFilter");
     }
 
     @Override

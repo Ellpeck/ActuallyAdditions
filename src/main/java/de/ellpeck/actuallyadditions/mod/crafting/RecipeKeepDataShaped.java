@@ -1,18 +1,16 @@
 package de.ellpeck.actuallyadditions.mod.crafting;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.ShapedRecipe;
-import net.neoforged.neoforge.attachment.AttachmentUtils;
-
-import javax.annotation.Nullable;
 
 public class RecipeKeepDataShaped extends ShapedRecipe {
     public static String NAME = "copy_nbt";
@@ -21,19 +19,19 @@ public class RecipeKeepDataShaped extends ShapedRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingContainer inv, RegistryAccess registryAccess) {
-        final ItemStack craftingResult = super.assemble(inv, registryAccess);
+    public ItemStack assemble(CraftingInput inv, HolderLookup.Provider registries) {
+        final ItemStack craftingResult = super.assemble(inv, registries);
         TargetNBTIngredient donorIngredient = null;
         ItemStack datasource = ItemStack.EMPTY;
         NonNullList<Ingredient> ingredients = getIngredients();
         for (Ingredient ingredient : ingredients) {
-            if (ingredient instanceof TargetNBTIngredient) {
-                donorIngredient = (TargetNBTIngredient) ingredient;
+            if (ingredient.getCustomIngredient() instanceof TargetNBTIngredient) {
+                donorIngredient = (TargetNBTIngredient)ingredient.getCustomIngredient();
                 break;
             }
         }
         if (donorIngredient != null && !inv.isEmpty()) {
-            for (int i = 0; i < inv.getContainerSize(); i++) {
+            for (int i = 0; i < inv.size(); i++) {
                 final ItemStack item = inv.getItem(i);
                 if (!item.isEmpty() && donorIngredient.test(item)) {
                     datasource = item;
@@ -42,11 +40,8 @@ public class RecipeKeepDataShaped extends ShapedRecipe {
             }
         }
 
-        if (!datasource.isEmpty() && datasource.hasTag())
-            craftingResult.setTag(datasource.getTag().copy());
-
-        if (!datasource.isEmpty())
-            AttachmentUtils.copyStackAttachments(datasource, craftingResult);
+        if (!datasource.isEmpty() && !datasource.getComponents().isEmpty())
+            craftingResult.applyComponents(datasource.getComponents());
 
         return craftingResult;
     }
@@ -58,23 +53,28 @@ public class RecipeKeepDataShaped extends ShapedRecipe {
     }
 
     public static class Serializer implements RecipeSerializer<RecipeKeepDataShaped> {
-        private static final Codec<RecipeKeepDataShaped> CODEC = ShapedRecipe.Serializer.CODEC.xmap(RecipeKeepDataShaped::new, $ -> $);
+        private static final MapCodec<RecipeKeepDataShaped> CODEC = ShapedRecipe.Serializer.CODEC.xmap(RecipeKeepDataShaped::new, $ -> $);
+        public static final StreamCodec<RegistryFriendlyByteBuf, RecipeKeepDataShaped> STREAM_CODEC = StreamCodec.of(
+                RecipeKeepDataShaped.Serializer::toNetwork, RecipeKeepDataShaped.Serializer::fromNetwork
+        );
 
         @Override
-        public Codec<RecipeKeepDataShaped> codec() {
+        public MapCodec<RecipeKeepDataShaped> codec() {
             return CODEC;
         }
 
-        @Nullable
         @Override
-        public RecipeKeepDataShaped fromNetwork(FriendlyByteBuf buffer) {
-            return new RecipeKeepDataShaped(RecipeSerializer.SHAPED_RECIPE.fromNetwork(buffer));
+        public StreamCodec<RegistryFriendlyByteBuf, RecipeKeepDataShaped> streamCodec() {
+            return STREAM_CODEC;
         }
 
-        @Override
-        public void toNetwork(FriendlyByteBuf buffer, RecipeKeepDataShaped recipe) {
+        public static RecipeKeepDataShaped fromNetwork(RegistryFriendlyByteBuf buffer) {
+            return new RecipeKeepDataShaped(RecipeSerializer.SHAPED_RECIPE.streamCodec().decode(buffer));
+        }
+
+        public static void toNetwork(RegistryFriendlyByteBuf buffer, RecipeKeepDataShaped recipe) {
             try {
-                RecipeSerializer.SHAPED_RECIPE.toNetwork(buffer, recipe);
+                RecipeSerializer.SHAPED_RECIPE.streamCodec().encode(buffer, recipe);
             }
             catch (Exception exception) {
                 ActuallyAdditions.LOGGER.info("Error writing "+ NAME +" Recipe to packet: ", exception);

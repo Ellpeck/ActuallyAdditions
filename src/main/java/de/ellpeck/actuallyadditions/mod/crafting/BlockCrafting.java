@@ -282,10 +282,10 @@ public final class BlockCrafting {
     //        RecipeHandler.addOreDictRecipe(new ItemStack(InitBlocks.blockGiantChest), "CWC", "WDW", "CWC", 'C', "chestWood", 'D', new ItemStack(InitBlocks.blockMisc, 1, TheMiscBlocks.WOOD_CASING.ordinal()), 'W', "plankWood");
     //        recipeCrate = RecipeUtil.lastIRecipe();
     //
-    //        new RecipeKeepDataShaped(new ResourceLocation(ActuallyAdditions.MODID, "giant_chest_media"), new ItemStack(InitBlocks.blockGiantChestMedium), new ItemStack(InitBlocks.blockGiantChest), "CWC", "WDW", "CWC", 'C', new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.COAL.ordinal()), 'D', new ItemStack(InitBlocks.blockGiantChest), 'W', "plankWood");
+    //        new RecipeKeepDataShaped(ActuallyAdditions.modLoc("giant_chest_media"), new ItemStack(InitBlocks.blockGiantChestMedium), new ItemStack(InitBlocks.blockGiantChest), "CWC", "WDW", "CWC", 'C', new ItemStack(InitBlocks.blockCrystal, 1, TheCrystals.COAL.ordinal()), 'D', new ItemStack(InitBlocks.blockGiantChest), 'W', "plankWood");
     //        recipeCrateMedium = RecipeUtil.lastIRecipe();
     //
-    //        new RecipeKeepDataShaped(new ResourceLocation(ActuallyAdditions.MODID, "giant_chest_large"), new ItemStack(InitBlocks.blockGiantChestLarge), new ItemStack(InitBlocks.blockGiantChestMedium), "CWC", "WDW", "CWC", 'C', new ItemStack(InitBlocks.blockCrystalEmpowered, 1, TheCrystals.COAL.ordinal()), 'D', new ItemStack(InitBlocks.blockGiantChestMedium), 'W', "plankWood");
+    //        new RecipeKeepDataShaped(ActuallyAdditions.modLoc("giant_chest_large"), new ItemStack(InitBlocks.blockGiantChestLarge), new ItemStack(InitBlocks.blockGiantChestMedium), "CWC", "WDW", "CWC", 'C', new ItemStack(InitBlocks.blockCrystalEmpowered, 1, TheCrystals.COAL.ordinal()), 'D', new ItemStack(InitBlocks.blockGiantChestMedium), 'W', "plankWood");
     //        recipeCrateLarge = RecipeUtil.lastIRecipe();
     //
     //        //Greenhouse Glass

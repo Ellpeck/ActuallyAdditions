@@ -14,6 +14,9 @@ import de.ellpeck.actuallyadditions.mod.util.VanillaPacketDispatcher;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -41,9 +44,9 @@ public abstract class TileEntityBase extends BlockEntity {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag compound) {
-        super.saveAdditional(compound);
-        this.writeSyncableNBT(compound, NBTType.SAVE_TILE);
+    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider lookupProvider) {
+        super.saveAdditional(compound, lookupProvider);
+        this.writeSyncableNBT(compound, lookupProvider, NBTType.SAVE_TILE);
     }
 
     // TODO: [port] remove if the above is correct
@@ -54,8 +57,8 @@ public abstract class TileEntityBase extends BlockEntity {
     //    }
 
     @Override
-    public void load(CompoundTag compound) {
-        this.readSyncableNBT(compound, NBTType.SAVE_TILE);
+    public void loadAdditional(CompoundTag compound, HolderLookup.Provider lookupProvider) {
+        this.readSyncableNBT(compound, lookupProvider, NBTType.SAVE_TILE);
     }
 
 
@@ -69,26 +72,28 @@ public abstract class TileEntityBase extends BlockEntity {
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
         CompoundTag compound = new CompoundTag();
-        this.writeSyncableNBT(compound, NBTType.SYNC);
+        this.writeSyncableNBT(compound,
+                this.level != null ? this.level.registryAccess() : RegistryAccess.fromRegistryOfRegistries(BuiltInRegistries.REGISTRY),
+                NBTType.SYNC);
         return ClientboundBlockEntityDataPacket.create(this);
     }
 
     @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt, HolderLookup.Provider lookupProvider) {
         if (pkt.getTag() != null) //TODO: pkt.getTag() is nullable. Hopping Item Interface will throw in the log when placed because of this
-            this.readSyncableNBT(pkt.getTag(), NBTType.SYNC);
+            this.readSyncableNBT(pkt.getTag(), lookupProvider, NBTType.SYNC);
     }
 
     @Override
-    public final CompoundTag getUpdateTag() {
+    public final CompoundTag getUpdateTag(HolderLookup.Provider lookupProvider) {
         CompoundTag compound = new CompoundTag();
-        this.writeSyncableNBT(compound, NBTType.SYNC);
+        this.writeSyncableNBT(compound, lookupProvider, NBTType.SYNC);
         return compound;
     }
 
     @Override
-    public void handleUpdateTag(CompoundTag tag) {
-        this.readSyncableNBT(tag, NBTType.SYNC);
+    public void handleUpdateTag(CompoundTag tag, HolderLookup.Provider lookupProvider) {
+        this.readSyncableNBT(tag, lookupProvider, NBTType.SYNC);
     }
 
     public final void sendUpdate() {
@@ -109,9 +114,9 @@ public abstract class TileEntityBase extends BlockEntity {
         }*/
     }
 
-    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
+    public void writeSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
         if (type != NBTType.SAVE_BLOCK) {
-            super.saveAdditional(compound);
+            super.saveAdditional(compound, lookupProvider);
         }
 
         if (type == NBTType.SAVE_TILE) {
@@ -127,9 +132,9 @@ public abstract class TileEntityBase extends BlockEntity {
         }
     }
 
-    public void readSyncableNBT(CompoundTag compound, NBTType type) {
+    public void readSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
         if (type != NBTType.SAVE_BLOCK) {
-            super.load(compound); // FIXME: [port] flag as possible crash source
+            super.loadAdditional(compound, lookupProvider); // FIXME: [port] flag as possible crash source
         }
 
         if (type == NBTType.SAVE_TILE) {

@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;
+import com.mojang.blaze3d.vertex.BufferUploader;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexFormat;
@@ -26,8 +27,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FastColor;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.level.material.Fluid;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.IFluidTank;
@@ -37,7 +36,7 @@ import javax.annotation.Nonnull;
 import java.text.NumberFormat;
 import java.util.Collections;
 
-@OnlyIn(Dist.CLIENT)
+
 public class FluidDisplay {
 
     private IFluidTank fluidReference;
@@ -134,7 +133,7 @@ public class FluidDisplay {
                 for (int i = 0; i < count; i++) {
                     double subHeight = Math.min(16.0, tankLevel - (16.0 * i));
                     double offsetY = 84 - 16.0 * i - subHeight;
-                    drawQuad(barX + 1, barY + offsetY, 16, subHeight, minU, (float) (maxV - deltaV * (subHeight / 16.0)), maxU, maxV);
+                    drawQuad((float) (barX + 1), (float) (barY + offsetY), 16F, (float) subHeight, minU, (float) (maxV - deltaV * (subHeight / 16.0)), maxU, maxV);
                 }
                 RenderSystem.disableBlend();
                 RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
@@ -146,15 +145,14 @@ public class FluidDisplay {
         }
     }
 
-    private void drawQuad(double x, double y, double width, double height, float minU, float minV, float maxU, float maxV) {
+    private void drawQuad(float x, float y, float width, float height, float minU, float minV, float maxU, float maxV) {
         Tesselator tesselator = Tesselator.getInstance();
-        BufferBuilder buffer = tesselator.getBuilder();
-        buffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
-        buffer.vertex(x, y + height, 0).uv(minU, maxV).endVertex();
-        buffer.vertex(x + width, y + height, 0).uv(maxU, maxV).endVertex();
-        buffer.vertex(x + width, y, 0).uv(maxU, minV).endVertex();
-        buffer.vertex(x, y, 0).uv(minU, minV).endVertex();
-        tesselator.end();
+        BufferBuilder buffer = tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+        buffer.addVertex(x, y + height, 0).setUv(minU, maxV);
+        buffer.addVertex(x + width, y + height, 0).setUv(maxU, maxV);
+        buffer.addVertex(x + width, y, 0).setUv(maxU, minV);
+        buffer.addVertex(x, y, 0).setUv(minU, minV);
+        BufferUploader.drawWithShader(buffer.buildOrThrow());
     }
 
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY) {
@@ -174,7 +172,7 @@ public class FluidDisplay {
         String cap = format.format(this.fluidReference.getCapacity());
         return stack.isEmpty()
             ? Component.literal("0/" + cap + " mB")
-            : Component.literal(format.format(this.fluidReference.getFluidAmount()) + (drawCapacityInTooltip?"/" + cap + " mB ":" mB ")).append(stack.getDisplayName());
+            : Component.literal(format.format(this.fluidReference.getFluidAmount()) + (drawCapacityInTooltip?"/" + cap + " mB ":" mB ")).append(stack.getHoverName());
     }
 
     public static class DummyTank implements IFluidTank {

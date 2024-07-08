@@ -43,7 +43,7 @@
 //        return null;
 //    }
 //
-//    @OnlyIn(Dist.CLIENT)
+//    
 //    public static GuiPage createBookletGuiFromPage(Screen previousScreen, IBookletPage page) {
 //        GuiMainPage mainPage = new GuiMainPage(previousScreen);
 //
@@ -53,7 +53,7 @@
 //        return createPageGui(previousScreen, entry, page);
 //    }
 //
-//    @OnlyIn(Dist.CLIENT)
+//    
 //    public static GuiPage createPageGui(Screen previousScreen, GuiBookletBase parentPage, IBookletPage page) {
 //        IBookletChapter chapter = page.getChapter();
 //

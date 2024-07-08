@@ -14,7 +14,7 @@ import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -66,9 +66,9 @@ public class BlockPlant extends CropBlock {
 
 
     @Override
-    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
+    protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult pHitResult) {
         if (this.getAge(state) < 7) {
-            return InteractionResult.PASS;
+            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
 
         if (!world.isClientSide) {
@@ -89,7 +89,7 @@ public class BlockPlant extends CropBlock {
             world.setBlockAndUpdate(pos, this.defaultBlockState().setValue(AGE, 0));
         }
 
-        return super.use(state, world, pos, player, handIn, hit);
+        return super.useItemOn(pStack, state, world, pos, player, hand, pHitResult);
     }
 
     @Override

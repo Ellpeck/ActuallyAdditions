@@ -17,6 +17,7 @@ import de.ellpeck.actuallyadditions.mod.crafting.LiquidFuelRecipe;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerOilGenerator;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
@@ -27,8 +28,6 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
@@ -79,7 +78,7 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
         return null;
     }
 
-    @OnlyIn(Dist.CLIENT)
+    
     public int getBurningScaled(int i) {
         return this.currentBurnTime * i / this.maxBurnTime;
     }
@@ -93,7 +92,7 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
     }
 
     @Override
-    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
+    public void writeSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
         if (type != NBTType.SAVE_BLOCK) {
             compound.putInt("BurnTime", this.currentBurnTime);
             compound.putInt("CurrentEnergy", this.currentEnergyProduce);
@@ -101,12 +100,12 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
             compound.putInt("FuelUsage", this.fuelUsage);
         }
         this.storage.writeToNBT(compound);
-        this.tank.writeToNBT(compound);
-        super.writeSyncableNBT(compound, type);
+        this.tank.writeToNBT(lookupProvider, compound);
+        super.writeSyncableNBT(compound, lookupProvider, type);
     }
 
     @Override
-    public void readSyncableNBT(CompoundTag compound, NBTType type) {
+    public void readSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
         if (type != NBTType.SAVE_BLOCK) {
             this.currentBurnTime = compound.getInt("BurnTime");
             this.currentEnergyProduce = compound.getInt("CurrentEnergy");
@@ -114,8 +113,8 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
             this.fuelUsage = compound.getInt("FuelUsage");
         }
         this.storage.readFromNBT(compound);
-        this.tank.readFromNBT(compound);
-        super.readSyncableNBT(compound, type);
+        this.tank.readFromNBT(lookupProvider, compound);
+        super.readSyncableNBT(compound, lookupProvider, type);
     }
 
     public static <T extends BlockEntity> void clientTick(Level level, BlockPos pos, BlockState state, T t) {
@@ -133,7 +132,7 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
             if (tile.currentBurnTime > 0 && tile.currentEnergyProduce > 0) {
                 tile.currentBurnTime--;
 
-                tile.storage.receiveEnergyInternal(tile.currentEnergyProduce, false);
+                tile.storage.receiveEnergy(tile.currentEnergyProduce, false);
             } else if (!tile.isRedstonePowered) {
 
                 RecipeHolder<LiquidFuelRecipe> recipeHolder = tile.getRecipeForCurrentFluid();

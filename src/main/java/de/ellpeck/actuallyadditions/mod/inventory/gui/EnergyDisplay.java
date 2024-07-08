@@ -16,14 +16,12 @@ import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-@OnlyIn(Dist.CLIENT)
+
 public class EnergyDisplay {
 
     private CustomEnergyStorage rfReference;

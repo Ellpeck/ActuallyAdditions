@@ -2,10 +2,9 @@ package de.ellpeck.actuallyadditions.mod.lootmodifier;
 
 import com.google.common.base.Supplier;
 import com.google.common.base.Suppliers;
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import de.ellpeck.actuallyadditions.api.ActuallyTags;
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
@@ -18,7 +17,6 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
@@ -26,8 +24,8 @@ import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
 import net.neoforged.neoforge.common.loot.LootModifier;
 
 public class DungeonLootModifier extends LootModifier {
-	public static final Supplier<Codec<DungeonLootModifier>> CODEC = Suppliers.memoize(() ->
-			RecordCodecBuilder.create(inst -> codecStart(inst).apply(inst, DungeonLootModifier::new)));
+	public static final Supplier<MapCodec<DungeonLootModifier>> CODEC = Suppliers.memoize(() ->
+			RecordCodecBuilder.mapCodec(inst -> codecStart(inst).apply(inst, DungeonLootModifier::new)));
 
 	public DungeonLootModifier(LootItemCondition[] conditionsIn) {
 		super(conditionsIn);
@@ -135,7 +133,7 @@ public class DungeonLootModifier extends LootModifier {
 	}
 
 	@Override
-	public Codec<? extends IGlobalLootModifier> codec() {
-		return CODEC.get();
+	public MapCodec<? extends IGlobalLootModifier> codec() {
+		return ActuallyLootModifiers.DUNGEON_LOOT.get();
 	}
 }

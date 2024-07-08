@@ -16,6 +16,7 @@ import de.ellpeck.actuallyadditions.mod.inventory.ContainerFluidCollector;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -103,9 +104,9 @@ public class TileEntityFluidCollector extends TileEntityBase implements ISharing
         BlockState stateToBreak = this.level.getBlockState(coordsBlock);
         Block blockToBreak = stateToBreak.getBlock();
         if (!this.isPlacer && FluidType.BUCKET_VOLUME <= this.tank.getCapacity() - this.tank.getFluidAmount()) {
-            if (blockToBreak instanceof LiquidBlock && stateToBreak.getFluidState().isSource() && ((LiquidBlock) blockToBreak).getFluid() != null) {
-                if (this.tank.fillInternal(new FluidStack(((LiquidBlock) blockToBreak).getFluid(), FluidType.BUCKET_VOLUME), IFluidHandler.FluidAction.SIMULATE) >= FluidType.BUCKET_VOLUME) {
-                    this.tank.fillInternal(new FluidStack(((LiquidBlock) blockToBreak).getFluid(), FluidType.BUCKET_VOLUME), IFluidHandler.FluidAction.EXECUTE);
+            if (blockToBreak instanceof LiquidBlock liquidBlock && liquidBlock.fluid != null && stateToBreak.getFluidState().isSource() ) {
+                if (this.tank.fillInternal(new FluidStack(liquidBlock.fluid, FluidType.BUCKET_VOLUME), IFluidHandler.FluidAction.SIMULATE) >= FluidType.BUCKET_VOLUME) {
+                    this.tank.fillInternal(new FluidStack(liquidBlock.fluid, FluidType.BUCKET_VOLUME), IFluidHandler.FluidAction.EXECUTE);
                     this.level.setBlockAndUpdate(coordsBlock, Blocks.AIR.defaultBlockState());
                 }
             }
@@ -148,21 +149,21 @@ public class TileEntityFluidCollector extends TileEntityBase implements ISharing
     }
 
     @Override
-    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
-        super.writeSyncableNBT(compound, type);
+    public void writeSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
+        super.writeSyncableNBT(compound, lookupProvider, type);
         if (type != NBTType.SAVE_BLOCK) {
             compound.putInt("CurrentTime", this.currentTime);
         }
-        this.tank.writeToNBT(compound);
+        this.tank.writeToNBT(lookupProvider, compound);
     }
 
     @Override
-    public void readSyncableNBT(CompoundTag compound, NBTType type) {
-        super.readSyncableNBT(compound, type);
+    public void readSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
+        super.readSyncableNBT(compound, lookupProvider, type);
         if (type != NBTType.SAVE_BLOCK) {
             this.currentTime = compound.getInt("CurrentTime");
         }
-        this.tank.readFromNBT(compound);
+        this.tank.readFromNBT(lookupProvider, compound);
     }
 
     public static <T extends BlockEntity> void clientTick(Level level, BlockPos pos, BlockState state, T t) {

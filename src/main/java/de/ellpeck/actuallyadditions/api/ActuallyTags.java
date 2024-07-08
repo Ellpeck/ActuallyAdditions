@@ -24,23 +24,23 @@ public final class ActuallyTags {
         public static final TagKey<Item> DRILLS = tag("drills");
         public static final TagKey<Item> COFFEE_BEANS = tag("coffee_beans");
         public static final TagKey<Item> TINY_COALS = tag("tiny_coals");
-        public static final TagKey<Item> HOLDS_ITEMS = ItemTags.create(new ResourceLocation("forge", "holds_items"));
+        public static final TagKey<Item> HOLDS_ITEMS = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "holds_items"));
         public static final TagKey<Item> CRYSTALS = tag("crystals");
         public static final TagKey<Item> CRYSTAL_BLOCKS = tag("crystal_blocks");
-        public static final TagKey<Item> SEEDS_RICE = ItemTags.create(new ResourceLocation("forge", "seeds/rice"));
-        public static final TagKey<Item> SEEDS_COFFEE = ItemTags.create(new ResourceLocation("forge", "seeds/coffee"));
-        public static final TagKey<Item> SEEDS_CANOLA = ItemTags.create(new ResourceLocation("forge", "seeds/canola"));
-        public static final TagKey<Item> SEEDS_FLAX = ItemTags.create(new ResourceLocation("forge", "seeds/flax"));
-        public static final TagKey<Item> CROPS_RICE = ItemTags.create(new ResourceLocation("forge", "crops/rice"));
-        public static final TagKey<Item> CROPS_COFFEE = ItemTags.create(new ResourceLocation("forge", "crops/coffee"));
-        public static final TagKey<Item> CROPS_CANOLA = ItemTags.create(new ResourceLocation("forge", "crops/canola"));
-        public static final TagKey<Item> CROPS_FLAX = ItemTags.create(new ResourceLocation("forge", "crops/flax"));
-        public static final TagKey<Item> GEMS_BLACK_QUARTZ = ItemTags.create(new ResourceLocation("forge", "gems/black_quartz"));
-        public static final TagKey<Item> ORES_BLACK_QUARTZ = ItemTags.create(new ResourceLocation("forge", "ores/black_quartz"));
-        public static final TagKey<Item> STORAGE_BLOCKS_BLACK_QUARTZ = ItemTags.create(new ResourceLocation("forge", "storage_blocks/black_quartz"));
+        public static final TagKey<Item> SEEDS_RICE = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "seeds/rice"));
+        public static final TagKey<Item> SEEDS_COFFEE = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "seeds/coffee"));
+        public static final TagKey<Item> SEEDS_CANOLA = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "seeds/canola"));
+        public static final TagKey<Item> SEEDS_FLAX = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "seeds/flax"));
+        public static final TagKey<Item> CROPS_RICE = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "crops/rice"));
+        public static final TagKey<Item> CROPS_COFFEE = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "crops/coffee"));
+        public static final TagKey<Item> CROPS_CANOLA = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "crops/canola"));
+        public static final TagKey<Item> CROPS_FLAX = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "crops/flax"));
+        public static final TagKey<Item> GEMS_BLACK_QUARTZ = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "gems/black_quartz"));
+        public static final TagKey<Item> ORES_BLACK_QUARTZ = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "ores/black_quartz"));
+        public static final TagKey<Item> STORAGE_BLOCKS_BLACK_QUARTZ = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "storage_blocks/black_quartz"));
 
         private static TagKey<Item> tag(String name) {
-            return TagKey.create(Registries.ITEM, new ResourceLocation(ActuallyAdditions.MODID, name));
+            return TagKey.create(Registries.ITEM, ActuallyAdditions.modLoc(name));
         }
     }
 
@@ -58,12 +58,12 @@ public final class ActuallyTags {
         public static final TagKey<Block> NEEDS_VOID_TOOL = tag("needs_void_tool");
         public static final TagKey<Block> NEEDS_EMERADIC_TOOL = tag("needs_emeradic_tool");
         public static final TagKey<Block> NEEDS_ENORI_TOOL = tag("needs_enori_tool");
-        public static final TagKey<Block> ORES_BLACK_QUARTZ = BlockTags.create(new ResourceLocation("forge", "ores/black_quartz"));
-        public static final TagKey<Block> STORAGE_BLOCKS_BLACK_QUARTZ = BlockTags.create(new ResourceLocation("forge", "storage_blocks/black_quartz"));
+        public static final TagKey<Block> ORES_BLACK_QUARTZ = BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", "ores/black_quartz"));
+        public static final TagKey<Block> STORAGE_BLOCKS_BLACK_QUARTZ = BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", "storage_blocks/black_quartz"));
 
 
         private static TagKey<Block> tag(String name) {
-            return TagKey.create(Registries.BLOCK, new ResourceLocation(ActuallyAdditions.MODID, name));
+            return TagKey.create(Registries.BLOCK, ActuallyAdditions.modLoc(name));
         }
     }
 
@@ -78,7 +78,7 @@ public final class ActuallyTags {
         public static final TagKey<BannerPattern> PATTERN_BOOK = tag("pattern_item/book");
 
         private static TagKey<BannerPattern> tag(String name) {
-            return TagKey.create(Registries.BANNER_PATTERN, new ResourceLocation(ActuallyAdditions.MODID, name));
+            return TagKey.create(Registries.BANNER_PATTERN, ActuallyAdditions.modLoc(name));
         }
     }
 }

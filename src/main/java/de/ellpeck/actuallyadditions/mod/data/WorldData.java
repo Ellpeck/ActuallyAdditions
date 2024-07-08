@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData.PlayerSave;
 import de.ellpeck.actuallyadditions.mod.misc.apiimpl.LaserRelayConnectionHandler;
 import io.netty.util.internal.ConcurrentSet;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.server.level.ServerLevel;
@@ -49,7 +50,7 @@ public class WorldData extends SavedData {
         }
     }
 
-    public static WorldData load(CompoundTag compound) {
+    public static WorldData load(CompoundTag compound, HolderLookup.Provider provider) {
         WorldData worldData = new WorldData();
         worldData.laserRelayNetworks.clear();
         ListTag networkList = compound.getList("Networks", 10);
@@ -74,7 +75,7 @@ public class WorldData extends SavedData {
     }
 
     @Override
-    public CompoundTag save(CompoundTag compound) {
+    public CompoundTag save(CompoundTag compound, HolderLookup.Provider provider) {
         //Laser World Data
         ListTag networkList = new ListTag();
         for (Network network : this.laserRelayNetworks) {

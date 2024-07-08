@@ -10,11 +10,11 @@
 
 package de.ellpeck.actuallyadditions.mod.entity;
 
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer.DefaultFarmerBehavior;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -28,7 +28,7 @@ import net.minecraft.world.level.block.GrassBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.neoforged.neoforge.common.FarmlandWaterManager;
-import net.neoforged.neoforge.common.IPlantable;
+import net.neoforged.neoforge.common.SpecialPlantable;
 import net.neoforged.neoforge.common.ticket.AABBTicket;
 
 public class EntityWorm extends Entity {
@@ -48,7 +48,7 @@ public class EntityWorm extends Entity {
             BlockPos posUp = pos.above();
             BlockState stateUp = world.getBlockState(posUp);
             Block blockUp = stateUp.getBlock();
-            return blockUp instanceof IPlantable || blockUp instanceof BushBlock || stateUp.canBeReplaced();
+            return blockUp instanceof SpecialPlantable || blockUp instanceof BushBlock || stateUp.canBeReplaced();
         } else {
             return false;
         }
@@ -86,11 +86,6 @@ public class EntityWorm extends Entity {
     }
 
     @Override
-    public boolean canUpdate() {
-        return true;
-    }
-
-    @Override
     public void tick() {
         if (!this.level().isClientSide) {
             this.timer++;
@@ -117,8 +112,8 @@ public class EntityWorm extends Entity {
                                     BlockState plantState = this.level().getBlockState(plant);
                                     Block plantBlock = plantState.getBlock();
 
-                                    if ((plantBlock instanceof BonemealableBlock || plantBlock instanceof IPlantable) && !(plantBlock instanceof GrassBlock)) {
-                                        plantBlock.randomTick(plantState, (ServerLevel) this.level(), plant, this.level().random);
+                                    if ((plantBlock instanceof BonemealableBlock /*|| plantBlock instanceof IPlantable*/) && !(plantBlock instanceof GrassBlock)) {
+                                        plantState.randomTick((ServerLevel) this.level(), plant, this.level().random);
 
                                         BlockState newState = this.level().getBlockState(plant);
                                         if (newState != plantState) {
@@ -142,7 +137,7 @@ public class EntityWorm extends Entity {
     }
 
     @Override
-    protected void defineSynchedData() {
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
 
     }
 

@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.level.Level;
@@ -39,8 +40,8 @@ public class TileEntityHeatCollector extends TileEntityBase implements ISharingE
     }
 
     @Override
-    public void writeSyncableNBT(CompoundTag compound, NBTType type) {
-        super.writeSyncableNBT(compound, type);
+    public void writeSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
+        super.writeSyncableNBT(compound, lookupProvider, type);
 
         this.storage.writeToNBT(compound);
         if (type == NBTType.SAVE_TILE) {
@@ -49,8 +50,8 @@ public class TileEntityHeatCollector extends TileEntityBase implements ISharingE
     }
 
     @Override
-    public void readSyncableNBT(CompoundTag compound, NBTType type) {
-        super.readSyncableNBT(compound, type);
+    public void readSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
+        super.readSyncableNBT(compound, lookupProvider, type);
 
         this.storage.readFromNBT(compound);
         if (type == NBTType.SAVE_TILE) {
@@ -80,7 +81,7 @@ public class TileEntityHeatCollector extends TileEntityBase implements ISharingE
                 }
 
                 if (blocksAround.size() >= BLOCKS_NEEDED) {
-                    tile.storage.receiveEnergyInternal(ENERGY_PRODUCE, false);
+                    tile.storage.receiveEnergy(ENERGY_PRODUCE, false);
                     tile.setChanged();
 
                     tile.disappearTime++;

@@ -1,19 +1,17 @@
 package de.ellpeck.actuallyadditions.mod.config.conditions;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
-import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.common.conditions.ICondition;
 
 public record BoolConfigCondition(String boolConfig) implements ICondition {
-    public static Codec<BoolConfigCondition> CODEC = RecordCodecBuilder.create(
+    public static MapCodec<BoolConfigCondition> CODEC = RecordCodecBuilder.mapCodec(
             builder -> builder
                     .group(
                             Codec.STRING.fieldOf("boolConfig").forGetter(BoolConfigCondition::boolConfig))
                     .apply(builder, BoolConfigCondition::new));
-    private static final ResourceLocation NAME = new ResourceLocation(ActuallyAdditions.MODID, "bool_config_condition");
 
     @Override
     public boolean test(IContext condition) {
@@ -26,7 +24,7 @@ public record BoolConfigCondition(String boolConfig) implements ICondition {
     }
 
     @Override
-    public Codec<? extends ICondition> codec() {
+    public MapCodec<? extends ICondition> codec() {
         return CODEC;
     }
 

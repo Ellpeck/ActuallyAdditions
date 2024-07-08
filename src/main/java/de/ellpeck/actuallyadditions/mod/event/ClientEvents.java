@@ -13,7 +13,6 @@ package de.ellpeck.actuallyadditions.mod.event;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.IHudDisplay;
 import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import de.ellpeck.actuallyadditions.mod.data.WorldData;
@@ -31,7 +30,6 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -41,18 +39,16 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.neoforge.client.event.RenderGuiOverlayEvent;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
+import net.neoforged.neoforge.client.event.RenderGuiLayerEvent;
 import net.neoforged.neoforge.client.event.RenderHighlightEvent;
-import net.neoforged.neoforge.client.gui.overlay.GuiOverlayManager;
-import net.neoforged.neoforge.event.TickEvent;
+import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 
 import java.util.List;
 
-@OnlyIn(Dist.CLIENT)
+
 public class ClientEvents {
 
     private static final Component ADVANCED_INFO_TEXT_PRE = Component.literal("  -").withStyle(ChatFormatting.DARK_GRAY);
@@ -62,13 +58,11 @@ public class ClientEvents {
 
     // TODO: [port] the fuck?
     @SubscribeEvent
-    public void onClientTick(TickEvent.ClientTickEvent event) {
-        if (event.phase == TickEvent.Phase.END) {
-            Minecraft mc = Minecraft.getInstance();
+    public void onClientTick(ClientTickEvent.Post event) {
+        Minecraft mc = Minecraft.getInstance();
 
-            if (mc.level == null) {
-                WorldData.clear();
-            }
+        if (mc.level == null) {
+            WorldData.clear();
         }
     }
 
@@ -174,9 +168,9 @@ public class ClientEvents {
     }
 
     @SubscribeEvent
-    public void onGameOverlay(RenderGuiOverlayEvent.Post event) {
+    public void onGameOverlay(RenderGuiLayerEvent.Post event) {
         Minecraft minecraft = Minecraft.getInstance();
-        if (event.getOverlay() == GuiOverlayManager.findOverlay(new ResourceLocation("portal")) && minecraft.screen == null) { //ALL
+        if (event.getName() == VanillaGuiLayers.CAMERA_OVERLAYS && minecraft.screen == null) { //ALL
             GuiGraphics guiGraphics = event.getGuiGraphics();
             Player player = minecraft.player;
             if (player == null) {
@@ -189,7 +183,7 @@ public class ClientEvents {
 
             if (StackUtil.isValid(stack)) {
                 if (stack.getItem() instanceof IHudDisplay) {
-                    ((IHudDisplay) stack.getItem()).displayHud(guiGraphics, minecraft, player, stack, posHit, event.getWindow());
+                    ((IHudDisplay) stack.getItem()).displayHud(guiGraphics, minecraft, player, stack, posHit, minecraft.getWindow());
                 }
             }
 
@@ -199,7 +193,7 @@ public class ClientEvents {
                 BlockEntity tileHit = minecraft.level.getBlockEntity(rayCast.getBlockPos());
 
                 if (blockHit instanceof IHudDisplay) {
-                    ((IHudDisplay) blockHit).displayHud(guiGraphics, minecraft, player, stack, posHit, event.getWindow());
+                    ((IHudDisplay) blockHit).displayHud(guiGraphics, minecraft, player, stack, posHit, minecraft.getWindow());
                 }
 
                 if (tileHit instanceof TileEntityBase base) {
@@ -208,7 +202,7 @@ public class ClientEvents {
                                 .append(Component.translatable("info.actuallyadditions.redstoneMode." + (base.isPulseMode
                             ? "pulse"
                             : "deactivation")).withStyle(ChatFormatting.DARK_RED));
-                        guiGraphics.drawString(font, component, (int) (event.getWindow().getGuiScaledWidth() / 2f + 5), (int) (event.getWindow().getGuiScaledHeight() / 2f + 5), 0xFFFFFF);
+                        guiGraphics.drawString(font, component, (int) (minecraft.getWindow().getGuiScaledWidth() / 2f + 5), (int) (minecraft.getWindow().getGuiScaledHeight() / 2f + 5), 0xFFFFFF);
 
                         Component expl;
                         if (!stack.isEmpty() && stack.getItem() == CommonConfig.Other.redstoneConfigureItem) {
@@ -216,7 +210,7 @@ public class ClientEvents {
                         } else {
                             expl = Component.translatable("info.actuallyadditions.redstoneMode.invalidItem", Component.translatable(CommonConfig.Other.redstoneConfigureItem.asItem().getDescriptionId()).getString()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC);
                         }
-                        guiGraphics.drawString(font, expl, (int) (event.getWindow().getGuiScaledWidth() / 2f + 5), (int) (event.getWindow().getGuiScaledHeight() / 2f + 15), 0xFFFFFF);
+                        guiGraphics.drawString(font, expl, (int) (minecraft.getWindow().getGuiScaledWidth() / 2f + 5), (int) (minecraft.getWindow().getGuiScaledHeight() / 2f + 15), 0xFFFFFF);
                     }
                 }
 
@@ -225,7 +219,7 @@ public class ClientEvents {
                         if (energyDisplay == null) {
                             energyDisplay = new EnergyDisplay(0, 0, null);
                         }
-                        energyDisplay.setData(2, event.getWindow().getGuiScaledHeight() - 96, display.getEnergyStorage(), true, true);
+                        energyDisplay.setData(2, minecraft.getWindow().getGuiScaledHeight() - 96, display.getEnergyStorage(), true, true);
 
                         PoseStack matrices = guiGraphics.pose();
                         matrices.pushPose();

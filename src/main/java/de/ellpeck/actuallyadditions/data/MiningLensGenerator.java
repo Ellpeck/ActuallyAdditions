@@ -4,6 +4,7 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.crafting.MiningLensRecipe;
 import de.ellpeck.actuallyadditions.mod.util.NoAdvRecipeOutput;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
@@ -16,10 +17,11 @@ import net.minecraft.world.level.ItemLike;
 import net.neoforged.neoforge.common.Tags;
 
 import javax.annotation.Nonnull;
+import java.util.concurrent.CompletableFuture;
 
 public class MiningLensGenerator extends RecipeProvider {
-    public MiningLensGenerator(PackOutput packOutput) {
-        super(packOutput);
+    public MiningLensGenerator(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+        super(packOutput, lookupProvider);
     }
 
     @Override
@@ -37,14 +39,14 @@ public class MiningLensGenerator extends RecipeProvider {
 //    }
 
     private ResourceLocation folderRecipe(String folder, String recipe) {
-        return new ResourceLocation(ActuallyAdditions.MODID, folder + "/" + recipe);
+        return ActuallyAdditions.modLoc(folder + "/" + recipe);
     }
 
     private void buildStoneOre(RecipeOutput consumer, int weight, ItemLike output) {
-        buildTagOre(consumer, Tags.Items.STONE, "stone", weight, output);
+        buildTagOre(consumer, Tags.Items.STONES, "stone", weight, output);
     }
     private void buildNetherOre(RecipeOutput consumer, int weight, ItemLike output) {
-        buildTagOre(consumer, Tags.Items.NETHERRACK, "nether", weight, output);
+        buildTagOre(consumer, Tags.Items.NETHERRACKS, "nether", weight, output);
     }
 
     private void buildDeepSlateOre(RecipeOutput consumer, int weight, ItemLike output) {

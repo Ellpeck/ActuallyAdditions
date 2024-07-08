@@ -151,7 +151,7 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
         if (StackUtil.isValid(stack)) {
             IPlantable plantable = this.getPlantableFromStack(stack);
             if (plantable != null) {
-                BlockState state = plantable.getPlant(world, pos);
+                BlockState state = plantable.g(world, pos);
                 if (state != null && state.getBlock() instanceof BonemealableBlock) {
                     return state;
                 }

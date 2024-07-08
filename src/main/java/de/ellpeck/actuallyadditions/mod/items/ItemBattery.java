@@ -20,8 +20,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 
@@ -71,9 +69,9 @@ public class ItemBattery extends ItemEnergy {
         return super.use(worldIn, player, hand);
     }
 
-    @OnlyIn(Dist.CLIENT)
+    
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level playerIn, List<Component> list, TooltipFlag advanced) {
+    public void appendHoverText(ItemStack stack, @Nullable TooltipContext playerIn, List<Component> list, TooltipFlag advanced) {
         super.appendHoverText(stack, playerIn, list, advanced);
         list.add(Component.translatable("tooltip.actuallyadditions.battery." + (ItemUtil.isEnabled(stack)
             ? "discharge"

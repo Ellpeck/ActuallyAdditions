@@ -62,7 +62,7 @@ public final class PlayerData {
         public IBookletPage[] bookmarks = new IBookletPage[12];
         public List<String> completedTrials = new ArrayList<>();
 
-//        @OnlyIn(Dist.CLIENT)
+//        
 //        public GuiBooklet lastOpenBooklet;
 
         public PlayerSave(UUID id) {

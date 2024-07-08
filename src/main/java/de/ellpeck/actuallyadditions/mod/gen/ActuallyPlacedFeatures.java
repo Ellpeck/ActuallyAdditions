@@ -2,7 +2,7 @@ package de.ellpeck.actuallyadditions.mod.gen;
 
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
@@ -19,7 +19,7 @@ import java.util.List;
 public class ActuallyPlacedFeatures {
 	public static final ResourceKey<PlacedFeature> PLACED_ORE_BLACK_QUARTZ = PlacementUtils.createKey("actuallyadditions:ore_black_quartz");
 
-	public static void bootstrap(BootstapContext<PlacedFeature> context) {
+	public static void bootstrap(BootstrapContext<PlacedFeature> context) {
 		HolderGetter<ConfiguredFeature<?, ?>> holdergetter = context.lookup(Registries.CONFIGURED_FEATURE);
 
 		PlacementUtils.register(context, PLACED_ORE_BLACK_QUARTZ, holdergetter.getOrThrow(ActuallyConfiguredFeatures.ORE_BLACK_QUARTZ),

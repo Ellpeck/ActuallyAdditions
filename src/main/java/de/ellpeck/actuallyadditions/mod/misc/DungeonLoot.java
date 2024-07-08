@@ -11,15 +11,21 @@
 package de.ellpeck.actuallyadditions.mod.misc;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.level.storage.loot.LootTable;
 
 // TODO: [port] MOVE OVER TO DATA GENS
 @Deprecated
 public class DungeonLoot {
     //
-    //    public static final ResourceLocation JAM_HOUSE = new ResourceLocation(ActuallyAdditions.MODID, "jam_house");
-    //    public static final ResourceLocation LUSH_CAVES = new ResourceLocation(ActuallyAdditions.MODID, "lush_caves");
-        public static final ResourceLocation ENGINEER_HOUSE = new ResourceLocation(ActuallyAdditions.MODID, "engineer_house");
+    //    public static final ResourceLocation JAM_HOUSE = ActuallyAdditions.modLoc("jam_house");
+    //    public static final ResourceLocation LUSH_CAVES = ActuallyAdditions.modLoc("lush_caves");
+        public static final ResourceKey<LootTable> ENGINEER_HOUSE = register("engineer_house");
+
+    private static ResourceKey<LootTable> register(String path) {
+        return ResourceKey.create(Registries.LOOT_TABLE, ActuallyAdditions.modLoc(path));
+    }
     //
     //    public DungeonLoot() {
     //        LootTableList.register(JAM_HOUSE);

@@ -20,12 +20,10 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.event.TickEvent;
 
 import java.util.List;
 import java.util.Set;
@@ -51,9 +49,9 @@ public class ItemEngineerGoggles extends ItemArmorAA implements IGoggles {
         return StackUtil.isValid(face) && face.getItem() instanceof IGoggles;
     }
 
-    @OnlyIn(Dist.CLIENT)
+    
     @SubscribeEvent
-    public void onClientTick(TickEvent.ClientTickEvent event) {
+    public void onClientTick(ClientTickEvent.Post event) {
         Player player = Minecraft.getInstance().player;
         if (player != null && isWearing(player)) {
             ItemStack face = player.getInventory().armor.get(3);

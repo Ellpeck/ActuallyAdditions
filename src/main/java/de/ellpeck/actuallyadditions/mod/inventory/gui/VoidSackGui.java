@@ -69,7 +69,7 @@ public class VoidSackGui extends AAScreen<VoidSackContainer> {
         data.putInt("ButtonID", id);
         data.putInt("PlayerID", Minecraft.getInstance().player.getId());
         data.putString("WorldID", Minecraft.getInstance().level.dimension().location().toString());
-        PacketDistributor.SERVER.noArg().send(new PacketClientToServer(data, PacketHandler.GUI_BUTTON_TO_CONTAINER_HANDLER));
+        PacketDistributor.sendToServer(new PacketClientToServer(data, PacketHandler.GUI_BUTTON_TO_CONTAINER_HANDLER));
     }
 
     @Override

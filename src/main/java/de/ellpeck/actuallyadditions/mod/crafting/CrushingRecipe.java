@@ -2,21 +2,23 @@ package de.ellpeck.actuallyadditions.mod.crafting;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.Container;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeInput;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 
 import javax.annotation.Nonnull;
 
-public class CrushingRecipe implements Recipe<Container> {
+public class CrushingRecipe implements Recipe<RecipeInput> {
     public static String NAME = "crushing";
     protected Ingredient input;
     protected NonNullList<CrushingResult> outputs;
@@ -39,7 +41,7 @@ public class CrushingRecipe implements Recipe<Container> {
     }
 
     @Override
-    public boolean matches(Container pInv, Level pLevel) {
+    public boolean matches(RecipeInput pInv, Level pLevel) {
         return input.test(pInv.getItem(0));
     }
 
@@ -54,7 +56,7 @@ public class CrushingRecipe implements Recipe<Container> {
 
     @Override
     @Nonnull
-    public ItemStack assemble(Container pInv, RegistryAccess pRegistryAccess) {
+    public ItemStack assemble(RecipeInput pInv, HolderLookup.Provider provider) {
         return ItemStack.EMPTY;
     }
 
@@ -65,8 +67,8 @@ public class CrushingRecipe implements Recipe<Container> {
 
     @Override
     @Nonnull
-    public ItemStack getResultItem(RegistryAccess pRegistryAccess) {
-        return this.outputs.get(0).stack.copy();
+    public ItemStack getResultItem(HolderLookup.Provider provider) {
+        return this.outputs.getFirst().stack.copy();
     }
 
     @Override
@@ -82,7 +84,7 @@ public class CrushingRecipe implements Recipe<Container> {
     }
 
     public ItemStack getOutputOne() {
-        return this.outputs.get(0).stack;
+        return this.outputs.getFirst().stack;
     }
 
     public ItemStack getOutputTwo() {
@@ -90,7 +92,7 @@ public class CrushingRecipe implements Recipe<Container> {
     }
 
     public float getFirstChance() {
-        return this.outputs.get(0).chance;
+        return this.outputs.getFirst().chance;
     }
     public float getSecondChance() {
         return this.outputs.get(1).chance;
@@ -114,7 +116,7 @@ public class CrushingRecipe implements Recipe<Container> {
                         .apply(instance, CrushingResult::new)
         );
 
-        private static final Codec<CrushingRecipe> CODEC = RecordCodecBuilder.create(
+        private static final MapCodec<CrushingRecipe> CODEC = RecordCodecBuilder.mapCodec(
                 instance -> instance.group(
                                 Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(recipe -> recipe.input),
                                 RESULT_CODEC
@@ -141,10 +143,18 @@ public class CrushingRecipe implements Recipe<Container> {
                         )
                         .apply(instance, CrushingRecipe::new)
         );
+        public static final StreamCodec<RegistryFriendlyByteBuf, CrushingRecipe> STREAM_CODEC = StreamCodec.of(
+                CrushingRecipe.Serializer::toNetwork, CrushingRecipe.Serializer::fromNetwork
+        );
 
         @Override
-        public Codec<CrushingRecipe> codec() {
+        public MapCodec<CrushingRecipe> codec() {
             return CODEC;
+        }
+
+        @Override
+        public StreamCodec<RegistryFriendlyByteBuf, CrushingRecipe> streamCodec() {
+            return STREAM_CODEC;
         }
 
 //        @Override
@@ -173,26 +183,24 @@ public class CrushingRecipe implements Recipe<Container> {
 //            return new CrushingRecipe(pRecipeId, ingredient, output1, chance1, output2, chance2);
 //        }
 
-        @Override
-        public CrushingRecipe fromNetwork(@Nonnull FriendlyByteBuf pBuffer) {
-            Ingredient ingredient = Ingredient.fromNetwork(pBuffer);
+        public static CrushingRecipe fromNetwork(@Nonnull RegistryFriendlyByteBuf pBuffer) {
+            Ingredient ingredient = Ingredient.CONTENTS_STREAM_CODEC.decode(pBuffer);
 
             int i = pBuffer.readVarInt();
 
             NonNullList<CrushingResult> nonnulllist = NonNullList.withSize(i, CrushingResult.EMPTY);
             for (int j = 0; j < nonnulllist.size(); ++j) {
-                nonnulllist.set(j, new CrushingResult(pBuffer.readItem(), pBuffer.readFloat()));
+                nonnulllist.set(j, new CrushingResult(ItemStack.STREAM_CODEC.decode(pBuffer), pBuffer.readFloat()));
             }
 
             return new CrushingRecipe(ingredient, nonnulllist);
         }
 
-        @Override
-        public void toNetwork(@Nonnull FriendlyByteBuf pBuffer, CrushingRecipe pRecipe) {
-            pRecipe.input.toNetwork(pBuffer);
+        public static void toNetwork(@Nonnull RegistryFriendlyByteBuf pBuffer, CrushingRecipe pRecipe) {
+            Ingredient.CONTENTS_STREAM_CODEC.encode(pBuffer, pRecipe.input);
             pBuffer.writeVarInt(pRecipe.outputs.size());
             for (CrushingResult result : pRecipe.outputs) {
-                pBuffer.writeItem(result.stack);
+                ItemStack.STREAM_CODEC.encode(pBuffer, result.stack);
                 pBuffer.writeFloat(result.chance);
             }
         }

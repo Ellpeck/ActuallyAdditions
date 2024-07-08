@@ -29,13 +29,13 @@
 //    }
 //
 //    @Override
-//    @OnlyIn(Dist.CLIENT)
+//    
 //    public String getLocalizedName() {
 //        return StringUtil.localize("booklet.actuallyadditions.trials." + this.getIdentifier() + ".name");
 //    }
 //
 //    @Override
-//    @OnlyIn(Dist.CLIENT)
+//    
 //    public String getLocalizedNameWithFormatting() {
 //        PlayerEntity player = Minecraft.getInstance().player;
 //        PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(player);
