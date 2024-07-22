@@ -9,14 +9,15 @@ import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.neoforged.neoforge.common.ItemAbilities;
-import net.neoforged.neoforge.common.ToolAction;
+import net.neoforged.neoforge.common.ItemAbility;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public class AllInOneTool extends DiggerItem {
     private final Tier tier;
 
-    private static List<ToolAction> ACTIONS = List.of(
+    private static List<ItemAbility> ACTIONS = List.of(
         ItemAbilities.AXE_DIG,
         ItemAbilities.HOE_DIG,
         ItemAbilities.PICKAXE_DIG,
@@ -28,8 +29,8 @@ public class AllInOneTool extends DiggerItem {
 
     public AllInOneTool(Tier tier) {
         super(
-            4.0f,
-            -2f,
+/*            4.0f,
+            -2f,*/
             tier,
                 ActuallyTags.Blocks.MINEABLE_WITH_AIO,
             new Properties()
@@ -41,12 +42,13 @@ public class AllInOneTool extends DiggerItem {
     }
 
     @Override
-    public boolean canPerformAction(ItemStack stack, ToolAction toolAction) {
+    public boolean canPerformAction(@Nonnull ItemStack stack, @Nonnull ItemAbility toolAction) {
         if (ACTIONS.contains(toolAction))
             return true;
         return super.canPerformAction(stack, toolAction);
     }
 
+    @Nonnull
     @Override
     public InteractionResult useOn(UseOnContext context) {
         // How, no idea, possible, most likely :cry:
@@ -64,8 +66,8 @@ public class AllInOneTool extends DiggerItem {
         return Items.IRON_HOE.useOn(context);
     }
 
-    @Override
+/*    @Override //TODO help, enchantments are weird now.
     public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
         return super.canApplyAtEnchantingTable(stack, enchantment) || enchantment.category.canEnchant(Items.DIAMOND_SWORD);
-    }
+    }*/
 }

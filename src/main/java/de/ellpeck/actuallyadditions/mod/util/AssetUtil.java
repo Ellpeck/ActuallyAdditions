@@ -40,6 +40,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemDisplayContext;
@@ -59,7 +60,7 @@ public final class AssetUtil {
     public static final int MAX_LIGHT_Y = 0xF000F0;
 
     public static final ResourceLocation GUI_INVENTORY_LOCATION = getGuiLocation("gui_inventory");
-    private static final ResourceLocation FORGE_WHITE = ResourceLocation.tryParse("forge", "white");
+    private static final ResourceLocation FORGE_WHITE = ResourceLocation.tryBuild("forge", "white");
 
     public static ResourceLocation getGuiLocation(String file) {
         return ActuallyAdditions.modLoc("textures/gui/" + file + ".png");
@@ -224,7 +225,7 @@ public final class AssetUtil {
 //        GlStateManager._popMatrix();
 //    }
 
-    public static void spawnLaserWithTimeServer(Level world, double startX, double startY, double startZ, double endX, double endY, double endZ, int color, int maxAge, double rotationTime, float size, float alpha) {
+    public static void spawnLaserWithTimeServer(ServerLevel world, double startX, double startY, double startZ, double endX, double endY, double endZ, int color, int maxAge, double rotationTime, float size, float alpha) {
         if (!world.isClientSide) {
             CompoundTag data = new CompoundTag();
             data.putDouble("StartX", startX);
@@ -238,7 +239,7 @@ public final class AssetUtil {
             data.putFloat("Size", size);
             data.putInt("MaxAge", maxAge);
             data.putFloat("Alpha", alpha);
-            PacketDistributor.NEAR.with(new PacketDistributor.TargetPoint(startX, startY, startZ, 96, world.dimension())).send(new PacketServerToClient(data, PacketHandler.LASER_HANDLER));
+            PacketDistributor.sendToPlayersNear(world, null, startX, startY, startZ, 96, new PacketServerToClient(data, PacketHandler.LASER_HANDLER));
         }
     }
 
@@ -292,25 +293,25 @@ public final class AssetUtil {
         for (int i = 1; i < 4; i++) {
             float width = beamWidth * (i / 4.0f);
             //top
-            builder.vertex(matrix, -width,  width,    0.0f).color(r, g, b, a).uv(minU, maxV).uv2(lightmap).endVertex();
-            builder.vertex(matrix,  width,  width,    0.0f).color(r, g, b, a).uv(maxU, maxV).uv2(lightmap).endVertex();
-            builder.vertex(matrix,  width,  width, -length).color(r, g, b, a).uv(maxU, minV).uv2(lightmap).endVertex();
-            builder.vertex(matrix, -width,  width, -length).color(r, g, b, a).uv(minU, minV).uv2(lightmap).endVertex();
+            builder.addVertex(matrix, -width,  width,    0.0f).setColor(r, g, b, a).setUv(minU, maxV).setLight(lightmap);//.endVertex(); //TODO ?!
+            builder.addVertex(matrix,  width,  width,    0.0f).setColor(r, g, b, a).setUv(maxU, maxV).setLight(lightmap);//.endVertex();
+            builder.addVertex(matrix,  width,  width, -length).setColor(r, g, b, a).setUv(maxU, minV).setLight(lightmap);
+            builder.addVertex(matrix, -width,  width, -length).setColor(r, g, b, a).setUv(minU, minV).setLight(lightmap);
             //bottom
-            builder.vertex(matrix, -width, -width,    0.0f).color(r, g, b, a).uv(minU, maxV).uv2(lightmap).endVertex();
-            builder.vertex(matrix, -width, -width, -length).color(r, g, b, a).uv(minU, minV).uv2(lightmap).endVertex();
-            builder.vertex(matrix,  width, -width, -length).color(r, g, b, a).uv(maxU, minV).uv2(lightmap).endVertex();
-            builder.vertex(matrix,  width, -width,    0.0f).color(r, g, b, a).uv(maxU, maxV).uv2(lightmap).endVertex();
+            builder.addVertex(matrix, -width, -width,    0.0f).setColor(r, g, b, a).setUv(minU, maxV).setLight(lightmap);
+            builder.addVertex(matrix, -width, -width, -length).setColor(r, g, b, a).setUv(minU, minV).setLight(lightmap);
+            builder.addVertex(matrix,  width, -width, -length).setColor(r, g, b, a).setUv(maxU, minV).setLight(lightmap);
+            builder.addVertex(matrix,  width, -width,    0.0f).setColor(r, g, b, a).setUv(maxU, maxV).setLight(lightmap);
             //left
-            builder.vertex(matrix, -width,  width,    0.0f).color(r, g, b, a).uv(maxU, maxV).uv2(lightmap).endVertex();
-            builder.vertex(matrix, -width, -width,    0.0f).color(r, g, b, a).uv(maxU, maxV).uv2(lightmap).endVertex();
-            builder.vertex(matrix, -width, -width, -length).color(r, g, b, a).uv(minU, minV).uv2(lightmap).endVertex();
-            builder.vertex(matrix, -width,  width, -length).color(r, g, b, a).uv(minU, minV).uv2(lightmap).endVertex();
+            builder.addVertex(matrix, -width,  width,    0.0f).setColor(r, g, b, a).setUv(maxU, maxV).setLight(lightmap);
+            builder.addVertex(matrix, -width, -width,    0.0f).setColor(r, g, b, a).setUv(maxU, maxV).setLight(lightmap);
+            builder.addVertex(matrix, -width, -width, -length).setColor(r, g, b, a).setUv(minU, minV).setLight(lightmap);
+            builder.addVertex(matrix, -width,  width, -length).setColor(r, g, b, a).setUv(minU, minV).setLight(lightmap);
             //right
-            builder.vertex(matrix,  width,  width,    0.0f).color(r, g, b, a).uv(maxU, maxV).uv2(lightmap).endVertex();
-            builder.vertex(matrix,  width, -width,    0.0f).color(r, g, b, a).uv(maxU, maxV).uv2(lightmap).endVertex();
-            builder.vertex(matrix,  width, -width, -length).color(r, g, b, a).uv(minU, minV).uv2(lightmap).endVertex();
-            builder.vertex(matrix,  width,  width, -length).color(r, g, b, a).uv(minU, minV).uv2(lightmap).endVertex();
+            builder.addVertex(matrix,  width,  width,    0.0f).setColor(r, g, b, a).setUv(maxU, maxV).setLight(lightmap);
+            builder.addVertex(matrix,  width, -width,    0.0f).setColor(r, g, b, a).setUv(maxU, maxV).setLight(lightmap);
+            builder.addVertex(matrix,  width, -width, -length).setColor(r, g, b, a).setUv(minU, minV).setLight(lightmap);
+            builder.addVertex(matrix,  width,  width, -length).setColor(r, g, b, a).setUv(minU, minV).setLight(lightmap);
         }
 
 
@@ -362,7 +363,7 @@ public final class AssetUtil {
         Matrix4f matrix = matrixStack.last().pose();
 
         RenderSystem.setShader(GameRenderer::getPositionColorLightmapShader);
-        Tesselator.getInstance().getBuilder().begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR_LIGHTMAP);
+        Tesselator.getInstance().begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR_LIGHTMAP);
 
         TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(FORGE_WHITE);
         float minU = sprite.getU0();

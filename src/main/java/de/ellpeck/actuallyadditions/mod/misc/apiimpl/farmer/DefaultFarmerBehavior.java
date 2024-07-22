@@ -37,7 +37,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.common.IPlantable;
+import net.neoforged.neoforge.common.SpecialPlantable;
 import net.neoforged.neoforge.common.util.FakePlayerFactory;
 
 import java.util.ArrayList;
@@ -148,10 +148,10 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
     }
 
     private BlockState getPlantablePlantFromStack(ItemStack stack, Level world, BlockPos pos) {
-        if (StackUtil.isValid(stack)) {
-            IPlantable plantable = this.getPlantableFromStack(stack);
+        if (!stack.isEmpty()) {
+            SpecialPlantable plantable = this.getPlantableFromStack(stack);
             if (plantable != null) {
-                BlockState state = plantable.g(world, pos);
+                BlockState state = plantable.getPlantType(world, pos);
                 if (state != null && state.getBlock() instanceof BonemealableBlock) {
                     return state;
                 }
@@ -160,14 +160,14 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
         return null;
     }
 
-    private IPlantable getPlantableFromStack(ItemStack stack) {
+    private SpecialPlantable getPlantableFromStack(ItemStack stack) {
         Item item = stack.getItem();
-        if (item instanceof IPlantable) {
-            return (IPlantable) item;
+        if (item instanceof SpecialPlantable plantable) {
+            return plantable;
         } else if (item instanceof BlockItem) {
             Block block = Block.byItem(item);
-            if (block instanceof IPlantable) {
-                return (IPlantable) block;
+            if (block instanceof SpecialPlantable plantable) {
+                return plantable;
             }
         }
         return null;

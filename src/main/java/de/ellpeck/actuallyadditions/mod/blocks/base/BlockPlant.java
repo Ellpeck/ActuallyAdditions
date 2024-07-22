@@ -28,7 +28,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.BlockHitResult;
-import net.neoforged.neoforge.common.PlantType;
 import net.neoforged.neoforge.items.ItemHandlerHelper;
 
 import java.util.List;
@@ -52,10 +51,10 @@ public class BlockPlant extends CropBlock {
         //        this.returnMeta = returnMeta;
     }
 
-    @Override
+/*    @Override
     public PlantType getPlantType(BlockGetter world, BlockPos pos) {
         return PlantType.CROP;
-    }
+    }*/
     //
     //    @Override
     //    public int damageDropped(BlockState state) {
