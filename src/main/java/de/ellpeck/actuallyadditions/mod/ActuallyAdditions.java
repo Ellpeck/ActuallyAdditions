@@ -36,6 +36,7 @@ import de.ellpeck.actuallyadditions.mod.inventory.ActuallyContainers;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.items.Worm;
 import de.ellpeck.actuallyadditions.mod.lootmodifier.ActuallyLootModifiers;
+import de.ellpeck.actuallyadditions.mod.material.ArmorMaterials;
 import de.ellpeck.actuallyadditions.mod.misc.apiimpl.LaserRelayConnectionHandler;
 import de.ellpeck.actuallyadditions.mod.misc.apiimpl.MethodHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
@@ -118,6 +119,7 @@ public class ActuallyAdditions {
         ActuallyComponents.init(eventBus);
         ActuallyLootModifiers.init(eventBus);
         ActuallyContainers.CONTAINERS.register(eventBus);
+        ArmorMaterials.init(eventBus);
         ENTITIES.register(eventBus);
         CONDITION_CODECS.register(eventBus);
         BIOME_MODIFIER_SERIALIZERS.register(eventBus);
@@ -139,10 +141,10 @@ public class ActuallyAdditions {
         eventBus.addListener(this::setup);
 
         if (dist.isClient()) {
-	        eventBus.addListener(ActuallyAdditionsClient::setup);
+            eventBus.addListener(ActuallyAdditionsClient::setup);
             eventBus.addListener(ActuallyAdditionsClient::setupMenus);
-	        eventBus.addListener(ActuallyAdditionsClient::setupSpecialRenders);
-	        eventBus.addListener(ActuallyAdditionsClient::registerParticleFactories);
+            eventBus.addListener(ActuallyAdditionsClient::setupSpecialRenders);
+            eventBus.addListener(ActuallyAdditionsClient::registerParticleFactories);
             eventBus.register(new ClientRegistryHandler());
         }
         IFarmerBehavior.initBehaviors();

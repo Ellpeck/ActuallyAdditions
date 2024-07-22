@@ -5,23 +5,29 @@ import net.minecraft.Util;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Supplier;
 
 /**
  * Complete copy paste from {@link net.minecraft.world.item.ArmorMaterial}
  * <p>
- * todo validate all values refect correctly
+ * //TODO validate all values refect correctly
  */
 public class ArmorMaterials {
+    public static final DeferredRegister<ArmorMaterial> MATERIALS = DeferredRegister.create(Registries.ARMOR_MATERIAL, ActuallyAdditions.MODID);
     //    EMERALD("emerald_armor_material", 30,  createProtectionMap( 5, 8, 9, 4 ), 15, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 2, 0f, () -> Ingredient.fromItems(Items.EMERALD)),
     //    OBSIDIAN("obsidian_armor_material", 28, createProtectionMap( 1, 3, 4, 3 ), 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 1, 0f, () -> Ingredient.fromItems(Items.OBSIDIAN)),
 
@@ -34,46 +40,28 @@ public class ArmorMaterials {
 //    ENORI("enori_armor_material", 24, createProtectionMap(3, 6, 6, 3), 11, SoundEvents.ARMOR_EQUIP_GENERIC, 0, 0f, () -> Ingredient.of(ActuallyItems.ENORI_CRYSTAL.get())),
 //    GOGGLES("goggles_armor_material", 0, createProtectionMap(0, 0, 0, 0), 0, SoundEvents.ARMOR_EQUIP_GENERIC, 0, 0f, () -> Ingredient.EMPTY);
 
-    public static final Holder<ArmorMaterial> GOGGLES = register(
+    public static final DeferredHolder<ArmorMaterial, ArmorMaterial> GOGGLES = MATERIALS.register(
             "goggles_armor_material",
-            Util.make(new EnumMap<>(ArmorItem.Type.class), p323384 -> {
-                p323384.put(ArmorItem.Type.BOOTS, 0);
-                p323384.put(ArmorItem.Type.LEGGINGS, 0);
-                p323384.put(ArmorItem.Type.CHESTPLATE, 0);
-                p323384.put(ArmorItem.Type.HELMET, 0);
-                p323384.put(ArmorItem.Type.BODY, 0);
-            }),
-            0,
-            SoundEvents.ARMOR_EQUIP_GENERIC,
-            0.0F,
-            0.0F,
-            () -> Ingredient.EMPTY,
-            List.of(
-                    new ArmorMaterial.Layer(ActuallyAdditions.modLoc("goggles"), "", true),
-                    new ArmorMaterial.Layer(ActuallyAdditions.modLoc("goggles"), "_overlay", false)
-            )
-    );
+            () -> new ArmorMaterial(
+                    Map.of(
+                            ArmorItem.Type.BOOTS, 0,
+                            ArmorItem.Type.LEGGINGS, 0,
+                            ArmorItem.Type.CHESTPLATE, 0,
+                            ArmorItem.Type.HELMET, 0,
+                            ArmorItem.Type.BODY, 0
+                    ),
+                    0,
+                    SoundEvents.ARMOR_EQUIP_GENERIC,
+                    () -> Ingredient.EMPTY,
+                    List.of(
+                            new ArmorMaterial.Layer(ActuallyAdditions.modLoc("goggles"), "", true),
+                            new ArmorMaterial.Layer(ActuallyAdditions.modLoc("goggles"), "_overlay", false)
+                    ),
+                    0.0F,
+                    0.0F
+            ));
 
-    private static Holder<ArmorMaterial> register(
-            String pName,
-            EnumMap<ArmorItem.Type, Integer> pDefense,
-            int pEnchantmentValue,
-            Holder<SoundEvent> pEquipSound,
-            float pToughness,
-            float pKnockbackResistance,
-            Supplier<Ingredient> pRepairIngridient,
-            List<ArmorMaterial.Layer> pLayers
-    ) {
-        EnumMap<ArmorItem.Type, Integer> enummap = new EnumMap<>(ArmorItem.Type.class);
-
-        for (ArmorItem.Type armoritem$type : ArmorItem.Type.values()) {
-            enummap.put(armoritem$type, pDefense.get(armoritem$type));
-        }
-
-        return Registry.registerForHolder(
-                BuiltInRegistries.ARMOR_MATERIAL,
-                ResourceLocation.withDefaultNamespace(pName),
-                new ArmorMaterial(enummap, pEnchantmentValue, pEquipSound, pRepairIngridient, pLayers, pToughness, pKnockbackResistance)
-        );
+    public static void init(IEventBus bus) {
+        MATERIALS.register(bus);
     }
 }
