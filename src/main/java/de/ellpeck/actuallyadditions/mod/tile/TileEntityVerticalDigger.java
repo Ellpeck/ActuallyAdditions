@@ -197,7 +197,7 @@ public class TileEntityVerticalDigger extends TileEntityInventoryBase implements
     }
 
     private void shootParticles(int endX, int endY, int endZ) {
-        AssetUtil.spawnLaserWithTimeServer(this.level, this.worldPosition.getX(), this.worldPosition.getY(), this.worldPosition.getZ(), endX, endY, endZ, 0x429602, 10, 120, 0.1F, 0.8F);
+        AssetUtil.spawnLaserWithTimeServer((ServerLevel) this.level, this.worldPosition.getX(), this.worldPosition.getY(), this.worldPosition.getZ(), endX, endY, endZ, 0x429602, 10, 120, 0.1F, 0.8F);
     }
 
     private boolean isBlacklisted(Block block) {

@@ -18,6 +18,8 @@ import de.ellpeck.actuallyadditions.mod.sack.SackData;
 import de.ellpeck.actuallyadditions.mod.sack.SackManager;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -25,6 +27,7 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -116,8 +119,27 @@ public class Sack extends ItemBase {
     public static SackData getData(ItemStack stack) {
         if (!(stack.getItem() instanceof Sack))
             return null;
-        UUID uuid = stack.getOrDefault(ActuallyComponents.UUID.get(), UUID.randomUUID());
-        stack.set(ActuallyComponents.UUID.get(), uuid);
+
+        UUID uuid;
+
+        if (stack.has(ActuallyComponents.UUID))
+            uuid = stack.get(ActuallyComponents.UUID);
+        else if(stack.has(DataComponents.CUSTOM_DATA)) {
+            CompoundTag tag = stack.get(DataComponents.CUSTOM_DATA).copyTag();
+            if (tag.contains("UUID")) {
+                uuid = tag.getUUID("UUID");
+                stack.set(ActuallyComponents.UUID, uuid);
+                stack.update(DataComponents.CUSTOM_DATA, CustomData.EMPTY, $ -> $.update(compoundTag -> compoundTag.remove("UUID")));
+            } else {
+                uuid = UUID.randomUUID();
+                stack.set(ActuallyComponents.UUID, uuid);
+            }
+        }
+        else {
+            uuid = UUID.randomUUID();
+            stack.set(ActuallyComponents.UUID, uuid);
+        }
+
         return SackManager.get().getOrCreateSack(uuid);
     }
 }

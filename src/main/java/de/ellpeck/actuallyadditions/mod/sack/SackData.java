@@ -1,10 +1,12 @@
 package de.ellpeck.actuallyadditions.mod.sack;
 
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.neoforged.neoforge.common.util.INBTSerializable;
 import net.neoforged.neoforge.items.IItemHandler;
 
+import javax.annotation.Nonnull;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -53,7 +55,7 @@ public class SackData {
         optional = Optional.ofNullable(inventory);
     }
 
-    public SackData(UUID uuid, CompoundTag incoming) {
+    public SackData(UUID uuid, CompoundTag incoming, HolderLookup.Provider provider) {
         this.uuid = uuid;
 
         inventory = new ItemStackHandlerAA(SIZE){
@@ -65,34 +67,34 @@ public class SackData {
             }
         };
 
-        inventory.deserializeNBT(incoming.getCompound("Inventory"));
+        inventory.deserializeNBT(provider, incoming.getCompound("Inventory"));
 
         optional = Optional.ofNullable(inventory);
 
         if (incoming.contains("Metadata"))
-            meta.deserializeNBT(incoming.getCompound("Metadata"));
+            meta.deserializeNBT(provider, incoming.getCompound("Metadata"));
     }
 
     public UUID getUuid() {
         return uuid;
     }
 
-    public static Optional<SackData> fromNBT(CompoundTag nbt) {
+    public static Optional<SackData> fromNBT(CompoundTag nbt, HolderLookup.Provider provider) {
         if (nbt.contains("UUID")) {
             UUID uuid = nbt.getUUID("UUID");
-            return Optional.of(new SackData(uuid, nbt));
+            return Optional.of(new SackData(uuid, nbt, provider));
         }
         return Optional.empty();
     }
 
-    public CompoundTag toNBT() {
+    public CompoundTag toNBT(HolderLookup.Provider provider) {
         CompoundTag nbt = new CompoundTag();
 
         nbt.putUUID("UUID", uuid);
 
-        nbt.put("Inventory", inventory.serializeNBT());
+        nbt.put("Inventory", inventory.serializeNBT(provider));
 
-        nbt.put("Metadata", meta.serializeNBT());
+        nbt.put("Metadata", meta.serializeNBT(provider));
 
         return nbt;
     }
@@ -128,7 +130,7 @@ public class SackData {
         }
 
         @Override
-        public CompoundTag serializeNBT() {
+        public CompoundTag serializeNBT(@Nonnull HolderLookup.Provider provider) {
             CompoundTag nbt = new CompoundTag();
 
             nbt.putString("firstPlayer", firstAccessedPlayer);
@@ -140,7 +142,7 @@ public class SackData {
         }
 
         @Override
-        public void deserializeNBT(CompoundTag nbt) {
+        public void deserializeNBT(@Nonnull HolderLookup.Provider provider, CompoundTag nbt) {
             firstAccessedPlayer = nbt.getString("firstPlayer");
             firstAccessedTime = nbt.getLong("firstTime");
             lastAccessedPlayer = nbt.getString("lastPlayer");

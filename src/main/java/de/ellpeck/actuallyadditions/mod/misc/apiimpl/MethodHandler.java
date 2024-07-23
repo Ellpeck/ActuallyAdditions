@@ -26,6 +26,7 @@ import net.minecraft.core.Vec3i;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -274,7 +275,8 @@ public class MethodHandler implements IMethodHandler {
                     BlockPos hitBlock = tile.getPosition().relative(sideToManipulate, i + 1);
 
                     if (currentLens.invoke(tile.getWorldObject().getBlockState(hitBlock), hitBlock, tile) || i >= distance - 1) {
-                        TileEntityAtomicReconstructor.shootLaser(tile, tile.getWorldObject(), tile.getX(), tile.getY(), tile.getZ(), hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), currentLens);
+                        if (tile.getWorldObject() instanceof ServerLevel level)
+                        TileEntityAtomicReconstructor.shootLaser(tile, level, tile.getX(), tile.getY(), tile.getZ(), hitBlock.getX(), hitBlock.getY(), hitBlock.getZ(), currentLens);
                         break;
                     }
                 }

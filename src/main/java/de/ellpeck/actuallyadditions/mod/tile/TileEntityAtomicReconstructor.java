@@ -24,6 +24,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.Item;
@@ -50,7 +51,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
         this.storage = new CustomEnergyStorage(power, recieve, 0);
     }
 
-    public static void shootLaser(IAtomicReconstructor tile, Level world, double startX, double startY, double startZ, double endX, double endY, double endZ, Lens currentLens) {
+    public static void shootLaser(IAtomicReconstructor tile, ServerLevel world, double startX, double startY, double startZ, double endX, double endY, double endZ, Lens currentLens) {
         world.playSound(null, startX, startY, startZ, AASounds.RECONSTRUCTOR.get(), SoundSource.BLOCKS, 0.35F, 1.0F);
         AssetUtil.spawnLaserWithTimeServer(world, startX, startY, startZ, endX, endY, endZ, currentLens.getColor(), 25, 0, 0.2F, 0.8F);
     }
