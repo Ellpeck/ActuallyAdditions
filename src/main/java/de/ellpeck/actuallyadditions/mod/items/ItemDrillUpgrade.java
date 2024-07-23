@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
+import de.ellpeck.actuallyadditions.mod.components.ActuallyComponents;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -30,11 +31,7 @@ public class ItemDrillUpgrade extends ItemBase {
     }
 
     public static int getSlotToPlaceFrom(ItemStack stack) {
-        CompoundTag compound = stack.getTag();
-        if (compound != null) {
-            return compound.getInt("SlotToPlaceFrom") - 1;
-        }
-        return -1;
+        return stack.getOrDefault(ActuallyComponents.SLOT, -1);
     }
 
     @Override
@@ -49,10 +46,7 @@ public class ItemDrillUpgrade extends ItemBase {
     }
 
     public void setSlotToPlaceFrom(ItemStack stack, int slot) {
-        CompoundTag compound = stack.getOrCreateTag();
-        compound.putInt("SlotToPlaceFrom", slot + 1);
-
-        stack.setTag(compound);
+        stack.set(ActuallyComponents.SLOT, slot + 1);
     }
 
     public enum UpgradeType {

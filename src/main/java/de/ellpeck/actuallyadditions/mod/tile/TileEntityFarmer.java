@@ -151,7 +151,7 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
             for (int i = 0; i < 6; i++) { //Process seed slots only
                 ItemStack stack = this.inv.getStackInSlot(i);
                 BlockState state = this.level.getBlockState(query);
-                if (StackUtil.isValid(stack) && state.canBeReplaced()) {
+                if (!stack.isEmpty() && state.canBeReplaced()) {
                     FarmerResult plantResult = behavior.tryPlantSeed(stack, this.level, query, this);
                     if (plantResult == FarmerResult.SUCCESS) {
                         this.inv.getStackInSlot(i).shrink(1);

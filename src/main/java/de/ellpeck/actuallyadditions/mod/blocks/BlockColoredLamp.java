@@ -74,7 +74,7 @@ public class BlockColoredLamp extends BlockBase {
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
 
-        if (StackUtil.isValid(stack) && stack.getItem() instanceof DyeItem) {
+        if (!stack.isEmpty() && stack.getItem() instanceof DyeItem) {
             DyeColor color = DyeColor.getColor(stack);
             if (color == null) {
                 return ItemInteractionResult.FAIL;

@@ -122,11 +122,6 @@ public class ActuallyAdditionsClient {
         ItemBlockRenderTypes.setRenderLayer(InitFluids.EMPOWERED_OIL.get(), RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(InitFluids.EMPOWERED_OIL.getFlowing(), RenderType.translucent());
 
-        ItemBlockRenderTypes.setRenderLayer(ActuallyBlocks.CANOLA.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(ActuallyBlocks.RICE.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(ActuallyBlocks.FLAX.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(ActuallyBlocks.COFFEE.get(), RenderType.cutout());
-
         ItemBlockRenderTypes.setRenderLayer(ActuallyBlocks.GREENHOUSE_GLASS.get(), RenderType.cutout());
     }
 

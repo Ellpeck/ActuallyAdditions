@@ -167,7 +167,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     }
 
     public void storeCoffee() {
-        if (StackUtil.isValid(this.inv.getStackInSlot(SLOT_COFFEE_BEANS)) && this.inv.getStackInSlot(SLOT_COFFEE_BEANS).is(ActuallyTags.Items.COFFEE_BEANS)) {
+        if (!this.inv.getStackInSlot(SLOT_COFFEE_BEANS).isEmpty() && this.inv.getStackInSlot(SLOT_COFFEE_BEANS).is(ActuallyTags.Items.COFFEE_BEANS)) {
             int toAdd = 2;
             if (toAdd <= COFFEE_CACHE_MAX_AMOUNT - this.coffeeCacheAmount) {
                 this.inv.setStackInSlot(SLOT_COFFEE_BEANS, StackUtil.shrink(this.inv.getStackInSlot(SLOT_COFFEE_BEANS), 1));
@@ -194,7 +194,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
                     this.brewTime = 0;
                     ItemStack output = new ItemStack(ActuallyItems.COFFEE_CUP.get());
                     for (int i = 3; i < this.inv.getSlots(); i++) {
-                        if (StackUtil.isValid(this.inv.getStackInSlot(i))) {
+                        if (!this.inv.getStackInSlot(i).isEmpty()) {
                             RecipeHolder<CoffeeIngredientRecipe> recipeHolder = ItemCoffee.getIngredientRecipeFromStack(this.inv.getStackInSlot(i));
                             if (recipeHolder != null) {
                                 if (recipeHolder.value().effect(output)) {

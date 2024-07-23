@@ -78,7 +78,7 @@ public class TileEntityDropper extends TileEntityInventoryBase implements MenuPr
 
     private void doWork() {
         ItemStack theoreticalRemove = this.removeFromInventory(false);
-        if (StackUtil.isValid(theoreticalRemove)) {
+        if (!theoreticalRemove.isEmpty()) {
             BlockState state = this.level.getBlockState(this.worldPosition);
             ItemStack drop = theoreticalRemove.copy();
             drop.setCount(1);
@@ -89,7 +89,7 @@ public class TileEntityDropper extends TileEntityInventoryBase implements MenuPr
 
     public ItemStack removeFromInventory(boolean actuallyDo) {
         for (int i = 0; i < this.inv.getSlots(); i++) {
-            if (StackUtil.isValid(this.inv.getStackInSlot(i))) {
+            if (!this.inv.getStackInSlot(i).isEmpty()) {
                 ItemStack slot = this.inv.getStackInSlot(i).copy();
                 if (actuallyDo) {
                     this.inv.setStackInSlot(i, StackUtil.shrink(this.inv.getStackInSlot(i), 1));

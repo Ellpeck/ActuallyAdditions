@@ -109,6 +109,12 @@ public class ActuallyComponents {
 					.networkSynchronized(LastXY.STREAM_CODEC)
 					.build());
 
+	public static final Supplier<DataComponentType<Integer>> SLOT = DATA_COMPONENT_TYPES.register("slot", () ->
+			DataComponentType.<Integer>builder()
+					.persistent(Codec.INT)
+					.networkSynchronized(ByteBufCodecs.INT)
+					.build());
+
 
 	/*
 	 * This is a supplier for an attachment type that can be used to attach an energy storage to an item.

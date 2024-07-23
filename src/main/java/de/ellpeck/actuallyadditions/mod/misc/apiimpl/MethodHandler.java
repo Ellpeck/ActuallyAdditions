@@ -72,7 +72,7 @@ public class MethodHandler implements IMethodHandler {
     public boolean addRecipeEffectToStack(ItemStack stack, CoffeeIngredientRecipe ingredient) {
         boolean worked = false;
         if (ingredient != null) {
-           List<MobEffectInstance> effects = ingredient.getEffects();
+            List<MobEffectInstance> effects = ingredient.getEffects();
             if (!effects.isEmpty()) {
                 for (MobEffectInstance effect : effects) {
                     MobEffectInstance effectHas = this.getSameEffectFromStack(stack, effect);

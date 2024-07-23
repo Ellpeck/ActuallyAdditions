@@ -25,6 +25,7 @@ import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -69,7 +70,7 @@ public class DrillItem extends ItemEnergy {
     private final Multimap<Holder<Attribute>, AttributeModifier> attributes_powered = ArrayListMultimap.create();
 
     public DrillItem() {
-        super(ActuallyItems.defaultProps().durability(0).stacksTo(1), 250000, 1000);
+        super(ActuallyItems.defaultProps().durability(0).stacksTo(1).component(DataComponents.TOOL, Tiers.NETHERITE.createToolProperties(ActuallyTags.Blocks.MINEABLE_WITH_DRILL)), 250000, 1000);
         attributes_powered.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ActuallyAdditions.modLoc("drill_speed_powered"), 8.0F, AttributeModifier.Operation.ADD_VALUE));
         attributes_powered.put(Attributes.ATTACK_SPEED, new AttributeModifier(ActuallyAdditions.modLoc("drill_speed_powered"), 1.5F, AttributeModifier.Operation.ADD_VALUE));
         attributes_unpowered.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ActuallyAdditions.modLoc("drill_attack"), 0.1F, AttributeModifier.Operation.ADD_VALUE));
@@ -81,7 +82,7 @@ public class DrillItem extends ItemEnergy {
         return ACTIONS.contains(toolAction);
     }
 
-    public boolean isCorrectToolForDrops(@Nonnull BlockState pBlock) {
+/*    public boolean isCorrectToolForDrops(@Nonnull BlockState pBlock) {
         Tier tier = Tiers.NETHERITE; //Use Nettherite as the tier as it has the same harvest level as the drill
         if (TierSortingRegistry.isTierSorted(tier)) {
             return TierSortingRegistry.isCorrectTierForDrops(tier, pBlock) && pBlock.is(ActuallyTags.Blocks.MINEABLE_WITH_DRILL);
@@ -93,7 +94,7 @@ public class DrillItem extends ItemEnergy {
         } else {
             return HARVEST_LEVEL < 1 && pBlock.is(BlockTags.NEEDS_STONE_TOOL) ? false : pBlock.is(ActuallyTags.Blocks.MINEABLE_WITH_DRILL);
         }
-    }
+    }*/
 
     /**
      * Gets all of the Slots from NBT
@@ -121,7 +122,7 @@ public class DrillItem extends ItemEnergy {
     @Nonnull
     @Override
     public InteractionResult useOn(UseOnContext context) {
-		Level level = context.getLevel();
+        Level level = context.getLevel();
         Player player = context.getPlayer();
         InteractionHand hand = context.getHand();
 
@@ -134,9 +135,9 @@ public class DrillItem extends ItemEnergy {
                 if (!equip.isEmpty() && equip != stack) {
                     ItemStack toPlaceStack = equip;
 
-	                //Places the Block into the World
-	                BlockHitResult result = new BlockHitResult(context.getClickLocation(), context.getClickedFace(), context.getClickedPos(), context.isInside());
-	                return toPlaceStack.useOn(new UseOnContext(level, player, hand, toPlaceStack, result));
+                    //Places the Block into the World
+                    BlockHitResult result = new BlockHitResult(context.getClickLocation(), context.getClickedFace(), context.getClickedPos(), context.isInside());
+                    return toPlaceStack.useOn(new UseOnContext(level, player, hand, toPlaceStack, result));
                 }
             }
         }

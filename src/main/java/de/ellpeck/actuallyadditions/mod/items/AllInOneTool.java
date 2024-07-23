@@ -1,13 +1,13 @@
 package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.api.ActuallyTags;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.world.item.enchantment.Enchantment;
 import net.neoforged.neoforge.common.ItemAbilities;
 import net.neoforged.neoforge.common.ItemAbility;
 
@@ -15,9 +15,8 @@ import javax.annotation.Nonnull;
 import java.util.List;
 
 public class AllInOneTool extends DiggerItem {
-    private final Tier tier;
 
-    private static List<ItemAbility> ACTIONS = List.of(
+    private static final List<ItemAbility> ACTIONS = List.of(
         ItemAbilities.AXE_DIG,
         ItemAbilities.HOE_DIG,
         ItemAbilities.PICKAXE_DIG,
@@ -35,10 +34,8 @@ public class AllInOneTool extends DiggerItem {
                 ActuallyTags.Blocks.MINEABLE_WITH_AIO,
             new Properties()
                 .durability(tier.getUses() * 4)
-                
+                    .component(DataComponents.TOOL, tier.createToolProperties(ActuallyTags.Blocks.MINEABLE_WITH_AIO))
         );
-
-        this.tier = tier;
     }
 
     @Override

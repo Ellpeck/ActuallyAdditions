@@ -120,7 +120,7 @@ public class TileEntityFluidCollector extends TileEntityBase implements ISharing
                     if (placeable) {
                         this.tank.drainInternal(FluidType.BUCKET_VOLUME, IFluidHandler.FluidAction.EXECUTE);
                         // TODO: [port] validate this check is still valid.
-                        if (this.level.dimensionType().ultraWarm() && stack.getFluid().is(FluidTags.WATER)) {
+                        if (this.level.dimensionType().ultraWarm() && stack.is(FluidTags.WATER)) {
                             this.level.playSound(null, offsetPos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.5F, 2.6F + (this.level.random.nextFloat() - this.level.random.nextFloat()) * 0.8F);
 
                             if (this.level instanceof ServerLevel) {
