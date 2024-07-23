@@ -11,11 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.util;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.DefaultVertexFormat;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.Tesselator;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.blaze3d.vertex.VertexFormat;
+import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Axis;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.render.RenderTypes;
@@ -293,8 +289,8 @@ public final class AssetUtil {
         for (int i = 1; i < 4; i++) {
             float width = beamWidth * (i / 4.0f);
             //top
-            builder.addVertex(matrix, -width,  width,    0.0f).setColor(r, g, b, a).setUv(minU, maxV).setLight(lightmap);//.endVertex(); //TODO ?!
-            builder.addVertex(matrix,  width,  width,    0.0f).setColor(r, g, b, a).setUv(maxU, maxV).setLight(lightmap);//.endVertex();
+            builder.addVertex(matrix, -width,  width,    0.0f).setColor(r, g, b, a).setUv(minU, maxV).setLight(lightmap);
+            builder.addVertex(matrix,  width,  width,    0.0f).setColor(r, g, b, a).setUv(maxU, maxV).setLight(lightmap);
             builder.addVertex(matrix,  width,  width, -length).setColor(r, g, b, a).setUv(maxU, minV).setLight(lightmap);
             builder.addVertex(matrix, -width,  width, -length).setColor(r, g, b, a).setUv(minU, minV).setLight(lightmap);
             //bottom
@@ -363,7 +359,7 @@ public final class AssetUtil {
         Matrix4f matrix = matrixStack.last().pose();
 
         RenderSystem.setShader(GameRenderer::getPositionColorLightmapShader);
-        Tesselator.getInstance().begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR_LIGHTMAP);
+        var bufferbuilder = Tesselator.getInstance().begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR_LIGHTMAP);
 
         TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(FORGE_WHITE);
         float minU = sprite.getU0();
@@ -375,28 +371,29 @@ public final class AssetUtil {
         for (int i = 1; i < 4; i++) {
             float width = beamWidth * (i / 4.0f);
             //top
-            builder.vertex(matrix, -width, width, 0.0f).color(r, g, b, a).uv(minU, maxV).uv2(lightmap).endVertex();
-            builder.vertex(matrix, width, width, 0.0f).color(r, g, b, a).uv(maxU, maxV).uv2(lightmap).endVertex();
-            builder.vertex(matrix, width, width, -length).color(r, g, b, a).uv(maxU, minV).uv2(lightmap).endVertex();
-            builder.vertex(matrix, -width, width, -length).color(r, g, b, a).uv(minU, minV).uv2(lightmap).endVertex();
+            builder.addVertex(matrix, -width, width, 0.0f).setColor(r, g, b, a).setUv(minU, maxV).setLight(lightmap);
+            builder.addVertex(matrix, width, width, 0.0f).setColor(r, g, b, a).setUv(maxU, maxV).setLight(lightmap);
+            builder.addVertex(matrix, width, width, -length).setColor(r, g, b, a).setUv(maxU, minV).setLight(lightmap);
+            builder.addVertex(matrix, -width, width, -length).setColor(r, g, b, a).setUv(minU, minV).setLight(lightmap);
             //bottom
-            builder.vertex(matrix, -width, -width, 0.0f).color(r, g, b, a).uv(minU, maxV).uv2(lightmap).endVertex();
-            builder.vertex(matrix, -width, -width, -length).color(r, g, b, a).uv(minU, minV).uv2(lightmap).endVertex();
-            builder.vertex(matrix, width, -width, -length).color(r, g, b, a).uv(maxU, minV).uv2(lightmap).endVertex();
-            builder.vertex(matrix, width, -width, 0.0f).color(r, g, b, a).uv(maxU, maxV).uv2(lightmap).endVertex();
+            builder.addVertex(matrix, -width, -width, 0.0f).setColor(r, g, b, a).setUv(minU, maxV).setLight(lightmap);
+            builder.addVertex(matrix, -width, -width, -length).setColor(r, g, b, a).setUv(minU, minV).setLight(lightmap);
+            builder.addVertex(matrix, width, -width, -length).setColor(r, g, b, a).setUv(maxU, minV).setLight(lightmap);
+            builder.addVertex(matrix, width, -width, 0.0f).setColor(r, g, b, a).setUv(maxU, maxV).setLight(lightmap);
             //left
-            builder.vertex(matrix, -width, width, 0.0f).color(r, g, b, a).uv(maxU, maxV).uv2(lightmap).endVertex();
-            builder.vertex(matrix, -width, -width, 0.0f).color(r, g, b, a).uv(maxU, maxV).uv2(lightmap).endVertex();
-            builder.vertex(matrix, -width, -width, -length).color(r, g, b, a).uv(minU, minV).uv2(lightmap).endVertex();
-            builder.vertex(matrix, -width, width, -length).color(r, g, b, a).uv(minU, minV).uv2(lightmap).endVertex();
+            builder.addVertex(matrix, -width, width, 0.0f).setColor(r, g, b, a).setUv(maxU, maxV).setLight(lightmap);
+            builder.addVertex(matrix, -width, -width, 0.0f).setColor(r, g, b, a).setUv(maxU, maxV).setLight(lightmap);
+            builder.addVertex(matrix, -width, -width, -length).setColor(r, g, b, a).setUv(minU, minV).setLight(lightmap);
+            builder.addVertex(matrix, -width, width, -length).setColor(r, g, b, a).setUv(minU, minV).setLight(lightmap);
             //right
-            builder.vertex(matrix, width, width, 0.0f).color(r, g, b, a).uv(maxU, maxV).uv2(lightmap).endVertex();
-            builder.vertex(matrix, width, -width, 0.0f).color(r, g, b, a).uv(maxU, maxV).uv2(lightmap).endVertex();
-            builder.vertex(matrix, width, -width, -length).color(r, g, b, a).uv(minU, minV).uv2(lightmap).endVertex();
-            builder.vertex(matrix, width, width, -length).color(r, g, b, a).uv(minU, minV).uv2(lightmap).endVertex();
+            builder.addVertex(matrix, width, width, 0.0f).setColor(r, g, b, a).setUv(maxU, maxV).setLight(lightmap);
+            builder.addVertex(matrix, width, -width, 0.0f).setColor(r, g, b, a).setUv(maxU, maxV).setLight(lightmap);
+            builder.addVertex(matrix, width, -width, -length).setColor(r, g, b, a).setUv(minU, minV).setLight(lightmap);
+            builder.addVertex(matrix, width, width, -length).setColor(r, g, b, a).setUv(minU, minV).setLight(lightmap);
+            
         }
         matrixStack.popPose();
-        Tesselator.getInstance().end();
+        BufferUploader.drawWithShader(bufferbuilder.buildOrThrow());
     }
 
     
@@ -456,14 +453,13 @@ public final class AssetUtil {
                     f /= f3;
                     f1 /= f3;
                     f2 /= f3;
-                    consumer.vertex(posestack$pose.pose(), (float) (minX + x), (float) (minY + y), (float) (minZ + z))
-                            .color(red, green, blue, alpha)
-                            .normal(posestack$pose.normal(), f, f1, f2)
-                            .endVertex();
-                    consumer.vertex(posestack$pose.pose(), (float) (maxX + x), (float) (maxY + y), (float) (maxZ + z))
-                            .color(red, green, blue, alpha)
-                            .normal(posestack$pose.normal(), f, f1, f2)
-                            .endVertex();
+                    consumer.addVertex(posestack$pose.pose(), (float) (minX + x), (float) (minY + y), (float) (minZ + z))
+                            .setColor(red, green, blue, alpha)
+                            .setNormal(posestack$pose, f, f1, f2);
+                    consumer.addVertex(posestack$pose, (float) (maxX + x), (float) (maxY + y), (float) (maxZ + z))
+                            .setColor(red, green, blue, alpha)
+                            .setNormal(posestack$pose, f, f1, f2) //TODO is this correct?
+                            ;
                 }
         );
     }
