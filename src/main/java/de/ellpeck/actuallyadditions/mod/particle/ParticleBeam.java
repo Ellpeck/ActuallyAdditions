@@ -13,8 +13,10 @@ package de.ellpeck.actuallyadditions.mod.particle;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.blaze3d.vertex.VertexFormat;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -25,22 +27,18 @@ import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.util.FastColor;
+import org.jetbrains.annotations.Nullable;
 
 public class ParticleBeam extends Particle {
     public static final ParticleRenderType LASER_RENDER = new ParticleRenderType() {
 
+        @Nullable
         @Override
-        public void begin(BufferBuilder buffer, TextureManager textureManager) {
+        public BufferBuilder begin(Tesselator tesselator, TextureManager textureManager) {
             RenderSystem.disableCull();
             RenderSystem.enableBlend();
             RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE);
-        }
-
-        @Override
-        public void end(Tesselator tesselator) {
-            RenderSystem.enableCull();
-            RenderSystem.disableBlend();
-            RenderSystem.defaultBlendFunc();
+            return tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.PARTICLE);
         }
 
         @Override
@@ -52,13 +50,13 @@ public class ParticleBeam extends Particle {
     private final double endX;
     private final double endY;
     private final double endZ;
-    private final float[] color;
+    private final int color;
     private final double rotationTime;
     private final float size;
     private final float alpha;
 
     public ParticleBeam(ClientLevel world, double startX, double startY, double startZ, double endX, double endY, double endZ,
-                        float[] color, float alpha, int maxAge, double rotationTime, float size) {
+                        int color, int maxAge, double rotationTime, float size) {
         super(world, startX, startY, startZ);
         this.endX = endX;
         this.endY = endY;
@@ -67,7 +65,7 @@ public class ParticleBeam extends Particle {
         this.rotationTime = rotationTime;
         this.size = size;
         this.lifetime = maxAge;
-        this.alpha = alpha;
+        this.alpha = FastColor.ARGB32.alpha(color) / 255.0F;
     }
 
     @Override
@@ -89,26 +87,20 @@ public class ParticleBeam extends Particle {
         }
 
         @Override
-        public Particle createParticle(BeamParticleData data, ClientLevel worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-            return new ParticleBeam(worldIn, x, y, z, data.endX, data.endY, data.endZ, data.color, data.alpha, data.maxAge,
-                    data.rotationTime, data.size);
+        public Particle createParticle(BeamParticleData data, ClientLevel worldIn, double x, double y, double z,
+                                       double xSpeed, double ySpeed, double zSpeed) {
+            return new ParticleBeam(worldIn, x, y, z, data.endX(), data.endY(), data.endZ(), data.color(), data.maxAge(),
+                    data.rotationTime(), data.size());
         }
 
-        public static ParticleOptions createData(double endX, double endY, double endZ, float[] color, float alpha,
+        public static ParticleOptions createData(double endX, double endY, double endZ, int color,
                                                  int maxAge, double rotationTime, float size) {
-            return new BeamParticleData(endX, endY, endZ, color, alpha, maxAge, rotationTime, size);
+            return new BeamParticleData(endX, endY, endZ, color, maxAge, rotationTime, size);
         }
 
         public static ParticleOptions createData(double endX, double endY, double endZ, int color, float alpha,
                                                  int maxAge, double rotationTime, float size) {
-            return new BeamParticleData(endX, endY, endZ, colorFromInt(color), alpha, maxAge, rotationTime, size);
-        }
-
-        private static float[] colorFromInt(int color) {
-            float red = (float)(FastColor.ARGB32.red(color) / 255.0);
-            float green = (float)(FastColor.ARGB32.green(color) / 255.0);
-            float blue = (float)(FastColor.ARGB32.blue(color) / 255.0);
-            return new float[] {red, green, blue};
+            return new BeamParticleData(endX, endY, endZ, color, maxAge, rotationTime, size);
         }
     }
 }

@@ -264,7 +264,7 @@ public final class WorldUtil {
             BreakEvent event = new BreakEvent(level, pos, state, fake);
             NeoForge.EVENT_BUS.post(event);
             if (!event.isCanceled()) {
-                return EventHooks.doPlayerHarvestCheck(fake, state, true) ? 1F : 0F;
+                return EventHooks.doPlayerHarvestCheck(fake, state, level, pos) ? 1F : 0F;
                 //return ForgeEventFactory.fireBlockHarvesting(drops, world, pos, state, 0, 1, false, fake); //TODO what?!
             }
         }
@@ -302,8 +302,8 @@ public final class WorldUtil {
         // server sided handling
         if (!level.isClientSide) {
             // send the blockbreak event
-            int xp = CommonHooks.onBlockBreakEvent(level, ((ServerPlayer) player).gameMode.getGameModeForPlayer(), (ServerPlayer) player, pos);
-            if (xp == -1) {
+            var event = CommonHooks.fireBlockBreak(level, ((ServerPlayer) player).gameMode.getGameModeForPlayer(), (ServerPlayer) player, pos, state);
+            if (event.isCanceled()) {
                 return false;
             }
 
@@ -311,7 +311,7 @@ public final class WorldUtil {
             if (block.onDestroyedByPlayer(state, level, pos, player, true, state.getFluidState())) { // boolean is if block can be harvested, checked above
                 block.destroy(level, pos, state);
                 block.playerDestroy(level, player, pos, state, blockEntity, stack);
-                block.popExperience(((ServerLevel) level), pos, xp);
+//                block.popExperience(((ServerLevel) level), pos, xp);
             }
 
             // always send block update to client

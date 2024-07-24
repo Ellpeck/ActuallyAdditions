@@ -37,6 +37,7 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemDisplayContext;
@@ -327,13 +328,14 @@ public final class AssetUtil {
     //Thanks to feldim2425 for this.
     //I can't do rendering code. Ever.
     
-    public static void renderLaserParticle(VertexConsumer builder, Camera camera, double firstX, double firstY, double firstZ, double secondX, double secondY, double secondZ, float rotationTime, float a, float beamWidth, float[] color) {
+    public static void renderLaserParticle(VertexConsumer builder, Camera camera, double firstX, double firstY, double firstZ,
+                                           double secondX, double secondY, double secondZ, float rotationTime, float a, float beamWidth, int color) {
         Level world = Minecraft.getInstance().level;
 
         Vec3 cam = camera.getPosition();
-        float r = color[0];
-        float g = color[1];
-        float b = color[2];
+        float r = FastColor.ARGB32.red(color) / 255.0F;
+        float g = FastColor.ARGB32.green(color) / 255.0F;
+        float b = FastColor.ARGB32.blue(color) / 255.0F;
 
         Vec3 vec1 = new Vec3(firstX, firstY, firstZ);
         Vec3 vec2 = new Vec3(secondX, secondY, secondZ);

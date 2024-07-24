@@ -118,7 +118,7 @@ public class ParticleLaserItem extends Particle {
 
         @Override
         public Particle createParticle(LaserItemParticleData data, ClientLevel worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-            return new ParticleLaserItem(worldIn, x, y, z, data.stack, ySpeed, data.outputX, data.outputY, data.outputZ);
+            return new ParticleLaserItem(worldIn, x, y, z, data.stack(), ySpeed, data.outputX(), data.outputY(), data.outputZ());
         }
 
         public static ParticleOptions createData(ItemStack stack, double outputX, double outputY, double outputZ) {
