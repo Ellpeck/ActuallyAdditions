@@ -14,7 +14,6 @@ import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditio
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotOutput;
 import de.ellpeck.actuallyadditions.mod.recipe.CrusherRecipeRegistry;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityCrusher;
-import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -111,7 +110,7 @@ public class CrusherContainer extends AbstractContainerMenu {
                 return ItemStack.EMPTY;
             }
 
-            if (!StackUtil.isValid(newStack)) {
+            if (newStack.isEmpty()) {
                 theSlot.set(ItemStack.EMPTY);
             } else {
                 theSlot.setChanged();

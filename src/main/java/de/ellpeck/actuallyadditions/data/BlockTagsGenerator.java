@@ -10,6 +10,7 @@ import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.concurrent.CompletableFuture;
 
@@ -19,7 +20,7 @@ public class BlockTagsGenerator extends BlockTagsProvider {
     }
 
     @Override
-    protected void addTags(HolderLookup.Provider provider) {
+    protected void addTags(@Nonnull HolderLookup.Provider provider) {
         tag(BlockTags.WALLS).add(
             ActuallyBlocks.ETHETIC_WHITE_WALL.get(),
             ActuallyBlocks.ETHETIC_GREEN_WALL.get(),
@@ -179,6 +180,7 @@ public class BlockTagsGenerator extends BlockTagsProvider {
     /**
      * Gets a name for this provider, to use in logging.
      */
+    @Nonnull
     @Override
     public String getName() {
         return "Block Tags";

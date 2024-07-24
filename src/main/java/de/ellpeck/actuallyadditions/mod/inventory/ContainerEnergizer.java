@@ -14,7 +14,6 @@ import com.mojang.datafixers.util.Pair;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotOutput;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityEnergizer;
-import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -72,7 +71,7 @@ public class ContainerEnergizer extends AbstractContainerMenu {
 
                 @Override
                 public boolean mayPlace(ItemStack stack) {
-                    return StackUtil.isValid(stack) && stack.getItem() instanceof ArmorItem;
+                    return !stack.isEmpty() && stack.getItem() instanceof ArmorItem;
                 }
 
                 @Override
@@ -131,7 +130,7 @@ public class ContainerEnergizer extends AbstractContainerMenu {
                 return ItemStack.EMPTY;
             }
 
-            if (!StackUtil.isValid(newStack)) {
+            if (newStack.isEmpty()) {
                 theSlot.set(ItemStack.EMPTY);
             } else {
                 theSlot.setChanged();

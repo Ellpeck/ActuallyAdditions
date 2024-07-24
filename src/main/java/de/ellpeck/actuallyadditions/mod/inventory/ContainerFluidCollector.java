@@ -11,7 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.inventory;
 
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityFluidCollector;
-import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -76,7 +75,7 @@ public class ContainerFluidCollector extends AbstractContainerMenu {
                 return ItemStack.EMPTY;
             }
 
-            if (!StackUtil.isValid(newStack)) {
+            if (newStack.isEmpty()) {
                 theSlot.set(ItemStack.EMPTY);
             } else {
                 theSlot.setChanged();

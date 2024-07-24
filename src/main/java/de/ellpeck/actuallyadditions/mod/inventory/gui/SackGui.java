@@ -48,7 +48,7 @@ public class SackGui extends AAScreen<SackContainer> {
     public void init() {
         super.init();
 
-        this.filter = new FilterSettingsGui(this.container.filter, this.leftPos + 137, this.topPos + 10, true, this::addRenderableWidget, this::buttonClicked,  1);
+        this.filter = new FilterSettingsGui(this.container.getFilter(), this.leftPos + 137, this.topPos + 10, true, this::addRenderableWidget, this::buttonClicked,  1);
 
         this.buttonAutoInsert = Button.builder(
                 Component.literal("I")

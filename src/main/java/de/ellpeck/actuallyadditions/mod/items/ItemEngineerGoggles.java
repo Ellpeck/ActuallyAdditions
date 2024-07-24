@@ -13,7 +13,6 @@ package de.ellpeck.actuallyadditions.mod.items;
 import de.ellpeck.actuallyadditions.api.misc.IGoggles;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemArmorAA;
 import de.ellpeck.actuallyadditions.mod.material.ArmorMaterials;
-import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import io.netty.util.internal.ConcurrentSet;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.Entity;
@@ -46,7 +45,7 @@ public class ItemEngineerGoggles extends ItemArmorAA implements IGoggles {
 
     public static boolean isWearing(Player player) {
         ItemStack face = player.getInventory().armor.get(3);
-        return StackUtil.isValid(face) && face.getItem() instanceof IGoggles;
+        return !face.isEmpty() && face.getItem() instanceof IGoggles;
     }
 
     

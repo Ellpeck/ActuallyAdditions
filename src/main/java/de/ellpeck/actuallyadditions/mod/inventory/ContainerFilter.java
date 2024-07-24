@@ -14,7 +14,6 @@ import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotFilter;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotImmovable;
 import de.ellpeck.actuallyadditions.mod.items.DrillItem;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
-import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -91,7 +90,7 @@ public class ContainerFilter extends AbstractContainerMenu {
                 return ItemStack.EMPTY;
             }
 
-            if (!StackUtil.isValid(newStack)) {
+            if (newStack.isEmpty()) {
                 theSlot.set(ItemStack.EMPTY);
             } else {
                 theSlot.setChanged();

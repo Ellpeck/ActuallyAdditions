@@ -14,7 +14,6 @@ import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditio
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotOutput;
 import de.ellpeck.actuallyadditions.mod.items.ItemSolidifiedExperience;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityXPSolidifier;
-import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -22,6 +21,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 
 public class ContainerXPSolidifier extends AbstractContainerMenu {
@@ -49,8 +49,9 @@ public class ContainerXPSolidifier extends AbstractContainerMenu {
         }
     }
 
+    @Nonnull
     @Override
-    public ItemStack quickMoveStack(Player player, int slot) {
+    public ItemStack quickMoveStack(@Nonnull Player player, int slot) {
         int inventoryStart = 2;
         int inventoryEnd = inventoryStart + 26;
         int hotbarStart = inventoryEnd + 1;
@@ -79,7 +80,7 @@ public class ContainerXPSolidifier extends AbstractContainerMenu {
                 return ItemStack.EMPTY;
             }
 
-            if (!StackUtil.isValid(newStack)) {
+            if (newStack.isEmpty()) {
                 theSlot.set(ItemStack.EMPTY);
             } else {
                 theSlot.setChanged();
@@ -96,7 +97,7 @@ public class ContainerXPSolidifier extends AbstractContainerMenu {
     }
 
     @Override
-    public boolean stillValid(Player player) {
+    public boolean stillValid(@Nonnull Player player) {
         return this.solidifier.canPlayerUse(player);
     }
 }
