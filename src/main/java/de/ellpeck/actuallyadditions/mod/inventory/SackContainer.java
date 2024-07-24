@@ -31,7 +31,7 @@ import java.util.UUID;
 
 public class SackContainer extends AbstractContainerMenu implements IButtonReactor {
 
-    public final FilterSettings filter = new FilterSettings(4, false,false, false, false);
+    private final FilterSettings filter;
     private final ItemStackHandlerAA bagInventory;
     private final Inventory inventory;
     public boolean autoInsert;
@@ -40,20 +40,22 @@ public class SackContainer extends AbstractContainerMenu implements IButtonReact
     public static final int SIZE = 28;
 
     public static SackContainer fromNetwork(int windowId, Inventory inv, FriendlyByteBuf data) {
-        return new SackContainer(windowId, inv, data.readUUID(), new ItemStackHandlerAA(28));
+        return new SackContainer(windowId, inv, new ItemStackHandlerAA(28), new FilterSettings(4, false, false, false, false));
     }
 
-    public SackContainer(int windowId, Inventory playerInventory, UUID uuid, ItemStackHandlerAA handler) {
+    public SackContainer(int windowId, Inventory playerInventory, ItemStackHandlerAA handler, FilterSettings filterIn) {
         super(ActuallyContainers.SACK_CONTAINER.get(), windowId);
 
         this.inventory = playerInventory;
         this.bagInventory = handler;
+        this.filter = filterIn;
 
+        // Filter slots.
         for (int row = 0; row < 4; row++) {
             this.addSlot(new SlotFilter(this.filter, row, 155, 10 + row * 18));
         }
 
-        // Sack inventory
+        // Sack inventory.
         for (int row = 0; row < 4; row++) {
             for (int col = 0; col < 7; col++) {
                 this.addSlot(new SlotItemHandlerUnconditioned(this.bagInventory, col + row * 7, 10 + col * 18, 10 + row * 18) {
@@ -65,14 +67,14 @@ public class SackContainer extends AbstractContainerMenu implements IButtonReact
             }
         }
 
-        // Player Inventory
+        // Player Inventory.
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 9; col++) {
                 this.addSlot(new Slot(playerInventory, col + row * 9 + 9, 8 + col * 18, 94 + row * 18));
             }
         }
 
-        // Player Hotbar
+        // Player Hotbar.
         for (int i = 0; i < 9; i++) {
             if (i == playerInventory.selected) {
                 this.addSlot(new SlotImmovable(playerInventory, i, 8 + i * 18, 152));
@@ -80,17 +82,9 @@ public class SackContainer extends AbstractContainerMenu implements IButtonReact
                 this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 152));
             }
         }
-
-        ItemStack stack = playerInventory.getSelected();
-        if (!stack.isEmpty() && stack.getItem() instanceof Sack) {
-//            if (stack.hasTag()) { TODO: IMPORTANT! RE_ENABLE FILTER READ
-//                CompoundTag compound = stack.getOrCreateTag();
-//                this.filter.readFromNBT(playerInventory.player.registryAccess(), compound, "Filter");
-//                this.autoInsert = compound.getBoolean("AutoInsert");
-//            }
-        }
     }
 
+    @Nonnull
     @Override
     public ItemStack quickMoveStack(@Nonnull Player player, int slot) {
         int inventoryStart = this.bagInventory.getSlots() + 4;

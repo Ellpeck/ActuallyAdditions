@@ -113,22 +113,22 @@ public class FilterSettings {
     }
 
     public void writeToNBT(HolderLookup.Provider provider, CompoundTag tag, String name) {
-//        CompoundTag compound = new CompoundTag(); TODO: IMPORTANT! FIX THE FILTER SETTINGS!!!
-//        compound.putBoolean("Whitelist", this.isWhitelist);
-//        compound.putBoolean("Mod", this.respectMod);
-//        compound.putBoolean("Damage", this.matchDamage);
-//        compound.putBoolean("NBT", this.matchNBT);
-//        compound.put("Items", filterInventory.serializeNBT());
-//        tag.put(name, compound);
+        CompoundTag compound = new CompoundTag();
+        compound.putBoolean("Whitelist", this.isWhitelist);
+        compound.putBoolean("Mod", this.respectMod);
+        compound.putBoolean("Damage", this.matchDamage);
+        compound.putBoolean("NBT", this.matchNBT);
+        compound.put("Items", filterInventory.serializeNBT(provider));
+        tag.put(name, compound);
     }
 
     public void readFromNBT(HolderLookup.Provider provider, CompoundTag tag, String name) {
-//        CompoundTag compound = tag.getCompound(name);
-//        this.isWhitelist = compound.getBoolean("Whitelist");
-//        this.respectMod = compound.getBoolean("Mod");
-//        this.matchDamage = compound.getBoolean("Damage");
-//        this.matchNBT = compound.getBoolean("NBT");
-//        this.filterInventory.deserializeNBT(compound.getCompound("Items"));
+        CompoundTag compound = tag.getCompound(name);
+        this.isWhitelist = compound.getBoolean("Whitelist");
+        this.respectMod = compound.getBoolean("Mod");
+        this.matchDamage = compound.getBoolean("Damage");
+        this.matchNBT = compound.getBoolean("NBT");
+        this.filterInventory.deserializeNBT(provider, compound.getCompound("Items"));
     }
 
     public boolean needsUpdateSend() {

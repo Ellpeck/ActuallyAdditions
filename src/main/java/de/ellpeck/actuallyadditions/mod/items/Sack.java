@@ -109,7 +109,7 @@ public class Sack extends ItemBase {
 
 
                 player.openMenu(new SimpleMenuProvider((id, inv, entity) ->
-                        new SackContainer(id, inv, uuid, data.getSpecialHandler()), sackStack.getHoverName()), (buffer -> buffer.writeUUID(uuid)));
+                        new SackContainer(id, inv, data.getSpecialHandler(), data.getFilter()), sackStack.getHoverName()), (buffer -> buffer.writeUUID(uuid)));
             } else
                 player.openMenu(new SimpleMenuProvider((id, inv, entity) -> new VoidSackContainer(id, inv), sackStack.getHoverName()));
         }

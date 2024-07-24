@@ -44,6 +44,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.Tiers;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
@@ -190,14 +191,10 @@ public class DrillItem extends ItemEnergy {
 
     @Nonnull
     @Override
-    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(@Nonnull EquipmentSlot slot, @Nonnull ItemStack stack) {
-        if (slot == EquipmentSlot.MAINHAND) {
+    public ItemAttributeModifiers getDefaultAttributeModifiers(@Nonnull ItemStack stack) {
             return this.getEnergyStored(stack) >= ENERGY_USE
                     ? this.attributes_powered
                     : this.attributes_unpowered;
-        }
-        else
-            return super.getDefaultAttributeModifiers(slot);
     }
 
 
