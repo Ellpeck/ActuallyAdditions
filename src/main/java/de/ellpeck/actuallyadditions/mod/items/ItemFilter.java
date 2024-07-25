@@ -23,7 +23,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 
-import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public class ItemFilter extends ItemBase {
@@ -43,11 +43,11 @@ public class ItemFilter extends ItemBase {
 
     
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable TooltipContext pContext, List<Component> tooltip, TooltipFlag flagIn) {
+    public void appendHoverText(ItemStack stack, @Nonnull TooltipContext pContext, List<Component> tooltip, TooltipFlag flagIn) {
         super.appendHoverText(stack, pContext, tooltip, flagIn);
 
         ItemStackHandlerAA inv = new ItemStackHandlerAA(ContainerFilter.SLOT_AMOUNT);
-        DrillItem.loadSlotsFromNBT(inv, stack);
+        DrillItem.loadSlotsFromNBT(inv, stack, pContext.registries());
         for (int i = 0; i < inv.getSlots(); i++) {
             ItemStack slot = inv.getStackInSlot(i);
             if (StackUtil.isValid(slot)) {

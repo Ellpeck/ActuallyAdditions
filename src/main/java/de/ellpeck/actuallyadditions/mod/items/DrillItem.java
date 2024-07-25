@@ -10,41 +10,35 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Multimap;
 import de.ellpeck.actuallyadditions.api.ActuallyTags;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
+import de.ellpeck.actuallyadditions.mod.components.ActuallyComponents;
 import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerDrill;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityInventoryBase;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.SimpleMenuProvider;
-import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
+import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
@@ -67,15 +61,25 @@ public class DrillItem extends ItemEnergy {
     private static final int ENERGY_USE = 100;
     private static final List<ItemAbility> ACTIONS = List.of(ItemAbilities.SHOVEL_DIG, ItemAbilities.PICKAXE_DIG);
 
-    private final Multimap<Holder<Attribute>, AttributeModifier> attributes_unpowered = ArrayListMultimap.create();
-    private final Multimap<Holder<Attribute>, AttributeModifier> attributes_powered = ArrayListMultimap.create();
+    private final ItemAttributeModifiers attributes_unpowered;
+    private final ItemAttributeModifiers attributes_powered;
 
     public DrillItem() {
-        super(ActuallyItems.defaultProps().durability(0).stacksTo(1).component(DataComponents.TOOL, Tiers.NETHERITE.createToolProperties(ActuallyTags.Blocks.MINEABLE_WITH_DRILL)), 250000, 1000);
-        attributes_powered.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ActuallyAdditions.modLoc("drill_speed_powered"), 8.0F, AttributeModifier.Operation.ADD_VALUE));
-        attributes_powered.put(Attributes.ATTACK_SPEED, new AttributeModifier(ActuallyAdditions.modLoc("drill_speed_powered"), 1.5F, AttributeModifier.Operation.ADD_VALUE));
-        attributes_unpowered.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ActuallyAdditions.modLoc("drill_attack"), 0.1F, AttributeModifier.Operation.ADD_VALUE));
-        attributes_unpowered.put(Attributes.ATTACK_SPEED, new AttributeModifier(ActuallyAdditions.modLoc("drill_speed"), 1.5F, AttributeModifier.Operation.ADD_VALUE));
+        super(ActuallyItems.defaultProps()
+                .durability(0)
+                .stacksTo(1)
+                .component(DataComponents.TOOL, Tiers.NETHERITE.createToolProperties(ActuallyTags.Blocks.MINEABLE_WITH_DRILL))
+                , 250000, 1000);
+
+        attributes_unpowered = ItemAttributeModifiers.builder()
+                .add(Attributes.ATTACK_DAMAGE, new AttributeModifier(ActuallyAdditions.modLoc("drill_attack"), 0.1F, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                .add(Attributes.ATTACK_SPEED, new AttributeModifier(ActuallyAdditions.modLoc("drill_speed"), 1.5F, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                .build();
+
+        attributes_powered = ItemAttributeModifiers.builder()
+                .add(Attributes.ATTACK_DAMAGE, new AttributeModifier(ActuallyAdditions.modLoc("drill_attack"), 8.0F, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                .add(Attributes.ATTACK_SPEED, new AttributeModifier(ActuallyAdditions.modLoc("drill_speed"), 1.5F, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                .build();
     }
 
     @Override
@@ -103,8 +107,13 @@ public class DrillItem extends ItemEnergy {
      * @param stack The Drill
      */
     public static void loadSlotsFromNBT(IItemHandlerModifiable slots, ItemStack stack) {
-        CompoundTag compound = stack.getOrCreateTag();
-        TileEntityInventoryBase.loadSlots(slots, compound);
+        if (stack.has(ActuallyComponents.CONTENTS)) {
+            ItemContainerContents containerContents = stack.getOrDefault(ActuallyComponents.CONTENTS, ItemContainerContents.EMPTY);
+            int slotCount = slots.getSlots();
+            for (int i = 0; i < slotCount; i++) {
+                slots.setStackInSlot(i, i < containerContents.getSlots()? containerContents.getStackInSlot(i): ItemStack.EMPTY);
+            }
+        }
     }
 
     /**
@@ -114,10 +123,11 @@ public class DrillItem extends ItemEnergy {
      * @param stack The Drill
      */
     public static void writeSlotsToNBT(IItemHandler slots, ItemStack stack) {
-        CompoundTag compound = stack.getOrCreateTag();
-
-        TileEntityInventoryBase.saveSlots(slots, compound);
-        stack.setTag(compound);
+        List<ItemStack> stacks = new ArrayList<>();
+        for (int i = 0; i < slots.getSlots(); i++) {
+            stacks.add(slots.getStackInSlot(i));
+        }
+        stack.set(ActuallyComponents.CONTENTS, ItemContainerContents.fromItems(stacks));
     }
 
     @Nonnull

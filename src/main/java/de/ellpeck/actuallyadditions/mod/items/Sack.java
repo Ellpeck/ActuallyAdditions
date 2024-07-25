@@ -16,8 +16,6 @@ import de.ellpeck.actuallyadditions.mod.inventory.VoidSackContainer;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.sack.SackData;
 import de.ellpeck.actuallyadditions.mod.sack.SackManager;
-import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
@@ -30,11 +28,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.neoforged.neoforge.capabilities.Capabilities;
 
 import javax.annotation.Nonnull;
-import java.util.Optional;
 import java.util.UUID;
 
 public class Sack extends ItemBase {
@@ -49,7 +44,7 @@ public class Sack extends ItemBase {
     @Override
     public InteractionResult useOn(UseOnContext context) {
         ItemStack stack = context.getPlayer().getItemInHand(context.getHand());
-        if (!this.isVoid) {
+/*        if (!this.isVoid) { //TODO oh boy this is still old... needs to be converted to the new UUID system.
             Level level = context.getLevel();
             BlockPos clickedPos = context.getClickedPos();
             BlockEntity tile = level.getBlockEntity(clickedPos);
@@ -88,7 +83,7 @@ public class Sack extends ItemBase {
                 }
                 return InteractionResult.SUCCESS;
             }
-        }
+        }*/
         return InteractionResult.PASS;
     }
 
