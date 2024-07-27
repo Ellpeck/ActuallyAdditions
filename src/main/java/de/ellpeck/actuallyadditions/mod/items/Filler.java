@@ -10,13 +10,11 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
+import de.ellpeck.actuallyadditions.mod.components.ActuallyComponents;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.sounds.SoundSource;
@@ -66,14 +64,13 @@ public class Filler extends ItemEnergy {
     }
 
     private static void saveData(BlockState state, ItemStack wand) {
-        wand.getOrCreateTag().put("state", NbtUtils.writeBlockState(state));
+        wand.set(ActuallyComponents.BLOCKSTATE, state);
     }
 
     private static Optional<BlockState> loadData(ItemStack stack) {
-        if (stack.getOrCreateTag().contains("state")) {
-            return Optional.of(NbtUtils.readBlockState(BuiltInRegistries.BLOCK.asLookup(), stack.getOrCreateTag().getCompound("state")));
+        if (stack.has(ActuallyComponents.BLOCKSTATE)) {
+            return Optional.ofNullable(stack.get(ActuallyComponents.BLOCKSTATE));
         }
-
         return Optional.empty();
     }
 
@@ -90,12 +87,9 @@ public class Filler extends ItemEnergy {
                 saveData(state, stack);
                 return InteractionResult.SUCCESS;
             } else if (loadData(stack).isPresent()) {
-                CompoundTag compound = stack.getOrCreateTag();
+                if (stack.getOrDefault(ActuallyComponents.FILLER_CURRENT, BlockPos.ZERO).equals(BlockPos.ZERO)) {
 
-                if (compound.getInt("CurrX") == 0 && compound.getInt("CurrY") == 0 && compound.getInt("CurrZ") == 0) {
-                    compound.putInt("FirstX", context.getClickedPos().getX());
-                    compound.putInt("FirstY", context.getClickedPos().getY());
-                    compound.putInt("FirstZ", context.getClickedPos().getZ());
+                    stack.set(ActuallyComponents.FILLER_FIRST, new BlockPos(context.getClickedPos()));
 
                     context.getPlayer().startUsingItem(context.getHand());
                     return InteractionResult.SUCCESS;
@@ -112,19 +106,16 @@ public class Filler extends ItemEnergy {
             if (entity instanceof Player player) {
                 HitResult result = player.pick(Util.getReachDistance(player), 1f, false);
                 if (result instanceof BlockHitResult) {
-                    CompoundTag compound = stack.getOrCreateTag();
-
                     BlockPos pos = ((BlockHitResult) result).getBlockPos();
-                    compound.putInt("SecondX", pos.getX());
-                    compound.putInt("SecondY", pos.getY());
-                    compound.putInt("SecondZ", pos.getZ());
+
+                    stack.set(ActuallyComponents.FILLER_SECOND, new BlockPos(pos));
 
                     clear = false;
                 }
             }
 
             if (clear) {
-                ItemPhantomConnector.clearStorage(stack, "FirstX", "FirstY", "FirstZ");
+                ItemPhantomConnector.clearStorage(stack, ActuallyComponents.FILLER_FIRST.get(), ActuallyComponents.FILLER_SECOND.get(), ActuallyComponents.FILLER_CURRENT.get());
             }
         }
 
@@ -140,13 +131,12 @@ public class Filler extends ItemEnergy {
             boolean shouldClear = false;
 
             if (isSelected) {
-                if (entity instanceof Player player && stack.hasTag()) {
+                if (entity instanceof Player player) {
                     boolean creative = player.isCreative();
 
-                    CompoundTag compound = stack.getOrCreateTag();
-
-                    BlockPos firstPos = new BlockPos(compound.getInt("FirstX"), compound.getInt("FirstY"), compound.getInt("FirstZ"));
-                    BlockPos secondPos = new BlockPos(compound.getInt("SecondX"), compound.getInt("SecondY"), compound.getInt("SecondZ"));
+                    BlockPos firstPos = stack.getOrDefault(ActuallyComponents.FILLER_FIRST, BlockPos.ZERO);
+                    BlockPos secondPos = stack.getOrDefault(ActuallyComponents.FILLER_SECOND, BlockPos.ZERO);
+                    BlockPos currentPos = stack.getOrDefault(ActuallyComponents.FILLER_CURRENT, BlockPos.ZERO);
 
                     if (!BlockPos.ZERO.equals(firstPos) && !BlockPos.ZERO.equals(secondPos)) {
                         int energyUse = 1500;
@@ -158,9 +148,9 @@ public class Filler extends ItemEnergy {
                             int lowestY = Math.min(firstPos.getY(), secondPos.getY());
                             int lowestZ = Math.min(firstPos.getZ(), secondPos.getZ());
 
-                            int currX = compound.getInt("CurrX");
-                            int currY = compound.getInt("CurrY");
-                            int currZ = compound.getInt("CurrZ");
+                            int currX = currentPos.getX();
+                            int currY = currentPos.getY();
+                            int currZ = currentPos.getZ();
 
                             BlockPos pos = new BlockPos(lowestX + currX, lowestY + currY, lowestZ + currZ);
                             BlockState state = world.getBlockState(pos);
@@ -198,9 +188,7 @@ public class Filler extends ItemEnergy {
                             }
 
                             if (!shouldClear) {
-                                compound.putInt("CurrX", currX);
-                                compound.putInt("CurrY", currY);
-                                compound.putInt("CurrZ", currZ);
+                                stack.set(ActuallyComponents.FILLER_CURRENT, new BlockPos(currX, currY, currZ));
                             }
                         } else {
                             shouldClear = true;
@@ -212,7 +200,7 @@ public class Filler extends ItemEnergy {
             }
 
             if (shouldClear) {
-                ItemPhantomConnector.clearStorage(stack, "FirstX", "FirstY", "FirstZ", "SecondX", "SecondY", "SecondZ", "CurrX", "CurrY", "CurrZ");
+                ItemPhantomConnector.clearStorage(stack, ActuallyComponents.FILLER_FIRST.get(), ActuallyComponents.FILLER_SECOND.get(), ActuallyComponents.FILLER_CURRENT.get());
             }
         }
     }

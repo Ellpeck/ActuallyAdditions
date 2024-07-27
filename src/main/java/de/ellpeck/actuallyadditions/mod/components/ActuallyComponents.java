@@ -12,6 +12,8 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -113,6 +115,28 @@ public class ActuallyComponents {
 			DataComponentType.<Integer>builder()
 					.persistent(Codec.INT)
 					.networkSynchronized(ByteBufCodecs.INT)
+					.build());
+
+	public static final Supplier<DataComponentType<BlockState>> BLOCKSTATE = DATA_COMPONENT_TYPES.register("blockstate", () ->
+			DataComponentType.<BlockState>builder()
+					.persistent(BlockState.CODEC)
+					.networkSynchronized(ByteBufCodecs.idMapper(Block.BLOCK_STATE_REGISTRY))
+					.build());
+
+	public static final Supplier<DataComponentType<BlockPos>> FILLER_FIRST = DATA_COMPONENT_TYPES.register("filler_first", () ->
+			DataComponentType.<BlockPos>builder()
+					.persistent(BlockPos.CODEC)
+					.networkSynchronized(BlockPos.STREAM_CODEC)
+					.build());
+	public static final Supplier<DataComponentType<BlockPos>> FILLER_SECOND = DATA_COMPONENT_TYPES.register("filler_second", () ->
+			DataComponentType.<BlockPos>builder()
+					.persistent(BlockPos.CODEC)
+					.networkSynchronized(BlockPos.STREAM_CODEC)
+					.build());
+	public static final Supplier<DataComponentType<BlockPos>> FILLER_CURRENT = DATA_COMPONENT_TYPES.register("filler_current", () ->
+			DataComponentType.<BlockPos>builder()
+					.persistent(BlockPos.CODEC)
+					.networkSynchronized(BlockPos.STREAM_CODEC)
 					.build());
 
 

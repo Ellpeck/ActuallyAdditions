@@ -42,7 +42,7 @@ public class ItemBattery extends ItemEnergy {
     @Override
     public void inventoryTick(@Nonnull ItemStack stack, Level world, @Nonnull Entity entity, int itemSlot, boolean isSelected) {
         if (!world.isClientSide && entity instanceof Player player && ItemUtil.isEnabled(stack) && !isSelected) {
-	        for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
+            for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
                 ItemStack slot = player.getInventory().getItem(i);
                 if (!slot.isEmpty() && slot.getCount() == 1) {
                     Optional<IEnergyStorage> energy = Optional.ofNullable(slot.getCapability(Capabilities.EnergyStorage.ITEM));
