@@ -7,6 +7,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.items.IItemHandler;
 
 import javax.annotation.Nonnull;
@@ -29,5 +30,10 @@ public class CapHelper {
     @Nonnull
     public static Optional<IItemHandler> getItemHandler(ItemStack stack) {
         return Optional.ofNullable(stack.getCapability(Capabilities.ItemHandler.ITEM));
+    }
+
+    @Nonnull
+    public static Optional<IEnergyStorage> getEnergyStorage(@Nonnull ItemStack stack) {
+        return Optional.ofNullable(stack.getCapability(Capabilities.EnergyStorage.ITEM));
     }
 }

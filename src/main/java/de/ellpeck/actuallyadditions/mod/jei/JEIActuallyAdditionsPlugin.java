@@ -12,18 +12,12 @@ package de.ellpeck.actuallyadditions.mod.jei;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
-import de.ellpeck.actuallyadditions.mod.crafting.ActuallyRecipes;
-import de.ellpeck.actuallyadditions.mod.crafting.CoffeeIngredientRecipe;
-import de.ellpeck.actuallyadditions.mod.crafting.CrushingRecipe;
-import de.ellpeck.actuallyadditions.mod.crafting.EmpowererRecipe;
-import de.ellpeck.actuallyadditions.mod.crafting.FermentingRecipe;
-import de.ellpeck.actuallyadditions.mod.crafting.LaserRecipe;
-import de.ellpeck.actuallyadditions.mod.crafting.MiningLensRecipe;
-import de.ellpeck.actuallyadditions.mod.crafting.PressingRecipe;
+import de.ellpeck.actuallyadditions.mod.crafting.*;
 import de.ellpeck.actuallyadditions.mod.inventory.gui.CrusherScreen;
 import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiCoffeeMachine;
 import de.ellpeck.actuallyadditions.mod.inventory.gui.GuiFurnaceDouble;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
+import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
 import de.ellpeck.actuallyadditions.mod.jei.coffee.CoffeeMachineCategory;
 import de.ellpeck.actuallyadditions.mod.jei.crusher.CrusherCategory;
 import de.ellpeck.actuallyadditions.mod.jei.empowerer.EmpowererRecipeCategory;
@@ -31,20 +25,21 @@ import de.ellpeck.actuallyadditions.mod.jei.fermenting.FermentingCategory;
 import de.ellpeck.actuallyadditions.mod.jei.laser.LaserRecipeCategory;
 import de.ellpeck.actuallyadditions.mod.jei.lens.MiningLensRecipeCategory;
 import de.ellpeck.actuallyadditions.mod.jei.pressing.PressingCategory;
+import de.ellpeck.actuallyadditions.mod.util.CapHelper;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.RecipeTypes;
 import mezz.jei.api.helpers.IJeiHelpers;
 import mezz.jei.api.recipe.RecipeType;
-import mezz.jei.api.registration.IGuiHandlerRegistration;
-import mezz.jei.api.registration.IRecipeCatalystRegistration;
-import mezz.jei.api.registration.IRecipeCategoryRegistration;
-import mezz.jei.api.registration.IRecipeRegistration;
+import mezz.jei.api.registration.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
+
+import javax.annotation.Nonnull;
+import java.util.Optional;
 
 @JeiPlugin
 public class JEIActuallyAdditionsPlugin implements IModPlugin {
@@ -62,13 +57,20 @@ public class JEIActuallyAdditionsPlugin implements IModPlugin {
     public static final RecipeType<CrushingRecipe> CRUSHING = RecipeType.create(ActuallyAdditions.MODID, "crushing", CrushingRecipe.class);
     public static final RecipeType<MiningLensRecipe> MINING_LENS = RecipeType.create(ActuallyAdditions.MODID, "mining_lens", MiningLensRecipe.class);
 
-//    @Override TODO: See if this is still needed
-//    public void registerItemSubtypes(@Nonnull ISubtypeRegistration reg) {
-//        ActuallyItems.ITEMS.getEntries().forEach(entry -> {
-//            if (entry.get() instanceof ItemEnergy)
-//                reg.useNbtForSubtypes(entry.get());
-//        });
-//    }
+    @Override
+    public void registerItemSubtypes(@Nonnull ISubtypeRegistration reg) {
+        ActuallyItems.ITEMS.getEntries().forEach(entry -> {
+            if (entry.get() instanceof ItemEnergy)
+                reg.registerSubtypeInterpreter(entry.get(),
+                (ingredient, context) -> CapHelper.getEnergyStorage(ingredient).flatMap(storage -> {
+                    if (storage.getEnergyStored() == storage.getMaxEnergyStored()) {
+                        return Optional.of("charged");
+                    } else {
+                        return Optional.of("uncharged");
+                    }
+                }).orElse("uncharged"));
+        });
+    }
 
     @Override
     public void registerCategories(IRecipeCategoryRegistration registry) {
