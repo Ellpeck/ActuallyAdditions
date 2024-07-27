@@ -13,7 +13,6 @@ package de.ellpeck.actuallyadditions.mod.items;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFilter;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
-import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -36,7 +35,6 @@ public class ItemFilter extends ItemBase {
     public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
         if (!world.isClientSide && hand == InteractionHand.MAIN_HAND) {
             player.openMenu(new SimpleMenuProvider((windowId, inv, playerEnt) -> new ContainerFilter(windowId, inv), Component.translatable("container.actuallyadditions.filter")));
-            //            player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.FILTER.ordinal(), world, (int) player.posX, (int) player.posY, (int) player.posZ);
         }
         return InteractionResultHolder.pass(player.getItemInHand(hand));
     }
@@ -47,10 +45,10 @@ public class ItemFilter extends ItemBase {
         super.appendHoverText(stack, pContext, tooltip, flagIn);
 
         ItemStackHandlerAA inv = new ItemStackHandlerAA(ContainerFilter.SLOT_AMOUNT);
-        DrillItem.loadSlotsFromNBT(inv, stack, pContext.registries());
+        DrillItem.loadSlotsFromNBT(inv, stack);
         for (int i = 0; i < inv.getSlots(); i++) {
             ItemStack slot = inv.getStackInSlot(i);
-            if (StackUtil.isValid(slot)) {
+            if (!slot.isEmpty()) {
                 tooltip.add(slot.getItem().getName(slot));
             }
         }

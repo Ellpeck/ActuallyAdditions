@@ -22,7 +22,9 @@ import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.core.Vec3i;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -33,6 +35,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -107,7 +110,6 @@ public class MethodHandler implements IMethodHandler {
     @Override
     public void addEffectProperties(ItemStack stack, MobEffectInstance effect, boolean addDur, boolean addAmp) {
         MobEffectInstance[] effects = this.getEffectsFromStack(stack);
-        stack.setTag(new CompoundTag());
         for (int i = 0; i < effects.length; i++) {
             if (effects[i].getEffect() == effect.getEffect()) {
                 effects[i] = new MobEffectInstance(effects[i].getEffect(), effects[i].getDuration() + (addDur
@@ -124,11 +126,11 @@ public class MethodHandler implements IMethodHandler {
 
     @Override
     public void addEffectToStack(ItemStack stack, MobEffectInstance effect) {
-        CompoundTag tag = stack.getOrCreateTag();
+        CompoundTag tag = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag(); //TODO move effects to a component
 
         int prevCounter = tag.getInt("Counter");
         CompoundTag compound = new CompoundTag();
-        compound.putString("ID", BuiltInRegistries.MOB_EFFECT.getKey(effect.getEffect()).toString());
+        compound.putString("ID", BuiltInRegistries.MOB_EFFECT.getKey(effect.getEffect().value()).toString());
         compound.putInt("Duration", effect.getDuration());
         compound.putInt("Amplifier", effect.getAmplifier());
 
@@ -136,19 +138,19 @@ public class MethodHandler implements IMethodHandler {
         tag.put(counter + "", compound);
         tag.putInt("Counter", counter);
 
-        stack.setTag(tag);
+        stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
     }
 
     @Override
     public MobEffectInstance[] getEffectsFromStack(ItemStack stack) {
         ArrayList<MobEffectInstance> effects = new ArrayList<>();
-        CompoundTag tag = stack.getOrCreateTag();
+        CompoundTag tag = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag(); //TODO move effects to a component
         int counter = tag.getInt("Counter");
         while (counter > 0) {
             CompoundTag compound = tag.getCompound(counter + "");
             String id =  compound.getString("ID");
             ResourceLocation effectID = id.isEmpty() ? ResourceLocation.tryParse("speed") : ResourceLocation.tryParse(id);
-            MobEffect effect = BuiltInRegistries.MOB_EFFECT.get(effectID);
+            Holder<MobEffect> effect = BuiltInRegistries.MOB_EFFECT.getHolder(effectID).orElse(null);
             if (effect == null) {
                 ActuallyAdditions.LOGGER.error("Unable to find effect with ID: {}, defaulting to speed", effectID);
                 effect = MobEffects.MOVEMENT_SPEED;
