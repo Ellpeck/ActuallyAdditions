@@ -1,7 +1,9 @@
 package de.ellpeck.actuallyadditions.mod;
 
+import de.ellpeck.actuallyadditions.mod.components.ActuallyComponents;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
+import de.ellpeck.actuallyadditions.mod.tile.CustomEnergyStorage;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
@@ -29,10 +31,10 @@ public class ActuallyTabs {
 						.filter(stack -> stack.getItem() instanceof ItemEnergy).toList();
 				charged.forEach(stack -> {
 					if(stack.getItem() instanceof ItemEnergy itemEnergy) {
-//						CustomEnergyStorage storage = new CustomEnergyStorage(itemEnergy.maxPower, itemEnergy.transfer, itemEnergy.transfer);
-//						storage.setEnergyStored(itemEnergy.maxPower);
-//						stack.setData(ActuallyComponents.ENERGY_STORAGE.get(), storage);
-//						stack.getOrCreateTag().putBoolean("Charged", true); TODO: IMPORTANT: ADD BACK THE CREATIVE ITEMS!
+						CustomEnergyStorage storage = new CustomEnergyStorage(itemEnergy.maxPower, itemEnergy.transfer, itemEnergy.transfer);
+						storage.setEnergyStored(itemEnergy.maxPower);
+						stack.set(ActuallyComponents.ENERGY_STORAGE.get(), storage);
+						stack.getOrCreateTag().putBoolean("Charged", true);
 					}
 				});
 				stacks.addAll(charged);
