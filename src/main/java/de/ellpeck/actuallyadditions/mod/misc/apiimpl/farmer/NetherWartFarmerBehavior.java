@@ -37,7 +37,7 @@ public class NetherWartFarmerBehavior implements IFarmerBehavior {
         int use = 500;
         if (farmer.getEnergy() >= use) {
             if (seed.getItem() == Items.NETHER_WART) {
-                if (world.getBlockState(pos.below()).getBlock().canSustainPlant(world.getBlockState(pos.below()), world, pos.below(), Direction.UP, (IPlantable) Items.NETHER_WART)) {
+                if (world.getBlockState(pos.below()).getBlock().canSustainPlant(world.getBlockState(pos), world, pos.below(), Direction.UP, Blocks.NETHER_WART.defaultBlockState()).isTrue()) {
                     world.setBlock(pos, Blocks.NETHER_WART.defaultBlockState(), 2);
                     farmer.extractEnergy(use);
                     return FarmerResult.SUCCESS;

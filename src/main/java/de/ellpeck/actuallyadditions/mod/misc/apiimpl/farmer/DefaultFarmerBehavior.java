@@ -38,6 +38,7 @@ import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.SpecialPlantable;
+import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.util.FakePlayerFactory;
 
 import java.util.ArrayList;
@@ -76,8 +77,17 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
     public FarmerResult tryPlantSeed(ItemStack seed, Level world, BlockPos pos, IFarmer farmer) {
         int use = 350;
         if (farmer.getEnergy() >= use * 2) {
-            if (defaultPlant(world, pos, this.getPlantablePlantFromStack(seed, world, pos), farmer, use)) {
+            var plantable = getPlantableFromStack(seed); //TODO: Should figure out what else to call in here (Farmland stuff etc)
+            if (plantable != null && plantable.canPlacePlantAtPosition(seed, world, pos, Direction.DOWN)) {
+                plantable.spawnPlantAtPosition(seed, world, pos, Direction.DOWN);
+                farmer.extractEnergy(use);
                 return FarmerResult.SUCCESS;
+            } else {
+                if (seed.is(Tags.Items.SEEDS) && seed.getItem() instanceof BlockItem blockItem) {
+                    if (defaultPlant(world, pos, blockItem.getBlock().defaultBlockState(), farmer, use)) {
+                        return FarmerResult.SUCCESS;
+                    }
+                }
             }
         }
         return FarmerResult.FAIL;
@@ -145,19 +155,6 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
     @Override
     public int getPriority() {
         return 0;
-    }
-
-    private BlockState getPlantablePlantFromStack(ItemStack stack, Level world, BlockPos pos) {
-        if (!stack.isEmpty()) {
-            SpecialPlantable plantable = this.getPlantableFromStack(stack);
-            if (plantable != null) {
-                BlockState state = plantable.getPlantType(world, pos);
-                if (state != null && state.getBlock() instanceof BonemealableBlock) {
-                    return state;
-                }
-            }
-        }
-        return null;
     }
 
     private SpecialPlantable getPlantableFromStack(ItemStack stack) {
