@@ -61,6 +61,7 @@ import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.protocol.game.ServerboundPlayerActionPacket;
 import net.minecraft.world.phys.BlockHitResult;
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
@@ -108,8 +109,11 @@ public class ActuallyAdditionsClient {
                         (stack, level, entity, tintIndex) -> "snail mail".equalsIgnoreCase(stack.getHoverName().getString()) ? 1F : 0F));
 
         setupRenderLayers();
-        
-        PatchouliPages.init();
+
+
+        if (ModList.get().isLoaded("patchouli")) {
+            PatchouliPages.init();
+        }
     }
 
     private static void setupRenderLayers() {
