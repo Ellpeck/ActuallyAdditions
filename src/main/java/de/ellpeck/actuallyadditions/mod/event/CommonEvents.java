@@ -18,6 +18,8 @@ import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData;
 import de.ellpeck.actuallyadditions.mod.data.WorldData;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
+import de.ellpeck.actuallyadditions.mod.items.DrillItem;
+import de.ellpeck.actuallyadditions.mod.items.ItemDrillUpgrade;
 import de.ellpeck.actuallyadditions.mod.items.ItemTag;
 import de.ellpeck.actuallyadditions.mod.items.Sack;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
@@ -26,6 +28,8 @@ import de.ellpeck.actuallyadditions.mod.tile.FilterSettings;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
+import de.ellpeck.actuallyadditions.mod.util.Util;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
@@ -37,7 +41,11 @@ import net.minecraft.world.entity.monster.Spider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.common.util.TriState;
 import net.neoforged.neoforge.event.AnvilUpdateEvent;
@@ -45,6 +53,7 @@ import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
 import net.neoforged.neoforge.event.entity.player.ItemEntityPickupEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+import net.neoforged.neoforge.event.level.BlockEvent;
 
 import java.util.Locale;
 
@@ -58,6 +67,51 @@ public class CommonEvents {
             event.setUseBlock(TriState.TRUE);
 //            event.setUseItem(Event.Result.DENY);
 //            event.setUseBlock(Event.Result.ALLOW);
+        }
+    }
+
+    @SubscribeEvent
+    public void onBlockBreaking(BlockEvent.BreakEvent event) { //Workaround, cant sneak right click a block with an item normally.
+        final Player player = event.getPlayer();
+        final LevelAccessor level = event.getLevel();
+        final BlockPos pos = event.getPos();
+        ItemStack stack = player.getMainHandItem();
+        if (stack.getItem() instanceof DrillItem drillItem) {
+            boolean toReturn = false;
+            int use = drillItem.getEnergyUsePerBlock(stack);
+            if (drillItem.getEnergyStored(stack) >= use) {
+                //Enchants the Drill depending on the Upgrades it has
+                if (drillItem.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SILK_TOUCH)) {
+                    ItemUtil.addEnchantment(stack, level.holderOrThrow(Enchantments.SILK_TOUCH), 1, level.registryAccess());
+                }
+                else {
+                    if (drillItem.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FORTUNE)) {
+                        ItemUtil.addEnchantment(stack, level.holderOrThrow(Enchantments.FORTUNE),
+                                drillItem.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FORTUNE_II) ? 3 : 1,
+                                level.registryAccess());
+                    }
+                }
+                //Block hit
+                HitResult ray = player.pick(Util.getReachDistance(player), 1f, false);
+                if (ray instanceof BlockHitResult trace) {
+                    //Breaks the Blocks
+                    if (!player.isShiftKeyDown() && drillItem.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.THREE_BY_THREE)) {
+                        if (drillItem.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FIVE_BY_FIVE)) {
+                            toReturn = drillItem.breakBlocks(stack, 2, player.level(), pos, trace.getDirection(), player);
+                        }
+                        else {
+                            toReturn = drillItem.breakBlocks(stack, 1, player.level(), pos, trace.getDirection(), player);
+                        }
+                    }
+                    else {
+                        toReturn = drillItem.breakBlocks(stack, 0, player.level(), pos, trace.getDirection(), player);
+                    }
+
+                    //Removes Enchantments added above
+                    ItemUtil.removeEnchantment(stack, level.holderOrThrow(Enchantments.SILK_TOUCH), level.registryAccess());
+                    ItemUtil.removeEnchantment(stack, level.holderOrThrow(Enchantments.FORTUNE), level.registryAccess());
+                }
+            }
         }
     }
 
