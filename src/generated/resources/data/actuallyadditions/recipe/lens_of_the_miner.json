@@ -1,0 +1,42 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "actuallyadditions:black_quartz"
+    },
+    "C": {
+      "tag": "minecraft:coals"
+    },
+    "D": {
+      "tag": "c:gems/diamond"
+    },
+    "E": {
+      "tag": "c:gems/emerald"
+    },
+    "G": {
+      "tag": "c:ingots/gold"
+    },
+    "I": {
+      "tag": "c:ingots/iron"
+    },
+    "L": {
+      "item": "actuallyadditions:lens"
+    },
+    "P": {
+      "tag": "c:gems/lapis"
+    },
+    "Q": {
+      "tag": "c:gems/quartz"
+    }
+  },
+  "pattern": [
+    "DGI",
+    "CLB",
+    "QPE"
+  ],
+  "result": {
+    "count": 1,
+    "id": "actuallyadditions:lens_of_the_miner"
+  }
+}

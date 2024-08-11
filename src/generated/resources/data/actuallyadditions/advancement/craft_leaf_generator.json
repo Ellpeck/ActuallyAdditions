@@ -1,0 +1,33 @@
+{
+  "parent": "actuallyadditions:craft_coal_generator",
+  "criteria": {
+    "leaf_generator": {
+      "conditions": {
+        "items": [
+          {
+            "items": "actuallyadditions:leaf_generator"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "achievement.actuallyadditions.craftLeafGen.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "actuallyadditions:leaf_generator"
+    },
+    "title": {
+      "translate": "achievement.actuallyadditions.craftLeafGen"
+    }
+  },
+  "requirements": [
+    [
+      "leaf_generator"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

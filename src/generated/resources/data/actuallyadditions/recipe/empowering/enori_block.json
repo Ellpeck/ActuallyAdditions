@@ -1,0 +1,27 @@
+{
+  "type": "actuallyadditions:empowering",
+  "base": {
+    "item": "actuallyadditions:enori_crystal_block"
+  },
+  "color": 13421772,
+  "energy": 50000,
+  "modifiers": [
+    {
+      "tag": "c:dyes/gray"
+    },
+    {
+      "item": "minecraft:snowball"
+    },
+    {
+      "item": "minecraft:stone_button"
+    },
+    {
+      "tag": "c:cobblestones"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "actuallyadditions:empowered_enori_crystal_block"
+  },
+  "time": 500
+}

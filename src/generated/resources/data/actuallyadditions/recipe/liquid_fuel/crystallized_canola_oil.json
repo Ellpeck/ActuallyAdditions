@@ -1,0 +1,9 @@
+{
+  "type": "actuallyadditions:liquid_fuel",
+  "burn_time": 280,
+  "fuel": {
+    "amount": 50,
+    "id": "actuallyadditions:crystallized_oil"
+  },
+  "total_energy": 28000
+}

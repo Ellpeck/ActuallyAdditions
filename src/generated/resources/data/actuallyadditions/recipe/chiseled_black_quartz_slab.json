@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "Q": {
+      "item": "actuallyadditions:chiseled_black_quartz_block"
+    }
+  },
+  "pattern": [
+    "QQQ"
+  ],
+  "result": {
+    "count": 1,
+    "id": "actuallyadditions:chiseled_black_quartz_slab"
+  }
+}

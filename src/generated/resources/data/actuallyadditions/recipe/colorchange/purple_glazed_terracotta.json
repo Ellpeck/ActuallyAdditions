@@ -1,0 +1,10 @@
+{
+  "type": "actuallyadditions:color_change",
+  "ingredient": {
+    "item": "minecraft:cyan_glazed_terracotta"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:purple_glazed_terracotta"
+  }
+}

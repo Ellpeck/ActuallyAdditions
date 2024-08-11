@@ -1,11 +1,11 @@
-// 1.20.4	2024-03-09T22:53:12.5570618	Block Tags
-8665de82dd3d3a1351ce58f78108214f359104b0 data/actuallyadditions/tags/blocks/mineable/aio.json
-f7dc293929a2176bc6e428c765f6bf49fbeccdb5 data/actuallyadditions/tags/blocks/mineable/drill.json
-19d96265c7adc1657153cf5faea40911854ac8ed data/forge/tags/blocks/ores.json
-2bcfae7c119b0b64170989e7d41b352a8d55ea43 data/forge/tags/blocks/ores/black_quartz.json
-2bcfae7c119b0b64170989e7d41b352a8d55ea43 data/forge/tags/blocks/ores_in_ground/stone.json
-6c9a3c952d8fad5bfd8a5ab0b76aeb0b930d1db9 data/forge/tags/blocks/storage_blocks/black_quartz.json
-8dbaf9b7bd6774bc7c01a47a72b8a7fdaee51f87 data/minecraft/tags/blocks/mineable/axe.json
-58c611cbaae2a0a5dd6f82f183b7d0f5dc2d09e6 data/minecraft/tags/blocks/mineable/pickaxe.json
-fab721a4fe7ece1d0e019ce36c4d2862f70ee53b data/minecraft/tags/blocks/needs_stone_tool.json
-f74407e86c92d0d9435d62ff0f95999f3a84c674 data/minecraft/tags/blocks/walls.json
+// 1.21.1	2024-08-11T19:30:01.8288198	Block Tags
+8665de82dd3d3a1351ce58f78108214f359104b0 data/actuallyadditions/tags/block/mineable/aio.json
+f7dc293929a2176bc6e428c765f6bf49fbeccdb5 data/actuallyadditions/tags/block/mineable/drill.json
+3ce233e27b4d7db10e2d4832602ef5b2a57f9a65 data/c/tags/block/ores.json
+2bcfae7c119b0b64170989e7d41b352a8d55ea43 data/c/tags/block/ores/black_quartz.json
+2bcfae7c119b0b64170989e7d41b352a8d55ea43 data/c/tags/block/ores_in_ground/stone.json
+6c9a3c952d8fad5bfd8a5ab0b76aeb0b930d1db9 data/c/tags/block/storage_blocks/black_quartz.json
+8dbaf9b7bd6774bc7c01a47a72b8a7fdaee51f87 data/minecraft/tags/block/mineable/axe.json
+58c611cbaae2a0a5dd6f82f183b7d0f5dc2d09e6 data/minecraft/tags/block/mineable/pickaxe.json
+fab721a4fe7ece1d0e019ce36c4d2862f70ee53b data/minecraft/tags/block/needs_stone_tool.json
+f74407e86c92d0d9435d62ff0f95999f3a84c674 data/minecraft/tags/block/walls.json

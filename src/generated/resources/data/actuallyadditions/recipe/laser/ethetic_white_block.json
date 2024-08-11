@@ -1,0 +1,11 @@
+{
+  "type": "actuallyadditions:laser",
+  "energy": 10,
+  "ingredient": {
+    "item": "minecraft:quartz_block"
+  },
+  "result": {
+    "count": 1,
+    "id": "actuallyadditions:ethetic_white_block"
+  }
+}

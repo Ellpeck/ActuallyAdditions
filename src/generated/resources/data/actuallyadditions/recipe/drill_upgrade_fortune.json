@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "I": {
+      "item": "minecraft:glowstone"
+    },
+    "R": {
+      "item": "actuallyadditions:empowered_diamatine_crystal_block"
+    },
+    "S": {
+      "tag": "c:dusts/redstone"
+    }
+  },
+  "pattern": [
+    "ISI",
+    "SRS",
+    "ISI"
+  ],
+  "result": {
+    "count": 1,
+    "id": "actuallyadditions:drill_upgrade_fortune"
+  }
+}

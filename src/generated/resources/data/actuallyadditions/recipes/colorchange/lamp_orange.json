@@ -1,9 +1,0 @@
-{
-  "type": "actuallyadditions:color_change",
-  "ingredient": {
-    "item": "actuallyadditions:lamp_white"
-  },
-  "result": {
-    "item": "actuallyadditions:lamp_orange"
-  }
-}

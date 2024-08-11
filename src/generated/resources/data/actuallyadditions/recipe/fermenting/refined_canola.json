@@ -1,0 +1,12 @@
+{
+  "type": "actuallyadditions:fermenting",
+  "ingredient": {
+    "amount": 80,
+    "id": "actuallyadditions:canola_oil"
+  },
+  "result": {
+    "amount": 80,
+    "id": "actuallyadditions:refined_canola_oil"
+  },
+  "time": 100
+}

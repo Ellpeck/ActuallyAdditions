@@ -1,0 +1,33 @@
+{
+  "parent": "actuallyadditions:craft_coal_generator",
+  "criteria": {
+    "atomic_reconstructor": {
+      "conditions": {
+        "items": [
+          {
+            "items": "actuallyadditions:atomic_reconstructor"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "achievement.actuallyadditions.craftReconstructor.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "actuallyadditions:atomic_reconstructor"
+    },
+    "title": {
+      "translate": "achievement.actuallyadditions.craftReconstructor"
+    }
+  },
+  "requirements": [
+    [
+      "atomic_reconstructor"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

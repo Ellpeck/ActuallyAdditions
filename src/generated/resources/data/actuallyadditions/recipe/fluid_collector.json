@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "minecraft:bucket"
+    },
+    "F": {
+      "item": "actuallyadditions:breaker"
+    }
+  },
+  "pattern": [
+    "BFB"
+  ],
+  "result": {
+    "count": 1,
+    "id": "actuallyadditions:fluid_collector"
+  }
+}

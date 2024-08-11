@@ -1,0 +1,33 @@
+{
+  "parent": "actuallyadditions:craft_coal_generator",
+  "criteria": {
+    "coffee_beans": {
+      "conditions": {
+        "items": [
+          {
+            "items": "actuallyadditions:coffee_beans"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "achievement.actuallyadditions.pickUpCoffee.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "actuallyadditions:coffee_beans"
+    },
+    "title": {
+      "translate": "achievement.actuallyadditions.pickUpCoffee"
+    }
+  },
+  "requirements": [
+    [
+      "coffee_beans"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

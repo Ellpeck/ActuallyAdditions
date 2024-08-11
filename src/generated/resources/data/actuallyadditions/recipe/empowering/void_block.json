@@ -1,0 +1,27 @@
+{
+  "type": "actuallyadditions:empowering",
+  "base": {
+    "item": "actuallyadditions:void_crystal_block"
+  },
+  "color": 3355443,
+  "energy": 50000,
+  "modifiers": [
+    {
+      "tag": "c:dyes/black"
+    },
+    {
+      "tag": "minecraft:coals"
+    },
+    {
+      "item": "minecraft:flint"
+    },
+    {
+      "tag": "c:stones"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "actuallyadditions:empowered_void_crystal_block"
+  },
+  "time": 500
+}

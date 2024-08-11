@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "actuallyadditions:basic_coil"
+    },
+    "D": {
+      "item": "actuallyadditions:diamatine_crystal"
+    },
+    "I": {
+      "item": "actuallyadditions:enori_crystal"
+    }
+  },
+  "pattern": [
+    "DID",
+    "ICI",
+    "DID"
+  ],
+  "result": {
+    "count": 1,
+    "id": "actuallyadditions:drill_upgrade_three_by_three"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "type": "actuallyadditions:empowering",
+  "base": {
+    "item": "actuallyadditions:diamatine_crystal_block"
+  },
+  "color": 6522834,
+  "energy": 50000,
+  "modifiers": [
+    {
+      "tag": "c:dyes/light_blue"
+    },
+    {
+      "item": "minecraft:clay_ball"
+    },
+    {
+      "item": "minecraft:clay_ball"
+    },
+    {
+      "item": "minecraft:clay"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "actuallyadditions:empowered_diamatine_crystal_block"
+  },
+  "time": 500
+}

@@ -1,0 +1,10 @@
+{
+  "type": "actuallyadditions:color_change",
+  "ingredient": {
+    "item": "minecraft:light_gray_stained_glass"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:cyan_stained_glass"
+  }
+}

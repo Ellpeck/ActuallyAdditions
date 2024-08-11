@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "actuallyadditions:advanced_coil"
+    },
+    "C": {
+      "item": "actuallyadditions:crusher"
+    },
+    "I": {
+      "item": "actuallyadditions:iron_casing"
+    },
+    "S": {
+      "tag": "c:cobblestones"
+    }
+  },
+  "pattern": [
+    "SAS",
+    "CIC",
+    "SAS"
+  ],
+  "result": {
+    "count": 1,
+    "id": "actuallyadditions:crusher_double"
+  }
+}

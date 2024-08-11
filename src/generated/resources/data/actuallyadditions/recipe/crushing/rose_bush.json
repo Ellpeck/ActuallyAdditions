@@ -1,0 +1,18 @@
+{
+  "type": "actuallyadditions:crushing",
+  "ingredient": {
+    "item": "minecraft:rose_bush"
+  },
+  "result": [
+    {
+      "result": {
+        "count": 4,
+        "id": "minecraft:red_dye"
+      }
+    },
+    {
+      "chance": 0.0,
+      "result": {}
+    }
+  ]
+}

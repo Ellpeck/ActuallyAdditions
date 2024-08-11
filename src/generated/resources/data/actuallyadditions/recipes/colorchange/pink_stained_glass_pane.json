@@ -1,9 +1,0 @@
-{
-  "type": "actuallyadditions:color_change",
-  "ingredient": {
-    "item": "minecraft:lime_stained_glass_pane"
-  },
-  "result": {
-    "item": "minecraft:pink_stained_glass_pane"
-  }
-}

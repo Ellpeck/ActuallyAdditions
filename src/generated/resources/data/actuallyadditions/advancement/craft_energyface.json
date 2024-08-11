@@ -1,0 +1,33 @@
+{
+  "parent": "actuallyadditions:craft_phantom_face",
+  "criteria": {
+    "energyface": {
+      "conditions": {
+        "items": [
+          {
+            "items": "actuallyadditions:phantom_energyface"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "achievement.actuallyadditions.craftEnergyface.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "actuallyadditions:phantom_energyface"
+    },
+    "title": {
+      "translate": "achievement.actuallyadditions.craftEnergyface"
+    }
+  },
+  "requirements": [
+    [
+      "energyface"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

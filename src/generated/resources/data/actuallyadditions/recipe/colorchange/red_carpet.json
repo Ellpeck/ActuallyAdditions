@@ -1,0 +1,10 @@
+{
+  "type": "actuallyadditions:color_change",
+  "ingredient": {
+    "item": "minecraft:green_carpet"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:red_carpet"
+  }
+}

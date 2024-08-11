@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "tag": "c:cobblestones"
+    },
+    "V": {
+      "item": "actuallyadditions:void_crystal"
+    },
+    "X": {
+      "item": "actuallyadditions:basic_coil"
+    }
+  },
+  "pattern": [
+    "CCC",
+    "CXV",
+    "CCC"
+  ],
+  "result": {
+    "count": 1,
+    "id": "actuallyadditions:breaker"
+  }
+}

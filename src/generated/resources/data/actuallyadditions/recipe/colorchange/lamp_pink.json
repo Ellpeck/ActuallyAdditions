@@ -1,0 +1,10 @@
+{
+  "type": "actuallyadditions:color_change",
+  "ingredient": {
+    "item": "actuallyadditions:lamp_lime"
+  },
+  "result": {
+    "count": 1,
+    "id": "actuallyadditions:lamp_pink"
+  }
+}

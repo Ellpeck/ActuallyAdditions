@@ -1,0 +1,33 @@
+{
+  "parent": "actuallyadditions:pickup_coffee",
+  "criteria": {
+    "coffee_machine": {
+      "conditions": {
+        "items": [
+          {
+            "items": "actuallyadditions:coffee_machine"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "achievement.actuallyadditions.craftCoffeeMachine.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "actuallyadditions:coffee_machine"
+    },
+    "title": {
+      "translate": "achievement.actuallyadditions.craftCoffeeMachine"
+    }
+  },
+  "requirements": [
+    [
+      "coffee_machine"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

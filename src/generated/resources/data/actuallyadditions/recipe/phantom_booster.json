@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "actuallyadditions:ender_casing"
+    },
+    "D": {
+      "item": "actuallyadditions:diamatine_crystal"
+    },
+    "R": {
+      "item": "actuallyadditions:restonia_crystal"
+    }
+  },
+  "pattern": [
+    "RDR",
+    "DCD",
+    "RDR"
+  ],
+  "result": {
+    "count": 1,
+    "id": "actuallyadditions:phantom_booster"
+  }
+}

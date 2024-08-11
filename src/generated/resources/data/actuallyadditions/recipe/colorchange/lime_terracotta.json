@@ -1,0 +1,10 @@
+{
+  "type": "actuallyadditions:color_change",
+  "ingredient": {
+    "item": "minecraft:yellow_terracotta"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:lime_terracotta"
+  }
+}

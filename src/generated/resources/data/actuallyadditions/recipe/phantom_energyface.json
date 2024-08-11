@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "I": {
+      "item": "actuallyadditions:phantom_itemface"
+    },
+    "R": {
+      "item": "actuallyadditions:empowered_restonia_crystal"
+    }
+  },
+  "pattern": [
+    " R ",
+    "RIR",
+    " R "
+  ],
+  "result": {
+    "count": 1,
+    "id": "actuallyadditions:phantom_energyface"
+  }
+}

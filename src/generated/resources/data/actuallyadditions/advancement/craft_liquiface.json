@@ -1,0 +1,33 @@
+{
+  "parent": "actuallyadditions:craft_phantom_face",
+  "criteria": {
+    "liquiface": {
+      "conditions": {
+        "items": [
+          {
+            "items": "actuallyadditions:phantom_liquiface"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "achievement.actuallyadditions.craftLiquiface.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "actuallyadditions:phantom_liquiface"
+    },
+    "title": {
+      "translate": "achievement.actuallyadditions.craftLiquiface"
+    }
+  },
+  "requirements": [
+    [
+      "liquiface"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

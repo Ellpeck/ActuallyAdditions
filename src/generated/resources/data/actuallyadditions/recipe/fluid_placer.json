@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "minecraft:bucket"
+    },
+    "P": {
+      "item": "actuallyadditions:placer"
+    }
+  },
+  "pattern": [
+    "BPB"
+  ],
+  "result": {
+    "count": 1,
+    "id": "actuallyadditions:fluid_placer"
+  }
+}

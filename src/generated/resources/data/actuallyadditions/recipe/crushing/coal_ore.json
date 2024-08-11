@@ -1,0 +1,18 @@
+{
+  "type": "actuallyadditions:crushing",
+  "ingredient": {
+    "item": "minecraft:coal_ore"
+  },
+  "result": [
+    {
+      "result": {
+        "count": 3,
+        "id": "minecraft:coal"
+      }
+    },
+    {
+      "chance": 0.0,
+      "result": {}
+    }
+  ]
+}

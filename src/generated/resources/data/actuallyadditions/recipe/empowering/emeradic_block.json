@@ -1,0 +1,27 @@
+{
+  "type": "actuallyadditions:empowering",
+  "base": {
+    "item": "actuallyadditions:emeradic_crystal_block"
+  },
+  "color": 3492376,
+  "energy": 50000,
+  "modifiers": [
+    {
+      "tag": "c:dyes/lime"
+    },
+    {
+      "item": "minecraft:tall_grass"
+    },
+    {
+      "tag": "minecraft:saplings"
+    },
+    {
+      "tag": "c:slimeballs"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "actuallyadditions:empowered_emeradic_crystal_block"
+  },
+  "time": 500
+}

@@ -1,0 +1,10 @@
+{
+  "type": "actuallyadditions:color_change",
+  "ingredient": {
+    "item": "minecraft:pink_stained_glass_pane"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:gray_stained_glass_pane"
+  }
+}

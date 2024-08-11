@@ -1,0 +1,11 @@
+{
+  "type": "actuallyadditions:mining_lens",
+  "ingredient": {
+    "tag": "c:stones"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:diamond_ore"
+  },
+  "weight": 50
+}

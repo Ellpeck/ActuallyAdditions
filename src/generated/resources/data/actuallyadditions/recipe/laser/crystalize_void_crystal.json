@@ -1,0 +1,11 @@
+{
+  "type": "actuallyadditions:laser",
+  "energy": 60,
+  "ingredient": {
+    "tag": "minecraft:coals"
+  },
+  "result": {
+    "count": 1,
+    "id": "actuallyadditions:void_crystal"
+  }
+}

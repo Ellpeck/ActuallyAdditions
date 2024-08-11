@@ -1,0 +1,16 @@
+{
+  "type": "actuallyadditions:copy_nbt_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "actuallyadditions:drills"
+    },
+    {
+      "tag": "c:dyes/white"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "actuallyadditions:drill_white"
+  }
+}

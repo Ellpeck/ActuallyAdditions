@@ -1,9 +1,0 @@
-{
-  "type": "actuallyadditions:color_change",
-  "ingredient": {
-    "item": "minecraft:cyan_dye"
-  },
-  "result": {
-    "item": "minecraft:purple_dye"
-  }
-}

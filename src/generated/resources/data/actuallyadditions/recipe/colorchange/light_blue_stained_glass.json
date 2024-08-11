@@ -1,0 +1,10 @@
+{
+  "type": "actuallyadditions:color_change",
+  "ingredient": {
+    "item": "minecraft:magenta_stained_glass"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:light_blue_stained_glass"
+  }
+}

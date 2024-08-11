@@ -1,0 +1,11 @@
+{
+  "type": "actuallyadditions:laser",
+  "energy": 5000,
+  "ingredient": {
+    "item": "actuallyadditions:lens_of_color"
+  },
+  "result": {
+    "count": 1,
+    "id": "actuallyadditions:lens_of_detonation"
+  }
+}

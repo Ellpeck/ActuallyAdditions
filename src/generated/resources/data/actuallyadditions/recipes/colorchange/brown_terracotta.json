@@ -1,9 +1,0 @@
-{
-  "type": "actuallyadditions:color_change",
-  "ingredient": {
-    "item": "minecraft:blue_terracotta"
-  },
-  "result": {
-    "item": "minecraft:brown_terracotta"
-  }
-}

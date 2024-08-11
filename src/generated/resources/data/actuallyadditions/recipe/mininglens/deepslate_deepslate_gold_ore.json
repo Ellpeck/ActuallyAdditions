@@ -1,0 +1,11 @@
+{
+  "type": "actuallyadditions:mining_lens",
+  "ingredient": {
+    "item": "minecraft:deepslate"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:deepslate_gold_ore"
+  },
+  "weight": 500
+}

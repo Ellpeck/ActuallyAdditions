@@ -1,0 +1,18 @@
+{
+  "type": "actuallyadditions:crushing",
+  "ingredient": {
+    "item": "minecraft:lily_of_the_valley"
+  },
+  "result": [
+    {
+      "result": {
+        "count": 3,
+        "id": "minecraft:white_dye"
+      }
+    },
+    {
+      "chance": 0.0,
+      "result": {}
+    }
+  ]
+}

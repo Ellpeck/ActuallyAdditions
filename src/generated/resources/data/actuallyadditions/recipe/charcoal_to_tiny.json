@@ -1,0 +1,19 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "actuallyadditions:bool_config_condition",
+      "boolConfig": "tinyCoalStuff"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:charcoal"
+    }
+  ],
+  "result": {
+    "count": 8,
+    "id": "actuallyadditions:tiny_charcoal"
+  }
+}

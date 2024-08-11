@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "tag": "c:cobblestones"
+    },
+    "P": {
+      "item": "actuallyadditions:palis_crystal"
+    },
+    "X": {
+      "item": "actuallyadditions:basic_coil"
+    }
+  },
+  "pattern": [
+    "CCC",
+    "CXP",
+    "CCC"
+  ],
+  "result": {
+    "count": 1,
+    "id": "actuallyadditions:placer"
+  }
+}

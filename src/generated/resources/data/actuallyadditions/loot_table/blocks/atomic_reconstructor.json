@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "actuallyadditions:atomic_reconstructor"
+        }
+      ],
+      "functions": [
+        {
+          "function": "minecraft:copy_components",
+          "include": [
+            "actuallyadditions:energy"
+          ],
+          "source": "block_entity"
+        },
+        {
+          "function": "minecraft:copy_components",
+          "include": [
+            "actuallyadditions:pulse_mode"
+          ],
+          "source": "block_entity"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "actuallyadditions:blocks/atomic_reconstructor"
+}

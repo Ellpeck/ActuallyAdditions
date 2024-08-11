@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "E": {
+      "item": "actuallyadditions:empowered_enori_crystal"
+    },
+    "I": {
+      "item": "actuallyadditions:iron_casing"
+    },
+    "S": {
+      "tag": "minecraft:saplings"
+    }
+  },
+  "pattern": [
+    "EIE",
+    "ESE",
+    "EIE"
+  ],
+  "result": {
+    "count": 1,
+    "id": "actuallyadditions:bio_reactor"
+  }
+}

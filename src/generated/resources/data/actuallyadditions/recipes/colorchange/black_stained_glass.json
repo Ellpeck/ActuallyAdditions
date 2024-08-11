@@ -1,9 +1,0 @@
-{
-  "type": "actuallyadditions:color_change",
-  "ingredient": {
-    "item": "minecraft:red_stained_glass"
-  },
-  "result": {
-    "item": "minecraft:black_stained_glass"
-  }
-}

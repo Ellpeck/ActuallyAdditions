@@ -1,0 +1,18 @@
+{
+  "type": "actuallyadditions:crushing",
+  "ingredient": {
+    "item": "minecraft:sugar_cane"
+  },
+  "result": [
+    {
+      "result": {
+        "count": 3,
+        "id": "minecraft:sugar"
+      }
+    },
+    {
+      "chance": 0.0,
+      "result": {}
+    }
+  ]
+}

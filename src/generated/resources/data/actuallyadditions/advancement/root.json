@@ -1,0 +1,26 @@
+{
+  "criteria": {
+    "right_click": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "background": "minecraft:textures/gui/advancements/backgrounds/stone.png",
+    "description": {
+      "translate": "achievement.actuallyadditions.openBooklet.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "actuallyadditions:booklet"
+    },
+    "title": {
+      "translate": "achievement.actuallyadditions.openBooklet"
+    }
+  },
+  "requirements": [
+    [
+      "right_click"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

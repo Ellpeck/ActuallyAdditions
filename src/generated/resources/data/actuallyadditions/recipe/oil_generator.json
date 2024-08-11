@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "actuallyadditions:canola"
+    },
+    "C": {
+      "tag": "c:cobblestones"
+    },
+    "I": {
+      "item": "actuallyadditions:iron_casing"
+    }
+  },
+  "pattern": [
+    "CIC",
+    "CAC",
+    "CIC"
+  ],
+  "result": {
+    "count": 1,
+    "id": "actuallyadditions:oil_generator"
+  }
+}

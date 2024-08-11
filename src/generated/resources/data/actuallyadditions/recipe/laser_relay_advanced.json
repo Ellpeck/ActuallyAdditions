@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "I": {
+      "item": "actuallyadditions:enori_crystal"
+    },
+    "R": {
+      "item": "actuallyadditions:laser_relay"
+    },
+    "X": {
+      "item": "actuallyadditions:restonia_crystal"
+    }
+  },
+  "pattern": [
+    " I ",
+    "XRX",
+    " I "
+  ],
+  "result": {
+    "count": 1,
+    "id": "actuallyadditions:laser_relay_advanced"
+  }
+}

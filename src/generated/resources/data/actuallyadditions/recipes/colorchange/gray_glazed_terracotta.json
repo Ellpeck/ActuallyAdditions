@@ -1,9 +1,0 @@
-{
-  "type": "actuallyadditions:color_change",
-  "ingredient": {
-    "item": "minecraft:pink_glazed_terracotta"
-  },
-  "result": {
-    "item": "minecraft:gray_glazed_terracotta"
-  }
-}

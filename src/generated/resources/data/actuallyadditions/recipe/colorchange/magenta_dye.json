@@ -1,0 +1,10 @@
+{
+  "type": "actuallyadditions:color_change",
+  "ingredient": {
+    "item": "minecraft:orange_dye"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:magenta_dye"
+  }
+}

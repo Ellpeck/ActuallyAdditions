@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "actuallyadditions:restonia_crystal"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "id": "actuallyadditions:restonia_crystal_shard"
+  }
+}

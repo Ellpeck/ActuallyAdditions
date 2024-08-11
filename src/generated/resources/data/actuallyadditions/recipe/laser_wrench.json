@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "actuallyadditions:advanced_coil"
+    },
+    "S": {
+      "item": "actuallyadditions:enori_crystal"
+    }
+  },
+  "pattern": [
+    "C  ",
+    " S ",
+    "  S"
+  ],
+  "result": {
+    "count": 1,
+    "id": "actuallyadditions:laser_wrench"
+  }
+}

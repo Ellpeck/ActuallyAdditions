@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "tag": "c:storage_blocks/redstone"
+    },
+    "C": {
+      "item": "actuallyadditions:advanced_coil"
+    },
+    "O": {
+      "tag": "c:obsidians"
+    },
+    "R": {
+      "item": "actuallyadditions:restonia_crystal"
+    }
+  },
+  "pattern": [
+    "OBO",
+    "RCR",
+    "OBO"
+  ],
+  "result": {
+    "count": 4,
+    "id": "actuallyadditions:laser_relay"
+  }
+}

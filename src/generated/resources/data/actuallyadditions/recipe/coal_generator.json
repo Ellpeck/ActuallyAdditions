@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "minecraft:coal"
+    },
+    "C": {
+      "tag": "c:cobblestones"
+    },
+    "I": {
+      "item": "actuallyadditions:iron_casing"
+    }
+  },
+  "pattern": [
+    "CIC",
+    "CAC",
+    "CIC"
+  ],
+  "result": {
+    "count": 1,
+    "id": "actuallyadditions:coal_generator"
+  }
+}

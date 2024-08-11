@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "D": {
+      "tag": "c:dusts/redstone"
+    },
+    "I": {
+      "item": "actuallyadditions:phantom_itemface"
+    },
+    "R": {
+      "item": "actuallyadditions:empowered_restonia_crystal"
+    }
+  },
+  "pattern": [
+    "DRD",
+    "RIR",
+    "DRD"
+  ],
+  "result": {
+    "count": 1,
+    "id": "actuallyadditions:phantom_redstoneface"
+  }
+}

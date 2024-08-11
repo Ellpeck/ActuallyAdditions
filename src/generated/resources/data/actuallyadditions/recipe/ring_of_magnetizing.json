@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "minecraft:lapis_lazuli"
+    },
+    "I": {
+      "item": "actuallyadditions:enori_crystal"
+    },
+    "O": {
+      "item": "actuallyadditions:ring"
+    },
+    "R": {
+      "item": "actuallyadditions:restonia_crystal"
+    }
+  },
+  "pattern": [
+    "RIB",
+    "IOI",
+    "BIR"
+  ],
+  "result": {
+    "count": 1,
+    "id": "actuallyadditions:ring_of_magnetizing"
+  }
+}

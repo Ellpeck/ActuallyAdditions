@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "E": {
+      "tag": "c:ender_pearls"
+    },
+    "S": {
+      "tag": "c:rods/wooden"
+    },
+    "Y": {
+      "item": "minecraft:ender_eye"
+    }
+  },
+  "pattern": [
+    "YE",
+    "EY",
+    "S "
+  ],
+  "result": {
+    "count": 1,
+    "id": "actuallyadditions:phantom_connector"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "type": "actuallyadditions:crushing",
+  "ingredient": {
+    "item": "minecraft:pitcher_plant"
+  },
+  "result": [
+    {
+      "result": {
+        "count": 4,
+        "id": "minecraft:cyan_dye"
+      }
+    },
+    {
+      "chance": 0.0,
+      "result": {}
+    }
+  ]
+}

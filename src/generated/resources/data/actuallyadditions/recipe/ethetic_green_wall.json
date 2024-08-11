@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "Q": {
+      "item": "actuallyadditions:ethetic_green_block"
+    }
+  },
+  "pattern": [
+    "QQQ",
+    "QQQ"
+  ],
+  "result": {
+    "count": 1,
+    "id": "actuallyadditions:ethetic_green_wall"
+  }
+}

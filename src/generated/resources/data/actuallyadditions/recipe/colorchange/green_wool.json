@@ -1,0 +1,10 @@
+{
+  "type": "actuallyadditions:color_change",
+  "ingredient": {
+    "item": "minecraft:brown_wool"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:green_wool"
+  }
+}

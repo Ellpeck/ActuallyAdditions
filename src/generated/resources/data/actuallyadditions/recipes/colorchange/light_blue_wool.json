@@ -1,9 +1,0 @@
-{
-  "type": "actuallyadditions:color_change",
-  "ingredient": {
-    "item": "minecraft:magenta_wool"
-  },
-  "result": {
-    "item": "minecraft:light_blue_wool"
-  }
-}

@@ -1,0 +1,11 @@
+{
+  "type": "actuallyadditions:laser",
+  "energy": 1000,
+  "ingredient": {
+    "tag": "c:storage_blocks/emerald"
+  },
+  "result": {
+    "count": 1,
+    "id": "actuallyadditions:emeradic_crystal_block"
+  }
+}

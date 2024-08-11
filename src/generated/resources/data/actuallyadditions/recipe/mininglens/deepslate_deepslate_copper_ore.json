@@ -1,0 +1,11 @@
+{
+  "type": "actuallyadditions:mining_lens",
+  "ingredient": {
+    "item": "minecraft:deepslate"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:deepslate_copper_ore"
+  },
+  "weight": 3000
+}

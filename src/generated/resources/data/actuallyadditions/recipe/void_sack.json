@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "actuallyadditions:travelers_sack"
+    },
+    {
+      "tag": "c:ender_pearls"
+    },
+    {
+      "tag": "c:obsidians"
+    },
+    {
+      "item": "actuallyadditions:void_crystal_block"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "actuallyadditions:void_sack"
+  }
+}

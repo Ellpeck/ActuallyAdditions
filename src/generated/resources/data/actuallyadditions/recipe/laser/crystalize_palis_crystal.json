@@ -1,0 +1,11 @@
+{
+  "type": "actuallyadditions:laser",
+  "energy": 40,
+  "ingredient": {
+    "tag": "c:gems/lapis"
+  },
+  "result": {
+    "count": 1,
+    "id": "actuallyadditions:palis_crystal"
+  }
+}

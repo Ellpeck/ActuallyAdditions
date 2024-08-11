@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "D": {
+      "tag": "c:dusts/glowstone"
+    },
+    "G": {
+      "tag": "c:ingots/gold"
+    },
+    "I": {
+      "tag": "c:ingots/iron"
+    }
+  },
+  "pattern": [
+    "IGI",
+    "GDG",
+    "IGI"
+  ],
+  "result": {
+    "count": 1,
+    "id": "actuallyadditions:ring"
+  }
+}

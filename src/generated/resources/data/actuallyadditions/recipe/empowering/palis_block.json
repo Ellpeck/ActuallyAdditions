@@ -1,0 +1,27 @@
+{
+  "type": "actuallyadditions:empowering",
+  "base": {
+    "item": "actuallyadditions:palis_crystal_block"
+  },
+  "color": 2437779,
+  "energy": 50000,
+  "modifiers": [
+    {
+      "tag": "c:dyes/cyan"
+    },
+    {
+      "item": "minecraft:prismarine_shard"
+    },
+    {
+      "item": "minecraft:prismarine_shard"
+    },
+    {
+      "item": "minecraft:prismarine_shard"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "actuallyadditions:empowered_palis_crystal_block"
+  },
+  "time": 500
+}

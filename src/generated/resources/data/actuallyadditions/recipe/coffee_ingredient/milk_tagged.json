@@ -1,0 +1,17 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:milk"
+      }
+    }
+  ],
+  "type": "actuallyadditions:coffee_ingredient",
+  "extraText": "jei.actuallyadditions.coffee.extra.milk",
+  "ingredient": {
+    "tag": "c:milk"
+  },
+  "maxAmplifier": 0
+}

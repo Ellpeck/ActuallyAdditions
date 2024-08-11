@@ -1,0 +1,27 @@
+{
+  "type": "actuallyadditions:empowering",
+  "base": {
+    "item": "actuallyadditions:restonia_crystal"
+  },
+  "color": 10365735,
+  "energy": 5000,
+  "modifiers": [
+    {
+      "tag": "c:dyes/red"
+    },
+    {
+      "item": "minecraft:nether_brick"
+    },
+    {
+      "tag": "c:dusts/redstone"
+    },
+    {
+      "item": "minecraft:brick"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "actuallyadditions:empowered_restonia_crystal"
+  },
+  "time": 50
+}

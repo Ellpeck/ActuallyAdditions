@@ -1,9 +1,0 @@
-{
-  "type": "actuallyadditions:color_change",
-  "ingredient": {
-    "item": "minecraft:black_carpet"
-  },
-  "result": {
-    "item": "minecraft:white_carpet"
-  }
-}
