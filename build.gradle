@@ -3,7 +3,7 @@ plugins {
     id 'eclipse'
     id 'idea'
     id 'maven-publish'
-    id 'net.neoforged.gradle.userdev' version '7.0.155'
+    id 'net.neoforged.gradle.userdev' version '7.0.157'
 }
 
 def buildSuffix = System.getenv('BUILD_NUMBER') ? "-b${System.getenv('BUILD_NUMBER')}" : ""
@@ -62,6 +62,14 @@ runs {
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
+// Sets up a dependency configuration called 'localRuntime'.
+// This configuration should be used instead of 'runtimeOnly' to declare
+// a dependency that will be present for runtime testing but that is
+// "optional", meaning it will not be pulled by dependents of this mod.
+configurations {
+    runtimeClasspath.extendsFrom localRuntime
+}
+
 repositories {
     maven {
         url = "https://maven.blamejared.com"
@@ -77,18 +85,18 @@ repositories {
 dependencies {
     implementation "net.neoforged:neoforge:${neo_version}"
 
-    compileOnly "mezz.jei:jei-${game_version}-common-api:${jei_version}"
-    compileOnly "mezz.jei:jei-${game_version}-neoforge-api:${jei_version}"
+    compileOnly "mezz.jei:jei-${jei_minecraft}-common-api:${jei_version}"
+    compileOnly "mezz.jei:jei-${jei_minecraft}-neoforge-api:${jei_version}"
 
-    runtimeOnly "mezz.jei:jei-${game_version}-neoforge:${jei_version}"
+    localRuntime "mezz.jei:jei-${jei_minecraft}-neoforge:${jei_version}"
 
     compileOnly "vazkii.patchouli:Patchouli:${patchouli_version}"
-//    runtimeOnly "vazkii.patchouli:Patchouli:${patchouli_version}"
+//    localRuntime "vazkii.patchouli:Patchouli:${patchouli_version}"
     compileOnly "xyz.brassgoggledcoders:PatchouliProvider:${patchouli_provider_version}"
-//    runtimeOnly "xyz.brassgoggledcoders:PatchouliProvider:${patchouli_provider_version}"
+//    localRuntime "xyz.brassgoggledcoders:PatchouliProvider:${patchouli_provider_version}"
 
-    runtimeOnly "curse.maven:jade-324717:5427817"
-    runtimeOnly "curse.maven:mekanism-268560:5433143"
+    localRuntime "curse.maven:jade-324717:5591256"
+    localRuntime "curse.maven:mekanism-268560:5574951"
 }
 
 jar {
@@ -113,7 +121,7 @@ processResources {
     inputs.property('loader', project.loader)
     inputs.property('minecraft_version_range', project.minecraft_version_range)
 
-    filesMatching(['META-INF/mods.toml'])  {
+    filesMatching(['META-INF/neoforge.mods.toml'])  {
         expand 'version': project.version, 'neo_version_range': project.neo_version_range, 'loader': project.loader, 'minecraft_version_range': project.minecraft_version_range
     }
 }
