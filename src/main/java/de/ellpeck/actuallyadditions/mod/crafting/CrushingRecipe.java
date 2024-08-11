@@ -110,7 +110,7 @@ public class CrushingRecipe implements Recipe<RecipeInput> {
     public static class Serializer implements RecipeSerializer<CrushingRecipe> {
         private static final Codec<CrushingResult> RESULT_CODEC = RecordCodecBuilder.create(
                 instance -> instance.group(
-                                ItemStack.CODEC.fieldOf("result").forGetter(result -> result.stack),
+                                ItemStack.OPTIONAL_CODEC.fieldOf("result").forGetter(result -> result.stack),
                                 Codec.FLOAT.optionalFieldOf("chance", 1.0F).forGetter(recipe -> recipe.chance)
                         )
                         .apply(instance, CrushingResult::new)
@@ -190,7 +190,7 @@ public class CrushingRecipe implements Recipe<RecipeInput> {
 
             NonNullList<CrushingResult> nonnulllist = NonNullList.withSize(i, CrushingResult.EMPTY);
             for (int j = 0; j < nonnulllist.size(); ++j) {
-                nonnulllist.set(j, new CrushingResult(ItemStack.STREAM_CODEC.decode(pBuffer), pBuffer.readFloat()));
+                nonnulllist.set(j, new CrushingResult(ItemStack.OPTIONAL_STREAM_CODEC.decode(pBuffer), pBuffer.readFloat()));
             }
 
             return new CrushingRecipe(ingredient, nonnulllist);
@@ -200,7 +200,7 @@ public class CrushingRecipe implements Recipe<RecipeInput> {
             Ingredient.CONTENTS_STREAM_CODEC.encode(pBuffer, pRecipe.input);
             pBuffer.writeVarInt(pRecipe.outputs.size());
             for (CrushingResult result : pRecipe.outputs) {
-                ItemStack.STREAM_CODEC.encode(pBuffer, result.stack);
+                ItemStack.OPTIONAL_STREAM_CODEC.encode(pBuffer, result.stack);
                 pBuffer.writeFloat(result.chance);
             }
         }
