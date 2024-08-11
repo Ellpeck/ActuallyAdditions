@@ -1,5 +1,6 @@
 package de.ellpeck.actuallyadditions.mod.gen;
 
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
@@ -17,7 +18,7 @@ import net.minecraft.world.level.levelgen.placement.PlacementModifier;
 import java.util.List;
 
 public class ActuallyPlacedFeatures {
-	public static final ResourceKey<PlacedFeature> PLACED_ORE_BLACK_QUARTZ = PlacementUtils.createKey("actuallyadditions:ore_black_quartz");
+	public static final ResourceKey<PlacedFeature> PLACED_ORE_BLACK_QUARTZ = createKey("ore_black_quartz");
 
 	public static void bootstrap(BootstrapContext<PlacedFeature> context) {
 		HolderGetter<ConfiguredFeature<?, ?>> holdergetter = context.lookup(Registries.CONFIGURED_FEATURE);
@@ -32,5 +33,9 @@ public class ActuallyPlacedFeatures {
 
 	private static List<PlacementModifier> commonOrePlacement(int count, PlacementModifier modifier) {
 		return orePlacement(CountPlacement.of(count), modifier);
+	}
+
+	private static ResourceKey<PlacedFeature> createKey(String name) {
+		return ResourceKey.create(Registries.PLACED_FEATURE, ActuallyAdditions.modLoc(name));
 	}
 }
