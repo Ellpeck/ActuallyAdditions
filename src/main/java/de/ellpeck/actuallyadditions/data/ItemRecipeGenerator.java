@@ -29,6 +29,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.item.crafting.ShapelessRecipe;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.ItemLike;
 import net.neoforged.neoforge.common.CommonHooks;
@@ -51,8 +52,8 @@ public class ItemRecipeGenerator extends RecipeProvider {
     }
 
     @Override
-    protected void buildRecipes(@Nonnull RecipeOutput output) {
-        var enchantmentLookup = CommonHooks.resolveLookup(Registries.ENCHANTMENT);
+    protected void buildRecipes(@Nonnull RecipeOutput output, HolderLookup.Provider holderLookup) {
+        HolderLookup.RegistryLookup<Enchantment> enchantmentLookup = holderLookup.lookupOrThrow(Registries.ENCHANTMENT);
         var recipeOutput = new NoAdvRecipeOutput(output);
 
         generateAOIT(recipeOutput);
