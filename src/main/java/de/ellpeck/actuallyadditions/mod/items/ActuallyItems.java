@@ -244,7 +244,8 @@ public final class ActuallyItems {
         for (DeferredHolder<Item, ? extends Item> holder : ITEMS.getEntries()) {
             if (holder.get() instanceof ItemEnergy energyItem) {
                 event.registerItem(Capabilities.EnergyStorage.ITEM, (stack, context) ->
-                        new ComponentEnergyStorage(stack, ActuallyComponents.ENERGY_STORAGE.get(), energyItem.maxPower)
+                        new ComponentEnergyStorage(stack, ActuallyComponents.ENERGY_STORAGE.get(), energyItem.maxPower, energyItem.transfer),
+                        energyItem
                 );
             }
         }
