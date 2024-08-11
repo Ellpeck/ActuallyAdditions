@@ -121,7 +121,7 @@ public class BlockStateGenerator extends BlockStateProvider {
 
         // TO BE SORTED
         getVariantBuilder(ActuallyBlocks.CANOLA.get()).partialState()
-            .with(CropBlock.AGE, 0).modelForState().modelFile(models().crop("canola_1", modLoc("block/canola_stage_1"))).addModel()
+            .with(CropBlock.AGE, 0).modelForState().modelFile(models().crop("canola_1", modLoc("block/canola_stage_1")).renderType("minecraft:cutout")).addModel()
             .partialState().with(CropBlock.AGE, 1).modelForState().modelFile(models().crop("canola_2", modLoc("block/canola_stage_2")).renderType("minecraft:cutout")).addModel()
             .partialState().with(CropBlock.AGE, 2).modelForState().modelFile(models().crop("canola_2", modLoc("block/canola_stage_2")).renderType("minecraft:cutout")).addModel()
             .partialState().with(CropBlock.AGE, 3).modelForState().modelFile(models().crop("canola_2", modLoc("block/canola_stage_2")).renderType("minecraft:cutout")).addModel()
@@ -131,7 +131,7 @@ public class BlockStateGenerator extends BlockStateProvider {
             .partialState().with(CropBlock.AGE, 7).modelForState().modelFile(models().crop("canola_4", modLoc("block/canola_stage_4")).renderType("minecraft:cutout")).addModel();
 
         getVariantBuilder(ActuallyBlocks.RICE.get()).partialState()
-            .with(CropBlock.AGE, 0).modelForState().modelFile(models().crop("rice_1", modLoc("block/rice_stage_1"))).addModel()
+            .with(CropBlock.AGE, 0).modelForState().modelFile(models().crop("rice_1", modLoc("block/rice_stage_1")).renderType("minecraft:cutout")).addModel()
             .partialState().with(CropBlock.AGE, 1).modelForState().modelFile(models().crop("rice_2", modLoc("block/rice_stage_2")).renderType("minecraft:cutout")).addModel()
             .partialState().with(CropBlock.AGE, 2).modelForState().modelFile(models().crop("rice_2", modLoc("block/rice_stage_2")).renderType("minecraft:cutout")).addModel()
             .partialState().with(CropBlock.AGE, 3).modelForState().modelFile(models().crop("rice_2", modLoc("block/rice_stage_2")).renderType("minecraft:cutout")).addModel()
@@ -141,7 +141,7 @@ public class BlockStateGenerator extends BlockStateProvider {
             .partialState().with(CropBlock.AGE, 7).modelForState().modelFile(models().crop("rice_4", modLoc("block/rice_stage_4")).renderType("minecraft:cutout")).addModel();
 
         getVariantBuilder(ActuallyBlocks.FLAX.get()).partialState()
-            .with(CropBlock.AGE, 0).modelForState().modelFile(models().crop("flax_1", modLoc("block/flax_stage_1"))).addModel()
+            .with(CropBlock.AGE, 0).modelForState().modelFile(models().crop("flax_1", modLoc("block/flax_stage_1")).renderType("minecraft:cutout")).addModel()
             .partialState().with(CropBlock.AGE, 1).modelForState().modelFile(models().crop("flax_2", modLoc("block/flax_stage_2")).renderType("minecraft:cutout")).addModel()
             .partialState().with(CropBlock.AGE, 2).modelForState().modelFile(models().crop("flax_2", modLoc("block/flax_stage_2")).renderType("minecraft:cutout")).addModel()
             .partialState().with(CropBlock.AGE, 3).modelForState().modelFile(models().crop("flax_2", modLoc("block/flax_stage_2")).renderType("minecraft:cutout")).addModel()
@@ -151,7 +151,7 @@ public class BlockStateGenerator extends BlockStateProvider {
             .partialState().with(CropBlock.AGE, 7).modelForState().modelFile(models().crop("flax_4", modLoc("block/flax_stage_4")).renderType("minecraft:cutout")).addModel();
 
         getVariantBuilder(ActuallyBlocks.COFFEE.get()).partialState()
-            .with(CropBlock.AGE, 0).modelForState().modelFile(models().crop("coffee_1", modLoc("block/coffee_stage_1"))).addModel()
+            .with(CropBlock.AGE, 0).modelForState().modelFile(models().crop("coffee_1", modLoc("block/coffee_stage_1")).renderType("minecraft:cutout")).addModel()
             .partialState().with(CropBlock.AGE, 1).modelForState().modelFile(models().crop("coffee_2", modLoc("block/coffee_stage_2")).renderType("minecraft:cutout")).addModel()
             .partialState().with(CropBlock.AGE, 2).modelForState().modelFile(models().crop("coffee_2", modLoc("block/coffee_stage_2")).renderType("minecraft:cutout")).addModel()
             .partialState().with(CropBlock.AGE, 3).modelForState().modelFile(models().crop("coffee_2", modLoc("block/coffee_stage_2")).renderType("minecraft:cutout")).addModel()
