@@ -3,7 +3,7 @@ plugins {
     id 'eclipse'
     id 'idea'
     id 'maven-publish'
-    id 'net.neoforged.gradle.userdev' version '7.0.157'
+    id 'net.neoforged.gradle.userdev' version '7.0.165'
 }
 
 def buildSuffix = System.getenv('BUILD_NUMBER') ? "-b${System.getenv('BUILD_NUMBER')}" : ""
@@ -91,12 +91,12 @@ dependencies {
     localRuntime "mezz.jei:jei-${jei_minecraft}-neoforge:${jei_version}"
 
     compileOnly "vazkii.patchouli:Patchouli:${patchouli_version}"
-//    localRuntime "vazkii.patchouli:Patchouli:${patchouli_version}"
+    localRuntime "vazkii.patchouli:Patchouli:${patchouli_version}"
     compileOnly "xyz.brassgoggledcoders:PatchouliProvider:${patchouli_provider_version}"
-//    localRuntime "xyz.brassgoggledcoders:PatchouliProvider:${patchouli_provider_version}"
+    localRuntime "xyz.brassgoggledcoders:PatchouliProvider:${patchouli_provider_version}"
 
-    localRuntime "curse.maven:jade-324717:5591256"
-    localRuntime "curse.maven:mekanism-268560:5574951"
+    localRuntime "curse.maven:jade-324717:5803666"
+    localRuntime "curse.maven:mekanism-268560:5680395"
 }
 
 jar {
