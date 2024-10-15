@@ -17,6 +17,8 @@ import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerDrill;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
+import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
+import de.ellpeck.actuallyadditions.mod.util.Util;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -38,10 +40,12 @@ import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.neoforged.neoforge.common.ItemAbilities;
 import net.neoforged.neoforge.common.ItemAbility;
 import net.neoforged.neoforge.items.IItemHandler;
@@ -49,7 +53,10 @@ import net.neoforged.neoforge.items.IItemHandlerModifiable;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 public class DrillItem extends ItemEnergy {
     public static final int HARVEST_LEVEL = 4;
@@ -177,7 +184,6 @@ public class DrillItem extends ItemEnergy {
     public InteractionResultHolder<ItemStack> use(Level world, @Nonnull Player player, @Nonnull InteractionHand hand) {
         if (!world.isClientSide && player.isShiftKeyDown() && hand == InteractionHand.MAIN_HAND) {
             player.openMenu(new SimpleMenuProvider((id, inv, p) -> new ContainerDrill(id, inv), Component.translatable("container.actuallyadditions.drill")));
-//            player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.DRILL.ordinal(), world, (int) player.posX, (int) player.posY, (int) player.posZ);
         }
         return new InteractionResultHolder<>(InteractionResult.PASS, player.getItemInHand(hand));
     }
@@ -188,7 +194,7 @@ public class DrillItem extends ItemEnergy {
         int use = this.getEnergyUsePerBlock(stack);
         if (!(entityHit instanceof Player) || !((Player) entityHit).isCreative()) {
             if (this.getEnergyStored(stack) >= use) {
-                this.extractEnergyInternal(stack, use, false);
+                this.extractEnergy(stack, use, false);
             }
         }
         return InteractionResult.SUCCESS;
@@ -212,42 +218,49 @@ public class DrillItem extends ItemEnergy {
                 : 0.1F;
     }
 
-    //    @Override TODO: Check if CommonEvents.onBlockBreaking works
-//    public boolean onBlockStartBreak(@Nonnull ItemStack stack, @Nonnull BlockPos pos, @Nonnull Player player) {
-//        boolean toReturn = false;
-//        int use = this.getEnergyUsePerBlock(stack);
-//        if (this.getEnergyStored(stack) >= use) {
-//            //Enchants the Drill depending on the Upgrades it has
-//            if (this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SILK_TOUCH)) {
-//                ItemUtil.addEnchantment(stack, Enchantments.SILK_TOUCH, 1);
-//            } else {
-//                if (this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FORTUNE)) {
-//                    ItemUtil.addEnchantment(stack, Enchantments.BLOCK_FORTUNE, this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FORTUNE_II)
-//                            ? 3
-//                            : 1);
-//                }
-//            }
-//            //Block hit
-//            HitResult ray = player.pick(Util.getReachDistance(player), 1f, false);
-//            if (ray instanceof BlockHitResult trace) {
-//                //Breaks the Blocks
-//                if (!player.isShiftKeyDown() && this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.THREE_BY_THREE)) {
-//                    if (this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FIVE_BY_FIVE)) {
-//                        toReturn = this.breakBlocks(stack, 2, player.level(), pos, trace.getDirection(), player);
-//                    } else {
-//                        toReturn = this.breakBlocks(stack, 1, player.level(), pos, trace.getDirection(), player);
-//                    }
-//                } else {
-//                    toReturn = this.breakBlocks(stack, 0, player.level(), pos, trace.getDirection(), player);
-//                }
-//
-//                //Removes Enchantments added above
-//                ItemUtil.removeEnchantment(stack, Enchantments.SILK_TOUCH);
-//                ItemUtil.removeEnchantment(stack, Enchantments.BLOCK_FORTUNE);
-//            }
-//        }
-//        return toReturn;
-//    }
+    private Set<UUID> breakers = new HashSet<>();
+
+    public boolean onBreakBlock(@Nonnull ItemStack stack, @Nonnull BlockPos pos, @Nonnull Player player) {
+        if (!breakers.add(player.getUUID())) return false; // Prevent multiple break operations from cascading, and don't execute when sneaking. (Borrowed from Apotheosis)
+        Level level = player.level();
+        boolean toReturn = false;
+        int use = this.getEnergyUsePerBlock(stack);
+        if (getEnergyStored(stack) >= use) {
+            //Enchants the Drill depending on the Upgrades it has
+            if (getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SILK_TOUCH)) {
+                ItemUtil.addEnchantment(stack, level.holderOrThrow(Enchantments.SILK_TOUCH), 1, level.registryAccess());
+            }
+            else {
+                if (getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FORTUNE)) {
+                    ItemUtil.addEnchantment(stack, level.holderOrThrow(Enchantments.FORTUNE),
+                            getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FORTUNE_II) ? 3 : 1,
+                            level.registryAccess());
+                }
+            }
+            //Block hit
+            HitResult ray = player.pick(Util.getReachDistance(player), 1f, false);
+            if (ray instanceof BlockHitResult trace) {
+                //Breaks the Blocks
+                if (!player.isShiftKeyDown() && getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.THREE_BY_THREE)) {
+                    if (getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FIVE_BY_FIVE)) {
+                        toReturn = breakBlocks(stack, 2, player.level(), pos, trace.getDirection(), player);
+                    }
+                    else {
+                        toReturn = breakBlocks(stack, 1, player.level(), pos, trace.getDirection(), player);
+                    }
+                }
+                else {
+                    toReturn = breakBlocks(stack, 0, player.level(), pos, trace.getDirection(), player);
+                }
+
+                //Removes Enchantments added above
+                ItemUtil.removeEnchantment(stack, level.holderOrThrow(Enchantments.SILK_TOUCH), level.registryAccess());
+                ItemUtil.removeEnchantment(stack, level.holderOrThrow(Enchantments.FORTUNE), level.registryAccess());
+            }
+        }
+        breakers.remove(player.getUUID());
+        return toReturn;
+    }
 
 /*    @Override //TODO old one
     public boolean isCorrectToolForDrops(ItemStack stack, BlockState state) {
@@ -528,24 +541,23 @@ public class DrillItem extends ItemEnergy {
      * Breaks the Block, drops Particles etc.
      * Has to be called on both Server and Client
      *
-     * @param world   The World
+     * @param level   The Level
      * @param isExtra If the Block is the Block that was looked at when breaking or an additional Block
      * @param stack   The Drill
      * @param player  The Player breaking the Blocks
      * @param use     The Energy that should be extracted per Block
      */
-    private boolean tryHarvestBlock(Level world, BlockPos pos, boolean isExtra, ItemStack stack, Player player, int use) {
-        BlockState state = world.getBlockState(pos);
-        Block block = state.getBlock();
-        float hardness = state.getDestroySpeed(world, pos);
+    private boolean tryHarvestBlock(Level level, BlockPos pos, boolean isExtra, ItemStack stack, Player player, int use) {
+        BlockState state = level.getBlockState(pos);
+        float hardness = state.getDestroySpeed(level, pos);
 
-        boolean canHarvest = (player.hasCorrectToolForDrops(state) || this.isCorrectToolForDrops(stack, state)) && (!isExtra || this.getDestroySpeed(stack, world.getBlockState(pos)) > 1.0F);
+        boolean canHarvest = (player.hasCorrectToolForDrops(state) || this.isCorrectToolForDrops(stack, state)) && (!isExtra || this.getDestroySpeed(stack, level.getBlockState(pos)) > 1.0F);
         if (hardness >= 0.0F && (!isExtra || canHarvest && !state.hasBlockEntity())) {
             if (!player.isCreative()) {
-                this.extractEnergyInternal(stack, use, false);
+                this.extractEnergy(stack, use, false);
             }
             //Break the Block
-            return WorldUtil.breakExtraBlock(stack, world, player, pos);
+            return WorldUtil.breakExtraBlock(stack, level, player, pos);
         }
         return false;
     }

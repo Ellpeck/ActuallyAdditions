@@ -328,8 +328,6 @@ public final class WorldUtil {
             if (block.onDestroyedByPlayer(state, level, pos, player, true, state.getFluidState())) {
                 block.destroy(level, pos, state);
             }
-            // callback to the tool
-            stack.mineBlock(level, state, pos, player);
 
             // send an update to the server, so we get an update back
 

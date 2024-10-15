@@ -103,7 +103,7 @@ public abstract class ItemEnergy extends ItemBase {
             .orElse(0);
     }
 
-    public int extractEnergyInternal(ItemStack stack, int maxExtract, boolean simulate) {
+    public int extractEnergyInternal(ItemStack stack, int maxExtract, boolean simulate) { //TODO: Check why this method doesn't work
         return Optional.ofNullable(stack.getCapability(Capabilities.EnergyStorage.ITEM))
             .map(cap -> cap instanceof EnergyStorage
                 ? cap.extractEnergy(maxExtract, simulate)
@@ -140,7 +140,17 @@ public abstract class ItemEnergy extends ItemBase {
 		return stack.getOrDefault(ActuallyComponents.ENERGY_STORAGE, 0);
 	}
 
-//    @Override TODO: Register Energy cap/attachment
+    @Override
+    public int getMaxDamage(ItemStack stack) {
+        return getEnergyStorage(stack);
+    }
+
+    @Override
+    public boolean isDamageable(ItemStack stack) {
+        return false;
+    }
+
+    //    @Override TODO: Register Energy cap/attachment
 //    public ICapabilityProvider initCapabilities(ItemStack stack, CompoundTag nbt) {
 //        return new EnergyCapabilityProvider(stack, this);
 //    }
