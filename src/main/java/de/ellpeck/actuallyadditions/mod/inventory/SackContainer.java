@@ -27,7 +27,6 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
 import javax.annotation.Nonnull;
-import java.util.UUID;
 
 public class SackContainer extends AbstractContainerMenu implements IButtonReactor {
 
