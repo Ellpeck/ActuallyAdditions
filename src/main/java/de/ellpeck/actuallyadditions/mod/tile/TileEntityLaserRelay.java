@@ -174,12 +174,6 @@ public abstract class TileEntityLaserRelay extends TileEntityInventoryBase {
         return this.cachedNetwork;
     }
 
-//    @Override TODO: Fix the renderBoundingBox
-//    
-//    public AABB getRenderBoundingBox() {
-//        return INFINITE_EXTENT_AABB;
-//    }
-
     @Override
     public boolean shouldSyncSlots() {
         return true;
