@@ -7,10 +7,11 @@
   ],
   "type": "actuallyadditions:mining_lens",
   "ingredient": {
-    "tag": "forge:stone"
+    "tag": "c:stones"
   },
   "result": {
-    "item": "powah:uraninite_ore"
+    "count": 1,
+    "id": "powah:uraninite_ore"
   },
   "weight": 200
 }

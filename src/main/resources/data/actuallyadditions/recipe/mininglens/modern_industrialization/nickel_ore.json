@@ -7,10 +7,11 @@
   ],
   "type": "actuallyadditions:mining_lens",
   "ingredient": {
-    "tag": "forge:stone"
+    "tag": "c:stones"
   },
   "result": {
-    "item": "modern_industrialization:nickel_ore"
+    "count": 1,
+    "id": "modern_industrialization:nickel_ore"
   },
   "weight": 2000
 }

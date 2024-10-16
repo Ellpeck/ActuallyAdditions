@@ -7,10 +7,11 @@
   ],
   "type": "actuallyadditions:mining_lens",
   "ingredient": {
-    "tag": "forge:stone"
+    "tag": "c:stones"
   },
   "result": {
-    "item": "xycraft_world:xychorium_ore_stone_dark"
+    "count": 1,
+    "id": "xycraft_world:xychorium_ore_stone_dark"
   },
   "weight": 300
 }

@@ -7,10 +7,11 @@
   ],
   "type": "actuallyadditions:mining_lens",
   "ingredient": {
-    "tag": "forge:stone"
+    "tag": "c:stones"
   },
   "result": {
-    "item": "mekanism:lead_ore"
+    "count": 1,
+    "id": "mekanism:lead_ore"
   },
   "weight": 2000
 }

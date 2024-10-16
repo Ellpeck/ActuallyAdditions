@@ -7,10 +7,11 @@
   ],
   "type": "actuallyadditions:mining_lens",
   "ingredient": {
-    "tag": "forge:stone"
+    "tag": "c:stones"
   },
   "result": {
-    "item": "elementsofpower:citrine_ore"
+    "count": 1,
+    "id": "elementsofpower:citrine_ore"
   },
   "weight": 25
 }

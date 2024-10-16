@@ -7,10 +7,11 @@
   ],
   "type": "actuallyadditions:mining_lens",
   "ingredient": {
-    "tag": "forge:stone"
+    "tag": "c:stones"
   },
   "result": {
-    "item": "elementalcraft:inert_crystal_ore"
+    "count": 1,
+    "id": "elementalcraft:inert_crystal_ore"
   },
   "weight": 500
 }

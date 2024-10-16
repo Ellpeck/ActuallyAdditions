@@ -7,10 +7,11 @@
   ],
   "type": "actuallyadditions:mining_lens",
   "ingredient": {
-    "tag": "forge:stone"
+    "tag": "c:stones"
   },
   "result": {
-    "item": "mekanism:uranium_ore"
+    "count": 1,
+    "id": "mekanism:uranium_ore"
   },
   "weight": 500
 }

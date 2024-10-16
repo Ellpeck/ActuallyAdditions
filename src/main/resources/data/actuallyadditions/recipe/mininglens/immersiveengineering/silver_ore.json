@@ -7,10 +7,11 @@
   ],
   "type": "actuallyadditions:mining_lens",
   "ingredient": {
-    "tag": "forge:stone"
+    "tag": "c:stones"
   },
   "result": {
-    "item": "immersiveengineering:ore_silver"
+    "count": 1,
+    "id": "immersiveengineering:ore_silver"
   },
   "weight": 1000
 }
