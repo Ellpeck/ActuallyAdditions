@@ -72,11 +72,6 @@ public final class AssetUtil {
         guiGraphics.drawString(font, text, xSize / 2f - font.width(text) / 2f, yPositionOfMachineText, 0xFFFFFF, false);
     }
 
-    
-    public static void displayNameString(GuiGraphics guiGraphics, Font font, int xSize, int yPositionOfMachineText, TileEntityBase tile) {
-        displayNameString(guiGraphics, font, xSize, yPositionOfMachineText, I18n.get(tile.getNameForTranslation()));
-    }
-
     //    public static void renderBlockInWorld(Block block, int meta) {
     //        renderItemInWorld(new ItemStack(block, 1, meta), combinedLightIn, combinedOverlayIn, matrices, buffer);
     //    }

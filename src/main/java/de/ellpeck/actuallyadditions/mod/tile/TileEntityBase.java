@@ -49,24 +49,10 @@ public abstract class TileEntityBase extends BlockEntity {
         this.writeSyncableNBT(compound, lookupProvider, NBTType.SAVE_TILE);
     }
 
-    // TODO: [port] remove if the above is correct
-    //    @Override
-    //    public final CompoundNBT writeToNBT(CompoundNBT compound) {
-    //        this.writeSyncableNBT(compound, NBTType.SAVE_TILE);
-    //        return compound;
-    //    }
-
     @Override
     public void loadAdditional(CompoundTag compound, HolderLookup.Provider lookupProvider) {
         this.readSyncableNBT(compound, lookupProvider, NBTType.SAVE_TILE);
     }
-
-
-    // TODO: [port] remove if the above is correct
-    //    @Override
-    //    public final void readFromNBT(CompoundNBT compound) {
-    //        this.readSyncableNBT(compound, NBTType.SAVE_TILE);
-    //    }
 
     @Nullable
     @Override
@@ -149,22 +135,6 @@ public abstract class TileEntityBase extends BlockEntity {
             this.isPulseMode = compound.getBoolean("IsPulseMode");
         }
     }
-
-    // TODO: [port] eval if still required in some way
-    //    @Override
-    //    public boolean shouldRefresh(World world, BlockPos pos, BlockState oldState, BlockState newState) {
-    //        return !oldState.getBlock().isAssociatedBlock(newState.getBlock());
-    //    }
-
-    @Deprecated
-    public String getNameForTranslation() {
-        return "removeme";// "container.actuallyadditions." + this.name + ".name";
-    }
-
-    //    @Override
-    //    public ITextComponent getDisplayName() {
-    //        return new TranslationTextComponent(this.getNameForTranslation());
-    //    }
 
     public int getComparatorStrength() {
         return 0;
