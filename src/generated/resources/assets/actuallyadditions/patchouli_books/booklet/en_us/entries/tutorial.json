@@ -1,0 +1,25 @@
+{
+  "category": "actuallyadditions:getting_started",
+  "icon": "actuallyadditions:booklet",
+  "name": "booklet.actuallyadditions.chapter.book_tutorial",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "booklet.actuallyadditions.chapter.book_tutorial.text.1"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "booklet.actuallyadditions.chapter.book_tutorial.text.2"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "booklet.actuallyadditions.chapter.book_tutorial.text.3"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "actuallyadditions:booklet",
+      "text": "booklet.actuallyadditions.shapeless_recipe",
+      "title": ""
+    }
+  ]
+}

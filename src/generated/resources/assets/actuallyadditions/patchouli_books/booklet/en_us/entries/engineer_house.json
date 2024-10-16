@@ -1,0 +1,18 @@
+{
+  "category": "actuallyadditions:getting_started",
+  "icon": "actuallyadditions:booklet",
+  "name": "booklet.actuallyadditions.chapter.engineer_house",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "booklet.actuallyadditions.chapter.engineer_house.text.1"
+    },
+    {
+      "type": "patchouli:image",
+      "images": [
+        "actuallyadditions:textures/gui/booklet/page_engineer_house.png"
+      ],
+      "text": "booklet.actuallyadditions.chapter.engineer_house.text.2"
+    }
+  ]
+}

@@ -1,5 +1,6 @@
 package de.ellpeck.actuallyadditions.data;
 
+import de.ellpeck.actuallyadditions.data.patchouli.PatchouliGenerator;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.gen.ActuallyBiomeModifiers;
 import de.ellpeck.actuallyadditions.mod.gen.ActuallyConfiguredFeatures;
@@ -65,7 +66,7 @@ public class ActuallyAdditionsData {
 
         generator.addProvider(true, new SoundsGenerator(packOutput, helper));
 
-//        generator.addProvider(true, new PachouliGenerator(packOutput));
+        generator.addProvider(true, new PatchouliGenerator(packOutput, lookupProvider));
 
         generator.addProvider(true, new GlobalLootModifierGenerator(packOutput, lookupProvider));
 

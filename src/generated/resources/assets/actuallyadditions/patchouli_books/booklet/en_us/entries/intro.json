@@ -1,0 +1,23 @@
+{
+  "category": "actuallyadditions:getting_started",
+  "icon": "actuallyadditions:booklet",
+  "name": "booklet.actuallyadditions.chapter.intro",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "booklet.actuallyadditions.chapter.intro.text.1"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "booklet.actuallyadditions.chapter.intro.text.2"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "booklet.actuallyadditions.chapter.intro.text.3"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "booklet.actuallyadditions.chapter.intro.text.4"
+    }
+  ]
+}
