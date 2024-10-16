@@ -453,12 +453,12 @@ public class ItemRecipeGenerator extends RecipeProvider {
                 .save(recipeOutput);
 
         //Growth Ring
-/*        Recipe.shaped(ActuallyItems.RING_OF_GROWTH.get())
+        Recipe.shaped(ActuallyItems.RING_OF_GROWTH.get())
                 .pattern("SIS", "IOI", "SIS")
                 .define('S', Tags.Items.SEEDS)
                 .define('I', ActuallyItems.EMPOWERED_ENORI_CRYSTAL.get())
                 .define('O', ActuallyItems.RING.get())
-                .save(recipeOutput);*/ //TODO not done yet
+                .save(recipeOutput);
 
         Recipe.shapeless(ActuallyItems.CRAFTER_ON_A_STICK.get()).requires(Items.CRAFTING_TABLE).requires(ItemTags.SIGNS).save(recipeOutput);
 
