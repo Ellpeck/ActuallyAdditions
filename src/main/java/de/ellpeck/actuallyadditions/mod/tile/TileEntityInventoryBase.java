@@ -35,38 +35,11 @@ public abstract class TileEntityInventoryBase extends TileEntityBase {
         this.inv = new TileStackHandler(slots);
     }
 
-    public static void saveSlots(IItemHandler slots, CompoundTag compound, HolderLookup.Provider provider) {
-        if (slots != null && slots.getSlots() > 0) {
-            ListTag tagList = new ListTag();
-            for (int i = 0; i < slots.getSlots(); i++) {
-                ItemStack slot = slots.getStackInSlot(i);
-                CompoundTag tagCompound = new CompoundTag();
-                if (StackUtil.isValid(slot)) {
-                    slot.save(provider, tagCompound);
-                }
-                tagList.add(tagCompound);
-            }
-            compound.put("Items", tagList);
-        }
-    }
-
-    public static void loadSlots(IItemHandlerModifiable slots, CompoundTag compound, HolderLookup.Provider provider) {
-        if (slots != null && slots.getSlots() > 0) {
-            ListTag tagList = compound.getList("Items", 10);
-            for (int i = 0; i < slots.getSlots(); i++) {
-                CompoundTag tagCompound = tagList.getCompound(i);
-                slots.setStackInSlot(i, tagCompound.contains("id")
-                    ? ItemStack.parseOptional(provider, tagCompound)
-                    : ItemStack.EMPTY);
-            }
-        }
-    }
-
     @Override
     public void writeSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
         super.writeSyncableNBT(compound, lookupProvider, type);
         if (type == NBTType.SAVE_TILE || type == NBTType.SYNC && this.shouldSyncSlots()) {
-            saveSlots(this.inv, compound, lookupProvider);
+            compound.put("Items", this.inv.serializeNBT(lookupProvider));
         }
     }
 
@@ -109,7 +82,7 @@ public abstract class TileEntityInventoryBase extends TileEntityBase {
     public void readSyncableNBT(CompoundTag compound, HolderLookup.Provider lookupProvider, NBTType type) {
         super.readSyncableNBT(compound, lookupProvider, type);
         if (type == NBTType.SAVE_TILE || type == NBTType.SYNC && this.shouldSyncSlots()) {
-            loadSlots(this.inv, compound, lookupProvider);
+            this.inv.deserializeNBT(lookupProvider, compound.getCompound("Items"));
         }
     }
 
