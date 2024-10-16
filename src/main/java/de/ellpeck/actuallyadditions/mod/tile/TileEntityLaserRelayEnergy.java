@@ -110,7 +110,6 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay {
         return transmitted;
     }
 
-    // TODO: [port] this is super hacky, review and fix up 
     @Override
     public IEnergyStorage getEnergyStorage(Direction facing) {
         return this.energyStorages[facing == null
