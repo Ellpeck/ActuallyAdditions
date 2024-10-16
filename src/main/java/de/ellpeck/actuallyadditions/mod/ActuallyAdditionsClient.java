@@ -16,6 +16,7 @@ import de.ellpeck.actuallyadditions.mod.blocks.render.RenderBatteryBox;
 import de.ellpeck.actuallyadditions.mod.blocks.render.RenderDisplayStand;
 import de.ellpeck.actuallyadditions.mod.blocks.render.RenderEmpowerer;
 import de.ellpeck.actuallyadditions.mod.blocks.render.RenderLaserRelay;
+import de.ellpeck.actuallyadditions.mod.entity.InitEntities;
 import de.ellpeck.actuallyadditions.mod.entity.RenderWorm;
 import de.ellpeck.actuallyadditions.mod.event.ClientEvents;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
@@ -142,7 +143,7 @@ public class ActuallyAdditionsClient {
         event.registerBlockEntityRenderer(ActuallyBlocks.LASER_RELAY_ITEM_ADVANCED.getTileEntityType(), RenderLaserRelay::new);
         event.registerBlockEntityRenderer(ActuallyBlocks.LASER_RELAY_FLUIDS.getTileEntityType(), RenderLaserRelay::new);
 
-        event.registerEntityRenderer(ActuallyAdditions.ENTITY_WORM.get(), RenderWorm::new);
+        event.registerEntityRenderer(InitEntities.ENTITY_WORM.get(), RenderWorm::new);
     }
 
     public static void registerParticleFactories(RegisterParticleProvidersEvent event) {

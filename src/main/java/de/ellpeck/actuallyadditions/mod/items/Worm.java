@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.items;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import de.ellpeck.actuallyadditions.mod.entity.EntityWorm;
+import de.ellpeck.actuallyadditions.mod.entity.InitEntities;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionResult;
@@ -48,7 +49,7 @@ public class Worm extends ItemBase {
         if (!worms.isEmpty())
             return super.useOn(context);
 
-        EntityWorm worm = new EntityWorm(ActuallyAdditions.ENTITY_WORM.get(), level);
+        EntityWorm worm = new EntityWorm(InitEntities.ENTITY_WORM.get(), level);
         worm.setPos(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
         worm.setCustomName(stack.getHoverName());
         level.addFreshEntity(worm);

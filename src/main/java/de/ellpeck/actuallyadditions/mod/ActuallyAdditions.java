@@ -26,6 +26,7 @@ import de.ellpeck.actuallyadditions.mod.entity.EntityWorm;
 import de.ellpeck.actuallyadditions.mod.entity.InitEntities;
 import de.ellpeck.actuallyadditions.mod.event.CommonEvents;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
+import de.ellpeck.actuallyadditions.mod.gen.ActuallyBiomeModifiers;
 import de.ellpeck.actuallyadditions.mod.gen.ActuallyVillages;
 import de.ellpeck.actuallyadditions.mod.gen.modifier.BoolConfigFeatureBiomeModifier;
 import de.ellpeck.actuallyadditions.mod.gen.village.ActuallyPOITypes;
@@ -89,22 +90,6 @@ public class ActuallyAdditions {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
 
-    private static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(BuiltInRegistries.ENTITY_TYPE, MODID);
-    public static final Supplier<EntityType<EntityWorm>> ENTITY_WORM = ENTITIES.register("worm", () -> EntityType.Builder.of(EntityWorm::new, MobCategory.MISC).build(MODID + ":worm"));
-
-    private static final DeferredRegister<MapCodec<? extends ICondition>> CONDITION_CODECS = DeferredRegister.create(NeoForgeRegistries.Keys.CONDITION_CODECS, MODID);
-    public static final DeferredHolder<MapCodec<? extends ICondition>, MapCodec<BoolConfigCondition>> BOOL_CONFIG_CONDITION = CONDITION_CODECS.register("bool_config_condition", () -> BoolConfigCondition.CODEC);
-
-    public static final DeferredRegister<MapCodec<? extends BiomeModifier>> BIOME_MODIFIER_SERIALIZERS = DeferredRegister.create(NeoForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, MODID);
-    public static final Supplier<MapCodec<BoolConfigFeatureBiomeModifier>> BOOL_CONFIG_MODIFIER = BIOME_MODIFIER_SERIALIZERS.register("bool_config_feature_modifier", () ->
-            RecordCodecBuilder.mapCodec(builder -> builder.group(
-                    Biome.LIST_CODEC.fieldOf("biomes").forGetter(BoolConfigFeatureBiomeModifier::biomes),
-                    PlacedFeature.LIST_CODEC.fieldOf("features").forGetter(BoolConfigFeatureBiomeModifier::features),
-                    GenerationStep.Decoration.CODEC.fieldOf("step").forGetter(BoolConfigFeatureBiomeModifier::step),
-                    Codec.STRING.fieldOf("boolConfig").forGetter(BoolConfigFeatureBiomeModifier::boolConfig)
-            ).apply(builder, BoolConfigFeatureBiomeModifier::new))
-    );
-
     public static boolean commonCapsLoaded;
 
     public ActuallyAdditions(IEventBus eventBus, ModContainer container, Dist dist) {
@@ -121,9 +106,9 @@ public class ActuallyAdditions {
         ActuallyLootModifiers.init(eventBus);
         ActuallyContainers.CONTAINERS.register(eventBus);
         ArmorMaterials.init(eventBus);
-        ENTITIES.register(eventBus);
-        CONDITION_CODECS.register(eventBus);
-        BIOME_MODIFIER_SERIALIZERS.register(eventBus);
+        InitEntities.init(eventBus);
+        InitFluids.init(eventBus);
+        ActuallyBiomeModifiers.init(eventBus);
         eventBus.addListener(this::onConfigReload);
         ActuallyParticles.init(eventBus);
         ActuallyTags.init();
@@ -136,7 +121,6 @@ public class ActuallyAdditions {
         NeoForge.EVENT_BUS.addListener(ActuallyAdditions::reloadEvent);
         NeoForge.EVENT_BUS.addListener(Worm::onHoe);
         NeoForge.EVENT_BUS.addListener(ActuallyVillages::modifyVillageStructures);
-        InitFluids.init(eventBus);
 
         eventBus.addListener(PacketHandler::register);
         eventBus.addListener(this::setup);
@@ -164,7 +148,6 @@ public class ActuallyAdditions {
         commonCapsLoaded = false; // Loader.isModLoaded("commoncapabilities");
 
         new UpdateChecker();
-        InitEntities.init(); // todo: [port] replace
     }
 
     private void onConfigReload(ModConfigEvent event) {
