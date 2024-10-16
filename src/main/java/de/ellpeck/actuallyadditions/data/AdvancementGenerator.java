@@ -39,8 +39,6 @@ public class AdvancementGenerator extends AdvancementProvider {
 					.addCriterion("right_click", CriteriaTriggers.IMPOSSIBLE.createCriterion(new ImpossibleTrigger.TriggerInstance()))
 					.save(consumer, "actuallyadditions:root");
 
-			//TODO: Underwater Treasure Chest Advancement?
-
 			AdvancementHolder phantomFace = Advancement.Builder.advancement()
 					.parent(root)
 					.display(new DisplayInfo(ActuallyBlocks.PHANTOM_ITEMFACE.get().asItem().getDefaultInstance(),
