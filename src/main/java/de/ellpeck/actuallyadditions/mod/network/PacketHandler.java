@@ -76,9 +76,6 @@ public final class PacketHandler {
             double outY = compound.getDouble("OutY") + 0.525;
             double outZ = compound.getDouble("OutZ") + 0.5;
 
-//            Particle fx = new ParticleLaserItem(mc.level, outX, outY, outZ, stack, 0.025, inX, inY, inZ);
-            //mc.effectRenderer.addEffect(fx); //TODO
-
             mc.level.addParticle(ParticleLaserItem.Factory.createData(stack, inX, inY, inZ),
                     outX, outY, outZ, 0, 0.025, 0);
         }
