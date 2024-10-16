@@ -3,13 +3,14 @@ package de.ellpeck.actuallyadditions.mod.inventory;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.inventory.MenuType;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
 
 public class ActuallyContainers {
-    public static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(BuiltInRegistries.MENU, ActuallyAdditions.MODID);
+    private static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(BuiltInRegistries.MENU, ActuallyAdditions.MODID);
 
     public static final Supplier<MenuType<SackContainer>> SACK_CONTAINER = CONTAINERS.register("sack_container", () -> IMenuTypeExtension.create(SackContainer::fromNetwork));
     public static final Supplier<MenuType<VoidSackContainer>> VOID_SACK_CONTAINER = CONTAINERS.register("void_sack_container", () -> IMenuTypeExtension.create(VoidSackContainer::new));
@@ -39,5 +40,9 @@ public class ActuallyContainers {
     public static final Supplier<MenuType<ContainerRangedCollector>> RANGED_COLLECTOR_CONTAINER = CONTAINERS.register("ranged_collector_container", () -> IMenuTypeExtension.create(ContainerRangedCollector::fromNetwork));
     public static final Supplier<MenuType<ContainerXPSolidifier>> XPSOLIDIFIER_CONTAINER = CONTAINERS.register("xpsolidifier_container", () -> IMenuTypeExtension.create(ContainerXPSolidifier::fromNetwork));
     public static final Supplier<MenuType<ItemTagContainer>> ITEM_TAG_CONTAINER = CONTAINERS.register("item_tag_container", () -> IMenuTypeExtension.create(ItemTagContainer::fromNetwork));
+
+    public static void init(IEventBus evt) {
+        CONTAINERS.register(evt);
+    }
 }
 

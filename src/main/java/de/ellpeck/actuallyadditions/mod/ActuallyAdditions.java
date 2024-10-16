@@ -104,14 +104,14 @@ public class ActuallyAdditions {
         ActuallyPOITypes.init(eventBus);
         ActuallyComponents.init(eventBus);
         ActuallyLootModifiers.init(eventBus);
-        ActuallyContainers.CONTAINERS.register(eventBus);
+        ActuallyContainers.init(eventBus);
         ArmorMaterials.init(eventBus);
         InitEntities.init(eventBus);
         InitFluids.init(eventBus);
         ActuallyBiomeModifiers.init(eventBus);
-        eventBus.addListener(this::onConfigReload);
         ActuallyParticles.init(eventBus);
         ActuallyTags.init();
+        eventBus.addListener(this::onConfigReload);
 
         NeoForge.EVENT_BUS.addListener(this::serverStarted);
         NeoForge.EVENT_BUS.addListener(this::serverStopped);
