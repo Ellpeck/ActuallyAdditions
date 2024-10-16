@@ -34,6 +34,7 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePrope
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredItem;
 
 import java.util.List;
 import java.util.Set;
@@ -185,20 +186,12 @@ public class LootTableGenerator extends LootTableProvider {
             this.dropSelf(ActuallyBlocks.EMPOWERED_VOID_CRYSTAL.get());
             this.dropSelf(ActuallyBlocks.EMPOWERED_EMERADIC_CRYSTAL.get());
 
-/*            this.registerCrystal(ActuallyBlocks.CRYSTAL_CLUSTER_RESTONIA, ActuallyItems.RED_CRYSTAL_SHARD);
-            this.registerCrystal(ActuallyBlocks.CRYSTAL_CLUSTER_PALIS, ActuallyItems.BLUE_CRYSTAL_SHARD);
-            this.registerCrystal(ActuallyBlocks.CRYSTAL_CLUSTER_DIAMATINE, ActuallyItems.LIGHT_BLUE_CRYSTAL_SHARD);
-            this.registerCrystal(ActuallyBlocks.CRYSTAL_CLUSTER_VOID, ActuallyItems.BLACK_CRYSTAL_SHARD);
-            this.registerCrystal(ActuallyBlocks.CRYSTAL_CLUSTER_EMERADIC, ActuallyItems.GREEN_CRYSTAL_SHARD);
-            this.registerCrystal(ActuallyBlocks.CRYSTAL_CLUSTER_ENORI, ActuallyItems.WHITE_CRYSTAL_SHARD);*/
-
-            //TODO temp
-            dropSelf(ActuallyBlocks.ENORI_CRYSTAL_CLUSTER.get());
-            dropSelf(ActuallyBlocks.RESTONIA_CRYSTAL_CLUSTER.get());
-            dropSelf(ActuallyBlocks.PALIS_CRYSTAL_CLUSTER.get());
-            dropSelf(ActuallyBlocks.DIAMATINE_CRYSTAL_CLUSTER.get());
-            dropSelf(ActuallyBlocks.VOID_CRYSTAL_CLUSTER.get());
-            dropSelf(ActuallyBlocks.EMERADIC_CRYSTAL_CLUSTER.get());
+            this.registerCrystal(ActuallyBlocks.ENORI_CRYSTAL_CLUSTER, ActuallyItems.ENORI_CRYSTAL_SHARD);
+            this.registerCrystal(ActuallyBlocks.RESTONIA_CRYSTAL_CLUSTER, ActuallyItems.RESTONIA_CRYSTAL_SHARD);
+            this.registerCrystal(ActuallyBlocks.PALIS_CRYSTAL_CLUSTER, ActuallyItems.PALIS_CRYSTAL_SHARD);
+            this.registerCrystal(ActuallyBlocks.DIAMATINE_CRYSTAL_CLUSTER, ActuallyItems.DIAMATINE_CRYSTAL_SHARD);
+            this.registerCrystal(ActuallyBlocks.VOID_CRYSTAL_CLUSTER, ActuallyItems.VOID_CRYSTAL_SHARD);
+            this.registerCrystal(ActuallyBlocks.EMERADIC_CRYSTAL_CLUSTER, ActuallyItems.EMERADIC_CRYSTAL_SHARD);
 
             add(ActuallyBlocks.BLACK_QUARTZ_ORE.get(), createOreDrop(ActuallyBlocks.BLACK_QUARTZ_ORE.getBlock(), ActuallyItems.BLACK_QUARTZ.get()));
 
@@ -226,17 +219,10 @@ public class LootTableGenerator extends LootTableProvider {
                     .include(ActuallyComponents.ENERGY_STORAGE.get())));
         }
 
-/*        // This isn't quite right :cry: fortune doesn't change it
-        private void registerCrystal(RegistryObject<Block> crystalCluster, RegistryObject<Item> crystalShard) {
-            this.registerLootTable(crystalCluster.get(), (crystal) ->
-                droppingWithSilkTouch(crystal,
-                    withExplosionDecay(crystal, ItemLootEntry.builder(crystalShard.get())
-                        .acceptFunction(ApplyBonus.oreDrops(Enchantments.FORTUNE))
-                        .acceptFunction(SetCount.builder(RandomValueRange.of(2f, 8f)))
-                    )
-                )
-            );
-        }*/
+        private void registerCrystal(Supplier<? extends Block> crystalCluster, DeferredItem<? extends Item> crystalShard) {
+            this.add(crystalCluster.get(), block ->
+                    this.createSingleItemTableWithSilkTouch(block, crystalShard.get(), UniformGenerator.between(2.0F, 8.0F)));
+        }
 
         @Override
         protected Iterable<Block> getKnownBlocks() {
