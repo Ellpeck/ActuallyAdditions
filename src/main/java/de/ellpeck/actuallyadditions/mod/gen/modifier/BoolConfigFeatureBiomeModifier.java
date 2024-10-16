@@ -1,7 +1,6 @@
 package de.ellpeck.actuallyadditions.mod.gen.modifier;
 
 import com.mojang.serialization.MapCodec;
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import de.ellpeck.actuallyadditions.mod.gen.ActuallyBiomeModifiers;
 import net.minecraft.core.Holder;
