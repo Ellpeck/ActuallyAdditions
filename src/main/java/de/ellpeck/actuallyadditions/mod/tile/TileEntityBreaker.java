@@ -78,16 +78,20 @@ public class TileEntityBreaker extends TileEntityInventoryBase implements MenuPr
     public static <T extends BlockEntity> void serverTick(Level level, BlockPos pos, BlockState state, T t) {
         if (t instanceof TileEntityBreaker tile) {
             tile.serverTick();
+        }
+    }
 
-            if (!tile.isRedstonePowered && !tile.isPulseMode) {
-                if (tile.currentTime > 0) {
-                    tile.currentTime--;
-                    if (tile.currentTime <= 0) {
-                        tile.doWork();
-                    }
-                } else {
-                    tile.currentTime = 15;
+    @Override
+    protected void serverTick() {
+        super.serverTick();
+        if (!isRedstonePowered && !isPulseMode) {
+            if (currentTime > 0) {
+                currentTime--;
+                if (currentTime <= 0) {
+                    doWork();
                 }
+            } else {
+                currentTime = 15;
             }
         }
     }

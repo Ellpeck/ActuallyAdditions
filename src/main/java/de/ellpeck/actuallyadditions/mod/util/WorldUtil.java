@@ -23,6 +23,7 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -165,8 +166,9 @@ public final class WorldUtil {
         if (level instanceof ServerLevel && StackUtil.isValid(stack) && pos != null) {
             BlockPos offsetPos = pos.relative(side);
             BlockState state = level.getBlockState(offsetPos);
-            Block block = state.getBlock();
-            boolean replaceable = false; //= block.canBeReplaced(world, offsetPos); //TODO
+            boolean replaceable = state.canBeReplaced(new BlockPlaceContext(level, null, InteractionHand.MAIN_HAND, stack,
+                    new BlockHitResult(new Vec3(0, 0, 0), side, pos, false)
+            ));
 
             //Redstone
             if (replaceable && stack.getItem() == Items.REDSTONE) {
