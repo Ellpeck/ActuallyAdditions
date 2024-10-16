@@ -200,11 +200,7 @@ public class LootTableGenerator extends LootTableProvider {
             dropSelf(ActuallyBlocks.VOID_CRYSTAL_CLUSTER.get());
             dropSelf(ActuallyBlocks.EMERADIC_CRYSTAL_CLUSTER.get());
 
-            //TODO temp
-            dropSelf(ActuallyBlocks.BLACK_QUARTZ_ORE.get());
             add(ActuallyBlocks.BLACK_QUARTZ_ORE.get(), createOreDrop(ActuallyBlocks.BLACK_QUARTZ_ORE.getBlock(), ActuallyItems.BLACK_QUARTZ.get()));
-
-            //this.add(ActuallyBlocks.BLACK_QUARTZ_ORE.get(), ore -> droppingItemWithFortune(ore, ActuallyItems.BLACK_QUARTZ.get()));
 
             addCrop(ActuallyBlocks.CANOLA, ActuallyItems.CANOLA, ActuallyItems.CANOLA_SEEDS);
             addCrop(ActuallyBlocks.RICE, ActuallyItems.RICE, ActuallyItems.RICE_SEEDS);
