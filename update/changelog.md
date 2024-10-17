@@ -1,3 +1,6 @@
+# 1.3.2+mc1.21.1
+* Fix the gui of the Energizer/Enervator crashing
+
 # 1.3.1+mc1.21.1
 * Fix Empowerer laser crashing
 * Fix energy storage of machines not working
