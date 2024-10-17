@@ -1,3 +1,8 @@
+# 1.3.0+mc1.21.1
+* Update the mod to 1.21.1
+* Fix crash when attempting to place Tiny Torch upside-down
+* Fix Empowered Emeradic Crystal requiring Tall Grass instead of Short Grass
+
 # 1.2.14+mc1.20.4
 * Fixed Drill attributes going haywire.
 * Fixed missing Crushing recipes for copper / some others.
