@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer;
 import de.ellpeck.actuallyadditions.api.farmer.FarmerResult;
 import de.ellpeck.actuallyadditions.api.farmer.IFarmerBehavior;
 import de.ellpeck.actuallyadditions.api.internal.IFarmer;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -27,6 +28,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.common.util.TriState;
 
 import java.util.List;
 
@@ -35,14 +37,14 @@ public class NetherWartFarmerBehavior implements IFarmerBehavior {
     @Override
     public FarmerResult tryPlantSeed(ItemStack seed, Level world, BlockPos pos, IFarmer farmer) {
         int use = 500;
-        if (farmer.getEnergy() >= use) {
-            if (seed.getItem() == Items.NETHER_WART) {
-                if (world.getBlockState(pos.below()).getBlock().canSustainPlant(world.getBlockState(pos), world, pos.below(), Direction.UP, Blocks.NETHER_WART.defaultBlockState()).isTrue()) {
-                    world.setBlock(pos, Blocks.NETHER_WART.defaultBlockState(), 2);
-                    farmer.extractEnergy(use);
-                    return FarmerResult.SUCCESS;
-                }
-                return FarmerResult.FAIL;
+        if (farmer.getEnergy() >= use && seed.is(Items.NETHER_WART)) {
+            BlockState belowState = world.getBlockState(pos.below());
+            TriState result = belowState.canSustainPlant(world, pos, Direction.UP, Blocks.NETHER_WART.defaultBlockState());
+            BlockState wartState = Blocks.NETHER_WART.defaultBlockState();
+            if (result.isTrue() || wartState.canSurvive(world, pos)) {
+                world.setBlock(pos, wartState, 2);
+                farmer.extractEnergy(use);
+                return FarmerResult.SUCCESS;
             }
         }
         return FarmerResult.FAIL;
@@ -53,29 +55,26 @@ public class NetherWartFarmerBehavior implements IFarmerBehavior {
         int use = 500;
         if (farmer.getEnergy() >= use) {
             BlockState state = world.getBlockState(pos);
-            if (state.getBlock() instanceof NetherWartBlock) {
-                if (state.getValue(BlockStateProperties.AGE_3) >= 3) {
-                    List<ItemStack> drops = state.getDrops(new LootParams.Builder(world)
+            if (state.getBlock() instanceof NetherWartBlock && state.getValue(BlockStateProperties.AGE_3) >= 3) {
+                List<ItemStack> drops = state.getDrops(new LootParams.Builder(world)
                         .withParameter(LootContextParams.ORIGIN, new Vec3(pos.getX(), pos.getY(), pos.getZ()))
                         .withParameter(LootContextParams.TOOL, ItemStack.EMPTY));
-                    if (!drops.isEmpty()) {
-                        boolean toInput = farmer.canAddToSeeds(drops);
-                        if (toInput || farmer.canAddToOutput(drops)) {
-                            world.levelEvent(2001, pos, Block.getId(state));
-                            world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+                if (!drops.isEmpty()) {
+                    boolean toInput = farmer.canAddToSeeds(drops);
+                    if (toInput || farmer.canAddToOutput(drops)) {
+                        world.levelEvent(2001, pos, Block.getId(state));
+                        world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
 
-                            if (toInput) {
-                                farmer.addToSeeds(drops);
-                            } else {
-                                farmer.addToOutput(drops);
-                            }
-
-                            farmer.extractEnergy(use);
-                            return FarmerResult.SUCCESS;
+                        if (toInput) {
+                            farmer.addToSeeds(drops);
+                        } else {
+                            farmer.addToOutput(drops);
                         }
+
+                        farmer.extractEnergy(use);
+                        return FarmerResult.SUCCESS;
                     }
                 }
-                return FarmerResult.FAIL;
             }
         }
         return FarmerResult.FAIL;
