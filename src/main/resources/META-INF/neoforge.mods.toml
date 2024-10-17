@@ -1,10 +1,10 @@
 
 modLoader="javafml"
-loaderVersion="[${loader},)"
+loaderVersion="[4,)"
 license="MIT"
 [[mods]]
 modId="actuallyadditions"
-version="${version}"
+version="${file.jarVersion}"
 displayName="Actually Additions"
 #logoFile="logo.png"
 credits="Author: Ellpeck; Textures and Models: BootyToast, GlenthorLP, canitzp; Porters: Flanks, MrBysco, ErrorMikey; 1.20+ Textures: Ridanisaurus"
@@ -18,13 +18,13 @@ config = "actuallyadditions.mixins.json"
 [[dependencies.actuallyadditions]]
     modId="neoforge"
     type="required"
-    versionRange="${neo_version_range}"
+    versionRange="[21.1.1,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.actuallyadditions]]
     modId="minecraft"
     type="required"
-    versionRange="${minecraft_version_range}"
+    versionRange="[1.21.1,1.22)"
     ordering="NONE"
     side="BOTH"

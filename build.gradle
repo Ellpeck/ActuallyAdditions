@@ -115,18 +115,6 @@ jar {
     from sourceSets.main.output
 }
 
-processResources {
-    inputs.property('version', project.version)
-    inputs.property('neo_version_range', project.neo_version_range)
-    inputs.property('loader', project.loader)
-    inputs.property('minecraft_version_range', project.minecraft_version_range)
-
-    filesMatching(['META-INF/neoforge.mods.toml'])  {
-        expand 'version': project.version, 'neo_version_range': project.neo_version_range, 'loader': project.loader, 'minecraft_version_range': project.minecraft_version_range
-    }
-}
-
-
 task apiJar(type: Jar) {
     from sourceSets.main.output
     from sourceSets.main.java
