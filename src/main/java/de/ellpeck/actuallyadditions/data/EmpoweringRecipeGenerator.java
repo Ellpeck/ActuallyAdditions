@@ -95,12 +95,12 @@ public class EmpoweringRecipeGenerator extends RecipeProvider {
 
         EmpoweringBuilder.builder(ActuallyItems.EMPOWERED_EMERADIC_CRYSTAL.get(), ActuallyItems.EMERADIC_CRYSTAL.get(), 5000, 50, Crystals.EMERALD.conversionColorParticles)
                 .addModifier(Tags.Items.DYES_LIME)
-                .addModifier(Items.TALL_GRASS)
+                .addModifier(Items.SHORT_GRASS)
                 .addModifier(ItemTags.SAPLINGS)
                 .addModifier(Tags.Items.SLIMEBALLS).save(recipeOutput, "emeradic");
         EmpoweringBuilder.builder(ActuallyBlocks.EMPOWERED_EMERADIC_CRYSTAL.get(), ActuallyBlocks.EMERADIC_CRYSTAL.get(), 50000, 500, Crystals.EMERALD.conversionColorParticles)
                 .addModifier(Tags.Items.DYES_LIME)
-                .addModifier(Items.TALL_GRASS)
+                .addModifier(Items.SHORT_GRASS)
                 .addModifier(ItemTags.SAPLINGS)
                 .addModifier(Tags.Items.SLIMEBALLS).save(recipeOutput, "emeradic_block");
 
