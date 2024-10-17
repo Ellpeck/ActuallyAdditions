@@ -34,7 +34,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 public class BlockTinyTorch extends BlockBase {
-    public static final DirectionProperty FACING = DirectionProperty.create("facing", Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST, Direction.UP);
+    public static final DirectionProperty FACING = DirectionProperty.create("facing", direction -> direction != Direction.DOWN);
 
     public BlockTinyTorch() {
         super(Properties.of().pushReaction(PushReaction.DESTROY).sound(SoundType.WOOD).strength(0.0F, 0.8F));
@@ -90,7 +90,7 @@ public class BlockTinyTorch extends BlockBase {
         Direction facing = context.getClickedFace();
         BlockPos pos = context.getClickedPos();
         if (this.canSurvive(state, levelreader, pos)) {
-            return state.setValue(BlockTinyTorch.FACING, facing);
+            return state.setValue(BlockTinyTorch.FACING, facing.getAxis() == Direction.Axis.Y ? Direction.UP : facing);
         } else {
             Direction[] adirection = context.getNearestLookingDirections();
             for(Direction direction : adirection) {
