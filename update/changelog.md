@@ -1,3 +1,7 @@
+# 1.3.1+mc1.21.1
+* Fix Empowerer laser crashing
+* Fix energy storage of machines not working
+
 # 1.3.0+mc1.21.1
 * Update the mod to 1.21.1
 * Fix crash when attempting to place Tiny Torch upside-down
