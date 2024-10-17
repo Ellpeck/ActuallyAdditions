@@ -156,7 +156,7 @@ public class TileEntityVerticalDigger extends TileEntityInventoryBase implements
                             StackUtil.addAll(this.inv, drops, false);
                             this.setChanged();
 
-                            this.storage.extractEnergy(actualUse, false);
+                            this.storage.extractEnergyInternal(actualUse, false);
                             this.shootParticles(pos.getX(), pos.getY(), pos.getZ());
                         } else {
                             return false;

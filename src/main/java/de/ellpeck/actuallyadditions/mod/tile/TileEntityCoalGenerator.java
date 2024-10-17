@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.crafting.SolidFuelRecipe;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerCoalGenerator;
@@ -108,7 +109,7 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
                 tile.currentBurnTime--;
                 int produce = tile.currentRecipe.value().getTotalEnergy() / tile.currentRecipe.value().getBurnTime();
                 if (produce > 0) {
-                    tile.storage.receiveEnergy(produce, false);
+                    tile.storage.receiveEnergyInternal(produce, false);
                 }
             }
 

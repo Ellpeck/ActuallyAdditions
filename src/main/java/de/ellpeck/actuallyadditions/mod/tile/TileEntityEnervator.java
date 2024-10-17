@@ -72,7 +72,7 @@ public class TileEntityEnervator extends TileEntityInventoryBase implements ISha
                     boolean canTakeUp = capability.map(cap -> cap.getEnergyStored() <= 0).orElse(false);
 
                     if (extracted > 0) {
-                        tile.storage.receiveEnergy(extracted, false);
+                        tile.storage.receiveEnergyInternal(extracted, false);
                     }
 
                     if (canTakeUp) {

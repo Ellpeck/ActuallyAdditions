@@ -111,7 +111,7 @@ public class TileEntityLongRangeBreaker extends TileEntityInventoryBase implemen
                             this.level.levelEvent(2001, coordsBlock, Block.getId(this.level.getBlockState(coordsBlock)));
                             this.level.setBlockAndUpdate(coordsBlock, Blocks.AIR.defaultBlockState());
                             StackUtil.addAll(this.inv, drops, false);
-                            this.storage.extractEnergy(ENERGY_USE, false);
+                            this.storage.extractEnergyInternal(ENERGY_USE, false);
                             this.setChanged();
                         }
                     }

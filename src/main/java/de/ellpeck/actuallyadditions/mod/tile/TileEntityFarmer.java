@@ -213,7 +213,7 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
 
     @Override
     public void extractEnergy(int amount) {
-        this.storage.extractEnergy(amount, false);
+        this.storage.extractEnergyInternal(amount, false);
     }
 
     @Override

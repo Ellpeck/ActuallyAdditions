@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.Mth;
 import net.neoforged.neoforge.energy.EnergyStorage;
 
 public class CustomEnergyStorage extends EnergyStorage {
@@ -30,6 +31,26 @@ public class CustomEnergyStorage extends EnergyStorage {
     public int extractEnergy(int maxExtract, boolean simulate) {
         dirty = true;
         return super.extractEnergy(maxExtract, simulate);
+    }
+
+    public int extractEnergyInternal(int maxExtract, boolean simulate) {
+        int before = this.maxExtract;
+        this.maxExtract = Integer.MAX_VALUE;
+
+        int toReturn = this.extractEnergy(maxExtract, simulate);
+
+        this.maxExtract = before;
+        return toReturn;
+    }
+
+    public int receiveEnergyInternal(int maxReceive, boolean simulate) {
+        int before = this.maxReceive;
+        this.maxReceive = Integer.MAX_VALUE;
+
+        int toReturn = this.receiveEnergy(maxReceive, simulate);
+
+        this.maxReceive = before;
+        return toReturn;
     }
 
     public boolean isDirty() {

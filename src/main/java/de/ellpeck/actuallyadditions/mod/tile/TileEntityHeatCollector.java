@@ -81,7 +81,7 @@ public class TileEntityHeatCollector extends TileEntityBase implements ISharingE
                 }
 
                 if (blocksAround.size() >= BLOCKS_NEEDED) {
-                    tile.storage.receiveEnergy(ENERGY_PRODUCE, false);
+                    tile.storage.receiveEnergyInternal(ENERGY_PRODUCE, false);
                     tile.setChanged();
 
                     tile.disappearTime++;

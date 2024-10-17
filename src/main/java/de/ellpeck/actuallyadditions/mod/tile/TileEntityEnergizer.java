@@ -74,7 +74,7 @@ public class TileEntityEnergizer extends TileEntityInventoryBase implements Menu
                     boolean canTakeUp = capability.map(cap -> cap.getEnergyStored() >= cap.getMaxEnergyStored()).orElse(false);
 
                     if (received > 0) {
-                        tile.storage.extractEnergy(received, false);
+                        tile.storage.extractEnergyInternal(received, false);
                     }
 
                     if (canTakeUp) {

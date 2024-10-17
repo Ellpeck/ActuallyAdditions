@@ -71,7 +71,7 @@ public class TileEntityLavaFactoryController extends TileEntityBase implements I
                 if (tile.currentWorkTime >= 200) {
                     tile.currentWorkTime = 0;
                     level.setBlock(tile.worldPosition.above(), Blocks.LAVA.defaultBlockState(), 2);
-                    tile.storage.extractEnergy(ENERGY_USE, false);
+                    tile.storage.extractEnergyInternal(ENERGY_USE, false);
                 }
             } else {
                 tile.currentWorkTime = 0;

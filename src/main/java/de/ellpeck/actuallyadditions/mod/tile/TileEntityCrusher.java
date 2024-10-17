@@ -131,7 +131,7 @@ public class TileEntityCrusher extends TileEntityInventoryBase implements IButto
                     finishCrushing(SLOT_INPUT_1, SLOT_OUTPUT_1_1, SLOT_OUTPUT_1_2);
                     firstCrushTime = 0;
                 }
-                storage.extractEnergy(ENERGY_USE, false);
+                storage.extractEnergyInternal(ENERGY_USE, false);
             }
             crushed = storage.getEnergyStored() >= ENERGY_USE;
         } else {
@@ -149,7 +149,7 @@ public class TileEntityCrusher extends TileEntityInventoryBase implements IButto
                         finishCrushing(SLOT_INPUT_2, SLOT_OUTPUT_2_1, SLOT_OUTPUT_2_2);
                         secondCrushTime = 0;
                     }
-                    storage.extractEnergy(ENERGY_USE, false);
+                    storage.extractEnergyInternal(ENERGY_USE, false);
                 }
                 crushed = storage.getEnergyStored() >= ENERGY_USE;
             } else {

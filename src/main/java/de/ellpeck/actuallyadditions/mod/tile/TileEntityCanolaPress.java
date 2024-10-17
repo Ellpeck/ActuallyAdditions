@@ -108,7 +108,7 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements Me
                 if ((FluidStack.isSameFluid(r.getOutput(), tile.tank.getFluid()) || tile.tank.isEmpty()) && r.getOutput().getAmount() <= tile.tank.getCapacity() - tile.tank.getFluidAmount()) {
                     if (tile.storage.getEnergyStored() >= ENERGY_USE) {
                         tile.currentProcessTime++;
-                        tile.storage.extractEnergy(ENERGY_USE, false);
+                        tile.storage.extractEnergyInternal(ENERGY_USE, false);
                         if (tile.currentProcessTime >= TIME) {
                             tile.currentProcessTime = 0;
 

@@ -189,7 +189,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
                 }
 
                 this.brewTime++;
-                this.storage.extractEnergy(ENERGY_USED, false);
+                this.storage.extractEnergyInternal(ENERGY_USED, false);
                 if (this.brewTime >= TIME_USED) {
                     this.brewTime = 0;
                     ItemStack output = new ItemStack(ActuallyItems.COFFEE_CUP.get());

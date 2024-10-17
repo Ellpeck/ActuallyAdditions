@@ -141,7 +141,7 @@ public class TileEntityPoweredFurnace extends TileEntityInventoryBase implements
                         tile.finishBurning(SLOT_INPUT_1, SLOT_OUTPUT_1);
                         tile.firstSmeltTime = 0;
                     }
-                    tile.storage.extractEnergy(ENERGY_USE, false);
+                    tile.storage.extractEnergyInternal(ENERGY_USE, false);
                 }
                 smelted = true;
             } else {
@@ -155,7 +155,7 @@ public class TileEntityPoweredFurnace extends TileEntityInventoryBase implements
                         tile.finishBurning(SLOT_INPUT_2, SLOT_OUTPUT_2);
                         tile.secondSmeltTime = 0;
                     }
-                    tile.storage.extractEnergy(ENERGY_USE, false);
+                    tile.storage.extractEnergyInternal(ENERGY_USE, false);
                 }
                 smelted = true;
             } else {

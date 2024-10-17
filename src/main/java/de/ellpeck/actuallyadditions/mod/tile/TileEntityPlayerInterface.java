@@ -96,7 +96,7 @@ public class TileEntityPlayerInterface extends TileEntityBase implements IEnergy
                             int received = Optional.ofNullable(slot.getCapability(Capabilities.EnergyStorage.ITEM))
                                     .map(cap -> cap.receiveEnergy(tile.storage.getEnergyStored(), false)).orElse(0);
                             if (received > 0) {
-                                tile.storage.extractEnergy(received, false);
+                                tile.storage.extractEnergyInternal(received, false);
                             }
                         }
                     } else {

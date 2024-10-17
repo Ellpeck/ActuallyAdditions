@@ -51,7 +51,7 @@ public class TileEntityDisplayStand extends TileEntityInventoryBase implements I
                     int energy = item.getUsePerTick(tile.inv.getStackInSlot(0), tile, tile.ticksElapsed);
                     if (tile.storage.getEnergyStored() >= energy) {
                         if (item.update(tile.inv.getStackInSlot(0), tile, tile.ticksElapsed)) {
-                            tile.storage.extractEnergy(energy, false);
+                            tile.storage.extractEnergyInternal(energy, false);
                         }
                     }
                 }

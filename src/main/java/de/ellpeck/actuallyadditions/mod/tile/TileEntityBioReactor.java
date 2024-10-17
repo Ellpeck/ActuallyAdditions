@@ -116,7 +116,7 @@ public class TileEntityBioReactor extends TileEntityInventoryBase implements Men
                 }
             } else {
                 tile.burnTime--;
-                tile.storage.receiveEnergy(tile.producePerTick, false);
+                tile.storage.receiveEnergyInternal(tile.producePerTick, false);
             }
 
             if ((tile.lastBurnTime != tile.burnTime || tile.lastProducePerTick != tile.producePerTick) && tile.sendUpdateWithInterval()) {

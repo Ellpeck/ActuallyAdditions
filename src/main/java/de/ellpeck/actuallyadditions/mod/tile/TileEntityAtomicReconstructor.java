@@ -185,7 +185,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
 
     @Override
     public void extractEnergy(int amount) {
-        this.storage.extractEnergy(amount, false);
+        this.storage.extractEnergyInternal(amount, false);
     }
 
     @Override

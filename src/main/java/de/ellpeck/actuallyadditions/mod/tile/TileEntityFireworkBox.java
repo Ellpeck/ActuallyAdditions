@@ -259,7 +259,7 @@ public class TileEntityFireworkBox extends TileEntityBase implements IEnergyDisp
         if (this.storage.getEnergyStored() >= USE_PER_SHOT) {
             this.spawnFireworks(this.level, this.worldPosition.getX(), this.worldPosition.getY(), this.worldPosition.getZ());
 
-            this.storage.extractEnergy(USE_PER_SHOT, false);
+            this.storage.extractEnergyInternal(USE_PER_SHOT, false);
         }
     }
 
