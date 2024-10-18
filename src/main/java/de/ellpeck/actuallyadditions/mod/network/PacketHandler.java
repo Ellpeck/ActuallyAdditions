@@ -42,7 +42,6 @@ public final class PacketHandler {
     public static final IDataHandler LASER_HANDLER = new IDataHandler() {
         @Override
         public void handleData(CompoundTag compound, IPayloadContext context) {
-            ActuallyAdditions.LOGGER.info("Received laser update");
             if(context.flow() == PacketFlow.CLIENTBOUND) {
                 PacketHelperClient.handleLaser(compound, context);
             }
@@ -51,7 +50,6 @@ public final class PacketHandler {
     public static final IDataHandler TILE_ENTITY_HANDLER = new IDataHandler() {
         @Override
         public void handleData(CompoundTag compound, IPayloadContext context) {
-            ActuallyAdditions.LOGGER.info("Received tile entity update");
             if(context.flow() == PacketFlow.CLIENTBOUND) {
                 PacketHelperClient.handleTileUpdate(compound, context);
             }
@@ -60,7 +58,6 @@ public final class PacketHandler {
     public static final IDataHandler LASER_PARTICLE_HANDLER = new IDataHandler() {
         @Override
         public void handleData(CompoundTag compound, IPayloadContext context) {
-            ActuallyAdditions.LOGGER.info("Received laser particle update");
             if(context.flow() == PacketFlow.CLIENTBOUND) {
                 PacketHelperClient.handleLaserParticle(compound, context);
             }
@@ -68,7 +65,6 @@ public final class PacketHandler {
     };
     public static final IDataHandler GUI_BUTTON_TO_TILE_HANDLER = (compound, context) -> {
         if (context.player() != null) {
-            ActuallyAdditions.LOGGER.info("Received button press");
             Player player = context.player();
             Level level = player.getServer().getLevel(ResourceKey.create(Registries.DIMENSION, ResourceLocation.tryParse(compound.getString("WorldID"))));
             BlockEntity tile = level.getBlockEntity(new BlockPos(compound.getInt("X"), compound.getInt("Y"), compound.getInt("Z")));
@@ -83,7 +79,6 @@ public final class PacketHandler {
     };
     public static final IDataHandler GUI_BUTTON_TO_CONTAINER_HANDLER = (compound, context) -> {
         if (context.player() != null) {
-            ActuallyAdditions.LOGGER.info("Received button press");
             Player player = context.player();
             Level level = player.getServer().getLevel(ResourceKey.create(Registries.DIMENSION, ResourceLocation.tryParse(compound.getString("WorldID"))));
             Entity entity = level.getEntity(compound.getInt("PlayerID"));
@@ -97,7 +92,6 @@ public final class PacketHandler {
     };
     public static final IDataHandler GUI_NUMBER_TO_TILE_HANDLER = (compound, context) -> {
         if (context.player() != null) {
-            ActuallyAdditions.LOGGER.info("Received number update");
             Player player = context.player();
             Level level = player.getServer().getLevel(ResourceKey.create(Registries.DIMENSION, ResourceLocation.tryParse(compound.getString("WorldID"))));
             BlockEntity tile = level.getBlockEntity(new BlockPos(compound.getInt("X"), compound.getInt("Y"), compound.getInt("Z")));
@@ -109,7 +103,6 @@ public final class PacketHandler {
     };
     public static final IDataHandler GUI_STRING_TO_TILE_HANDLER = (compound, context) -> {
         if (context.player() != null) {
-            ActuallyAdditions.LOGGER.info("Received string update");
             Player player = context.player();
             Level level = player.getServer().getLevel(ResourceKey.create(Registries.DIMENSION, ResourceLocation.tryParse(compound.getString("WorldID"))));
             BlockEntity tile = level.getBlockEntity(new BlockPos(compound.getInt("X"), compound.getInt("Y"), compound.getInt("Z")));
@@ -122,7 +115,6 @@ public final class PacketHandler {
     public static final IDataHandler SYNC_PLAYER_DATA = new IDataHandler() {
         @Override
         public void handleData(CompoundTag compound, IPayloadContext context) {
-            ActuallyAdditions.LOGGER.info("Received player data");
             if(context.flow() == PacketFlow.CLIENTBOUND) {
                 PacketHelperClient.handlePlayerUpdate(compound, context);
             }
@@ -130,7 +122,6 @@ public final class PacketHandler {
     };
     public static final IDataHandler PLAYER_DATA_TO_SERVER = (compound, context) -> {
         if (context.player() != null) {
-            ActuallyAdditions.LOGGER.info("Received player data Server");
             Level level = context.player().getServer().getLevel(ResourceKey.create(Registries.DIMENSION, ResourceLocation.tryParse(compound.getString("World"))));
             Player player = level.getServer().getPlayerList().getPlayer(compound.getUUID("UUID"));
             if (player != null) {

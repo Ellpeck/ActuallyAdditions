@@ -184,9 +184,8 @@ public class CommonEvents {
     @SubscribeEvent
     public void onLogInEvent(PlayerEvent.PlayerLoggedInEvent event) {
         if (!event.getEntity().level().isClientSide && event.getEntity() instanceof ServerPlayer player) {
-            ActuallyAdditions.LOGGER.info("Player " + player.getName() + " with UUID " + player.getUUID() + " logged in.");
             PacketHelperServer.syncPlayerData(player, true);
-            ActuallyAdditions.LOGGER.info("Sending Player Data to player " + player.getName() + " with UUID " + player.getUUID() + ".");
+	        ActuallyAdditions.LOGGER.info("Sending Player Data to player {} with UUID {}.", player.getName(), player.getUUID());
         }
     }
 
