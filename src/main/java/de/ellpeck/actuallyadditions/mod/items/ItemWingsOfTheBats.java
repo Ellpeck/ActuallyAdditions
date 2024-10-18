@@ -13,7 +13,7 @@ package de.ellpeck.actuallyadditions.mod.items;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
-import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
+import de.ellpeck.actuallyadditions.mod.network.PacketHelperServer;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -178,7 +178,7 @@ public class ItemWingsOfTheBats extends ItemBase {
                     }
 
                     if (shouldSend) {
-                        PacketHandlerHelper.syncPlayerData(player, false);
+                        PacketHelperServer.syncPlayerData(player, false);
                         data.shouldDisableBatWings = false; //was set only temporarily to send it
                     }
                 } else {

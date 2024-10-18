@@ -12,7 +12,7 @@ package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFurnaceDouble;
-import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
+import de.ellpeck.actuallyadditions.mod.network.PacketHelperClient;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityPoweredFurnace;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.ChatFormatting;
@@ -54,7 +54,7 @@ public class GuiFurnaceDouble extends AAScreen<ContainerFurnaceDouble> {
     public void init() {
         super.init();
         this.energy = new EnergyDisplay(this.leftPos + 27, this.topPos + 5, this.tileFurnace.storage);
-        this.buttonAutoSplit = Button.builder(Component.literal("S"), (button) -> PacketHandlerHelper.sendButtonPacket(this.tileFurnace, 0))
+        this.buttonAutoSplit = Button.builder(Component.literal("S"), (button) -> PacketHelperClient.sendButtonPacket(this.tileFurnace, 0))
                 .bounds(this.getGuiLeft(), this.topPos + 5, 16, 16).build();
         buttonAutoSplit.setFGColor(this.tileFurnace.isAutoSplit ? ChatFormatting.DARK_GREEN.getColor() : ChatFormatting.RED.getColor());
         this.addRenderableWidget(this.buttonAutoSplit);

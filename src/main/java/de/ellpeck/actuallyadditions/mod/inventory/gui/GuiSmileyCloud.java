@@ -13,7 +13,7 @@
 //
 //import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 //import de.ellpeck.actuallyadditions.mod.inventory.ContainerSmileyCloud;
-//import de.ellpeck.actuallyadditions.mod.network.PacketClientToServer;
+//import de.ellpeck.actuallyadditions.mod.network.packet.PacketClientToServer;
 //import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 //import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 //import de.ellpeck.actuallyadditions.mod.tile.TileEntitySmileyCloud;

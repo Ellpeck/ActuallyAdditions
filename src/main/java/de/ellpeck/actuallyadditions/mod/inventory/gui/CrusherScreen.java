@@ -11,7 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import de.ellpeck.actuallyadditions.mod.inventory.CrusherContainer;
-import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
+import de.ellpeck.actuallyadditions.mod.network.PacketHelperClient;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityCrusher;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.ChatFormatting;
@@ -62,7 +62,7 @@ public class CrusherScreen extends AAScreen<CrusherContainer> {
 
     protected void actionPerformed(int id) {
         if (this.isDouble && id == 0) {
-            PacketHandlerHelper.sendButtonPacket(this.tileGrinder, id);
+            PacketHelperClient.sendButtonPacket(this.tileGrinder, id);
         }
     }
 

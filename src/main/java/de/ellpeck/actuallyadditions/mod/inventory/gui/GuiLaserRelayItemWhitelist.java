@@ -12,9 +12,9 @@ package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerLaserRelayItemWhitelist;
-import de.ellpeck.actuallyadditions.mod.network.PacketClientToServer;
+import de.ellpeck.actuallyadditions.mod.network.packet.PacketClientToServer;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
-import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
+import de.ellpeck.actuallyadditions.mod.network.PacketHelperClient;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayItemAdvanced;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.ChatFormatting;
@@ -71,14 +71,14 @@ public class GuiLaserRelayItemWhitelist extends AAScreen<ContainerLaserRelayItem
         this.buttonSmartWhitelistLeft = this.addRenderableWidget(Button.builder(
                         Component.literal("S"),
                         (button) -> {
-                            PacketHandlerHelper.sendButtonPacket(this.tile, 2);
+                            PacketHelperClient.sendButtonPacket(this.tile, 2);
                         }).bounds(this.leftPos + 3, this.topPos + 79, 16, 16)
                 .build());
 
         this.buttonSmartWhitelistRight = this.addRenderableWidget(Button.builder(
                         Component.literal("S"),
                         (button) -> {
-                            PacketHandlerHelper.sendButtonPacket(this.tile, 3);
+                            PacketHelperClient.sendButtonPacket(this.tile, 3);
                         }).bounds(this.leftPos + 157, this.topPos + 79, 16, 16)
                 .build());
     }

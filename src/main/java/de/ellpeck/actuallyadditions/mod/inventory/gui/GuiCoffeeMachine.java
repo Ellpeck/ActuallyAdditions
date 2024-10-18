@@ -12,7 +12,7 @@ package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerCoffeeMachine;
-import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
+import de.ellpeck.actuallyadditions.mod.network.PacketHelperClient;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityCoffeeMachine;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.client.Minecraft;
@@ -46,7 +46,7 @@ public class GuiCoffeeMachine extends AAScreen<ContainerCoffeeMachine> {
         super.init();
 
         this.addRenderableWidget(new Button.Builder(Component.translatable("info.actuallyadditions.gui.ok"),
-                (b) -> PacketHandlerHelper.sendButtonPacket(this.machine, 0))
+                (b) -> PacketHelperClient.sendButtonPacket(this.machine, 0))
                 .bounds(this.leftPos + 60, this.topPos + 11, 58, 20).build());
 
         this.energy = new EnergyDisplay(this.leftPos + 16, this.topPos + 5, this.machine.storage);

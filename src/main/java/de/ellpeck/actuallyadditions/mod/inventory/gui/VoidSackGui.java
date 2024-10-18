@@ -12,7 +12,7 @@ package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import de.ellpeck.actuallyadditions.mod.inventory.VoidSackContainer;
-import de.ellpeck.actuallyadditions.mod.network.PacketClientToServer;
+import de.ellpeck.actuallyadditions.mod.network.packet.PacketClientToServer;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.ChatFormatting;

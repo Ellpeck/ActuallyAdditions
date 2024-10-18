@@ -1,7 +1,7 @@
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import de.ellpeck.actuallyadditions.mod.inventory.ItemTagContainer;
-import de.ellpeck.actuallyadditions.mod.network.PacketClientToServer;
+import de.ellpeck.actuallyadditions.mod.network.packet.PacketClientToServer;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;

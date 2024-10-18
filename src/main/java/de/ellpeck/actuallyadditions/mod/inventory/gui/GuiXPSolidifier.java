@@ -12,7 +12,7 @@ package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerXPSolidifier;
-import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
+import de.ellpeck.actuallyadditions.mod.network.PacketHelperClient;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityXPSolidifier;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.client.gui.GuiGraphics;
@@ -39,39 +39,39 @@ public class GuiXPSolidifier extends AAScreen<ContainerXPSolidifier> {
         super.init();
 
         Button buttonOne = this.addRenderableWidget(Button.builder(Component.literal("1"), btn -> {
-            PacketHandlerHelper.sendButtonPacket(this.solidifier, 0);
+            PacketHelperClient.sendButtonPacket(this.solidifier, 0);
             this.solidifier.onButtonPressed(0, minecraft.player);
         }).bounds(this.leftPos + 62, this.topPos + 44, 16, 16).build());
         Button buttonFive = this.addRenderableWidget(Button.builder(Component.literal("5"), btn -> {
-            PacketHandlerHelper.sendButtonPacket(this.solidifier, 1);
+            PacketHelperClient.sendButtonPacket(this.solidifier, 1);
             this.solidifier.onButtonPressed(1, minecraft.player);
         }).bounds(this.leftPos + 80, this.topPos + 44, 16, 16).build());
         Button buttonTen = this.addRenderableWidget(Button.builder(Component.literal("10"), btn -> {
-            PacketHandlerHelper.sendButtonPacket(this.solidifier, 2);
+            PacketHelperClient.sendButtonPacket(this.solidifier, 2);
             this.solidifier.onButtonPressed(2, minecraft.player);
         }).bounds(this.leftPos + 99, this.topPos + 44, 16, 16).build());
         Button buttonTwenty = this.addRenderableWidget(Button.builder(Component.literal("20"), btn -> {
-            PacketHandlerHelper.sendButtonPacket(this.solidifier, 3);
+            PacketHelperClient.sendButtonPacket(this.solidifier, 3);
             this.solidifier.onButtonPressed(3, minecraft.player);
         }).bounds(this.leftPos + 62, this.topPos + 61, 16, 16).build());
         Button buttonThirty = this.addRenderableWidget(Button.builder(Component.literal("30"), btn -> {
-            PacketHandlerHelper.sendButtonPacket(this.solidifier, 4);
+            PacketHelperClient.sendButtonPacket(this.solidifier, 4);
             this.solidifier.onButtonPressed(4, minecraft.player);
         }).bounds(this.leftPos + 80, this.topPos + 61, 16, 16).build());
         Button buttonForty = this.addRenderableWidget(Button.builder(Component.literal("40"), btn -> {
-            PacketHandlerHelper.sendButtonPacket(this.solidifier, 5);
+            PacketHelperClient.sendButtonPacket(this.solidifier, 5);
             this.solidifier.onButtonPressed(5, minecraft.player);
         }).bounds(this.leftPos + 99, this.topPos + 61, 16, 16).build());
         Button buttonFifty = this.addRenderableWidget(Button.builder(Component.literal("50"), btn -> {
-            PacketHandlerHelper.sendButtonPacket(this.solidifier, 6);
+            PacketHelperClient.sendButtonPacket(this.solidifier, 6);
             this.solidifier.onButtonPressed(6, minecraft.player);
         }).bounds(this.leftPos + 62, this.topPos + 78, 16, 16).build());
         Button buttonSixtyFour = this.addRenderableWidget(Button.builder(Component.literal("64"), btn -> {
-            PacketHandlerHelper.sendButtonPacket(this.solidifier, 7);
+            PacketHelperClient.sendButtonPacket(this.solidifier, 7);
             this.solidifier.onButtonPressed(7, minecraft.player);
         }).bounds(this.leftPos + 80, this.topPos + 78, 16, 16).build());
         Button buttonAll = this.addRenderableWidget(Button.builder(Component.literal("All"), btn -> {
-            PacketHandlerHelper.sendButtonPacket(this.solidifier, 8);
+            PacketHelperClient.sendButtonPacket(this.solidifier, 8);
             this.solidifier.onButtonPressed(8, minecraft.player);
         }).bounds(this.leftPos + 99, this.topPos + 78, 16, 16).build());
     }

@@ -12,7 +12,7 @@ package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerPhantomPlacer;
-import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
+import de.ellpeck.actuallyadditions.mod.network.PacketHelperClient;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityPhantomPlacer;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.ChatFormatting;
@@ -45,7 +45,7 @@ public class GuiPhantomPlacer extends AAScreen<ContainerPhantomPlacer> {
         super.init();
 
         if (!this.placer.isBreaker) {
-            buttonSide = Button.builder(Component.literal(this.getSide()), (button) -> PacketHandlerHelper.sendButtonPacket(this.placer, 0))
+            buttonSide = Button.builder(Component.literal(this.getSide()), (button) -> PacketHelperClient.sendButtonPacket(this.placer, 0))
                     .bounds(this.leftPos + 63, this.topPos + 75, 50, 20).build();
             this.addRenderableWidget(buttonSide);
         }

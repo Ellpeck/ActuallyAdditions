@@ -11,7 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFireworkBox;
-import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
+import de.ellpeck.actuallyadditions.mod.network.PacketHelperClient;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityFireworkBox;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.client.gui.GuiGraphics;
@@ -45,20 +45,20 @@ public class GuiFireworkBox extends AbstractContainerScreen<ContainerFireworkBox
 
         DecimalFormat intFormatter = new DecimalFormat("0");
         int left = this.getGuiLeft() + 2;
-        this.addRenderableWidget(new CustomSlider(left, this.getGuiTop() + 2, Component.literal("Value Play"), 0F, 5F, this.tile.intValuePlay, intFormatter, (slider) -> PacketHandlerHelper.sendNumberPacket(this.tile, slider.getValue(), 0)));
-        this.addRenderableWidget(new CustomSlider(left, this.getGuiTop() + 23, Component.literal("Average Charge Amount"), 1F, 4F, this.tile.chargeAmount, intFormatter, (slider) -> PacketHandlerHelper.sendNumberPacket(this.tile, slider.getValue(), 1)));
-        this.addRenderableWidget(new CustomSlider(left, this.getGuiTop() + 44, Component.literal("Average Flight Time"), 1F, 3F, this.tile.flightTime, intFormatter, (slider) -> PacketHandlerHelper.sendNumberPacket(this.tile, slider.getValue(), 2)));
-        this.addRenderableWidget(new CustomSlider(left, this.getGuiTop() + 65, Component.literal("Effect Chance"), 0F, 1F, this.tile.trailOrFlickerChance, null, (slider) -> PacketHandlerHelper.sendNumberPacket(this.tile, slider.getValue(), 3)));
-        this.addRenderableWidget(new CustomSlider(left, this.getGuiTop() + 86, Component.literal("Flicker/Trail Ratio"), 0F, 1F, this.tile.flickerChance, null, (slider) -> PacketHandlerHelper.sendNumberPacket(this.tile, slider.getValue(), 4)));
-        this.addRenderableWidget(new CustomSlider(left, this.getGuiTop() + 107, Component.literal("Color Amount"), 1, 6, this.tile.colorAmount, intFormatter, (slider) -> PacketHandlerHelper.sendNumberPacket(this.tile, slider.getValue(), 5)));
+        this.addRenderableWidget(new CustomSlider(left, this.getGuiTop() + 2, Component.literal("Value Play"), 0F, 5F, this.tile.intValuePlay, intFormatter, (slider) -> PacketHelperClient.sendNumberPacket(this.tile, slider.getValue(), 0)));
+        this.addRenderableWidget(new CustomSlider(left, this.getGuiTop() + 23, Component.literal("Average Charge Amount"), 1F, 4F, this.tile.chargeAmount, intFormatter, (slider) -> PacketHelperClient.sendNumberPacket(this.tile, slider.getValue(), 1)));
+        this.addRenderableWidget(new CustomSlider(left, this.getGuiTop() + 44, Component.literal("Average Flight Time"), 1F, 3F, this.tile.flightTime, intFormatter, (slider) -> PacketHelperClient.sendNumberPacket(this.tile, slider.getValue(), 2)));
+        this.addRenderableWidget(new CustomSlider(left, this.getGuiTop() + 65, Component.literal("Effect Chance"), 0F, 1F, this.tile.trailOrFlickerChance, null, (slider) -> PacketHelperClient.sendNumberPacket(this.tile, slider.getValue(), 3)));
+        this.addRenderableWidget(new CustomSlider(left, this.getGuiTop() + 86, Component.literal("Flicker/Trail Ratio"), 0F, 1F, this.tile.flickerChance, null, (slider) -> PacketHelperClient.sendNumberPacket(this.tile, slider.getValue(), 4)));
+        this.addRenderableWidget(new CustomSlider(left, this.getGuiTop() + 107, Component.literal("Color Amount"), 1, 6, this.tile.colorAmount, intFormatter, (slider) -> PacketHelperClient.sendNumberPacket(this.tile, slider.getValue(), 5)));
 
-        this.addRenderableWidget(new CustomSlider(left + 150, this.getGuiTop() + 2, Component.literal("Small Ball"), 0F, 1F, this.tile.typeChance0, null, (slider) -> PacketHandlerHelper.sendNumberPacket(this.tile, slider.getValue(), 6)));
-        this.addRenderableWidget(new CustomSlider(left + 150, this.getGuiTop() + 23, Component.literal("Large Ball"), 0F, 1F, this.tile.typeChance1, null, (slider) -> PacketHandlerHelper.sendNumberPacket(this.tile, slider.getValue(), 7)));
-        this.addRenderableWidget(new CustomSlider(left + 150, this.getGuiTop() + 44, Component.literal("Star Shape"), 0F, 1F, this.tile.typeChance2, null, (slider) -> PacketHandlerHelper.sendNumberPacket(this.tile, slider.getValue(), 8)));
-        this.addRenderableWidget(new CustomSlider(left + 150, this.getGuiTop() + 65, Component.literal("Creeper Shape"), 0F, 1F, this.tile.typeChance3, null, (slider) -> PacketHandlerHelper.sendNumberPacket(this.tile, slider.getValue(), 9)));
-        this.addRenderableWidget(new CustomSlider(left + 150, this.getGuiTop() + 86, Component.literal("Burst"), 0F, 1F, this.tile.typeChance4, null, (slider) -> PacketHandlerHelper.sendNumberPacket(this.tile, slider.getValue(), 10)));
+        this.addRenderableWidget(new CustomSlider(left + 150, this.getGuiTop() + 2, Component.literal("Small Ball"), 0F, 1F, this.tile.typeChance0, null, (slider) -> PacketHelperClient.sendNumberPacket(this.tile, slider.getValue(), 6)));
+        this.addRenderableWidget(new CustomSlider(left + 150, this.getGuiTop() + 23, Component.literal("Large Ball"), 0F, 1F, this.tile.typeChance1, null, (slider) -> PacketHelperClient.sendNumberPacket(this.tile, slider.getValue(), 7)));
+        this.addRenderableWidget(new CustomSlider(left + 150, this.getGuiTop() + 44, Component.literal("Star Shape"), 0F, 1F, this.tile.typeChance2, null, (slider) -> PacketHelperClient.sendNumberPacket(this.tile, slider.getValue(), 8)));
+        this.addRenderableWidget(new CustomSlider(left + 150, this.getGuiTop() + 65, Component.literal("Creeper Shape"), 0F, 1F, this.tile.typeChance3, null, (slider) -> PacketHelperClient.sendNumberPacket(this.tile, slider.getValue(), 9)));
+        this.addRenderableWidget(new CustomSlider(left + 150, this.getGuiTop() + 86, Component.literal("Burst"), 0F, 1F, this.tile.typeChance4, null, (slider) -> PacketHelperClient.sendNumberPacket(this.tile, slider.getValue(), 10)));
 
-        this.addRenderableWidget(new CustomSlider(left + 150, this.getGuiTop() + 107, Component.literal("Area of Effect"), 0, 4, this.tile.areaOfEffect, intFormatter, (slider) -> PacketHandlerHelper.sendNumberPacket(this.tile, slider.getValue(), 11)));
+        this.addRenderableWidget(new CustomSlider(left + 150, this.getGuiTop() + 107, Component.literal("Area of Effect"), 0, 4, this.tile.areaOfEffect, intFormatter, (slider) -> PacketHelperClient.sendNumberPacket(this.tile, slider.getValue(), 11)));
     }
 
     @Override

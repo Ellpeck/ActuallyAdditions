@@ -21,7 +21,7 @@ import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.items.DrillItem;
 import de.ellpeck.actuallyadditions.mod.items.ItemTag;
 import de.ellpeck.actuallyadditions.mod.items.Sack;
-import de.ellpeck.actuallyadditions.mod.network.PacketHandlerHelper;
+import de.ellpeck.actuallyadditions.mod.network.PacketHelperServer;
 import de.ellpeck.actuallyadditions.mod.sack.SackManager;
 import de.ellpeck.actuallyadditions.mod.tile.FilterSettings;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
@@ -184,7 +184,8 @@ public class CommonEvents {
     @SubscribeEvent
     public void onLogInEvent(PlayerEvent.PlayerLoggedInEvent event) {
         if (!event.getEntity().level().isClientSide && event.getEntity() instanceof ServerPlayer player) {
-	        PacketHandlerHelper.syncPlayerData(player, true);
+            ActuallyAdditions.LOGGER.info("Player " + player.getName() + " with UUID " + player.getUUID() + " logged in.");
+            PacketHelperServer.syncPlayerData(player, true);
             ActuallyAdditions.LOGGER.info("Sending Player Data to player " + player.getName() + " with UUID " + player.getUUID() + ".");
         }
     }

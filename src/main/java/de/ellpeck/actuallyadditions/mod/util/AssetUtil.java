@@ -17,7 +17,7 @@ import com.mojang.math.Axis;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.render.RenderTypes;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
-import de.ellpeck.actuallyadditions.mod.network.PacketServerToClient;
+import de.ellpeck.actuallyadditions.mod.network.packet.PacketServerToClient;
 import de.ellpeck.actuallyadditions.mod.particle.ParticleBeam;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
