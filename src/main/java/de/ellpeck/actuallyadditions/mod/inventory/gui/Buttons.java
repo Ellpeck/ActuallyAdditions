@@ -11,6 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 
 import javax.annotation.Nonnull;
 
+@Deprecated(forRemoval = true) //Unused because vanilla's Button class can render small just fine and even allows text scrolling
 public class Buttons {
     
     @Deprecated(forRemoval = true) //Vanilla's Button class can render small just fine and even allows text scrolling
