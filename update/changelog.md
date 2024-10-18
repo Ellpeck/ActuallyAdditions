@@ -1,3 +1,6 @@
+# 1.3.4+mc1.21.1
+* Fix the way the Atomic Reconstructor handles the level when adding tooltips. Fixes an issue that would cause CM2E to crash
+
 # 1.3.3+mc1.21.1
 * Fix crash on server start
 
