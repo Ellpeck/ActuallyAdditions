@@ -163,8 +163,8 @@ public class BlockAtomicReconstructor extends FullyDirectionalBlock.Container im
 
             if (this.lastSysTime + 3000 < sysTime) {
                 this.lastSysTime = sysTime;
-                if (Minecraft.getInstance().level != null) {
-                    RandomSource random = Minecraft.getInstance().level.random;
+                if (context.level() != null) {
+                    RandomSource random = context.level().random;
                     this.toPick1 = random.nextInt(NAME_FLAVOR_AMOUNTS_1) + 1;
                     this.toPick2 = random.nextInt(NAME_FLAVOR_AMOUNTS_2) + 1;
                 }
