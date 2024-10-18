@@ -52,7 +52,7 @@ public class RenderEmpowerer implements BlockEntityRenderer<TileEntityEmpowerer>
             try {
                 AssetUtil.renderItemInWorld(stack, combinedLight, combinedOverlay, matrices, buffer);
             } catch (Exception e) {
-                ActuallyAdditions.LOGGER.error("Something went wrong trying to render an item in an empowerer! The item is " + BuiltInRegistries.ITEM.getKey(stack.getItem()) + "!", e);
+	            ActuallyAdditions.LOGGER.error("Something went wrong trying to render an item in an empowerer! The item is {}!", BuiltInRegistries.ITEM.getKey(stack.getItem()), e);
             }
 
             matrices.popPose();

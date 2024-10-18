@@ -199,7 +199,7 @@ public final class WorldUtil {
                 //setHandItemWithoutAnnoyingSound(fake, Hand.MAIN_HAND, heldBefore);
                 return result;
             } catch (Exception e) {
-                ActuallyAdditions.LOGGER.error("Something that places Blocks at " + offsetPos.getX() + ", " + offsetPos.getY() + ", " + offsetPos.getZ() + " in World " + level.dimension() + " threw an Exception! Don't let that happen again!", e);
+	            ActuallyAdditions.LOGGER.error("Something that places Blocks at {}, {}, {} in World {} threw an Exception! Don't let that happen again!", offsetPos.getX(), offsetPos.getY(), offsetPos.getZ(), level.dimension(), e);
             }
         }
         return stack;

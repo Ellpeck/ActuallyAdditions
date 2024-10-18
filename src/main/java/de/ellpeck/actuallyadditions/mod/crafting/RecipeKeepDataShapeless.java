@@ -97,7 +97,7 @@ public class RecipeKeepDataShapeless extends ShapelessRecipe {
                 RecipeSerializer.SHAPELESS_RECIPE.streamCodec().encode(pBuffer, pRecipe);
             }
             catch (Exception e) {
-                ActuallyAdditions.LOGGER.info("Failed to serialize " + NAME + " Recipe to packet: " + e.getMessage());
+	            ActuallyAdditions.LOGGER.info("Failed to serialize {} Recipe to packet: {}", NAME, e.getMessage());
                 throw e;
             }
         }

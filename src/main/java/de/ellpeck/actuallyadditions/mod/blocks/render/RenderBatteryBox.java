@@ -86,7 +86,7 @@ public class RenderBatteryBox implements BlockEntityRenderer<TileEntityBatteryBo
         try {
             AssetUtil.renderItemInWorld(stack, combinedLight, combinedOverlay, matrices, buffer);
         } catch (Exception e) {
-            ActuallyAdditions.LOGGER.error("Something went wrong trying to render an item in a battery box! The item is " + BuiltInRegistries.ITEM.getKey(stack.getItem()) + "!", e);
+	        ActuallyAdditions.LOGGER.error("Something went wrong trying to render an item in a battery box! The item is {}!", BuiltInRegistries.ITEM.getKey(stack.getItem()), e);
         }
 
         matrices.popPose();

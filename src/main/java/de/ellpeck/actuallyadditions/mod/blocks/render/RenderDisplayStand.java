@@ -50,7 +50,7 @@ public class RenderDisplayStand implements BlockEntityRenderer<TileEntityDisplay
         try {
             AssetUtil.renderItemInWorld(stack, combinedLightIn, combinedOverlayIn, matrices, buffer);
         } catch (Exception e) {
-            ActuallyAdditions.LOGGER.error("Something went wrong trying to render an item in a display stand! The item is " + BuiltInRegistries.ITEM.getKey(stack.getItem()) + "!", e);
+	        ActuallyAdditions.LOGGER.error("Something went wrong trying to render an item in a display stand! The item is {}!", BuiltInRegistries.ITEM.getKey(stack.getItem()), e);
         }
 
         matrices.popPose();

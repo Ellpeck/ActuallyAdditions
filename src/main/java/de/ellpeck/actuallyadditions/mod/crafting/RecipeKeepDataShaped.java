@@ -77,7 +77,7 @@ public class RecipeKeepDataShaped extends ShapedRecipe {
                 RecipeSerializer.SHAPED_RECIPE.streamCodec().encode(buffer, recipe);
             }
             catch (Exception exception) {
-                ActuallyAdditions.LOGGER.info("Error writing "+ NAME +" Recipe to packet: ", exception);
+	            ActuallyAdditions.LOGGER.info("Error writing {} Recipe to packet: ", NAME, exception);
                 throw exception;
             }
         }

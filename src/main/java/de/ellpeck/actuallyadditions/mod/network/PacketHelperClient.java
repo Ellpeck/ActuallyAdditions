@@ -68,7 +68,7 @@ public final class PacketHelperClient {
             PlayerData.getDataFromPlayer(player).readFromNBT(dataTag, false);
 
             if (compound.getBoolean("Log")) {
-                ActuallyAdditions.LOGGER.info("Receiving (new or changed) Player Data for player " + player.getName() + ".");
+	            ActuallyAdditions.LOGGER.info("Receiving (new or changed) Player Data for player {}.", player.getName());
             }
         } else {
             ActuallyAdditions.LOGGER.error("Tried to receive Player Data for the current player, but he doesn't seem to be present!");

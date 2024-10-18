@@ -142,10 +142,10 @@ public final class PacketHandler {
                 WorldData.get(level).setDirty();
 
                 if (compound.getBoolean("Log")) {
-                    ActuallyAdditions.LOGGER.info("Receiving changed Player Data for player " + player.getName() + ".");
+	                ActuallyAdditions.LOGGER.info("Receiving changed Player Data for player {}.", player.getName());
                 }
             } else {
-                ActuallyAdditions.LOGGER.error("Tried to receive Player Data for UUID " + compound.getUUID("UUID") + ", but he doesn't seem to be present!");
+	            ActuallyAdditions.LOGGER.error("Tried to receive Player Data for UUID {}, but he doesn't seem to be present!", compound.getUUID("UUID"));
             }
         }
     };
