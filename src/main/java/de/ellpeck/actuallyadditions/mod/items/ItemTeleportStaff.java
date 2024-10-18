@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
@@ -40,10 +39,10 @@ public class ItemTeleportStaff extends ItemEnergy {
                 Vec3 pos = Vec3.atBottomCenterOf(BlockPos.containing(location.x, location.y, location.z));
                 int baseUse = 200;
                 int use = baseUse + (int) (baseUse * Math.sqrt(player.blockPosition().distManhattan(BlockPos.containing(pos.x, pos.y, pos.z))));
-                ActuallyAdditions.LOGGER.info("Use: " + use + " Energy: " + this.getEnergyStored(stack));
-                ActuallyAdditions.LOGGER.info("Distance: " + Math.sqrt(player.blockPosition().distSqr(BlockPos.containing(pos.x, pos.y, pos.z))));
-                ActuallyAdditions.LOGGER.info("Player: " + player.blockPosition());
-                ActuallyAdditions.LOGGER.info("Pos: " + pos);
+//                ActuallyAdditions.LOGGER.info("Use: " + use + " Energy: " + this.getEnergyStored(stack));
+//                ActuallyAdditions.LOGGER.info("Distance: " + Math.sqrt(player.blockPosition().distSqr(BlockPos.containing(pos.x, pos.y, pos.z))));
+//                ActuallyAdditions.LOGGER.info("Player: " + player.blockPosition());
+//                ActuallyAdditions.LOGGER.info("Pos: " + pos);
                 if (this.getEnergyStored(stack) >= use) {
                     ((ServerPlayer) player).connection.teleport(pos.x, pos.y + 1F, pos.z, player.getYRot(), player.getXRot());
                     player.removeVehicle();
