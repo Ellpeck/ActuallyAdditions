@@ -140,11 +140,11 @@ public class TileEntityPhantomPlacer extends TileEntityInventoryBase implements 
     @Override
     public boolean hasBoundPosition() {
         if (this.boundPosition != null) {
-            if (this.level.getBlockEntity(this.boundPosition) instanceof IPhantomTile || this.getBlockPos().getX() == this.boundPosition.getX() && this.getBlockPos().getY() == this.boundPosition.getY() && this.getBlockPos().getZ() == this.boundPosition.getZ() && this.level.dimensionType() == this.level.dimensionType()) {
+            if (this.level.getBlockEntity(this.boundPosition) instanceof IPhantomTile || this.getBlockPos().getX() == this.boundPosition.getX() && this.getBlockPos().getY() == this.boundPosition.getY() && this.getBlockPos().getZ() == this.boundPosition.getZ()) { // && this.level.dimensionType() == this.level.dimensionType()
                 this.boundPosition = null;
                 return false;
             }
-            return this.level.dimensionType() == this.level.dimensionType();
+            return true;//this.level.dimensionType() == this.level.dimensionType(); 
         }
         return false;
     }
