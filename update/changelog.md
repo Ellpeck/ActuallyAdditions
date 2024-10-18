@@ -1,3 +1,6 @@
+# 1.3.3+mc1.21.1
+* Fix crash on server start
+
 # 1.3.2+mc1.21.1
 * Fix the gui of the Energizer/Enervator crashing
 
