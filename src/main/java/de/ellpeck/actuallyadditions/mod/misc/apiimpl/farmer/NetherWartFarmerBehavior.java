@@ -13,7 +13,6 @@ package de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer;
 import de.ellpeck.actuallyadditions.api.farmer.FarmerResult;
 import de.ellpeck.actuallyadditions.api.farmer.IFarmerBehavior;
 import de.ellpeck.actuallyadditions.api.internal.IFarmer;
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;

@@ -13,19 +13,8 @@ package de.ellpeck.actuallyadditions.mod.items;
 import de.ellpeck.actuallyadditions.api.misc.IGoggles;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemArmorAA;
 import de.ellpeck.actuallyadditions.mod.material.ArmorMaterials;
-import io.netty.util.internal.ConcurrentSet;
-import net.minecraft.client.Minecraft;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.phys.AABB;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.loading.FMLEnvironment;
-import net.neoforged.neoforge.client.event.ClientTickEvent;
-import net.neoforged.neoforge.common.NeoForge;
-
-import java.util.List;
-import java.util.Set;
 
 public class ItemEngineerGoggles extends ItemArmorAA implements IGoggles {
 
