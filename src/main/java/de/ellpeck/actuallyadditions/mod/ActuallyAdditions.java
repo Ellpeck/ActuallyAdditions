@@ -35,7 +35,6 @@ import de.ellpeck.actuallyadditions.mod.misc.apiimpl.LaserRelayConnectionHandler
 import de.ellpeck.actuallyadditions.mod.misc.apiimpl.MethodHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.particle.ActuallyParticles;
-import de.ellpeck.actuallyadditions.mod.update.UpdateChecker;
 import de.ellpeck.actuallyadditions.mod.util.ResourceReloader;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -129,7 +128,7 @@ public class ActuallyAdditions {
 
         commonCapsLoaded = false; // Loader.isModLoaded("commoncapabilities");
 
-        new UpdateChecker();
+//        new UpdateChecker();
     }
 
     private void onConfigReload(ModConfigEvent event) {

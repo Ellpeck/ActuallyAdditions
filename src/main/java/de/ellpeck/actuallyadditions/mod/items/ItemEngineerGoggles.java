@@ -29,63 +29,16 @@ import java.util.Set;
 
 public class ItemEngineerGoggles extends ItemArmorAA implements IGoggles {
 
-    private final Set<Entity> cachedGlowingEntities = new ConcurrentSet<>();
-
     private final boolean displayMobs;
 
     public ItemEngineerGoggles(boolean displayMobs) {
         super(ArmorMaterials.GOGGLES, Type.HELMET, ActuallyItems.defaultProps().setNoRepair().durability(0));
         this.displayMobs = displayMobs;
-
-        if (FMLEnvironment.dist.isClient()) {
-            NeoForge.EVENT_BUS.register(this);
-        }
-
     }
 
     public static boolean isWearing(Player player) {
         ItemStack face = player.getInventory().armor.get(3);
         return !face.isEmpty() && face.getItem() instanceof IGoggles;
-    }
-
-    
-    @SubscribeEvent
-    public void onClientTick(ClientTickEvent.Post event) {
-        Player player = Minecraft.getInstance().player;
-        if (player != null && isWearing(player)) {
-            ItemStack face = player.getInventory().armor.get(3);
-            if (((IGoggles) face.getItem()).displaySpectralMobs()) {
-                double range = 8;
-                AABB aabb = new AABB(player.getX() - range, player.getY() - range, player.getZ() - range, player.getX() + range, player.getY() + range, player.getZ() + range);
-                List<Entity> entities = player.level().getEntitiesOfClass(Entity.class, aabb);
-                if (entities != null && !entities.isEmpty()) {
-                    this.cachedGlowingEntities.addAll(entities);
-                }
-
-                if (!this.cachedGlowingEntities.isEmpty()) {
-                    for (Entity entity : this.cachedGlowingEntities) {
-                        if (!entity.isAlive() || entity.distanceToSqr(player.getX(), player.getY(), player.getZ()) > range * range) {
-                            entity.setGlowingTag(false);
-
-                            this.cachedGlowingEntities.remove(entity);
-                        } else {
-                            entity.setGlowingTag(true);
-                        }
-                    }
-                }
-
-                return;
-            }
-        }
-
-        if (!this.cachedGlowingEntities.isEmpty()) {
-            for (Entity entity : this.cachedGlowingEntities) {
-                if (entity.isAlive()) {
-                    entity.setGlowingTag(false);
-                }
-            }
-            this.cachedGlowingEntities.clear();
-        }
     }
 
     @Override

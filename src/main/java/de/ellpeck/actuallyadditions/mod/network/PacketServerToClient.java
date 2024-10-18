@@ -62,7 +62,7 @@ public record PacketServerToClient(CompoundTag data, IDataHandler handler) imple
                 if (message.data != null && message.handler != null) {
                     message.handler.handleData(message.data, context);
                 }
-                }
-            );
+            }
+        );
     }
 }

@@ -16,10 +16,7 @@ import de.ellpeck.actuallyadditions.mod.data.WorldData;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.network.gui.INumberReactor;
 import de.ellpeck.actuallyadditions.mod.network.gui.IStringReactor;
-import de.ellpeck.actuallyadditions.mod.particle.ParticleLaserItem;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
@@ -28,9 +25,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
@@ -43,41 +40,24 @@ public final class PacketHandler {
     public static final List<IDataHandler> DATA_HANDLERS = new ArrayList<>();
     public static final IDataHandler LASER_HANDLER = new IDataHandler() {
         @Override
-        
         public void handleData(CompoundTag compound, IPayloadContext context) {
             AssetUtil.spawnLaserWithTimeClient(compound.getDouble("StartX"), compound.getDouble("StartY"), compound.getDouble("StartZ"), compound.getDouble("EndX"), compound.getDouble("EndY"), compound.getDouble("EndZ"), compound.getInt("Color"), compound.getInt("MaxAge"), compound.getDouble("RotationTime"), compound.getFloat("Size"), compound.getFloat("Alpha"));
         }
     };
     public static final IDataHandler TILE_ENTITY_HANDLER = new IDataHandler() {
         @Override
-        
         public void handleData(CompoundTag compound, IPayloadContext context) {
-            Level world = Minecraft.getInstance().level;
-            if (world != null) {
-                BlockEntity tile = world.getBlockEntity(new BlockPos(compound.getInt("X"), compound.getInt("Y"), compound.getInt("Z")));
-                if (tile instanceof TileEntityBase) {
-                    ((TileEntityBase) tile).readSyncableNBT(compound.getCompound("Data"), world.registryAccess(), TileEntityBase.NBTType.SYNC);
-                }
+            if (FMLEnvironment.dist.isClient()) {
+                PacketHandlerClient.handleTileUpdate(compound, context);
             }
         }
     };
     public static final IDataHandler LASER_PARTICLE_HANDLER = new IDataHandler() {
         @Override
-        
         public void handleData(CompoundTag compound, IPayloadContext context) {
-            Minecraft mc = Minecraft.getInstance();
-            ItemStack stack = ItemStack.parseOptional(context.player().registryAccess(), compound);
-
-            double inX = compound.getDouble("InX") + 0.5;
-            double inY = compound.getDouble("InY") + 0.78;
-            double inZ = compound.getDouble("InZ") + 0.5;
-
-            double outX = compound.getDouble("OutX") + 0.5;
-            double outY = compound.getDouble("OutY") + 0.525;
-            double outZ = compound.getDouble("OutZ") + 0.5;
-
-            mc.level.addParticle(ParticleLaserItem.Factory.createData(stack, inX, inY, inZ),
-                    outX, outY, outZ, 0, 0.025, 0);
+            if (FMLEnvironment.dist.isClient()) {
+                PacketHandlerClient.handleLaserParticle(compound, context);
+            }
         }
     };
     public static final IDataHandler GUI_BUTTON_TO_TILE_HANDLER = (compound, context) -> {
