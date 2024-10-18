@@ -9,8 +9,8 @@
  */
 /*
 @API(owner = ActuallyAdditionsAPI.MOD_ID, apiVersion = ActuallyAdditionsAPI.API_VERSION, provides = ActuallyAdditionsAPI.API_ID)
-package de.ellpeck.actuallyadditions.api;
 
 import net.minecraftforge.fml.common.API;
 
  */
+package de.ellpeck.actuallyadditions.api;
