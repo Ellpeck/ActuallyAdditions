@@ -94,7 +94,6 @@ public class ActuallyAdditions {
         ActuallyBiomeModifiers.init(eventBus);
         ActuallyParticles.init(eventBus);
         ActuallyTags.init();
-        ActuallyAdditionsClient.init(eventBus);
         eventBus.addListener(this::onConfigReload);
 
         NeoForge.EVENT_BUS.addListener(this::serverStarted);
@@ -110,6 +109,7 @@ public class ActuallyAdditions {
         eventBus.addListener(this::setup);
 
         if (dist.isClient()) {
+            ActuallyAdditionsClient.init(eventBus);
             container.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
             eventBus.addListener(ActuallyAdditionsClient::setup);
             eventBus.addListener(ActuallyAdditionsClient::setupMenus);
