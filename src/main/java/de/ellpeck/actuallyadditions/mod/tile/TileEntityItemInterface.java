@@ -12,14 +12,12 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.api.laser.Network;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
-import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
-import de.ellpeck.actuallyadditions.mod.network.packet.PacketServerToClient;
+import de.ellpeck.actuallyadditions.mod.network.packet.SpawnLaserParticlePacket;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import de.ellpeck.actuallyadditions.mod.util.compat.SlotlessableItemHandlerWrapper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -162,22 +160,11 @@ public class TileEntityItemInterface extends TileEntityBase {
 
     public void doItemParticle(ItemStack stack, BlockPos input, BlockPos output) {
         if (!this.level.isClientSide) {
-            CompoundTag compound = new CompoundTag();
-            stack.save(this.level.registryAccess(), compound);
-
-            compound.putDouble("InX", input.getX());
-            compound.putDouble("InY", input.getY());
-            compound.putDouble("InZ", input.getZ());
-
-            compound.putDouble("OutX", output.getX());
-            compound.putDouble("OutY", output.getY());
-            compound.putDouble("OutZ", output.getZ());
-
             int rangeSq = 16 * 16;
             for (Player player : this.level.players()) {
-                if (player instanceof ServerPlayer) {
+                if (player instanceof ServerPlayer serverPlayer) {
                     if (player.distanceToSqr(input.getX(), input.getY(), input.getZ()) <= rangeSq || player.distanceToSqr(output.getX(), output.getY(), output.getZ()) <= rangeSq) {
-                        ((ServerPlayer) player).connection.send(new PacketServerToClient(compound, PacketHandler.LASER_PARTICLE_HANDLER));
+                        serverPlayer.connection.send(new SpawnLaserParticlePacket(stack, input, output));
                     }
                 }
             }

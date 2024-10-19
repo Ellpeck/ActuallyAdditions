@@ -10,6 +10,9 @@ public final class VanillaPacketDispatcher {
 
     //Don't call from the client.
     public static void dispatchTEToNearbyPlayers(BlockEntity blockEntity) {
+        if (blockEntity.getLevel().isClientSide) {
+            throw new IllegalArgumentException("Tried to dispatch a TileEntity packet on the client side! This is not allowed!");
+        }
         ServerLevel serverLevel = (ServerLevel) blockEntity.getLevel();
         LevelChunk chunk = serverLevel.getChunk(blockEntity.getBlockPos().getX() >> 4, blockEntity.getBlockPos().getZ() >> 4);
 

@@ -13,8 +13,8 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerMiner;
+import de.ellpeck.actuallyadditions.mod.network.PacketHelperServer;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
-import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
@@ -197,7 +197,7 @@ public class TileEntityVerticalDigger extends TileEntityInventoryBase implements
     }
 
     private void shootParticles(int endX, int endY, int endZ) {
-        AssetUtil.spawnLaserWithTimeServer((ServerLevel) this.level, this.worldPosition.getX(), this.worldPosition.getY(), this.worldPosition.getZ(), endX, endY, endZ, 0x429602, 10, 120, 0.1F, 0.8F);
+        PacketHelperServer.spawnLaserWithTimeServer((ServerLevel) this.level, this.worldPosition.getX(), this.worldPosition.getY(), this.worldPosition.getZ(), endX, endY, endZ, 0x429602, 10, 120, 0.1F, 0.8F);
     }
 
     private boolean isBlacklisted(Block block) {

@@ -12,20 +12,17 @@ package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerRangedCollector;
-import de.ellpeck.actuallyadditions.mod.network.packet.PacketClientToServer;
-import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
+import de.ellpeck.actuallyadditions.mod.network.packet.ButtonToTilePacket;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityRangedCollector;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 import javax.annotation.Nonnull;
-
 
 
 public class GuiRangedCollector extends AAScreen<ContainerRangedCollector> {
@@ -73,14 +70,8 @@ public class GuiRangedCollector extends AAScreen<ContainerRangedCollector> {
     }
     
     public void buttonClicked(int id) {
-        CompoundTag data = new CompoundTag();
-        data.putInt("ButtonID", id);
-        data.putInt("PlayerID", Minecraft.getInstance().player.getId());
-        data.putString("WorldID", Minecraft.getInstance().level.dimension().location().toString());
-        data.putInt("X", this.collector.getBlockPos().getX());
-        data.putInt("Y", this.collector.getBlockPos().getY());
-        data.putInt("Z", this.collector.getBlockPos().getZ());
-        PacketDistributor.sendToServer(new PacketClientToServer(data, PacketHandler.GUI_BUTTON_TO_TILE_HANDLER));
+        PacketDistributor.sendToServer(new ButtonToTilePacket(collector.getLevel().dimension().location(),
+                this.collector.getBlockPos(), Minecraft.getInstance().player.getId(), id));
     }
 
 }

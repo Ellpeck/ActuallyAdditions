@@ -12,16 +12,14 @@ package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerLaserRelayItemWhitelist;
-import de.ellpeck.actuallyadditions.mod.network.packet.PacketClientToServer;
-import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketHelperClient;
+import de.ellpeck.actuallyadditions.mod.network.packet.ButtonToContainerPacket;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayItemAdvanced;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
@@ -84,11 +82,8 @@ public class GuiLaserRelayItemWhitelist extends AAScreen<ContainerLaserRelayItem
     }
 
     public void buttonClicked(int id) {
-        CompoundTag data = new CompoundTag();
-        data.putInt("ButtonID", id);
-        data.putInt("PlayerID", Minecraft.getInstance().player.getId());
-        data.putString("WorldID", Minecraft.getInstance().level.dimension().location().toString());
-        PacketDistributor.sendToServer(new PacketClientToServer(data, PacketHandler.GUI_BUTTON_TO_CONTAINER_HANDLER));
+        PacketDistributor.sendToServer(new ButtonToContainerPacket(
+                Minecraft.getInstance().level.dimension().location(), Minecraft.getInstance().player.getId(), id));
     }
 
     @Override

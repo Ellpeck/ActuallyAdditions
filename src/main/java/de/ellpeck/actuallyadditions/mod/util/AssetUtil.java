@@ -16,8 +16,6 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.render.RenderTypes;
-import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
-import de.ellpeck.actuallyadditions.mod.network.packet.PacketServerToClient;
 import de.ellpeck.actuallyadditions.mod.particle.ParticleBeam;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
@@ -33,9 +31,7 @@ import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
@@ -47,7 +43,6 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.client.ClientHooks;
-import net.neoforged.neoforge.network.PacketDistributor;
 import org.joml.Matrix4f;
 
 public final class AssetUtil {
@@ -215,24 +210,6 @@ public final class AssetUtil {
 //        GlStateManager.color3arg(1.0F, 1.0F, 1.0F, 1.0F);
 //        GlStateManager._popMatrix();
 //    }
-
-    public static void spawnLaserWithTimeServer(ServerLevel world, double startX, double startY, double startZ, double endX, double endY, double endZ, int color, int maxAge, double rotationTime, float size, float alpha) {
-        if (!world.isClientSide) {
-            CompoundTag data = new CompoundTag();
-            data.putDouble("StartX", startX);
-            data.putDouble("StartY", startY);
-            data.putDouble("StartZ", startZ);
-            data.putDouble("EndX", endX);
-            data.putDouble("EndY", endY);
-            data.putDouble("EndZ", endZ);
-            data.putInt("Color", color);
-            data.putDouble("RotationTime", rotationTime);
-            data.putFloat("Size", size);
-            data.putInt("MaxAge", maxAge);
-            data.putFloat("Alpha", alpha);
-            PacketDistributor.sendToPlayersNear(world, null, startX, startY, startZ, 96, new PacketServerToClient(data, PacketHandler.LASER_HANDLER));
-        }
-    }
 
     
     public static void spawnLaserWithTimeClient(double startX, double startY, double startZ, double endX, double endY, double endZ, int color, int maxAge, double rotationTime, float size, float alpha) {

@@ -17,7 +17,7 @@ import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.mod.AASounds;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
-import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import de.ellpeck.actuallyadditions.mod.network.PacketHelperServer;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.core.BlockPos;
@@ -53,7 +53,7 @@ public class TileEntityAtomicReconstructor extends TileEntityInventoryBase imple
 
     public static void shootLaser(IAtomicReconstructor tile, ServerLevel world, double startX, double startY, double startZ, double endX, double endY, double endZ, Lens currentLens) {
         world.playSound(null, startX, startY, startZ, AASounds.RECONSTRUCTOR.get(), SoundSource.BLOCKS, 0.35F, 1.0F);
-        AssetUtil.spawnLaserWithTimeServer(world, startX, startY, startZ, endX, endY, endZ, currentLens.getColor(), 25, 0, 0.2F, 0.8F);
+        PacketHelperServer.spawnLaserWithTimeServer(world, startX, startY, startZ, endX, endY, endZ, currentLens.getColor(), 25, 0, 0.2F, 0.8F);
     }
 
     @Override

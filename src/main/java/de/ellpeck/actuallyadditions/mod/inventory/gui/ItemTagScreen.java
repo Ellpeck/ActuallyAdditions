@@ -1,16 +1,13 @@
 package de.ellpeck.actuallyadditions.mod.inventory.gui;
 
 import de.ellpeck.actuallyadditions.mod.inventory.ItemTagContainer;
-import de.ellpeck.actuallyadditions.mod.network.packet.PacketClientToServer;
-import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
-import net.minecraft.client.Minecraft;
+import de.ellpeck.actuallyadditions.mod.network.packet.ButtonToContainerPacket;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.StringWidget;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -81,12 +78,13 @@ public class ItemTagScreen extends AAScreen<ItemTagContainer> {
             this.minecraft.player.closeContainer();
         }
         if (pKeyCode == GLFW.GLFW_KEY_ENTER && validTag) {
-            CompoundTag data = new CompoundTag();
-            data.putInt("ButtonID", 0);
-            data.putInt("PlayerID", Minecraft.getInstance().player.getId());
-            data.putString("WorldID", Minecraft.getInstance().level.dimension().location().toString());
-            data.putString("Tag", tagBox.getValue());
-            PacketDistributor.sendToServer(new PacketClientToServer(data, PacketHandler.GUI_BUTTON_TO_CONTAINER_HANDLER));
+//            data.putString("Tag", tagBox.getValue()); TODO: This value was never used by the old packet (GUI_BUTTON_TO_CONTAINER_HANDLER)
+            PacketDistributor.sendToServer(new ButtonToContainerPacket(
+                    minecraft.level.dimension().location(),
+                    minecraft.player.getId(),
+                    0
+            ));
+
             this.minecraft.player.closeContainer();
         }
 
