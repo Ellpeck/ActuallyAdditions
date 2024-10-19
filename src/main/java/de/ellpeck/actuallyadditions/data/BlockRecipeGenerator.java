@@ -507,6 +507,14 @@ public class BlockRecipeGenerator extends RecipeProvider {
                 .define('A', ActuallyBlocks.BREAKER.get())
                 .define('V', ActuallyItems.VOID_CRYSTAL)
                 .save(recipeOutput);
+
+        // Experience Solidifier
+        Recipe.shaped(ActuallyBlocks.XP_SOLIDIFIER.getItem())
+                .pattern("SSS", "EAE", "SSS")
+                .define('S', ActuallyItems.SOLIDIFIED_EXPERIENCE)
+                .define('E', ActuallyBlocks.EMPOWERED_DIAMATINE_CRYSTAL.getItem())
+                .define('A', ActuallyItems.ADVANCED_COIL)
+                .save(recipeOutput);
     }
 
     public static class Recipe {

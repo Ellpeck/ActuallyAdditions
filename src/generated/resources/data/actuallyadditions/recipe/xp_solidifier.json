@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "actuallyadditions:advanced_coil"
+    },
+    "E": {
+      "item": "actuallyadditions:empowered_diamatine_crystal_block"
+    },
+    "S": {
+      "item": "actuallyadditions:solidified_experience"
+    }
+  },
+  "pattern": [
+    "SSS",
+    "EAE",
+    "SSS"
+  ],
+  "result": {
+    "count": 1,
+    "id": "actuallyadditions:xp_solidifier"
+  }
+}
