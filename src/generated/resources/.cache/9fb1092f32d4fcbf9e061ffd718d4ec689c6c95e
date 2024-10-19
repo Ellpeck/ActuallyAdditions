@@ -1,4 +1,4 @@
-// 1.21.1	2024-08-11T19:30:01.8298188	Recipes
+// 1.21.1	2024-10-19T22:58:03.6472462	Recipes
 b44fee42c2b2b3f56256fe76b2d9f529dc87350a data/actuallyadditions/recipe/atomic_reconstructor.json
 b1c937b75ba7f8e02dfac4db5253271f2de502e5 data/actuallyadditions/recipe/battery_box.json
 660b96730a8ef88b4b44e4ce67fde0945c13ae7f data/actuallyadditions/recipe/bio_reactor.json
@@ -73,3 +73,4 @@ a5bbea36e4e66a6c1aed2b618b6b2782b334963c data/actuallyadditions/recipe/smooth_bl
 f0a6cbd14eac4a35f31b17818a10c3052d848e32 data/actuallyadditions/recipe/tiny_torch.json
 417bba7527a62cea44fd900ce3882000ada36a2c data/actuallyadditions/recipe/vertical_digger.json
 207a2f79e0b0c94905c385aaa0dd843c26fcfa6d data/actuallyadditions/recipe/wood_casing.json
+c5dae80ac00ec9829c80d6e453adcb488e775005 data/actuallyadditions/recipe/xp_solidifier.json
