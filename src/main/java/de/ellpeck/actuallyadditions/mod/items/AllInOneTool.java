@@ -3,10 +3,14 @@ package de.ellpeck.actuallyadditions.mod.items;
 import de.ellpeck.actuallyadditions.api.ActuallyTags;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EquipmentSlotGroup;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.context.UseOnContext;
 import net.neoforged.neoforge.common.ItemAbilities;
 import net.neoforged.neoforge.common.ItemAbility;
@@ -27,15 +31,20 @@ public class AllInOneTool extends DiggerItem {
     );
 
     public AllInOneTool(Tier tier) {
-        super(
-/*            4.0f,
-            -2f,*/
-            tier,
-                ActuallyTags.Blocks.MINEABLE_WITH_AIO,
+        super(tier,
+            ActuallyTags.Blocks.MINEABLE_WITH_AIO,
             new Properties()
                 .durability(tier.getUses() * 4)
-                    .component(DataComponents.TOOL, tier.createToolProperties(ActuallyTags.Blocks.MINEABLE_WITH_AIO))
+                .component(DataComponents.TOOL, tier.createToolProperties(ActuallyTags.Blocks.MINEABLE_WITH_AIO))
+                .attributes(createAttributes())
         );
+    }
+
+    private static ItemAttributeModifiers createAttributes() {
+        ItemAttributeModifiers.Builder builder = ItemAttributeModifiers.builder();
+        builder.add(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_ID,4.0f, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND);
+        builder.add(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_ID, -2.0f, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND);
+        return builder.build();
     }
 
     @Override
