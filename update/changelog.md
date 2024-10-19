@@ -1,3 +1,9 @@
+# 1.3.5+mc1.21.1
+* Overhaul networking, should fix a lot of issues with crashes on servers
+* Add storage block tags for the crystals
+* Add tags for the different filled buckets
+* Change the tag used by Rice Slimeballs to `c:slime_balls`
+
 # 1.3.4+mc1.21.1
 * Fix the way the Atomic Reconstructor handles the level when adding tooltips. Fixes an issue that would cause CM2E to crash
 
