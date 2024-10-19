@@ -55,6 +55,9 @@ public final class ActuallyTags {
         public static final TagKey<Item> BUCKET_CRYSTALLIZED_OIL = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "bucket/crystallized_oil"));
         public static final TagKey<Item> BUCKET_EMPOWERED_OIL = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "bucket/empowered_oil"));
 
+        //curios:bracelet
+        public static final TagKey<Item> CURIOS_CHARM = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("curios", "charm"));
+
 
         private static TagKey<Item> tag(String name) {
             return TagKey.create(Registries.ITEM, ActuallyAdditions.modLoc(name));

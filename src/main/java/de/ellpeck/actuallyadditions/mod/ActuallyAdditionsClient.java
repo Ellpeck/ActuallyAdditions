@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.blocks.render.ReconstructorRenderer;
 import de.ellpeck.actuallyadditions.mod.blocks.render.RenderBatteryBox;
@@ -50,10 +51,12 @@ import de.ellpeck.actuallyadditions.mod.inventory.gui.SackGui;
 import de.ellpeck.actuallyadditions.mod.inventory.gui.VoidSackGui;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.misc.special.SpecialRenderInit;
+import de.ellpeck.actuallyadditions.mod.network.packet.HotkeyPacket;
 import de.ellpeck.actuallyadditions.mod.particle.ActuallyParticles;
 import de.ellpeck.actuallyadditions.mod.particle.ParticleBeam;
 import de.ellpeck.actuallyadditions.mod.particle.ParticleLaserItem;
 import de.ellpeck.actuallyadditions.mod.patchouli.PatchouliPages;
+import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
@@ -62,14 +65,24 @@ import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.protocol.game.ServerboundPlayerActionPacket;
 import net.minecraft.world.phys.BlockHitResult;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.neoforge.client.event.EntityRenderersEvent;
-import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
-import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
+import net.neoforged.neoforge.client.event.*;
+import net.neoforged.neoforge.client.settings.KeyConflictContext;
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.network.PacketDistributor;
+
+import java.util.Optional;
 
 public class ActuallyAdditionsClient {
+    private static final KeyMapping OPEN_CRAFTING_KEY = new KeyMapping("key.actualladditions.crafting_stick_open.desc", KeyConflictContext.IN_GAME, InputConstants.Type.KEYSYM, -1, "key.actuallyadditions.category");
+
+    public static void init(IEventBus modBus) {
+        NeoForge.EVENT_BUS.addListener(ActuallyAdditionsClient::onClientTick);
+        modBus.addListener(ActuallyAdditionsClient::registerKeyBinding);
+    }
+
     public static void setupMenus(RegisterMenuScreensEvent evt) {
         evt.register(ActuallyContainers.SACK_CONTAINER.get(), SackGui::new);
         evt.register(ActuallyContainers.VOID_SACK_CONTAINER.get(), VoidSackGui::new);
@@ -157,5 +170,15 @@ public class ActuallyAdditionsClient {
         assert connection != null;
         assert Minecraft.getInstance().hitResult != null;
         connection.send(new ServerboundPlayerActionPacket(ServerboundPlayerActionPacket.Action.STOP_DESTROY_BLOCK, pos, ((BlockHitResult) Minecraft.getInstance().hitResult).getDirection()));
+    }
+
+    private static void onClientTick(ClientTickEvent.Post event) {
+        if (OPEN_CRAFTING_KEY.consumeClick()) {
+            PacketDistributor.sendToServer(new HotkeyPacket(HotkeyPacket.HotKey.OPEN_CRAFTING_STICK));
+        }
+    }
+
+    private static void registerKeyBinding(final RegisterKeyMappingsEvent event) {
+        event.register(OPEN_CRAFTING_KEY);
     }
 }

@@ -992,5 +992,8 @@
   "jei.actuallyadditions.coffee.extra.milk": "+01:00, -1 Level",
   "jei.actuallyadditions.mining_lens": "Lens of the Miner",
   "jei.actuallyadditions.mining_lens.weight": "Weight:",
-  "container.actuallyadditions.item_tag": "Item Tag"
+  "container.actuallyadditions.item_tag": "Item Tag",
+
+  "key.actualladditions.crafting_stick_open.desc": "Open the Crafting Stick",
+  "key.actuallyadditions.category": "Actually Additions"
 }

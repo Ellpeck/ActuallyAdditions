@@ -80,6 +80,7 @@ repositories {
             includeGroup "curse.maven"
         }
     }
+    maven { url = 'https://maven.octo-studios.com/releases' }
 }
 
 dependencies {
@@ -97,6 +98,8 @@ dependencies {
 
     localRuntime "curse.maven:jade-324717:5803666"
     localRuntime "curse.maven:mekanism-268560:5680395"
+
+    implementation "top.theillusivec4.curios:curios-neoforge:${curios_version}"
 }
 
 jar {

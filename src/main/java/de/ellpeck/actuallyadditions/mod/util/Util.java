@@ -48,4 +48,6 @@ public final class Util {
         AttributeInstance attribute = player.getAttribute(Attributes.BLOCK_INTERACTION_RANGE);
         return attribute == null ? 4.5d : attribute.getValue();
     }
+
+    public static boolean curiosLoaded = false;
 }

@@ -36,6 +36,7 @@ import de.ellpeck.actuallyadditions.mod.misc.apiimpl.MethodHandler;
 import de.ellpeck.actuallyadditions.mod.network.PacketHandler;
 import de.ellpeck.actuallyadditions.mod.particle.ActuallyParticles;
 import de.ellpeck.actuallyadditions.mod.util.ResourceReloader;
+import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -43,6 +44,7 @@ import net.minecraft.world.item.Items;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.config.ModConfigEvent;
@@ -92,6 +94,7 @@ public class ActuallyAdditions {
         ActuallyBiomeModifiers.init(eventBus);
         ActuallyParticles.init(eventBus);
         ActuallyTags.init();
+        ActuallyAdditionsClient.init(eventBus);
         eventBus.addListener(this::onConfigReload);
 
         NeoForge.EVENT_BUS.addListener(this::serverStarted);
@@ -114,6 +117,8 @@ public class ActuallyAdditions {
             eventBus.addListener(ActuallyAdditionsClient::registerParticleFactories);
         }
         IFarmerBehavior.initBehaviors();
+
+        Util.curiosLoaded = ModList.get().isLoaded("curios");
     }
 
     private static void reloadEvent(AddReloadListenerEvent event) {

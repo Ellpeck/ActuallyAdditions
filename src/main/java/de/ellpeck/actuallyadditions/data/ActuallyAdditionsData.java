@@ -72,6 +72,8 @@ public class ActuallyAdditionsData {
 
         generator.addProvider(event.includeServer(), new DatapackBuiltinEntriesProvider(
                 packOutput, patchedProvider, Set.of(ActuallyAdditions.MODID)));
+
+        generator.addProvider(true, new Curios(packOutput, helper, lookupProvider));
     }
 
     private static RegistrySetBuilder.PatchedRegistries getProvider() {

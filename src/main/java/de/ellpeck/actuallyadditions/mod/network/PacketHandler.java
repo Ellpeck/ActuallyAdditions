@@ -13,14 +13,7 @@ package de.ellpeck.actuallyadditions.mod.network;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.network.handler.ClientPayloadHandler;
 import de.ellpeck.actuallyadditions.mod.network.handler.ServerPayloadHandler;
-import de.ellpeck.actuallyadditions.mod.network.packet.ButtonToContainerPacket;
-import de.ellpeck.actuallyadditions.mod.network.packet.ButtonToTilePacket;
-import de.ellpeck.actuallyadditions.mod.network.packet.NumberToTilePacket;
-import de.ellpeck.actuallyadditions.mod.network.packet.SpawnLaserPacket;
-import de.ellpeck.actuallyadditions.mod.network.packet.SpawnLaserParticlePacket;
-import de.ellpeck.actuallyadditions.mod.network.packet.StringToTilePacket;
-import de.ellpeck.actuallyadditions.mod.network.packet.SyncPlayerPacket;
-import de.ellpeck.actuallyadditions.mod.network.packet.TileUpdatePacket;
+import de.ellpeck.actuallyadditions.mod.network.packet.*;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.handling.DirectionalPayloadHandler;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
@@ -39,6 +32,7 @@ public final class PacketHandler {
         registrar.playToServer(StringToTilePacket.ID, StringToTilePacket.CODEC, ServerPayloadHandler.getInstance()::handleStringToTile);
         registrar.playToServer(NumberToTilePacket.ID, NumberToTilePacket.CODEC, ServerPayloadHandler.getInstance()::handleNumberToTile);
         registrar.playToServer(ButtonToContainerPacket.ID, ButtonToContainerPacket.CODEC, ServerPayloadHandler.getInstance()::handleButtonToContainer);
+        registrar.playToServer(HotkeyPacket.TYPE, HotkeyPacket.CODEC, HotkeyPacket::handle);
 
         registrar.playBidirectional(SyncPlayerPacket.ID, SyncPlayerPacket.CODEC,
                 new DirectionalPayloadHandler<>(ClientPayloadHandler.getInstance()::handleSyncPlayer, ServerPayloadHandler.getInstance()::handleSyncPlayer));

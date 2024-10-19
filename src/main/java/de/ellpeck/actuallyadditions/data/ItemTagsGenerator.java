@@ -88,5 +88,6 @@ public class ItemTagsGenerator extends ItemTagsProvider {
                 ActuallyTags.Items.BUCKET_CRYSTALLIZED_OIL, ActuallyTags.Items.BUCKET_EMPOWERED_OIL
         );
 
+        tag(ActuallyTags.Items.CURIOS_CHARM).add(ActuallyItems.CRAFTER_ON_A_STICK.get());
     }
 }
