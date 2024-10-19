@@ -1,9 +1,14 @@
-// 1.21.1	2024-08-11T19:30:01.8138177	Tags for minecraft:item mod id actuallyadditions
+// 1.21.1	2024-10-19T16:16:57.3701064	Tags for minecraft:item mod id actuallyadditions
 87327118c2f16da245b76de4fdcaab149456d9b8 data/actuallyadditions/tags/item/coffee_beans.json
 f3ee78cd8c9563bd1828de2b4b336735f289f9f2 data/actuallyadditions/tags/item/crystals.json
 441008b49b4bab00125100fc969cb6582eff7271 data/actuallyadditions/tags/item/crystal_blocks.json
 7e6e49c3eb5302af147a2d6ba439e83bd4831cbc data/actuallyadditions/tags/item/drills.json
 ae55da193b94fd6375c05d5aa46cafdda9d335cd data/actuallyadditions/tags/item/tiny_coals.json
+dc377437805c7c5696b88c17454da7b856b9055e data/c/tags/item/buckets.json
+ea53bfe045e7e533a13fa2fa8793cd7741e92902 data/c/tags/item/bucket/canola_oil.json
+fb46ac4e564c749fcaa5ba1393ab33fcd91817f5 data/c/tags/item/bucket/crystallized_oil.json
+e70a00f63e5f22e8f37d76d45bbadc66ff0e3598 data/c/tags/item/bucket/empowered_oil.json
+3d76a9a33b8db313d2960468ef55ae7baf1d997f data/c/tags/item/bucket/refined_canola_oil.json
 822a882fc0d985d819c32a1039616f999761fae3 data/c/tags/item/crops.json
 aaf3c8c818cc015e9c693e0bbf8f86da81f78285 data/c/tags/item/crops/canola.json
 87327118c2f16da245b76de4fdcaab149456d9b8 data/c/tags/item/crops/coffee.json
@@ -18,5 +23,17 @@ f29e7ca84f30d7b2d4b19ad10b62f56fc422378a data/c/tags/item/seeds/canola.json
 87327118c2f16da245b76de4fdcaab149456d9b8 data/c/tags/item/seeds/coffee.json
 4be6e9ebd0f4ea040587e7ff05c78270990889b8 data/c/tags/item/seeds/flax.json
 27f7953be7073bc266bdf5a245658268d11a4252 data/c/tags/item/seeds/rice.json
-da125442e98e78f6dac7e0c8f35a51503f5bb79d data/c/tags/item/slimeballs.json
+da125442e98e78f6dac7e0c8f35a51503f5bb79d data/c/tags/item/slime_balls.json
 6c9a3c952d8fad5bfd8a5ab0b76aeb0b930d1db9 data/c/tags/item/storage_blocks/black_quartz.json
+02a18fabd2fe852ec9d6564242eaef8b58dd6517 data/c/tags/item/storage_blocks/diamatine_crystal.json
+e38d81e8b3eef1f8a225b98891672f00942496e9 data/c/tags/item/storage_blocks/emeradic_crystal.json
+bbce87d7a828d3e31abf1209cceb3c6084423678 data/c/tags/item/storage_blocks/empowered_diamatine_crystal.json
+520350a8e9e7818642cc7d663396a1d3c238d9ec data/c/tags/item/storage_blocks/empowered_emeradic_crystal.json
+9ad94fbd4cda9e4ad8c68078cc53b67eb4043160 data/c/tags/item/storage_blocks/empowered_enori_crystal.json
+fb95ac8041521e1d2879f6fcb652266dcd9e0fb1 data/c/tags/item/storage_blocks/empowered_palis_crystal.json
+4885ac9140dbf4f8af14cf61e6ec9e81b933b77b data/c/tags/item/storage_blocks/empowered_restonia_crystal.json
+5a912b868ae8a193bc17f5c3f485e22818c3c06f data/c/tags/item/storage_blocks/empowered_void_crystal.json
+741733f39fa70fc6a7a85f033088821af14971c6 data/c/tags/item/storage_blocks/enori_crystal.json
+148cd937543fd58b196403c18839b2698bf87fdf data/c/tags/item/storage_blocks/palis_crystal.json
+b9aa28a54d47054ba5653bec2f20e0a675ab5120 data/c/tags/item/storage_blocks/restonia_crystal.json
+fb4f349bc6fd89f26ef2ba72a9236f05eefd8ea2 data/c/tags/item/storage_blocks/void_crystal.json

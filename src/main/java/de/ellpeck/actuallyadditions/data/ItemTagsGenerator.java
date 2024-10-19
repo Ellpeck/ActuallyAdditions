@@ -3,6 +3,7 @@ package de.ellpeck.actuallyadditions.data;
 import de.ellpeck.actuallyadditions.api.ActuallyTags;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
+import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
@@ -44,7 +45,7 @@ public class ItemTagsGenerator extends ItemTagsProvider {
                         ActuallyBlocks.DIAMATINE_CRYSTAL.getItem(), ActuallyBlocks.VOID_CRYSTAL.getItem(),
                         ActuallyBlocks.EMERADIC_CRYSTAL.getItem(), ActuallyBlocks.ENORI_CRYSTAL.getItem());
 
-        tag(Tags.Items.SLIMEBALLS)
+        tag(Tags.Items.SLIME_BALLS)
                 .add(ActuallyItems.RICE_SLIMEBALL.get());
 
         tag(ActuallyTags.Items.CROPS_RICE).add(ActuallyItems.RICE.get());
@@ -63,6 +64,29 @@ public class ItemTagsGenerator extends ItemTagsProvider {
         tag(ActuallyTags.Items.ORES_BLACK_QUARTZ).add(ActuallyBlocks.BLACK_QUARTZ_ORE.getItem());
         tag(Tags.Items.ORES).addTags(ActuallyTags.Items.ORES_BLACK_QUARTZ);
         tag(Tags.Items.ORES_IN_GROUND_STONE).add(ActuallyBlocks.BLACK_QUARTZ_ORE.getItem());
+
         tag(ActuallyTags.Items.STORAGE_BLOCKS_BLACK_QUARTZ).add(ActuallyBlocks.BLACK_QUARTZ.getItem());
+        tag(ActuallyTags.Items.STORAGE_BLOCKS_RESTONIA_CRYSTAL).add(ActuallyBlocks.RESTONIA_CRYSTAL.getItem());
+        tag(ActuallyTags.Items.STORAGE_BLOCKS_PALIS_CRYSTAL).add(ActuallyBlocks.PALIS_CRYSTAL.getItem());
+        tag(ActuallyTags.Items.STORAGE_BLOCKS_DIAMATINE_CRYSTAL).add(ActuallyBlocks.DIAMATINE_CRYSTAL.getItem());
+        tag(ActuallyTags.Items.STORAGE_BLOCKS_VOID_CRYSTAL).add(ActuallyBlocks.VOID_CRYSTAL.getItem());
+        tag(ActuallyTags.Items.STORAGE_BLOCKS_EMERADIC_CRYSTAL).add(ActuallyBlocks.EMERADIC_CRYSTAL.getItem());
+        tag(ActuallyTags.Items.STORAGE_BLOCKS_ENORI_CRYSTAL).add(ActuallyBlocks.ENORI_CRYSTAL.getItem());
+        tag(ActuallyTags.Items.STORAGE_BLOCKS_EMPOWERED_RESTONIA_CRYSTAL).add(ActuallyBlocks.EMPOWERED_RESTONIA_CRYSTAL.getItem());
+        tag(ActuallyTags.Items.STORAGE_BLOCKS_EMPOWERED_PALIS_CRYSTAL).add(ActuallyBlocks.EMPOWERED_PALIS_CRYSTAL.getItem());
+        tag(ActuallyTags.Items.STORAGE_BLOCKS_EMPOWERED_DIAMATINE_CRYSTAL).add(ActuallyBlocks.EMPOWERED_DIAMATINE_CRYSTAL.getItem());
+        tag(ActuallyTags.Items.STORAGE_BLOCKS_EMPOWERED_VOID_CRYSTAL).add(ActuallyBlocks.EMPOWERED_VOID_CRYSTAL.getItem());
+        tag(ActuallyTags.Items.STORAGE_BLOCKS_EMPOWERED_EMERADIC_CRYSTAL).add(ActuallyBlocks.EMPOWERED_EMERADIC_CRYSTAL.getItem());
+        tag(ActuallyTags.Items.STORAGE_BLOCKS_EMPOWERED_ENORI_CRYSTAL).add(ActuallyBlocks.EMPOWERED_ENORI_CRYSTAL.getItem());
+
+        tag(ActuallyTags.Items.BUCKET_CANOLA_OIL).add(InitFluids.CANOLA_OIL.getBucket());
+        tag(ActuallyTags.Items.BUCKET_REFINED_CANOLA_OIL).add(InitFluids.REFINED_CANOLA_OIL.getBucket());
+        tag(ActuallyTags.Items.BUCKET_CRYSTALLIZED_OIL).add(InitFluids.CRYSTALLIZED_OIL.getBucket());
+        tag(ActuallyTags.Items.BUCKET_EMPOWERED_OIL).add(InitFluids.EMPOWERED_OIL.getBucket());
+        tag(Tags.Items.BUCKETS).addTags(
+                ActuallyTags.Items.BUCKET_CANOLA_OIL, ActuallyTags.Items.BUCKET_REFINED_CANOLA_OIL,
+                ActuallyTags.Items.BUCKET_CRYSTALLIZED_OIL, ActuallyTags.Items.BUCKET_EMPOWERED_OIL
+        );
+
     }
 }

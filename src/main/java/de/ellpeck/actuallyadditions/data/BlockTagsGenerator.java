@@ -167,6 +167,18 @@ public class BlockTagsGenerator extends BlockTagsProvider {
         this.tag(Tags.Blocks.ORES).addTags(ActuallyTags.Blocks.ORES_BLACK_QUARTZ);
         this.tag(Tags.Blocks.ORES_IN_GROUND_STONE).add(ActuallyBlocks.BLACK_QUARTZ_ORE.get());
         this.tag(ActuallyTags.Blocks.STORAGE_BLOCKS_BLACK_QUARTZ).add(ActuallyBlocks.BLACK_QUARTZ.get());
+        this.tag(ActuallyTags.Blocks.STORAGE_BLOCKS_RESTONIA_CRYSTAL).add(ActuallyBlocks.RESTONIA_CRYSTAL.get());
+        this.tag(ActuallyTags.Blocks.STORAGE_BLOCKS_PALIS_CRYSTAL).add(ActuallyBlocks.PALIS_CRYSTAL.get());
+        this.tag(ActuallyTags.Blocks.STORAGE_BLOCKS_DIAMATINE_CRYSTAL).add(ActuallyBlocks.DIAMATINE_CRYSTAL.get());
+        this.tag(ActuallyTags.Blocks.STORAGE_BLOCKS_VOID_CRYSTAL).add(ActuallyBlocks.VOID_CRYSTAL.get());
+        this.tag(ActuallyTags.Blocks.STORAGE_BLOCKS_EMERADIC_CRYSTAL).add(ActuallyBlocks.EMERADIC_CRYSTAL.get());
+        this.tag(ActuallyTags.Blocks.STORAGE_BLOCKS_ENORI_CRYSTAL).add(ActuallyBlocks.ENORI_CRYSTAL.get());
+        this.tag(ActuallyTags.Blocks.STORAGE_BLOCKS_EMPOWERED_RESTONIA_CRYSTAL).add(ActuallyBlocks.EMPOWERED_RESTONIA_CRYSTAL.get());
+        this.tag(ActuallyTags.Blocks.STORAGE_BLOCKS_EMPOWERED_PALIS_CRYSTAL).add(ActuallyBlocks.EMPOWERED_PALIS_CRYSTAL.get());
+        this.tag(ActuallyTags.Blocks.STORAGE_BLOCKS_EMPOWERED_DIAMATINE_CRYSTAL).add(ActuallyBlocks.EMPOWERED_DIAMATINE_CRYSTAL.get());
+        this.tag(ActuallyTags.Blocks.STORAGE_BLOCKS_EMPOWERED_VOID_CRYSTAL).add(ActuallyBlocks.EMPOWERED_VOID_CRYSTAL.get());
+        this.tag(ActuallyTags.Blocks.STORAGE_BLOCKS_EMPOWERED_EMERADIC_CRYSTAL).add(ActuallyBlocks.EMPOWERED_EMERADIC_CRYSTAL.get());
+        this.tag(ActuallyTags.Blocks.STORAGE_BLOCKS_EMPOWERED_ENORI_CRYSTAL).add(ActuallyBlocks.EMPOWERED_ENORI_CRYSTAL.get());
     }
 
 //    /**
