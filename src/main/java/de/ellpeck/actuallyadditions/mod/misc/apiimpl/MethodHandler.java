@@ -19,7 +19,6 @@ import de.ellpeck.actuallyadditions.mod.blocks.BlockLaserRelay;
 import de.ellpeck.actuallyadditions.mod.crafting.CoffeeIngredientRecipe;
 import de.ellpeck.actuallyadditions.mod.crafting.LaserRecipe;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
-import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
@@ -228,7 +227,7 @@ public class MethodHandler implements IMethodHandler {
             List<ItemEntity> items = tile.getWorldObject().getEntitiesOfClass(ItemEntity.class, aabb);
             for (ItemEntity item : items) {
                 ItemStack stack = item.getItem();
-                if (item.isAlive() && StackUtil.isValid(stack) && !item.getPersistentData().getBoolean("aa_cnv")) {
+                if (item.isAlive() && !stack.isEmpty() && !item.getPersistentData().getBoolean("aa_cnv")) {
                     Optional<RecipeHolder<LaserRecipe>> holder = LaserRecipe.getRecipeForStack(stack);
                     if (holder.isPresent()) {
                         LaserRecipe recipe = holder.get().value();

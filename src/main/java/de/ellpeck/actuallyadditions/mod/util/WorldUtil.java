@@ -44,6 +44,7 @@ import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.items.IItemHandler;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,7 +60,7 @@ public final class WorldUtil {
 
     public static boolean doItemInteraction(SlotlessableItemHandlerWrapper extractWrapper, SlotlessableItemHandlerWrapper insertWrapper, int maxExtract, int extractSlotStart, int extractSlotEnd, int insertSlotStart, int insertSlotEnd, FilterSettings filter) {
         ItemStack theoreticalExtract = extractItem(extractWrapper, maxExtract, true, extractSlotStart, extractSlotEnd, filter);
-        if (StackUtil.isValid(theoreticalExtract)) {
+        if (!theoreticalExtract.isEmpty()) {
             ItemStack remaining = StackUtil.insertItem(insertWrapper, theoreticalExtract, false, insertSlotStart, insertSlotEnd);
             if (!ItemStack.matches(remaining, theoreticalExtract)) {
                 int toExtract = theoreticalExtract.getCount() - remaining.getCount();
@@ -95,14 +96,14 @@ public final class WorldUtil {
             }*/
         }
 
-        if (!StackUtil.isValid(extracted)) {
+        if (extracted.isEmpty()) {
             IItemHandler handler = extractWrapper.getNormalHandler();
             if (handler != null) {
                 for (int i = Math.max(0, slotStart); i < Math.min(slotEnd, handler.getSlots()); i++) {
                     if (filter == null || !filter.needsCheck() || filter.check(handler.getStackInSlot(i))) {
                         extracted = handler.extractItem(i, maxExtract, simulate);
 
-                        if (StackUtil.isValid(extracted)) {
+                        if (!extracted.isEmpty()) {
                             break;
                         }
                     }
@@ -162,8 +163,8 @@ public final class WorldUtil {
         return true;
     }
 
-    public static ItemStack useItemAtSide(Direction side, Level level, BlockPos pos, ItemStack stack) {
-        if (level instanceof ServerLevel && StackUtil.isValid(stack) && pos != null) {
+    public static ItemStack useItemAtSide(Direction side, Level level, BlockPos pos, @Nonnull ItemStack stack) {
+        if (level instanceof ServerLevel && !stack.isEmpty() && pos != null) {
             BlockPos offsetPos = pos.relative(side);
             BlockState state = level.getBlockState(offsetPos);
             boolean replaceable = state.canBeReplaced(new BlockPlaceContext(level, null, InteractionHand.MAIN_HAND, stack,

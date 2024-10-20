@@ -14,7 +14,6 @@ import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.network.PacketHelperServer;
-import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.Entity;
@@ -28,6 +27,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
+
+import javax.annotation.Nonnull;
 
 public class ItemWingsOfTheBats extends ItemBase {
 
@@ -50,7 +51,7 @@ public class ItemWingsOfTheBats extends ItemBase {
      */
     public static ItemStack getWingItem(Player player) {
         for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
-            if (StackUtil.isValid(player.getInventory().getItem(i)) && player.getInventory().getItem(i).getItem() instanceof ItemWingsOfTheBats) {
+            if (!player.getInventory().getItem(i).isEmpty() && player.getInventory().getItem(i).getItem() instanceof ItemWingsOfTheBats) {
                 return player.getInventory().getItem(i);
             }
         }
@@ -58,12 +59,12 @@ public class ItemWingsOfTheBats extends ItemBase {
     }
 
     @Override
-    public boolean isBarVisible(ItemStack stack) {
+    public boolean isBarVisible(@Nonnull ItemStack stack) {
         return true;
     }
 
     @Override
-    public int getBarWidth(ItemStack stack) {
+    public int getBarWidth(@Nonnull ItemStack stack) {
 /*        PlayerEntity player = ClientProxy.getCurrentPlayer();
         if (player != null) {
 //            PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(player);
@@ -74,7 +75,7 @@ public class ItemWingsOfTheBats extends ItemBase {
     }
 
     @Override
-    public int getBarColor(ItemStack stack) {
+    public int getBarColor(@Nonnull ItemStack stack) {
 /*        PlayerEntity player = ClientProxy.getCurrentPlayer();
         if (player != null) {
 //            PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(player);
@@ -96,7 +97,7 @@ public class ItemWingsOfTheBats extends ItemBase {
                 Iterable<ItemStack> equip = player.getHandSlots();
                 for (ItemStack stack : equip) {
                     // Todo: [port] this might not work anymore due to the way things are checked
-                    if (StackUtil.isValid(stack) && ItemWingsOfTheBats.THE_BAT_BAT.equalsIgnoreCase(stack.getHoverName().getString()) && stack.getItem() instanceof SwordItem) {
+                    if (!stack.isEmpty() && ItemWingsOfTheBats.THE_BAT_BAT.equalsIgnoreCase(stack.getHoverName().getString()) && stack.getItem() instanceof SwordItem) {
                         looting += 3;
                         break;
                     }
@@ -121,7 +122,7 @@ public class ItemWingsOfTheBats extends ItemBase {
                     boolean tryDeduct = false;
                     boolean shouldSend = false;
 
-                    boolean wingsEquipped = StackUtil.isValid(ItemWingsOfTheBats.getWingItem(player));
+                    boolean wingsEquipped = !ItemWingsOfTheBats.getWingItem(player).isEmpty();
                     if (!data.hasBatWings) {
                         if (data.batWingsFlyTime <= 0) {
                             if (wingsEquipped) {

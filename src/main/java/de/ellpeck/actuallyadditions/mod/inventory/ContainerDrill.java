@@ -15,7 +15,6 @@ import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditio
 import de.ellpeck.actuallyadditions.mod.items.DrillItem;
 import de.ellpeck.actuallyadditions.mod.items.ItemDrillUpgrade;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
-import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -23,6 +22,8 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+
+import javax.annotation.Nonnull;
 
 public class ContainerDrill extends AbstractContainerMenu {
 
@@ -62,13 +63,14 @@ public class ContainerDrill extends AbstractContainerMenu {
         }
 
         ItemStack stack = inventory.getSelected();
-        if (StackUtil.isValid(stack) && stack.getItem() instanceof DrillItem) {
+        if (!stack.isEmpty() && stack.getItem() instanceof DrillItem) {
             DrillItem.loadSlotsFromNBT(this.drillInventory, inventory.getSelected());
         }
     }
 
+    @Nonnull
     @Override
-    public ItemStack quickMoveStack(Player player, int slot) {
+    public ItemStack quickMoveStack(@Nonnull Player player, int slot) {
         int inventoryStart = 5;
         int inventoryEnd = inventoryStart + 26;
         int hotbarStart = inventoryEnd + 1;
@@ -101,7 +103,7 @@ public class ContainerDrill extends AbstractContainerMenu {
                 return ItemStack.EMPTY;
             }
 
-            if (!StackUtil.isValid(newStack)) {
+            if (newStack.isEmpty()) {
                 theSlot.set(ItemStack.EMPTY);
             } else {
                 theSlot.setChanged();
@@ -118,7 +120,7 @@ public class ContainerDrill extends AbstractContainerMenu {
     }
 
     @Override
-    public void clicked(int slotId, int dragType, ClickType clickTypeIn, Player player) {
+    public void clicked(int slotId, int dragType, @Nonnull ClickType clickTypeIn, @Nonnull Player player) {
         if (clickTypeIn == ClickType.SWAP && dragType == this.inventory.selected) {
             return; //TODO: Check if this is correct, used to return ItemStack.EMPTY
         } else {
@@ -127,16 +129,16 @@ public class ContainerDrill extends AbstractContainerMenu {
     }
 
     @Override
-    public void removed(Player player) {
+    public void removed(@Nonnull Player player) {
         ItemStack stack = this.inventory.getSelected();
-        if (StackUtil.isValid(stack) && stack.getItem() instanceof DrillItem) {
+        if (!stack.isEmpty() && stack.getItem() instanceof DrillItem) {
             DrillItem.writeSlotsToNBT(this.drillInventory, this.inventory.getSelected());
         }
         super.removed(player);
     }
 
     @Override
-    public boolean stillValid(Player player) {
+    public boolean stillValid(@Nonnull Player player) {
         return true;
     }
 }

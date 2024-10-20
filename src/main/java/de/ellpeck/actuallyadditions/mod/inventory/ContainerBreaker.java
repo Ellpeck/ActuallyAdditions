@@ -12,7 +12,6 @@ package de.ellpeck.actuallyadditions.mod.inventory;
 
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityBreaker;
-import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -20,6 +19,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 
 public class ContainerBreaker extends AbstractContainerMenu {
@@ -51,8 +51,9 @@ public class ContainerBreaker extends AbstractContainerMenu {
         }
     }
 
+    @Nonnull
     @Override
-    public ItemStack quickMoveStack(Player player, int slot) {
+    public ItemStack quickMoveStack(@Nonnull Player player, int slot) {
         int inventoryStart = 9;
         int inventoryEnd = inventoryStart + 26;
         int hotbarStart = inventoryEnd + 1;
@@ -81,7 +82,7 @@ public class ContainerBreaker extends AbstractContainerMenu {
                 return ItemStack.EMPTY;
             }
 
-            if (!StackUtil.isValid(newStack)) {
+            if (newStack.isEmpty()) {
                 theSlot.set(ItemStack.EMPTY);
             } else {
                 theSlot.setChanged();
@@ -98,7 +99,7 @@ public class ContainerBreaker extends AbstractContainerMenu {
     }
 
     @Override
-    public boolean stillValid(Player player) {
+    public boolean stillValid(@Nonnull Player player) {
         return this.breaker.canPlayerUse(player);
     }
 }

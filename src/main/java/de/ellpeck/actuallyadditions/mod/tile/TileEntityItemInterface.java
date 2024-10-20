@@ -53,6 +53,7 @@ public class TileEntityItemInterface extends TileEntityBase {
                 return TileEntityItemInterface.this.getSlotCount();
             }
 
+            @Nonnull
             @Override
             public ItemStack getStackInSlot(int slot) {
                 IItemHandlerInfo handler = TileEntityItemInterface.this.getSwitchedIndexHandler(slot);
@@ -62,8 +63,9 @@ public class TileEntityItemInterface extends TileEntityBase {
                 return ItemStack.EMPTY;
             }
 
+            @Nonnull
             @Override
-            public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
+            public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
                 IItemHandlerInfo info = TileEntityItemInterface.this.getSwitchedIndexHandler(slot);
                 if (info != null && info.isLoaded() && TileEntityItemInterface.this.isWhitelisted(info, stack, false)) {
                     ItemStack remain = info.handler.insertItem(info.switchedIndex, stack, simulate);
@@ -76,14 +78,15 @@ public class TileEntityItemInterface extends TileEntityBase {
                 return stack;
             }
 
+            @Nonnull
             @Override
             public ItemStack extractItem(int slot, int amount, boolean simulate) {
                 ItemStack stackIn = this.getStackInSlot(slot);
-                if (StackUtil.isValid(stackIn)) {
+                if (!stackIn.isEmpty()) {
                     IItemHandlerInfo info = TileEntityItemInterface.this.getSwitchedIndexHandler(slot);
                     if (info != null && info.isLoaded() && TileEntityItemInterface.this.isWhitelisted(info, stackIn, true)) {
                         ItemStack extracted = info.handler.extractItem(info.switchedIndex, amount, simulate);
-                        if (StackUtil.isValid(extracted) && !simulate) {
+                        if (!extracted.isEmpty() && !simulate) {
                             TileEntityItemInterface.this.setChanged();
                             TileEntityItemInterface.this.doItemParticle(extracted, TileEntityItemInterface.this.connectedRelay.getBlockPos(), info.relayInQuestion.getBlockPos());
                         }
@@ -285,7 +288,7 @@ public class TileEntityItemInterface extends TileEntityBase {
         }
     }
 
-    private static class IItemHandlerInfo extends SpecificItemHandlerInfo {
+    public static class IItemHandlerInfo extends SpecificItemHandlerInfo {
 
         public final IItemHandler handler;
         public final int switchedIndex;
@@ -297,7 +300,7 @@ public class TileEntityItemInterface extends TileEntityBase {
         }
     }
 
-    private static class SpecificItemHandlerInfo {
+    public static class SpecificItemHandlerInfo {
 
         public final TileEntityLaserRelayItem relayInQuestion;
 

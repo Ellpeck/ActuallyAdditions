@@ -16,7 +16,6 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.crafting.EmpowererRecipe;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityEmpowerer;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.Util;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
@@ -29,14 +28,16 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.phys.Vec3;
 
+import javax.annotation.Nonnull;
+
 public class RenderEmpowerer implements BlockEntityRenderer<TileEntityEmpowerer> {
     public RenderEmpowerer(BlockEntityRendererProvider.Context context) {
     }
 
     @Override
-    public void render(TileEntityEmpowerer tile, float partialTicks, PoseStack matrices, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
+    public void render(TileEntityEmpowerer tile, float partialTicks, @Nonnull PoseStack matrices, @Nonnull MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
         ItemStack stack = tile.inv.getStackInSlot(0);
-        if (StackUtil.isValid(stack)) {
+        if (!stack.isEmpty()) {
             // TODO: [port][refactor] migrate this logic into a single method, most renders use it
             matrices.pushPose();
             matrices.translate(0.5F, 1F, 0.5F);
@@ -52,7 +53,7 @@ public class RenderEmpowerer implements BlockEntityRenderer<TileEntityEmpowerer>
             try {
                 AssetUtil.renderItemInWorld(stack, combinedLight, combinedOverlay, matrices, buffer);
             } catch (Exception e) {
-	            ActuallyAdditions.LOGGER.error("Something went wrong trying to render an item in an empowerer! The item is {}!", BuiltInRegistries.ITEM.getKey(stack.getItem()), e);
+                ActuallyAdditions.LOGGER.error("Something went wrong trying to render an item in an empowerer! The item is {}!", BuiltInRegistries.ITEM.getKey(stack.getItem()), e);
             }
 
             matrices.popPose();

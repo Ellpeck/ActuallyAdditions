@@ -45,7 +45,7 @@ public class TileEntityDisplayStand extends TileEntityInventoryBase implements I
         if (t instanceof TileEntityDisplayStand tile) {
             tile.serverTick();
 
-            if (StackUtil.isValid(tile.inv.getStackInSlot(0)) && !tile.isRedstonePowered) {
+            if (!tile.inv.getStackInSlot(0).isEmpty() && !tile.isRedstonePowered) {
                 IDisplayStandItem item = tile.convertToDisplayStandItem(tile.inv.getStackInSlot(0).getItem());
                 if (item != null) {
                     int energy = item.getUsePerTick(tile.inv.getStackInSlot(0), tile, tile.ticksElapsed);

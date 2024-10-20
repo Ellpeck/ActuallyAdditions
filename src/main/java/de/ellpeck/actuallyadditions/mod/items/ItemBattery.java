@@ -71,7 +71,7 @@ public class ItemBattery extends ItemEnergy {
 
     
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable TooltipContext playerIn, List<Component> list, TooltipFlag advanced) {
+    public void appendHoverText(@Nonnull ItemStack stack, @Nonnull TooltipContext playerIn, @Nonnull List<Component> list, @Nonnull TooltipFlag advanced) {
         super.appendHoverText(stack, playerIn, list, advanced);
         list.add(Component.translatable("tooltip.actuallyadditions.battery." + (ItemUtil.isEnabled(stack)
             ? "discharge"

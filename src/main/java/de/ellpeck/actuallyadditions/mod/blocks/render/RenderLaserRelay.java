@@ -20,7 +20,6 @@ import de.ellpeck.actuallyadditions.mod.items.ItemEngineerGoggles;
 import de.ellpeck.actuallyadditions.mod.items.ItemLaserWrench;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelay;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
-import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import io.netty.util.internal.ConcurrentSet;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
@@ -58,13 +57,13 @@ public class RenderLaserRelay implements BlockEntityRenderer<TileEntityLaserRela
         boolean hasGoggles = ItemEngineerGoggles.isWearing(player);
 
         ItemStack upgrade = relay.inv.getStackInSlot(0);
-        if (StackUtil.isValid(upgrade)) {
+        if (!upgrade.isEmpty()) {
             if (upgrade.getItem() == ActuallyItems.LASER_UPGRADE_INVISIBILITY.get()) {
                 hasInvis = true;
             }
 
             ItemStack hand = player.getMainHandItem();
-            if (hasGoggles || StackUtil.isValid(hand) && (hand.getItem() == CommonConfig.Other.relayConfigureItem || hand.getItem() instanceof ItemLaserWrench) || "themattabase".equals(player.getName().getString())) {
+            if (hasGoggles || !hand.isEmpty() && (hand.getItem() == CommonConfig.Other.relayConfigureItem || hand.getItem() instanceof ItemLaserWrench) || "themattabase".equals(player.getName().getString())) {
                 matrices.pushPose();
                 Direction direction = state.hasProperty(BlockStateProperties.FACING) ?
                         state.getValue(BlockStateProperties.FACING) : Direction.UP;
@@ -92,7 +91,7 @@ public class RenderLaserRelay implements BlockEntityRenderer<TileEntityLaserRela
                     BlockEntity secondTile = tile.getLevel().getBlockEntity(second);
                     if (secondTile instanceof TileEntityLaserRelay) {
                         ItemStack secondUpgrade = ((TileEntityLaserRelay) secondTile).inv.getStackInSlot(0);
-                        boolean otherInvis = StackUtil.isValid(secondUpgrade) && secondUpgrade.getItem() == ActuallyItems.LASER_UPGRADE_INVISIBILITY.get();
+                        boolean otherInvis = !secondUpgrade.isEmpty() && secondUpgrade.getItem() == ActuallyItems.LASER_UPGRADE_INVISIBILITY.get();
 
                         if (hasGoggles || !hasInvis || !otherInvis) {
                             int color = hasInvis && otherInvis

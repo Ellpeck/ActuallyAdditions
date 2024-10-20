@@ -14,7 +14,6 @@ import de.ellpeck.actuallyadditions.mod.inventory.slot.ArmorSlot;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotOutput;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityEnervator;
-import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -26,6 +25,7 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.capabilities.Capabilities;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 
 public class ContainerEnervator extends AbstractContainerMenu {
@@ -59,8 +59,9 @@ public class ContainerEnervator extends AbstractContainerMenu {
         }
     }
 
+    @Nonnull
     @Override
-    public ItemStack quickMoveStack(Player player, int slot) {
+    public ItemStack quickMoveStack(@Nonnull Player player, int slot) {
         int inventoryStart = 2;
         int inventoryEnd = inventoryStart + 26;
         int hotbarStart = inventoryEnd + 1;
@@ -100,7 +101,7 @@ public class ContainerEnervator extends AbstractContainerMenu {
                 return ItemStack.EMPTY;
             }
 
-            if (!StackUtil.isValid(newStack)) {
+            if (newStack.isEmpty()) {
                 theSlot.set(ItemStack.EMPTY);
             } else {
                 theSlot.setChanged();

@@ -232,7 +232,7 @@ public class ClientEvents {
             Font font = minecraft.font;
             ItemStack stack = player.getMainHandItem();
 
-            if (StackUtil.isValid(stack)) {
+            if (!stack.isEmpty()) {
                 if (stack.getItem() instanceof IHudDisplay) {
                     ((IHudDisplay) stack.getItem()).displayHud(guiGraphics, minecraft, player, stack, posHit, minecraft.getWindow());
                 }
@@ -248,7 +248,7 @@ public class ClientEvents {
                 }
 
                 if (tileHit instanceof TileEntityBase base) {
-	                if (base.isRedstoneToggle()) {
+                    if (base.isRedstoneToggle()) {
                         Component component = Component.translatable("info.actuallyadditions.redstoneMode").append(": ")
                                 .append(Component.translatable("info.actuallyadditions.redstoneMode." + (base.isPulseMode
                             ? "pulse"
@@ -266,7 +266,7 @@ public class ClientEvents {
                 }
 
                 if (tileHit instanceof IEnergyDisplay display) {
-	                if (!display.needsHoldShift() || player.isShiftKeyDown()) {
+                    if (!display.needsHoldShift() || player.isShiftKeyDown()) {
                         if (energyDisplay == null) {
                             energyDisplay = new EnergyDisplay(0, 0, null);
                         }

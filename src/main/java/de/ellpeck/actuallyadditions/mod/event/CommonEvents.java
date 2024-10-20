@@ -85,12 +85,12 @@ public class CommonEvents {
         ItemEntity item = event.getItemEntity();
         if (item != null && item.isAlive()) {
             ItemStack stack = item.getItem();
-            if (StackUtil.isValid(stack)) {
+            if (!stack.isEmpty()) {
                 for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
                     if (i != player.getInventory().selected) {
 
                         ItemStack invStack = player.getInventory().getItem(i);
-                        if (StackUtil.isValid(invStack) && (invStack.getItem() instanceof Sack)) {
+                        if (!invStack.isEmpty() && (invStack.getItem() instanceof Sack)) {
                             boolean changed = false;
                             boolean isVoid = ((Sack) invStack.getItem()).isVoid;
 
@@ -114,7 +114,7 @@ public class CommonEvents {
                                 if (filter.check(stack)) {
                                     for (int j = 0; j < inv.getSlots(); j++) {
                                         ItemStack bagStack = inv.getStackInSlot(j);
-                                        if (StackUtil.isValid(bagStack)) {
+                                        if (!bagStack.isEmpty()) {
                                             if (ItemUtil.canBeStacked(bagStack, stack)) {
                                                 int maxTransfer = Math.min(stack.getCount(), stack.getMaxStackSize() - bagStack.getCount());
                                                 if (maxTransfer > 0) {
@@ -145,7 +145,7 @@ public class CommonEvents {
                         }
                     }
 
-                    if (!StackUtil.isValid(stack)) {
+                    if (stack.isEmpty()) {
                         break;
                     }
                 }
@@ -185,7 +185,7 @@ public class CommonEvents {
     public void onLogInEvent(PlayerEvent.PlayerLoggedInEvent event) {
         if (!event.getEntity().level().isClientSide && event.getEntity() instanceof ServerPlayer player) {
             PacketHelperServer.syncPlayerData(player, true);
-	        ActuallyAdditions.LOGGER.info("Sending Player Data to player {} with UUID {}.", player.getName(), player.getUUID());
+            ActuallyAdditions.LOGGER.info("Sending Player Data to player {} with UUID {}.", player.getName(), player.getUUID());
         }
     }
 
@@ -195,7 +195,7 @@ public class CommonEvents {
         //checkAchievements(event.crafting, event.player, InitAchievements.Type.CRAFTING);
 
         if (CommonConfig.Other.GIVE_BOOKLET_ON_FIRST_CRAFT.get()) {
-            if (!event.getEntity().level().isClientSide && StackUtil.isValid(event.getCrafting()) && event.getCrafting().getItem() != ActuallyItems.ITEM_BOOKLET.get()) {
+            if (!event.getEntity().level().isClientSide && !event.getCrafting().isEmpty() && event.getCrafting().getItem() != ActuallyItems.ITEM_BOOKLET.get()) {
 
                 String name = BuiltInRegistries.ITEM.getKey(event.getCrafting().getItem()).toString();
                 if (name != null && name.toLowerCase(Locale.ROOT).contains(ActuallyAdditions.MODID)) {

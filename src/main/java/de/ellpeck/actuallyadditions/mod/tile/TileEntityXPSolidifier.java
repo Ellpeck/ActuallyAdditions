@@ -175,7 +175,7 @@ public class TileEntityXPSolidifier extends TileEntityInventoryBase implements I
             }
 
             ItemStack stack = tile.inv.getStackInSlot(1);
-            if (StackUtil.isValid(stack) && stack.getItem() instanceof ItemSolidifiedExperience) {
+            if (!stack.isEmpty() && stack.getItem() instanceof ItemSolidifiedExperience) {
                 int remainingSpace = Mth.clamp(Integer.MAX_VALUE - tile.amount, 0, stack.getCount());
                 if (stack.getCount() >= remainingSpace && remainingSpace != 0) {
                     tile.amount += remainingSpace;

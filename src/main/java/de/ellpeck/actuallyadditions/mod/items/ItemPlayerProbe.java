@@ -13,7 +13,6 @@ package de.ellpeck.actuallyadditions.mod.items;
 import de.ellpeck.actuallyadditions.mod.components.ActuallyComponents;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityPlayerInterface;
-import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -26,6 +25,7 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.UUID;
 
@@ -37,7 +37,7 @@ public class ItemPlayerProbe extends ItemBase {
 
     // TODO: [port] might be the wrong event
     @Override
-    public void inventoryTick(ItemStack stack, Level world, Entity entity, int itemSlot, boolean isSelected) {
+    public void inventoryTick(@Nonnull ItemStack stack, Level world, @Nonnull Entity entity, int itemSlot, boolean isSelected) {
         if (!world.isClientSide) {
             UUID uuid = stack.get(ActuallyComponents.UUID);
             if (uuid != null) {
@@ -57,6 +57,7 @@ public class ItemPlayerProbe extends ItemBase {
         }
     }
 
+    @Nonnull
     @Override
     public InteractionResult useOn(UseOnContext context) {
         Player player = context.getPlayer();
@@ -84,14 +85,15 @@ public class ItemPlayerProbe extends ItemBase {
         return InteractionResult.FAIL;
     }
 
+    @Nonnull
     @Override
-    public InteractionResult interactLivingEntity(ItemStack aStack, Player player, LivingEntity entity, InteractionHand hand) {
+    public InteractionResult interactLivingEntity(@Nonnull ItemStack aStack, Player player, @Nonnull LivingEntity entity, @Nonnull InteractionHand hand) {
         if (!player.level().isClientSide) {
             ItemStack stack = player.getMainHandItem();
-            if (StackUtil.isValid(stack) && stack.getItem() == this) {
+            if (!stack.isEmpty() && stack.getItem() == this) {
                 if (entity instanceof Player playerHit) {
 
-	                if (!playerHit.isShiftKeyDown()) {
+                    if (!playerHit.isShiftKeyDown()) {
                         stack.set(ActuallyComponents.UUID, playerHit.getUUID());
                         stack.set(ActuallyComponents.NAME, playerHit.getName().getString());
                         return InteractionResult.SUCCESS;
@@ -104,7 +106,7 @@ public class ItemPlayerProbe extends ItemBase {
 
     
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext pContext, List<Component> tooltip, TooltipFlag advanced) {
+    public void appendHoverText(ItemStack stack, @Nonnull TooltipContext pContext, @Nonnull List<Component> tooltip, @Nonnull TooltipFlag advanced) {
         String name = stack.get(ActuallyComponents.NAME);
         if (name != null) {
             tooltip.add(Component.translatable("tooltip.actuallyadditions.playerProbe.probing").append(": " + name));

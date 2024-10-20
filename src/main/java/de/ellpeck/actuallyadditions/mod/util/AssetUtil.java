@@ -45,6 +45,8 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.client.ClientHooks;
 import org.joml.Matrix4f;
 
+import javax.annotation.Nonnull;
+
 public final class AssetUtil {
 
     public static final int MAX_LIGHT_X = 0xF000F0;
@@ -94,8 +96,8 @@ public final class AssetUtil {
     //    }
 
     
-    public static void renderItemWithoutScrewingWithColors(ItemStack stack, PoseStack matrices, int combinedOverlay, int combinedLight) {
-        if (StackUtil.isValid(stack)) {
+    public static void renderItemWithoutScrewingWithColors(@Nonnull ItemStack stack, PoseStack matrices, int combinedOverlay, int combinedLight) {
+        if (!stack.isEmpty()) {
             Minecraft mc = Minecraft.getInstance();
             ItemRenderer renderer = mc.getItemRenderer();
             TextureManager manager = mc.getTextureManager();

@@ -12,7 +12,6 @@ package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.mod.components.ActuallyComponents;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
-import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -32,7 +31,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 
-import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,12 +45,12 @@ public class Filler extends ItemEnergy {
         Block block = state.getBlock();
         ItemStack stack = new ItemStack(block, 1);
 
-        if (StackUtil.isValid(stack)) {
+        if (!stack.isEmpty()) {
             for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
                 ItemStack slot = player.getInventory().getItem(i);
-                if (StackUtil.isValid(slot) && ItemStack.isSameItem(slot, stack)) {
+                if (!slot.isEmpty() && ItemStack.isSameItem(slot, stack)) {
                     slot.shrink(1);
-                    if (!StackUtil.isValid(slot)) {
+                    if (slot.isEmpty()) {
                         player.getInventory().setItem(i, ItemStack.EMPTY);
                     }
 
@@ -74,6 +73,7 @@ public class Filler extends ItemEnergy {
         return Optional.empty();
     }
 
+    @Nonnull
     @Override
     public InteractionResult useOn(UseOnContext context) {
         if (context.getPlayer() == null) {
@@ -100,7 +100,7 @@ public class Filler extends ItemEnergy {
     }
 
     @Override
-    public void releaseUsing(ItemStack stack, Level world, LivingEntity entity, int timeLeft) {
+    public void releaseUsing(@Nonnull ItemStack stack, Level world, @Nonnull LivingEntity entity, int timeLeft) {
         if (!world.isClientSide) {
             boolean clear = true;
             if (entity instanceof Player player) {
@@ -123,7 +123,7 @@ public class Filler extends ItemEnergy {
     }
 
     @Override
-    public void inventoryTick(ItemStack stack, Level world, Entity entity, int itemSlot, boolean isSelected) {
+    public void inventoryTick(@Nonnull ItemStack stack, @Nonnull Level world, @Nonnull Entity entity, int itemSlot, boolean isSelected) {
         super.inventoryTick(stack, world, entity, itemSlot, isSelected);
 
 
@@ -207,7 +207,7 @@ public class Filler extends ItemEnergy {
 
     
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable TooltipContext context, List<Component> tooltip, TooltipFlag flagIn) {
+    public void appendHoverText(@Nonnull ItemStack stack, @Nonnull TooltipContext context, @Nonnull List<Component> tooltip, @Nonnull TooltipFlag flagIn) {
         super.appendHoverText(stack, context, tooltip, flagIn);
 
         MutableComponent display = loadData(stack)
@@ -218,7 +218,7 @@ public class Filler extends ItemEnergy {
     }
 
     @Override
-    public int getUseDuration(ItemStack stack, LivingEntity livingEntity) {
+    public int getUseDuration(@Nonnull ItemStack stack, @Nonnull LivingEntity livingEntity) {
         return Integer.MAX_VALUE;
     }
 }

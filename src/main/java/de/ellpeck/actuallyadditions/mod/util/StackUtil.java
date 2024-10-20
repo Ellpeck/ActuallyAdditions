@@ -16,45 +16,9 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.items.IItemHandler;
 
-import java.util.Collection;
 import java.util.List;
 
 public final class StackUtil {
-
-    /**
-     * Pretty much just a check for {@link ItemStack#isEmpty()} but exists in case Mojang does some more refactoring.
-     *
-     * @param stack The stack
-     * @return If the stack is not empty, or if it's an IDisableableItem, if its enabled.
-     */
-    @Deprecated
-    public static boolean isValid(ItemStack stack) {
-        return stack != null && !stack.isEmpty();
-        //        if (stack == null) AwfulUtil.callTheFuckinPolice("Null ItemStack detected", stack);
-        //        Item i = stack.getItem();
-        //        if (i instanceof IDisableableItem) return !((IDisableableItem) i).isDisabled();
-        //        return !stack.isEmpty();
-    }
-
-    /**
-     * Checks if a collection of stacks are empty, as {@link Collection#isEmpty()} does not care about empty stacks.
-     *
-     * @param stacks Some ItemStacks
-     * @return If all stacks in the collection return true for {@link ItemStack#isEmpty()}
-     */
-    @Deprecated
-    public static boolean isEmpty(Collection<ItemStack> stacks) {
-        if (stacks.isEmpty()) {
-            return true;
-        }
-        for (ItemStack s : stacks) {
-            if (!s.isEmpty()) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     /**
      * Checks if all provided itemstacks will fit in the AA handler.  Use addAll below to actually add the stacks.  This is strictly a check function.
      *

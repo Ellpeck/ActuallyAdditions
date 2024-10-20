@@ -67,7 +67,7 @@ public class LensColor extends Lens {
             for (ItemEntity item : items) {
                 if (item.isAlive() && !item.getItem().isEmpty() && tile.getEnergy() >= ENERGY_USE) {
                     ItemStack newStack = this.tryConvert(item.getItem(), tile.getWorldObject().registryAccess());
-                    if (StackUtil.isValid(newStack)) {
+                    if (!newStack.isEmpty()) {
                         item.discard();
 
                         ItemEntity newItem = new ItemEntity(tile.getWorldObject(), item.getX(), item.getY(), item.getZ(), newStack);

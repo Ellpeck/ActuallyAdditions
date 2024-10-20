@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks.base;
 
-import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
@@ -29,6 +28,7 @@ import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.BlockHitResult;
 import net.neoforged.neoforge.items.ItemHandlerHelper;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -63,8 +63,9 @@ public class BlockPlant extends CropBlock {
     //    }
 
 
+    @Nonnull
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult pHitResult) {
+    protected ItemInteractionResult useItemOn(@Nonnull ItemStack pStack, @Nonnull BlockState state, @Nonnull Level world, @Nonnull BlockPos pos, @Nonnull Player player, @Nonnull InteractionHand hand, @Nonnull BlockHitResult pHitResult) {
         if (this.getAge(state) < 7) {
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
@@ -73,12 +74,12 @@ public class BlockPlant extends CropBlock {
             List<ItemStack> drops = Block.getDrops(state, (ServerLevel) world, pos, null);
             boolean deductedSeedSize = false;
             for (ItemStack drop : drops) {
-                if (StackUtil.isValid(drop)) {
+                if (!drop.isEmpty()) {
                     if (drop.getItem() == this.seedItem.get() && !deductedSeedSize) {
                         drop.shrink(1);
                         deductedSeedSize = true;
                     }
-                    if (StackUtil.isValid(drop)) {
+                    if (!drop.isEmpty()) {
                         ItemHandlerHelper.giveItemToPlayer(player, drop);
                     }
                 }
@@ -90,6 +91,7 @@ public class BlockPlant extends CropBlock {
         return super.useItemOn(pStack, state, world, pos, player, hand, pHitResult);
     }
 
+    @Nonnull
     @Override
     protected ItemLike getBaseSeedId() {
         return this.seedItem.get();

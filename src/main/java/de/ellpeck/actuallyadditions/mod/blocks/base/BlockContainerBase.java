@@ -172,7 +172,7 @@ public abstract class BlockContainerBase extends Block implements EntityBlock {
 
     protected boolean tryUseItemOnTank(Player player, InteractionHand hand, FluidTank tank) {
         ItemStack heldItem = player.getItemInHand(hand);
-        return StackUtil.isValid(heldItem) && FluidUtil.interactWithFluidHandler(player, hand, tank);
+        return !heldItem.isEmpty() && FluidUtil.interactWithFluidHandler(player, hand, tank);
 
     }
 

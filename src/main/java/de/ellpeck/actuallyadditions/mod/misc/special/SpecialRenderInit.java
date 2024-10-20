@@ -32,39 +32,14 @@ public class SpecialRenderInit {
         new ThreadSpecialFetcher();
     }
 
-    // TODO: [port][note] ensure that this still works with the special people stuff
     public static void parse(Properties properties) {
         for (String key : properties.stringPropertyNames()) {
-            String[] values = properties.getProperty(key).split("@");
-            if (values.length > 0) {
-                String itemName = values[0];
-
-                int meta;
-                try {
-                    meta = Integer.parseInt(values[1]);
-                } catch (Exception e) {
-                    meta = 0;
-                }
-
-                // TODO: remove tolowercase hack
-                ResourceLocation resLoc = ResourceLocation.tryParse(itemName.toLowerCase());
+            String value = properties.getProperty(key);
+            if (!value.isEmpty()) {
+                ResourceLocation resLoc = ResourceLocation.tryParse(value);
                 ItemStack stack = findItem(resLoc);
 
-                //TODO Remove this block once the transition to 1.11 is done and the special people stuff file has been converted to snake_case
-                if (!StackUtil.isValid(stack)) {
-                    String convertedItemName = "";
-                    for (char c : itemName.toCharArray()) {
-                        if (Character.isUpperCase(c)) {
-                            convertedItemName += "_";
-                            convertedItemName += Character.toLowerCase(c);
-                        } else {
-                            convertedItemName += c;
-                        }
-                    }
-                    stack = findItem(ResourceLocation.tryParse(convertedItemName));
-                }
-
-                if (StackUtil.isValid(stack)) {
+                if (!stack.isEmpty()) {
                     SPECIAL_LIST.put(key.toLowerCase(Locale.ROOT), new RenderSpecial(stack));
                 }
             }
@@ -73,14 +48,14 @@ public class SpecialRenderInit {
 
     private static ItemStack findItem(ResourceLocation resLoc) {
         if (BuiltInRegistries.ITEM.containsKey(resLoc)) {
-            Item item = BuiltInRegistries.ITEM.get(resLoc);
-            if (item != null) {
-                return new ItemStack(item);
+            var item = BuiltInRegistries.ITEM.getOptional(resLoc);
+            if (item.isPresent()) {
+                return new ItemStack(item.get());
             }
         } else if (BuiltInRegistries.BLOCK.containsKey(resLoc)) {
-            Block block = BuiltInRegistries.BLOCK.get(resLoc);
-            if (block != null) {
-                return new ItemStack(block);
+            var block = BuiltInRegistries.BLOCK.getOptional(resLoc);
+            if (block.isPresent()) {
+                return new ItemStack(block.get());
             }
         }
         return ItemStack.EMPTY;

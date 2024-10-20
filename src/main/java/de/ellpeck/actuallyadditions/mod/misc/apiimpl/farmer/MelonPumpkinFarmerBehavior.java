@@ -13,7 +13,6 @@ package de.ellpeck.actuallyadditions.mod.misc.apiimpl.farmer;
 import de.ellpeck.actuallyadditions.api.farmer.FarmerResult;
 import de.ellpeck.actuallyadditions.api.farmer.IFarmerBehavior;
 import de.ellpeck.actuallyadditions.api.internal.IFarmer;
-import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.Item;
@@ -35,7 +34,7 @@ public class MelonPumpkinFarmerBehavior implements IFarmerBehavior {
     public FarmerResult tryPlantSeed(ItemStack seed, Level world, BlockPos pos, IFarmer farmer) {
         int use = 350;
         if (farmer.getEnergy() >= use * 2) {
-            if (StackUtil.isValid(seed)) {
+            if (!seed.isEmpty()) {
                 Item seedItem = seed.getItem();
                 boolean isPumpkin = seedItem == Items.PUMPKIN_SEEDS;
                 if (isPumpkin || seedItem == Items.MELON_SEEDS) {

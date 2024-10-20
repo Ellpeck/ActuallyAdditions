@@ -13,7 +13,6 @@ package de.ellpeck.actuallyadditions.mod.inventory;
 import de.ellpeck.actuallyadditions.mod.crafting.PressingRecipe;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityCanolaPress;
-import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -22,6 +21,7 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -49,8 +49,9 @@ public class ContainerCanolaPress extends AbstractContainerMenu {
         return new ContainerCanolaPress(windowId, inv, (TileEntityCanolaPress) Objects.requireNonNull(inv.player.level().getBlockEntity(data.readBlockPos())));
     }
 
+    @Nonnull
     @Override
-    public ItemStack quickMoveStack(Player player, int slot) {
+    public ItemStack quickMoveStack(@Nonnull Player player, int slot) {
         int inventoryStart = 1;
         int inventoryEnd = inventoryStart + 26;
         int hotbarStart = inventoryEnd + 1;
@@ -84,7 +85,7 @@ public class ContainerCanolaPress extends AbstractContainerMenu {
                 return ItemStack.EMPTY;
             }
 
-            if (!StackUtil.isValid(newStack)) {
+            if (newStack.isEmpty()) {
                 theSlot.set(ItemStack.EMPTY);
             } else {
                 theSlot.setChanged();
@@ -101,7 +102,7 @@ public class ContainerCanolaPress extends AbstractContainerMenu {
     }
 
     @Override
-    public boolean stillValid(Player player) {
+    public boolean stillValid(@Nonnull Player player) {
         return this.press.canPlayerUse(player);
     }
 }

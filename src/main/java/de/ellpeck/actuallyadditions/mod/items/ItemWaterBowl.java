@@ -39,6 +39,8 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
+import javax.annotation.Nonnull;
+
 public class ItemWaterBowl extends ItemBase {
 
     public ItemWaterBowl() {
@@ -68,7 +70,7 @@ public class ItemWaterBowl extends ItemBase {
                             ItemStack reduced = StackUtil.shrink(event.getItemStack(), 1);
 
                             ItemStack bowl = new ItemStack(ActuallyItems.WATER_BOWL.get());
-                            if (!StackUtil.isValid(reduced)) {
+                            if (reduced.isEmpty()) {
                                 event.getEntity().setItemInHand(event.getHand(), bowl);
                             } else if (!event.getEntity().getInventory().add(bowl.copy())) {
                                 ItemEntity entityItem = new ItemEntity(event.getLevel(), event.getEntity().getX(), event.getEntity().getY(), event.getEntity().getZ(), bowl.copy());
@@ -82,13 +84,14 @@ public class ItemWaterBowl extends ItemBase {
         }
     }
 
+    @Nonnull
     @Override
-    public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
+    public InteractionResultHolder<ItemStack> use(@Nonnull Level world, Player player, @Nonnull InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
 
         HitResult trace = player.pick(8.0D, 1.0F, false);
 
-        if (trace == null) {
+        if (trace.getType() == HitResult.Type.MISS) {
             return InteractionResultHolder.pass(stack);
         } else if (trace.getType() != HitResult.Type.BLOCK) {
             return InteractionResultHolder.pass(stack);
@@ -117,7 +120,7 @@ public class ItemWaterBowl extends ItemBase {
     }
 
     @Override
-    public void inventoryTick(ItemStack stack, Level world, Entity entity, int itemSlot, boolean isSelected) {
+    public void inventoryTick(@Nonnull ItemStack stack, Level world, @Nonnull Entity entity, int itemSlot, boolean isSelected) {
         if (!world.isClientSide) {
             if (CommonConfig.Other.WATER_BOWL_LOSS.get()) {
                 if (world.getGameTime() % 10 == 0 && world.random.nextFloat() >= 0.5F) {
@@ -134,7 +137,7 @@ public class ItemWaterBowl extends ItemBase {
                     if (lastX != 0 && lastX != (int) entity.getX() || lastY != 0 && lastY != (int) entity.getY()) {
                         if (!entity.isShiftKeyDown()) {
                             if (entity instanceof Player player) {
-	                            if (this.tryPlaceContainedLiquid(player, world, player.blockPosition(), true)) {
+                                if (this.tryPlaceContainedLiquid(player, world, player.blockPosition(), true)) {
                                     this.checkReplace(player, stack, new ItemStack(Items.BOWL), itemSlot);
                                 }
                             }
@@ -159,7 +162,7 @@ public class ItemWaterBowl extends ItemBase {
     }
 
     @Override
-    public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
+    public boolean shouldCauseReequipAnimation(@Nonnull ItemStack oldStack, @Nonnull ItemStack newStack, boolean slotChanged) {
         return !ItemStack.isSameItem(oldStack, newStack);
     }
 

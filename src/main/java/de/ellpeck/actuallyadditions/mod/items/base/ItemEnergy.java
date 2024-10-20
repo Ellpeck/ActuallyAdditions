@@ -25,6 +25,7 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.energy.EnergyStorage;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 
+import javax.annotation.Nonnull;
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.Optional;
@@ -46,7 +47,7 @@ public abstract class ItemEnergy extends ItemBase {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flagIn) {
+    public void appendHoverText(@Nonnull ItemStack stack, @Nonnull TooltipContext context, @Nonnull List<Component> tooltip, @Nonnull TooltipFlag flagIn) {
         super.appendHoverText(stack, context, tooltip, flagIn);
         IEnergyStorage storage = stack.getCapability(Capabilities.EnergyStorage.ITEM);
         if(storage != null) {
