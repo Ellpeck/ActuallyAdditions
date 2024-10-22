@@ -73,8 +73,6 @@ import net.neoforged.neoforge.client.settings.KeyConflictContext;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.network.PacketDistributor;
 
-import java.util.Optional;
-
 public class ActuallyAdditionsClient {
     private static final KeyMapping OPEN_CRAFTING_KEY = new KeyMapping("key.actualladditions.crafting_stick_open.desc", KeyConflictContext.IN_GAME, InputConstants.Type.KEYSYM, -1, "key.actuallyadditions.category");
 
