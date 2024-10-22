@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.api.ActuallyTags;
 import de.ellpeck.actuallyadditions.mod.AASounds;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.crafting.CoffeeIngredientRecipe;
+import de.ellpeck.actuallyadditions.mod.fluids.AATank;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerCoffeeMachine;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.items.ItemCoffee;
@@ -59,7 +60,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
 
     public final CustomEnergyStorage storage = new CustomEnergyStorage(300000, 250, 0);
 
-    public final FluidTank tank = new FluidTank(4 * FluidType.BUCKET_VOLUME) {
+    public final AATank tank = new AATank(4 * FluidType.BUCKET_VOLUME) {
         @Nonnull
         @Override
         public FluidStack drain(int maxDrain, FluidAction action) {
@@ -206,7 +207,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
                     this.inv.setStackInSlot(SLOT_OUTPUT, output.copy());
                     this.inv.getStackInSlot(SLOT_INPUT).shrink(1);
                     this.coffeeCacheAmount -= CACHE_USE;
-                    this.tank.drain(WATER_USE, IFluidHandler.FluidAction.EXECUTE);
+                    this.tank.drainInternal(WATER_USE, IFluidHandler.FluidAction.EXECUTE);
                 }
             }
         } else {
