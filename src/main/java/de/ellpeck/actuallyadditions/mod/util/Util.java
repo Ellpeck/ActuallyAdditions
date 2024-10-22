@@ -18,12 +18,6 @@ import net.neoforged.fml.loading.FMLLoader;
 
 public final class Util {
 
-    @Deprecated
-    public static final int WILDCARD = Short.MAX_VALUE;//OreDictionary.WILDCARD_VALUE;
-
-    @Deprecated
-    public static final int BUCKET = 1000;
-
     public static boolean isDevVersion() {
         return ActuallyAdditions.VERSION.equals("@VERSION@");
     }
