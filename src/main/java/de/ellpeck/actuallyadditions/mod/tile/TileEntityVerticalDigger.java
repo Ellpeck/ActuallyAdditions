@@ -30,6 +30,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -138,13 +139,13 @@ public class TileEntityVerticalDigger extends TileEntityInventoryBase implements
             : 1);
         if (this.storage.getEnergyStored() >= actualUse) {
             BlockPos pos = new BlockPos(this.worldPosition.getX() + this.checkX, this.checkY, this.worldPosition.getZ() + this.checkZ);
+            ItemStack fakePickaxe = Items.NETHERITE_PICKAXE.getDefaultInstance();
 
             BlockState state = this.level.getBlockState(pos);
             Block block = state.getBlock();
             ItemStack stack = block.getCloneItemStack(state, new BlockHitResult(new Vec3(0, 0, 0), Direction.DOWN, pos, false), this.level, pos, FakePlayerFactory.getMinecraft((ServerLevel) this.level));
             if (!state.isAir()) {
-                //block.getHarvestLevel(state) <= DrillItem.HARVEST_LEVEL
-                if (stack.isCorrectToolForDrops(state) && state.getDestroySpeed(this.level, pos) >= 0F && this.isMinable(state, stack)) {
+                if (fakePickaxe.isCorrectToolForDrops(state) && state.getDestroySpeed(this.level, pos) >= 0F && this.isMinable(state, stack)) {
                     List<ItemStack> drops = Block.getDrops(state, (ServerLevel) this.level, pos, this.level.getBlockEntity(pos));
                     float chance = WorldUtil.fireFakeHarvestEventsForDropChance(this, drops, this.level, pos);
 

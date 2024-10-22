@@ -95,7 +95,7 @@ public class TileEntityLongRangeBreaker extends TileEntityInventoryBase implemen
 
     private void doWork() {
         if (this.storage.getEnergyStored() >= ENERGY_USE * RANGE) {
-            BlockState state = this.level.getBlockState(this.worldPosition);
+            BlockState state = getBlockState();
             Direction sideToManipulate = WorldUtil.getDirectionByPistonRotation(state);
 
             for (int i = 0; i < RANGE; i++) {

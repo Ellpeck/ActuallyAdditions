@@ -21,11 +21,13 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -102,7 +104,7 @@ public class TileEntityBreaker extends TileEntityInventoryBase implements MenuPr
     }
 
     private void doWork() {
-        Direction side = WorldUtil.getDirectionByPistonRotation(this.level.getBlockState(this.worldPosition));
+        Direction side = WorldUtil.getDirectionByPistonRotation(getBlockState());
         BlockPos breakCoords = this.worldPosition.relative(side);
         BlockState stateToBreak = this.level.getBlockState(breakCoords);
         Block blockToBreak = stateToBreak.getBlock();
@@ -110,6 +112,7 @@ public class TileEntityBreaker extends TileEntityInventoryBase implements MenuPr
         if (!this.isPlacer && blockToBreak != Blocks.AIR && stateToBreak.getDestroySpeed(this.level, breakCoords) >= 0.0F) {
             List<ItemStack> drops = Block.getDrops(stateToBreak, (ServerLevel) this.level, breakCoords, this.level.getBlockEntity(breakCoords));
             FakePlayer fake = FakePlayerFactory.getMinecraft((ServerLevel) this.level);
+            fake.getInventory().items.set(fake.getInventory().selected, Items.NETHERITE_PICKAXE.getDefaultInstance());
             if (stateToBreak.canHarvestBlock(this.level, breakCoords, fake)) { //TODO might double check this is right mikey
                 if (StackUtil.canAddAll(this.inv, drops, false)) {
                     this.level.destroyBlock(breakCoords, false);
