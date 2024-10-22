@@ -20,6 +20,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.registries.VanillaRegistries;
 import net.minecraft.world.damagesource.DamageType;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -67,7 +68,8 @@ public class ActuallyAdditionsData {
 
         generator.addProvider(true, new SoundsGenerator(packOutput, helper));
 
-        generator.addProvider(true, new PatchouliGenerator(packOutput, lookupProvider));
+        if (ModList.get().isLoaded("patchouli"))
+            generator.addProvider(true, new PatchouliGenerator(packOutput, lookupProvider));
 
         generator.addProvider(true, new GlobalLootModifierGenerator(packOutput, lookupProvider));
 

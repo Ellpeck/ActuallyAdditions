@@ -29,6 +29,12 @@ public record BoolConfigFeatureBiomeModifier(HolderSet<Biome> biomes, HolderSet<
 				return true;
 			case "generateQuartz":
 				return CommonConfig.Worldgen.GENERATE_QUARTZ.get();
+			case "generateCanola":
+				return CommonConfig.Worldgen.GENERATE_CANOLA.get();
+			case "generateFlax":
+				return CommonConfig.Worldgen.GENERATE_FLAX.get();
+			case "generateCoffee":
+				return CommonConfig.Worldgen.GENERATE_COFFEE.get();
 		}
 	}
 

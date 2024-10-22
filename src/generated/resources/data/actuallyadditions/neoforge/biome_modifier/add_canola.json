@@ -1,0 +1,13 @@
+{
+  "type": "actuallyadditions:bool_config_feature_modifier",
+  "biomes": {
+    "type": "neoforge:or",
+    "values": [
+      "#c:is_hot/overworld",
+      "#c:is_sparse_vegetation/overworld"
+    ]
+  },
+  "boolConfig": "generateCanola",
+  "features": "actuallyadditions:canola_patch",
+  "step": "vegetal_decoration"
+}

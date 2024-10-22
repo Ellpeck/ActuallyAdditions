@@ -16,11 +16,14 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.conditions.ICondition;
 import net.neoforged.neoforge.common.world.BiomeModifier;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
+import net.neoforged.neoforge.registries.holdersets.AndHolderSet;
+import net.neoforged.neoforge.registries.holdersets.OrHolderSet;
 
 import java.util.function.Supplier;
 
@@ -46,6 +49,12 @@ public final class ActuallyBiomeModifiers {
 
 	protected static final ResourceKey<BiomeModifier> ADD_BLACK_QUARTZ_ORE_MODIFIER = ResourceKey.create(NeoForgeRegistries.Keys.BIOME_MODIFIERS,
 			ActuallyAdditions.modLoc("add_black_quartz"));
+	protected static final ResourceKey<BiomeModifier> ADD_CANOLA = ResourceKey.create(NeoForgeRegistries.Keys.BIOME_MODIFIERS,
+			ActuallyAdditions.modLoc("add_canola"));
+	protected static final ResourceKey<BiomeModifier> ADD_FLAX = ResourceKey.create(NeoForgeRegistries.Keys.BIOME_MODIFIERS,
+			ActuallyAdditions.modLoc("add_flax"));
+	protected static final ResourceKey<BiomeModifier> ADD_COFFEE = ResourceKey.create(NeoForgeRegistries.Keys.BIOME_MODIFIERS,
+			ActuallyAdditions.modLoc("add_coffee"));
 
 	public static void bootstrap(BootstrapContext<BiomeModifier> context) {
 		HolderGetter<Biome> biomeGetter = context.lookup(Registries.BIOME);
@@ -57,6 +66,21 @@ public final class ActuallyBiomeModifiers {
 				overworldHolder,
 				HolderSet.direct(placedGetter.getOrThrow(ActuallyPlacedFeatures.PLACED_ORE_BLACK_QUARTZ)),
 				GenerationStep.Decoration.UNDERGROUND_ORES, "generateQuartz"
+		));
+		context.register(ADD_CANOLA, new BoolConfigFeatureBiomeModifier(
+				new OrHolderSet<>(biomeGetter.getOrThrow(Tags.Biomes.IS_HOT_OVERWORLD), biomeGetter.getOrThrow(Tags.Biomes.IS_SPARSE_VEGETATION_OVERWORLD)),
+				HolderSet.direct(placedGetter.getOrThrow(ActuallyPlacedFeatures.CANOLA_PATCH)),
+				GenerationStep.Decoration.VEGETAL_DECORATION, "generateCanola"
+		));
+		context.register(ADD_FLAX, new BoolConfigFeatureBiomeModifier(
+				new OrHolderSet<>(biomeGetter.getOrThrow(Tags.Biomes.IS_DENSE_VEGETATION_OVERWORLD), biomeGetter.getOrThrow(Tags.Biomes.IS_COLD_OVERWORLD)),
+				HolderSet.direct(placedGetter.getOrThrow(ActuallyPlacedFeatures.FLAX_PATCH)),
+				GenerationStep.Decoration.VEGETAL_DECORATION, "generateFlax"
+		));
+		context.register(ADD_COFFEE, new BoolConfigFeatureBiomeModifier(
+				biomeGetter.getOrThrow(Tags.Biomes.IS_HOT_OVERWORLD),
+				HolderSet.direct(placedGetter.getOrThrow(ActuallyPlacedFeatures.COFFEE_PATCH)),
+				GenerationStep.Decoration.VEGETAL_DECORATION, "generateCoffee"
 		));
 	}
 }

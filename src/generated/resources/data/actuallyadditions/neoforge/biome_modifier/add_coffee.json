@@ -1,0 +1,7 @@
+{
+  "type": "actuallyadditions:bool_config_feature_modifier",
+  "biomes": "#c:is_hot/overworld",
+  "boolConfig": "generateCoffee",
+  "features": "actuallyadditions:coffee_patch",
+  "step": "vegetal_decoration"
+}

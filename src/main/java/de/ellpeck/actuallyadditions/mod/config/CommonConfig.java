@@ -72,11 +72,17 @@ public class CommonConfig {
 
     public static class Worldgen {
         public static ModConfigSpec.BooleanValue GENERATE_QUARTZ;
+        public static ModConfigSpec.BooleanValue GENERATE_CANOLA;
+        public static ModConfigSpec.BooleanValue GENERATE_FLAX;
+        public static ModConfigSpec.BooleanValue GENERATE_COFFEE;
 
         public static void build() {
             BUILDER.comment("Worldgen Settings").push("worldgenSettings");
 
-            GENERATE_QUARTZ = BUILDER.comment("Should Black Quartz generate in the world?").define("laserRelayLoss", true);
+            GENERATE_QUARTZ = BUILDER.comment("Should Black Quartz generate in the world?").define("generateQuartz", true);
+            GENERATE_CANOLA = BUILDER.comment("Should Canola generate in the World?").define("generateCanola", true);
+            GENERATE_FLAX = BUILDER.comment("Should Flax generate in the world?").define("generateFlax", true);
+            GENERATE_COFFEE = BUILDER.comment("Should Coffee generate in the world?").define("generateCoffee", true);
 
             BUILDER.pop();
         }
