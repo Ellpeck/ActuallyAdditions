@@ -1,3 +1,14 @@
+# 1.3.6+mc1.21.1
+* Add the ability to open the Crafting Table On A Stick while inside a Curios slot
+* Add missing XP Solidifier recipe
+* Fixed All In One tool not having attributes
+* Fix Engineer's House not generating
+* Add worldgen of Canola, Flax and Coffee patches (With a config option to disable)
+* Fix Breaker and Vertical Digger being unable to break blocks tougher than dirt
+* Fix Coffee Machine not consuming water
+* Fix Coffee not applying effects
+* Fix Coffee not transforming into Empty Cup when consumed entirely
+
 # 1.3.5+mc1.21.1
 * Overhaul networking, should fix a lot of issues with crashes on servers
 * Add storage block tags for the crystals
