@@ -61,9 +61,9 @@ public class ItemCoffee extends ItemBase { //TODO: Do we want to change the satu
     public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity livingEntity) {
         ItemStack theStack = stack.copy();
         super.finishUsingItem(stack, level, livingEntity);
-        applyPotionEffectsFromStack(stack, livingEntity);
+        applyPotionEffectsFromStack(theStack, livingEntity);
         theStack.setDamageValue(theStack.getDamageValue() + 1);
-        if (theStack.getMaxDamage() - theStack.getDamageValue() < 0) {
+        if (theStack.getMaxDamage() - theStack.getDamageValue() <= 0) {
             return new ItemStack(ActuallyItems.EMPTY_CUP.get());
         } else {
             return theStack;
