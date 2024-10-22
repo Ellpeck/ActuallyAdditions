@@ -109,18 +109,32 @@ public class MethodHandler implements IMethodHandler {
     @Override
     public void addEffectProperties(ItemStack stack, MobEffectInstance effect, boolean addDur, boolean addAmp) {
         MobEffectInstance[] effects = this.getEffectsFromStack(stack);
+        boolean effectUpdated = false;
         for (int i = 0; i < effects.length; i++) {
             if (effects[i].getEffect() == effect.getEffect()) {
-                effects[i] = new MobEffectInstance(effects[i].getEffect(), effects[i].getDuration() + (addDur
-                    ? effect.getDuration()
-                    : 0), effects[i].getAmplifier() + (addAmp
-                    ? effect.getAmplifier() > 0
-                    ? effect.getAmplifier()
-                    : 1
-                    : 0));
+                effects[i] = new MobEffectInstance(effects[i].getEffect(),
+                        effects[i].getDuration() + (addDur ? effect.getDuration() : 0),
+                        effects[i].getAmplifier() + (addAmp ? effect.getAmplifier() > 0 ? effect.getAmplifier() : 1 : 0));
+                effectUpdated = true;
+                break;
             }
-            this.addEffectToStack(stack, effects[i]);
         }
+        if (!effectUpdated) {
+            this.addEffectToStack(stack, effect);
+        } else {
+            // Clear existing effects from the stack
+            this.clearEffectsFromStack(stack);
+            // Add updated effects to the stack
+            for (MobEffectInstance updatedEffect : effects) {
+                this.addEffectToStack(stack, updatedEffect);
+            }
+        }
+    }
+
+    private void clearEffectsFromStack(ItemStack stack) {
+        CompoundTag tag = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
+        tag.remove("Counter");
+        stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
     }
 
     @Override
