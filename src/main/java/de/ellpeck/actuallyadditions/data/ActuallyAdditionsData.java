@@ -1,5 +1,6 @@
 package de.ellpeck.actuallyadditions.data;
 
+import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.data.patchouli.PatchouliGenerator;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.gen.ActuallyBiomeModifiers;
@@ -72,6 +73,7 @@ public class ActuallyAdditionsData {
 
         generator.addProvider(event.includeServer(), new DatapackBuiltinEntriesProvider(
                 packOutput, patchedProvider, Set.of(ActuallyAdditions.MODID)));
+        generator.addProvider(true, new StructureUpdater("structure", ActuallyAdditionsAPI.MOD_ID, helper, packOutput));
 
         generator.addProvider(true, new Curios(packOutput, helper, lookupProvider));
     }
