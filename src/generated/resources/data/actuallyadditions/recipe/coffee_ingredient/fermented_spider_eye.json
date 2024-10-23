@@ -10,5 +10,5 @@
   "ingredient": {
     "item": "minecraft:fermented_spider_eye"
   },
-  "maxAmplifier": 2
+  "max_amplifier": 2
 }

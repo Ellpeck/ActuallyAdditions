@@ -164,8 +164,8 @@ public class CoffeeIngredientRecipe implements Recipe<RecipeInput> {
 												DataResult::success
 										)
 										.forGetter(recipe -> recipe.instances),
-								Codec.INT.fieldOf("maxAmplifier").forGetter(recipe -> recipe.maxAmplifier),
-								Codec.STRING.optionalFieldOf("extraText", "").forGetter(recipe -> recipe.extraText)
+								Codec.INT.fieldOf("max_amplifier").forGetter(recipe -> recipe.maxAmplifier),
+								Codec.STRING.optionalFieldOf("extra_text", "").forGetter(recipe -> recipe.extraText)
 						)
 						.apply(instance, CoffeeIngredientRecipe::new)
 		);

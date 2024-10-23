@@ -9,9 +9,9 @@
     }
   ],
   "type": "actuallyadditions:coffee_ingredient",
-  "extraText": "jei.actuallyadditions.coffee.extra.milk",
+  "extra_text": "jei.actuallyadditions.coffee.extra.milk",
   "ingredient": {
     "tag": "c:milk"
   },
-  "maxAmplifier": 0
+  "max_amplifier": 0
 }

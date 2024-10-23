@@ -1,8 +1,8 @@
 {
   "type": "actuallyadditions:coffee_ingredient",
-  "extraText": "jei.actuallyadditions.coffee.extra.milk",
+  "extra_text": "jei.actuallyadditions.coffee.extra.milk",
   "ingredient": {
     "item": "minecraft:milk_bucket"
   },
-  "maxAmplifier": 0
+  "max_amplifier": 0
 }

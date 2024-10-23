@@ -10,5 +10,5 @@
   "ingredient": {
     "item": "minecraft:blaze_powder"
   },
-  "maxAmplifier": 4
+  "max_amplifier": 4
 }
