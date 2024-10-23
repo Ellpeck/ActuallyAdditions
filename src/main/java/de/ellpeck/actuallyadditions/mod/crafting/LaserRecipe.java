@@ -101,7 +101,7 @@ public class LaserRecipe implements Recipe<RecipeInput> {
     public static class Serializer implements RecipeSerializer<LaserRecipe> {
         private static final MapCodec<LaserRecipe> CODEC = RecordCodecBuilder.mapCodec(
                 instance -> instance.group(
-                                ItemStack.STRICT_CODEC.fieldOf("result").forGetter(recipe -> recipe.result),
+                                ItemStack.STRICT_SINGLE_ITEM_CODEC.fieldOf("result").forGetter(recipe -> recipe.result),
                                 Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(recipe -> recipe.itemIngredient),
                                 Codec.INT.fieldOf("energy").forGetter(recipe -> recipe.energy)
                         )
