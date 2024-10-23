@@ -28,8 +28,7 @@ public class ThreadSpecialFetcher extends Thread {
     public void run() {
         ActuallyAdditions.LOGGER.info("Fetching Special People Stuff...");
         try {
-            //URL url = new URL("https://raw.githubusercontent.com/Ellpeck/ActuallyAdditions/main/specialPeopleStuff.properties");
-            URL url = new URL("https://raw.githubusercontent.com/Ellpeck/ActuallyAdditions/1.20.4/specialPeopleStuff.properties");
+            URL url = new URL("https://raw.githubusercontent.com/Ellpeck/ActuallyAdditions/main/specialPeopleThings.properties");
             Properties specialProperties = new Properties();
             specialProperties.load(new InputStreamReader(url.openStream()));
             SpecialRenderInit.parse(specialProperties);
