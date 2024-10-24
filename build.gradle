@@ -100,9 +100,12 @@ dependencies {
     localRuntime "curse.maven:mekanism-268560:5680395"
 
     // Immersive Engineering, mainly for compat datagen
-    implementation "curse.maven:ie-231951:5828000"
-    implementation "blusunrize.immersiveengineering:ImmersiveEngineering:1.21.1-12.0.0-182.77:datagen"
-    implementation "blusunrize.immersiveengineering:ImmersiveEngineering:1.21.1-12.0.0-182.77:api"
+    localRuntime "curse.maven:ie-231951:5828000"
+    compileOnly "curse.maven:ie-231951:5828000"
+    localRuntime "blusunrize.immersiveengineering:ImmersiveEngineering:1.21.1-12.0.0-182.77:datagen"
+    compileOnly "blusunrize.immersiveengineering:ImmersiveEngineering:1.21.1-12.0.0-182.77:datagen"
+    localRuntime "blusunrize.immersiveengineering:ImmersiveEngineering:1.21.1-12.0.0-182.77:api"
+    compileOnly "blusunrize.immersiveengineering:ImmersiveEngineering:1.21.1-12.0.0-182.77:api"
 
     implementation "top.theillusivec4.curios:curios-neoforge:${curios_version}"
 }
