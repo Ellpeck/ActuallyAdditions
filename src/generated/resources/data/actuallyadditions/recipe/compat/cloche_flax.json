@@ -1,0 +1,25 @@
+{
+  "type": "immersiveengineering:cloche",
+  "input": {
+    "item": "actuallyadditions:flax_seeds"
+  },
+  "render": {
+    "type": "immersiveengineering:crop",
+    "block": "actuallyadditions:flax"
+  },
+  "results": [
+    {
+      "basePredicate": {
+        "item": "minecraft:string"
+      },
+      "count": 2
+    },
+    {
+      "item": "actuallyadditions:flax_seeds"
+    }
+  ],
+  "soil": {
+    "tag": "minecraft:dirt"
+  },
+  "time": 800
+}

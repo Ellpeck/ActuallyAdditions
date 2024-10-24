@@ -1,0 +1,25 @@
+{
+  "type": "immersiveengineering:cloche",
+  "input": {
+    "item": "actuallyadditions:canola_seeds"
+  },
+  "render": {
+    "type": "immersiveengineering:crop",
+    "block": "actuallyadditions:canola"
+  },
+  "results": [
+    {
+      "basePredicate": {
+        "item": "actuallyadditions:canola"
+      },
+      "count": 2
+    },
+    {
+      "item": "actuallyadditions:canola_seeds"
+    }
+  ],
+  "soil": {
+    "tag": "minecraft:dirt"
+  },
+  "time": 800
+}

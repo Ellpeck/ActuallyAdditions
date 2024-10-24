@@ -1,5 +1,6 @@
 package de.ellpeck.actuallyadditions.data;
 
+import de.ellpeck.actuallyadditions.data.compat.ClocheRecipes;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.crafting.FermentingRecipe;
 import de.ellpeck.actuallyadditions.mod.crafting.PressingRecipe;
@@ -36,6 +37,8 @@ public class MiscMachineRecipeGenerator extends RecipeProvider {
 
         recipeOutput.accept(folderRecipe("fermenting", "refined_canola"), new FermentingRecipe(
             new FluidStack(InitFluids.CANOLA_OIL.get(), 80), new FluidStack(InitFluids.REFINED_CANOLA_OIL.get(), 80), 100), null);
+
+        ClocheRecipes.buildRecipes(recipeOutput);
     }
 
 //    private String getItemName(ItemLike item) {

@@ -1,0 +1,25 @@
+{
+  "type": "immersiveengineering:cloche",
+  "input": {
+    "item": "actuallyadditions:coffee_beans"
+  },
+  "render": {
+    "type": "immersiveengineering:crop",
+    "block": "actuallyadditions:coffee"
+  },
+  "results": [
+    {
+      "basePredicate": {
+        "item": "actuallyadditions:coffee_beans"
+      },
+      "count": 2
+    },
+    {
+      "item": "actuallyadditions:coffee_beans"
+    }
+  ],
+  "soil": {
+    "tag": "minecraft:dirt"
+  },
+  "time": 800
+}

@@ -1,0 +1,25 @@
+{
+  "type": "immersiveengineering:cloche",
+  "input": {
+    "item": "actuallyadditions:rice_seeds"
+  },
+  "render": {
+    "type": "immersiveengineering:crop",
+    "block": "actuallyadditions:rice"
+  },
+  "results": [
+    {
+      "basePredicate": {
+        "item": "actuallyadditions:rice"
+      },
+      "count": 2
+    },
+    {
+      "item": "actuallyadditions:rice_seeds"
+    }
+  ],
+  "soil": {
+    "tag": "minecraft:dirt"
+  },
+  "time": 800
+}
