@@ -36,13 +36,13 @@ public class AllInOneTool extends DiggerItem {
             new Properties()
                 .durability(tier.getUses() * 4)
                 .component(DataComponents.TOOL, tier.createToolProperties(ActuallyTags.Blocks.MINEABLE_WITH_AIO))
-                .attributes(createAttributes())
+                .attributes(createAttributes(tier))
         );
     }
 
-    private static ItemAttributeModifiers createAttributes() {
+    private static ItemAttributeModifiers createAttributes(Tier tier) {
         ItemAttributeModifiers.Builder builder = ItemAttributeModifiers.builder();
-        builder.add(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_ID,4.0f, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND);
+        builder.add(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_ID,4.0f + tier.getAttackDamageBonus(), AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND);
         builder.add(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_ID, -2.0f, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND);
         return builder.build();
     }
