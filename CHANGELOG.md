@@ -1,5 +1,6 @@
 # 1.3.7+mc1.21.1
 * Added recipes for AA crops in the IE cloche.
+* Fix All in One Tool stats
 
 # 1.3.6+mc1.21.1
 * Add the ability to open the Crafting Table On A Stick while inside a Curios slot
