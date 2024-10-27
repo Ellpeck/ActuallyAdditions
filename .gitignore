@@ -20,3 +20,4 @@
 *.launch
 .settings/org.eclipse.jdt.core.prefs
 *.prefs
+.DS_Store

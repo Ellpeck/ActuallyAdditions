@@ -1,0 +1,29 @@
+name: "Release"
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone project
+        uses: actions/checkout@v4
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: "microsoft"
+          java-version: 21
+      - name: Fix borked permissions
+        run: chmod +x ./gradlew
+      - name: Run gradle tasks
+        uses: gradle/gradle-build-action@v2
+        env:
+          MR_TOKEN: ${{ secrets.MR_TOKEN }}
+          CF_TOKEN: ${{ secrets.CF_TOKEN }}
+          MAVEN_TOKEN: ${{ secrets.MAVEN_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          arguments: clean build publish publishMods

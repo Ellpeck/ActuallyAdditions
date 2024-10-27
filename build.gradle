@@ -1,76 +1,92 @@
 plugins {
     id 'java-library'
-    id 'eclipse'
-    id 'idea'
     id 'maven-publish'
-    id 'net.neoforged.gradle.userdev' version '7.0.165'
+    id 'net.neoforged.moddev' version '1.0.21'
+    id "me.modmuss50.mod-publish-plugin" version "0.7.4"
 }
 
-def buildSuffix = System.getenv('BUILD_NUMBER') ? "-b${System.getenv('BUILD_NUMBER')}" : ""
+tasks.named('wrapper', Wrapper).configure {
+    distributionType = Wrapper.DistributionType.BIN
+}
 
-version = "$mod_version+mc${game_version}${buildSuffix}"
-group = "de.ellpeck.actuallyadditions"
+version = "$mod_version+mc${game_version}"
+group = "de.ellpeck"
+
 base {
-    archivesName = "ActuallyAdditions"
+    archivesName = "actuallyadditions"
 }
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
-if (rootProject.file('src/main/resources/META-INF/accesstransformer.cfg').exists()) {
-    minecraft.accessTransformers.file rootProject.file('src/main/resources/META-INF/accesstransformer.cfg')
-}
+neoForge {
+    version = project.neo_version
 
-runs {
-    // applies to all the run configs below
-    configureEach { net.neoforged.gradle.dsl.common.runs.run.Run run ->
-        //Limit ram usage for the dev environment to 4GB
-        jvmArgument '-Xmx4G'
+    parchment {
+        mappingsVersion = project.parchment_mappings_version
+        minecraftVersion = project.hasProperty("parchment_minecraft_version") ? project.parchment_minecraft_version : project.game_version
+    }
 
-        if (run.project.javaToolchains.launcherFor(java.toolchain).map { it.metadata.vendor }.getOrElse("").contains("JetBrains")) {
-            run.jvmArgument("-XX:+AllowEnhancedClassRedefinition")
+    runs {
+        client {
+            client()
+            systemProperty 'neoforge.enabledGameTestNamespaces', "actuallyadditions"
+            programArguments.addAll '--width=1920', '--height=1080'
         }
 
-        modSource project.sourceSets.main
+        client2 {
+            client()
+
+            programArguments.addAll '--username', 'Dev2'
+
+            // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
+            systemProperty 'neoforge.enabledGameTestNamespaces', "actuallyadditions"
+        }
+
+        server {
+            server()
+            programArgument '--nogui'
+            systemProperty 'neoforge.enabledGameTestNamespaces', "actuallyadditions"
+        }
+
+        gameTestServer {
+            type = "gameTestServer"
+            systemProperty 'neoforge.enabledGameTestNamespaces', "actuallyadditions"
+        }
+
+        data {
+            data()
+            programArguments.addAll '--mod', "actuallyadditions", '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
+        }
+
+        configureEach { run ->
+            systemProperty 'forge.logging.markers', 'REGISTRIES'
+            logLevel = org.slf4j.event.Level.DEBUG
+
+            jvmArgument '-Xmx4G'
+
+            if (run.project.javaToolchains.launcherFor(java.toolchain).map { it.metadata.vendor }.getOrElse("").contains("JetBrains")) {
+                run.jvmArgument("-XX:+AllowEnhancedClassRedefinition")
+            }
+        }
     }
 
-    client {
-        // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
-        systemProperty 'neoforge.enabledGameTestNamespaces', "actuallyadditions"
-    }
-    client2 {
-        configure ("client")
-
-        programArguments.addAll '--username', 'Dev2'
-
-        // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
-        systemProperty 'neoforge.enabledGameTestNamespaces', "actuallyadditions"
-    }
-
-    server {
-        systemProperty 'neoforge.enabledGameTestNamespaces', "actuallyadditions"
-        programArgument '--nogui'
-    }
-
-    data {
-        // example of overriding the workingDirectory set in configureEach above, uncomment if you want to use it
-        // workingDirectory project.file('run-data')
-
-        // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
-        programArguments.addAll '--mod', "actuallyadditions", '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
+    mods {
+        "actuallyadditions" {
+            sourceSet(sourceSets.main)
+        }
     }
 }
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
-// Sets up a dependency configuration called 'localRuntime'.
-// This configuration should be used instead of 'runtimeOnly' to declare
-// a dependency that will be present for runtime testing but that is
-// "optional", meaning it will not be pulled by dependents of this mod.
 configurations {
     runtimeClasspath.extendsFrom localRuntime
 }
 
 repositories {
+    maven {
+        url = "https://maven.neoforged.net/releases"
+    }
     maven {
         url = "https://maven.blamejared.com"
     }
@@ -84,8 +100,6 @@ repositories {
 }
 
 dependencies {
-    implementation "net.neoforged:neoforge:${neo_version}"
-
     compileOnly "mezz.jei:jei-${jei_minecraft}-common-api:${jei_version}"
     compileOnly "mezz.jei:jei-${jei_minecraft}-neoforge-api:${jei_version}"
 
@@ -126,7 +140,28 @@ jar {
     from sourceSets.main.output
 }
 
-task apiJar(type: Jar) {
+var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
+    var replaceProperties = [
+            minecraft_version      : game_version,
+            minecraft_version_range: game_version_range,
+            neo_version            : neo_version,
+            neo_version_range      : neo_version_range,
+            loader_version_range   : loader_version_range,
+            mod_id                 : "actuallyadditions",
+            mod_name               : "Actually Additions",
+            mod_version            : mod_version,
+    ]
+
+    inputs.properties replaceProperties
+    expand replaceProperties
+    from "src/main/templates"
+    into "build/generated/sources/modMetadata"
+}
+
+sourceSets.main.resources.srcDir generateModMetadata
+neoForge.ideSyncTask generateModMetadata
+
+tasks.register('apiJar', Jar) {
     from sourceSets.main.output
     from sourceSets.main.java
     archiveClassifier.set('api')
@@ -137,12 +172,13 @@ javadoc {
     include 'de/ellpeck/actuallyadditions/api/**'
 }
 
-task javadocJar(type: Jar, dependsOn: javadoc) {
+tasks.register('javadocJar', Jar) {
+    dependsOn javadoc
     from 'build/docs/javadoc'
     archiveClassifier.set('javadoc')
 }
 
-task sourcesJar(type: Jar) {
+tasks.register('sourcesJar', Jar) {
     from sourceSets.main.java
     archiveClassifier.set('sources')
 }
@@ -151,38 +187,111 @@ artifacts {
     archives sourcesJar, apiJar, javadocJar
 }
 
-publishing {
-    tasks.publish.dependsOn build
-    publications {
-        mavenJava(MavenPublication) {
-            groupId = group
-            artifactId = base.archivesName.get()
-            version = version
 
+publishing {
+    publications {
+        register('mavenJava', MavenPublication) {
             from components.java
 
+            // Add sources and javadoc to the publication
             artifact sourcesJar
             artifact apiJar
             artifact javadocJar
-
-            pom.withXml {
-                def node = asNode()
-                if (node.dependencies.size() > 0)
-                    node.remove(node.dependencies)
-            }
         }
     }
+
     repositories {
-        maven {
-            url "file://" + System.getenv("local_maven")
+        def token = providers.environmentVariable("MAVEN_TOKEN")
+        if (token.isPresent()) {
+            maven {
+                url "https://maven.saps.dev/releases"
+                credentials {
+                    username = "ell"
+                    password = token.get()
+                }
+            }
         }
     }
 }
 
-// IDEA no longer automatically downloads sources/javadoc jars for dependencies, so we need to explicitly enable the behavior.
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
 idea {
     module {
         downloadSources = true
         downloadJavadoc = true
+    }
+}
+
+/**
+ * Seek out the changelog for the current version and return it as a string.
+ */
+def createChangelog = () -> {
+    def changelogText = new File("CHANGELOG.md").text
+    def changelog = ""
+
+    def lines = changelogText.split("\n")
+    def inChangelog = false
+    for (int i = 0; i < lines.size(); i++) {
+        def line = lines[i]
+        if (line.startsWith("# ")) {
+            if (inChangelog) {
+                break
+            } else {
+                if (line.contains(mod_version)) {
+                    inChangelog = true
+                }
+            }
+        }
+
+        if (inChangelog) {
+            changelog += line + "\n"
+        }
+    }
+
+    def output = changelog.trim()
+    return output.empty ? "No changelog found" : output
+}
+
+def cfToken = providers.environmentVariable("CF_TOKEN")
+def mrToken = providers.environmentVariable("MR_TOKEN")
+def ghToken = providers.environmentVariable("GITHUB_TOKEN")
+
+publishMods {
+    dryRun = !cfToken.isPresent() || !mrToken.isPresent() || !ghToken.isPresent()
+    changelog = createChangelog().trim()
+    version = mod_version
+    displayName = "Actually Additions ${mod_version}"
+    type = STABLE
+
+    file = jar.archiveFile
+
+    additionalFiles.from apiJar.archiveFile
+    additionalFiles.from javadocJar.archiveFile
+    additionalFiles.from sourcesJar.archiveFile
+
+    modLoaders.add("neoforge")
+
+    curseforge {
+        accessToken = cfToken
+        projectId = "228404"
+        minecraftVersions.add(game_version)
+        javaVersions.add(JavaVersion.VERSION_21)
+    }
+
+    modrinth {
+        accessToken = mrToken
+        projectId = "4K7Q3nqd"
+        minecraftVersions.add(game_version)
+    }
+
+    github {
+        repository = "Ellpeck/ActuallyAdditions"
+        accessToken = ghToken
+        commitish = providers.environmentVariable("GITHUB_SHA").orElse("dryRun")
+        tagName = providers.environmentVariable("GITHUB_REF_NAME").orElse("dryRun")
     }
 }
