@@ -30,7 +30,7 @@ neoForge {
         client {
             client()
             systemProperty 'neoforge.enabledGameTestNamespaces', "actuallyadditions"
-            programArguments.addAll '--width=1920', '--height=1080'
+            programArguments.addAll '--width=1280', '--height=720'
         }
 
         client2 {
@@ -59,9 +59,6 @@ neoForge {
         }
 
         configureEach { run ->
-            systemProperty 'forge.logging.markers', 'REGISTRIES'
-            logLevel = org.slf4j.event.Level.DEBUG
-
             jvmArgument '-Xmx4G'
 
             if (run.project.javaToolchains.launcherFor(java.toolchain).map { it.metadata.vendor }.getOrElse("").contains("JetBrains")) {
