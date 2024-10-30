@@ -1,3 +1,8 @@
+# 1.3.8+mc1.21.1
+* Fixed the Vertical Miner / Phantom Breaker not breaking / harvesting blocks properly.
+* Fixed Energy lasers not properly filling mekanism energy cubes only needing 2 FE.
+* Fixed Batbox's not properly invalidating capabilities.
+
 # 1.3.7+mc1.21.1
 * Added recipes for AA crops in the IE cloche.
 * Fix All in One Tool stats
