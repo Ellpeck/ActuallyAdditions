@@ -278,12 +278,20 @@ publishMods {
         projectId = "228404"
         minecraftVersions.add(game_version)
         javaVersions.add(JavaVersion.VERSION_21)
+        type = BETA;
+        clientRequired = true
+        serverRequired = true
+        requires("patchouli")
+        optional("jei")
     }
 
     modrinth {
         accessToken = mrToken
         projectId = "4K7Q3nqd"
         minecraftVersions.add(game_version)
+        type = BETA;
+        requires("patchouli")
+        optional("jei")
     }
 
     github {
