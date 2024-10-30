@@ -59,6 +59,7 @@ neoForge {
         }
 
         configureEach { run ->
+            logLevel = org.slf4j.event.Level.DEBUG
             jvmArgument '-Xmx4G'
 
             if (run.project.javaToolchains.launcherFor(java.toolchain).map { it.metadata.vendor }.getOrElse("").contains("JetBrains")) {
