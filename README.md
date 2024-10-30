@@ -2,7 +2,6 @@
 
 For more information, visit the main CurseForge Page by [clicking here](https://www.curseforge.com/minecraft/mc-mods/actually-additions)!
 
-Jenkins: [Click here](https://ci.ellpeck.de/blue/organizations/jenkins/ActuallyAdditions/)      
-Maven: [Click here](https://maven.ellpeck.de/de/ellpeck/actuallyadditions/)
+Maven: [Click here](https://maven.saps.dev/#/releases/de/ellpeck/actuallyadditions/)
 
 ![](https://raw.githubusercontent.com/Ellpeck/ActuallyAdditions/main/pics/logo.png)
