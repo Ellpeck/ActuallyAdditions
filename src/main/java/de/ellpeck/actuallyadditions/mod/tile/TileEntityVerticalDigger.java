@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerMiner;
+import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.network.PacketHelperServer;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
@@ -139,7 +140,7 @@ public class TileEntityVerticalDigger extends TileEntityInventoryBase implements
             : 1);
         if (this.storage.getEnergyStored() >= actualUse) {
             BlockPos pos = new BlockPos(this.worldPosition.getX() + this.checkX, this.checkY, this.worldPosition.getZ() + this.checkZ);
-            ItemStack fakePickaxe = Items.NETHERITE_PICKAXE.getDefaultInstance();
+            ItemStack fakePickaxe = new ItemStack(ActuallyItems.NETHERITE_AIOT.get());
 
             BlockState state = this.level.getBlockState(pos);
             Block block = state.getBlock();
@@ -147,7 +148,7 @@ public class TileEntityVerticalDigger extends TileEntityInventoryBase implements
             if (!state.isAir()) {
                 if (fakePickaxe.isCorrectToolForDrops(state) && state.getDestroySpeed(this.level, pos) >= 0F && this.isMinable(state, stack)) {
                     List<ItemStack> drops = Block.getDrops(state, (ServerLevel) this.level, pos, this.level.getBlockEntity(pos));
-                    float chance = WorldUtil.fireFakeHarvestEventsForDropChance(this, drops, this.level, pos);
+                    float chance = WorldUtil.fireFakeHarvestEventsForDropChance(this, this.level, pos);
 
                     if (chance > 0 && this.level.random.nextFloat() <= chance) {
                         if (StackUtil.canAddAll(this.inv, drops, false)) {

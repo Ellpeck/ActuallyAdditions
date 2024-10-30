@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.util;
 
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditionsClient;
+import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.tile.FilterSettings;
 import de.ellpeck.actuallyadditions.mod.util.compat.SlotlessableItemHandlerWrapper;
 import net.minecraft.core.BlockPos;
@@ -257,9 +258,12 @@ public final class WorldUtil {
     }
 
     //I think something is up with this, but I'm not entirely certain what.
-    public static float fireFakeHarvestEventsForDropChance(BlockEntity caller, List<ItemStack> drops, Level level, BlockPos pos) {
+    // TODO We really need to refactor this out of existence... -Flanks
+    public static float fireFakeHarvestEventsForDropChance(BlockEntity caller, Level level, BlockPos pos) {
         if (level instanceof ServerLevel) {
             FakePlayer fake = FakePlayerFactory.getMinecraft((ServerLevel) level);
+            ItemStack fakeTool = new ItemStack(ActuallyItems.NETHERITE_AIOT.get());
+            fake.getInventory().items.set(fake.getInventory().selected, fakeTool);
             BlockPos tePos = caller.getBlockPos();
             fake.setPos(tePos.getX() + 0.5, tePos.getY() + 0.5, tePos.getZ() + 0.5);
             BlockState state = level.getBlockState(pos);

@@ -214,7 +214,7 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay {
                                     int trans = 0;
                                     int theoreticalReceived = cap.receiveEnergy(Math.min(amountPer, lowestCap), true);
                                     if (theoreticalReceived > 0) {
-                                        int deduct = this.calcDeduction(theoreticalReceived, highestLoss);
+                                        int deduct = this.calcDeduction(theoreticalReceived, highestLoss); // TODO maybe we do a minimum threshold before losses occur?
                                         if (deduct >= theoreticalReceived) { //Happens with small numbers
                                             deduct = 0;
                                         }
