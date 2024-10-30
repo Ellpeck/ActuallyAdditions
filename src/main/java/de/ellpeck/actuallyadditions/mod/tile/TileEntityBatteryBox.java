@@ -135,7 +135,7 @@ public class TileEntityBatteryBox extends TileEntityInventoryBase implements ISh
 
         for (BlockEntity tile : startTile.tilesAround) {
             if (tile instanceof TileEntityBatteryBox box) {
-	            if (!pushOffTo.contains(box)) {
+                if (!pushOffTo.contains(box)) {
                     pushOffTo.add(box);
 
                     this.energyPushOffLoop(box, pushOffTo);

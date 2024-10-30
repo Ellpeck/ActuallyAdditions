@@ -61,11 +61,12 @@ public class BlockBatteryBox extends BlockContainerBase {
     protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult pHitResult) {
         BlockEntity tile = world.getBlockEntity(pos);
         if (tile instanceof TileEntityBatteryBox box) {
-	        ItemStack stack = player.getItemInHand(hand);
+            ItemStack stack = player.getItemInHand(hand);
 
             if (!stack.isEmpty()) {
                 if (stack.getItem() instanceof ItemBattery && box.inv.getStackInSlot(0).isEmpty()) {
                     box.inv.setStackInSlot(0, stack.copy());
+                    box.invalidateCapabilities();
                     player.setItemInHand(hand, ItemStack.EMPTY);
                     return ItemInteractionResult.SUCCESS;
                 }
@@ -74,6 +75,7 @@ public class BlockBatteryBox extends BlockContainerBase {
                 if (!inSlot.isEmpty()) {
                     player.setItemInHand(hand, inSlot.copy());
                     box.inv.setStackInSlot(0, ItemStack.EMPTY);
+                    box.invalidateCapabilities();
                     return ItemInteractionResult.SUCCESS;
                 }
             }
