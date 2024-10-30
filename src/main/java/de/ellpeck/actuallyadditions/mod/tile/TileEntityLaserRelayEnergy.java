@@ -218,9 +218,11 @@ public class TileEntityLaserRelayEnergy extends TileEntityLaserRelay {
                                         if (deduct >= theoreticalReceived) { //Happens with small numbers
                                             deduct = 0;
                                         }
-
-                                        trans += cap.receiveEnergy(theoreticalReceived - deduct, simulate);
-                                        trans += deduct;
+                                        int actual = cap.receiveEnergy(theoreticalReceived - deduct, simulate);
+                                        if (actual > 0) {
+                                            trans += actual;
+                                            trans += deduct;
+                                        }
                                     }
 
                                     return trans;
