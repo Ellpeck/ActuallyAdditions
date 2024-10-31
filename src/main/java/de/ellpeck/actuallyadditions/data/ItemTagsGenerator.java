@@ -9,6 +9,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.data.tags.TagsProvider;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -24,6 +25,36 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 
     @Override
     protected void addTags(@Nonnull HolderLookup.Provider provider) {
+        tag(ItemTags.WALLS).add(
+                ActuallyBlocks.ETHETIC_WHITE_WALL.getItem(),
+                ActuallyBlocks.ETHETIC_GREEN_WALL.getItem(),
+                ActuallyBlocks.BLACK_QUARTZ_WALL.getItem(),
+                ActuallyBlocks.SMOOTH_BLACK_QUARTZ_WALL.getItem(),
+                ActuallyBlocks.BLACK_QUARTZ_PILLAR_WALL.getItem(),
+                ActuallyBlocks.CHISELED_BLACK_QUARTZ_WALL.getItem(),
+                ActuallyBlocks.BLACK_QUARTZ_BRICK_WALL.getItem()
+        );
+
+        tag(ItemTags.STAIRS).add(
+                ActuallyBlocks.ETHETIC_WHITE_STAIRS.getItem(),
+                ActuallyBlocks.ETHETIC_GREEN_STAIRS.getItem(),
+                ActuallyBlocks.BLACK_QUARTZ_STAIR.getItem(),
+                ActuallyBlocks.SMOOTH_BLACK_QUARTZ_STAIR.getItem(),
+                ActuallyBlocks.BLACK_QUARTZ_PILLAR_STAIR.getItem(),
+                ActuallyBlocks.CHISELED_BLACK_QUARTZ_STAIR.getItem(),
+                ActuallyBlocks.BLACK_QUARTZ_BRICK_STAIR.getItem()
+        );
+
+        tag(ItemTags.SLABS).add(
+                ActuallyBlocks.ETHETIC_WHITE_SLAB.getItem(),
+                ActuallyBlocks.ETHETIC_GREEN_SLAB.getItem(),
+                ActuallyBlocks.BLACK_QUARTZ_SLAB.getItem(),
+                ActuallyBlocks.SMOOTH_BLACK_QUARTZ_SLAB.getItem(),
+                ActuallyBlocks.BLACK_QUARTZ_PILLAR_SLAB.getItem(),
+                ActuallyBlocks.CHISELED_BLACK_QUARTZ_SLAB.getItem(),
+                ActuallyBlocks.BLACK_QUARTZ_BRICK_SLAB.getItem()
+        );
+
         tag(ActuallyTags.Items.COFFEE_BEANS)
             .add(ActuallyItems.COFFEE_BEANS.get());
         tag(ActuallyTags.Items.TINY_COALS)

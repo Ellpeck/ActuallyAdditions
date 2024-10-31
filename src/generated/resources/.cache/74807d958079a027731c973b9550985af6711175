@@ -1,4 +1,4 @@
-// 1.21.1	2024-10-19T11:22:45.676221	Tags for minecraft:item mod id actuallyadditions
+// 1.21.1	2024-10-31T20:14:02.6354984	Tags for minecraft:item mod id actuallyadditions
 87327118c2f16da245b76de4fdcaab149456d9b8 data/actuallyadditions/tags/item/coffee_beans.json
 f3ee78cd8c9563bd1828de2b4b336735f289f9f2 data/actuallyadditions/tags/item/crystals.json
 441008b49b4bab00125100fc969cb6582eff7271 data/actuallyadditions/tags/item/crystal_blocks.json
@@ -38,3 +38,6 @@ fb95ac8041521e1d2879f6fcb652266dcd9e0fb1 data/c/tags/item/storage_blocks/empower
 148cd937543fd58b196403c18839b2698bf87fdf data/c/tags/item/storage_blocks/palis_crystal.json
 b9aa28a54d47054ba5653bec2f20e0a675ab5120 data/c/tags/item/storage_blocks/restonia_crystal.json
 fb4f349bc6fd89f26ef2ba72a9236f05eefd8ea2 data/c/tags/item/storage_blocks/void_crystal.json
+51d50547b5f031f4fa6e62189af06059a407c009 data/minecraft/tags/item/slabs.json
+a60870f29ca48ea0d55ac32620ff5b4bb2f2f62e data/minecraft/tags/item/stairs.json
+f74407e86c92d0d9435d62ff0f95999f3a84c674 data/minecraft/tags/item/walls.json
