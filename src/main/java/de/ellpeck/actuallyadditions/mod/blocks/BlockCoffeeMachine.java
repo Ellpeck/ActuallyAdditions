@@ -19,6 +19,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -31,7 +32,7 @@ import javax.annotation.Nullable;
 
 public class BlockCoffeeMachine extends DirectionalBlock.Container {
     public BlockCoffeeMachine() {
-        super(ActuallyBlocks.defaultPickProps());
+        super(ActuallyBlocks.defaultPickProps().sound(SoundType.METAL));
     }
 
     @Override

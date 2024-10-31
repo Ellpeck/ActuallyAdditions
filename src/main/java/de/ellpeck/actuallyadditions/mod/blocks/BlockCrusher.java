@@ -24,6 +24,7 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -41,7 +42,7 @@ public class BlockCrusher extends BlockContainerBase {
     private final boolean isDouble;
 
     public BlockCrusher(boolean isDouble) {
-        super(ActuallyBlocks.defaultPickProps().randomTicks());
+        super(ActuallyBlocks.defaultPickProps().sound(SoundType.METAL).randomTicks());
         this.isDouble = isDouble;
         this.registerDefaultState(getStateDefinition().any().setValue(HORIZONTAL_FACING, Direction.NORTH).setValue(LIT, false));
     }

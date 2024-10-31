@@ -27,6 +27,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -42,7 +43,7 @@ import static net.minecraft.world.level.block.state.properties.BlockStatePropert
 
 public class BlockPoweredFurnace extends DirectionalBlock.Container {
     public BlockPoweredFurnace() {
-        super(ActuallyBlocks.defaultPickProps().randomTicks().lightLevel(state -> state.getValue(LIT)
+        super(ActuallyBlocks.defaultPickProps().sound(SoundType.METAL).randomTicks().lightLevel(state -> state.getValue(LIT)
             ? 12
             : 0));
 

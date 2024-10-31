@@ -20,6 +20,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -33,7 +34,7 @@ import javax.annotation.Nullable;
 public class BlockLavaFactoryController extends DirectionalBlock.Container implements IHudDisplay {
 
     public BlockLavaFactoryController() {
-        super(ActuallyBlocks.defaultPickProps(4.5F, 20.0F));
+        super(ActuallyBlocks.defaultPickProps(4.5F, 20.0F).sound(SoundType.METAL));
     }
 
     @Nullable
