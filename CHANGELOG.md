@@ -1,3 +1,9 @@
+# 1.3.8+mc1.21.1
+* Lock the Immersive Engineering cloche compat recipes behind a mod loaded condition
+* Add the stairs, slabs and walls to the appropriate block/item tags
+* Change the sound type of the casing blocks to match material used in the recipe
+* Change the sound type of some machines to use the metal sound
+
 # 1.3.7+mc1.21.1
 * Added recipes for AA crops in the IE cloche.
 * Fix All in One Tool stats
