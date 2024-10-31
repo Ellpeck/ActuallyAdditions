@@ -86,6 +86,27 @@
     "actuallyadditions:laser_relay_fluids",
     "actuallyadditions:laser_relay_item",
     "actuallyadditions:laser_relay_item_advanced",
-    "actuallyadditions:greenhouse_glass"
+    "actuallyadditions:greenhouse_glass",
+    "actuallyadditions:ethetic_white_wall",
+    "actuallyadditions:ethetic_green_wall",
+    "actuallyadditions:black_quartz_wall",
+    "actuallyadditions:smooth_black_quartz_wall",
+    "actuallyadditions:black_quartz_pillar_wall",
+    "actuallyadditions:chiseled_black_quartz_wall",
+    "actuallyadditions:black_quartz_brick_wall",
+    "actuallyadditions:ethetic_white_stairs",
+    "actuallyadditions:ethetic_green_stairs",
+    "actuallyadditions:black_quartz_stair",
+    "actuallyadditions:smooth_black_quartz_stair",
+    "actuallyadditions:black_quartz_pillar_stair",
+    "actuallyadditions:chiseled_black_quartz_stair",
+    "actuallyadditions:black_quartz_brick_stair",
+    "actuallyadditions:ethetic_white_slab",
+    "actuallyadditions:ethetic_green_slab",
+    "actuallyadditions:black_quartz_slab",
+    "actuallyadditions:smooth_black_quartz_slab",
+    "actuallyadditions:black_quartz_pillar_slab",
+    "actuallyadditions:chiseled_black_quartz_slab",
+    "actuallyadditions:black_quartz_brick_slab"
   ]
 }

@@ -31,6 +31,26 @@ public class BlockTagsGenerator extends BlockTagsProvider {
             ActuallyBlocks.BLACK_QUARTZ_BRICK_WALL.get()
         );
 
+        tag(BlockTags.STAIRS).add(
+            ActuallyBlocks.ETHETIC_WHITE_STAIRS.get(),
+            ActuallyBlocks.ETHETIC_GREEN_STAIRS.get(),
+            ActuallyBlocks.BLACK_QUARTZ_STAIR.get(),
+            ActuallyBlocks.SMOOTH_BLACK_QUARTZ_STAIR.get(),
+            ActuallyBlocks.BLACK_QUARTZ_PILLAR_STAIR.get(),
+            ActuallyBlocks.CHISELED_BLACK_QUARTZ_STAIR.get(),
+            ActuallyBlocks.BLACK_QUARTZ_BRICK_STAIR.get()
+        );
+
+        tag(BlockTags.SLABS).add(
+            ActuallyBlocks.ETHETIC_WHITE_SLAB.get(),
+            ActuallyBlocks.ETHETIC_GREEN_SLAB.get(),
+            ActuallyBlocks.BLACK_QUARTZ_SLAB.get(),
+            ActuallyBlocks.SMOOTH_BLACK_QUARTZ_SLAB.get(),
+            ActuallyBlocks.BLACK_QUARTZ_PILLAR_SLAB.get(),
+            ActuallyBlocks.CHISELED_BLACK_QUARTZ_SLAB.get(),
+            ActuallyBlocks.BLACK_QUARTZ_BRICK_SLAB.get()
+        );
+
         tag(BlockTags.MINEABLE_WITH_AXE).add(
                 ActuallyBlocks.FERMENTING_BARREL.get()
         );
@@ -121,7 +141,28 @@ public class BlockTagsGenerator extends BlockTagsProvider {
                 ActuallyBlocks.LASER_RELAY_FLUIDS.get(),
                 ActuallyBlocks.LASER_RELAY_ITEM.get(),
                 ActuallyBlocks.LASER_RELAY_ITEM_ADVANCED.get(),
-                ActuallyBlocks.GREENHOUSE_GLASS.get()
+                ActuallyBlocks.GREENHOUSE_GLASS.get(),
+                ActuallyBlocks.ETHETIC_WHITE_WALL.get(),
+                ActuallyBlocks.ETHETIC_GREEN_WALL.get(),
+                ActuallyBlocks.BLACK_QUARTZ_WALL.get(),
+                ActuallyBlocks.SMOOTH_BLACK_QUARTZ_WALL.get(),
+                ActuallyBlocks.BLACK_QUARTZ_PILLAR_WALL.get(),
+                ActuallyBlocks.CHISELED_BLACK_QUARTZ_WALL.get(),
+                ActuallyBlocks.BLACK_QUARTZ_BRICK_WALL.get(),
+                ActuallyBlocks.ETHETIC_WHITE_STAIRS.get(),
+                ActuallyBlocks.ETHETIC_GREEN_STAIRS.get(),
+                ActuallyBlocks.BLACK_QUARTZ_STAIR.get(),
+                ActuallyBlocks.SMOOTH_BLACK_QUARTZ_STAIR.get(),
+                ActuallyBlocks.BLACK_QUARTZ_PILLAR_STAIR.get(),
+                ActuallyBlocks.CHISELED_BLACK_QUARTZ_STAIR.get(),
+                ActuallyBlocks.BLACK_QUARTZ_BRICK_STAIR.get(),
+                ActuallyBlocks.ETHETIC_WHITE_SLAB.get(),
+                ActuallyBlocks.ETHETIC_GREEN_SLAB.get(),
+                ActuallyBlocks.BLACK_QUARTZ_SLAB.get(),
+                ActuallyBlocks.SMOOTH_BLACK_QUARTZ_SLAB.get(),
+                ActuallyBlocks.BLACK_QUARTZ_PILLAR_SLAB.get(),
+                ActuallyBlocks.CHISELED_BLACK_QUARTZ_SLAB.get(),
+                ActuallyBlocks.BLACK_QUARTZ_BRICK_SLAB.get()
         );
 
         tag(BlockTags.NEEDS_STONE_TOOL).add(
