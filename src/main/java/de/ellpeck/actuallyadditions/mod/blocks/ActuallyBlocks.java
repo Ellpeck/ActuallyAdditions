@@ -91,10 +91,10 @@ public final class ActuallyBlocks {
     public static final BlockBehaviour.Properties miscBlockProperties = BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).requiresCorrectToolForDrops().strength(1.5f, 10f);
 
     // Casings
-    public static final AABlockReg<ActuallyBlock, AABlockItem, ?> WOOD_CASING = new AABlockReg<>("wood_casing", () -> new ActuallyBlock(miscBlockProperties), ActuallyBlock::createBlockItem);
-    public static final AABlockReg<ActuallyBlock, AABlockItem, ?> IRON_CASING = new AABlockReg<>("iron_casing", () -> new ActuallyBlock(miscBlockProperties), ActuallyBlock::createBlockItem);
-    public static final AABlockReg<ActuallyBlock, AABlockItem, ?> ENDER_CASING = new AABlockReg<>("ender_casing", () -> new ActuallyBlock(miscBlockProperties), ActuallyBlock::createBlockItem);
-    public static final AABlockReg<ActuallyBlock, AABlockItem, ?> LAVA_FACTORY_CASING = new AABlockReg<>("lava_factory_casing", () -> new ActuallyBlock(miscBlockProperties), ActuallyBlock::createBlockItem);
+    public static final AABlockReg<ActuallyBlock, AABlockItem, ?> WOOD_CASING = new AABlockReg<>("wood_casing", () -> new ActuallyBlock(miscBlockProperties.sound(SoundType.WOOD)), ActuallyBlock::createBlockItem);
+    public static final AABlockReg<ActuallyBlock, AABlockItem, ?> IRON_CASING = new AABlockReg<>("iron_casing", () -> new ActuallyBlock(miscBlockProperties.sound(SoundType.METAL)), ActuallyBlock::createBlockItem);
+    public static final AABlockReg<ActuallyBlock, AABlockItem, ?> ENDER_CASING = new AABlockReg<>("ender_casing", () -> new ActuallyBlock(miscBlockProperties.sound(SoundType.METAL)), ActuallyBlock::createBlockItem);
+    public static final AABlockReg<ActuallyBlock, AABlockItem, ?> LAVA_FACTORY_CASING = new AABlockReg<>("lava_factory_casing", () -> new ActuallyBlock(miscBlockProperties.sound(SoundType.METAL)), ActuallyBlock::createBlockItem);
 
     // Machines
     public static final AABlockReg<BlockFeeder, AABlockItem, TileEntityFeeder> FEEDER = new AABlockReg<>("feeder", BlockFeeder::new, (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityFeeder::new);
