@@ -263,7 +263,7 @@ publishMods {
     changelog = createChangelog().trim()
     version = mod_version
     displayName = "Actually Additions ${mod_version}"
-    type = STABLE
+    type = BETA;
 
     file = jar.archiveFile
 
@@ -278,7 +278,6 @@ publishMods {
         projectId = "228404"
         minecraftVersions.add(game_version)
         javaVersions.add(JavaVersion.VERSION_21)
-        type = BETA;
         clientRequired = true
         serverRequired = true
         requires("patchouli")
@@ -289,7 +288,6 @@ publishMods {
         accessToken = mrToken
         projectId = "4K7Q3nqd"
         minecraftVersions.add(game_version)
-        type = BETA;
         requires("patchouli")
         optional("jei")
     }
