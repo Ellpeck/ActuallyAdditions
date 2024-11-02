@@ -47,7 +47,6 @@ import net.neoforged.neoforge.items.IItemHandler;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
-import java.util.List;
 
 public final class WorldUtil {
 
