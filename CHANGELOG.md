@@ -3,6 +3,7 @@
 * Add the stairs, slabs and walls to the appropriate block/item tags
 * Change the sound type of the casing blocks to match material used in the recipe
 * Change the sound type of some machines to use the metal sound
+* Change the sound type of crystal blocks / Clusters
 * Allow seeds and crops to be composted
 * Add the tiny coal and charcoal to the furnace fuel datamap
 
