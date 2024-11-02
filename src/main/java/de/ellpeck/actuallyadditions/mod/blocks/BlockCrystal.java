@@ -11,12 +11,13 @@
 package de.ellpeck.actuallyadditions.mod.blocks;
 
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.SoundType;
 
 public class BlockCrystal extends ActuallyBlock {
     private final boolean isEmpowered;
 
     public BlockCrystal(boolean isEmpowered) {
-        super(ActuallyBlocks.defaultPickProps());
+        super(ActuallyBlocks.defaultPickProps().sound(SoundType.AMETHYST));
         this.isEmpowered = isEmpowered;
     }
 

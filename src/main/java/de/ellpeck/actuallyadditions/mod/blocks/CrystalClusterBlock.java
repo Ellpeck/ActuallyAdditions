@@ -45,7 +45,7 @@ public class CrystalClusterBlock extends FullyDirectionalBlock {
         super(Block.Properties.of()
             .instrument(NoteBlockInstrument.HAT)
             .lightLevel((e) -> 7)
-            .sound(SoundType.GLASS)
+            .sound(SoundType.AMETHYST_CLUSTER)
             .noOcclusion()
             .strength(0.25f, 1.0f));
     }
