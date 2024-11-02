@@ -6,6 +6,7 @@
 * Change the sound type of crystal blocks / Clusters
 * Allow seeds and crops to be composted
 * Add the tiny coal and charcoal to the furnace fuel datamap
+* Fix one of the Engineer House blocks being the wrong block
 
 # 1.3.7+mc1.21.1
 * Added recipes for AA crops in the IE cloche.
