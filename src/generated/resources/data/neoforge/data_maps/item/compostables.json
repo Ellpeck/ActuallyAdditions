@@ -1,0 +1,22 @@
+{
+  "values": {
+    "actuallyadditions:canola": {
+      "chance": 0.65
+    },
+    "actuallyadditions:canola_seeds": {
+      "chance": 0.3
+    },
+    "actuallyadditions:coffee_beans": {
+      "chance": 0.65
+    },
+    "actuallyadditions:flax_seeds": {
+      "chance": 0.65
+    },
+    "actuallyadditions:rice": {
+      "chance": 0.65
+    },
+    "actuallyadditions:rice_seeds": {
+      "chance": 0.3
+    }
+  }
+}

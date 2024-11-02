@@ -66,6 +66,8 @@ public class ActuallyAdditionsData {
         generator.addProvider(true, new MiningLensGenerator(packOutput, lookupProvider));
         generator.addProvider(true, new CoffeeIngredientGenerator(packOutput, lookupProvider));
 
+        generator.addProvider(true, new DataMapGenerator(packOutput, lookupProvider));
+
         generator.addProvider(true, new SoundsGenerator(packOutput, helper));
 
         if (ModList.get().isLoaded("patchouli"))

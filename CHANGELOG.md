@@ -3,6 +3,8 @@
 * Add the stairs, slabs and walls to the appropriate block/item tags
 * Change the sound type of the casing blocks to match material used in the recipe
 * Change the sound type of some machines to use the metal sound
+* Allow seeds and crops to be composted
+* Add the tiny coal and charcoal to the furnace fuel datamap
 
 # 1.3.7+mc1.21.1
 * Added recipes for AA crops in the IE cloche.

@@ -1,0 +1,10 @@
+{
+  "values": {
+    "actuallyadditions:tiny_charcoal": {
+      "burn_time": 200
+    },
+    "actuallyadditions:tiny_coal": {
+      "burn_time": 200
+    }
+  }
+}
