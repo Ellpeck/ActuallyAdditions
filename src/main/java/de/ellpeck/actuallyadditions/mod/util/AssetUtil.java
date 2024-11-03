@@ -229,6 +229,7 @@ public final class AssetUtil {
     
     public static void renderLaser(PoseStack matrixStack, MultiBufferSource buffer, float offX, float offY, float offZ, float yaw, float pitch, float length, float rotationTime, int color, float alpha, float beamWidth) {
         Level world = Minecraft.getInstance().level;
+        if (world == null) return;
 /*        int r = (color >> 16) & 0xFF;
         int g = (color >> 8) & 0xFF;
         int b = color & 0xFF;
