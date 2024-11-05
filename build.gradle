@@ -94,6 +94,9 @@ repositories {
             includeGroup "curse.maven"
         }
     }
+    maven {
+        url = "https://api.modrinth.com/maven"
+    }
     maven { url = 'https://maven.octo-studios.com/releases' }
 }
 
@@ -110,6 +113,8 @@ dependencies {
 
     localRuntime "curse.maven:jade-324717:5803666"
     localRuntime "curse.maven:mekanism-268560:5680395"
+    localRuntime "maven.modrinth:sodium:mc1.21.1-0.6.0-beta.4-neoforge"
+    localRuntime "curse.maven:irisshaders-455508:5873114"
 
     // Immersive Engineering, mainly for compat datagen
     localRuntime "curse.maven:ie-231951:5828000"

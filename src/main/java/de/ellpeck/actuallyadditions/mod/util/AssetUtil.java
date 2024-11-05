@@ -234,9 +234,9 @@ public final class AssetUtil {
         int g = (color >> 8) & 0xFF;
         int b = color & 0xFF;
         int a = (int) (alpha * 255);*/
-        int r = (int)(((color >> 16) & 0xFF) * alpha);
-        int g = (int)(((color >> 8) & 0xFF) * alpha);
-        int b = (int)((color & 0xFF) * alpha);
+        int r = (int)(((color >> 16) & 0xFF) * alpha * 0.4F);
+        int g = (int)(((color >> 8) & 0xFF) * alpha * 0.4F);
+        int b = (int)((color & 0xFF) * alpha * 0.4F);
         int a = 255;
 
         int lightmap = LightTexture.pack(MAX_LIGHT_X, MAX_LIGHT_Y);
@@ -334,7 +334,7 @@ public final class AssetUtil {
 
         Matrix4f matrix = matrixStack.last().pose();
 
-        RenderSystem.setShader(GameRenderer::getPositionColorLightmapShader);
+        RenderSystem.setShader(GameRenderer::getPositionColorShader);
 
         TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(FORGE_WHITE);
         float minU = sprite.getU0();
