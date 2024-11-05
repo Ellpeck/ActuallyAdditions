@@ -29,6 +29,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -194,11 +195,10 @@ public abstract class BlockContainerBase extends Block implements EntityBlock {
     @Override
     public BlockState playerWillDestroy(@Nonnull Level world, @Nonnull BlockPos pos, @Nonnull BlockState state, Player player) {
         BlockState theState = super.playerWillDestroy(world, pos, state, player);
-        if (!player.isCreative()) {
-            BlockEntity tile = world.getBlockEntity(pos);
-            if (tile instanceof TileEntityBase && ((TileEntityBase) tile).stopFromDropping) {
+        if (!player.isCreative() && world.getBlockEntity(pos) instanceof TileEntityBase tileBase && tileBase.stopFromDropping) {
+            if (!world.isClientSide)
                 player.displayClientMessage(Component.translatable("info.actuallyadditions.machineBroke").withStyle(ChatFormatting.RED), false);
-            }
+            return Blocks.AIR.defaultBlockState();
         }
         return theState;
     }
