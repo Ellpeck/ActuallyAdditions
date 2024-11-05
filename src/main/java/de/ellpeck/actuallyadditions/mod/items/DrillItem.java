@@ -39,6 +39,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.component.ItemContainerContents;
+import net.minecraft.world.item.component.Unbreakable;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
@@ -68,7 +69,6 @@ public class DrillItem extends ItemEnergy {
 
     public DrillItem() {
         super(ActuallyItems.defaultProps()
-                .durability(0)
                 .stacksTo(1)
                 .component(DataComponents.TOOL, Tiers.NETHERITE.createToolProperties(ActuallyTags.Blocks.MINEABLE_WITH_DRILL))
                 , 250000, 1000);

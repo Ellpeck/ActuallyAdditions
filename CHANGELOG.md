@@ -1,6 +1,7 @@
 # 1.3.9+mc1.21.1
 * Change laser rendering to be compatible with Iris
 * Fix machines in the Engineer House being obtainable when broken
+* Fixed the drill breaking when out of energy.
 
 # 1.3.8+mc1.21.1
 * Lock the Immersive Engineering cloche compat recipes behind a mod loaded condition

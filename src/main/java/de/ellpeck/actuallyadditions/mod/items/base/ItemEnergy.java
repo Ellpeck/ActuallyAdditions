@@ -31,7 +31,6 @@ import java.util.List;
 import java.util.Optional;
 
 public abstract class ItemEnergy extends ItemBase {
-
     public final int maxPower;
     public final int transfer;
 
