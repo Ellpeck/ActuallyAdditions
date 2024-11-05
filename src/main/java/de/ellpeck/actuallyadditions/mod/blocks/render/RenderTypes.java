@@ -25,6 +25,7 @@ public class RenderTypes extends RenderType {
         .setOutputState(MAIN_TARGET)
         .setLightmapState(RenderStateShard.LIGHTMAP)
         .setCullState(RenderStateShard.NO_CULL)
-        .setShaderState(RenderStateShard.POSITION_COLOR_TEX_LIGHTMAP_SHADER)
+        .setShaderState(RenderStateShard.POSITION_COLOR_SHADER)
         .createCompositeState(true));
+
 }
