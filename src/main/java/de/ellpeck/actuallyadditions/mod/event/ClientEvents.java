@@ -233,7 +233,7 @@ public class ClientEvents {
 
             if (!stack.isEmpty()) {
                 if (stack.getItem() instanceof IHudDisplay) {
-                    ((IHudDisplay) stack.getItem()).displayHud(guiGraphics, minecraft, player, stack, posHit, minecraft.getWindow());
+                    ((IHudDisplay) stack.getItem()).getHud().displayHud(guiGraphics, minecraft, player, stack, posHit, minecraft.getWindow());
                 }
             }
 
@@ -243,7 +243,7 @@ public class ClientEvents {
                 BlockEntity tileHit = minecraft.level.getBlockEntity(rayCast.getBlockPos());
 
                 if (blockHit instanceof IHudDisplay) {
-                    ((IHudDisplay) blockHit).displayHud(guiGraphics, minecraft, player, stack, posHit, minecraft.getWindow());
+                    ((IHudDisplay) blockHit).getHud().displayHud(guiGraphics, minecraft, player, stack, posHit, minecraft.getWindow());
                 }
 
                 if (tileHit instanceof TileEntityBase base) {

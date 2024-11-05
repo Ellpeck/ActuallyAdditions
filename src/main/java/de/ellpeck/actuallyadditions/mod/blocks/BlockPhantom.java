@@ -10,46 +10,30 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import com.mojang.blaze3d.platform.Window;
-import de.ellpeck.actuallyadditions.api.tile.IPhantomTile;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityPhantomBreaker;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityPhantomEnergyface;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityPhantomItemface;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityPhantomLiquiface;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityPhantomPlacer;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityPhantomRedstoneface;
-import net.minecraft.ChatFormatting;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import de.ellpeck.actuallyadditions.mod.blocks.blockhuds.IBlockHud;
+import de.ellpeck.actuallyadditions.mod.blocks.blockhuds.PhantomHud;
+import de.ellpeck.actuallyadditions.mod.tile.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.FormattedText;
-import net.minecraft.util.FormattedCharSequence;
-import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.HitResult;
-import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
 
 
 public class BlockPhantom extends BlockContainerBase implements IHudDisplay {
+    private static final IBlockHud HUD = new PhantomHud();
 
     public final Type type;
 
@@ -141,43 +125,10 @@ public class BlockPhantom extends BlockContainerBase implements IHudDisplay {
     }
 
     @Override
-    
-    public void displayHud(GuiGraphics guiGraphics, Minecraft minecraft, Player player, ItemStack stack, HitResult rayCast, Window resolution) {
-        if (!(rayCast instanceof BlockHitResult)) {
-            return;
-        }
-        BlockPos pos = ((BlockHitResult) rayCast).getBlockPos();
-        BlockEntity tile = minecraft.level.getBlockEntity(pos);
-        if (tile != null) {
-            if (tile instanceof IPhantomTile phantom) {
-                guiGraphics.drawString(minecraft.font, Component.translatable("tooltip.actuallyadditions.blockPhantomRange.desc").append(": " + phantom.getRange()).withStyle(ChatFormatting.GOLD), resolution.getGuiScaledWidth() / 2 + 5, resolution.getGuiScaledHeight() / 2 - 40, ChatFormatting.WHITE.getColor());
-                if (phantom.hasBoundPosition()) {
-                    int distance = Mth.ceil(new Vec3(pos.getX(), pos.getY(), pos.getZ()).distanceTo(new Vec3(phantom.getBoundPosition().getX(), phantom.getBoundPosition().getY(), phantom.getBoundPosition().getZ())));
-                    BlockState state = minecraft.level.getBlockState(phantom.getBoundPosition());
-                    Block block = state.getBlock();
-                    Item item = Item.byBlock(block);
-                    String name = item.getName(new ItemStack(block)).getString();
-                    drawWordWrap(guiGraphics, minecraft.font, Component.translatable("tooltip.actuallyadditions.phantom.blockInfo.desc", name, phantom.getBoundPosition().getX(), phantom.getBoundPosition().getY(), phantom.getBoundPosition().getZ(), distance), resolution.getGuiScaledWidth() / 2 + 5, resolution.getGuiScaledHeight() / 2 - 30, 200, 0xFFFFFF, true);
-
-                    if (phantom.isBoundThingInRange()) {
-                        drawWordWrap(guiGraphics, minecraft.font, Component.translatable("tooltip.actuallyadditions.phantom.connectedRange.desc"), resolution.getGuiScaledWidth() / 2 + 5, resolution.getGuiScaledHeight() / 2 + 25, 200, 0xFFFFFF, true);
-                    } else {
-                        drawWordWrap(guiGraphics, minecraft.font, Component.translatable("tooltip.actuallyadditions.phantom.connectedNoRange.desc"), resolution.getGuiScaledWidth() / 2 + 5, resolution.getGuiScaledHeight() / 2 + 25, 200, 0xFFFFFF, true);
-                    }
-                } else {
-                    guiGraphics.drawString(minecraft.font, Component.translatable("tooltip.actuallyadditions.phantom.notConnected.desc").withStyle(ChatFormatting.RED), resolution.getGuiScaledWidth() / 2 + 5, resolution.getGuiScaledHeight() / 2 + 25, ChatFormatting.WHITE.getColor());
-                }
-            }
-        }
+    public IBlockHud getHud() {
+        return HUD;
     }
 
-    
-    public static void drawWordWrap(GuiGraphics gg, Font font, FormattedText text, int x, int y, int width, int color, boolean shadow) {
-        for (FormattedCharSequence line : font.split(text, width)) {
-            gg.drawString(font, line, x, y, color, shadow);
-            y += font.lineHeight;
-        }
-    }
 
     public enum Type {
         ITEMFACE,

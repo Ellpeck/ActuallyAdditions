@@ -13,7 +13,6 @@ package de.ellpeck.actuallyadditions.mod.items;
 import com.mojang.blaze3d.platform.Window;
 import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
-import de.ellpeck.actuallyadditions.mod.blocks.IHudDisplay;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import net.minecraft.ChatFormatting;
 import net.minecraft.advancements.AdvancementHolder;
@@ -32,10 +31,12 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
 import java.util.List;
 
-public class ItemBooklet extends ItemBase implements IHudDisplay {
+public class ItemBooklet extends ItemBase {
 
 
     public static IBookletPage forcedPage;
@@ -99,8 +100,7 @@ public class ItemBooklet extends ItemBase implements IHudDisplay {
         }
     }
 
-    @Override
-
+    @OnlyIn(Dist.CLIENT)
     public void displayHud(GuiGraphics guiGraphics, Minecraft minecraft, Player player, ItemStack stack, HitResult rayCast, Window resolution) {
 //        if (rayCast != null && rayCast.getBlockPos() != null) {
 //            BlockState state = minecraft.level.getBlockState(rayCast.getBlockPos());

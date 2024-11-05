@@ -10,28 +10,24 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import com.mojang.blaze3d.platform.Window;
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
+import de.ellpeck.actuallyadditions.mod.blocks.blockhuds.IBlockHud;
+import de.ellpeck.actuallyadditions.mod.blocks.blockhuds.PlayerInterfaceHud;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityPlayerInterface;
-import net.minecraft.ChatFormatting;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.HitResult;
 
 import javax.annotation.Nullable;
 
 
 public class BlockPlayerInterface extends BlockContainerBase implements IHudDisplay {
+    private static final IBlockHud HUD = new PlayerInterfaceHud();
     public BlockPlayerInterface() {
         super(ActuallyBlocks.defaultPickProps(4.5F, 10.0F));
     }
@@ -52,7 +48,7 @@ public class BlockPlayerInterface extends BlockContainerBase implements IHudDisp
     public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity player, ItemStack stack) {
         BlockEntity tile = world.getBlockEntity(pos);
         if (tile instanceof TileEntityPlayerInterface face) {
-	        if (face.connectedPlayer == null) {
+            if (face.connectedPlayer == null) {
                 face.connectedPlayer = player.getUUID();
                 face.playerName = player.getName().getString();
                 face.setChanged();
@@ -64,26 +60,7 @@ public class BlockPlayerInterface extends BlockContainerBase implements IHudDisp
     }
 
     @Override
-    
-    public void displayHud(GuiGraphics guiGraphics, Minecraft minecraft, Player player, ItemStack stack, HitResult rayCast, Window resolution) {
-        if (!(rayCast instanceof BlockHitResult)) {
-            return;
-        }
-
-        BlockEntity tile = minecraft.level.getBlockEntity(((BlockHitResult) rayCast).getBlockPos());
-        if (tile != null) {
-            if (tile instanceof TileEntityPlayerInterface face) {
-	            String name = face.playerName == null
-                    ? "Unknown"
-                    : face.playerName;
-                guiGraphics.drawString(minecraft.font, "Bound to: " + ChatFormatting.RED + name, (int) (resolution.getGuiScaledWidth() / 2f + 5), (int) (resolution.getGuiScaledHeight() / 2f + 5), 0xFFFFFF);
-                guiGraphics.drawString(minecraft.font, "UUID: " + ChatFormatting.DARK_GREEN + face.connectedPlayer, (int) (resolution.getGuiScaledWidth() / 2f + 5), (int) (resolution.getGuiScaledHeight() / 2f + 15), 0xFFFFFF);
-            }
-        }
+    public IBlockHud getHud() {
+        return HUD;
     }
-    
-/*    @Override
-    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-        return VoxelShapes.PLAYER_INTERFACE_SHAPE;
-    }*/
 }

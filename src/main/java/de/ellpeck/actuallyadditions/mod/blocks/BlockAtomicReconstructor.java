@@ -10,14 +10,12 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import com.mojang.blaze3d.platform.Window;
 import de.ellpeck.actuallyadditions.api.lens.ILensItem;
 import de.ellpeck.actuallyadditions.mod.blocks.base.FullyDirectionalBlock;
+import de.ellpeck.actuallyadditions.mod.blocks.blockhuds.IBlockHud;
+import de.ellpeck.actuallyadditions.mod.blocks.blockhuds.ReconstructorHud;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
-import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
@@ -39,7 +37,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.HitResult;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -47,6 +44,7 @@ import java.text.NumberFormat;
 import java.util.List;
 
 public class BlockAtomicReconstructor extends FullyDirectionalBlock.Container implements IHudDisplay {
+    private static final IBlockHud HUD = new ReconstructorHud();
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
 
     public static final int NAME_FLAVOR_AMOUNTS_1 = 12;
@@ -121,25 +119,8 @@ public class BlockAtomicReconstructor extends FullyDirectionalBlock.Container im
     }
 
     @Override
-    
-    public void displayHud(GuiGraphics guiGraphics, Minecraft minecraft, Player player, ItemStack stack, HitResult rayCast, Window resolution) {
-        if (!(rayCast instanceof BlockHitResult) || minecraft.level == null) {
-            return;
-        }
-
-        BlockEntity tile = minecraft.level.getBlockEntity(((BlockHitResult) rayCast).getBlockPos());
-        if (tile instanceof TileEntityAtomicReconstructor) {
-            ItemStack slot = ((TileEntityAtomicReconstructor) tile).inv.getStackInSlot(0);
-            Component lens_name;
-            if (slot.isEmpty()) {
-                lens_name = Component.translatable("info.actuallyadditions.nolens");
-            } else {
-                lens_name = slot.getItem().getName(slot);
-
-                AssetUtil.renderStackToGui(slot, resolution.getGuiScaledWidth() / 2 + 15, resolution.getGuiScaledHeight() / 2 - 19, 1F);
-            }
-            guiGraphics.drawString(minecraft.font, lens_name.plainCopy().withStyle(ChatFormatting.YELLOW).withStyle(ChatFormatting.ITALIC).getString(), (int) (resolution.getGuiScaledWidth() / 2.0f + 35), (int) (resolution.getGuiScaledHeight() / 2.0f - 15), 0xFFFFFF);
-        }
+    public IBlockHud getHud() {
+        return HUD;
     }
 
     public static class TheItemBlock extends AABlockItem {

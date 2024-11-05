@@ -10,29 +10,19 @@
 
 package de.ellpeck.actuallyadditions.mod.blocks;
 
-import com.mojang.blaze3d.platform.Window;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.laser.IConnectionPair;
 import de.ellpeck.actuallyadditions.api.laser.Network;
 import de.ellpeck.actuallyadditions.mod.blocks.base.FullyDirectionalBlock;
+import de.ellpeck.actuallyadditions.mod.blocks.blockhuds.IBlockHud;
+import de.ellpeck.actuallyadditions.mod.blocks.blockhuds.LaserRelayHud;
 import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
-import de.ellpeck.actuallyadditions.mod.items.ItemEngineerGoggles;
 import de.ellpeck.actuallyadditions.mod.items.ItemLaserRelayUpgrade;
 import de.ellpeck.actuallyadditions.mod.items.ItemLaserWrench;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelay;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayEnergy;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayEnergyAdvanced;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayEnergyExtreme;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayFluids;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayItem;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayItemAdvanced;
+import de.ellpeck.actuallyadditions.mod.tile.*;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import io.netty.util.internal.ConcurrentSet;
-import net.minecraft.ChatFormatting;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -45,7 +35,6 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -55,7 +44,7 @@ import java.util.List;
 
 
 public class BlockLaserRelay extends FullyDirectionalBlock.Container implements IHudDisplay {
-
+    private static final IBlockHud HUD = new LaserRelayHud();
     //This took way too much fiddling around. I'm not good with numbers.
     //    private static final float F = 1 / 16F;
     //    private static final AxisAlignedBB AABB_UP = new AxisAlignedBB(2 * F, 0, 2 * F, 1 - 2 * F, 10 * F, 1 - 2 * F);
@@ -195,38 +184,6 @@ public class BlockLaserRelay extends FullyDirectionalBlock.Container implements 
         }
     }
 
-    @Override
-    
-    public void displayHud(GuiGraphics guiGraphics, Minecraft minecraft, Player player, ItemStack stack, HitResult rayCast, Window resolution) {
-        if (!(rayCast instanceof BlockHitResult)) {
-            return;
-        }
-
-        BlockPos pos = ((BlockHitResult) rayCast).getBlockPos();
-        if (minecraft.level != null) {
-            boolean wearing = ItemEngineerGoggles.isWearing(player);
-            if (wearing || !stack.isEmpty()) {
-                boolean compass = stack.getItem() == CommonConfig.Other.relayConfigureItem;
-                if (wearing || compass || stack.getItem() instanceof ItemLaserWrench) {
-                    BlockEntity tile = minecraft.level.getBlockEntity(pos);
-                    if (tile instanceof TileEntityLaserRelay relay) {
-
-	                    Component strg = relay.getExtraDisplayString();
-                        guiGraphics.drawString(minecraft.font, strg, (int) (resolution.getGuiScaledWidth() / 2f + 5), (int) (resolution.getGuiScaledHeight() / 2f + 5), 0xFFFFFF);
-
-                        Component expl;
-                        if (compass) {
-                            expl = relay.getCompassDisplayString();
-                        } else {
-                            expl = Component.translatable("info.actuallyadditions.laserRelay.mode.noCompasss", Component.translatable(CommonConfig.Other.relayConfigureItem.getDescriptionId()).getString()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC);
-                        }
-
-                        guiGraphics.drawString(minecraft.font, expl, (int) (resolution.getGuiScaledWidth() / 2f + 5), (int) (resolution.getGuiScaledHeight() / 2f + 15), 0xFFFFFF);
-                    }
-                }
-            }
-        }
-    }
 
     @Override
     public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
@@ -245,11 +202,16 @@ public class BlockLaserRelay extends FullyDirectionalBlock.Container implements 
             relayPositions.forEach(relayPos -> {
                 BlockEntity tile = world.getBlockEntity(relayPos);
                 if(tile instanceof TileEntityLaserRelay relay) {
-	                relay.sendUpdate();
+                    relay.sendUpdate();
                 }
             });
         }
         super.onRemove(state, world, pos, newState, isMoving);
+    }
+
+    @Override
+    public IBlockHud getHud() {
+        return HUD;
     }
     //
     //    @Override
