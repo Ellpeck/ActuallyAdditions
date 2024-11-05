@@ -37,9 +37,8 @@ public class ParticleBeam extends Particle {
         public BufferBuilder begin(Tesselator tesselator, TextureManager textureManager) {
             RenderSystem.disableCull();
             RenderSystem.enableBlend();
-            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 0.2F);
             RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE);
-            return tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.PARTICLE);
+            return tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
         }
 
         @Override
@@ -101,7 +100,7 @@ public class ParticleBeam extends Particle {
 
         public static ParticleOptions createData(double endX, double endY, double endZ, int color, float alpha,
                                                  int maxAge, double rotationTime, float size) {
-            return new BeamParticleData(endX, endY, endZ, color, maxAge, rotationTime, size);
+            return new BeamParticleData(endX, endY, endZ, FastColor.ARGB32.color((int)(alpha * 255F), color), maxAge, rotationTime, size);
         }
     }
 }
