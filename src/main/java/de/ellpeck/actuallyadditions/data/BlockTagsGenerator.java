@@ -99,6 +99,7 @@ public class BlockTagsGenerator extends BlockTagsProvider {
                 ActuallyBlocks.BREAKER.get(),
                 ActuallyBlocks.DROPPER.get(),
                 ActuallyBlocks.FLUID_COLLECTOR.get(),
+                ActuallyBlocks.FLUID_PLACER.get(),
                 ActuallyBlocks.FARMER.get(),
                 ActuallyBlocks.BIOREACTOR.get(),
                 ActuallyBlocks.VERTICAL_DIGGER.get(),
