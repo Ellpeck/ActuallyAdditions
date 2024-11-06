@@ -60,8 +60,6 @@ public class ClientEvents {
 
     private static EnergyDisplay energyDisplay;
 
-    boolean shouldHideEnergyOverlay = CommonConfig.Other.HIDE_ENERGY_OVERLAY.get();
-
     // TODO: [port] the fuck?
     @SubscribeEvent
     public void onClientTick(ClientTickEvent.Post event) {
@@ -266,7 +264,7 @@ public class ClientEvents {
                     }
                 }
 
-                if (tileHit instanceof IEnergyDisplay display && !shouldHideEnergyOverlay) {
+                if (tileHit instanceof IEnergyDisplay display && !CommonConfig.Other.HIDE_ENERGY_OVERLAY.get()) {
                     if (!display.needsHoldShift() || player.isShiftKeyDown()) {
                         if (energyDisplay == null) {
                             energyDisplay = new EnergyDisplay(0, 0, null);
