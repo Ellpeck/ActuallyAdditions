@@ -12,6 +12,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
+import de.ellpeck.actuallyadditions.mod.components.ActuallyComponents;
 import de.ellpeck.actuallyadditions.mod.crafting.PressingRecipe;
 import de.ellpeck.actuallyadditions.mod.fluids.OutputOnlyFluidTank;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerCanolaPress;
@@ -21,6 +22,7 @@ import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
@@ -38,6 +40,7 @@ import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Optional;
 
@@ -183,5 +186,22 @@ public class TileEntityCanolaPress extends TileEntityInventoryBase implements Me
     @Override
     public AbstractContainerMenu createMenu(int windowId, Inventory playerInventory, Player playerEntity) {
         return new ContainerCanolaPress(windowId, playerInventory, this);
+    }
+
+
+    @Override
+    protected void applyImplicitComponents(DataComponentInput componentInput) {
+        super.applyImplicitComponents(componentInput);
+
+        storage.setEnergyStored(componentInput.getOrDefault(ActuallyComponents.ENERGY_STORAGE, 0));
+        tank.setFluid(componentInput.getOrDefault(ActuallyComponents.FLUID_A, ActuallyComponents.FluidContents.EMPTY).inner());
+    }
+
+    @Override
+    protected void collectImplicitComponents(@Nonnull DataComponentMap.Builder builder) {
+        super.collectImplicitComponents(builder);
+
+        builder.set(ActuallyComponents.ENERGY_STORAGE, storage.getEnergyStored());
+        builder.set(ActuallyComponents.FLUID_A, ActuallyComponents.FluidContents.of(tank.getFluid()));
     }
 }

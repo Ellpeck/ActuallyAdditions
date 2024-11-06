@@ -69,20 +69,34 @@ public class LootTableGenerator extends LootTableProvider {
                     .include(ActuallyComponents.ENERGY_STORAGE.get());
             CopyComponentsFunction.Builder copyPulseMode = CopyComponentsFunction.copyComponents(CopyComponentsFunction.Source.BLOCK_ENTITY)
                     .include(ActuallyComponents.PULSE_MODE.get());
+            CopyComponentsFunction.Builder copyFluid_A = CopyComponentsFunction.copyComponents(CopyComponentsFunction.Source.BLOCK_ENTITY)
+                    .include(ActuallyComponents.FLUID_A.get());
+            CopyComponentsFunction.Builder copyFluid_B = CopyComponentsFunction.copyComponents(CopyComponentsFunction.Source.BLOCK_ENTITY)
+                    .include(ActuallyComponents.FLUID_B.get());
+            CopyComponentsFunction.Builder copyMiscInt = CopyComponentsFunction.copyComponents(CopyComponentsFunction.Source.BLOCK_ENTITY)
+                    .include(ActuallyComponents.MISC_INT.get());
 
             //Special Drops
             dropComponents(ActuallyBlocks.ATOMIC_RECONSTRUCTOR, $ -> $.apply(copyEnergy).apply(copyPulseMode));
             dropKeepEnergy(ActuallyBlocks.DISPLAY_STAND);
             dropKeepEnergy(ActuallyBlocks.COAL_GENERATOR);
-            dropKeepEnergy(ActuallyBlocks.OIL_GENERATOR);
+            dropComponents(ActuallyBlocks.OIL_GENERATOR, $ -> $.apply(copyEnergy).apply(copyFluid_A));
             dropKeepEnergy(ActuallyBlocks.LEAF_GENERATOR);
             dropKeepEnergy(ActuallyBlocks.CRUSHER);
             dropKeepEnergy(ActuallyBlocks.CRUSHER_DOUBLE);
             dropKeepEnergy(ActuallyBlocks.POWERED_FURNACE);
+            dropComponents(ActuallyBlocks.COFFEE_MACHINE, $ -> $.apply(copyEnergy).apply(copyFluid_A).apply(copyMiscInt));
+            dropComponents(ActuallyBlocks.FLUID_COLLECTOR, $ -> $.apply(copyFluid_A).apply(copyPulseMode));
+            dropComponents(ActuallyBlocks.FLUID_PLACER, $ -> $.apply(copyFluid_A).apply(copyPulseMode));
+            dropKeepPulseMode(ActuallyBlocks.BREAKER);
+            dropKeepPulseMode(ActuallyBlocks.PLACER);
+            dropKeepPulseMode(ActuallyBlocks.DROPPER);
+            dropComponents(ActuallyBlocks.CANOLA_PRESS, $ -> $.apply(copyEnergy).apply(copyFluid_A));
+            dropComponents(ActuallyBlocks.FERMENTING_BARREL, $ -> $.apply(copyFluid_A).apply(copyFluid_B));
+            dropKeepEnergy(ActuallyBlocks.FARMER);
 
             this.dropSelf(ActuallyBlocks.BATTERY_BOX.get());
             this.dropSelf(ActuallyBlocks.ITEM_INTERFACE_HOPPING.get());
-            this.dropSelf(ActuallyBlocks.FARMER.get());
             this.dropSelf(ActuallyBlocks.BIOREACTOR.get());
             this.dropSelf(ActuallyBlocks.EMPOWERER.get());
             this.dropSelf(ActuallyBlocks.TINY_TORCH.get());
@@ -94,24 +108,16 @@ public class LootTableGenerator extends LootTableProvider {
             this.dropSelf(ActuallyBlocks.ENERGIZER.get());
             this.dropSelf(ActuallyBlocks.ENERVATOR.get());
             this.dropSelf(ActuallyBlocks.LAVA_FACTORY_CONTROLLER.get());
-            this.dropSelf(ActuallyBlocks.CANOLA_PRESS.get());
             this.dropSelf(ActuallyBlocks.PHANTOM_ITEMFACE.get());
             this.dropSelf(ActuallyBlocks.PHANTOM_PLACER.get());
             this.dropSelf(ActuallyBlocks.PHANTOM_LIQUIFACE.get());
             this.dropSelf(ActuallyBlocks.PHANTOM_ENERGYFACE.get());
             this.dropSelf(ActuallyBlocks.PHANTOM_REDSTONEFACE.get());
             this.dropSelf(ActuallyBlocks.PHANTOM_BREAKER.get());
-            this.dropSelf(ActuallyBlocks.FERMENTING_BARREL.get());
             this.dropSelf(ActuallyBlocks.FEEDER.get());
             this.dropSelf(ActuallyBlocks.HEAT_COLLECTOR.get());
             this.dropSelf(ActuallyBlocks.GREENHOUSE_GLASS.get());
-            this.dropSelf(ActuallyBlocks.BREAKER.get());
-            this.dropSelf(ActuallyBlocks.PLACER.get());
-            this.dropSelf(ActuallyBlocks.DROPPER.get());
             this.dropSelf(ActuallyBlocks.CRATE_SMALL.get());
-            this.dropSelf(ActuallyBlocks.FLUID_PLACER.get());
-            this.dropSelf(ActuallyBlocks.FLUID_COLLECTOR.get());
-            this.dropSelf(ActuallyBlocks.COFFEE_MACHINE.get());
             this.dropSelf(ActuallyBlocks.PHANTOM_BOOSTER.get());
             this.dropSelf(ActuallyBlocks.RANGED_COLLECTOR.get());
             this.dropSelf(ActuallyBlocks.LONG_RANGE_BREAKER.get());
@@ -213,6 +219,10 @@ public class LootTableGenerator extends LootTableProvider {
             lootFunctionProvider.accept(lootpool);
 
             add(blockSupplier.get(), LootTable.lootTable().withPool(applyExplosionCondition(ActuallyBlocks.ATOMIC_RECONSTRUCTOR.get(), lootpool)));
+        }
+        private void dropKeepPulseMode(Supplier<? extends Block> blockSupplier) {
+            dropComponents(blockSupplier, $ -> $.apply(CopyComponentsFunction.copyComponents(CopyComponentsFunction.Source.BLOCK_ENTITY)
+                    .include(ActuallyComponents.PULSE_MODE.get())));
         }
         private void dropKeepEnergy(Supplier<? extends Block> blockSupplier) {
             dropComponents(blockSupplier, $ -> $.apply(CopyComponentsFunction.copyComponents(CopyComponentsFunction.Source.BLOCK_ENTITY)

@@ -7,7 +7,9 @@ import net.minecraft.core.UUIDUtil;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.component.ItemContainerContents;
@@ -15,6 +17,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.UUID;
@@ -139,7 +142,43 @@ public class ActuallyComponents {
 					.networkSynchronized(BlockPos.STREAM_CODEC)
 					.build());
 
+	public static final Supplier<DataComponentType<Integer>> MISC_INT = DATA_COMPONENT_TYPES.register("misc_int", () ->
+			DataComponentType.<Integer>builder()
+					.persistent(Codec.INT)
+					.networkSynchronized(ByteBufCodecs.INT)
+					.build());
 
+	public static final Supplier<DataComponentType<FluidContents>> FLUID_A = DATA_COMPONENT_TYPES.register("fluid", () ->
+		DataComponentType.<FluidContents>builder()
+					.persistent(FluidContents.CODEC)
+					.networkSynchronized(FluidContents.STREAM_CODEC)
+					.build());
+
+	public static final Supplier<DataComponentType<FluidContents>> FLUID_B = DATA_COMPONENT_TYPES.register("fluid_b", () ->
+			DataComponentType.<FluidContents>builder()
+					.persistent(FluidContents.CODEC)
+					.networkSynchronized(FluidContents.STREAM_CODEC)
+					.build());
+
+
+	public record FluidContents(FluidStack inner) {
+		public static final Codec<FluidContents> CODEC = FluidStack.OPTIONAL_CODEC.xmap(FluidContents::new, FluidContents::inner);
+		public static final StreamCodec<RegistryFriendlyByteBuf, FluidContents> STREAM_CODEC = FluidStack.OPTIONAL_STREAM_CODEC.map(FluidContents::new, FluidContents::inner);
+
+		public static final FluidContents EMPTY = new FluidContents(FluidStack.EMPTY);
+
+		public static FluidContents of(FluidStack stack) {
+			return new FluidContents(stack);
+		}
+
+		@Override
+			public boolean equals(Object obj) {
+				if (obj instanceof FluidStack other) {
+					return FluidStack.matches(inner, other);
+				}
+				return false;
+			}
+		}
 	/*
 	 * This is a supplier for an attachment type that can be used to attach an energy storage to an item.
 	 * Implementation is based on EnderIO's https://github.com/Team-EnderIO/EnderIO/blob/e1f022df745131ed5fea718bd860880a5785d4c7/src/core/java/com/enderio/core/common/attachment/AttachmentUtil.java#L47-L60

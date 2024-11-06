@@ -1,5 +1,6 @@
 # 1.3.10+mc1.21.1
-* Fixed some machines not holding power when broken, The following machines now keep their stored energy when broken:
+* Fixed Fluid placer not being harvestable.
+* The following machines will now retain energy when broken:
   * Coal Generator
   * Oil Generator
   * Leaf eating generator
@@ -7,6 +8,22 @@
   * Display Stand
   * Powered Furnace
   * Atomic Reconstructor
+  * Coffee Machine
+  * Farmer
+* The following machines will retain fluids when broken:
+  * Oil Generator 
+  * Coffee Machine
+  * Fluid Placer
+  * Fluid Collector
+  * Canola Press
+  * Fermenting Barrel
+* The following machines will retain redstone state when broken:
+  * Atomic Reconstrutor
+  * Fluid Placer
+  * Fluid Collector
+  * Breaker
+  * Placer
+  * Dropper
 
 # 1.3.9+mc1.21.1
 * Change laser rendering to be compatible with Iris

@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
+import de.ellpeck.actuallyadditions.mod.components.ActuallyComponents;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerBreaker;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.StackUtil;
@@ -18,6 +19,7 @@ import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -148,5 +150,20 @@ public class TileEntityBreaker extends TileEntityInventoryBase implements MenuPr
     @Override
     public AbstractContainerMenu createMenu(int windowId, Inventory playerInventory, Player playerEntity) {
         return new ContainerBreaker(windowId, playerInventory, this);
+    }
+
+
+    @Override
+    protected void applyImplicitComponents(@Nonnull DataComponentInput input) {
+        super.applyImplicitComponents(input);
+
+        this.isPulseMode = input.getOrDefault(ActuallyComponents.PULSE_MODE, false);
+    }
+
+    @Override
+    protected void collectImplicitComponents(@Nonnull DataComponentMap.Builder builder) {
+        super.collectImplicitComponents(builder);
+
+        builder.set(ActuallyComponents.PULSE_MODE, isPulseMode);
     }
 }

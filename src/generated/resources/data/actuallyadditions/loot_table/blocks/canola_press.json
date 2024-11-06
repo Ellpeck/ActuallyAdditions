@@ -14,6 +14,22 @@
           "name": "actuallyadditions:canola_press"
         }
       ],
+      "functions": [
+        {
+          "function": "minecraft:copy_components",
+          "include": [
+            "actuallyadditions:energy"
+          ],
+          "source": "block_entity"
+        },
+        {
+          "function": "minecraft:copy_components",
+          "include": [
+            "actuallyadditions:fluid"
+          ],
+          "source": "block_entity"
+        }
+      ],
       "rolls": 1.0
     }
   ],

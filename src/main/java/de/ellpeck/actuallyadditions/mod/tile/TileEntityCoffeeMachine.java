@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.tile;
 import de.ellpeck.actuallyadditions.api.ActuallyTags;
 import de.ellpeck.actuallyadditions.mod.AASounds;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
+import de.ellpeck.actuallyadditions.mod.components.ActuallyComponents;
 import de.ellpeck.actuallyadditions.mod.crafting.CoffeeIngredientRecipe;
 import de.ellpeck.actuallyadditions.mod.fluids.AATank;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerCoffeeMachine;
@@ -25,6 +26,7 @@ import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundSource;
@@ -255,5 +257,23 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
     @Override
     public AbstractContainerMenu createMenu(int windowId, Inventory playerInventory, Player player) {
         return new ContainerCoffeeMachine(windowId, playerInventory, this);
+    }
+
+    @Override
+    protected void applyImplicitComponents(DataComponentInput componentInput) {
+        super.applyImplicitComponents(componentInput);
+
+        storage.setEnergyStored(componentInput.getOrDefault(ActuallyComponents.ENERGY_STORAGE, 0));
+        tank.setFluid(componentInput.getOrDefault(ActuallyComponents.FLUID_A, ActuallyComponents.FluidContents.EMPTY).inner());
+        this.coffeeCacheAmount = componentInput.getOrDefault(ActuallyComponents.MISC_INT, 0);
+    }
+
+    @Override
+    protected void collectImplicitComponents(@Nonnull DataComponentMap.Builder builder) {
+        super.collectImplicitComponents(builder);
+
+        builder.set(ActuallyComponents.ENERGY_STORAGE, storage.getEnergyStored());
+        builder.set(ActuallyComponents.FLUID_A, ActuallyComponents.FluidContents.of(tank.getFluid()));
+        builder.set(ActuallyComponents.MISC_INT, this.coffeeCacheAmount);
     }
 }

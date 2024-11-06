@@ -12,11 +12,13 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
+import de.ellpeck.actuallyadditions.mod.components.ActuallyComponents;
 import de.ellpeck.actuallyadditions.mod.crafting.FermentingRecipe;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFermentingBarrel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
@@ -117,6 +119,22 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
                 tile.lastOutput = tile.tanks.getFluidInTank(1).getAmount();
             }
         }
+    }
+
+    @Override
+    protected void applyImplicitComponents(DataComponentInput componentInput) {
+        super.applyImplicitComponents(componentInput);
+
+        tanks.inputTank.setFluid(componentInput.getOrDefault(ActuallyComponents.FLUID_A, ActuallyComponents.FluidContents.EMPTY).inner());
+        tanks.outputTank.setFluid(componentInput.getOrDefault(ActuallyComponents.FLUID_B, ActuallyComponents.FluidContents.EMPTY).inner());
+    }
+
+    @Override
+    protected void collectImplicitComponents(@Nonnull DataComponentMap.Builder builder) {
+        super.collectImplicitComponents(builder);
+
+        builder.set(ActuallyComponents.FLUID_A, ActuallyComponents.FluidContents.of(tanks.inputTank.getFluid()));
+        builder.set(ActuallyComponents.FLUID_B, ActuallyComponents.FluidContents.of(tanks.outputTank.getFluid()));
     }
 
     @Override

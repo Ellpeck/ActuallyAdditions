@@ -11,12 +11,14 @@
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
+import de.ellpeck.actuallyadditions.mod.components.ActuallyComponents;
 import de.ellpeck.actuallyadditions.mod.fluids.AATank;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFluidCollector;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -227,5 +229,21 @@ public class TileEntityFluidCollector extends TileEntityBase implements ISharing
     @Override
     public AbstractContainerMenu createMenu(int windowId, Inventory playerInventory, Player player) {
         return new ContainerFluidCollector(windowId, playerInventory, this);
+    }
+
+    @Override
+    protected void applyImplicitComponents(@Nonnull DataComponentInput input) {
+        super.applyImplicitComponents(input);
+
+        tank.setFluid(input.getOrDefault(ActuallyComponents.FLUID_A, ActuallyComponents.FluidContents.EMPTY).inner());
+        this.isPulseMode = input.getOrDefault(ActuallyComponents.PULSE_MODE, false);
+    }
+
+    @Override
+    protected void collectImplicitComponents(@Nonnull DataComponentMap.Builder builder) {
+        super.collectImplicitComponents(builder);
+
+        builder.set(ActuallyComponents.FLUID_A, ActuallyComponents.FluidContents.of(tank.getFluid()));
+        builder.set(ActuallyComponents.PULSE_MODE, isPulseMode);
     }
 }

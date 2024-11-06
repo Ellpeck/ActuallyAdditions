@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.api.farmer.FarmerResult;
 import de.ellpeck.actuallyadditions.api.farmer.IFarmerBehavior;
 import de.ellpeck.actuallyadditions.api.internal.IFarmer;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
+import de.ellpeck.actuallyadditions.mod.components.ActuallyComponents;
 import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFarmer;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
@@ -24,6 +25,7 @@ import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -38,6 +40,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -250,5 +253,19 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
     @Override
     public AbstractContainerMenu createMenu(int windowId, Inventory playerInventory, Player p_createMenu_3_) {
         return new ContainerFarmer(windowId, playerInventory, this);
+    }
+
+    @Override
+    protected void applyImplicitComponents(@Nonnull DataComponentInput input) {
+        super.applyImplicitComponents(input);
+
+        storage.setEnergyStored(input.getOrDefault(ActuallyComponents.ENERGY_STORAGE, 0));
+    }
+
+    @Override
+    protected void collectImplicitComponents(@Nonnull DataComponentMap.Builder builder) {
+        super.collectImplicitComponents(builder);
+
+        builder.set(ActuallyComponents.ENERGY_STORAGE, storage.getEnergyStored());
     }
 }
