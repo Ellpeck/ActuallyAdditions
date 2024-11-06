@@ -89,6 +89,7 @@ public class CommonConfig {
     }
 
     public static class Other {
+        public static ModConfigSpec.BooleanValue HIDE_ENERGY_OVERLAY;
         public static ModConfigSpec.BooleanValue SOLID_XP_ALWAYS_ORBS;
         public static ModConfigSpec.BooleanValue DO_UPDATE_CHECK;
         public static ModConfigSpec.BooleanValue UPDATE_CHECK_VERSION_SPECIFIC;
@@ -115,6 +116,9 @@ public class CommonConfig {
         public static void build() {
 
             BUILDER.comment("Everything else").push("other");
+
+            HIDE_ENERGY_OVERLAY = BUILDER.comment("If true, when looking at blocks the Energy Overlay will be hidden.")
+                .define("hideEnergyOverlay", false);
 
             SOLID_XP_ALWAYS_ORBS = BUILDER.comment("If true, Solidified Experience will always spawn orbs, even for regular players.")
                 .define("solidXPOrbs", false);
