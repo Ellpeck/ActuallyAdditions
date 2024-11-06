@@ -12,9 +12,11 @@ package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.api.misc.IDisplayStandItem;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
+import de.ellpeck.actuallyadditions.mod.components.ActuallyComponents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -24,6 +26,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.energy.IEnergyStorage;
+
+import javax.annotation.Nonnull;
 
 public class TileEntityDisplayStand extends TileEntityInventoryBase implements IEnergyDisplay {
 
@@ -113,5 +117,19 @@ public class TileEntityDisplayStand extends TileEntityInventoryBase implements I
 
     public ItemStack getStack() {
         return this.inv.getStackInSlot(0);
+    }
+
+    @Override
+    protected void applyImplicitComponents(@Nonnull DataComponentInput input) {
+        super.applyImplicitComponents(input);
+
+        storage.setEnergyStored(input.getOrDefault(ActuallyComponents.ENERGY_STORAGE, 0));
+    }
+
+    @Override
+    protected void collectImplicitComponents(@Nonnull DataComponentMap.Builder builder) {
+        super.collectImplicitComponents(builder);
+
+        builder.set(ActuallyComponents.ENERGY_STORAGE, storage.getEnergyStored());
     }
 }

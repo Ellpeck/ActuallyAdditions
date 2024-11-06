@@ -1,4 +1,4 @@
-// 1.21.1	2024-10-16T22:24:12.9580535	Loot Tables
+// 1.21.1	2024-11-05T20:37:45.5911624	Loot Tables
 ef11aa79a2f96a47250f46811f8491fd34d627f9 data/actuallyadditions/loot_table/blocks/atomic_reconstructor.json
 e15c868b26b669c30365bfb93e7d9274e07df16d data/actuallyadditions/loot_table/blocks/battery_box.json
 745d64af3b0203a138f9eca7de21ed4988b35c95 data/actuallyadditions/loot_table/blocks/bio_reactor.json
@@ -91,7 +91,7 @@ af0cb5ad3473b274da2873d3e08da0f4085e6699 data/actuallyadditions/loot_table/block
 04f2ec311197a6e8770d30704448ee6abba70e32 data/actuallyadditions/loot_table/blocks/laser_relay_item_advanced.json
 395d67efbd229f614c51bd96f637797f035cc7e3 data/actuallyadditions/loot_table/blocks/lava_factory_casing.json
 f8a03e56a032e858126f1b1861ea0b759a3e517d data/actuallyadditions/loot_table/blocks/lava_factory_controller.json
-82e3d0039b6702d62c5460953426812d798cdc37 data/actuallyadditions/loot_table/blocks/leaf_generator.json
+b5acba2bc0fc0ba58b60b1c929bb67a1a8fe96cb data/actuallyadditions/loot_table/blocks/leaf_generator.json
 27ba42bb0f2dca72e29393944b61e566d758a2dc data/actuallyadditions/loot_table/blocks/long_range_breaker.json
 43113c67b268280ce09b9c90df83f33c15bf2f06 data/actuallyadditions/loot_table/blocks/oil_generator.json
 f0905fdc46775bb0d7382375b0a1109d125175e7 data/actuallyadditions/loot_table/blocks/palis_crystal_block.json

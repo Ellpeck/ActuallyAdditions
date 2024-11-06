@@ -14,10 +14,10 @@ import de.ellpeck.actuallyadditions.api.lens.ILensItem;
 import de.ellpeck.actuallyadditions.mod.blocks.base.FullyDirectionalBlock;
 import de.ellpeck.actuallyadditions.mod.blocks.blockhuds.IBlockHud;
 import de.ellpeck.actuallyadditions.mod.blocks.blockhuds.ReconstructorHud;
+import de.ellpeck.actuallyadditions.mod.components.ActuallyComponents;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -27,7 +27,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -154,19 +153,14 @@ public class BlockAtomicReconstructor extends FullyDirectionalBlock.Container im
             String base = block.getDescriptionId() + ".info.";
             pTooltip.add(Component.translatable(base + "1." + this.toPick1).append(" ").append(Component.translatable(base + "2." + this.toPick2)).withStyle(s -> s.withColor(ChatFormatting.GRAY)));
 
-            if (pStack.has(DataComponents.CUSTOM_DATA) ) {
-                CustomData customData = pStack.get(DataComponents.CUSTOM_DATA);
-                int energy = 0;
-                if (customData.contains("Energy")) {
-                    energy = customData.copyTag().getInt("Energy");
-                }
+            if (pStack.has(ActuallyComponents.ENERGY_STORAGE) ) {
+                int energy = pStack.getOrDefault(ActuallyComponents.ENERGY_STORAGE, 0);
                 NumberFormat format = NumberFormat.getInstance();
                 pTooltip.add(Component.translatable("misc.actuallyadditions.power_single", format.format(energy)).withStyle(ChatFormatting.GRAY));
-
-                if (customData.contains("IsPulseMode")) {
-                    pTooltip.add(Component.translatable("info.actuallyadditions.redstoneMode").append(": ")
-                            .append(Component.translatable(customData.copyTag().getBoolean("IsPulseMode")?"info.actuallyadditions.redstoneMode.pulse":"info.actuallyadditions.redstoneMode.deactivation").withStyle($ -> $.withColor(ChatFormatting.RED))));
-                }
+            }
+            if (pStack.has(ActuallyComponents.PULSE_MODE)) {
+                pTooltip.add(Component.translatable("info.actuallyadditions.redstoneMode").append(": ")
+                        .append(Component.translatable(pStack.getOrDefault(ActuallyComponents.PULSE_MODE, false)?"info.actuallyadditions.redstoneMode.pulse":"info.actuallyadditions.redstoneMode.deactivation").withStyle($ -> $.withColor(ChatFormatting.RED))));
             }
         }
 

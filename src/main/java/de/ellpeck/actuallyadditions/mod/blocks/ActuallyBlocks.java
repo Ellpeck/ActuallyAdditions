@@ -126,7 +126,7 @@ public final class ActuallyBlocks {
         (b) -> new AABlockItem.BlockEntityEnergyItem(b, defaultBlockItemProperties), TileEntityCoalGenerator::new);
 
     public static final AABlockReg<BlockLeafGenerator, AABlockItem, TileEntityLeafGenerator> LEAF_GENERATOR = new AABlockReg<>("leaf_generator", BlockLeafGenerator::new,
-        (b) -> new AABlockItem(b, defaultBlockItemProperties) , TileEntityLeafGenerator::new);
+        (b) -> new AABlockItem.BlockEntityEnergyItem(b, defaultBlockItemProperties) , TileEntityLeafGenerator::new);
 
     public static final AABlockReg<BlockXPSolidifier, AABlockItem, TileEntityXPSolidifier> XP_SOLIDIFIER = new AABlockReg<>("xp_solidifier", BlockXPSolidifier::new,
         (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityXPSolidifier::new);

@@ -1,3 +1,13 @@
+# 1.3.10+mc1.21.1
+* Fixed some machines not holding power when broken, The following machines now keep their stored energy when broken:
+  * Coal Generator
+  * Oil Generator
+  * Leaf eating generator
+  * Crushers
+  * Display Stand
+  * Powered Furnace
+  * Atomic Reconstructor
+
 # 1.3.9+mc1.21.1
 * Change laser rendering to be compatible with Iris
 * Fix machines in the Engineer House being obtainable when broken
