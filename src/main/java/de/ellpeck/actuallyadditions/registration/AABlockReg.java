@@ -44,7 +44,7 @@ public class AABlockReg<B extends Block, I extends Item, T extends BlockEntity> 
 
   */
 
-    public String getName() {return name;}
+    public String getName() { return name; }
 
     @Override
     public Block get() {

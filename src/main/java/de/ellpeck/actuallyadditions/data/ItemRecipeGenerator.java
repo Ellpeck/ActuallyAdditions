@@ -10,6 +10,7 @@ import de.ellpeck.actuallyadditions.mod.crafting.TargetNBTIngredient;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.util.NoAdvRecipeOutput;
 import de.ellpeck.actuallyadditions.mod.util.RecipeInjector;
+import de.ellpeck.actuallyadditions.registration.AABlockReg;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -609,6 +610,33 @@ public class ItemRecipeGenerator extends RecipeProvider {
                 .requires(ActuallyItems.ITEM_BOOKLET.get())
                 .requires(Items.PAPER)
                 .save(recipeOutput);
+
+        // Reset Recipes
+        generateReset(ActuallyBlocks.OIL_GENERATOR, recipeOutput);
+        generateReset(ActuallyBlocks.COAL_GENERATOR, recipeOutput);
+        generateReset(ActuallyBlocks.LEAF_GENERATOR, recipeOutput);
+        generateReset(ActuallyBlocks.POWERED_FURNACE, recipeOutput);
+        generateReset(ActuallyBlocks.CRUSHER, recipeOutput);
+        generateReset(ActuallyBlocks.CRUSHER_DOUBLE, recipeOutput);
+        generateReset(ActuallyBlocks.DISPLAY_STAND, recipeOutput);
+        generateReset(ActuallyBlocks.ATOMIC_RECONSTRUCTOR, recipeOutput);
+        generateReset(ActuallyBlocks.FARMER, recipeOutput);
+        generateReset(ActuallyBlocks.DROPPER, recipeOutput);
+        generateReset(ActuallyBlocks.PLACER, recipeOutput);
+        generateReset(ActuallyBlocks.BREAKER, recipeOutput);
+        generateReset(ActuallyBlocks.FLUID_COLLECTOR, recipeOutput);
+        generateReset(ActuallyBlocks.FLUID_PLACER, recipeOutput);
+        generateReset(ActuallyBlocks.COFFEE_MACHINE, recipeOutput);
+        generateReset(ActuallyBlocks.CANOLA_PRESS, recipeOutput);
+        generateReset(ActuallyBlocks.FERMENTING_BARREL, recipeOutput);
+
+    }
+
+    protected void generateReset(@Nonnull AABlockReg<?, ?, ?> item, @Nonnull RecipeOutput consumer) {
+        Recipe.shapeless(item.getItem())
+                .ingredients(item.getItem())
+                .name(ActuallyAdditions.modLoc("reset/" + item.getName()))
+                .save(consumer);
     }
 
     protected void generateAOIT(RecipeOutput consumer) {

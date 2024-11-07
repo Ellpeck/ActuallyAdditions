@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "actuallyadditions:canola_press"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "actuallyadditions:canola_press"
+  }
+}
