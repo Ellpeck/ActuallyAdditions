@@ -18,7 +18,7 @@
   * Canola Press
   * Fermenting Barrel
 * The following machines will retain redstone state when broken:
-  * Atomic Reconstrutor
+  * Atomic Reconstructor
   * Fluid Placer
   * Fluid Collector
   * Breaker
