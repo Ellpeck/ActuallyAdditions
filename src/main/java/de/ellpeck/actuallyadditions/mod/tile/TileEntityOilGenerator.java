@@ -237,7 +237,7 @@ public class TileEntityOilGenerator extends TileEntityBase implements ISharingEn
         super.applyImplicitComponents(input);
 
         storage.setEnergyStored(input.getOrDefault(ActuallyComponents.ENERGY_STORAGE, 0));
-        tank.setFluid(input.getOrDefault(ActuallyComponents.FLUID_A, ActuallyComponents.FluidContents.EMPTY).inner());
+        tank.setFluid(input.getOrDefault(ActuallyComponents.FLUID_A, ActuallyComponents.FluidContents.EMPTY).get());
     }
 
     @Override

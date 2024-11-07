@@ -264,7 +264,7 @@ public class TileEntityCoffeeMachine extends TileEntityInventoryBase implements 
         super.applyImplicitComponents(componentInput);
 
         storage.setEnergyStored(componentInput.getOrDefault(ActuallyComponents.ENERGY_STORAGE, 0));
-        tank.setFluid(componentInput.getOrDefault(ActuallyComponents.FLUID_A, ActuallyComponents.FluidContents.EMPTY).inner());
+        tank.setFluid(componentInput.getOrDefault(ActuallyComponents.FLUID_A, ActuallyComponents.FluidContents.EMPTY).get());
         this.coffeeCacheAmount = componentInput.getOrDefault(ActuallyComponents.MISC_INT, 0);
     }
 

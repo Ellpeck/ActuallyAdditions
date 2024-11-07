@@ -161,24 +161,43 @@ public class ActuallyComponents {
 					.build());
 
 
-	public record FluidContents(FluidStack inner) {
-		public static final Codec<FluidContents> CODEC = FluidStack.OPTIONAL_CODEC.xmap(FluidContents::new, FluidContents::inner);
-		public static final StreamCodec<RegistryFriendlyByteBuf, FluidContents> STREAM_CODEC = FluidStack.OPTIONAL_STREAM_CODEC.map(FluidContents::new, FluidContents::inner);
+	public static class FluidContents {
+		private final FluidStack inner;
+		public static final Codec<FluidContents> CODEC = FluidStack.OPTIONAL_CODEC.xmap(FluidContents::of, FluidContents::inner);
+		public static final StreamCodec<RegistryFriendlyByteBuf, FluidContents> STREAM_CODEC = FluidStack.OPTIONAL_STREAM_CODEC.map(FluidContents::of, FluidContents::inner);
 
-		public static final FluidContents EMPTY = new FluidContents(FluidStack.EMPTY);
+		public static final FluidContents EMPTY = FluidContents.of(FluidStack.EMPTY);
 
 		public static FluidContents of(FluidStack stack) {
 			return new FluidContents(stack);
 		}
 
+		private	FluidStack inner() {
+			return inner;
+		}
+
+		private FluidContents(FluidStack inner) {
+			this.inner = inner;
+		}
+
+		public FluidStack get() {
+			return inner.copy();
+		}
+
 		@Override
-			public boolean equals(Object obj) {
+		public boolean equals(Object obj) {
 				if (obj instanceof FluidStack other) {
 					return FluidStack.matches(inner, other);
 				}
 				return false;
 			}
+
+		@Override
+		public int hashCode() {
+			return inner.hashCode();
 		}
+	}
+
 	/*
 	 * This is a supplier for an attachment type that can be used to attach an energy storage to an item.
 	 * Implementation is based on EnderIO's https://github.com/Team-EnderIO/EnderIO/blob/e1f022df745131ed5fea718bd860880a5785d4c7/src/core/java/com/enderio/core/common/attachment/AttachmentUtil.java#L47-L60

@@ -125,8 +125,8 @@ public class TileEntityFermentingBarrel extends TileEntityBase implements IShari
     protected void applyImplicitComponents(DataComponentInput componentInput) {
         super.applyImplicitComponents(componentInput);
 
-        tanks.inputTank.setFluid(componentInput.getOrDefault(ActuallyComponents.FLUID_A, ActuallyComponents.FluidContents.EMPTY).inner());
-        tanks.outputTank.setFluid(componentInput.getOrDefault(ActuallyComponents.FLUID_B, ActuallyComponents.FluidContents.EMPTY).inner());
+        tanks.inputTank.setFluid(componentInput.getOrDefault(ActuallyComponents.FLUID_A, ActuallyComponents.FluidContents.EMPTY).get());
+        tanks.outputTank.setFluid(componentInput.getOrDefault(ActuallyComponents.FLUID_B, ActuallyComponents.FluidContents.EMPTY).get());
     }
 
     @Override

@@ -235,7 +235,7 @@ public class TileEntityFluidCollector extends TileEntityBase implements ISharing
     protected void applyImplicitComponents(@Nonnull DataComponentInput input) {
         super.applyImplicitComponents(input);
 
-        tank.setFluid(input.getOrDefault(ActuallyComponents.FLUID_A, ActuallyComponents.FluidContents.EMPTY).inner());
+        tank.setFluid(input.getOrDefault(ActuallyComponents.FLUID_A, ActuallyComponents.FluidContents.EMPTY).get());
         this.isPulseMode = input.getOrDefault(ActuallyComponents.PULSE_MODE, false);
     }
 
