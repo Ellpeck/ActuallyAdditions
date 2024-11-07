@@ -15,6 +15,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import de.ellpeck.actuallyadditions.api.misc.IGoggles;
 import de.ellpeck.actuallyadditions.mod.blocks.IHudDisplay;
+import de.ellpeck.actuallyadditions.mod.config.ClientConfig;
 import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import de.ellpeck.actuallyadditions.mod.data.WorldData;
 import de.ellpeck.actuallyadditions.mod.inventory.gui.EnergyDisplay;
@@ -264,7 +265,7 @@ public class ClientEvents {
                     }
                 }
 
-                if (tileHit instanceof IEnergyDisplay display && !CommonConfig.Other.HIDE_ENERGY_OVERLAY.get()) {
+                if (tileHit instanceof IEnergyDisplay display && !ClientConfig.HIDE_ENERGY_OVERLAY.get()) {
                     if (!display.needsHoldShift() || player.isShiftKeyDown()) {
                         if (energyDisplay == null) {
                             energyDisplay = new EnergyDisplay(0, 0, null);

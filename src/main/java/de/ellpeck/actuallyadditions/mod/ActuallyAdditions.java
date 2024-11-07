@@ -15,6 +15,7 @@ import de.ellpeck.actuallyadditions.api.ActuallyTags;
 import de.ellpeck.actuallyadditions.api.farmer.IFarmerBehavior;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.components.ActuallyComponents;
+import de.ellpeck.actuallyadditions.mod.config.ClientConfig;
 import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import de.ellpeck.actuallyadditions.mod.crafting.ActuallyRecipes;
 import de.ellpeck.actuallyadditions.mod.data.WorldData;
@@ -75,6 +76,8 @@ public class ActuallyAdditions {
 
     public ActuallyAdditions(IEventBus eventBus, ModContainer container, Dist dist) {
         container.registerConfig(ModConfig.Type.COMMON, CommonConfig.COMMON_CONFIG);
+        if (dist.isClient())
+            container.registerConfig(ModConfig.Type.CLIENT, ClientConfig.CLIENT_CONFIG);
 
         ActuallyBlocks.init(eventBus);
         ActuallyItems.init(eventBus);
@@ -135,10 +138,12 @@ public class ActuallyAdditions {
     }
 
     private void onConfigReload(ModConfigEvent event) {
-        Item item1 = BuiltInRegistries.ITEM.get(ResourceLocation.tryParse(CommonConfig.Other.REDSTONECONFIGURATOR.get()));
-        Item item2 = BuiltInRegistries.ITEM.get(ResourceLocation.tryParse(CommonConfig.Other.RELAYCONFIGURATOR.get()));
-        CommonConfig.Other.redstoneConfigureItem = item1 != null?item1: Items.AIR;
-        CommonConfig.Other.relayConfigureItem = item2 != null?item2: Items.AIR;
+        if (event.getConfig().getType() == ModConfig.Type.COMMON) {
+            Item item1 = BuiltInRegistries.ITEM.get(ResourceLocation.tryParse(CommonConfig.Other.REDSTONECONFIGURATOR.get()));
+            Item item2 = BuiltInRegistries.ITEM.get(ResourceLocation.tryParse(CommonConfig.Other.RELAYCONFIGURATOR.get()));
+            CommonConfig.Other.redstoneConfigureItem = item1 != null ? item1 : Items.AIR;
+            CommonConfig.Other.relayConfigureItem = item2 != null ? item2 : Items.AIR;
+        }
     }
 
     public void serverStarted(ServerStartedEvent event) {

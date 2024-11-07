@@ -1,5 +1,6 @@
 # 1.3.10+mc1.21.1
 * Fixed Fluid placer not being harvestable.
+* PR #1438, Added config to disable energy overlay.
 * The following machines will now retain energy when broken:
   * Coal Generator
   * Oil Generator
