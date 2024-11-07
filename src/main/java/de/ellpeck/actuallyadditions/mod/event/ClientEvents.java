@@ -264,7 +264,7 @@ public class ClientEvents {
                     }
                 }
 
-                if (tileHit instanceof IEnergyDisplay display) {
+                if (tileHit instanceof IEnergyDisplay display && !CommonConfig.Other.HIDE_ENERGY_OVERLAY.get()) {
                     if (!display.needsHoldShift() || player.isShiftKeyDown()) {
                         if (energyDisplay == null) {
                             energyDisplay = new EnergyDisplay(0, 0, null);
