@@ -20,7 +20,7 @@ public class ItemLens extends ItemBase implements ILensItem {
     private final Lens type;
 
     public ItemLens(Lens type) {
-        super(ActuallyItems.defaultProps().stacksTo(1));
+        super(ActuallyItems.defaultProps());
         this.type = type;
     }
 

@@ -72,6 +72,9 @@ public class BlockAtomicReconstructor extends FullyDirectionalBlock.Container im
                             heldItem.shrink(1);
                         }
                         return ItemInteractionResult.CONSUME;
+                    } else if (ItemStack.isSameItem(heldItem, reconstructor.inv.getStackInSlot(0)) && heldItem.getCount() + 1 <= heldItem.getMaxStackSize()) {
+                        reconstructor.inv.setStackInSlot(0, ItemStack.EMPTY);
+                        heldItem.grow(1);
                     }
                 } else {
                     ItemStack slot = reconstructor.inv.getStackInSlot(0);
