@@ -1,0 +1,28 @@
+name: 💡 Suggestions
+description: For suggesting changes / additions
+title: "[Suggestion]: "
+labels: [suggestion, enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out the feature request!
+  - type: checkboxes
+    id: general-info
+    attributes:
+      label: General Info
+      description: You may select more than one.
+      options:
+        - label: I would like to propose new content
+        - label: I would like to propose changes
+        - label: I would like to propose another thing
+    validations:
+      required: false
+  - type: textarea
+    id: suggestion-description
+    attributes:
+      label: Suggestion Description
+      description: Tell us your suggestion
+      placeholder: I want this to happen
+    validations:
+      required: true
