@@ -26,6 +26,7 @@
   * Placer
   * Dropper
 * Fix some blocks using metal sounds as a side effect of the changes to the casing block sounds
+* Update banner/shield patterns
 
 # 1.3.9+mc1.21.1
 * Change laser rendering to be compatible with Iris
