@@ -88,13 +88,11 @@ public final class ActuallyBlocks {
 
     public static final Item.Properties defaultBlockItemProperties = new Item.Properties().stacksTo(64);
 
-    public static final BlockBehaviour.Properties miscBlockProperties = BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).requiresCorrectToolForDrops().strength(1.5f, 10f);
-
     // Casings
-    public static final AABlockReg<ActuallyBlock, AABlockItem, ?> WOOD_CASING = new AABlockReg<>("wood_casing", () -> new ActuallyBlock(miscBlockProperties.sound(SoundType.WOOD)), ActuallyBlock::createBlockItem);
-    public static final AABlockReg<ActuallyBlock, AABlockItem, ?> IRON_CASING = new AABlockReg<>("iron_casing", () -> new ActuallyBlock(miscBlockProperties.sound(SoundType.METAL)), ActuallyBlock::createBlockItem);
-    public static final AABlockReg<ActuallyBlock, AABlockItem, ?> ENDER_CASING = new AABlockReg<>("ender_casing", () -> new ActuallyBlock(miscBlockProperties.sound(SoundType.METAL)), ActuallyBlock::createBlockItem);
-    public static final AABlockReg<ActuallyBlock, AABlockItem, ?> LAVA_FACTORY_CASING = new AABlockReg<>("lava_factory_casing", () -> new ActuallyBlock(miscBlockProperties.sound(SoundType.METAL)), ActuallyBlock::createBlockItem);
+    public static final AABlockReg<ActuallyBlock, AABlockItem, ?> WOOD_CASING = new AABlockReg<>("wood_casing", () -> new ActuallyBlock(miscBlockProperties().sound(SoundType.WOOD)), ActuallyBlock::createBlockItem);
+    public static final AABlockReg<ActuallyBlock, AABlockItem, ?> IRON_CASING = new AABlockReg<>("iron_casing", () -> new ActuallyBlock(miscBlockProperties().sound(SoundType.METAL)), ActuallyBlock::createBlockItem);
+    public static final AABlockReg<ActuallyBlock, AABlockItem, ?> ENDER_CASING = new AABlockReg<>("ender_casing", () -> new ActuallyBlock(miscBlockProperties().sound(SoundType.METAL)), ActuallyBlock::createBlockItem);
+    public static final AABlockReg<ActuallyBlock, AABlockItem, ?> LAVA_FACTORY_CASING = new AABlockReg<>("lava_factory_casing", () -> new ActuallyBlock(miscBlockProperties().sound(SoundType.METAL)), ActuallyBlock::createBlockItem);
 
     // Machines
     public static final AABlockReg<BlockFeeder, AABlockItem, TileEntityFeeder> FEEDER = new AABlockReg<>("feeder", BlockFeeder::new, (b) -> new AABlockItem(b, defaultBlockItemProperties), TileEntityFeeder::new);
@@ -266,18 +264,18 @@ public final class ActuallyBlocks {
 
 
     // Misc building blocks
-    public static final AABlockReg<ActuallyBlock, AABlockItem, ?> BLACK_QUARTZ_ORE = new AABlockReg<>("black_quartz_ore", () -> new ActuallyBlock(miscBlockProperties),
+    public static final AABlockReg<ActuallyBlock, AABlockItem, ?> BLACK_QUARTZ_ORE = new AABlockReg<>("black_quartz_ore", () -> new ActuallyBlock(miscBlockProperties()),
         (b) -> new AABlockItem(b, defaultBlockItemProperties));
 
-    public static final AABlockReg<ActuallyBlock, AABlockItem, ?> ETHETIC_GREEN_BLOCK = new AABlockReg<>("ethetic_green_block", () -> new ActuallyBlock(miscBlockProperties), (b) -> new AABlockItem(b, defaultBlockItemProperties));
-    public static final AABlockReg<ActuallyBlock, AABlockItem, ?> ETHETIC_WHITE_BLOCK = new AABlockReg<>("ethetic_white_block", () -> new ActuallyBlock(miscBlockProperties), (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<ActuallyBlock, AABlockItem, ?> ETHETIC_GREEN_BLOCK = new AABlockReg<>("ethetic_green_block", () -> new ActuallyBlock(miscBlockProperties()), (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<ActuallyBlock, AABlockItem, ?> ETHETIC_WHITE_BLOCK = new AABlockReg<>("ethetic_white_block", () -> new ActuallyBlock(miscBlockProperties()), (b) -> new AABlockItem(b, defaultBlockItemProperties));
 
     //Black Quartz
-    public static final AABlockReg<ActuallyBlock, AABlockItem, ?> BLACK_QUARTZ = new AABlockReg<>("black_quartz_block", () -> new ActuallyBlock(miscBlockProperties), (b) -> new AABlockItem(b, defaultBlockItemProperties));
-    public static final AABlockReg<ActuallyBlock, AABlockItem, ?> BLACK_QUARTZ_PILLAR = new AABlockReg<>("black_quartz_pillar_block", () -> new ActuallyBlock(miscBlockProperties), (b) -> new AABlockItem(b, defaultBlockItemProperties));
-    public static final AABlockReg<ActuallyBlock, AABlockItem, ?> CHISELED_BLACK_QUARTZ = new AABlockReg<>("chiseled_black_quartz_block", () -> new ActuallyBlock(miscBlockProperties), (b) -> new AABlockItem(b, defaultBlockItemProperties));
-    public static final AABlockReg<ActuallyBlock, AABlockItem, ?> SMOOTH_BLACK_QUARTZ = new AABlockReg<>("smooth_black_quartz_block", () -> new ActuallyBlock(miscBlockProperties), (b) -> new AABlockItem(b, defaultBlockItemProperties));
-    public static final AABlockReg<ActuallyBlock, AABlockItem, ?> BLACK_QUARTZ_BRICK = new AABlockReg<>("black_quartz_brick_block", () -> new ActuallyBlock(miscBlockProperties), (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<ActuallyBlock, AABlockItem, ?> BLACK_QUARTZ = new AABlockReg<>("black_quartz_block", () -> new ActuallyBlock(miscBlockProperties()), (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<ActuallyBlock, AABlockItem, ?> BLACK_QUARTZ_PILLAR = new AABlockReg<>("black_quartz_pillar_block", () -> new ActuallyBlock(miscBlockProperties()), (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<ActuallyBlock, AABlockItem, ?> CHISELED_BLACK_QUARTZ = new AABlockReg<>("chiseled_black_quartz_block", () -> new ActuallyBlock(miscBlockProperties()), (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<ActuallyBlock, AABlockItem, ?> SMOOTH_BLACK_QUARTZ = new AABlockReg<>("smooth_black_quartz_block", () -> new ActuallyBlock(miscBlockProperties()), (b) -> new AABlockItem(b, defaultBlockItemProperties));
+    public static final AABlockReg<ActuallyBlock, AABlockItem, ?> BLACK_QUARTZ_BRICK = new AABlockReg<>("black_quartz_brick_block", () -> new ActuallyBlock(miscBlockProperties()), (b) -> new AABlockItem(b, defaultBlockItemProperties));
 
     //Walls
     public static final AABlockReg<WallBlock, AABlockItem, ?> ETHETIC_GREEN_WALL = new AABlockReg<>("ethetic_green_wall", () -> new WallBlock(BlockBehaviour.Properties.ofFullCopy(ETHETIC_GREEN_BLOCK.get())), (b) -> new AABlockItem(b, defaultBlockItemProperties));
@@ -322,6 +320,10 @@ public final class ActuallyBlocks {
 
     public static final AABlockReg<BlockGreenhouseGlass, AABlockItem, ?> GREENHOUSE_GLASS = new AABlockReg<>("greenhouse_glass", BlockGreenhouseGlass::new,
         (b) -> new AABlockItem(b, defaultBlockItemProperties));
+
+    public static BlockBehaviour.Properties miscBlockProperties() {
+        return BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).requiresCorrectToolForDrops().strength(1.5f, 10f);
+    }
 
     public static BlockBehaviour.Properties defaultPickProps(float hardness, float resistance) {
         return BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).requiresCorrectToolForDrops().strength(hardness, resistance).sound(SoundType.STONE);
