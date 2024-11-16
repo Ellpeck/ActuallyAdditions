@@ -15,6 +15,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.fluids.FluidStack;
 
 import javax.annotation.Nonnull;
@@ -38,8 +39,9 @@ public class FuelRecipeGenerator extends RecipeProvider {
         addSolid(recipeOutput, "stick", Items.STICK, 2000, 100);
         addSolid(recipeOutput, "tiny-coal", ActuallyTags.Items.TINY_COALS, 4000, 200);
         addSolid(recipeOutput, "charcoal", Items.CHARCOAL, 32000, 1600);
-        addSolid(recipeOutput, "coal-block", Items.COAL_BLOCK, 320000, 16000);
+        addSolid(recipeOutput, "coal-block", Tags.Items.STORAGE_BLOCKS_COAL, 320000, 16000);
         addSolid(recipeOutput, "lava", Items.LAVA_BUCKET, 400000, 20000);
+
 
         recipeOutput.accept(ActuallyAdditions.modLoc("liquid_fuel/canola_oil"), new LiquidFuelRecipe(
             new FluidStack(InitFluids.CANOLA_OIL.get(), 50), 4000, 100), null);

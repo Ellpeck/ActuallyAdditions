@@ -31,12 +31,11 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
@@ -104,6 +103,28 @@ public class TileEntityFluidCollector extends TileEntityBase implements ISharing
         BlockPos coordsBlock = this.worldPosition.relative(sideToManipulate);
 
         BlockState stateToBreak = this.level.getBlockState(coordsBlock);
+
+        // Try cauldron
+        if(stateToBreak.getBlock() instanceof AbstractCauldronBlock cauldron) {
+            if (cauldron.isFull(stateToBreak)) {
+                if (stateToBreak.getBlock() == Blocks.WATER_CAULDRON) {
+                    if (this.tank.fillInternal(new FluidStack(Fluids.WATER, FluidType.BUCKET_VOLUME), IFluidHandler.FluidAction.SIMULATE) >= FluidType.BUCKET_VOLUME) {
+                        this.tank.fillInternal(new FluidStack(Fluids.WATER, FluidType.BUCKET_VOLUME), IFluidHandler.FluidAction.EXECUTE);
+                        level.setBlockAndUpdate(coordsBlock, Blocks.CAULDRON.defaultBlockState());
+                        level.playSound(null, coordsBlock, SoundEvents.BUCKET_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
+                        return;
+                    }
+                } else if (stateToBreak.getBlock() == Blocks.LAVA_CAULDRON) {
+                    if (this.tank.fillInternal(new FluidStack(Fluids.LAVA, FluidType.BUCKET_VOLUME), IFluidHandler.FluidAction.SIMULATE) >= FluidType.BUCKET_VOLUME) {
+                        this.tank.fillInternal(new FluidStack(Fluids.LAVA, FluidType.BUCKET_VOLUME), IFluidHandler.FluidAction.EXECUTE);
+                        level.setBlockAndUpdate(coordsBlock, Blocks.CAULDRON.defaultBlockState());
+                        level.playSound(null, coordsBlock, SoundEvents.BUCKET_FILL_LAVA, SoundSource.BLOCKS, 1.0F, 1.0F);
+                        return;
+                    }
+                }
+            }
+        }
+
         Block blockToBreak = stateToBreak.getBlock();
         if (!this.isPlacer && FluidType.BUCKET_VOLUME <= this.tank.getCapacity() - this.tank.getFluidAmount()) {
             if (blockToBreak instanceof LiquidBlock liquidBlock && liquidBlock.fluid != null && stateToBreak.getFluidState().isSource() ) {

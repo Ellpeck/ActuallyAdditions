@@ -14,11 +14,13 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.Level;
 
+import javax.annotation.Nonnull;
+
 public class SolidFuelRecipe implements Recipe<SingleRecipeInput> {
     public static String NAME = "solid_fuel";
-    private Ingredient itemIngredient;
-    private int burnTime;
-    private int totalEnergy;
+    private final Ingredient itemIngredient;
+    private final int burnTime;
+    private final int totalEnergy;
 
     public SolidFuelRecipe(Ingredient itemIngredient, int totalEnergy, int burnTime) {
         this.itemIngredient = itemIngredient;
@@ -35,7 +37,7 @@ public class SolidFuelRecipe implements Recipe<SingleRecipeInput> {
     }
 
     @Override
-    public boolean matches(SingleRecipeInput pInv, Level pLevel) {
+    public boolean matches(SingleRecipeInput pInv, @Nonnull Level pLevel) {
         return itemIngredient.test(pInv.getItem(0));
     }
 
@@ -48,8 +50,9 @@ public class SolidFuelRecipe implements Recipe<SingleRecipeInput> {
         return true;
     }
 
+    @Nonnull
     @Override
-    public ItemStack assemble(SingleRecipeInput pInv, HolderLookup.Provider registries) {
+    public ItemStack assemble(@Nonnull SingleRecipeInput pInv, @Nonnull HolderLookup.Provider registries) {
         return ItemStack.EMPTY;
     }
 
@@ -58,16 +61,19 @@ public class SolidFuelRecipe implements Recipe<SingleRecipeInput> {
         return false;
     }
 
+    @Nonnull
     @Override
-    public ItemStack getResultItem(HolderLookup.Provider provider) {
+    public ItemStack getResultItem(@Nonnull HolderLookup.Provider provider) {
         return ItemStack.EMPTY;
     }
 
+    @Nonnull
     @Override
     public RecipeSerializer<?> getSerializer() {
         return ActuallyRecipes.SOLID_FUEL_RECIPE.get();
     }
 
+    @Nonnull
     @Override
     public RecipeType<?> getType() {
         return ActuallyRecipes.Types.SOLID_FUEL.get();
@@ -86,11 +92,13 @@ public class SolidFuelRecipe implements Recipe<SingleRecipeInput> {
                 SolidFuelRecipe.Serializer::toNetwork, SolidFuelRecipe.Serializer::fromNetwork
         );
 
+        @Nonnull
         @Override
         public MapCodec<SolidFuelRecipe> codec() {
             return CODEC;
         }
 
+        @Nonnull
         @Override
         public StreamCodec<RegistryFriendlyByteBuf, SolidFuelRecipe> streamCodec() {
             return STREAM_CODEC;
