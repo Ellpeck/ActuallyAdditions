@@ -3,6 +3,7 @@
 * Added the ability to change the farmers work area with a compass.
 * Make blocks still drop items even when broken incorrectly.
 * Add AIOT to the necessary tool related item tags (swords, pickaxes, axes, shovels)
+* Fix the Engineer Goggles not rendering correctly
 
 # 1.3.10+mc1.21.1
 * Fixed Fluid placer not being harvestable.
