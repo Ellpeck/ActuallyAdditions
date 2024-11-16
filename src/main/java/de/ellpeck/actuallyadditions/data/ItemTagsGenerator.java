@@ -120,5 +120,46 @@ public class ItemTagsGenerator extends ItemTagsProvider {
         );
 
         tag(ActuallyTags.Items.CURIOS_CHARM).add(ActuallyItems.CRAFTER_ON_A_STICK.get());
+
+        tag(ItemTags.SWORDS).add(
+                ActuallyItems.WOODEN_AIOT.get(),
+                ActuallyItems.STONE_AIOT.get(),
+                ActuallyItems.IRON_AIOT.get(),
+                ActuallyItems.GOLD_AIOT.get(),
+                ActuallyItems.DIAMOND_AIOT.get(),
+                ActuallyItems.NETHERITE_AIOT.get()
+        );
+        tag(ItemTags.AXES).add(
+                ActuallyItems.WOODEN_AIOT.get(),
+                ActuallyItems.STONE_AIOT.get(),
+                ActuallyItems.IRON_AIOT.get(),
+                ActuallyItems.GOLD_AIOT.get(),
+                ActuallyItems.DIAMOND_AIOT.get(),
+                ActuallyItems.NETHERITE_AIOT.get()
+        );
+        tag(ItemTags.PICKAXES).add(
+                ActuallyItems.WOODEN_AIOT.get(),
+                ActuallyItems.STONE_AIOT.get(),
+                ActuallyItems.IRON_AIOT.get(),
+                ActuallyItems.GOLD_AIOT.get(),
+                ActuallyItems.DIAMOND_AIOT.get(),
+                ActuallyItems.NETHERITE_AIOT.get()
+        );
+        tag(ItemTags.CLUSTER_MAX_HARVESTABLES).add(
+                ActuallyItems.WOODEN_AIOT.get(),
+                ActuallyItems.STONE_AIOT.get(),
+                ActuallyItems.IRON_AIOT.get(),
+                ActuallyItems.GOLD_AIOT.get(),
+                ActuallyItems.DIAMOND_AIOT.get(),
+                ActuallyItems.NETHERITE_AIOT.get()
+        );
+        tag(ItemTags.SHOVELS).add(
+                ActuallyItems.WOODEN_AIOT.get(),
+                ActuallyItems.STONE_AIOT.get(),
+                ActuallyItems.IRON_AIOT.get(),
+                ActuallyItems.GOLD_AIOT.get(),
+                ActuallyItems.DIAMOND_AIOT.get(),
+                ActuallyItems.NETHERITE_AIOT.get()
+        );
     }
 }

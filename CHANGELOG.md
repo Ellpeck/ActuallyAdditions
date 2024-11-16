@@ -2,6 +2,7 @@
 * Fixed Farmer not playing well with non-vanilla farmland.
 * Added the ability to change the farmers work area with a compass.
 * Make blocks still drop items even when broken incorrectly.
+* Add AIOT to the necessary tool related item tags (swords, pickaxes, axes, shovels)
 
 # 1.3.10+mc1.21.1
 * Fixed Fluid placer not being harvestable.
