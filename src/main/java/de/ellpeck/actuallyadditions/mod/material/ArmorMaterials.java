@@ -46,8 +46,7 @@ public class ArmorMaterials {
                     SoundEvents.ARMOR_EQUIP_GENERIC,
                     () -> Ingredient.EMPTY,
                     List.of(
-                            new ArmorMaterial.Layer(ActuallyAdditions.modLoc("goggles"), "", true),
-                            new ArmorMaterial.Layer(ActuallyAdditions.modLoc("goggles"), "_overlay", false)
+                            new ArmorMaterial.Layer(ActuallyAdditions.modLoc("goggles"), "", true)
                     ),
                     0.0F,
                     0.0F
