@@ -26,7 +26,7 @@ import javax.annotation.Nullable;
 public class BlockLeafGenerator extends DirectionalBlock.Container {
 
     public BlockLeafGenerator() {
-        super(Properties.of().mapColor(MapColor.METAL).strength(5.0F, 10.0F).requiresCorrectToolForDrops().strength(5.0F, 10.0F).sound(SoundType.METAL));
+        super(Properties.of().mapColor(MapColor.METAL).strength(5.0F, 10.0F).strength(5.0F, 10.0F).sound(SoundType.METAL));
     }
 
     @Nullable

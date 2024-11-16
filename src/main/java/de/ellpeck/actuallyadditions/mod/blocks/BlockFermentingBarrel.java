@@ -39,7 +39,7 @@ import javax.annotation.Nullable;
 public class BlockFermentingBarrel extends BlockContainerBase {
 
     public BlockFermentingBarrel() {
-        super(Properties.of().mapColor(MapColor.WOOD).ignitedByLava().instrument(NoteBlockInstrument.BASS).requiresCorrectToolForDrops().strength(0.5F, 5.0F).sound(SoundType.WOOD));
+        super(Properties.of().mapColor(MapColor.WOOD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(0.5F, 5.0F).sound(SoundType.WOOD));
     }
 
     @Nullable

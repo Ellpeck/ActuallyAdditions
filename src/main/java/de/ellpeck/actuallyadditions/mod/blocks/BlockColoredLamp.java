@@ -55,7 +55,7 @@ public class BlockColoredLamp extends BlockBase {
     private static final BooleanProperty LIT = BlockStateProperties.LIT;
 
     public BlockColoredLamp() {
-        super(Properties.of().mapColor(MapColor.NONE).instrument(NoteBlockInstrument.HAT).strength(0.5F, 3.0F).requiresCorrectToolForDrops());
+        super(Properties.of().mapColor(MapColor.NONE).instrument(NoteBlockInstrument.HAT).strength(0.5F, 3.0F));
         this.registerDefaultState(this.stateDefinition.any().setValue(LIT, false));
     }
 

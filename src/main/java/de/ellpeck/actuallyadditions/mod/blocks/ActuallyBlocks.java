@@ -322,15 +322,15 @@ public final class ActuallyBlocks {
         (b) -> new AABlockItem(b, defaultBlockItemProperties));
 
     public static BlockBehaviour.Properties miscBlockProperties() {
-        return BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).requiresCorrectToolForDrops().strength(1.5f, 10f);
+        return BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).strength(1.5f, 10f);
     }
 
     public static BlockBehaviour.Properties defaultPickProps(float hardness, float resistance) {
-        return BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).requiresCorrectToolForDrops().strength(hardness, resistance).sound(SoundType.STONE);
+        return BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).strength(hardness, resistance).sound(SoundType.STONE);
     }
 
     public static BlockBehaviour.Properties defaultPickProps() {
-        return BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).requiresCorrectToolForDrops().strength(1.5F, 10.0F).sound(SoundType.STONE);
+        return BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).strength(1.5F, 10.0F).sound(SoundType.STONE);
     }
 
     public static BlockBehaviour.Properties defaultCropProps() {
