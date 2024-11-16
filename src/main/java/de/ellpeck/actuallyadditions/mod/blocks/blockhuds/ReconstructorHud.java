@@ -24,8 +24,8 @@ public class ReconstructorHud implements IBlockHud {
         }
 
         BlockEntity tile = minecraft.level.getBlockEntity(((BlockHitResult) rayCast).getBlockPos());
-        if (tile instanceof TileEntityAtomicReconstructor) {
-            ItemStack slot = ((TileEntityAtomicReconstructor) tile).inv.getStackInSlot(0);
+        if (tile instanceof TileEntityAtomicReconstructor laser) {
+            ItemStack slot = laser.inv.getStackInSlot(0);
             Component lens_name;
             if (slot.isEmpty()) {
                 lens_name = Component.translatable("info.actuallyadditions.nolens");

@@ -58,12 +58,4 @@ public class BlockEnergizer extends BlockContainerBase {
             return this.openGui(world, player, pos, TileEntityEnervator.class);
         }
     }
-
-/*    @Override
-    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-        if (this.isEnergizer) {
-            return VoxelShapes.ENERGIZER_SHAPE;
-        }
-        return VoxelShapes.ENERVATOR_SHAPE;
-    }*/
 }

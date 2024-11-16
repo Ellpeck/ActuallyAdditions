@@ -107,8 +107,10 @@ public class CommonConfig {
         public static ModConfigSpec.BooleanValue MOST_BLAND_PERSON_EVER;
         public static ModConfigSpec.ConfigValue<String> REDSTONECONFIGURATOR;
         public static ModConfigSpec.ConfigValue<String> RELAYCONFIGURATOR;
+        public static ModConfigSpec.ConfigValue<String> FARMERCONFIG;
         public static Item redstoneConfigureItem = Items.AIR;
         public static Item relayConfigureItem = Items.AIR;
+        public static Item farmerConfigureItem = Items.AIR;
 
 
         public static void build() {
@@ -164,6 +166,7 @@ public class CommonConfig {
 
             REDSTONECONFIGURATOR = BUILDER.comment("define the item used to configure Redstone Mode").define("redstoneConfigurator", "minecraft:redstone_torch");
             RELAYCONFIGURATOR = BUILDER.comment("define the item used to configure Direction in laser relays").define("relayConfigurator", "minecraft:compass");
+            FARMERCONFIG = BUILDER.comment("define the item used to configure the area in a farmer").define("farmerConfigurator", "minecraft:compass");
 
             BUILDER.pop();
         }

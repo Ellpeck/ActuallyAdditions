@@ -1,3 +1,7 @@
+# 1.3.11+mc1.21.1
+* Fixed Farmer not playing well with non vanilla farmland.
+* Added the ability to change the farmers work area with a compass.
+
 # 1.3.10+mc1.21.1
 * Fixed Fluid placer not being harvestable.
 * PR #1438, Added config to disable energy overlay.

@@ -46,9 +46,4 @@ public class BlockFeeder extends BlockContainerBase {
     protected InteractionResult useWithoutItem(BlockState pState, Level world, BlockPos pos, Player player, BlockHitResult pHitResult) {
         return this.openGui(world, player, pos, TileEntityFeeder.class);
     }
-
-/*    @Override
-    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-        return VoxelShapes.FEEDER_SHAPE;
-    }*/
 }

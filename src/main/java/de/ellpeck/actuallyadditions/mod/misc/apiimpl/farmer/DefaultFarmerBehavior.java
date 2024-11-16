@@ -26,10 +26,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.CropBlock;
-import net.minecraft.world.level.block.StemBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.storage.loot.LootParams;
@@ -47,8 +44,8 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
     public static boolean defaultPlant(Level world, BlockPos pos, BlockState toPlant, IFarmer farmer, int use) {
         if (toPlant != null) {
             BlockPos farmland = pos.below();
-            BlockState farmlandState = world.getBlockState(farmland);
-            if (farmlandState.is(BlockTags.DIRT) || farmlandState.is(Blocks.GRASS_BLOCK)) {
+            BlockState targetBlockstate = world.getBlockState(farmland);
+            if (!(targetBlockstate.getBlock() instanceof FarmBlock) && (targetBlockstate.is(BlockTags.DIRT) || targetBlockstate.is(Blocks.GRASS_BLOCK))) {
                 world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
                 useHoeAt(world, farmland);
                 world.playSound(null, farmland, SoundEvents.HOE_TILL, SoundSource.BLOCKS, 1.0F, 1.0F);
@@ -183,7 +180,7 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
 
         ItemStack itemstack = getHoeStack();
 
-        if (!player.mayUseItemAt(pos.relative(Direction.UP), Direction.UP, itemstack)) {
+        if (!player.mayUseItemAt(pos.relative(Direction.UP), Direction.UP, itemstack)) { //TODO this does nothing. -Flanks
             return InteractionResult.FAIL;
         } else {
 //            UseOnContext dummyContext = new UseOnContext(world, player, InteractionHand.MAIN_HAND, itemstack, new BlockHitResult(new Vec3(0.5, 0.5, 0.5), Direction.UP, pos, false));

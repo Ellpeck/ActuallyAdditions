@@ -40,7 +40,6 @@ import de.ellpeck.actuallyadditions.mod.util.ResourceReloader;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
@@ -139,10 +138,12 @@ public class ActuallyAdditions {
 
     private void onConfigReload(ModConfigEvent event) {
         if (event.getConfig().getType() == ModConfig.Type.COMMON) {
-            Item item1 = BuiltInRegistries.ITEM.get(ResourceLocation.tryParse(CommonConfig.Other.REDSTONECONFIGURATOR.get()));
-            Item item2 = BuiltInRegistries.ITEM.get(ResourceLocation.tryParse(CommonConfig.Other.RELAYCONFIGURATOR.get()));
-            CommonConfig.Other.redstoneConfigureItem = item1 != null ? item1 : Items.AIR;
-            CommonConfig.Other.relayConfigureItem = item2 != null ? item2 : Items.AIR;
+            CommonConfig.Other.redstoneConfigureItem =
+                    BuiltInRegistries.ITEM.getOptional(ResourceLocation.tryParse(CommonConfig.Other.REDSTONECONFIGURATOR.get())).orElse(Items.AIR);
+            CommonConfig.Other.relayConfigureItem =
+                    BuiltInRegistries.ITEM.getOptional(ResourceLocation.tryParse(CommonConfig.Other.RELAYCONFIGURATOR.get())).orElse(Items.AIR);
+            CommonConfig.Other.farmerConfigureItem =
+                    BuiltInRegistries.ITEM.getOptional(ResourceLocation.tryParse(CommonConfig.Other.FARMERCONFIG.get())).orElse(Items.AIR);
         }
     }
 

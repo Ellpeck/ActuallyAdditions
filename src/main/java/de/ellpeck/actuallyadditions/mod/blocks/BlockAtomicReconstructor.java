@@ -90,24 +90,6 @@ public class BlockAtomicReconstructor extends FullyDirectionalBlock.Container im
         return ItemInteractionResult.CONSUME;
     }
 
-/*    @Override
-    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-        switch (state.getValue(FACING)) {
-            case UP:
-                return VoxelShapes.AtomicReconstructorShapes.SHAPE_U;
-            case DOWN:
-                return VoxelShapes.AtomicReconstructorShapes.SHAPE_D;
-            case EAST:
-                return VoxelShapes.AtomicReconstructorShapes.SHAPE_E;
-            case SOUTH:
-                return VoxelShapes.AtomicReconstructorShapes.SHAPE_S;
-            case WEST:
-                return VoxelShapes.AtomicReconstructorShapes.SHAPE_W;
-            default:
-                return VoxelShapes.AtomicReconstructorShapes.SHAPE_N;
-        }
-    }*/
-
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
@@ -139,7 +121,7 @@ public class BlockAtomicReconstructor extends FullyDirectionalBlock.Container im
 
         
         @Override
-        public void appendHoverText(@Nonnull ItemStack pStack, @Nullable TooltipContext context, @Nonnull List<Component> pTooltip, @Nonnull TooltipFlag pFlag) {
+        public void appendHoverText(@Nonnull ItemStack pStack, @Nonnull TooltipContext context, @Nonnull List<Component> pTooltip, @Nonnull TooltipFlag pFlag) {
             super.appendHoverText(pStack, context, pTooltip, pFlag);
 
             long sysTime = System.currentTimeMillis();
@@ -169,11 +151,7 @@ public class BlockAtomicReconstructor extends FullyDirectionalBlock.Container im
 
         @Override
         protected boolean updateCustomBlockEntityTag(BlockPos pPos, Level pLevel, @Nullable Player pPlayer, ItemStack pStack, BlockState pState) {
-            boolean ret = super.updateCustomBlockEntityTag(pPos, pLevel, pPlayer, pStack, pState);
-
-
-
-            return ret;
+            return super.updateCustomBlockEntityTag(pPos, pLevel, pPlayer, pStack, pState);
         }
     }
 

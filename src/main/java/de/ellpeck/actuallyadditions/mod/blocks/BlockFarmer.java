@@ -11,10 +11,16 @@
 package de.ellpeck.actuallyadditions.mod.blocks;
 
 import de.ellpeck.actuallyadditions.mod.blocks.base.DirectionalBlock;
+import de.ellpeck.actuallyadditions.mod.blocks.blockhuds.FarmerHud;
+import de.ellpeck.actuallyadditions.mod.blocks.blockhuds.IBlockHud;
+import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityFarmer;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -25,7 +31,8 @@ import net.minecraft.world.phys.BlockHitResult;
 
 import javax.annotation.Nullable;
 
-public class BlockFarmer extends DirectionalBlock.Container {
+public class BlockFarmer extends DirectionalBlock.Container implements IHudDisplay {
+    private static final IBlockHud HUD = new FarmerHud();
 
     public BlockFarmer() {
         super(ActuallyBlocks.defaultPickProps().sound(SoundType.METAL));
@@ -48,17 +55,20 @@ public class BlockFarmer extends DirectionalBlock.Container {
         return this.openGui(world, player, pos, TileEntityFarmer.class);
     }
 
-/*    @Override
-    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-        switch (state.getValue(FACING)) {
-            case EAST:
-                return VoxelShapes.FarmerShapes.SHAPE_E;
-            case SOUTH:
-                return VoxelShapes.FarmerShapes.SHAPE_S;
-            case WEST:
-                return VoxelShapes.FarmerShapes.SHAPE_W;
-            default:
-                return VoxelShapes.FarmerShapes.SHAPE_N;
+    @Override
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        ItemStack heldItem = player.getItemInHand(hand);
+        BlockEntity tile = level.getBlockEntity(pos);
+        if (heldItem.getItem() == CommonConfig.Other.farmerConfigureItem && tile instanceof TileEntityFarmer farmer) {
+            farmer.cycleArea();
+            return ItemInteractionResult.SUCCESS;
         }
-    }*/
+
+        return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
+    }
+
+    @Override
+    public IBlockHud getHud() {
+        return HUD;
+    }
 }

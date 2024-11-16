@@ -22,7 +22,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.MenuProvider;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -38,7 +37,6 @@ import net.neoforged.neoforge.fluids.FluidUtil;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 public abstract class BlockContainerBase extends Block implements EntityBlock {
     public BlockContainerBase(Properties properties) {
@@ -73,7 +71,7 @@ public abstract class BlockContainerBase extends Block implements EntityBlock {
         if (!world.isClientSide) {
             BlockEntity aTile = world.getBlockEntity(position);
             if (aTile instanceof TileEntityInventoryBase tile) {
-	            if (tile.inv.getSlots() > 0) {
+                if (tile.inv.getSlots() > 0) {
                     for (int i = 0; i < tile.inv.getSlots(); i++) {
                         this.dropSlotFromInventory(i, tile, world, position);
                     }
@@ -142,7 +140,7 @@ public abstract class BlockContainerBase extends Block implements EntityBlock {
     }
 
     @Override
-    public void onNeighborChange(BlockState state, LevelReader world, BlockPos pos, BlockPos neighbor) {
+    public void onNeighborChange(@Nonnull BlockState state, @Nonnull LevelReader world, @Nonnull BlockPos pos, @Nonnull BlockPos neighbor) {
         super.onNeighborChange(state, world, pos, neighbor);
         if (world instanceof Level) { //TODO what?
             this.neighborsChangedCustom((Level) world, pos);
@@ -181,19 +179,9 @@ public abstract class BlockContainerBase extends Block implements EntityBlock {
         this.updateRedstoneState(worldIn, pos);
     }
 
+    @Nonnull
     @Override
-    public void setPlacedBy(Level world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
-//        if (stack.hasTag()) {
-//            BlockEntity tile = world.getBlockEntity(pos);
-//            if (tile instanceof TileEntityBase base) {
-//                CompoundTag compound = stack.get(DataComponents.BLOCK_ENTITY_DATA).getCompound("Data");
-//                base.readSyncableNBT(compound, world.registryAccess(), TileEntityBase.NBTType.SAVE_BLOCK); TODO: Check if this is still required
-//            }
-//        }
-    }
-
-    @Override
-    public BlockState playerWillDestroy(@Nonnull Level world, @Nonnull BlockPos pos, @Nonnull BlockState state, Player player) {
+    public BlockState playerWillDestroy(@Nonnull Level world, @Nonnull BlockPos pos, @Nonnull BlockState state, @Nonnull Player player) {
         BlockState theState = super.playerWillDestroy(world, pos, state, player);
         if (!player.isCreative() && world.getBlockEntity(pos) instanceof TileEntityBase tileBase && tileBase.stopFromDropping) {
             if (!world.isClientSide)
@@ -204,12 +192,12 @@ public abstract class BlockContainerBase extends Block implements EntityBlock {
     }
 
     @Override
-    public boolean hasAnalogOutputSignal(BlockState state) {
+    public boolean hasAnalogOutputSignal(@Nonnull BlockState state) {
         return true;
     }
 
     @Override
-    public int getAnalogOutputSignal(BlockState state, Level world, BlockPos pos) {
+    public int getAnalogOutputSignal(@Nonnull BlockState state, Level world, @Nonnull BlockPos pos) {
         BlockEntity tile = world.getBlockEntity(pos);
         if (tile instanceof TileEntityBase) {
             return ((TileEntityBase) tile).getComparatorStrength();
@@ -217,62 +205,14 @@ public abstract class BlockContainerBase extends Block implements EntityBlock {
         return 0;
     }
 
-    // TODO: [port]: come back and fix this
-
-    //    @Override
-    //    public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, BlockState state, int fortune) {
-    //        TileEntity tile = world.getTileEntity(pos);
-    //        if (tile instanceof TileEntityBase) {
-    //            TileEntityBase base = (TileEntityBase) tile;
-    //            if (!base.stopFromDropping) {
-    //                CompoundNBT data = new CompoundNBT();
-    //                base.writeSyncableNBT(data, TileEntityBase.NBTType.SAVE_BLOCK);
-    //
-    //                //Remove unnecessarily saved default values to avoid unstackability
-    //                List<String> keysToRemove = new ArrayList<>();
-    //                for (String key : data.getKeySet()) {
-    //                    NBTBase tag = data.getTag(key);
-    //                    //Remove only ints because they are the most common ones
-    //                    //Add else if below here to remove more types
-    //                    if (tag instanceof NBTTagInt) {
-    //                        if (((NBTTagInt) tag).getInt() == 0) {
-    //                            keysToRemove.add(key);
-    //                        }
-    //                    }
-    //                }
-    //                for (String key : keysToRemove) {
-    //                    data.removeTag(key);
-    //                }
-    //
-    //                ItemStack stack = new ItemStack(this.getItemDropped(state, tile.getWorld().rand, fortune), 1, this.damageDropped(state));
-    //                if (!data.isEmpty()) {
-    //                    stack.setTagCompound(new CompoundNBT());
-    //                    stack.getTagCompound().setTag("Data", data);
-    //                }
-    //
-    //                drops.add(stack);
-    //            }
-    //        } else {
-    //            super.getDrops(drops, world, pos, state, fortune);
-    //        }
-    //    }
-
-
-    // TODO: [port]: eval
-
-    //    @Override
-    //    public EnumBlockRenderType getRenderType(BlockState state) {
-    //        return EnumBlockRenderType.MODEL;
-    //    }
-
-
+    @Nonnull
     @Override
-    public RenderShape getRenderShape(BlockState pState) {
+    public RenderShape getRenderShape(@Nonnull BlockState pState) {
         return RenderShape.MODEL;
     }
 
     @Override
-    public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
+    public void onRemove(BlockState state, @Nonnull Level world, @Nonnull BlockPos pos, BlockState newState, boolean isMoving) {
         if (state.getBlock() != newState.getBlock()) {
             if (this.shouldDropInventory(world, pos)) {
                 this.dropInventory(world, pos);

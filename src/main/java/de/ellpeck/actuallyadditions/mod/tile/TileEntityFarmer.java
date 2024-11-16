@@ -56,6 +56,8 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
 
     private int lastEnergy;
 
+    private int area;
+
     public TileEntityFarmer(BlockPos pos, BlockState state) {
         super(ActuallyBlocks.FARMER.getTileEntityType(), pos, state, 12);
     }
@@ -69,6 +71,7 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
             compound.putInt("CheckX", this.checkX);
             compound.putInt("CheckY", this.checkY);
         }
+        compound.putInt("Area", this.area);
         this.storage.writeToNBT(compound);
         super.writeSyncableNBT(compound, lookupProvider, type);
     }
@@ -82,6 +85,7 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
             this.checkX = compound.getInt("CheckX");
             this.checkY = compound.getInt("CheckY");
         }
+        this.area = compound.contains("Area") ?compound.getInt("Area"):CommonConfig.Machines.FARMER_AREA.get();
         this.storage.readFromNBT(compound);
         super.readSyncableNBT(compound, lookupProvider, type);
     }
@@ -97,15 +101,15 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
             tile.serverTick();
 
             if (!tile.isRedstonePowered && tile.storage.getEnergyStored() > 0) {
+                int localArea = Math.min(tile.area, CommonConfig.Machines.FARMER_AREA.get());
                 if (tile.waitTime > 0) {
                     tile.waitTime--;
 
                     if (tile.waitTime <= 0) {
-                        int area = CommonConfig.Machines.FARMER_AREA.get();
-                        if (area % 2 == 0) {
-                            area++;
+                        if (localArea % 2 == 0) {
+                            localArea++;
                         }
-                        int radius = area / 2;
+                        int radius = localArea / 2;
 
                         BlockPos center = pos.relative(state.getValue(BlockStateProperties.HORIZONTAL_FACING), radius + 1);
 
@@ -192,6 +196,26 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
     @Override
     public BlockPos getPosition() {
         return this.worldPosition;
+    }
+
+    public int getArea() {
+        return this.area;
+    }
+
+    public void setArea(int area) {
+        this.area = Math.min(area, CommonConfig.Machines.FARMER_AREA.get());
+    }
+
+    public int cycleArea() {
+        if (this.area >= CommonConfig.Machines.FARMER_AREA.get())
+            this.area = 1;
+        else
+            this.area+= 2;
+
+        this.checkY = 0; // Reset the current position so we dont go off the rails and plant behind the machine when spamming area changes.
+        this.checkX = 0;
+
+        return this.area;
     }
 
     @Override
