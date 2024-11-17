@@ -511,7 +511,7 @@ public class BlockRecipeGenerator extends RecipeProvider {
         // Experience Solidifier
         Recipe.shaped(ActuallyBlocks.XP_SOLIDIFIER.getItem())
                 .pattern("SSS", "EAE", "SSS")
-                .define('S', ActuallyItems.SOLIDIFIED_EXPERIENCE)
+                .define('S', Items.EXPERIENCE_BOTTLE)
                 .define('E', ActuallyBlocks.EMPOWERED_DIAMATINE_CRYSTAL.getItem())
                 .define('A', ActuallyItems.ADVANCED_COIL)
                 .save(recipeOutput);

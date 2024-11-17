@@ -2,7 +2,7 @@
   "type": "actuallyadditions:solid_fuel",
   "burn_time": 16000,
   "item": {
-    "item": "minecraft:coal_block"
+    "tag": "c:storage_blocks/coal"
   },
   "total_energy": 320000
 }
