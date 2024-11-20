@@ -32,7 +32,7 @@ public final class PacketHelperServer {
         CompoundTag data = new CompoundTag();
         PlayerData.getDataFromPlayer(player).writeToNBT(data, false);
         compound.put("Data", data);
-        ActuallyAdditions.LOGGER.info("Sending data {}", data);
+        ActuallyAdditions.LOGGER.debug("Sending data {}", data);
 
         if (player instanceof ServerPlayer serverPlayer) {
             serverPlayer.connection.send(new SyncPlayerPacket(data));
