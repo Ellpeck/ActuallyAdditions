@@ -121,18 +121,18 @@ public class ServerPayloadHandler {
 						if (player != null) {
 							PlayerData.PlayerSave data = PlayerData.getDataFromPlayer(player);
 
-							int type = tag.getInt("Type");
-							if (type == 0) {
-								data.loadBookmarks(tag.getList("Bookmarks", 8));
-							} else if (type == 1) {
-								data.didBookTutorial = tag.getBoolean("DidBookTutorial");
-							} else if (type == 2) {
-								data.loadTrials(tag.getList("Trials", 8));
-
-								if (tag.getBoolean("Achievement")) {
-									//TheAchievements.COMPLETE_TRIALS.get(player);
-								}
-							}
+//							int type = tag.getInt("Type");
+//							if (type == 0) {
+//								data.loadBookmarks(tag.getList("Bookmarks", 8));
+//							} else if (type == 1) {
+//								data.didBookTutorial = tag.getBoolean("DidBookTutorial");
+//							} else if (type == 2) {
+//								data.loadTrials(tag.getList("Trials", 8));
+//
+//								if (tag.getBoolean("Achievement")) {
+//									//TheAchievements.COMPLETE_TRIALS.get(player);
+//								}
+//							}
 							WorldData.get(level).setDirty();
 
 							if (tag.getBoolean("Log")) {

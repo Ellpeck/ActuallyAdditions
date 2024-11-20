@@ -10,8 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.network;
 
-import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
-import de.ellpeck.actuallyadditions.api.booklet.IBookletChapter;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData.PlayerSave;
 import de.ellpeck.actuallyadditions.mod.network.packet.ButtonToTilePacket;
@@ -44,24 +42,24 @@ public final class PacketHelperClient {
 
             PlayerSave data = PlayerData.getDataFromPlayer(player);
 
-            if (type == 0) {
-                compound.put("Bookmarks", data.saveBookmarks());
-            } else if (type == 1) {
-                compound.putBoolean("DidBookTutorial", data.didBookTutorial);
-            } else if (type == 2) {
-                compound.put("Trials", data.saveTrials());
-
-                int total = 0;
-                for (IBookletChapter chapter : ActuallyAdditionsAPI.entryTrials.getAllChapters()) {
-                    //if (chapter instanceof BookletChapterTrials) {
-                    //    total++;
-                    //}
-                }
-
-                if (data.completedTrials.size() >= total) {
-                    compound.putBoolean("Achievement", true);
-                }
-            }
+//            if (type == 0) {
+//                compound.put("Bookmarks", data.saveBookmarks());
+//            } else if (type == 1) {
+//                compound.putBoolean("DidBookTutorial", data.didBookTutorial);
+//            } else if (type == 2) {
+//                compound.put("Trials", data.saveTrials());
+//
+//                int total = 0;
+//                for (IBookletChapter chapter : ActuallyAdditionsAPI.entryTrials.getAllChapters()) {
+//                    //if (chapter instanceof BookletChapterTrials) {
+//                    //    total++;
+//                    //}
+//                }
+//
+//                if (data.completedTrials.size() >= total) {
+//                    compound.putBoolean("Achievement", true);
+//                }
+//            }
 
             PacketDistributor.sendToServer(new SyncPlayerPacket(compound));
         }

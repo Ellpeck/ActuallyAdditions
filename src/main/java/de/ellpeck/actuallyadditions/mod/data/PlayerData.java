@@ -10,15 +10,10 @@
 
 package de.ellpeck.actuallyadditions.mod.data;
 
-import de.ellpeck.actuallyadditions.api.booklet.IBookletPage;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.StringTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -54,13 +49,13 @@ public final class PlayerData {
         public UUID id;
 
         public boolean bookGottenAlready;
-        public boolean didBookTutorial;
+//        public boolean didBookTutorial;
         public boolean hasBatWings;
         public boolean shouldDisableBatWings;
         public int batWingsFlyTime;
 
-        public IBookletPage[] bookmarks = new IBookletPage[12];
-        public List<String> completedTrials = new ArrayList<>();
+//        public IBookletPage[] bookmarks = new IBookletPage[12];
+//        public List<String> completedTrials = new ArrayList<>();
 
 //        
 //        public GuiBooklet lastOpenBooklet;
@@ -71,16 +66,16 @@ public final class PlayerData {
 
         public void readFromNBT(CompoundTag compound, boolean savingToFile) {
             this.bookGottenAlready = compound.getBoolean("BookGotten");
-            this.didBookTutorial = compound.getBoolean("DidTutorial");
+//            this.didBookTutorial = compound.getBoolean("DidTutorial");
 
             this.hasBatWings = compound.getBoolean("HasBatWings");
             this.batWingsFlyTime = compound.getInt("BatWingsFlyTime");
 
-            ListTag bookmarks = compound.getList("Bookmarks", 8);
-            this.loadBookmarks(bookmarks);
-
-            ListTag trials = compound.getList("Trials", 8);
-            this.loadTrials(trials);
+//            ListTag bookmarks = compound.getList("Bookmarks", 8);
+//            this.loadBookmarks(bookmarks);
+//
+//            ListTag trials = compound.getList("Trials", 8);
+//            this.loadTrials(trials);
 
             if (!savingToFile) {
                 this.shouldDisableBatWings = compound.getBoolean("ShouldDisableWings");
@@ -89,59 +84,59 @@ public final class PlayerData {
 
         public void writeToNBT(CompoundTag compound, boolean savingToFile) {
             compound.putBoolean("BookGotten", this.bookGottenAlready);
-            compound.putBoolean("DidTutorial", this.didBookTutorial);
+//            compound.putBoolean("DidTutorial", this.didBookTutorial);
 
             compound.putBoolean("HasBatWings", this.hasBatWings);
             compound.putInt("BatWingsFlyTime", this.batWingsFlyTime);
 
-            compound.put("Bookmarks", this.saveBookmarks());
-            compound.put("Trials", this.saveTrials());
+//            compound.put("Bookmarks", this.saveBookmarks());
+//            compound.put("Trials", this.saveTrials());
 
             if (!savingToFile) {
                 compound.putBoolean("ShouldDisableWings", this.shouldDisableBatWings);
             }
         }
 
-        public ListTag saveBookmarks() {
-            ListTag bookmarks = new ListTag();
-            for (IBookletPage bookmark : this.bookmarks) {
-                bookmarks.add(StringTag.valueOf(bookmark == null
-                    ? ""
-                    : bookmark.getIdentifier()));
-            }
-            return bookmarks;
-        }
-
-        public void loadBookmarks(ListTag bookmarks) {
-            for (int i = 0; i < bookmarks.size(); i++) {
-                String strg = bookmarks.getString(i);
-                if (!strg.isEmpty()) {
-//                    IBookletPage page = BookletUtils.getBookletPageById(strg);
-                    this.bookmarks[i] = null; // page;
-                } else {
-                    this.bookmarks[i] = null;
-                }
-            }
-        }
-
-        public ListTag saveTrials() {
-            ListTag trials = new ListTag();
-            for (String trial : this.completedTrials) {
-                trials.add(StringTag.valueOf(trial));
-            }
-            return trials;
-        }
-
-        public void loadTrials(ListTag trials) {
-            this.completedTrials.clear();
-
-            for (int i = 0; i < trials.size(); i++) {
-                String strg = trials.getString(i);
-                if (!strg.isEmpty()) {
-                    this.completedTrials.add(strg);
-                }
-            }
-        }
+//        public ListTag saveBookmarks() {
+//            ListTag bookmarks = new ListTag();
+//            for (IBookletPage bookmark : this.bookmarks) {
+//                bookmarks.add(StringTag.valueOf(bookmark == null
+//                    ? ""
+//                    : bookmark.getIdentifier()));
+//            }
+//            return bookmarks;
+//        }
+//
+//        public void loadBookmarks(ListTag bookmarks) {
+//            for (int i = 0; i < bookmarks.size(); i++) {
+//                String strg = bookmarks.getString(i);
+//                if (!strg.isEmpty()) {
+////                    IBookletPage page = BookletUtils.getBookletPageById(strg);
+//                    this.bookmarks[i] = null; // page;
+//                } else {
+//                    this.bookmarks[i] = null;
+//                }
+//            }
+//        }
+//
+//        public ListTag saveTrials() {
+//            ListTag trials = new ListTag();
+//            for (String trial : this.completedTrials) {
+//                trials.add(StringTag.valueOf(trial));
+//            }
+//            return trials;
+//        }
+//
+//        public void loadTrials(ListTag trials) {
+//            this.completedTrials.clear();
+//
+//            for (int i = 0; i < trials.size(); i++) {
+//                String strg = trials.getString(i);
+//                if (!strg.isEmpty()) {
+//                    this.completedTrials.add(strg);
+//                }
+//            }
+//        }
     }
 
 }
