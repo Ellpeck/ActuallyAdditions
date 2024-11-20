@@ -25,8 +25,6 @@ public record BoolConfigFeatureBiomeModifier(HolderSet<Biome> biomes, HolderSet<
 
 	private boolean checkConfig() {
 		switch (boolConfig) {
-			default:
-				return true;
 			case "generateQuartz":
 				return CommonConfig.Worldgen.GENERATE_QUARTZ.get();
 			case "generateCanola":
@@ -35,6 +33,8 @@ public record BoolConfigFeatureBiomeModifier(HolderSet<Biome> biomes, HolderSet<
 				return CommonConfig.Worldgen.GENERATE_FLAX.get();
 			case "generateCoffee":
 				return CommonConfig.Worldgen.GENERATE_COFFEE.get();
+			default:
+				return true;
 		}
 	}
 
