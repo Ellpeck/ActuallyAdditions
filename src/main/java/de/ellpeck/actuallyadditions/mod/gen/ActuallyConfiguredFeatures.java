@@ -41,7 +41,7 @@ public class ActuallyConfiguredFeatures {
 	}
 
 	private static RandomPatchConfiguration plantPatch(Block crop, int tries) {
-		BlockStateProvider stateProvider = BlockStateProvider.simple(crop.defaultBlockState().setValue(AACrops.AGE, AACrops.MAX_AGE));
+		BlockStateProvider stateProvider = BlockStateProvider.simple(crop.defaultBlockState().setValue(AACrops.AGE, AACrops.MAX_AGE).setValue(AACrops.PERSISTENT, true));
 		return FeatureUtils.simpleRandomPatchConfiguration(
 				tries, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(stateProvider))
 		);

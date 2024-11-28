@@ -10,7 +10,8 @@
             "state": {
               "Name": "actuallyadditions:coffee",
               "Properties": {
-                "age": "7"
+                "age": "7",
+                "persistent": "true"
               }
             }
           }
