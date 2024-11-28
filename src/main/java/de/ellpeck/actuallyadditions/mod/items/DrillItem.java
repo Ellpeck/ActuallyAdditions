@@ -53,11 +53,7 @@ import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.IItemHandlerModifiable;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 public class DrillItem extends ItemEnergy {
     public static final int HARVEST_LEVEL = 4;
@@ -70,6 +66,7 @@ public class DrillItem extends ItemEnergy {
     public DrillItem() {
         super(ActuallyItems.defaultProps()
                 .stacksTo(1)
+                .component(DataComponents.UNBREAKABLE, new Unbreakable(false))
                 .component(DataComponents.TOOL, Tiers.NETHERITE.createToolProperties(ActuallyTags.Blocks.MINEABLE_WITH_DRILL))
                 , 250000, 1000);
 
