@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.inventory;
 
+import com.mojang.datafixers.util.Pair;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.ArmorSlot;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotOutput;
@@ -57,6 +58,19 @@ public class ContainerEnervator extends AbstractContainerMenu {
             ResourceLocation resourcelocation = InventoryMenu.TEXTURE_EMPTY_SLOTS.get(slot);
             this.addSlot(new ArmorSlot(inventory, slot, 36 + 3 - k, 102, 19 + k * 18, resourcelocation));
         }
+
+        this.addSlot(new Slot(inventory, 40, 120, 19 + 3 * 18) {
+            @Override
+            public void setByPlayer(ItemStack newStack, ItemStack oldStack) {
+                inventory.player.onEquipItem(EquipmentSlot.OFFHAND, oldStack, newStack);
+                super.setByPlayer(newStack, oldStack);
+            }
+
+            @Override
+            public Pair<ResourceLocation, ResourceLocation> getNoItemIcon() {
+                return Pair.of(InventoryMenu.BLOCK_ATLAS, InventoryMenu.EMPTY_ARMOR_SLOT_SHIELD);
+            }
+        });
     }
 
     @Nonnull
