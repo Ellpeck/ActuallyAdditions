@@ -1,3 +1,4 @@
+/*
 package de.ellpeck.actuallyadditions.mod.util;
 
 import de.ellpeck.actuallyadditions.mod.blocks.Crate;
@@ -21,3 +22,4 @@ public class CrateItemHandler extends ItemStackHandlerAA {
         return 64 * this.size.getStackBoost();
     }
 }
+*/

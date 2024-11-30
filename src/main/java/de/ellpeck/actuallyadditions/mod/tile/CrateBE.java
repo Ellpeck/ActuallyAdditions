@@ -1,3 +1,4 @@
+/*
 package de.ellpeck.actuallyadditions.mod.tile;
 
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
@@ -16,3 +17,4 @@ public class CrateBE extends TileEntityBase{
         return size;
     }
 }
+*/

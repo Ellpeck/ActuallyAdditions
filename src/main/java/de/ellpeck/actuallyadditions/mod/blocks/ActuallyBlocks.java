@@ -14,62 +14,11 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.base.AACrops;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.items.metalists.Crystals;
-import de.ellpeck.actuallyadditions.mod.tile.CrateBE;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityAtomicReconstructor;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBase;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBatteryBox;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBioReactor;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityBreaker;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityCanolaPress;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityCoalGenerator;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityCoffeeMachine;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityCrusher;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityCrusherDouble;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityDisplayStand;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityDropper;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityEmpowerer;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityEnergizer;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityEnervator;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityFarmer;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityFeeder;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityFermentingBarrel;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityFireworkBox;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityFluidCollector;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityFluidPlacer;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityHeatCollector;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityItemInterface;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityItemInterfaceHopping;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayEnergy;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayEnergyAdvanced;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayEnergyExtreme;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayFluids;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayItem;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayItemAdvanced;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLavaFactoryController;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLeafGenerator;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityLongRangeBreaker;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityOilGenerator;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityPhantomBreaker;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityPhantomEnergyface;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityPhantomItemface;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityPhantomLiquiface;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityPhantomPlacer;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityPhantomRedstoneface;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityPlacer;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityPlayerInterface;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityPoweredFurnace;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityRangedCollector;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityShockSuppressor;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityVerticalDigger;
-import de.ellpeck.actuallyadditions.mod.tile.TileEntityXPSolidifier;
+import de.ellpeck.actuallyadditions.mod.tile.*;
 import de.ellpeck.actuallyadditions.registration.AABlockReg;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.SlabBlock;
-import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.StairBlock;
-import net.minecraft.world.level.block.WallBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
@@ -161,8 +110,10 @@ public final class ActuallyBlocks {
     public static final AABlockReg<BlockPoweredFurnace, AABlockItem, TileEntityPoweredFurnace> POWERED_FURNACE = new AABlockReg<>("powered_furnace", BlockPoweredFurnace::new,
         (b) -> new AABlockItem.BlockEntityEnergyItem(b, defaultBlockItemProperties), TileEntityPoweredFurnace::new);
 
+/*
     public static final AABlockReg<Crate, AABlockItem, CrateBE> CRATE_SMALL = new AABlockReg<>("crate_small", () -> new Crate(Crate.Size.SMALL),
         (b) -> new AABlockItem(b, defaultBlockItemProperties), (pos, state) -> new CrateBE(pos, state, Crate.Size.SMALL)); //TODO
+*/
 
 
     // Crystal Blocks

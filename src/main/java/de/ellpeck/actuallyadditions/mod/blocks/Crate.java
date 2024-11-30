@@ -1,3 +1,4 @@
+/*
 package de.ellpeck.actuallyadditions.mod.blocks;
 
 import de.ellpeck.actuallyadditions.mod.blocks.base.BlockContainerBase;
@@ -46,3 +47,4 @@ public class Crate extends BlockContainerBase {
         return new CrateBE(pPos, pState, this.size);
     }
 }
+*/
