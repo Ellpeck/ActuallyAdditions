@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "actuallyadditions:chiseled_black_quartz_block"
+  },
+  "result": {
+    "count": 1,
+    "id": "actuallyadditions:chiseled_black_quartz_stair"
+  }
+}

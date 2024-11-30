@@ -8,6 +8,9 @@
 * Explicitly made the Drills unbreakable.
 * Fixed worldgenned AA plants breaking on block update.
 * Add off-hand slot to Energizer/Enervator
+* Fix Black Quartz wall recipe conflicts
+* Fix output of Wall, Stair and Slab recipes
+* Add stonecutter recipes for the walls/stairs and slabs
 
 # 1.3.10+mc1.21.1
 * Fixed Fluid placer not being harvestable.

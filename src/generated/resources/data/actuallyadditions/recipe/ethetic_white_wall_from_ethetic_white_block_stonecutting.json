@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "actuallyadditions:ethetic_white_block"
+  },
+  "result": {
+    "count": 1,
+    "id": "actuallyadditions:ethetic_white_wall"
+  }
+}

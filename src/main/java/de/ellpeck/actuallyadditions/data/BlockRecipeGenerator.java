@@ -1,6 +1,7 @@
 package de.ellpeck.actuallyadditions.data;
 
 import de.ellpeck.actuallyadditions.api.ActuallyTags;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.util.NoAdvRecipeOutput;
@@ -11,9 +12,12 @@ import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
+import net.minecraft.data.recipes.SingleItemRecipeBuilder;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
 
 import javax.annotation.Nonnull;
@@ -100,68 +104,94 @@ public class BlockRecipeGenerator extends RecipeProvider {
             .define('A', ActuallyItems.ADVANCED_COIL)
             .save(recipeOutput);
 
+        //Black Quartz stonecutting
+        Recipe.stonecutterResultFromBase(recipeOutput, RecipeCategory.DECORATIONS, ActuallyBlocks.BLACK_QUARTZ_PILLAR.getItem(), ActuallyBlocks.BLACK_QUARTZ.get());
+        Recipe.stonecutterResultFromBase(recipeOutput, RecipeCategory.DECORATIONS, ActuallyBlocks.BLACK_QUARTZ_BRICK.getItem(), ActuallyBlocks.BLACK_QUARTZ.get());
+        Recipe.stonecutterResultFromBase(recipeOutput, RecipeCategory.DECORATIONS, ActuallyBlocks.CHISELED_BLACK_QUARTZ.getItem(), ActuallyBlocks.BLACK_QUARTZ.get());
+
         //Black Quartz Wall
         Recipe.wall(ActuallyBlocks.BLACK_QUARTZ_WALL.getItem(), ActuallyBlocks.BLACK_QUARTZ.get(), recipeOutput);
+        Recipe.stonecutterResultFromBase(recipeOutput, RecipeCategory.DECORATIONS, ActuallyBlocks.BLACK_QUARTZ_WALL.getItem(), ActuallyBlocks.BLACK_QUARTZ.get());
 
         //Black Quartz Slab
         Recipe.slab(ActuallyBlocks.BLACK_QUARTZ_SLAB.getItem(), ActuallyBlocks.BLACK_QUARTZ.get(), recipeOutput);
+        Recipe.stonecutterResultFromBase(recipeOutput, RecipeCategory.DECORATIONS, ActuallyBlocks.BLACK_QUARTZ_SLAB.getItem(), ActuallyBlocks.BLACK_QUARTZ.get(), 2);
 
         //Black Quartz Stairs
         Recipe.stairs(ActuallyBlocks.BLACK_QUARTZ_STAIR.getItem(), ActuallyBlocks.BLACK_QUARTZ.get(), recipeOutput);
+        Recipe.stonecutterResultFromBase(recipeOutput, RecipeCategory.DECORATIONS, ActuallyBlocks.BLACK_QUARTZ_STAIR.getItem(), ActuallyBlocks.BLACK_QUARTZ.get());
 
         //Smooth Black Quartz Wall
         Recipe.wall(ActuallyBlocks.SMOOTH_BLACK_QUARTZ_WALL.getItem(), ActuallyBlocks.SMOOTH_BLACK_QUARTZ.get(), recipeOutput);
+        Recipe.stonecutterResultFromBase(recipeOutput, RecipeCategory.DECORATIONS, ActuallyBlocks.SMOOTH_BLACK_QUARTZ_WALL.getItem(), ActuallyBlocks.SMOOTH_BLACK_QUARTZ.get());
 
         //Smooth Black Quartz Slab
         Recipe.slab(ActuallyBlocks.SMOOTH_BLACK_QUARTZ_SLAB.getItem(), ActuallyBlocks.SMOOTH_BLACK_QUARTZ.get(), recipeOutput);
+        Recipe.stonecutterResultFromBase(recipeOutput, RecipeCategory.DECORATIONS, ActuallyBlocks.SMOOTH_BLACK_QUARTZ_SLAB.getItem(), ActuallyBlocks.SMOOTH_BLACK_QUARTZ.get(), 2);
 
         //Smooth Black Quartz Stairs
         Recipe.stairs(ActuallyBlocks.SMOOTH_BLACK_QUARTZ_STAIR.getItem(), ActuallyBlocks.SMOOTH_BLACK_QUARTZ.get(), recipeOutput);
+        Recipe.stonecutterResultFromBase(recipeOutput, RecipeCategory.DECORATIONS, ActuallyBlocks.SMOOTH_BLACK_QUARTZ_STAIR.getItem(), ActuallyBlocks.SMOOTH_BLACK_QUARTZ.get());
 
         //Black Quartz Brick Wall
         Recipe.wall(ActuallyBlocks.BLACK_QUARTZ_BRICK_WALL.getItem(), ActuallyBlocks.BLACK_QUARTZ_BRICK.get(), recipeOutput);
+        Recipe.stonecutterResultFromBase(recipeOutput, RecipeCategory.DECORATIONS, ActuallyBlocks.BLACK_QUARTZ_BRICK_WALL.getItem(), ActuallyBlocks.BLACK_QUARTZ_BRICK.get());
 
         //Black Quartz Brick Slab
         Recipe.slab(ActuallyBlocks.BLACK_QUARTZ_BRICK_SLAB.getItem(), ActuallyBlocks.BLACK_QUARTZ_BRICK.get(), recipeOutput);
+        Recipe.stonecutterResultFromBase(recipeOutput, RecipeCategory.DECORATIONS, ActuallyBlocks.BLACK_QUARTZ_BRICK_SLAB.getItem(), ActuallyBlocks.BLACK_QUARTZ_BRICK.get(), 2);
 
         //Black Quartz Brick Stairs
         Recipe.stairs(ActuallyBlocks.BLACK_QUARTZ_BRICK_STAIR.getItem(), ActuallyBlocks.BLACK_QUARTZ_BRICK.get(), recipeOutput);
+        Recipe.stonecutterResultFromBase(recipeOutput, RecipeCategory.DECORATIONS, ActuallyBlocks.BLACK_QUARTZ_BRICK_STAIR.getItem(), ActuallyBlocks.BLACK_QUARTZ_BRICK.get());
 
         //Pillar Black Quartz Wall
         Recipe.wall(ActuallyBlocks.BLACK_QUARTZ_PILLAR_WALL.getItem(), ActuallyBlocks.BLACK_QUARTZ_PILLAR.get(), recipeOutput);
+        Recipe.stonecutterResultFromBase(recipeOutput, RecipeCategory.DECORATIONS, ActuallyBlocks.BLACK_QUARTZ_PILLAR_WALL.getItem(), ActuallyBlocks.BLACK_QUARTZ_PILLAR.get());
 
         //Pillar Black Quartz Slab
         Recipe.slab(ActuallyBlocks.BLACK_QUARTZ_PILLAR_SLAB.getItem(), ActuallyBlocks.BLACK_QUARTZ_PILLAR.get(), recipeOutput);
+        Recipe.stonecutterResultFromBase(recipeOutput, RecipeCategory.DECORATIONS, ActuallyBlocks.BLACK_QUARTZ_PILLAR_SLAB.getItem(), ActuallyBlocks.BLACK_QUARTZ_PILLAR.get(), 2);
 
         //Pillar Black Quartz Stairs
         Recipe.stairs(ActuallyBlocks.BLACK_QUARTZ_PILLAR_STAIR.getItem(), ActuallyBlocks.BLACK_QUARTZ_PILLAR.get(), recipeOutput);
+        Recipe.stonecutterResultFromBase(recipeOutput, RecipeCategory.DECORATIONS, ActuallyBlocks.BLACK_QUARTZ_PILLAR_STAIR.getItem(), ActuallyBlocks.BLACK_QUARTZ_PILLAR.get());
 
         //Chiseled Black Quartz Wall
         Recipe.wall(ActuallyBlocks.CHISELED_BLACK_QUARTZ_WALL.getItem(), ActuallyBlocks.CHISELED_BLACK_QUARTZ.get(), recipeOutput);
+        Recipe.stonecutterResultFromBase(recipeOutput, RecipeCategory.DECORATIONS, ActuallyBlocks.CHISELED_BLACK_QUARTZ_WALL.getItem(), ActuallyBlocks.CHISELED_BLACK_QUARTZ.get());
 
         //Chiseled Black Quartz Slab
         Recipe.slab(ActuallyBlocks.CHISELED_BLACK_QUARTZ_SLAB.getItem(), ActuallyBlocks.CHISELED_BLACK_QUARTZ.get(), recipeOutput);
+        Recipe.stonecutterResultFromBase(recipeOutput, RecipeCategory.DECORATIONS, ActuallyBlocks.CHISELED_BLACK_QUARTZ_SLAB.getItem(), ActuallyBlocks.CHISELED_BLACK_QUARTZ.get(), 2);
 
         //Chiseled Black Quartz Stairs
         Recipe.stairs(ActuallyBlocks.CHISELED_BLACK_QUARTZ_STAIR.getItem(), ActuallyBlocks.CHISELED_BLACK_QUARTZ.get(), recipeOutput);
+        Recipe.stonecutterResultFromBase(recipeOutput, RecipeCategory.DECORATIONS, ActuallyBlocks.CHISELED_BLACK_QUARTZ_STAIR.getItem(), ActuallyBlocks.CHISELED_BLACK_QUARTZ.get());
 
         //Ethetic White Wall
         Recipe.wall(ActuallyBlocks.ETHETIC_WHITE_WALL.getItem(), ActuallyBlocks.ETHETIC_WHITE_BLOCK.get(), recipeOutput);
+        Recipe.stonecutterResultFromBase(recipeOutput, RecipeCategory.DECORATIONS, ActuallyBlocks.ETHETIC_WHITE_WALL.getItem(), ActuallyBlocks.ETHETIC_WHITE_BLOCK.get());
 
         //Ethetic White Slab
         Recipe.slab(ActuallyBlocks.ETHETIC_WHITE_SLAB.getItem(), ActuallyBlocks.ETHETIC_WHITE_BLOCK.get(), recipeOutput);
+        Recipe.stonecutterResultFromBase(recipeOutput, RecipeCategory.DECORATIONS, ActuallyBlocks.ETHETIC_WHITE_SLAB.getItem(), ActuallyBlocks.ETHETIC_WHITE_BLOCK.get(), 2);
 
         //Ethetic White Stairs
         Recipe.stairs(ActuallyBlocks.ETHETIC_WHITE_STAIRS.getItem(), ActuallyBlocks.ETHETIC_WHITE_BLOCK.get(), recipeOutput);
+        Recipe.stonecutterResultFromBase(recipeOutput, RecipeCategory.DECORATIONS, ActuallyBlocks.ETHETIC_WHITE_STAIRS.getItem(), ActuallyBlocks.ETHETIC_WHITE_BLOCK.get());
 
         // Ethetic Green Wall
         Recipe.wall(ActuallyBlocks.ETHETIC_GREEN_WALL.getItem(), ActuallyBlocks.ETHETIC_GREEN_BLOCK.get(), recipeOutput);
+        Recipe.stonecutterResultFromBase(recipeOutput, RecipeCategory.DECORATIONS, ActuallyBlocks.ETHETIC_GREEN_WALL.getItem(), ActuallyBlocks.ETHETIC_GREEN_BLOCK.get());
 
         // Ethetic Green Slab
         Recipe.slab(ActuallyBlocks.ETHETIC_GREEN_SLAB.getItem(), ActuallyBlocks.ETHETIC_GREEN_BLOCK.get(), recipeOutput);
+        Recipe.stonecutterResultFromBase(recipeOutput, RecipeCategory.DECORATIONS, ActuallyBlocks.ETHETIC_GREEN_SLAB.getItem(), ActuallyBlocks.ETHETIC_GREEN_BLOCK.get(), 2);
 
         // Ethetic Green Stairs
         Recipe.stairs(ActuallyBlocks.ETHETIC_GREEN_STAIRS.getItem(), ActuallyBlocks.ETHETIC_GREEN_BLOCK.get(), recipeOutput);
+        Recipe.stonecutterResultFromBase(recipeOutput, RecipeCategory.DECORATIONS, ActuallyBlocks.ETHETIC_GREEN_STAIRS.getItem(), ActuallyBlocks.ETHETIC_GREEN_BLOCK.get());
 
         // Atomic Reconstructor
         Recipe.shaped(ActuallyBlocks.ATOMIC_RECONSTRUCTOR.getItem())
@@ -535,15 +565,25 @@ public class BlockRecipeGenerator extends RecipeProvider {
         }
 
         public static void stairs(ItemLike result, ItemLike resource, RecipeOutput consumer) {
-            Recipe.shaped(result).patternSingleKey('Q', resource, "Q  ", "QQ ", "QQQ").save(consumer);
+            Recipe.shaped(result, 4).patternSingleKey('Q', resource, "Q  ", "QQ ", "QQQ").save(consumer);
         }
 
         public static void wall(ItemLike result, ItemLike resource, RecipeOutput consumer) {
-            Recipe.shaped(result).patternSingleKey('Q', resource, "QQQ", "QQQ").save(consumer);
+            Recipe.shaped(result, 6).patternSingleKey('Q', resource, "QQQ", "QQQ").save(consumer);
         }
 
         public static void slab(ItemLike result, ItemLike resource, RecipeOutput consumer) {
-            Recipe.shaped(result).patternSingleKey('Q', resource, "QQQ").save(consumer);
+            Recipe.shaped(result,6).patternSingleKey('Q', resource, "QQQ").save(consumer);
+        }
+
+        protected static void stonecutterResultFromBase(RecipeOutput recipeOutput, RecipeCategory category, ItemLike result, ItemLike material) {
+            stonecutterResultFromBase(recipeOutput, category, result, material, 1);
+        }
+
+        protected static void stonecutterResultFromBase(RecipeOutput recipeOutput, RecipeCategory category, ItemLike result, ItemLike material, int resultCount) {
+            SingleItemRecipeBuilder.stonecutting(Ingredient.of(material), category, result, resultCount)
+                    .unlockedBy(getHasName(material), has(material))
+                    .save(recipeOutput, ActuallyAdditions.modLoc(getConversionRecipeName(result, material) + "_stonecutting"));
         }
 
         private static class Shapeless extends ShapelessRecipeBuilder {
