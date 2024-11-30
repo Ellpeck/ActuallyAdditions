@@ -154,13 +154,10 @@ public abstract class BlockContainerBase extends Block implements EntityBlock {
                 boolean powered = world.getBestNeighborSignal(pos) > 0;
                 boolean wasPowered = base.isRedstonePowered;
                 if (powered && !wasPowered) {
+                    base.setRedstonePowered(true);
                     if (base.respondsToPulses()) {
-                        // TODO: [port] eval what this does? :D
-                        //                        world.scheduleUpdate(pos, this, this.tickRate(world));
-                        // Who knows -Flanks
                         base.activateOnPulse();
                     }
-                    base.setRedstonePowered(true);
                 } else if (!powered && wasPowered) {
                     base.setRedstonePowered(false);
                 }
