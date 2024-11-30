@@ -287,10 +287,11 @@ public final class WorldUtil {
      * @return If the break was successful.
      */
     public static boolean breakExtraBlock(ItemStack stack, Level level, Player player, BlockPos pos) {
-        BlockState state = level.getBlockState(pos);
-        Block block = state.getBlock();
+
 
         if (player.isCreative()) {
+            BlockState state = level.getBlockState(pos);
+            Block block = state.getBlock();
             if (block.onDestroyedByPlayer(state, level, pos, player, false, state.getFluidState())) {
                 block.destroy(level, pos, state);
             }
@@ -300,6 +301,14 @@ public final class WorldUtil {
                 //((ServerPlayerEntity) player).connection.send(new SPacketBlockChange(world, pos)); //TODO dunno what this is
             }
             return true;
+        }
+
+        BlockState tempstate = level.getBlockState(pos);
+        BlockState state = tempstate.getBlock().playerWillDestroy(level, pos, tempstate, player);
+        Block block = state.getBlock();
+
+        if (state.isAir()) {
+            return false;
         }
 
         // callback to the tool the player uses. Called on both sides. This damages the tool n stuff.
