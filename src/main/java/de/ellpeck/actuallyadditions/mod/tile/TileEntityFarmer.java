@@ -60,6 +60,7 @@ public class TileEntityFarmer extends TileEntityInventoryBase implements IFarmer
 
     public TileEntityFarmer(BlockPos pos, BlockState state) {
         super(ActuallyBlocks.FARMER.getTileEntityType(), pos, state, 12);
+        area = CommonConfig.Machines.FARMER_AREA.get();
     }
 
     @Override

@@ -78,14 +78,20 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
                 farmer.extractEnergy(use);
                 return FarmerResult.SUCCESS;
             } else {
-                if (seed.is(Tags.Items.SEEDS) && seed.getItem() instanceof BlockItem blockItem) {
-                    if (defaultPlant(world, pos, blockItem.getBlock().defaultBlockState(), farmer, use)) {
+                if (isPlantable(seed)) {
+                    if (defaultPlant(world, pos, ((BlockItem)seed.getItem()).getBlock().defaultBlockState(), farmer, use)) {
                         return FarmerResult.SUCCESS;
                     }
                 }
             }
         }
         return FarmerResult.FAIL;
+    }
+
+    private boolean isPlantable(ItemStack seed) {
+        if (seed.is(Tags.Items.SEEDS)  && seed.getItem() instanceof BlockItem) {
+            return true;
+        } else return seed.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof CropBlock;
     }
 
     @Override

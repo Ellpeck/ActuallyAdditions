@@ -11,6 +11,10 @@
 * Fix Black Quartz wall recipe conflicts
 * Fix output of Wall, Stair and Slab recipes
 * Add stonecutter recipes for the walls/stairs and slabs
+* Fixed Farmer being unable to plant potatoes / carrots.
+* Possible fix for very rare stack overflow.
+* Reinforced fix for drills breaking in certain circumstances.
+* Fix for drill not dropping block contents for certain mods.
 
 # 1.3.10+mc1.21.1
 * Fixed Fluid placer not being harvestable.
