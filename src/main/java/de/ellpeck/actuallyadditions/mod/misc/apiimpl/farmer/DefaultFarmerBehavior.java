@@ -62,7 +62,9 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
 
     private static boolean tryPlant(BlockState toPlant, Level world, BlockPos pos) {
         if (toPlant.canSurvive(world, pos)) {
+            SoundType sound = toPlant.getSoundType(world, pos, null);
             world.setBlockAndUpdate(pos, toPlant);
+            world.playSound(null, pos, sound.getPlaceSound(), SoundSource.BLOCKS, (sound.getVolume() + 1.0F) / 2.0F, sound.getPitch() * 0.8F);
             return true;
         }
         return false;

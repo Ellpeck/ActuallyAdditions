@@ -15,6 +15,7 @@
 * Possible fix for very rare stack overflow.
 * Reinforced fix for drills breaking in certain circumstances.
 * Fix for drill not dropping block contents for certain mods.
+* Fixed the Farmer not making sounds when planting.
 
 # 1.3.10+mc1.21.1
 * Fixed Fluid placer not being harvestable.
