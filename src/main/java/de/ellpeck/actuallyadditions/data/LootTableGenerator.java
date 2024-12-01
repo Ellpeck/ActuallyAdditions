@@ -11,6 +11,7 @@ import de.ellpeck.actuallyadditions.mod.misc.DungeonLoot;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.WritableRegistry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.data.loot.LootTableProvider;
@@ -20,6 +21,7 @@ import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.storage.loot.LootPool;
@@ -27,6 +29,7 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.ValidationContext;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.entries.TagEntry;
+import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.functions.CopyComponentsFunction;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
@@ -200,16 +203,28 @@ public class LootTableGenerator extends LootTableProvider {
 
             add(ActuallyBlocks.BLACK_QUARTZ_ORE.get(), createOreDrop(ActuallyBlocks.BLACK_QUARTZ_ORE.getBlock(), ActuallyItems.BLACK_QUARTZ.get()));
 
-            addCrop(ActuallyBlocks.CANOLA, ActuallyItems.CANOLA, ActuallyItems.CANOLA_SEEDS);
-            addCrop(ActuallyBlocks.RICE, ActuallyItems.RICE, ActuallyItems.RICE_SEEDS);
-            addCrop(ActuallyBlocks.FLAX, () -> Items.STRING, ActuallyItems.FLAX_SEEDS);
-            addCrop(ActuallyBlocks.COFFEE, ActuallyItems.COFFEE_BEANS, ActuallyItems.COFFEE_BEANS);
+            addCrop(ActuallyBlocks.CANOLA, ActuallyItems.CANOLA, 2, 3, ActuallyItems.CANOLA_SEEDS);
+            addCrop(ActuallyBlocks.RICE, ActuallyItems.RICE, 1, 2, ActuallyItems.RICE_SEEDS);
+            addCrop(ActuallyBlocks.FLAX, () -> Items.STRING, 2, 4, ActuallyItems.FLAX_SEEDS);
+            addCrop(ActuallyBlocks.COFFEE, ActuallyItems.COFFEE_BEANS, 2, 2, ActuallyItems.COFFEE_BEANS);
         }
 
-        private void addCrop(Supplier<? extends Block> block, Supplier<? extends Item> item, Supplier<? extends Item> seed) {
-            add(block.get(), createCropDrops(block.get(), item.get(), seed.get(),
-                LootItemBlockStatePropertyCondition.hasBlockStateProperties(block.get()).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CropBlock.AGE, 7))));
+        private void addCrop(Supplier<? extends Block> block, Supplier<? extends Item> item, int min, int bonus, Supplier<? extends Item> seed) {
+            var registry = registries.lookupOrThrow(Registries.ENCHANTMENT);
+            LootItemBlockStatePropertyCondition.Builder cropCondition = LootItemBlockStatePropertyCondition.hasBlockStateProperties(block.get()).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CropBlock.AGE, 7));
+            var table = LootTable.lootTable()
+                            .withPool(LootPool.lootPool().add(LootItem
+                                    .lootTableItem(item.get()).when(cropCondition)
+                                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(min, min + bonus)))
+                                    .apply(ApplyBonusCount.addUniformBonusCount(registry.getOrThrow(Enchantments.FORTUNE)))
+                                    .otherwise(LootItem.lootTableItem(seed.get())))
+                            )
+                            .withPool(LootPool.lootPool().add(LootItem.lootTableItem(seed.get()).when(cropCondition)
+                                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F)))
+                                    .apply(ApplyBonusCount.addUniformBonusCount(registry.getOrThrow(Enchantments.FORTUNE)))));
 
+
+            add(block.get(), applyExplosionDecay(block.get(), table));
         }
 
         private void dropComponents(Supplier<? extends Block> blockSupplier, Consumer<LootPool.Builder> lootFunctionProvider) {
