@@ -24,6 +24,7 @@
 - [x] Fur balls
 - [x] The food (except for stuff used elsewhere like the coffee)
 - [x] The weird rainbow colored item names, except for the crystals which should keep their color-matching names
+- [X] Storage crates
 
 # Change
 - [ ] Make crystal clusters spawn in amethyst nodes in 1.18, leave unused in 1.16 (same with crystal shards)
@@ -36,10 +37,6 @@
 - [x] Change the recipe of casings (the lava factory ones) to give only 4, and rename them to "Lava Factory Casing"
 - [x] Make coal generator create half as much CF, we don't want this to be a main power source for people( Flanks: already dropped to 20fe/t)
 - [x] Make black quartz drop the items directly, unless silk-touched
-- [ ] Make storage crates work as follows, recipes unchanged:
-  - [ ] Lowest tier can hold 8192 of a single item
-  - [ ] Mid-tier can hold 16384 of two items
-  - [ ] Highest tier can hold 32768 of four items
 - [ ] Rename powered furnace to double powered furnace and add a second block which is a single powered furnace, make recipes work similarly to crusher and double crusher
 - [ ] Make greenhouse glass less OP and potentially more difficult to craft
 - [ ] Improve the coffee maker's ui by putting the water meter actually into the ui
