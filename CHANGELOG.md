@@ -18,6 +18,7 @@
 * Fixed the Farmer not making sounds when planting.
 * Overhauled AA crop drop tables to be more in line with 1.12 numbers.
 * Re-added native right click harvesting to AA crops.
+* Fixed coal generator gui having a extra dark background.
 
 # 1.3.10+mc1.21.1
 * Fixed Fluid placer not being harvestable.
