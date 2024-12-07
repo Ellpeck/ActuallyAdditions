@@ -1,3 +1,7 @@
+# 1.3.12+mc1.21.1
+* Fixed the Drill dye recipes not functioning.
+* Fixed the name of the first drill speed augment.
+
 # 1.3.11+mc1.21.1
 * Fixed Farmer not playing well with non-vanilla farmland.
 * Added the ability to change the farmers work area with a compass.

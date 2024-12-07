@@ -3,7 +3,10 @@
   "category": "misc",
   "ingredients": [
     {
-      "tag": "actuallyadditions:drills"
+      "type": "actuallyadditions:target_nbt",
+      "base": {
+        "tag": "actuallyadditions:drills"
+      }
     },
     {
       "tag": "c:dyes/pink"

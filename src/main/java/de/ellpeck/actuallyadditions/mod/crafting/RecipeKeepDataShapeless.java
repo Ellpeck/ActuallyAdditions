@@ -24,6 +24,8 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.ShapelessRecipe;
 
+import javax.annotation.Nonnull;
+
 public class RecipeKeepDataShapeless extends ShapelessRecipe {
     public static String NAME = "copy_nbt_shapeless";
     public RecipeKeepDataShapeless(String pGroup, CraftingBookCategory pCategory, ItemStack pResult, NonNullList<Ingredient> pIngredients) {
@@ -33,21 +35,23 @@ public class RecipeKeepDataShapeless extends ShapelessRecipe {
         super(recipe.getGroup(), recipe.category(), recipe.getResultItem(RegistryAccess.EMPTY), recipe.getIngredients());
     }
 
+    @Nonnull
     @Override
     public RecipeSerializer<?> getSerializer() {
         return ActuallyRecipes.KEEP_DATA_SHAPELESS_RECIPE.get();
     }
 
+    @Nonnull
     @Override
-    public ItemStack assemble(CraftingInput pContainer, HolderLookup.Provider provider) {
+    public ItemStack assemble(@Nonnull CraftingInput pContainer, @Nonnull HolderLookup.Provider provider) {
         ItemStack result = super.assemble(pContainer, provider);
 
-        TargetNBTIngredient donorIngredient = null;
+        TargetComponentIngredient donorIngredient = null;
         ItemStack datasource = ItemStack.EMPTY;
         NonNullList<Ingredient> ingredients = getIngredients();
         for (Ingredient ingredient : ingredients) {
-            if (ingredient.getCustomIngredient() instanceof TargetNBTIngredient) {
-                donorIngredient = (TargetNBTIngredient)ingredient.getCustomIngredient();
+            if (ingredient.getCustomIngredient() instanceof TargetComponentIngredient) {
+                donorIngredient = (TargetComponentIngredient)ingredient.getCustomIngredient();
                 break;
             }
         }
@@ -65,7 +69,7 @@ public class RecipeKeepDataShapeless extends ShapelessRecipe {
         if (!datasource.isEmpty() && !datasource.getComponents().isEmpty())
             result.applyComponents(datasource.getComponents());
         else {
-            ActuallyAdditions.LOGGER.info("AA.KeepDataShapeless missing TargetNBTIngredient");
+            ActuallyAdditions.LOGGER.info("AA.KeepDataShapeless missing TargetComponentIngredient");
             return ItemStack.EMPTY;
         }
 
@@ -78,11 +82,13 @@ public class RecipeKeepDataShapeless extends ShapelessRecipe {
                 RecipeKeepDataShapeless.Serializer::toNetwork, RecipeKeepDataShapeless.Serializer::fromNetwork
         );
 
+        @Nonnull
         @Override
         public MapCodec<RecipeKeepDataShapeless> codec() {
             return CODEC;
         }
 
+        @Nonnull
         @Override
         public StreamCodec<RegistryFriendlyByteBuf, RecipeKeepDataShapeless> streamCodec() {
             return STREAM_CODEC;
@@ -97,7 +103,7 @@ public class RecipeKeepDataShapeless extends ShapelessRecipe {
                 RecipeSerializer.SHAPELESS_RECIPE.streamCodec().encode(pBuffer, pRecipe);
             }
             catch (Exception e) {
-	            ActuallyAdditions.LOGGER.info("Failed to serialize {} Recipe to packet: {}", NAME, e.getMessage());
+                ActuallyAdditions.LOGGER.info("Failed to serialize {} Recipe to packet: {}", NAME, e.getMessage());
                 throw e;
             }
         }

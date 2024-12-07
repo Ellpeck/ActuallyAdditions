@@ -52,6 +52,7 @@ public class ActuallyRecipes {
     public static class Ingredients {
         public static final DeferredRegister<IngredientType<?>> INGREDIENTS = DeferredRegister.create(NeoForgeRegistries.Keys.INGREDIENT_TYPES, ActuallyAdditions.MODID);
 
-        public static final Supplier<IngredientType<TargetNBTIngredient>> TARGET_NBT = INGREDIENTS.register("target_nbt", () -> new IngredientType<>(TargetNBTIngredient.CODEC));
+        //TODO change name from nbt in 1.22
+        public static final Supplier<IngredientType<TargetComponentIngredient>> TARGET_NBT = INGREDIENTS.register("target_nbt", () -> new IngredientType<>(TargetComponentIngredient.CODEC));
     }
 }

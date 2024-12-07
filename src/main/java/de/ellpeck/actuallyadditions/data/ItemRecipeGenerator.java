@@ -6,7 +6,7 @@ import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.config.conditions.BoolConfigCondition;
 import de.ellpeck.actuallyadditions.mod.crafting.RecipeKeepDataShaped;
 import de.ellpeck.actuallyadditions.mod.crafting.RecipeKeepDataShapeless;
-import de.ellpeck.actuallyadditions.mod.crafting.TargetNBTIngredient;
+import de.ellpeck.actuallyadditions.mod.crafting.TargetComponentIngredient;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.util.NoAdvRecipeOutput;
 import de.ellpeck.actuallyadditions.mod.util.RecipeInjector;
@@ -46,6 +46,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
         super(packOutput, lookupProvider);
     }
 
+    @Nonnull
     @Override
     public String getName() {
         return "Item " + super.getName();
@@ -162,9 +163,8 @@ public class ItemRecipeGenerator extends RecipeProvider {
 
         //Killer Lens
         ItemStack enchantedBook = new ItemStack(Items.ENCHANTED_BOOK);
-        if (enchantmentLookup != null) {
-            enchantedBook.enchant(enchantmentLookup.getOrThrow(Enchantments.SHARPNESS), 5);
-        }
+        enchantedBook.enchant(enchantmentLookup.getOrThrow(Enchantments.SHARPNESS), 5);
+
         Recipe.shapeless(ActuallyItems.LENS_OF_THE_KILLER.get())
                 .requires(Items.DIAMOND_SWORD)
                 .requires(ActuallyItems.LENS_OF_CERTAIN_DEATH.get())
@@ -409,7 +409,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .pattern(" R ")
             .pattern("ICI")
             .pattern("III")
-            .define('R', TargetNBTIngredient.of(ActuallyItems.SINGLE_BATTERY.get()))
+            .define('R', TargetComponentIngredient.of(ActuallyItems.SINGLE_BATTERY.get()))
             .define('I', ActuallyItems.ENORI_CRYSTAL.get())
             .define('C', ActuallyItems.ADVANCED_COIL.get())
             .save(new RecipeInjector<ShapedRecipe>(recipeOutput, RecipeKeepDataShaped::new));
@@ -419,7 +419,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .pattern(" R ")
             .pattern("ICI")
             .pattern("III")
-            .define('R', TargetNBTIngredient.of(ActuallyItems.DOUBLE_BATTERY.get()))
+            .define('R', TargetComponentIngredient.of(ActuallyItems.DOUBLE_BATTERY.get()))
             .define('I', ActuallyItems.EMPOWERED_ENORI_CRYSTAL.get())
             .define('C', ActuallyItems.ADVANCED_COIL.get())
             .save(new RecipeInjector<ShapedRecipe>(recipeOutput, RecipeKeepDataShaped::new));
@@ -429,7 +429,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .pattern(" R ")
             .pattern("ICI")
             .pattern("III")
-            .define('R', TargetNBTIngredient.of(ActuallyItems.TRIPLE_BATTERY.get()))
+            .define('R', TargetComponentIngredient.of(ActuallyItems.TRIPLE_BATTERY.get()))
             .define('I', ActuallyItems.EMPOWERED_ENORI_CRYSTAL.get())
             .define('C', ActuallyItems.ADVANCED_COIL.get())
             .save(new RecipeInjector<ShapedRecipe>(recipeOutput, RecipeKeepDataShaped::new));
@@ -439,7 +439,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .pattern(" R ")
             .pattern("ICI")
             .pattern("III")
-            .define('R', TargetNBTIngredient.of(ActuallyItems.QUADRUPLE_BATTERY.get()))
+            .define('R', TargetComponentIngredient.of(ActuallyItems.QUADRUPLE_BATTERY.get()))
             .define('I', ActuallyItems.EMPOWERED_DIAMATINE_CRYSTAL.get())
             .define('C', ActuallyItems.ADVANCED_COIL.get())
             .save(new RecipeInjector<ShapedRecipe>(recipeOutput, RecipeKeepDataShaped::new));
@@ -533,14 +533,14 @@ public class ItemRecipeGenerator extends RecipeProvider {
         // Sticky Piston from tagged slime balls
         Recipe.shaped(Items.STICKY_PISTON)
                 .pattern("R", "P")
-                .define('R', Tags.Items.SLIMEBALLS)
+                .define('R', Tags.Items.SLIME_BALLS)
                 .define('P', Items.PISTON)
                 .save(recipeOutput, ActuallyAdditions.modLoc("tagged_sticky_piston"));
 
         // Slime block from tagged balls
         Recipe.shaped(Items.SLIME_BLOCK)
                 .pattern("RRR", "RRR", "RRR")
-                .define('R', Tags.Items.SLIMEBALLS)
+                .define('R', Tags.Items.SLIME_BALLS)
                 .save(recipeOutput, ActuallyAdditions.modLoc("tagged_slime_block"));
 
         //Shards
@@ -650,7 +650,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
 
     private static void dyeDrill(DeferredItem<? extends Item> result, TagKey<Item> dyeItem, RecipeOutput recipeOutput) {
         Recipe.shapeless(result.get())
-                .requires(Ingredient.of(ActuallyTags.Items.DRILLS)) //TargetNBTIngredient
+                .requires(TargetComponentIngredient.of(ActuallyTags.Items.DRILLS))
                 .requires(dyeItem)
                 .save(new RecipeInjector<ShapelessRecipe>(recipeOutput, RecipeKeepDataShapeless::new), ActuallyAdditions.modLoc("drill_coloring/dye_" + BuiltInRegistries.ITEM.getKey(result.get()).getPath()));
     }
@@ -807,7 +807,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
             }
         }
 
-        private static class Shaped extends ShapedRecipeBuilder {
+        public static class Shaped extends ShapedRecipeBuilder {
             public Shaped(ItemLike resultIn) {
                 this(resultIn, 1);
             }
