@@ -34,7 +34,7 @@ public class ItemBattery extends ItemEnergy {
     }
 
     @Override
-    public boolean isFoil(ItemStack stack) {
+    public boolean isFoil(@Nonnull ItemStack stack) {
         return ItemUtil.isEnabled(stack);
     }
 

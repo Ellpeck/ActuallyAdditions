@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.items.base;
 
-import de.ellpeck.actuallyadditions.mod.components.ActuallyComponents;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.tile.CustomEnergyStorage;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
@@ -58,12 +57,12 @@ public abstract class ItemEnergy extends ItemBase {
     }
 
     @Override
-    public boolean isFoil(ItemStack stack) {
+    public boolean isFoil(@Nonnull ItemStack stack) {
         return false;
     }
 
     @Override
-    public boolean isBarVisible(ItemStack itemStack) {
+    public boolean isBarVisible(@Nonnull ItemStack itemStack) {
         return true;
     }
 
@@ -77,7 +76,7 @@ public abstract class ItemEnergy extends ItemBase {
     }
 
     @Override
-    public int getBarColor(ItemStack stack) {
+    public int getBarColor(@Nonnull ItemStack stack) {
         int defaultColor = super.getBarColor(stack);
         if (FMLEnvironment.dist.isClient()) {
             Minecraft mc = Minecraft.getInstance();
@@ -134,20 +133,6 @@ public abstract class ItemEnergy extends ItemBase {
         return Optional.ofNullable(stack.getCapability(Capabilities.EnergyStorage.ITEM))
             .map(IEnergyStorage::getMaxEnergyStored)
             .orElse(0);
-    }
-
-	public int getEnergyStorage(ItemStack stack) {
-		return stack.getOrDefault(ActuallyComponents.ENERGY_STORAGE, 0);
-	}
-
-    @Override
-    public int getMaxDamage(ItemStack stack) {
-        return getEnergyStorage(stack);
-    }
-
-    @Override
-    public boolean isDamageable(ItemStack stack) {
-        return false;
     }
 
     //    @Override TODO: Register Energy cap/attachment
