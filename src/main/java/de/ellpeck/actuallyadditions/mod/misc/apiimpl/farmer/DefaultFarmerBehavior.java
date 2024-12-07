@@ -74,7 +74,7 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
     public FarmerResult tryPlantSeed(ItemStack seed, Level world, BlockPos pos, IFarmer farmer) {
         int use = 350;
         if (farmer.getEnergy() >= use * 2) {
-            var plantable = getPlantableFromStack(seed); //TODO: Should figure out what else to call in here (Farmland stuff etc)
+            var plantable = getSpecialPlantable(seed); //TODO: Should figure out what else to call in here (Farmland stuff etc)
             if (plantable != null && plantable.canPlacePlantAtPosition(seed, world, pos, Direction.DOWN)) {
                 plantable.spawnPlantAtPosition(seed, world, pos, Direction.DOWN);
                 farmer.extractEnergy(use);
@@ -126,7 +126,7 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
         if (drops.isEmpty())
             return FarmerResult.FAIL;
         for (ItemStack stack : drops) {
-            if (this.getPlantableFromStack(stack) != null) {
+            if (this.getSpecialPlantable(stack) != null || isPlantable(stack)) {
                 seeds.add(stack);
             } else {
                 other.add(stack);
@@ -160,7 +160,7 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
         return 0;
     }
 
-    private SpecialPlantable getPlantableFromStack(ItemStack stack) {
+    private SpecialPlantable getSpecialPlantable(ItemStack stack) {
         Item item = stack.getItem();
         if (item instanceof SpecialPlantable plantable) {
             return plantable;

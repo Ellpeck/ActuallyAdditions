@@ -1,6 +1,7 @@
 # 1.3.12+mc1.21.1
 * Fixed the Drill dye recipes not functioning.
 * Fixed the name of the first drill speed augment.
+* Fixed the farmer not funneling seeds back to the seed slots.
 
 # 1.3.11+mc1.21.1
 * Fixed Farmer not playing well with non-vanilla farmland.
