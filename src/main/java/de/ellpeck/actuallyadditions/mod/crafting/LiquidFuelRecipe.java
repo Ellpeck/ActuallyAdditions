@@ -18,6 +18,7 @@ import javax.annotation.Nonnull;
 
 public class LiquidFuelRecipe implements Recipe<RecipeInput> {
     public static String NAME = "liquid_fuel";
+    //TODO 1.22 change from FluidStack to Neo:FluidIngredient
     private FluidStack fuel;
     private int burnTime;
     private int totalEnergy;

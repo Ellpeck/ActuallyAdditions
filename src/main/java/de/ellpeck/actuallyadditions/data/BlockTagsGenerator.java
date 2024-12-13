@@ -205,6 +205,12 @@ public class BlockTagsGenerator extends BlockTagsProvider {
                 BlockTags.MINEABLE_WITH_SHOVEL
         );
 
+        tag(BlockTags.CROPS).add(
+                ActuallyBlocks.CANOLA.get(),
+                ActuallyBlocks.FLAX.get(),
+                ActuallyBlocks.RICE.get()
+        );
+
         this.tag(ActuallyTags.Blocks.ORES_BLACK_QUARTZ).add(ActuallyBlocks.BLACK_QUARTZ_ORE.get());
         this.tag(Tags.Blocks.ORES).addTags(ActuallyTags.Blocks.ORES_BLACK_QUARTZ);
         this.tag(Tags.Blocks.ORES_IN_GROUND_STONE).add(ActuallyBlocks.BLACK_QUARTZ_ORE.get());
@@ -222,14 +228,6 @@ public class BlockTagsGenerator extends BlockTagsProvider {
         this.tag(ActuallyTags.Blocks.STORAGE_BLOCKS_EMPOWERED_EMERADIC_CRYSTAL).add(ActuallyBlocks.EMPOWERED_EMERADIC_CRYSTAL.get());
         this.tag(ActuallyTags.Blocks.STORAGE_BLOCKS_EMPOWERED_ENORI_CRYSTAL).add(ActuallyBlocks.EMPOWERED_ENORI_CRYSTAL.get());
     }
-
-//    /**
-//     * Resolves a Path for the location to save the given tag.
-//     */
-//    @Override
-//    protected Path getPath(ResourceLocation id) {
-//        return this.generator.getOutputFolder().resolve("data/" + id.getNamespace() + "/tags/blocks/" + id.getPath() + ".json");
-//    }
 
     /**
      * Gets a name for this provider, to use in logging.

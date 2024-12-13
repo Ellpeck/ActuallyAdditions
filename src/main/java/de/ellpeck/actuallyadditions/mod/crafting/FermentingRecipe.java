@@ -21,6 +21,7 @@ import java.util.Optional;
 
 public class FermentingRecipe implements Recipe<RecipeInput> {
     public static final String NAME = "fermenting";
+    //TODO change input from FluidStack to Neo:FluidIngredient
     private final FluidStack input;
     private final FluidStack output;
     private final int time;
