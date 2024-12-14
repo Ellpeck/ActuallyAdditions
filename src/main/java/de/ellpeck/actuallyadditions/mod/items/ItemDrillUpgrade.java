@@ -12,13 +12,18 @@ package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.mod.components.ActuallyComponents;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
+import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+
+import javax.annotation.Nonnull;
+import java.util.List;
 
 public class ItemDrillUpgrade extends ItemBase {
 
@@ -33,8 +38,9 @@ public class ItemDrillUpgrade extends ItemBase {
         return stack.getOrDefault(ActuallyComponents.SLOT, -1);
     }
 
+    @Nonnull
     @Override
-    public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
+    public InteractionResultHolder<ItemStack> use(Level world, Player player, @Nonnull InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         if (!world.isClientSide && this.type == UpgradeType.PLACER) {
             this.setSlotToPlaceFrom(stack, player.getInventory().selected);
@@ -45,7 +51,7 @@ public class ItemDrillUpgrade extends ItemBase {
     }
 
     public void setSlotToPlaceFrom(ItemStack stack, int slot) {
-        stack.set(ActuallyComponents.SLOT, slot + 1);
+        stack.set(ActuallyComponents.SLOT, slot);
     }
 
     public enum UpgradeType {
@@ -58,5 +64,13 @@ public class ItemDrillUpgrade extends ItemBase {
         THREE_BY_THREE,
         FIVE_BY_FIVE,
         PLACER
+    }
+
+    @Override
+    public void appendHoverText(@Nonnull ItemStack stack, @Nonnull TooltipContext context, @Nonnull List<Component> tooltipComponents, @Nonnull TooltipFlag tooltipFlag) {
+        super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
+        if (this.type == UpgradeType.PLACER) {
+            tooltipComponents.add(Component.translatable("tooltip.actuallyadditions.placer_augment", getSlotToPlaceFrom(stack) + 1).withStyle(ChatFormatting.GRAY));
+        }
     }
 }

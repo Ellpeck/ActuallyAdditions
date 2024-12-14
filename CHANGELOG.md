@@ -3,6 +3,7 @@
 * Fixed the name of the first drill speed augment.
 * Fixed the farmer not funneling seeds back to the seed slots.
 * Added crops block-tag to Canola/Flax/Rice
+* Fixed the drill block placement augment.
 
 # 1.3.11+mc1.21.1
 * Fixed Farmer not playing well with non-vanilla farmland.

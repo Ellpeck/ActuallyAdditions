@@ -16,10 +16,10 @@ import de.ellpeck.actuallyadditions.mod.components.ActuallyComponents;
 import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerDrill;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemEnergy;
-import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
 import de.ellpeck.actuallyadditions.mod.util.ItemUtil;
 import de.ellpeck.actuallyadditions.mod.util.Util;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
@@ -37,6 +37,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Tiers;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.item.component.Unbreakable;
@@ -85,20 +86,6 @@ public class DrillItem extends ItemEnergy {
     public boolean canPerformAction(@Nonnull ItemStack stack, @Nonnull ItemAbility toolAction) {
         return ACTIONS.contains(toolAction);
     }
-
-/*    public boolean isCorrectToolForDrops(@Nonnull BlockState pBlock) {
-        Tier tier = Tiers.NETHERITE; //Use Nettherite as the tier as it has the same harvest level as the drill
-        if (TierSortingRegistry.isTierSorted(tier)) {
-            return TierSortingRegistry.isCorrectTierForDrops(tier, pBlock) && pBlock.is(ActuallyTags.Blocks.MINEABLE_WITH_DRILL);
-        }
-        if (HARVEST_LEVEL < 3 && pBlock.is(BlockTags.NEEDS_DIAMOND_TOOL)) {
-            return false;
-        } else if (HARVEST_LEVEL < 2 && pBlock.is(BlockTags.NEEDS_IRON_TOOL)) {
-            return false;
-        } else {
-            return HARVEST_LEVEL < 1 && pBlock.is(BlockTags.NEEDS_STONE_TOOL) ? false : pBlock.is(ActuallyTags.Blocks.MINEABLE_WITH_DRILL);
-        }
-    }*/
 
     /**
      * Gets all of the Slots from NBT
@@ -160,13 +147,12 @@ public class DrillItem extends ItemEnergy {
      *
      * @param stack   The Drill
      * @param upgrade The Upgrade to be checked
-     * @return The Upgrade, if it's installed
+     * @return The Upgrade, if it's installed, the returned ItemStack should not be modified.
      */
     public ItemStack getHasUpgradeAsStack(ItemStack stack, ItemDrillUpgrade.UpgradeType upgrade) {
-        ItemStackHandlerAA inv = new ItemStackHandlerAA(ContainerDrill.SLOT_AMOUNT);
-        loadSlotsFromNBT(inv, stack);
-        for (int i = 0; i < inv.getSlots(); i++) {
-            ItemStack slotStack = inv.getStackInSlot(i);
+        var contents = stack.getOrDefault(ActuallyComponents.CONTENTS, ItemContainerContents.EMPTY);
+        for (int i = 0; i < contents.getSlots(); i++) {
+            ItemStack slotStack = contents.getStackInSlot(i);
             if (!slotStack.isEmpty() && slotStack.getItem() instanceof ItemDrillUpgrade drillUpgrade) {
                 if (drillUpgrade.type == upgrade) {
                     return slotStack;
@@ -284,11 +270,6 @@ public class DrillItem extends ItemEnergy {
         return this.getEnergyStored(stack) >= this.getEnergyUsePerBlock(stack) && super.isCorrectToolForDrops(stack, state);
     }
 
-//    @Override
-//    public int getHarvestLevel(ItemStack stack, ToolType p_getHarvestLevel_2_, @Nullable Player p_getHarvestLevel_3_, @Nullable BlockState p_getHarvestLevel_4_) {
-//        return HARVEST_LEVEL;
-//    }
-
     /**
      * Gets the Energy that is used per Block broken
      *
@@ -343,26 +324,6 @@ public class DrillItem extends ItemEnergy {
     public boolean getHasUpgrade(ItemStack stack, ItemDrillUpgrade.UpgradeType upgrade) {
         return !this.getHasUpgradeAsStack(stack, upgrade).isEmpty();
     }
-
-//    @Override
-//    @OnlyIn(Dist.CLIENT)
-//    public void getSubItems(CreativeTabs tabs, NonNullList<ItemStack> list) {
-//        if (this.isInCreativeTab(tabs)) {
-//            for (int i = 0; i < 16; i++) {
-//                this.addDrillStack(list, i);
-//            }
-//        }
-//    }
-
-//    private void addDrillStack(List<ItemStack> list, int meta) {
-//        ItemStack stackFull = new ItemStack(this, 1, meta);
-//        this.setEnergy(stackFull, this.getMaxEnergyStored(stackFull));
-//        list.add(stackFull);
-//
-//        ItemStack stackEmpty = new ItemStack(this, 1, meta);
-//        this.setEnergy(stackEmpty, 0);
-//        list.add(stackEmpty);
-//    }
 
     /**
      * Gets the Mining Speed of the Drill
@@ -579,5 +540,14 @@ public class DrillItem extends ItemEnergy {
     @Override
     public boolean shouldCauseBlockBreakReset(@Nonnull ItemStack oldStack, @Nonnull ItemStack newStack) {
         return !ItemStack.isSameItem(newStack, oldStack);
+    }
+
+    @Override
+    public void appendHoverText(@Nonnull ItemStack stack, @Nonnull TooltipContext context, @Nonnull List<Component> tooltip, @Nonnull TooltipFlag flagIn) {
+        super.appendHoverText(stack, context, tooltip, flagIn);
+        ItemStack placer = this.getHasUpgradeAsStack(stack, ItemDrillUpgrade.UpgradeType.PLACER);
+        if (!placer.isEmpty()) {
+            tooltip.add(Component.translatable("tooltip.actuallyadditions.placer_augment", ItemDrillUpgrade.getSlotToPlaceFrom(placer) + 1).withStyle(ChatFormatting.GRAY));
+        }
     }
 }
