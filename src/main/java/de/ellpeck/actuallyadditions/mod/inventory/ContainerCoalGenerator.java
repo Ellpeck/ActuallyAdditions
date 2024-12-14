@@ -18,6 +18,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeType;
 
 import javax.annotation.Nonnull;
 import java.util.Objects;
@@ -63,7 +64,7 @@ public class ContainerCoalGenerator extends AbstractContainerMenu {
             //Other Slots in Inventory excluded
             if (slot >= inventoryStart) {
                 //Shift from Inventory
-                if (newStack.getBurnTime(null) > 0) {
+                if (newStack.getBurnTime(RecipeType.SMELTING) > 0) {
                     if (!this.moveItemStackTo(newStack, 0, 1, false)) {
                         return ItemStack.EMPTY;
                     }

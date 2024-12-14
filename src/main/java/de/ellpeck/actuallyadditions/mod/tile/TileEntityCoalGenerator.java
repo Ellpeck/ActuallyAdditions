@@ -10,10 +10,8 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
-import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.components.ActuallyComponents;
-import de.ellpeck.actuallyadditions.mod.crafting.SolidFuelRecipe;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerCoalGenerator;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IAcceptor;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA.IRemover;
@@ -24,13 +22,12 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -42,18 +39,21 @@ import javax.annotation.Nullable;
 public class TileEntityCoalGenerator extends TileEntityInventoryBase implements MenuProvider, ISharingEnergyProvider, IEnergyDisplay {
 
     public final CustomEnergyStorage storage = new CustomEnergyStorage(60000, 0, 80);
+    public static final int ENERGY_PER_TICK = 20;
     public int maxBurnTime;
     public int currentBurnTime;
     private int lastEnergy;
     private int lastBurnTime;
     private int lastCurrentBurnTime;
     private int lastCompare;
-    private RecipeHolder<SolidFuelRecipe> currentRecipe = null;
 
     public TileEntityCoalGenerator(BlockPos pos, BlockState state) {
         super(ActuallyBlocks.COAL_GENERATOR.getTileEntityType(), pos, state, 1);
     }
 
+    private int getBurnTime(@Nonnull ItemStack stack) {
+        return stack.getBurnTime(RecipeType.SMELTING);
+    }
     
     public int getEnergyScaled(int i) {
         return this.storage.getEnergyStored() * i / this.storage.getMaxEnergyStored();
@@ -69,8 +69,6 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
         if (type != NBTType.SAVE_BLOCK) {
             compound.putInt("BurnTime", this.currentBurnTime);
             compound.putInt("MaxBurnTime", this.maxBurnTime);
-            if (currentRecipe != null)
-                compound.putString("currentRecipe", currentRecipe.id().toString());
         }
         this.storage.writeToNBT(compound);
         super.writeSyncableNBT(compound, lookupProvider, type);
@@ -81,15 +79,6 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
         if (type != NBTType.SAVE_BLOCK) {
             this.currentBurnTime = compound.getInt("BurnTime");
             this.maxBurnTime = compound.getInt("MaxBurnTime");
-            if (compound.contains("currentRecipe")) {
-                ResourceLocation id = ResourceLocation.tryParse(compound.getString("currentRecipe"));
-                for (RecipeHolder<SolidFuelRecipe> fuelRecipe : ActuallyAdditionsAPI.SOLID_FUEL_RECIPES) {
-                    if (fuelRecipe.id().equals(id)) {
-                        this.currentRecipe = fuelRecipe;
-                        break;
-                    }
-                }
-            }
         }
         this.storage.readFromNBT(compound);
         super.readSyncableNBT(compound, lookupProvider, type);
@@ -107,25 +96,21 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
 
             boolean flag = tile.currentBurnTime > 0;
 
-            if (tile.currentBurnTime > 0 && tile.currentRecipe != null) {
+            if (tile.currentBurnTime > 0) {
                 tile.currentBurnTime--;
-                int produce = tile.currentRecipe.value().getTotalEnergy() / tile.currentRecipe.value().getBurnTime();
-                if (produce > 0) {
-                    tile.storage.receiveEnergyInternal(produce, false);
-                }
+                tile.storage.receiveEnergyInternal(ENERGY_PER_TICK, false);
             }
 
             if (!tile.isRedstonePowered && tile.currentBurnTime <= 0 && tile.storage.getEnergyStored() < tile.storage.getMaxEnergyStored()) {
                 ItemStack stack = tile.inv.getStackInSlot(0);
                 if (!stack.isEmpty()) {
-                    ActuallyAdditionsAPI.SOLID_FUEL_RECIPES.stream().filter(r -> r.value().matches(stack)).findFirst().ifPresent(recipe -> {
-                        tile.currentRecipe = recipe;
-                        tile.maxBurnTime = recipe.value().getBurnTime();
+                    int time = tile.getBurnTime(stack);
+                    if (time > 0) {
+                        tile.maxBurnTime = tile.getBurnTime(stack);
                         tile.currentBurnTime = tile.maxBurnTime;
                         tile.inv.setStackInSlot(0, StackUtil.shrinkForContainer(stack, 1));
-                    });
-                } else
-                    tile.currentRecipe = null;
+                    }
+                }
             }
 
             if (flag != tile.currentBurnTime > 0 || tile.lastCompare != tile.getComparatorStrength()) {
@@ -150,10 +135,7 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
     @Override
     public IAcceptor getAcceptor() {
         return (slot, stack, automation) -> {
-            for (RecipeHolder<SolidFuelRecipe> recipe : ActuallyAdditionsAPI.SOLID_FUEL_RECIPES) {
-                if (recipe.value().matches(stack))return true;
-            }
-            return false;
+            return stack.getBurnTime(RecipeType.SMELTING) > 0;
         };
     }
 
@@ -163,7 +145,7 @@ public class TileEntityCoalGenerator extends TileEntityInventoryBase implements 
             if (!automation) {
                 return true;
             }
-            return this.inv.getStackInSlot(0).getBurnTime(null) <= 0;
+            return this.inv.getStackInSlot(0).getBurnTime(RecipeType.SMELTING) <= 0;
         };
     }
 

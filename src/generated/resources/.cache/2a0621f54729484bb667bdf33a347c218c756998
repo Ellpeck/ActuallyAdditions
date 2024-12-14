@@ -1,11 +1,5 @@
-// 1.21.1	2024-11-17T13:53:47.3739458	Fuel Recipes
+// 1.21.1	2024-12-14T10:16:17.1144713	Fuel Recipes
 76f02a2cc4d39ec2adb71fbe0ac6da3a1b31ff9d data/actuallyadditions/recipe/liquid_fuel/canola_oil.json
 6b23d46a93b3e67bb58858c13becd6bd3f348f6f data/actuallyadditions/recipe/liquid_fuel/crystallized_canola_oil.json
 056a848bc5c836985a9f080c3a540bf97e710f2a data/actuallyadditions/recipe/liquid_fuel/empowered_canola_oil.json
 0f6dd7157c080d139886b390000aa075aaa658cd data/actuallyadditions/recipe/liquid_fuel/refined_canola_oil.json
-0732b5aebc03718a2adf8710c149021b1bc05eb7 data/actuallyadditions/recipe/solid_fuel/charcoal.json
-390939de1b4699a714ed3d5c3e67e4e5df7b5135 data/actuallyadditions/recipe/solid_fuel/coal-block.json
-d6dbd4428a27289d3407a7609c5e8342a0c72b1a data/actuallyadditions/recipe/solid_fuel/coal.json
-50885f04b21b6cdb4a1d41b8d4f1210762c21db9 data/actuallyadditions/recipe/solid_fuel/lava.json
-5bc9490d9ce3874d628644059d2ab3738b267242 data/actuallyadditions/recipe/solid_fuel/stick.json
-df8a71b8bd2bc3594381e1337c65a0963dd06714 data/actuallyadditions/recipe/solid_fuel/tiny-coal.json

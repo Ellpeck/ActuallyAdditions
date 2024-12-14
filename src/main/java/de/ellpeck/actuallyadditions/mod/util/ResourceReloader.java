@@ -21,9 +21,6 @@ public class ResourceReloader implements ResourceManagerReloadListener {
         ActuallyAdditionsAPI.EMPOWERER_RECIPES.clear();
         ActuallyAdditionsAPI.EMPOWERER_RECIPES.addAll(recipeManager.getAllRecipesFor(ActuallyRecipes.Types.EMPOWERING.get()));
 
-        ActuallyAdditionsAPI.SOLID_FUEL_RECIPES.clear();
-        ActuallyAdditionsAPI.SOLID_FUEL_RECIPES.addAll(recipeManager.getAllRecipesFor(ActuallyRecipes.Types.SOLID_FUEL.get()));
-
         ActuallyAdditionsAPI.LIQUID_FUEL_RECIPES.clear();
         ActuallyAdditionsAPI.LIQUID_FUEL_RECIPES.addAll(recipeManager.getAllRecipesFor(ActuallyRecipes.Types.LIQUID_FUEL.get()));
 

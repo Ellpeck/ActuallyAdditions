@@ -14,12 +14,16 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerCoalGenerator;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityCoalGenerator;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeType;
 
 import javax.annotation.Nonnull;
+import java.util.List;
 
 
 public class GuiCoalGenerator extends AAScreen<ContainerCoalGenerator> {
@@ -62,5 +66,21 @@ public class GuiCoalGenerator extends AAScreen<ContainerCoalGenerator> {
         }
 
         this.energy.draw(guiGraphics);
+    }
+
+    @Nonnull
+    @Override
+    protected List<Component> getTooltipFromContainerItem(@Nonnull ItemStack stack) {
+        var tooltip = super.getTooltipFromContainerItem(stack);
+
+        int burnTime = stack.getBurnTime(RecipeType.SMELTING);
+        if (burnTime > 0) {
+            tooltip.add(Component.translatable("tooltip.actuallyadditions.coal_generator_stats",
+                    burnTime * TileEntityCoalGenerator.ENERGY_PER_TICK,
+                    TileEntityCoalGenerator.ENERGY_PER_TICK,
+                    burnTime).withStyle(ChatFormatting.GRAY));
+        }
+
+        return tooltip;
     }
 }

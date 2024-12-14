@@ -25,7 +25,6 @@ public class ActuallyRecipes {
     public static final Supplier<RecipeSerializer<?>> LASER_RECIPE = SERIALIZERS.register(LaserRecipe.NAME, LaserRecipe.Serializer::new);
     public static final Supplier<RecipeSerializer<?>> EMPOWERING_RECIPE = SERIALIZERS.register(EmpowererRecipe.NAME, EmpowererRecipe.Serializer::new);
     public static final Supplier<RecipeSerializer<?>> CRUSHING_RECIPE = SERIALIZERS.register(CrushingRecipe.NAME, CrushingRecipe.Serializer::new);
-    public static final Supplier<RecipeSerializer<?>> SOLID_FUEL_RECIPE = SERIALIZERS.register(SolidFuelRecipe.NAME, SolidFuelRecipe.Serializer::new);
     public static final Supplier<RecipeSerializer<?>> LIQUID_FUEL_RECIPE = SERIALIZERS.register(LiquidFuelRecipe.NAME, LiquidFuelRecipe.Serializer::new);
     public static final Supplier<RecipeSerializer<?>> PRESSING_RECIPE = SERIALIZERS.register(PressingRecipe.NAME, PressingRecipe.Serializer::new);
     public static final Supplier<RecipeSerializer<?>> FERMENTING_RECIPE = SERIALIZERS.register(FermentingRecipe.NAME, FermentingRecipe.Serializer::new);
@@ -41,7 +40,6 @@ public class ActuallyRecipes {
         public static final Supplier<RecipeType<LaserRecipe>> LASER = RECIPE_TYPES.register("laser", RecipeType::simple);
         public static final Supplier<RecipeType<EmpowererRecipe>> EMPOWERING = RECIPE_TYPES.register("empower", RecipeType::simple);
         public static final Supplier<RecipeType<CrushingRecipe>> CRUSHING = RECIPE_TYPES.register("crushing", RecipeType::simple);
-        public static final Supplier<RecipeType<SolidFuelRecipe>> SOLID_FUEL = RECIPE_TYPES.register("solid_fuel", RecipeType::simple);
         public static final Supplier<RecipeType<LiquidFuelRecipe>> LIQUID_FUEL = RECIPE_TYPES.register("liquid_fuel", RecipeType::simple);
         public static final Supplier<RecipeType<PressingRecipe>> PRESSING = RECIPE_TYPES.register("pressing", RecipeType::simple);
         public static final Supplier<RecipeType<FermentingRecipe>> FERMENTING = RECIPE_TYPES.register("fermenting", RecipeType::simple);

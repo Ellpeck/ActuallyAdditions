@@ -1,8 +1,0 @@
-{
-  "type": "actuallyadditions:solid_fuel",
-  "burn_time": 16000,
-  "item": {
-    "tag": "c:storage_blocks/coal"
-  },
-  "total_energy": 320000
-}
