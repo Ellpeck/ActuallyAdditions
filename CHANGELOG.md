@@ -5,6 +5,8 @@
 * Added crops block-tag to Canola/Flax/Rice
 * Fixed the drill block placement augment.
 * Migrated the Coal generator to using any burnable item, Removed Solid fuel recipes.
+* The Drill's now display a list of installed augments in tooltips.
+* The Drill Placer upgrade now displays the selected slot in its tooltip, and on the drill when installed.
 
 # 1.3.11+mc1.21.1
 * Fixed Farmer not playing well with non-vanilla farmland.

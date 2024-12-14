@@ -162,6 +162,57 @@ public class DrillItem extends ItemEnergy {
         return ItemStack.EMPTY;
     }
 
+    /**
+     * Gets all of the Upgrades that are installed in the Drill
+     *
+     * @param drill The Drill
+     * @return A List of all Upgrades
+     */
+    public static List<ItemDrillUpgrade.UpgradeType> getUpgrades(@Nonnull ItemStack drill) {
+        var contents = drill.getOrDefault(ActuallyComponents.CONTENTS, ItemContainerContents.EMPTY);
+        List<ItemDrillUpgrade.UpgradeType> upgrades = new ArrayList<>();
+
+        for (int i = 0; i < contents.getSlots(); i++) {
+            ItemStack slotStack = contents.getStackInSlot(i);
+            if (!slotStack.isEmpty() && slotStack.getItem() instanceof ItemDrillUpgrade drillUpgrade) {
+                upgrades.add(drillUpgrade.type);
+            }
+        }
+
+        return upgrades;
+    }
+
+    /**
+     * Gets all of the Upgrades that are installed in the Drill as a String
+     *
+     * @param drill The Drill
+     * @return A String of all Upgrades
+     */
+    public static String getUpgradesString(@Nonnull ItemStack drill) {
+        List<ItemDrillUpgrade.UpgradeType> upgrades = getUpgrades(drill);
+        StringBuilder sb = new StringBuilder();
+        for (ItemDrillUpgrade.UpgradeType upgrade : upgrades) {
+            String name = switch (upgrade) {
+                case SPEED -> "Speed";
+                case SPEED_II -> "Speed II";
+                case SPEED_III -> "Speed III";
+                case SILK_TOUCH -> "Silk Touch";
+                case FORTUNE -> "Fortune";
+                case FORTUNE_II -> "Fortune II";
+                case THREE_BY_THREE -> "3x3";
+                case FIVE_BY_FIVE -> "5x5";
+                case PLACER -> "Placer";
+            };
+            sb.append(name).append(", ");
+        }
+
+        if (sb.length() > 2) {
+            sb.delete(sb.length() - 2, sb.length());
+        }
+
+        return sb.toString();
+    }
+
     @Nonnull
     @Override
     public InteractionResultHolder<ItemStack> use(Level world, @Nonnull Player player, @Nonnull InteractionHand hand) {
@@ -208,15 +259,17 @@ public class DrillItem extends ItemEnergy {
         Level level = player.level();
         boolean toReturn = false;
         int use = this.getEnergyUsePerBlock(stack);
+        var upgrades = getUpgrades(stack);
+
         if (getEnergyStored(stack) >= use) {
             //Enchants the Drill depending on the Upgrades it has
-            if (getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SILK_TOUCH)) {
+            if (upgrades.contains(ItemDrillUpgrade.UpgradeType.SILK_TOUCH)) {
                 ItemUtil.addEnchantment(stack, level.holderOrThrow(Enchantments.SILK_TOUCH), 1, level.registryAccess());
             }
             else {
-                if (getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FORTUNE)) {
+                if (upgrades.contains(ItemDrillUpgrade.UpgradeType.FORTUNE)) {
                     ItemUtil.addEnchantment(stack, level.holderOrThrow(Enchantments.FORTUNE),
-                            getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FORTUNE_II) ? 3 : 1,
+                            upgrades.contains(ItemDrillUpgrade.UpgradeType.FORTUNE_II) ? 3 : 1,
                             level.registryAccess());
                 }
             }
@@ -224,8 +277,8 @@ public class DrillItem extends ItemEnergy {
             HitResult ray = player.pick(Util.getReachDistance(player), 1f, false);
             if (ray instanceof BlockHitResult trace) {
                 //Breaks the Blocks
-                if (!player.isShiftKeyDown() && getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.THREE_BY_THREE)) {
-                    if (getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FIVE_BY_FIVE)) {
+                if (!player.isShiftKeyDown() && upgrades.contains(ItemDrillUpgrade.UpgradeType.THREE_BY_THREE)) {
+                    if (upgrades.contains(ItemDrillUpgrade.UpgradeType.FIVE_BY_FIVE)) {
                         toReturn = breakBlocks(stack, 2, player.level(), pos, trace.getDirection(), player);
                     }
                     else {
@@ -245,28 +298,8 @@ public class DrillItem extends ItemEnergy {
         return toReturn;
     }
 
-/*    @Override //TODO old one
-    public boolean isCorrectToolForDrops(ItemStack stack, BlockState state) {
-        Block block = state.getBlock();
-        return this.getEnergyStored(stack) >= this.getEnergyUsePerBlock(stack) && (this.hasExtraWhitelist(block) || state.canBeReplaced() || block == Blocks.SNOW_BLOCK || block == Blocks.SNOW || (block == Blocks.OBSIDIAN
-                ? HARVEST_LEVEL >= 3
-                : block != Blocks.DIAMOND_BLOCK && block != Blocks.DIAMOND_ORE
-                ? block != Blocks.EMERALD_ORE && block != Blocks.EMERALD_BLOCK
-                ? block != Blocks.GOLD_BLOCK && block != Blocks.GOLD_ORE
-                ? block != Blocks.IRON_BLOCK && block != Blocks.IRON_ORE
-                ? block != Blocks.LAPIS_BLOCK && block != Blocks.LAPIS_ORE
-                ? block != Blocks.REDSTONE_ORE
-                ? state.is(Tags.Blocks.STONE) || state.is(Tags.Blocks.STORAGE_BLOCKS)
-                : HARVEST_LEVEL >= 2
-                : HARVEST_LEVEL >= 1
-                : HARVEST_LEVEL >= 1
-                : HARVEST_LEVEL >= 2
-                : HARVEST_LEVEL >= 2
-                : HARVEST_LEVEL >= 2));
-    }*/
-
     @Override
-    public boolean isCorrectToolForDrops(ItemStack stack, BlockState state) {
+    public boolean isCorrectToolForDrops(@Nonnull ItemStack stack, @Nonnull BlockState state) {
         return this.getEnergyStored(stack) >= this.getEnergyUsePerBlock(stack) && super.isCorrectToolForDrops(stack, state);
     }
 
@@ -278,35 +311,36 @@ public class DrillItem extends ItemEnergy {
      */
     public int getEnergyUsePerBlock(ItemStack stack) {
         int use = ENERGY_USE;
+        var upgrades = getUpgrades(stack);
 
         //Speed
-        if (this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SPEED)) {
+        if (upgrades.contains(ItemDrillUpgrade.UpgradeType.SPEED)) {
             use += 50;
-            if (this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SPEED_II)) {
+            if (upgrades.contains(ItemDrillUpgrade.UpgradeType.SPEED_II)) {
                 use += 75;
-                if (this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SPEED_III)) {
+                if (upgrades.contains(ItemDrillUpgrade.UpgradeType.SPEED_III)) {
                     use += 175;
                 }
             }
         }
 
         //Silk Touch
-        if (this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SILK_TOUCH)) {
+        if (upgrades.contains(ItemDrillUpgrade.UpgradeType.SILK_TOUCH)) {
             use += 100;
         }
 
         //Fortune
-        if (this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FORTUNE)) {
+        if (upgrades.contains(ItemDrillUpgrade.UpgradeType.FORTUNE)) {
             use += 40;
-            if (this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FORTUNE_II)) {
+            if (upgrades.contains(ItemDrillUpgrade.UpgradeType.FORTUNE_II)) {
                 use += 80;
             }
         }
 
         //Size
-        if (this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.THREE_BY_THREE)) {
+        if (upgrades.contains(ItemDrillUpgrade.UpgradeType.THREE_BY_THREE)) {
             use += 10;
-            if (this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FIVE_BY_FIVE)) {
+            if (upgrades.contains(ItemDrillUpgrade.UpgradeType.FIVE_BY_FIVE)) {
                 use += 30;
             }
         }
@@ -333,9 +367,11 @@ public class DrillItem extends ItemEnergy {
      */
     public float getEfficiencyFromUpgrade(ItemStack stack) {
         float efficiency = 8.0F;
-        if (this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SPEED)) {
-            if (this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SPEED_II)) {
-                if (this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.SPEED_III)) {
+        var upgrades = getUpgrades(stack);
+
+        if (upgrades.contains(ItemDrillUpgrade.UpgradeType.SPEED)) {
+            if (upgrades.contains(ItemDrillUpgrade.UpgradeType.SPEED_II)) {
+                if (upgrades.contains(ItemDrillUpgrade.UpgradeType.SPEED_III)) {
                     efficiency += 37.0F;
                 } else {
                     efficiency += 25.0F;
@@ -344,9 +380,9 @@ public class DrillItem extends ItemEnergy {
                 efficiency += 8.0F;
             }
         }
-        if (this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.THREE_BY_THREE)) {
+        if (upgrades.contains(ItemDrillUpgrade.UpgradeType.THREE_BY_THREE)) {
             efficiency *= 0.5F;
-            if (this.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FIVE_BY_FIVE)) {
+            if (upgrades.contains(ItemDrillUpgrade.UpgradeType.FIVE_BY_FIVE)) {
                 efficiency *= 0.35F;
             }
         }
@@ -545,6 +581,10 @@ public class DrillItem extends ItemEnergy {
     @Override
     public void appendHoverText(@Nonnull ItemStack stack, @Nonnull TooltipContext context, @Nonnull List<Component> tooltip, @Nonnull TooltipFlag flagIn) {
         super.appendHoverText(stack, context, tooltip, flagIn);
+
+        String augmentList = getUpgradesString(stack);
+        tooltip.add(Component.translatable("tooltip.actuallyadditions.drill.augments", augmentList).withStyle(ChatFormatting.GRAY));
+
         ItemStack placer = this.getHasUpgradeAsStack(stack, ItemDrillUpgrade.UpgradeType.PLACER);
         if (!placer.isEmpty()) {
             tooltip.add(Component.translatable("tooltip.actuallyadditions.placer_augment", ItemDrillUpgrade.getSlotToPlaceFrom(placer) + 1).withStyle(ChatFormatting.GRAY));

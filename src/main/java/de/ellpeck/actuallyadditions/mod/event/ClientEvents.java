@@ -292,8 +292,10 @@ public class ClientEvents {
             return;
 
         ItemStack stack = player.getMainHandItem();
+        var upgrades = DrillItem.getUpgrades(stack);
+
         if (stack.getItem() instanceof DrillItem drillItem) {
-            if (!player.isShiftKeyDown() && drillItem.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.THREE_BY_THREE)) {
+            if (!player.isShiftKeyDown() && upgrades.contains(ItemDrillUpgrade.UpgradeType.THREE_BY_THREE)) {
                 Level level = player.level();
                 Vec3 vec3 = event.getCamera().getPosition();
                 double d0 = vec3.x();
@@ -305,9 +307,9 @@ public class ClientEvents {
                 VertexConsumer lineConsumer = event.getMultiBufferSource().getBuffer(RenderType.lines());
                 if (stack.isCorrectToolForDrops(blockState)) {
                     int radius = 0;
-                    if (drillItem.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.FIVE_BY_FIVE)) {
+                    if (upgrades.contains(ItemDrillUpgrade.UpgradeType.FIVE_BY_FIVE)) {
                         radius = 2;
-                    } else if (drillItem.getHasUpgrade(stack, ItemDrillUpgrade.UpgradeType.THREE_BY_THREE)) {
+                    } else if (upgrades.contains(ItemDrillUpgrade.UpgradeType.THREE_BY_THREE)) {
                         radius = 1;
                     }
                     if (radius == 0) return; //No radius, no need to render extra hitboxes
