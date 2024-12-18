@@ -28,50 +28,6 @@ import java.util.List;
 import java.util.Optional;
 
 public class LensMining extends Lens {
-
-    @Deprecated
-    public static void init() {
-
-        //These need to be moved to datagen conditionals if the appropriate mod is loaded.
-        ActuallyAdditionsAPI.addMiningLensStoneOre("oreCopper", 2000);
-        ActuallyAdditionsAPI.addMiningLensNetherOre("oreNetherCopper", 2000);
-        ActuallyAdditionsAPI.addMiningLensStoneOre("oreTin", 1800);
-        ActuallyAdditionsAPI.addMiningLensNetherOre("oreNetherTin", 1800);
-        ActuallyAdditionsAPI.addMiningLensStoneOre("oreLead", 1500);
-        ActuallyAdditionsAPI.addMiningLensNetherOre("oreNetherLead", 1500);
-        ActuallyAdditionsAPI.addMiningLensStoneOre("oreSilver", 1000);
-        ActuallyAdditionsAPI.addMiningLensNetherOre("oreNetherSilver", 1000);
-        ActuallyAdditionsAPI.addMiningLensStoneOre("oreNickel", 100);
-        ActuallyAdditionsAPI.addMiningLensNetherOre("oreNetherNickel", 100);
-        ActuallyAdditionsAPI.addMiningLensStoneOre("orePlatinum", 20);
-        ActuallyAdditionsAPI.addMiningLensNetherOre("oreNetherPlatinum", 20);
-        ActuallyAdditionsAPI.addMiningLensStoneOre("oreAluminum", 1200);
-        ActuallyAdditionsAPI.addMiningLensStoneOre("oreAluminium", 1200);
-        ActuallyAdditionsAPI.addMiningLensStoneOre("oreOsmium", 1500);
-        ActuallyAdditionsAPI.addMiningLensStoneOre("oreZinc", 1000);
-        ActuallyAdditionsAPI.addMiningLensStoneOre("oreYellorite", 1200);
-        ActuallyAdditionsAPI.addMiningLensStoneOre("oreUranium", 400);
-        ActuallyAdditionsAPI.addMiningLensStoneOre("oreCertusQuartz", 800);
-        ActuallyAdditionsAPI.addMiningLensStoneOre("oreApatite", 700);
-        ActuallyAdditionsAPI.addMiningLensStoneOre("oreQuartzBlack", 3000);
-        ActuallyAdditionsAPI.addMiningLensStoneOre("oreRuby", 40);
-        ActuallyAdditionsAPI.addMiningLensStoneOre("orePeridot", 40);
-        ActuallyAdditionsAPI.addMiningLensStoneOre("oreTopaz", 40);
-        ActuallyAdditionsAPI.addMiningLensStoneOre("oreTanzanite", 40);
-        ActuallyAdditionsAPI.addMiningLensStoneOre("oreMalachite", 40);
-        ActuallyAdditionsAPI.addMiningLensStoneOre("oreSapphire", 40);
-        ActuallyAdditionsAPI.addMiningLensStoneOre("oreAmber", 150);
-        ActuallyAdditionsAPI.addMiningLensStoneOre("oreResonating", 50);
-        ActuallyAdditionsAPI.addMiningLensStoneOre("oreSulfur", 3000);
-        ActuallyAdditionsAPI.addMiningLensStoneOre("oreSaltpeter", 250);
-        ActuallyAdditionsAPI.addMiningLensNetherOre("oreFirestone", 30);
-        ActuallyAdditionsAPI.addMiningLensStoneOre("oreSalt", 2900);
-        ActuallyAdditionsAPI.addMiningLensStoneOre("oreDraconium", 5);
-
-        ActuallyAdditionsAPI.addMiningLensNetherOre("oreCobalt", 50);
-        ActuallyAdditionsAPI.addMiningLensNetherOre("oreArdite", 50);
-    }
-
     @Override
     public boolean invoke(BlockState hitState, BlockPos hitPos, IAtomicReconstructor tile) {
         final int energyUse = CommonConfig.Machines.MINER_LENS_ENERGY.get();

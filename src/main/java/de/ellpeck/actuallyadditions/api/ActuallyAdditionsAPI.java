@@ -18,16 +18,8 @@ import de.ellpeck.actuallyadditions.api.internal.IMethodHandler;
 import de.ellpeck.actuallyadditions.api.laser.ILaserRelayConnectionHandler;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.api.lens.LensConversion;
-import de.ellpeck.actuallyadditions.api.recipe.CoffeeIngredient;
-import de.ellpeck.actuallyadditions.api.recipe.WeightedOre;
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.crafting.*;
 import de.ellpeck.actuallyadditions.mod.items.lens.*;
-import net.minecraft.core.NonNullList;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeHolder;
 
 import java.util.ArrayList;
@@ -59,10 +51,6 @@ public final class ActuallyAdditionsAPI {
     public static final List<IBookletChapter> ALL_CHAPTERS = new ArrayList<>();
     //This is added to automatically, you don't need to add anything to this list
     public static final List<IBookletPage> BOOKLET_PAGES_WITH_ITEM_OR_FLUID_DATA = new ArrayList<>();
-    @Deprecated
-    public static final List<WeightedOre> STONE_ORES = new ArrayList<>();
-    @Deprecated
-    public static final List<WeightedOre> NETHERRACK_ORES = new ArrayList<>();
 
     /**
      * Use this to handle things that aren't based in the API itself
@@ -106,129 +94,6 @@ public final class ActuallyAdditionsAPI {
     public static final Lens lensDisenchanting = new LensDisenchanting();
     public static final Lens lensMining = new LensMining();
 
-    /**
-     * Adds an ore with a specific weight to the list of ores that the lens of the miner will generate inside of stone.
-     * Higher weight means higher occurence.
-     *
-     * @param oreName The ore's name
-     * @param weight  The ore's weight
-     */
-    public static void addMiningLensStoneOre(String oreName, int weight) {
-        STONE_ORES.add(new WeightedOre(oreName, weight));
-    }
-
-    /**
-     * Adds an ore with a specific weight to the list of ores that the lens of the miner will generate inside of netherrack.
-     * Higher weight means higher occurence.
-     *
-     * @param oreName The ore's name
-     * @param weight  The ore's weight
-     */
-    public static void addMiningLensNetherOre(String oreName, int weight) {
-        NETHERRACK_ORES.add(new WeightedOre(oreName, weight));
-    }
-
-    /**
-     * Adds a Recipe to the Crusher Recipe Registry
-     *
-     * @param input           The input as an ItemStack
-     * @param outputOne       The first stack as an ItemStack
-     * @param outputTwo       The second stack as an ItemStack (can be ItemStack.EMPTY if there should be none)
-     * @param outputTwoChance The chance of the second stack (0 won't occur at all, 100 will all the time)
-     */
-    public static void addCrusherRecipe(ItemStack input, ItemStack outputOne, ItemStack outputTwo, int outputTwoChance) {
-        ResourceLocation id = ActuallyAdditions.modLoc(BuiltInRegistries.ITEM.getKey(input.getItem()).getPath() + "_crushing");
-        CRUSHER_RECIPES.add(new RecipeHolder<>(id, new CrushingRecipe(Ingredient.of(input), outputOne, 1.0f, outputTwo.isEmpty()
-            ? ItemStack.EMPTY
-            : outputTwo, outputTwoChance)));
-    }
-
-    /**
-     * Adds a Recipe to the Crusher Recipe Registry
-     *
-     * @param input           The input as an Ingredient
-     * @param outputOne       The first stack as an ItemStack
-     * @param outputTwo       The second stack as an ItemStack (can be ItemStack.EMPTY if there should be none)
-     * @param outputTwoChance The chance of the second stack (0 won't occur at all, 100 will all the time)
-     */
-    public static void addCrusherRecipe(Ingredient input, ItemStack outputOne, ItemStack outputTwo, int outputTwoChance) {
-        ResourceLocation id = ActuallyAdditions.modLoc(BuiltInRegistries.ITEM.getKey(input.getItems()[0].getItem()).getPath() + "_crushing");
-        CRUSHER_RECIPES.add(new RecipeHolder<>(id, new CrushingRecipe(input, outputOne, 1.0f, outputTwo.isEmpty()
-                ? ItemStack.EMPTY
-                : outputTwo, outputTwoChance)));
-    }
-
-    /**
-     * Adds multiple Recipes to the Crusher Recipe Registry
-     * Use this if you want to add OreDictionary recipes easier
-     *
-     * @param inputs           The inputs as an ItemStack List, stacksizes are ignored
-     * @param outputOnes       The first outputs as an ItemStack List, stacksizes are ignored
-     * @param outputOneAmounts The amount of the first stack, will be equal for all entries in the list
-     * @param outputTwos       The second outputs as a List (can be null or empty if there should be none)
-     * @param outputTwoAmounts The amount of the second stack, will be equal for all entries in the list
-     * @param outputTwoChance  The chance of the second stack (0 won't occur at all, 100 will all the time)
-     */
-    public static boolean addCrusherRecipes(List<ItemStack> inputs, List<ItemStack> outputOnes, int outputOneAmounts, List<ItemStack> outputTwos, int outputTwoAmounts, int outputTwoChance) {
-        return methodHandler.addCrusherRecipes(inputs, outputOnes, outputOneAmounts, outputTwos, outputTwoAmounts, outputTwoChance);
-    }
-
-    //Same thing as above, but with ItemStack outputs.
-    @Deprecated //Use Ingredient
-    public static boolean addCrusherRecipes(List<ItemStack> inputs, ItemStack outputOne, int outputOneAmount, ItemStack outputTwo, int outputTwoAmount, int outputTwoChance) {
-        return methodHandler.addCrusherRecipes(inputs, outputOne, outputOneAmount, outputTwo, outputTwoAmount, outputTwoChance);
-    }
-
-    public static void addEmpowererRecipe(ResourceLocation id, Ingredient input, ItemStack output, Ingredient modifier1, Ingredient modifier2, Ingredient modifier3, Ingredient modifier4, int energyPerStand, int time, int particleColor) {
-        EmpowererRecipe recipe = new EmpowererRecipe(output, input, NonNullList.of(modifier1, modifier2, modifier3, modifier4), energyPerStand, time, particleColor);
-        EMPOWERER_RECIPES.add(new RecipeHolder<>(id, recipe));
-    }
-
-    /**
-     * Adds a recipe to the Atomic Reconstructor conversion lenses
-     * StackSizes can only be 1 and greater ones will be ignored
-     *
-     * @param input     The input as an ItemStack
-     * @param output    The stack as an ItemStack
-     * @param energyUse The amount of RF used per conversion
-     * @param type      The type of lens used for the conversion. To use the default type, use method below.
-     *                  Note how this always has to be the same instance of the lens type that the item also has for it to work!
-     */
-    @Deprecated
-    public static void addReconstructorLensConversionRecipe(ItemStack input, ItemStack output, int energyUse, LensConversion type) {
-        //RECONSTRUCTOR_LENS_CONVERSION_RECIPES.add(new LensConversionRecipe(input, stack, energyUse, type));
-    }
-
-    @Deprecated
-    public static void addReconstructorLensConversionRecipe(ItemStack input, ItemStack output, int energyUse) {
-        //addReconstructorLensConversionRecipe(input, stack, energyUse, lensDefaultConversion);
-    }
-
-    /**
-     * Adds a recipe to the Atomic Reconstructor conversion lenses
-     * StackSizes can only be 1 and greater ones will be ignored
-     *
-     * @param input     The input as an ItemStack
-     * @param output    The stack as an ItemStack
-     * @param energyUse The amount of RF used per conversion
-     * @param type      The type of lens used for the conversion. To use the default type, use method below.
-     *                  Note how this always has to be the same instance of the lens type that the item also has for it to work!
-     */
-    public static void addReconstructorLensConversionRecipe(Ingredient input, ItemStack output, int energyUse, LensConversion type) {
-        //RECONSTRUCTOR_LENS_CONVERSION_RECIPES.add(new LensConversionRecipe(input, stack, energyUse, type));
-    }
-
-    public static void addReconstructorLensConversionRecipe(Ingredient input, ItemStack output, int energyUse) {
-        //addReconstructorLensConversionRecipe(input, stack, energyUse, lensDefaultConversion);
-    }
-    /**
-     * Adds an ingredient to the Coffee Machine ingredient list
-     *
-     * @param ingredient The ingredient to add
-     */
-    public static void addCoffeeMachineIngredient(CoffeeIngredient ingredient) {
-//        COFFEE_MACHINE_INGREDIENTS.add(ingredient);
-    }
 
     /**
      * Adds a booklet entry to the list of entries

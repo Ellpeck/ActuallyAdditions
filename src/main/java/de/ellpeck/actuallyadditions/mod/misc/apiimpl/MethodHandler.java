@@ -302,62 +302,6 @@ public class MethodHandler implements IMethodHandler {
         return false;
     }
 
-    @Override
-    public boolean addCrusherRecipes(List<ItemStack> inputs, List<ItemStack> outputOnes, int outputOneAmounts, List<ItemStack> outputTwos, int outputTwoAmounts, int outputTwoChance) {
-        boolean hasWorkedOnce = false;
-/*        for (ItemStack input : inputs) {
-            if (StackUtil.isValid(input) && CrusherRecipeRegistry.getRecipeFromInput(input) == null) {
-                for (ItemStack outputOne : outputOnes) {
-                    if (StackUtil.isValid(outputOne) && !CrusherRecipeRegistry.hasBlacklistedOutput(outputOne, ConfigStringListValues.CRUSHER_OUTPUT_BLACKLIST.getValue())) {
-                        ItemStack outputOneCopy = outputOne.copy();
-                        outputOneCopy.setCount(outputOneAmounts);
-
-                        if (outputTwos.isEmpty()) {
-                            ActuallyAdditionsAPI.addCrusherRecipe(input, outputOneCopy, StackUtil.getEmpty(), 0);
-                            hasWorkedOnce = true;
-                        } else {
-                            for (ItemStack outputTwo : outputTwos) {
-                                if (StackUtil.isValid(outputTwo) && !CrusherRecipeRegistry.hasBlacklistedOutput(outputTwo, ConfigStringListValues.CRUSHER_OUTPUT_BLACKLIST.getValue())) {
-                                    ItemStack outputTwoCopy = outputTwo.copy();
-                                    outputTwoCopy.setCount(outputTwoAmounts);
-
-                                    ActuallyAdditionsAPI.addCrusherRecipe(input, outputOneCopy, outputTwoCopy, outputTwoChance);
-                                    hasWorkedOnce = true;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }*/ //TODO
-        return hasWorkedOnce;
-    }
-
-    @Override
-    public boolean addCrusherRecipes(List<ItemStack> inputs, ItemStack outputOne, int outputOneAmount, ItemStack outputTwo, int outputTwoAmount, int outputTwoChance) {
-        boolean hasWorkedOnce = false;
-/*        for (ItemStack input : inputs) {
-            if (StackUtil.isValid(input) && CrusherRecipeRegistry.getRecipeFromInput(input) == null) {
-                if (StackUtil.isValid(outputOne) && !CrusherRecipeRegistry.hasBlacklistedOutput(outputOne, ConfigStringListValues.CRUSHER_OUTPUT_BLACKLIST.getValue())) {
-                    ItemStack outputOneCopy = outputOne.copy();
-                    outputOneCopy.setCount(outputOneAmount);
-
-                    if (!StackUtil.isValid(outputTwo)) {
-                        ActuallyAdditionsAPI.addCrusherRecipe(input, outputOneCopy, StackUtil.getEmpty(), 0);
-                        hasWorkedOnce = true;
-                    } else if (StackUtil.isValid(outputTwo) && !CrusherRecipeRegistry.hasBlacklistedOutput(outputTwo, ConfigStringListValues.CRUSHER_OUTPUT_BLACKLIST.getValue())) {
-                        ItemStack outputTwoCopy = outputTwo.copy();
-                        outputTwoCopy.setCount(outputTwoAmount);
-
-                        ActuallyAdditionsAPI.addCrusherRecipe(input, outputOneCopy, outputTwoCopy, outputTwoChance);
-                        hasWorkedOnce = true;
-                    }
-                }
-            }
-        }*/
-        return hasWorkedOnce;
-    }
-
 //    @Override
 //    public IBookletPage generateTextPage(int id) {
 //        return this.generateTextPage(id, 0);

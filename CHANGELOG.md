@@ -8,6 +8,7 @@
 * The Drill's now display a list of installed augments in tooltips.
 * The Drill Placer upgrade now displays the selected slot in its tooltip, and on the drill when installed.
 * Fixed the drills attack speed.
+* Fixed some lens of the miner probability overlaps.
 
 # 1.3.11+mc1.21.1
 * Fixed Farmer not playing well with non-vanilla farmland.
