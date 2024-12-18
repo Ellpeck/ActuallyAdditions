@@ -11,7 +11,6 @@
 package de.ellpeck.actuallyadditions.mod.items;
 
 import de.ellpeck.actuallyadditions.api.ActuallyTags;
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.components.ActuallyComponents;
 import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerDrill;
@@ -72,13 +71,13 @@ public class DrillItem extends ItemEnergy {
                 , 250000, 1000);
 
         attributes_unpowered = ItemAttributeModifiers.builder()
-                .add(Attributes.ATTACK_DAMAGE, new AttributeModifier(ActuallyAdditions.modLoc("drill_attack"), 0.1F, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-                .add(Attributes.ATTACK_SPEED, new AttributeModifier(ActuallyAdditions.modLoc("drill_speed"), 1.0F, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                .add(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_ID, 0.1F, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                .add(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_ID, -3.0F, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                 .build();
 
         attributes_powered = ItemAttributeModifiers.builder()
-                .add(Attributes.ATTACK_DAMAGE, new AttributeModifier(ActuallyAdditions.modLoc("drill_attack"), 8.0F, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-                .add(Attributes.ATTACK_SPEED, new AttributeModifier(ActuallyAdditions.modLoc("drill_speed"), 1.0F, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                .add(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_ID, 8.0F, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                .add(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_ID, -3.0F, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                 .build();
     }
 
