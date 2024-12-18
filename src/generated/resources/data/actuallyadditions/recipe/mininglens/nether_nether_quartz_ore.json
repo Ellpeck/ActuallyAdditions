@@ -1,7 +1,7 @@
 {
   "type": "actuallyadditions:mining_lens",
   "ingredient": {
-    "tag": "c:netherracks"
+    "tag": "c:ore_bearing_ground/netherrack"
   },
   "result": {
     "count": 1,

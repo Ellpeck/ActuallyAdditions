@@ -7,7 +7,7 @@
   ],
   "type": "actuallyadditions:mining_lens",
   "ingredient": {
-    "tag": "c:stones"
+    "tag": "actuallyadditions:stone_ore_replaceables"
   },
   "result": {
     "count": 1,

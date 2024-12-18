@@ -10,6 +10,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -161,5 +162,15 @@ public class ItemTagsGenerator extends ItemTagsProvider {
                 ActuallyItems.DIAMOND_AIOT.get(),
                 ActuallyItems.NETHERITE_AIOT.get()
         );
+
+        tag(ActuallyTags.Items.STONE_ORE_REPLACEABLES)
+                .add(Items.STONE)
+                .add(Items.GRANITE)
+                .add(Items.DIORITE)
+                .add(Items.ANDESITE);
+
+        tag(ActuallyTags.Items.DEEPSLATE_ORE_REPLACEABLES)
+                .add(Items.DEEPSLATE)
+                .add(Items.TUFF);
     }
 }

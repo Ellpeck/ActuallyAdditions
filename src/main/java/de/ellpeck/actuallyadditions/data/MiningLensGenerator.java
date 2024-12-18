@@ -1,5 +1,6 @@
 package de.ellpeck.actuallyadditions.data;
 
+import de.ellpeck.actuallyadditions.api.ActuallyTags;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.crafting.MiningLensRecipe;
@@ -43,18 +44,14 @@ public class MiningLensGenerator extends RecipeProvider {
     }
 
     private void buildStoneOre(RecipeOutput consumer, int weight, ItemLike output) {
-        buildTagOre(consumer, Tags.Items.STONES, "stone", weight, output);
+        buildTagOre(consumer, ActuallyTags.Items.STONE_ORE_REPLACEABLES, "stone", weight, output);
     }
     private void buildNetherOre(RecipeOutput consumer, int weight, ItemLike output) {
-        buildTagOre(consumer, Tags.Items.NETHERRACKS, "nether", weight, output);
+        buildTagOre(consumer, Tags.Items.ORE_BEARING_GROUND_NETHERRACK, "nether", weight, output);
     }
 
     private void buildDeepSlateOre(RecipeOutput consumer, int weight, ItemLike output) {
-        consumer.accept(folderRecipe("mininglens", "deepslate_" + getItemName(output)), new MiningLensRecipe(
-                Ingredient.of(Items.DEEPSLATE),
-                weight,
-                output.asItem().getDefaultInstance()
-        ), null);
+        buildTagOre(consumer, ActuallyTags.Items.DEEPSLATE_ORE_REPLACEABLES, "deepslate", weight, output);
     }
 
     private void buildTagOre(RecipeOutput consumer, TagKey<Item> tag, String prefix, int weight, ItemLike output) {
