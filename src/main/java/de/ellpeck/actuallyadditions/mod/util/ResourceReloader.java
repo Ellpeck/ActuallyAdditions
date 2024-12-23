@@ -3,6 +3,7 @@ package de.ellpeck.actuallyadditions.mod.util;
 
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.mod.crafting.ActuallyRecipes;
+import de.ellpeck.actuallyadditions.mod.crafting.MiningLensRecipe;
 import net.minecraft.server.ReloadableServerResources;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
@@ -38,6 +39,13 @@ public class ResourceReloader implements ResourceManagerReloadListener {
 
         ActuallyAdditionsAPI.MINING_LENS_RECIPES.clear();
         ActuallyAdditionsAPI.MINING_LENS_RECIPES.addAll(recipeManager.getAllRecipesFor(ActuallyRecipes.Types.MINING_LENS.get()));
+
+        // Cache mining lens total weights by type
+        MiningLensRecipe.WEIGHT_CACHE.clear();
+        ActuallyAdditionsAPI.MINING_LENS_RECIPES.forEach(recipe -> {
+            MiningLensRecipe.Type type = recipe.value().getInputType();
+            MiningLensRecipe.WEIGHT_CACHE.put(type, MiningLensRecipe.WEIGHT_CACHE.getOrDefault(type, 0) + recipe.value().getWeight().asInt());
+        });
 
         ActuallyAdditionsAPI.CRUSHER_RECIPES.clear();
         ActuallyAdditionsAPI.CRUSHER_RECIPES.addAll(recipeManager.getAllRecipesFor(ActuallyRecipes.Types.CRUSHING.get()));

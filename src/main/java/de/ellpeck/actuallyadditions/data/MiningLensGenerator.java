@@ -1,6 +1,5 @@
 package de.ellpeck.actuallyadditions.data;
 
-import de.ellpeck.actuallyadditions.api.ActuallyTags;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.crafting.MiningLensRecipe;
@@ -15,7 +14,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
-import net.neoforged.neoforge.common.Tags;
 
 import javax.annotation.Nonnull;
 import java.util.concurrent.CompletableFuture;
@@ -44,19 +42,30 @@ public class MiningLensGenerator extends RecipeProvider {
     }
 
     private void buildStoneOre(RecipeOutput consumer, int weight, ItemLike output) {
-        buildTagOre(consumer, ActuallyTags.Items.STONE_ORE_REPLACEABLES, "stone", weight, output);
+        //buildTagOre(consumer, ActuallyTags.Items.STONE_ORE_REPLACEABLES, "stone", weight, output);
+        buildTypeOre(consumer, MiningLensRecipe.Type.STONE, "stone", weight, output);
     }
     private void buildNetherOre(RecipeOutput consumer, int weight, ItemLike output) {
-        buildTagOre(consumer, Tags.Items.ORE_BEARING_GROUND_NETHERRACK, "nether", weight, output);
+        //buildTagOre(consumer, Tags.Items.ORE_BEARING_GROUND_NETHERRACK, "nether", weight, output);
+        buildTypeOre(consumer, MiningLensRecipe.Type.NETHERRACK, "nether", weight, output);
     }
 
     private void buildDeepSlateOre(RecipeOutput consumer, int weight, ItemLike output) {
-        buildTagOre(consumer, ActuallyTags.Items.DEEPSLATE_ORE_REPLACEABLES, "deepslate", weight, output);
+        //buildTagOre(consumer, ActuallyTags.Items.DEEPSLATE_ORE_REPLACEABLES, "deepslate", weight, output);
+        buildTypeOre(consumer, MiningLensRecipe.Type.DEEPSLATE, "deepslate", weight, output);
     }
 
     private void buildTagOre(RecipeOutput consumer, TagKey<Item> tag, String prefix, int weight, ItemLike output) {
         consumer.accept(folderRecipe("mininglens", prefix + "_" + getItemName(output)), new MiningLensRecipe(
                 Ingredient.of(tag),
+                weight,
+                output.asItem().getDefaultInstance()
+        ), null);
+    }
+
+    private void buildTypeOre(RecipeOutput consumer, MiningLensRecipe.Type type, String prefix, int weight, ItemLike output) {
+        consumer.accept(folderRecipe("mininglens", prefix + "_" + getItemName(output)), new MiningLensRecipe(
+                type,
                 weight,
                 output.asItem().getDefaultInstance()
         ), null);

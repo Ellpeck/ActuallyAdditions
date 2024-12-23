@@ -1,8 +1,6 @@
 {
   "type": "actuallyadditions:mining_lens",
-  "ingredient": {
-    "tag": "c:ore_bearing_ground/netherrack"
-  },
+  "input_type": "NETHERRACK",
   "result": {
     "count": 1,
     "id": "minecraft:nether_gold_ore"

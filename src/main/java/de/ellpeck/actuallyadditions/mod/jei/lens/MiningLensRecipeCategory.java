@@ -79,10 +79,12 @@ public class MiningLensRecipeCategory implements IRecipeCategory<MiningLensRecip
     public void draw(MiningLensRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
         Minecraft mc = Minecraft.getInstance();
 
-        Component component = Component.translatable("jei.actuallyadditions.mining_lens.weight");
+        Component component = Component.translatable("jei.actuallyadditions.mining_lens.chance");
         guiGraphics.drawString(mc.font, component, 2, 42, 0, false);
 
-        String weight = String.valueOf(recipe.getWeight());
-        guiGraphics.drawString(mc.font, weight, 16 - mc.font.width(weight) / 2, 52, 0, false);
+        float chance = (float) recipe.getWeight().asInt() / MiningLensRecipe.WEIGHT_CACHE.get(recipe.getInputType());
+
+        String chanceString = String.format("%.2f%%", chance * 100.0f);
+        guiGraphics.drawString(mc.font, chanceString, 16 - mc.font.width(chanceString) / 2, 52, 0, false);
     }
 }

@@ -1,8 +1,6 @@
 {
   "type": "actuallyadditions:mining_lens",
-  "ingredient": {
-    "tag": "actuallyadditions:deepslate_ore_replaceables"
-  },
+  "input_type": "DEEPSLATE",
   "result": {
     "count": 1,
     "id": "minecraft:deepslate_copper_ore"

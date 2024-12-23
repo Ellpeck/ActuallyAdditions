@@ -163,14 +163,21 @@ public class ItemTagsGenerator extends ItemTagsProvider {
                 ActuallyItems.NETHERITE_AIOT.get()
         );
 
-        tag(ActuallyTags.Items.STONE_ORE_REPLACEABLES)
+        tag(ActuallyTags.Items.STONE_MINING_LENS)
                 .add(Items.STONE)
                 .add(Items.GRANITE)
                 .add(Items.DIORITE)
                 .add(Items.ANDESITE);
 
-        tag(ActuallyTags.Items.DEEPSLATE_ORE_REPLACEABLES)
+        tag(ActuallyTags.Items.DEEPSLATE_MINING_LENS)
                 .add(Items.DEEPSLATE)
                 .add(Items.TUFF);
+
+        tag(ActuallyTags.Items.NETHERRACK_MINING_LENS)
+                .add(Items.NETHERRACK)
+                .add(Items.BLACKSTONE);
+
+        tag(ActuallyTags.Items.END_STONE_MINING_LENS)
+                .add(Items.END_STONE);
     }
 }

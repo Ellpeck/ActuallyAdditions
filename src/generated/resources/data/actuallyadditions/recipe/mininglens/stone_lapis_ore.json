@@ -1,8 +1,6 @@
 {
   "type": "actuallyadditions:mining_lens",
-  "ingredient": {
-    "tag": "actuallyadditions:stone_ore_replaceables"
-  },
+  "input_type": "STONE",
   "result": {
     "count": 1,
     "id": "minecraft:lapis_ore"

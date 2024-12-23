@@ -54,8 +54,10 @@ public final class ActuallyTags {
         public static final TagKey<Item> BUCKET_REFINED_CANOLA_OIL = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "bucket/refined_canola_oil"));
         public static final TagKey<Item> BUCKET_CRYSTALLIZED_OIL = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "bucket/crystallized_oil"));
         public static final TagKey<Item> BUCKET_EMPOWERED_OIL = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "bucket/empowered_oil"));
-        public static final TagKey<Item> STONE_ORE_REPLACEABLES = ItemTags.create(ActuallyAdditions.modLoc("stone_ore_replaceables"));
-        public static final TagKey<Item> DEEPSLATE_ORE_REPLACEABLES = ItemTags.create(ActuallyAdditions.modLoc("deepslate_ore_replaceables"));
+        public static final TagKey<Item> STONE_MINING_LENS = ItemTags.create(ActuallyAdditions.modLoc("stone_mining_lens"));
+        public static final TagKey<Item> DEEPSLATE_MINING_LENS = ItemTags.create(ActuallyAdditions.modLoc("deepslate_mining_lens"));
+        public static final TagKey<Item> NETHERRACK_MINING_LENS = ItemTags.create(ActuallyAdditions.modLoc("netherrack_mining_lens"));
+        public static final TagKey<Item> END_STONE_MINING_LENS = ItemTags.create(ActuallyAdditions.modLoc("end_stone_mining_lens"));
 
         //curios:bracelet
         public static final TagKey<Item> CURIOS_CHARM = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("curios", "charm"));
