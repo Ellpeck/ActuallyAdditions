@@ -13,18 +13,15 @@ package de.ellpeck.actuallyadditions.mod.inventory.gui;
 import com.mojang.blaze3d.systems.RenderSystem;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerLaserRelayItemWhitelist;
 import de.ellpeck.actuallyadditions.mod.network.PacketHelperClient;
-import de.ellpeck.actuallyadditions.mod.network.packet.ButtonToContainerPacket;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayItemAdvanced;
 import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.entity.player.Inventory;
-import net.neoforged.neoforge.network.PacketDistributor;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -63,27 +60,22 @@ public class GuiLaserRelayItemWhitelist extends AAScreen<ContainerLaserRelayItem
     public void init() {
         super.init();
 
-        this.leftFilter = new FilterSettingsGui(this.tile.leftFilter, this.leftPos + 3, this.topPos + 6, true, this::addRenderableWidget, this::buttonClicked,  0);
-        this.rightFilter = new FilterSettingsGui(this.tile.rightFilter, this.leftPos + 157, this.topPos + 6, true, this::addRenderableWidget, this::buttonClicked,  4);
+        this.leftFilter = new FilterSettingsGui(this.tile.leftFilter, this.leftPos + 3, this.topPos + 6, true, this::addRenderableWidget, id -> PacketHelperClient.sendButtonPacket(this.tile, id),  0);
+        this.rightFilter = new FilterSettingsGui(this.tile.rightFilter, this.leftPos + 157, this.topPos + 6, true, this::addRenderableWidget, id -> PacketHelperClient.sendButtonPacket(this.tile, id),  4);
 
         this.buttonSmartWhitelistLeft = this.addRenderableWidget(Button.builder(
                         Component.literal("S"),
-                        (button) -> {
-                            PacketHelperClient.sendButtonPacket(this.tile, 2);
-                        }).bounds(this.leftPos + 3, this.topPos + 79, 16, 16)
+                        (button) ->
+                                PacketHelperClient.sendButtonPacket(this.tile, 8))
+                .bounds(this.leftPos + 3, this.topPos + 79, 16, 16)
                 .build());
 
         this.buttonSmartWhitelistRight = this.addRenderableWidget(Button.builder(
                         Component.literal("S"),
-                        (button) -> {
-                            PacketHelperClient.sendButtonPacket(this.tile, 3);
-                        }).bounds(this.leftPos + 157, this.topPos + 79, 16, 16)
+                        (button) ->
+                                PacketHelperClient.sendButtonPacket(this.tile, 9))
+                .bounds(this.leftPos + 157, this.topPos + 79, 16, 16)
                 .build());
-    }
-
-    public void buttonClicked(int id) {
-        PacketDistributor.sendToServer(new ButtonToContainerPacket(
-                Minecraft.getInstance().level.dimension().location(), Minecraft.getInstance().player.getId(), id));
     }
 
     @Override

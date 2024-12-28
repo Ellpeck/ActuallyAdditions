@@ -1,6 +1,7 @@
 # 1.3.13+mc1.21.1
 * Fixed the Sack not saving filter options, and Auto-Insert state always being stuck on.
 * Fixed no item pickup sound when the Sack picks things up.
+* Fixed Advanced Item Laser Relays filters not working, and the Smart filter buttons not working.
 
 # 1.3.12+mc1.21.1
 * Fixed the Drill dye recipes not functioning.

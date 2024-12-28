@@ -90,12 +90,11 @@ public class TileEntityLaserRelayItemAdvanced extends TileEntityLaserRelayItem i
 
     @Override
     public void onButtonPressed(int buttonID, Player player) {
-        this.leftFilter.onButtonPressed(buttonID);
-        this.rightFilter.onButtonPressed(buttonID);
-        if (buttonID == 2) {
-            this.addWhitelistSmart(false);
-        } else if (buttonID == 3) {
-            this.addWhitelistSmart(true);
+        switch(buttonID) {
+            case 0,1,2,3 -> this.leftFilter.onButtonPressed(buttonID);
+            case 4,5,6,7 -> this.rightFilter.onButtonPressed(buttonID - 4);
+            case 8 -> this.addWhitelistSmart(false);
+            case 9 -> this.addWhitelistSmart(true);
         }
     }
 

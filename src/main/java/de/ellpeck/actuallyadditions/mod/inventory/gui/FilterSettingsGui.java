@@ -73,7 +73,7 @@ public class FilterSettingsGui {
 
         this.nbtButton = Button.builder(Component.literal("DA"), $ -> {
                     theSettings.matchNBT = !theSettings.matchNBT;
-                    clickConsumer.accept(idOffset + 2);
+                    clickConsumer.accept(idOffset + 3);
                 })
                 .bounds(x, y, 16, 12).build();
         buttonConsumer.accept(this.nbtButton);
