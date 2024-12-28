@@ -11,6 +11,7 @@
 package de.ellpeck.actuallyadditions.mod.inventory;
 
 import de.ellpeck.actuallyadditions.api.ActuallyTags;
+import de.ellpeck.actuallyadditions.mod.components.ActuallyComponents;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotFilter;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotImmovable;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotItemHandlerUnconditioned;
@@ -27,27 +28,29 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
 import javax.annotation.Nonnull;
+import java.util.UUID;
 
 public class SackContainer extends AbstractContainerMenu implements IButtonReactor {
 
     private final FilterSettings filter;
     private final ItemStackHandlerAA bagInventory;
     private final Inventory inventory;
-    public boolean autoInsert;
-    private boolean oldAutoInsert;
+    public boolean autoInsert = false;
 
     public static final int SIZE = 28;
 
     public static SackContainer fromNetwork(int windowId, Inventory inv, FriendlyByteBuf data) {
-        return new SackContainer(windowId, inv, new ItemStackHandlerAA(28), new FilterSettings(4, false, false, false, false));
+        UUID uuid = data.readUUID();
+        return new SackContainer(windowId, inv, new ItemStackHandlerAA(28), data.readBoolean() , new FilterSettings(4, data.readInt()));
     }
 
-    public SackContainer(int windowId, Inventory playerInventory, ItemStackHandlerAA handler, FilterSettings filterIn) {
+    public SackContainer(int windowId, Inventory playerInventory, ItemStackHandlerAA handler, boolean pickup, FilterSettings filterIn) {
         super(ActuallyContainers.SACK_CONTAINER.get(), windowId);
 
         this.inventory = playerInventory;
         this.bagInventory = handler;
         this.filter = filterIn;
+        autoInsert = pickup;
 
         // Filter slots.
         for (int row = 0; row < 4; row++) {
@@ -165,7 +168,11 @@ public class SackContainer extends AbstractContainerMenu implements IButtonReact
     @Override
     public void onButtonPressed(int buttonID, Player player) {
         if (buttonID == 0) {
+            ItemStack stack = this.inventory.getSelected();
             this.autoInsert = !this.autoInsert;
+            if (!stack.isEmpty() && stack.getItem() instanceof Sack) {
+                stack.set(ActuallyComponents.AUTO_INSERT, this.autoInsert);
+            }
         } else {
             this.filter.onButtonPressed(buttonID - 1);
         }

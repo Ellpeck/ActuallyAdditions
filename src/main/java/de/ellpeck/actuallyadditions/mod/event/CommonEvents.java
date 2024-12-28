@@ -33,6 +33,8 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Spider;
@@ -83,14 +85,14 @@ public class CommonEvents {
     public void onItemPickup(ItemEntityPickupEvent.Pre event) {
         Player player = event.getPlayer();
         ItemEntity item = event.getItemEntity();
-        if (item != null && item.isAlive()) {
+        if (item != null && item.isAlive() && !item.hasPickUpDelay()) {
             ItemStack stack = item.getItem();
             if (!stack.isEmpty()) {
                 for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
                     if (i != player.getInventory().selected) {
 
                         ItemStack invStack = player.getInventory().getItem(i);
-                        if (!invStack.isEmpty() && (invStack.getItem() instanceof Sack)) {
+                        if (!invStack.isEmpty() && (invStack.getItem() instanceof Sack) && invStack.getOrDefault(ActuallyComponents.AUTO_INSERT, false)) {
                             boolean changed = false;
                             boolean isVoid = ((Sack) invStack.getItem()).isVoid;
 
@@ -137,10 +139,9 @@ public class CommonEvents {
                             }
 
                             if (changed) {
-/*                                    if (!isVoid) {
-                                        DrillItem.writeSlotsToNBT(inv, invStack);
-                                    }*/
-                                event.setCanPickup(TriState.FALSE);
+                                if (item.getAge() > 0)
+                                    event.getPlayer().level().playSound(null, event.getPlayer().blockPosition(), SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS, 0.2F, ((player.getRandom().nextFloat() - player.getRandom().nextFloat()) * 0.7F + 1.0F) * 2.0F);
+                                event.setCanPickup(TriState.TRUE);
                             }
                         }
                     }

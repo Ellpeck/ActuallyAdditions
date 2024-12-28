@@ -57,6 +57,14 @@ public class FilterSettings {
         this.matchNBT = defaultMatchNBT;
     }
 
+    public FilterSettings(int slots, int packedSettings) {
+        this(slots, (packedSettings & 1) != 0, (packedSettings & 2) != 0, (packedSettings & 4) != 0, (packedSettings & 8) != 0);
+    }
+
+    public int getPackedSettings() {
+        return (this.isWhitelist? 1 : 0) | (this.respectMod? 2 : 0) | (this.matchDamage? 4 : 0) | (this.matchNBT? 8 : 0);
+    }
+
     public void onContentsChanged() {}
 
     public static boolean check(ItemStack stack, ItemStackHandlerAA filter, boolean whitelist, boolean mod, boolean damage, boolean nbt) {

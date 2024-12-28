@@ -102,9 +102,9 @@ public class Sack extends ItemBase {
 
                 data.updateAccessRecords(player.getName().getString(), System.currentTimeMillis());
 
-
+                boolean autoInsert = sackStack.getOrDefault(ActuallyComponents.AUTO_INSERT, false);
                 player.openMenu(new SimpleMenuProvider((id, inv, entity) ->
-                        new SackContainer(id, inv, data.getSpecialHandler(), data.getFilter()), sackStack.getHoverName()), (buffer -> buffer.writeUUID(uuid)));
+                        new SackContainer(id, inv, data.getSpecialHandler(), autoInsert, data.getFilter()), sackStack.getHoverName()), (buffer -> buffer.writeUUID(uuid).writeBoolean(autoInsert).writeInt(data.getFilter().getPackedSettings())));
             } else
                 player.openMenu(new SimpleMenuProvider((id, inv, entity) -> new VoidSackContainer(id, inv), sackStack.getHoverName()));
         }
