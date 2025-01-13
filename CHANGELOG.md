@@ -6,6 +6,7 @@
 * Added recipe for the Lamp Controller.
 * Fixed Lamp Controller model rotation.
 * Fixed Lamp textures being always lit.
+* Pulled in chinese translation PR.
 
 # 1.3.12+mc1.21.1
 * Fixed the Drill dye recipes not functioning.
