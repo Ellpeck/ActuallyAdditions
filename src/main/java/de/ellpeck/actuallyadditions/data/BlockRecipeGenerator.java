@@ -5,19 +5,14 @@ import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems;
 import de.ellpeck.actuallyadditions.mod.util.NoAdvRecipeOutput;
+import de.ellpeck.actuallyadditions.registration.AABlockReg;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.recipes.RecipeCategory;
-import net.minecraft.data.recipes.RecipeOutput;
-import net.minecraft.data.recipes.RecipeProvider;
-import net.minecraft.data.recipes.ShapedRecipeBuilder;
-import net.minecraft.data.recipes.ShapelessRecipeBuilder;
-import net.minecraft.data.recipes.SingleItemRecipeBuilder;
+import net.minecraft.data.recipes.*;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
-import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
 
 import javax.annotation.Nonnull;
@@ -545,6 +540,41 @@ public class BlockRecipeGenerator extends RecipeProvider {
                 .define('E', ActuallyBlocks.EMPOWERED_DIAMATINE_CRYSTAL.getItem())
                 .define('A', ActuallyItems.ADVANCED_COIL)
                 .save(recipeOutput);
+
+
+        //Lamps
+        Lamp(recipeOutput, ActuallyBlocks.LAMP_WHITE, Items.WHITE_DYE);
+        Lamp(recipeOutput, ActuallyBlocks.LAMP_ORANGE, Items.ORANGE_DYE);
+        Lamp(recipeOutput, ActuallyBlocks.LAMP_MAGENTA, Items.MAGENTA_DYE);
+        Lamp(recipeOutput, ActuallyBlocks.LAMP_LIGHT_BLUE, Items.LIGHT_BLUE_DYE);
+        Lamp(recipeOutput, ActuallyBlocks.LAMP_YELLOW, Items.YELLOW_DYE);
+        Lamp(recipeOutput, ActuallyBlocks.LAMP_LIME, Items.LIME_DYE);
+        Lamp(recipeOutput, ActuallyBlocks.LAMP_PINK, Items.PINK_DYE);
+        Lamp(recipeOutput, ActuallyBlocks.LAMP_GRAY, Items.GRAY_DYE);
+        Lamp(recipeOutput, ActuallyBlocks.LAMP_LIGHT_GRAY, Items.LIGHT_GRAY_DYE);
+        Lamp(recipeOutput, ActuallyBlocks.LAMP_CYAN, Items.CYAN_DYE);
+        Lamp(recipeOutput, ActuallyBlocks.LAMP_PURPLE, Items.PURPLE_DYE);
+        Lamp(recipeOutput, ActuallyBlocks.LAMP_BLUE, Items.BLUE_DYE);
+        Lamp(recipeOutput, ActuallyBlocks.LAMP_BROWN, Items.BROWN_DYE);
+        Lamp(recipeOutput, ActuallyBlocks.LAMP_GREEN, Items.GREEN_DYE);
+        Lamp(recipeOutput, ActuallyBlocks.LAMP_RED, Items.RED_DYE);
+        Lamp(recipeOutput, ActuallyBlocks.LAMP_BLACK, Items.BLACK_DYE);
+
+        //Lamp Controller, any lamp surrounded by restonia crystals
+        Recipe.shaped(ActuallyBlocks.LAMP_CONTROLLER.getItem(), 4)
+                .pattern("RRR", "RLR", "RRR")
+                .define('R', ActuallyItems.RESTONIA_CRYSTAL.get())
+                .define('L', ActuallyTags.Items.LAMPS);
+    }
+
+    public void Lamp(RecipeOutput output, AABlockReg<?,?,?> lamp, ItemLike dye) {
+        Recipe.shaped(lamp.getItem(), 6)
+                .pattern("GCG", "DBD", "GCG")
+                .define('G', Items.GLOWSTONE)
+                .define('C', ActuallyItems.PALIS_CRYSTAL)
+                .define('D', dye)
+                .define('B', ActuallyItems.BLACK_QUARTZ)
+                .save(output);
     }
 
     public static class Recipe {

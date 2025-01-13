@@ -172,5 +172,13 @@ public class ItemTagsGenerator extends ItemTagsProvider {
         tag(ActuallyTags.Items.DEEPSLATE_ORE_REPLACEABLES)
                 .add(Items.DEEPSLATE)
                 .add(Items.TUFF);
+
+        tag(ActuallyTags.Items.LAMPS)
+                .add(ActuallyBlocks.LAMP_WHITE.getItem(), ActuallyBlocks.LAMP_ORANGE.getItem(), ActuallyBlocks.LAMP_MAGENTA.getItem(),
+                        ActuallyBlocks.LAMP_LIGHT_BLUE.getItem(), ActuallyBlocks.LAMP_YELLOW.getItem(), ActuallyBlocks.LAMP_LIME.getItem(),
+                        ActuallyBlocks.LAMP_PINK.getItem(), ActuallyBlocks.LAMP_GRAY.getItem(), ActuallyBlocks.LAMP_LIGHT_GRAY.getItem(),
+                        ActuallyBlocks.LAMP_CYAN.getItem(), ActuallyBlocks.LAMP_PURPLE.getItem(), ActuallyBlocks.LAMP_BLUE.getItem(),
+                        ActuallyBlocks.LAMP_BROWN.getItem(), ActuallyBlocks.LAMP_GREEN.getItem(), ActuallyBlocks.LAMP_RED.getItem(),
+                        ActuallyBlocks.LAMP_BLACK.getItem());
     }
 }

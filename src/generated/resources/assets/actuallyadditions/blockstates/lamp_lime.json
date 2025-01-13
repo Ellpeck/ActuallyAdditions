@@ -4,7 +4,7 @@
       "model": "actuallyadditions:block/lamp_lime"
     },
     "lit=true": {
-      "model": "actuallyadditions:block/lamp_lime"
+      "model": "actuallyadditions:block/lamp_lime_on"
     }
   }
 }

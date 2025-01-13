@@ -4,7 +4,7 @@
       "model": "actuallyadditions:block/lamp_red"
     },
     "lit=true": {
-      "model": "actuallyadditions:block/lamp_red"
+      "model": "actuallyadditions:block/lamp_red_on"
     }
   }
 }
