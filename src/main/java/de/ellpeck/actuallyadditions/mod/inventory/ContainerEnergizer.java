@@ -26,7 +26,6 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.capabilities.Capabilities;
 
-import java.util.Map;
 import java.util.Objects;
 
 public class ContainerEnergizer extends AbstractContainerMenu {
