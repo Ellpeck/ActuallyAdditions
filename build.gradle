@@ -90,12 +90,15 @@ repositories {
         url = "https://maven.blamejared.com"
     }
     maven {
+        name = "Illusive Soulworks maven"
+        url = "https://maven.theillusivec4.top/"
+    }
+    maven {
         url "https://cursemaven.com"
         content {
             includeGroup "curse.maven"
         }
     }
-    maven { url = 'https://maven.octo-studios.com/releases' }
 }
 
 dependencies {
@@ -283,6 +286,7 @@ publishMods {
         serverRequired = true
         requires("patchouli")
         optional("jei")
+        optional("curios")
     }
 
     modrinth {
@@ -291,6 +295,7 @@ publishMods {
         minecraftVersions.add(game_version)
         requires("patchouli")
         optional("jei")
+        optional("curios")
     }
 
     github {
