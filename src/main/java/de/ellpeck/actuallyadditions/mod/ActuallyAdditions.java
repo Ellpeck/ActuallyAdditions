@@ -65,9 +65,6 @@ public class ActuallyAdditions {
 
     @Deprecated
     public static final String NAME = "Actually Additions";
-    @Deprecated
-    public static final String VERSION = "@VERSION@";
-    public static final String DEPS = "required:forge@[14.23.5.2836,);before:craftingtweaks;after:fastbench@[1.3.2,)";
 
     public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
 

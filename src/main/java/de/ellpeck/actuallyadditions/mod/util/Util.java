@@ -10,7 +10,6 @@
 
 package de.ellpeck.actuallyadditions.mod.util;
 
-import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
@@ -18,24 +17,8 @@ import net.neoforged.fml.loading.FMLLoader;
 
 public final class Util {
 
-    public static boolean isDevVersion() {
-        return ActuallyAdditions.VERSION.equals("@VERSION@");
-    }
-
     public static boolean isClient() {
         return FMLLoader.getDist().isClient();
-    }
-
-    private static String[] splitVersion() {
-        return ActuallyAdditions.VERSION.split("-");
-    }
-
-    public static String getMcVersion() {
-        return splitVersion()[0];
-    }
-
-    public static String getMajorModVersion() {
-        return splitVersion()[1].substring(1);
     }
 
     public static double getReachDistance(Player player) {
