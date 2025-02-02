@@ -1,3 +1,7 @@
+# 1.3.14+mc1.21.1
+* Fix the Lens of Disenchanting not getting the correct enchantment level.
+* Change Curios used when building, now builds against the original Curios.
+
 # 1.3.13+mc1.21.1
 * Fixed the Sack not saving filter options, and Auto-Insert state always being stuck on.
 * Fixed no item pickup sound when the Sack picks things up.
