@@ -53,7 +53,7 @@ public class LensDisenchanting extends Lens {
                                     return false;
                                 }
                             } else {
-                                ItemEnchantments enchants = stack.getAllEnchantments(tile.getWorldObject().registryAccess().lookupOrThrow(Registries.ENCHANTMENT));
+                                ItemEnchantments enchants = stack.getTagEnchantments();
                                 if (!enchants.isEmpty()) {
                                     if (toDisenchant == null) {
                                         toDisenchant = item;
@@ -70,7 +70,7 @@ public class LensDisenchanting extends Lens {
                     ItemStack disenchantStack = toDisenchant.getItem();
                     ItemStack bookStack = book.getItem();
 
-                    ItemEnchantments enchants = disenchantStack.getAllEnchantments(tile.getWorldObject().registryAccess().lookupOrThrow(Registries.ENCHANTMENT));
+                    ItemEnchantments enchants = disenchantStack.getTagEnchantments();
                     if (!enchants.isEmpty()) {
                         Holder<Enchantment> enchant = enchants.keySet().iterator().next();
                         int level = enchants.getLevel(enchant);
