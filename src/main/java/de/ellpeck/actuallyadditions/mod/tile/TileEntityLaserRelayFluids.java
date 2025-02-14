@@ -14,6 +14,8 @@ import de.ellpeck.actuallyadditions.api.laser.IConnectionPair;
 import de.ellpeck.actuallyadditions.api.laser.LaserType;
 import de.ellpeck.actuallyadditions.api.laser.Network;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
+import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
+import de.ellpeck.actuallyadditions.mod.config.CommonConfig.Machines;
 import de.ellpeck.actuallyadditions.mod.tile.TileEntityLaserRelayEnergy.Mode;
 import de.ellpeck.actuallyadditions.mod.util.WorldUtil;
 import net.minecraft.ChatFormatting;
@@ -110,7 +112,7 @@ public class TileEntityLaserRelayFluids extends TileEntityLaserRelay {
         super.serverTick();
         if (this.mode == Mode.INPUT_ONLY) {
             for (Direction side : this.handlersAround.keySet()) {
-                WorldUtil.doFluidInteraction(this.level, this.handlersAround.get(side).getBlockPos(), this.getBlockPos(), side.getOpposite(), Integer.MAX_VALUE);
+                WorldUtil.doFluidInteraction(this.level, this.handlersAround.get(side).getBlockPos(), this.getBlockPos(), side.getOpposite(), Machines.FLUID_LASER_TRANSFER_RATE.get());
             }
         }
     }
