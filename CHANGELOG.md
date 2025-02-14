@@ -1,3 +1,9 @@
+# 1.3.15+mc1.21.1
+* Fix config options not using camelCase everywhere **(All configs with lists will reset!)**
+* Add translation keys for the built-in config screen
+* Add config option for changing the Fluid Laser Relays transfer rate
+* Fix Lens of Color not preserving stack size
+
 # 1.3.14+mc1.21.1
 * Fix the Lens of Disenchanting not getting the correct enchantment level.
 * Change Curios used when building, now builds against the original Curios.
