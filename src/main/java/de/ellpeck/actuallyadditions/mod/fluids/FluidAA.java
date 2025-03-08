@@ -59,6 +59,7 @@ public class FluidAA implements Supplier<Fluid> {
         this.stillTexture = ActuallyAdditions.modLoc("block/" + textureName + "_still");
         this.flowingTexture = ActuallyAdditions.modLoc("block/" + textureName + "_flowing");
         this.fluidType = InitFluids.FLUID_TYPES.register(name, () -> new FluidType(createTypeProperties()) {
+            @SuppressWarnings("removal")
             @Override
             public void initializeClient(Consumer<IClientFluidTypeExtensions> consumer) {
                 consumer.accept(new IClientFluidTypeExtensions() {

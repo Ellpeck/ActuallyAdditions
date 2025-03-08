@@ -577,6 +577,7 @@ public class BlockRecipeGenerator extends RecipeProvider {
                 .save(output);
     }
 
+    @SuppressWarnings("ClassEscapesDefinedScope")
     public static class Recipe {
         public static Shapeless shapeless(ItemLike result) {
             return new Shapeless(result);

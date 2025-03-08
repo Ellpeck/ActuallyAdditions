@@ -754,6 +754,7 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .save(consumer);
     }
 
+    @SuppressWarnings("ClassEscapesDefinedScope")
     public static class Recipe {
         public static ItemRecipeGenerator.Recipe.Shapeless shapeless(ItemLike result) {
             return new ItemRecipeGenerator.Recipe.Shapeless(result);
