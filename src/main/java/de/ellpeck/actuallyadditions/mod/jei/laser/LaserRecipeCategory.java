@@ -66,7 +66,7 @@ public class LaserRecipeCategory implements IRecipeCategory<LaserRecipe> {
         HolderLookup.Provider registries = level.registryAccess();
 
         builder.addSlot(RecipeIngredientRole.INPUT, 5, 19).addIngredients(recipe.getInput());
-        builder.addSlot(RecipeIngredientRole.INPUT, 35, 20).addItemStack(RECONSTRUCTOR);
+        builder.addSlot(RecipeIngredientRole.RENDER_ONLY, 35, 20).addItemStack(RECONSTRUCTOR);
 
         builder.addSlot(RecipeIngredientRole.OUTPUT, 66, 19).addItemStack(recipe.getResultItem(registries));
     }
