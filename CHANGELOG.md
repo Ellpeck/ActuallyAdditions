@@ -1,3 +1,8 @@
+# 1.3.16+mc1.21.1
+* Fix Coffee Maker automation
+* Fix Reconstructor in the JEI category being seen as input instead of render only causing EMI recipe tree to be more expensive than it should be
+* Fix crash relating to the hoe-ing grass to obtain worms, it would sometimes crash from fake players
+
 # 1.3.15+mc1.21.1
 * Fix config options not using camelCase everywhere **(All configs with lists will reset!)**
 * Add translation keys for the built-in config screen
