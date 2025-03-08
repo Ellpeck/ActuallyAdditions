@@ -20,7 +20,7 @@ public class CrusherCategory implements IRecipeCategory<CrushingRecipe> {
 	private final IDrawableStatic background;
 
 	public CrusherCategory(IGuiHelper helper) {
-		this.background = helper.drawableBuilder(AssetUtil.getGuiLocation("gui_grinder"), 60, 13, 56, 79).setTextureSize(256,256).build();
+		this.background = helper.drawableBuilder(AssetUtil.getGuiLocation("gui_grinder"), 60, 13, 56, 79).build();
 	}
 
 	@Override
@@ -34,8 +34,13 @@ public class CrusherCategory implements IRecipeCategory<CrushingRecipe> {
 	}
 
 	@Override
-	public IDrawable getBackground() {
-		return background;
+	public int getWidth() {
+		return 56;
+	}
+
+	@Override
+	public int getHeight() {
+		return 79;
 	}
 
 	@Override
@@ -54,6 +59,7 @@ public class CrusherCategory implements IRecipeCategory<CrushingRecipe> {
 
 	@Override
 	public void draw(CrushingRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+		this.background.draw(guiGraphics);
 		IRecipeCategory.super.draw(recipe, recipeSlotsView, guiGraphics, mouseX, mouseY);
 
 		Minecraft mc = Minecraft.getInstance();

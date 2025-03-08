@@ -7,11 +7,13 @@ import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.drawable.IDrawableStatic;
+import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.neoforged.neoforge.fluids.FluidStack;
@@ -22,7 +24,7 @@ public class PressingCategory implements IRecipeCategory<PressingRecipe> {
     private final IDrawableStatic fluidBackground;
 
     public PressingCategory(IGuiHelper guiHelper) {
-        background = guiHelper.drawableBuilder(ActuallyAdditions.modLoc("textures/gui/gui_canola_press.png"), 41, 4, 93, 85).setTextureSize(256,256).build();
+        background = guiHelper.drawableBuilder(ActuallyAdditions.modLoc("textures/gui/gui_canola_press.png"), 41, 4, 93, 85).build();
         fluidBackground = guiHelper.drawableBuilder(AssetUtil.GUI_INVENTORY_LOCATION, 0, 171, 18, 85).build();
     }
     @Override
@@ -36,8 +38,13 @@ public class PressingCategory implements IRecipeCategory<PressingRecipe> {
     }
 
     @Override
-    public IDrawable getBackground() {
-        return background;
+    public int getWidth() {
+        return 93;
+    }
+
+    @Override
+    public int getHeight() {
+        return 85;
     }
 
     @Override
@@ -60,5 +67,11 @@ public class PressingCategory implements IRecipeCategory<PressingRecipe> {
                 .addFluidStack(output.getFluid(), output.getAmount())
                 .setFluidRenderer(output.getAmount(), false, 16, height)
                 .setBackground(fluidBackground, -1, -1 - offset);
+    }
+
+    @Override
+    public void draw(PressingRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+        this.background.draw(guiGraphics);
+        IRecipeCategory.super.draw(recipe, recipeSlotsView, guiGraphics, mouseX, mouseY);
     }
 }

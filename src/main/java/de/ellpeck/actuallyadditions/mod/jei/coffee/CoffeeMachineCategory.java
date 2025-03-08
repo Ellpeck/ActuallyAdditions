@@ -26,7 +26,7 @@ public class CoffeeMachineCategory implements IRecipeCategory<CoffeeIngredientRe
 	private final IDrawableStatic background;
 
 	public CoffeeMachineCategory(IGuiHelper helper) {
-		this.background = helper.drawableBuilder(AssetUtil.getGuiLocation("gui_nei_coffee_machine"), 0, 0, 126, 92).setTextureSize(256,256).build();
+		this.background = helper.drawableBuilder(AssetUtil.getGuiLocation("gui_nei_coffee_machine"), 0, 0, 126, 92).build();
 	}
 
 	@Override
@@ -40,8 +40,13 @@ public class CoffeeMachineCategory implements IRecipeCategory<CoffeeIngredientRe
 	}
 
 	@Override
-	public IDrawable getBackground() {
-		return background;
+	public int getWidth() {
+		return 126;
+	}
+
+	@Override
+	public int getHeight() {
+		return 92;
 	}
 
 	@Override
@@ -62,6 +67,7 @@ public class CoffeeMachineCategory implements IRecipeCategory<CoffeeIngredientRe
 
 	@Override
 	public void draw(CoffeeIngredientRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+		this.background.draw(guiGraphics);
 		IRecipeCategory.super.draw(recipe, recipeSlotsView, guiGraphics, mouseX, mouseY);
 
 		Minecraft mc = Minecraft.getInstance();

@@ -36,7 +36,7 @@ public class MiningLensRecipeCategory implements IRecipeCategory<MiningLensRecip
     private final ItemStack RECONSTRUCTOR = new ItemStack(ActuallyBlocks.ATOMIC_RECONSTRUCTOR.getItem());
 
     public MiningLensRecipeCategory(IGuiHelper helper) {
-        this.background = helper.drawableBuilder(AssetUtil.getGuiLocation("gui_nei_atomic_reconstructor"), 0, 0, 96, 60).setTextureSize(256,256).build();
+        this.background = helper.drawableBuilder(AssetUtil.getGuiLocation("gui_nei_atomic_reconstructor"), 0, 0, 96, 60).build();
     }
 
 	@Override
@@ -50,8 +50,13 @@ public class MiningLensRecipeCategory implements IRecipeCategory<MiningLensRecip
     }
 
     @Override
-    public IDrawable getBackground() {
-        return this.background;
+    public int getWidth() {
+        return 96;
+    }
+
+    @Override
+    public int getHeight() {
+        return 60;
     }
 
     @Override
@@ -77,6 +82,8 @@ public class MiningLensRecipeCategory implements IRecipeCategory<MiningLensRecip
 
     @Override
     public void draw(MiningLensRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+        this.background.draw(guiGraphics);
+        IRecipeCategory.super.draw(recipe, recipeSlotsView, guiGraphics, mouseX, mouseY);
         Minecraft mc = Minecraft.getInstance();
 
         Component component = Component.translatable("jei.actuallyadditions.mining_lens.weight");

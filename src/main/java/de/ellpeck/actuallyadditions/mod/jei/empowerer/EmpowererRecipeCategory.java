@@ -17,12 +17,14 @@ import de.ellpeck.actuallyadditions.mod.util.AssetUtil;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.drawable.IDrawableStatic;
+import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
@@ -35,7 +37,7 @@ public class EmpowererRecipeCategory implements IRecipeCategory<EmpowererRecipe>
     private final IDrawableStatic background;
 
     public EmpowererRecipeCategory(IGuiHelper helper) {
-        this.background = helper.drawableBuilder(AssetUtil.getGuiLocation("gui_nei_empowerer"), 0, 0, 135, 80).setTextureSize(256,256).build();
+        this.background = helper.drawableBuilder(AssetUtil.getGuiLocation("gui_nei_empowerer"), 0, 0, 135, 80).build();
     }
 
 	@Override
@@ -48,10 +50,15 @@ public class EmpowererRecipeCategory implements IRecipeCategory<EmpowererRecipe>
         return Component.translatable("container.actuallyadditions.empowerer");
     }
 
-    @Override
-    public IDrawable getBackground() {
-        return background;
-    }
+	@Override
+	public int getWidth() {
+		return 135;
+	}
+
+	@Override
+	public int getHeight() {
+		return 80;
+	}
 
     @Override
     public IDrawable getIcon() {
@@ -74,5 +81,11 @@ public class EmpowererRecipeCategory implements IRecipeCategory<EmpowererRecipe>
 		builder.addSlot(RecipeIngredientRole.INPUT, 32, 62).addIngredients(recipe.getStandFour());
 
 		builder.addSlot(RecipeIngredientRole.OUTPUT, 113, 32).addItemStack(recipe.getResultItem(registries));
+	}
+
+	@Override
+	public void draw(EmpowererRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+		this.background.draw(guiGraphics);
+		IRecipeCategory.super.draw(recipe, recipeSlotsView, guiGraphics, mouseX, mouseY);
 	}
 }

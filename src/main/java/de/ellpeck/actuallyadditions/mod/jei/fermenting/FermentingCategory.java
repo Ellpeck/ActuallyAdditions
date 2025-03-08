@@ -24,7 +24,7 @@ public class FermentingCategory implements IRecipeCategory<FermentingRecipe> {
     private final IDrawableStatic fluidBackground;
 
     public FermentingCategory(IGuiHelper guiHelper) {
-        background = guiHelper.drawableBuilder(RES_LOC, 41, 4, 94, 86).setTextureSize(256,256).build();
+        background = guiHelper.drawableBuilder(RES_LOC, 41, 4, 94, 86).build();
 	    fluidBackground = guiHelper.drawableBuilder(AssetUtil.GUI_INVENTORY_LOCATION, 0, 171, 18, 85).build();
     }
 
@@ -38,10 +38,15 @@ public class FermentingCategory implements IRecipeCategory<FermentingRecipe> {
         return Component.literal("Fermenting Recipe");
     }
 
-    @Override
-    public IDrawable getBackground() {
-        return background;
-    }
+	@Override
+	public int getWidth() {
+		return 94;
+	}
+
+	@Override
+	public int getHeight() {
+		return 86;
+	}
 
     @Override
     public IDrawable getIcon() {
@@ -69,6 +74,8 @@ public class FermentingCategory implements IRecipeCategory<FermentingRecipe> {
 
 	@Override
 	public void draw(FermentingRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+		this.background.draw(guiGraphics);
+		IRecipeCategory.super.draw(recipe, recipeSlotsView, guiGraphics, mouseX, mouseY);
 		int recipeTime = recipe.getTime();
 		if (recipeTime > 0) {
 			int currentProcessTime = (int) (System.currentTimeMillis() / 50 % recipeTime);
@@ -77,6 +84,5 @@ public class FermentingCategory implements IRecipeCategory<FermentingRecipe> {
 				guiGraphics.blit(RES_LOC, 41, 30, 176, 0, 12, i);
 			}
 		}
-
 	}
 }
