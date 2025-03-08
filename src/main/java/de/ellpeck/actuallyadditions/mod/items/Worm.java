@@ -59,9 +59,7 @@ public class Worm extends ItemBase {
     }
 
     public static void onHoe(BlockEvent.BlockToolModificationEvent event) {
-        if (event.getItemAbility() == ItemAbilities.HOE_TILL) {
-            Level level = event.getPlayer().level();
-
+        if (event.getItemAbility() == ItemAbilities.HOE_TILL && event.getLevel() instanceof Level level) {
             if (level.isClientSide || !CommonConfig.Other.WORMS.get())
                 return;
 
