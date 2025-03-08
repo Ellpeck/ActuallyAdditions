@@ -25,7 +25,6 @@ import de.ellpeck.actuallyadditions.mod.jei.fermenting.FermentingCategory;
 import de.ellpeck.actuallyadditions.mod.jei.laser.LaserRecipeCategory;
 import de.ellpeck.actuallyadditions.mod.jei.lens.MiningLensRecipeCategory;
 import de.ellpeck.actuallyadditions.mod.jei.pressing.PressingCategory;
-import de.ellpeck.actuallyadditions.mod.util.CapHelper;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.RecipeTypes;
@@ -38,8 +37,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 
-import javax.annotation.Nonnull;
-import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 @JeiPlugin
 public class JEIActuallyAdditionsPlugin implements IModPlugin {
@@ -58,17 +56,10 @@ public class JEIActuallyAdditionsPlugin implements IModPlugin {
     public static final RecipeType<MiningLensRecipe> MINING_LENS = RecipeType.create(ActuallyAdditions.MODID, "mining_lens", MiningLensRecipe.class);
 
     @Override
-    public void registerItemSubtypes(@Nonnull ISubtypeRegistration reg) {
+    public void registerItemSubtypes(@NotNull ISubtypeRegistration reg) {
         ActuallyItems.ITEMS.getEntries().forEach(entry -> {
             if (entry.get() instanceof ItemEnergy)
-                reg.registerSubtypeInterpreter(entry.get(),
-                (ingredient, context) -> CapHelper.getEnergyStorage(ingredient).flatMap(storage -> {
-                    if (storage.getEnergyStored() == storage.getMaxEnergyStored()) {
-                        return Optional.of("charged");
-                    } else {
-                        return Optional.of("uncharged");
-                    }
-                }).orElse("uncharged"));
+                reg.registerSubtypeInterpreter(entry.get(), EnergyInterpreter.INSTANCE);
         });
     }
 
@@ -89,9 +80,9 @@ public class JEIActuallyAdditionsPlugin implements IModPlugin {
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registry) {
         registry.addRecipeCatalyst(new ItemStack(ActuallyItems.CRAFTER_ON_A_STICK.get()), RecipeTypes.CRAFTING);
         registry.addRecipeCatalyst(new ItemStack(ActuallyBlocks.POWERED_FURNACE.getItem()), RecipeTypes.SMELTING);
-        registry.addRecipeCatalyst(new ItemStack(ActuallyBlocks.FERMENTING_BARREL.getItem()), FERMENTING); 
-        registry.addRecipeCatalyst(new ItemStack(ActuallyBlocks.ATOMIC_RECONSTRUCTOR.getItem()), LASER); 
-        registry.addRecipeCatalyst(new ItemStack(ActuallyBlocks.EMPOWERER.getItem()), EMPOWERER); 
+        registry.addRecipeCatalyst(new ItemStack(ActuallyBlocks.FERMENTING_BARREL.getItem()), FERMENTING);
+        registry.addRecipeCatalyst(new ItemStack(ActuallyBlocks.ATOMIC_RECONSTRUCTOR.getItem()), LASER);
+        registry.addRecipeCatalyst(new ItemStack(ActuallyBlocks.EMPOWERER.getItem()), EMPOWERER);
         registry.addRecipeCatalyst(new ItemStack(ActuallyBlocks.COFFEE_MACHINE.getItem()), COFFEE_MACHINE);
         registry.addRecipeCatalyst(new ItemStack(ActuallyBlocks.CANOLA_PRESS.getItem()), PRESSING);
         registry.addRecipeCatalyst(new ItemStack(ActuallyBlocks.CRUSHER.getItem()), CRUSHING);
