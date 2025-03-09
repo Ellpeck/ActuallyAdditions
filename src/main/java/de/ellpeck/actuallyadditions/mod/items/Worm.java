@@ -10,6 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
+import de.ellpeck.actuallyadditions.api.ActuallyTags;
 import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import de.ellpeck.actuallyadditions.mod.entity.EntityWorm;
 import de.ellpeck.actuallyadditions.mod.entity.InitEntities;
@@ -66,7 +67,7 @@ public class Worm extends ItemBase {
             BlockPos pos = event.getContext().getClickedPos();
             if (level.isEmptyBlock(pos.above())) {
                 BlockState state = level.getBlockState(pos);
-                if (state.getBlock() == Blocks.GRASS_BLOCK && level.random.nextFloat() >= 0.95F) {
+                if (state.is(ActuallyTags.Blocks.WORM_CAN_POP) && level.random.nextFloat() >= 0.95F) {
                     ItemStack stack = new ItemStack(ActuallyItems.WORM.get(), level.random.nextInt(2) + 1);
                     ItemEntity item = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, stack);
 
