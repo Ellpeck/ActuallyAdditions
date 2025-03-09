@@ -1,4 +1,4 @@
-// 1.21.1	2024-12-01T15:57:03.7596243	Loot Tables
+// 1.21.1	2025-03-09T14:09:37.5747352	Loot Tables
 ef11aa79a2f96a47250f46811f8491fd34d627f9 data/actuallyadditions/loot_table/blocks/atomic_reconstructor.json
 e15c868b26b669c30365bfb93e7d9274e07df16d data/actuallyadditions/loot_table/blocks/battery_box.json
 745d64af3b0203a138f9eca7de21ed4988b35c95 data/actuallyadditions/loot_table/blocks/bio_reactor.json
@@ -121,3 +121,4 @@ d43769e7f20448bf87952664a3ddd12db0804627 data/actuallyadditions/loot_table/block
 d3498d690b7d9170fecdc2dd9825519b680cfeec data/actuallyadditions/loot_table/blocks/wood_casing.json
 e1ebdde950a7f730c423a16143ad5598e3b6e3a7 data/actuallyadditions/loot_table/blocks/xp_solidifier.json
 860b2c007cf8a1942e3f2934e1385a3a75d3a940 data/actuallyadditions/loot_table/engineer_house.json
+f54f71971689d4ece10f1c379f6f678a8ef6ec0b data/actuallyadditions/loot_table/worm_drop.json

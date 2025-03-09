@@ -6,6 +6,7 @@ import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -192,6 +193,8 @@ public class BlockTagsGenerator extends BlockTagsProvider {
                 ActuallyBlocks.EMPOWERED_VOID_CRYSTAL.get(),
                 ActuallyBlocks.EMPOWERED_EMERADIC_CRYSTAL.get()
         );
+
+        tag(ActuallyTags.Blocks.WORM_CAN_POP).add(Blocks.GRASS_BLOCK);
 
         this.tag(ActuallyTags.Blocks.MINEABLE_WITH_DRILL).addTags(
                 BlockTags.MINEABLE_WITH_SHOVEL,
