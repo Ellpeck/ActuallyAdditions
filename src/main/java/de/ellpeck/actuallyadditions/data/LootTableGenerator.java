@@ -210,7 +210,7 @@ public class LootTableGenerator extends LootTableProvider {
 
             addCrop(ActuallyBlocks.CANOLA, ActuallyItems.CANOLA, 2, 3, ActuallyItems.CANOLA_SEEDS);
             addCrop(ActuallyBlocks.RICE, ActuallyItems.RICE, 1, 2, ActuallyItems.RICE_SEEDS);
-            addCrop(ActuallyBlocks.FLAX, () -> Items.STRING, 2, 4, ActuallyItems.FLAX_SEEDS);
+            addCrop(ActuallyBlocks.FLAX, () -> net.minecraft.world.item.Items.STRING, 2, 4, ActuallyItems.FLAX_SEEDS);
             addCrop(ActuallyBlocks.COFFEE, ActuallyItems.COFFEE_BEANS, 2, 2, ActuallyItems.COFFEE_BEANS);
         }
 
