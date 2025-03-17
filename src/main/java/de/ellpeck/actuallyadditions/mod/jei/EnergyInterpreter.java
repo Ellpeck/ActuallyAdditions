@@ -4,6 +4,7 @@ import de.ellpeck.actuallyadditions.mod.util.CapHelper;
 import mezz.jei.api.ingredients.subtypes.ISubtypeInterpreter;
 import mezz.jei.api.ingredients.subtypes.UidContext;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -19,7 +20,11 @@ public class EnergyInterpreter implements ISubtypeInterpreter<ItemStack> {
 	@Override
 	@Nullable
 	public Object getSubtypeData(@NotNull ItemStack ingredient, @NotNull UidContext context) {
-		return CapHelper.getEnergyStorage(ingredient).orElse(null);
+		IEnergyStorage energyStorage = CapHelper.getEnergyStorage(ingredient).orElse(null);
+		if (energyStorage != null) {
+			return energyStorage.getEnergyStored();
+		}
+		return null;
 	}
 
 	@Override
