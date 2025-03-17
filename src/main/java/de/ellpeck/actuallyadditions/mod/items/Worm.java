@@ -78,7 +78,7 @@ public class Worm extends ItemBase {
                 BlockState state = level.getBlockState(pos);
                 if (state.is(ActuallyTags.Blocks.WORM_CAN_POP)) {
 
-                    List<ItemStack> loot_worm_items = LootTableUtil.getLootFromTable(level, LootTableGenerator.Items.WORM_DROP.location())
+                    List<ItemStack> loot_worm_items = LootTableUtil.getLootFromTable(level, LootTableGenerator.ItemWorm.WORM_DROP.location())
                             .getRandomItems(new LootParams.Builder((ServerLevel) event.getLevel())
                                     .withLuck(event.getPlayer().getLuck())
                                     .create(LootContextParamSets.EMPTY));

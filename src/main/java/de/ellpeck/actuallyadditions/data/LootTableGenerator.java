@@ -56,7 +56,7 @@ public class LootTableGenerator extends LootTableProvider {
         super(packOutput, Set.of(), List.of(
                 new SubProviderEntry(Blocks::new, LootContextParamSets.BLOCK),
                 new SubProviderEntry(Dungeon::new, LootContextParamSets.CHEST),
-                new SubProviderEntry(Items::new, LootContextParamSets.BLOCK)
+                new SubProviderEntry(ItemWorm::new, LootContextParamSets.BLOCK)
         ), lookupProvider);
     }
 
@@ -210,7 +210,7 @@ public class LootTableGenerator extends LootTableProvider {
 
             addCrop(ActuallyBlocks.CANOLA, ActuallyItems.CANOLA, 2, 3, ActuallyItems.CANOLA_SEEDS);
             addCrop(ActuallyBlocks.RICE, ActuallyItems.RICE, 1, 2, ActuallyItems.RICE_SEEDS);
-            addCrop(ActuallyBlocks.FLAX, () -> net.minecraft.world.item.Items.STRING, 2, 4, ActuallyItems.FLAX_SEEDS);
+            addCrop(ActuallyBlocks.FLAX, () -> Items.STRING, 2, 4, ActuallyItems.FLAX_SEEDS);
             addCrop(ActuallyBlocks.COFFEE, ActuallyItems.COFFEE_BEANS, 2, 2, ActuallyItems.COFFEE_BEANS);
         }
 
@@ -292,8 +292,8 @@ public class LootTableGenerator extends LootTableProvider {
             );
         }
     }
-    public static class Items implements LootTableSubProvider {
-        public Items(HolderLookup.Provider provider) {
+    public static class ItemWorm implements LootTableSubProvider {
+        public ItemWorm(HolderLookup.Provider provider) {
 
         }
 
