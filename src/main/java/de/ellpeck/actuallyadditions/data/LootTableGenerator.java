@@ -3,6 +3,7 @@ package de.ellpeck.actuallyadditions.data;
 
 import com.google.common.collect.ImmutableSet;
 import de.ellpeck.actuallyadditions.api.ActuallyTags;
+import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.ActuallyBlocks;
 import de.ellpeck.actuallyadditions.mod.components.ActuallyComponents;
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids;
@@ -34,6 +35,9 @@ import net.minecraft.world.level.storage.loot.functions.CopyComponentsFunction;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemConditions;
+import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -51,7 +55,8 @@ public class LootTableGenerator extends LootTableProvider {
     public LootTableGenerator(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider) {
         super(packOutput, Set.of(), List.of(
                 new SubProviderEntry(Blocks::new, LootContextParamSets.BLOCK),
-                new SubProviderEntry(Dungeon::new, LootContextParamSets.CHEST)
+                new SubProviderEntry(Dungeon::new, LootContextParamSets.CHEST),
+                new SubProviderEntry(ItemWorm::new, LootContextParamSets.BLOCK)
         ), lookupProvider);
     }
 
@@ -283,6 +288,29 @@ public class LootTableGenerator extends LootTableProvider {
                                             .add(LootItem.lootTableItem(ActuallyItems.DRILL_CORE.get()).setWeight(5))
                                             .add(TagEntry.expandTag(ActuallyTags.Items.CRYSTALS).setWeight(20).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))))
                                             .add(TagEntry.expandTag(ActuallyTags.Items.CRYSTALS).setWeight(3).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))))
+                            )
+            );
+        }
+    }
+    public static class ItemWorm implements LootTableSubProvider {
+        public ItemWorm(HolderLookup.Provider provider) {
+
+        }
+
+
+        public static final ResourceKey<LootTable> WORM_DROP =   ResourceKey.create(Registries.LOOT_TABLE, ActuallyAdditions.modLoc("worm_drop"));
+
+        @Override
+        public void generate(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> pOutput) {
+
+            pOutput.accept(
+                    WORM_DROP,
+                    LootTable.lootTable()
+                            .withPool(
+                                    LootPool.lootPool()
+                                            .add(LootItem.lootTableItem(ActuallyItems.WORM)
+                                                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
+                                                        .when(LootItemRandomChanceCondition.randomChance(0.05F))
                             )
             );
         }

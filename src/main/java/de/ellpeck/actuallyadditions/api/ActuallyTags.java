@@ -71,7 +71,7 @@ public final class ActuallyTags {
         public static void touch() {
             // load the stupid tags
         }
-
+        public static final TagKey<Block> WORM_CAN_POP = tag("worm_drop");
         public static final TagKey<Block> MINEABLE_WITH_DRILL = tag("mineable/drill");
         public static final TagKey<Block> MINEABLE_WITH_AIO = tag("mineable/aio");
         public static final TagKey<Block> NEEDS_BLACK_QUARTZ_TOOL = tag("needs_black_quartz_tool");
@@ -95,6 +95,7 @@ public final class ActuallyTags {
         public static final TagKey<Block> STORAGE_BLOCKS_EMPOWERED_VOID_CRYSTAL = BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", "storage_blocks/empowered_void_crystal"));
         public static final TagKey<Block> STORAGE_BLOCKS_EMPOWERED_EMERADIC_CRYSTAL = BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", "storage_blocks/empowered_emeradic_crystal"));
         public static final TagKey<Block> STORAGE_BLOCKS_EMPOWERED_ENORI_CRYSTAL = BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", "storage_blocks/empowered_enori_crystal"));
+        
 
         private static TagKey<Block> tag(String name) {
             return TagKey.create(Registries.BLOCK, ActuallyAdditions.modLoc(name));
