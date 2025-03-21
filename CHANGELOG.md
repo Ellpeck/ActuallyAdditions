@@ -1,3 +1,8 @@
+# 1.3.17+mc1.21.1
+* Pulled in DevDyna's PR to upgrade worms to use block tags and loot tables, and fixed up cluster models.
+* Fixed Drills/Batteries/Etc not showing recipes in JEI
+* Fixed missing Lamp Controller recipe.
+
 # 1.3.16+mc1.21.1
 * Fix Coffee Maker automation
 * Fix Reconstructor in the JEI category being seen as input instead of render only causing EMI recipe tree to be more expensive than it should be
