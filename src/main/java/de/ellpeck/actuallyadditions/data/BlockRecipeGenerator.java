@@ -564,7 +564,8 @@ public class BlockRecipeGenerator extends RecipeProvider {
         Recipe.shaped(ActuallyBlocks.LAMP_CONTROLLER.getItem(), 4)
                 .pattern("RRR", "RLR", "RRR")
                 .define('R', ActuallyItems.RESTONIA_CRYSTAL.get())
-                .define('L', ActuallyTags.Items.LAMPS);
+                .define('L', ActuallyTags.Items.LAMPS)
+                .save(output);
     }
 
     public void Lamp(RecipeOutput output, AABlockReg<?,?,?> lamp, ItemLike dye) {

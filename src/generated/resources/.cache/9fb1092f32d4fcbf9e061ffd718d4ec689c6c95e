@@ -1,4 +1,5 @@
-// 1.21.1	2025-01-13T16:55:53.4195843	Recipes
+// 1.21.1	2025-03-21T11:30:42.3162467	Recipes
+29b83e4143e1081257ba78ef24485b64dc8515cd data/actuallyadditions/advancement/recipes/misc/lamp_controller.json
 b44fee42c2b2b3f56256fe76b2d9f529dc87350a data/actuallyadditions/recipe/atomic_reconstructor.json
 b1c937b75ba7f8e02dfac4db5253271f2de502e5 data/actuallyadditions/recipe/battery_box.json
 660b96730a8ef88b4b44e4ce67fde0945c13ae7f data/actuallyadditions/recipe/bio_reactor.json
@@ -70,6 +71,7 @@ c1828800d15b83adfc3c76e08e90398f4e9f5fd7 data/actuallyadditions/recipe/fermentin
 b5e2f993ee21feb655cb4424c68268f3f3c8598c data/actuallyadditions/recipe/lamp_black.json
 705cfa023d54ebd0f970008277d095b0cd7faca0 data/actuallyadditions/recipe/lamp_blue.json
 24aac8a0a29815ba298f4211e6da395c63fc6e4f data/actuallyadditions/recipe/lamp_brown.json
+cd2a0bd55343fd316f8c7ee136c3db8b69e1c9c0 data/actuallyadditions/recipe/lamp_controller.json
 13a6671aa87db5910d2f69ac4a503556fbd3211f data/actuallyadditions/recipe/lamp_cyan.json
 1ec071c21a3e97277f1ca1daa0d01d62af06d0d1 data/actuallyadditions/recipe/lamp_gray.json
 a969bff91c16131adb20e2276696170e85b0b2bb data/actuallyadditions/recipe/lamp_green.json

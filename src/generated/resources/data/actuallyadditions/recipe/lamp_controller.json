@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "L": {
+      "tag": "actuallyadditions:lamps"
+    },
+    "R": {
+      "item": "actuallyadditions:restonia_crystal"
+    }
+  },
+  "pattern": [
+    "RRR",
+    "RLR",
+    "RRR"
+  ],
+  "result": {
+    "count": 4,
+    "id": "actuallyadditions:lamp_controller"
+  }
+}
