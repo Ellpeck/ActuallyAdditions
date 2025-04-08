@@ -99,25 +99,16 @@ public final class AssetUtil {
         if (!stack.isEmpty()) {
             Minecraft mc = Minecraft.getInstance();
             ItemRenderer renderer = mc.getItemRenderer();
-            TextureManager manager = mc.getTextureManager();
             MultiBufferSource.BufferSource bufferSource = mc.renderBuffers().bufferSource();
 
             BakedModel model = renderer.getModel(stack, null, null, 0);
-            manager.bindForSetup(TextureAtlas.LOCATION_BLOCKS); //bind
-            manager.getTexture(TextureAtlas.LOCATION_BLOCKS).setBlurMipmap(false, false);
-//            RenderSystem.enableRescaleNormal();
-            RenderSystem.enableBlend();
-//            RenderSystem.pushMatrix();
             matrices.pushPose();
             model = ClientHooks.handleCameraTransforms(matrices, model, ItemDisplayContext.FIXED, false);
+            RenderSystem.enableBlend();
             renderer.render(stack, ItemDisplayContext.FIXED, false, matrices, bufferSource,
                     combinedOverlay, combinedLight, model);
-//            RenderSystem.popMatrix();
-            matrices.popPose();
-//            RenderSystem.disableRescaleNormal();
             RenderSystem.disableBlend();
-            manager.bindForSetup(TextureAtlas.LOCATION_BLOCKS); //bind
-            manager.getTexture(TextureAtlas.LOCATION_BLOCKS).restoreLastBlurMipmap();
+            matrices.popPose();
             bufferSource.endBatch();
         }
     }
