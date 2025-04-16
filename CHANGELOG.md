@@ -1,5 +1,6 @@
 # 1.3.18+mc1.21.1
 * Update enchantment related code
+* Fix the visual glitches when translucent particles are rendered while the laser item particles render
 
 # 1.3.17+mc1.21.1
 * Pulled in DevDyna's PR to upgrade worms to use block tags and loot tables, and fixed up cluster models.
