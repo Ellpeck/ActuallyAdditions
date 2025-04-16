@@ -82,7 +82,7 @@ public class LensDisenchanting extends Lens {
                             newBookStack = bookStack.copy();
                         }
 
-                        ItemUtil.removeEnchantment(newDisenchantStack, enchant, tile.getWorldObject().registryAccess());
+                        ItemUtil.removeEnchantment(newDisenchantStack, enchant);
 
                         ItemEntity disenchanted = new ItemEntity(toDisenchant.getCommandSenderWorld(), toDisenchant.getX(), toDisenchant.getY(), toDisenchant.getZ(), newDisenchantStack);
                         ItemEntity newBook = new ItemEntity(book.getCommandSenderWorld(), book.getX(), book.getY(), book.getZ(), newBookStack);

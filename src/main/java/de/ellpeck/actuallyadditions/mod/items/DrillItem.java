@@ -263,13 +263,12 @@ public class DrillItem extends ItemEnergy {
         if (getEnergyStored(stack) >= use) {
             //Enchants the Drill depending on the Upgrades it has
             if (upgrades.contains(ItemDrillUpgrade.UpgradeType.SILK_TOUCH)) {
-                ItemUtil.addEnchantment(stack, level.holderOrThrow(Enchantments.SILK_TOUCH), 1, level.registryAccess());
+                stack.enchant(level.holderOrThrow(Enchantments.SILK_TOUCH), 1);
             }
             else {
                 if (upgrades.contains(ItemDrillUpgrade.UpgradeType.FORTUNE)) {
-                    ItemUtil.addEnchantment(stack, level.holderOrThrow(Enchantments.FORTUNE),
-                            upgrades.contains(ItemDrillUpgrade.UpgradeType.FORTUNE_II) ? 3 : 1,
-                            level.registryAccess());
+                    stack.enchant(level.holderOrThrow(Enchantments.FORTUNE),
+                            upgrades.contains(ItemDrillUpgrade.UpgradeType.FORTUNE_II) ? 3 : 1);
                 }
             }
             //Block hit
@@ -289,8 +288,8 @@ public class DrillItem extends ItemEnergy {
                 }
 
                 //Removes Enchantments added above
-                ItemUtil.removeEnchantment(stack, level.holderOrThrow(Enchantments.SILK_TOUCH), level.registryAccess());
-                ItemUtil.removeEnchantment(stack, level.holderOrThrow(Enchantments.FORTUNE), level.registryAccess());
+                ItemUtil.removeEnchantment(stack, level.holderOrThrow(Enchantments.SILK_TOUCH));
+                ItemUtil.removeEnchantment(stack, level.holderOrThrow(Enchantments.FORTUNE));
             }
         }
         breakers.remove(player.getUUID());

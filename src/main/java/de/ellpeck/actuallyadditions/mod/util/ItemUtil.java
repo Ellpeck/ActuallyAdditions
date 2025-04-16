@@ -12,9 +12,7 @@ package de.ellpeck.actuallyadditions.mod.util;
 
 import de.ellpeck.actuallyadditions.mod.components.ActuallyComponents;
 import net.minecraft.core.Holder;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
@@ -62,16 +60,8 @@ public final class ItemUtil {
     //        return !(list == null || list.isEmpty()) && getPlaceAt(list, stack, checkWildcard) != -1;
     //    }
 
-    @Deprecated
-    public static void addEnchantment(ItemStack stack, Holder<Enchantment> e, int level, RegistryAccess lookup) {
-        if (!(stack.getAllEnchantments(lookup.lookupOrThrow(Registries.ENCHANTMENT)).getLevel(e) > 0)) {
-            stack.enchant(e, level);
-        }
-    }
-
-    // TODO: [port] ensure this still works :D
-    public static void removeEnchantment(ItemStack stack, Holder<Enchantment> e, RegistryAccess registryAccess) {
-        ItemEnchantments enchantments = stack.getAllEnchantments(registryAccess.lookupOrThrow(Registries.ENCHANTMENT));
+    public static void removeEnchantment(ItemStack stack, Holder<Enchantment> e) {
+        ItemEnchantments enchantments = stack.getTagEnchantments();
         ItemEnchantments.Mutable itemenchantments$mutable = new ItemEnchantments.Mutable(enchantments);
 
         itemenchantments$mutable.removeIf((enchantment) -> enchantment == e);
