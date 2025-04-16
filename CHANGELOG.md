@@ -1,3 +1,6 @@
+# 1.3.18+mc1.21.1
+* Update enchantment related code
+
 # 1.3.17+mc1.21.1
 * Pulled in DevDyna's PR to upgrade worms to use block tags and loot tables, and fixed up cluster models.
 * Fixed Drills/Batteries/Etc not showing recipes in JEI
