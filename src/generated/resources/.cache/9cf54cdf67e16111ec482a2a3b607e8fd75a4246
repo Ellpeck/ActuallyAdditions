@@ -1,4 +1,4 @@
-// 1.21.1	2024-12-12T19:35:44.7684353	Item Recipes
+// 1.21.1	2025-04-19T14:28:40.031525	Item Recipes
 14bd5bc2ee3e84b6f3a3181c0e0efd40df5f1d84 data/actuallyadditions/recipe/advanced_coil.json
 955aad6c1def123a6adbaeabb13faa6eedce847f data/actuallyadditions/recipe/advanced_leaf_blower.json
 97e7ba64f5054b030f4e49615dc4212a28ca9be1 data/actuallyadditions/recipe/basic_coil.json
@@ -78,6 +78,7 @@ a8b8e2a7ee66f320dc3fdffe07ec1b37a9d5a895 data/actuallyadditions/recipe/drill_upg
 792becebcb8e93b5893517463325ad08f7d07300 data/actuallyadditions/recipe/drill_upgrade_speed_iii.json
 d13393cec567e646d5a3fda8f700ae5739770d7e data/actuallyadditions/recipe/drill_upgrade_three_by_three.json
 eccc61f49d5d85852f83a2186d7eb11709d7dfb4 data/actuallyadditions/recipe/empty_cup.json
+a9ad3b933a50565ad3fd9fc1c6e85d1d19caccb6 data/actuallyadditions/recipe/ender_star.json
 66596c1119f7e237bb11a045677f702d97d664b7 data/actuallyadditions/recipe/engineers_goggles.json
 b8e6e228feb1b51b1b9c3269f932ffa0438d54ad data/actuallyadditions/recipe/engineers_goggles_advanced.json
 90ccbe23b72d53009557fc15b09ccfe2ca3136e9 data/actuallyadditions/recipe/filter.json

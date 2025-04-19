@@ -369,6 +369,11 @@ public class ItemRecipeGenerator extends RecipeProvider {
             .define('A', ActuallyItems.BASIC_COIL.get())
             .define('R', ActuallyItems.ENORI_CRYSTAL.get()).save(recipeOutput);
 
+        //Ender Star
+        Recipe.shapeless(ActuallyItems.ENDER_STAR.get())
+                .ingredients(Items.NETHER_STAR, Items.DRAGON_BREATH, ActuallyItems.BLACK_QUARTZ.get(), Items.PRISMARINE_SHARD)
+                .save(recipeOutput);
+
         //Bat Wings
         Recipe.shaped(ActuallyItems.WINGS_OF_THE_BATS.get())
             .pattern("WNW")
