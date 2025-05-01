@@ -18,23 +18,18 @@ import de.ellpeck.actuallyadditions.mod.entity.InitEntities;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.util.LootTableUtil;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParamSet;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.phys.AABB;
 import net.neoforged.neoforge.common.ItemAbilities;
 import net.neoforged.neoforge.event.level.BlockEvent;
-import net.minecraft.world.level.storage.loot.LootParams.Builder;
-import net.minecraft.world.level.storage.loot.LootParams;
 
 import java.util.List;
 
@@ -47,7 +42,7 @@ public class Worm extends ItemBase {
     @Override
     public InteractionResult useOn(UseOnContext context) {
         BlockPos pos = context.getClickedPos();
-        ItemStack stack = context.getPlayer().getItemInHand(context.getHand());
+        ItemStack stack = context.getItemInHand();
         Level level = context.getLevel();
         BlockState state = level.getBlockState(pos);
 
@@ -62,8 +57,8 @@ public class Worm extends ItemBase {
         worm.setPos(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
         worm.setCustomName(stack.getHoverName());
         level.addFreshEntity(worm);
-        if (!context.getPlayer().isCreative())
-            stack.shrink(1);
+
+        stack.consume(1, context.getPlayer());
 
         return InteractionResult.SUCCESS;
     }
@@ -77,10 +72,11 @@ public class Worm extends ItemBase {
             if (level.isEmptyBlock(pos.above())) {
                 BlockState state = level.getBlockState(pos);
                 if (state.is(ActuallyTags.Blocks.WORM_CAN_POP)) {
+                    float luck = event.getPlayer() != null ? event.getPlayer().getLuck() : 0;
 
                     List<ItemStack> loot_worm_items = LootTableUtil.getLootFromTable(level, LootTableGenerator.ItemWorm.WORM_DROP.location())
                             .getRandomItems(new LootParams.Builder((ServerLevel) event.getLevel())
-                                    .withLuck(event.getPlayer().getLuck())
+                                    .withLuck(luck)
                                     .create(LootContextParamSets.EMPTY));
 
                     for (ItemStack item : loot_worm_items) {
