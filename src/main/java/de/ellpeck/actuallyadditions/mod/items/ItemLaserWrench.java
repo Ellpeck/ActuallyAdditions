@@ -59,7 +59,7 @@ public class ItemLaserWrench extends ItemBase {
                             if (ItemPhantomConnector.getStoredWorld(stack) == world.dimension() && savedRelay.type == relay.type && distanceSq <= range && ActuallyAdditionsAPI.connectionHandler.addConnection(savedPos, pos, relay.type, world, false, true)) {
                                 ItemPhantomConnector.clearStorage(stack, ActuallyComponents.POSITION.get(), ActuallyComponents.LEVEL.get());
 
-                                ((TileEntityLaserRelay) savedTile).sendUpdate();
+                                savedRelay.sendUpdate();
                                 relay.sendUpdate();
 
                                 if (player != null)
@@ -69,7 +69,8 @@ public class ItemLaserWrench extends ItemBase {
                             }
                         }
 
-                        player.displayClientMessage(Component.translatable("tooltip.actuallyadditions.laser.cantConnect.desc"), false);
+                        if (player != null)
+                            player.displayClientMessage(Component.translatable("tooltip.actuallyadditions.laser.cantConnect.desc"), false);
                         ItemPhantomConnector.clearStorage(stack, ActuallyComponents.POSITION.get(), ActuallyComponents.LEVEL.get());
                     }
                 }

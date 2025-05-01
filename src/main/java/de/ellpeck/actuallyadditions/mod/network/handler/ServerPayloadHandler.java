@@ -99,7 +99,7 @@ public class ServerPayloadHandler {
 						if (entity instanceof Player p) {
 							AbstractContainerMenu container = p.containerMenu;
 							if (container instanceof IButtonReactor reactor) {
-								reactor.onButtonPressed(packet.buttonId(), (Player) entity);
+								reactor.onButtonPressed(packet.buttonId(), p);
 							}
 						}
 					}
