@@ -1,3 +1,8 @@
+# 1.3.19+mc1.21.1
+* Add missing Ender Star recipe
+* Add missing null checks to the worm to prevent crashes
+* Add null checks to other items/blocks to prevent crashes
+
 # 1.3.18+mc1.21.1
 * Update enchantment related code
 * Fix the visual glitches when translucent particles are rendered while the laser item particles render
