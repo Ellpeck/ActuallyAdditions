@@ -65,7 +65,7 @@ public class FermentingCategory implements IRecipeCategory<FermentingRecipe> {
 
 		FluidStack output = recipe.getOutput();
 		height = (int)(83D / 1000 * input.getAmount());
-		offset = 83 - height;;
+		offset = 83 - height;
 		builder.addSlot(RecipeIngredientRole.OUTPUT, 20+38, 1 + offset)
 				.addFluidStack(output.getFluid(), output.getAmount())
 				.setFluidRenderer(output.getAmount(), false, 16, height)

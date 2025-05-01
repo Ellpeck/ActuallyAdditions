@@ -84,7 +84,7 @@ public class LaserRecipeGenerator extends RecipeProvider {
     }
     private void laserRecipe(RecipeOutput consumer, ItemLike output, ItemLike input, int energy) {
         ResourceLocation id = ActuallyAdditions.modLoc("laser/" + BuiltInRegistries.ITEM.getKey(output.asItem()).getPath());
-        consumer.accept(id, new LaserRecipe(output.asItem().getDefaultInstance(), Ingredient.of(input), energy), null);;
+        consumer.accept(id, new LaserRecipe(output.asItem().getDefaultInstance(), Ingredient.of(input), energy), null);
     }
     private void laserCrystalizeRecipe(RecipeOutput consumer, ItemLike output, Ingredient input, int energy) {
         ResourceLocation id = ActuallyAdditions.modLoc("laser/crystalize_" + BuiltInRegistries.ITEM.getKey(output.asItem()).getPath());

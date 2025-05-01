@@ -105,7 +105,7 @@ public class CrushingRecipe implements Recipe<RecipeInput> {
 
     public record CrushingResult(ItemStack stack, float chance) {
         public static final CrushingResult EMPTY = new CrushingResult(ItemStack.EMPTY, 0.0F);
-    };
+    }
 
     public static class Serializer implements RecipeSerializer<CrushingRecipe> {
         private static final Codec<CrushingResult> RESULT_CODEC = RecordCodecBuilder.create(
