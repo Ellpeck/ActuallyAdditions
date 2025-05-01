@@ -43,7 +43,7 @@ public class Sack extends ItemBase {
     @Nonnull
     @Override
     public InteractionResult useOn(UseOnContext context) {
-        ItemStack stack = context.getPlayer().getItemInHand(context.getHand());
+        ItemStack stack = context.getItemInHand();
 /*        if (!this.isVoid) { //TODO oh boy this is still old... needs to be converted to the new UUID system.
             Level level = context.getLevel();
             BlockPos clickedPos = context.getClickedPos();

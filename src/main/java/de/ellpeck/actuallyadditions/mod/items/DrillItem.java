@@ -122,9 +122,9 @@ public class DrillItem extends ItemEnergy {
         Player player = context.getPlayer();
         InteractionHand hand = context.getHand();
 
-        ItemStack stack = player.getItemInHand(hand);
+        ItemStack stack = context.getItemInHand();
         ItemStack upgrade = this.getHasUpgradeAsStack(stack, ItemDrillUpgrade.UpgradeType.PLACER);
-        if (!upgrade.isEmpty()) {
+        if (!upgrade.isEmpty() && player != null) {
             int slot = ItemDrillUpgrade.getSlotToPlaceFrom(upgrade);
             if (slot >= 0 && slot < 9) { // TODO: validate... old = PlayerInventory.getHotbarSize(); new = 9
                 ItemStack equip = player.getInventory().getItem(slot);

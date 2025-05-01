@@ -55,7 +55,7 @@ public class ItemPhantomConnector extends ItemBase {
 
     @Override
     public InteractionResult useOn(UseOnContext context) {
-        ItemStack stack = context.getPlayer().getItemInHand(context.getHand());
+        ItemStack stack = context.getItemInHand();
         if (!context.getLevel().isClientSide) {
             //Passing Data to Phantoms
             BlockPos pos = context.getClickedPos();
@@ -70,7 +70,8 @@ public class ItemPhantomConnector extends ItemBase {
                             ((TileEntityBase) tile).sendUpdate();
                         }
                         clearStorage(stack, ActuallyComponents.POSITION.get(), ActuallyComponents.LEVEL.get());
-                        context.getPlayer().displayClientMessage(Component.translatable("tooltip.actuallyadditions.phantom.connected.desc"), true);
+                        if (context.getPlayer() != null)
+                            context.getPlayer().displayClientMessage(Component.translatable("tooltip.actuallyadditions.phantom.connected.desc"), true);
                         return InteractionResult.SUCCESS;
                     }
                     return InteractionResult.FAIL;
@@ -78,7 +79,8 @@ public class ItemPhantomConnector extends ItemBase {
             }
             //Storing Connections
             storeConnection(stack, pos.getX(), pos.getY(), pos.getZ(), context.getLevel());
-            context.getPlayer().displayClientMessage(Component.translatable("tooltip.actuallyadditions.phantom.stored.desc"), true);
+            if (context.getPlayer() != null)
+                context.getPlayer().displayClientMessage(Component.translatable("tooltip.actuallyadditions.phantom.stored.desc"), true);
         }
         return InteractionResult.SUCCESS;
     }
@@ -89,8 +91,8 @@ public class ItemPhantomConnector extends ItemBase {
 //        return new CompoundTag();
 //    }
 
-	@Override
-	public void appendHoverText(ItemStack stack, TooltipContext pContext, List<Component> list, TooltipFlag advanced) {
+    @Override
+    public void appendHoverText(ItemStack stack, TooltipContext pContext, List<Component> list, TooltipFlag advanced) {
         BlockPos coords = getStoredPosition(stack);
         if (coords != null) {
             list.add(Component.translatable("tooltip.actuallyadditions.boundTo.desc").append(":"));

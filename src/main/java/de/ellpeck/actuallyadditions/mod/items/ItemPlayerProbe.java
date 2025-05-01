@@ -65,7 +65,7 @@ public class ItemPlayerProbe extends ItemBase {
             return InteractionResult.FAIL;
         }
 
-        ItemStack stack = player.getItemInHand(context.getHand());
+        ItemStack stack = context.getItemInHand();
         BlockEntity tile = context.getLevel().getBlockEntity(context.getClickedPos());
         if (tile instanceof TileEntityPlayerInterface face) {
             UUID uuid = stack.get(ActuallyComponents.UUID);

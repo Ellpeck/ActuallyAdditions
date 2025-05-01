@@ -25,10 +25,10 @@ public class ItemFertilizer extends ItemBase {
 
         DispenserBlock.registerBehavior(this, new DispenserHandlerFertilize());
     }
-    
+
     @Override
     public InteractionResult useOn(UseOnContext context) {
-        ItemStack stack = context.getPlayer().getItemInHand(context.getHand());
+        ItemStack stack = context.getItemInHand();
         if (BoneMealItem.applyBonemeal(stack, context.getLevel(), context.getClickedPos(), context.getPlayer())) {
             if (!context.getLevel().isClientSide) {
                 context.getLevel().levelEvent(2005, context.getClickedPos(), 0);

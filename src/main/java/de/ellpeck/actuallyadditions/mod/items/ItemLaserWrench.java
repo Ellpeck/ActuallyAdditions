@@ -39,13 +39,14 @@ public class ItemLaserWrench extends ItemBase {
         Level world = context.getLevel();
         Player player = context.getPlayer();
 
-        ItemStack stack = player.getItemInHand(context.getHand());
+        ItemStack stack = context.getItemInHand();
         BlockEntity tile = world.getBlockEntity(pos);
         if (tile instanceof TileEntityLaserRelay relay) {
-	        if (!world.isClientSide) {
+            if (!world.isClientSide) {
                 if (ItemPhantomConnector.getStoredPosition(stack) == null) {
                     ItemPhantomConnector.storeConnection(stack, pos.getX(), pos.getY(), pos.getZ(), world);
-                    player.displayClientMessage(Component.translatable("tooltip.actuallyadditions.laser.stored.desc"), true);
+                    if (player != null)
+                        player.displayClientMessage(Component.translatable("tooltip.actuallyadditions.laser.stored.desc"), true);
                 } else {
                     BlockPos savedPos = ItemPhantomConnector.getStoredPosition(stack);
                     if (savedPos != null) {
@@ -53,7 +54,7 @@ public class ItemLaserWrench extends ItemBase {
                         if (savedTile instanceof TileEntityLaserRelay savedRelay) {
                             int distanceSq = (int) savedPos.distSqr(pos);
 
-	                        int lowestRange = Math.min(relay.getMaxRange(), savedRelay.getMaxRange());
+                            int lowestRange = Math.min(relay.getMaxRange(), savedRelay.getMaxRange());
                             int range = lowestRange * lowestRange;
                             if (ItemPhantomConnector.getStoredWorld(stack) == world.dimension() && savedRelay.type == relay.type && distanceSq <= range && ActuallyAdditionsAPI.connectionHandler.addConnection(savedPos, pos, relay.type, world, false, true)) {
                                 ItemPhantomConnector.clearStorage(stack, ActuallyComponents.POSITION.get(), ActuallyComponents.LEVEL.get());
@@ -61,7 +62,8 @@ public class ItemLaserWrench extends ItemBase {
                                 ((TileEntityLaserRelay) savedTile).sendUpdate();
                                 relay.sendUpdate();
 
-                                player.displayClientMessage(Component.translatable("tooltip.actuallyadditions.laser.connected.desc"), true);
+                                if (player != null)
+                                    player.displayClientMessage(Component.translatable("tooltip.actuallyadditions.laser.connected.desc"), true);
 
                                 return InteractionResult.SUCCESS;
                             }

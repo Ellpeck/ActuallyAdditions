@@ -80,7 +80,7 @@ public class Filler extends ItemEnergy {
             return InteractionResult.PASS;
         }
 
-        ItemStack stack = context.getPlayer().getItemInHand(context.getHand());
+        ItemStack stack = context.getItemInHand();
         if (!context.getLevel().isClientSide && context.getPlayer().getUseItemRemainingTicks() <= 0) {
             if (context.getPlayer().isCrouching()) {
                 BlockState state = context.getLevel().getBlockState(context.getClickedPos());
@@ -205,14 +205,14 @@ public class Filler extends ItemEnergy {
         }
     }
 
-    
+
     @Override
     public void appendHoverText(@Nonnull ItemStack stack, @Nonnull TooltipContext context, @Nonnull List<Component> tooltip, @Nonnull TooltipFlag flagIn) {
         super.appendHoverText(stack, context, tooltip, flagIn);
 
         MutableComponent display = loadData(stack)
-            .map(state -> state.getBlock().getName())
-            .orElse(Component.translatable("tooltip.actuallyadditions.item_filling_wand.selected_block.none"));
+                .map(state -> state.getBlock().getName())
+                .orElse(Component.translatable("tooltip.actuallyadditions.item_filling_wand.selected_block.none"));
 
         tooltip.add(Component.translatable("tooltip.actuallyadditions.item_filling_wand.selected_block", display.getString()));
     }
