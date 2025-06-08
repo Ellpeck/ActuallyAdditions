@@ -1,0 +1,7 @@
+{
+  "type": "actuallyadditions:bool_config_feature_modifier",
+  "biomes": "#c:is_overworld",
+  "boolConfig": "generateRice",
+  "features": "actuallyadditions:rice_patch",
+  "step": "vegetal_decoration"
+}

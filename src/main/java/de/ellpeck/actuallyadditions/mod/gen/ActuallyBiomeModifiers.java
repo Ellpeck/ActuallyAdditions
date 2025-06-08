@@ -54,6 +54,8 @@ public final class ActuallyBiomeModifiers {
 			ActuallyAdditions.modLoc("add_flax"));
 	protected static final ResourceKey<BiomeModifier> ADD_COFFEE = ResourceKey.create(NeoForgeRegistries.Keys.BIOME_MODIFIERS,
 			ActuallyAdditions.modLoc("add_coffee"));
+	protected static final ResourceKey<BiomeModifier> ADD_RICE = ResourceKey.create(NeoForgeRegistries.Keys.BIOME_MODIFIERS,
+			ActuallyAdditions.modLoc("add_rice"));
 
 	public static void bootstrap(BootstrapContext<BiomeModifier> context) {
 		HolderGetter<Biome> biomeGetter = context.lookup(Registries.BIOME);
@@ -80,6 +82,11 @@ public final class ActuallyBiomeModifiers {
 				biomeGetter.getOrThrow(Tags.Biomes.IS_HOT_OVERWORLD),
 				HolderSet.direct(placedGetter.getOrThrow(ActuallyPlacedFeatures.COFFEE_PATCH)),
 				GenerationStep.Decoration.VEGETAL_DECORATION, "generateCoffee"
+		));
+		context.register(ADD_RICE, new BoolConfigFeatureBiomeModifier(
+				biomeGetter.getOrThrow(Tags.Biomes.IS_OVERWORLD),
+				HolderSet.direct(placedGetter.getOrThrow(ActuallyPlacedFeatures.RICE_PATCH)),
+				GenerationStep.Decoration.VEGETAL_DECORATION, "generateRice"
 		));
 	}
 }

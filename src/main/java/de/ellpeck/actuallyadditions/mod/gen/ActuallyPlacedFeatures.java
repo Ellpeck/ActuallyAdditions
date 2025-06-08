@@ -24,6 +24,7 @@ public class ActuallyPlacedFeatures {
 	public static final ResourceKey<PlacedFeature> CANOLA_PATCH = createKey("canola_patch");
 	public static final ResourceKey<PlacedFeature> FLAX_PATCH = createKey("flax_patch");
 	public static final ResourceKey<PlacedFeature> COFFEE_PATCH = createKey("coffee_patch");
+	public static final ResourceKey<PlacedFeature> RICE_PATCH = createKey("rice_patch");
 
 	public static void bootstrap(BootstrapContext<PlacedFeature> context) {
 		HolderGetter<ConfiguredFeature<?, ?>> holdergetter = context.lookup(Registries.CONFIGURED_FEATURE);
@@ -56,6 +57,17 @@ public class ActuallyPlacedFeatures {
 				COFFEE_PATCH,
 				holdergetter.getOrThrow(ActuallyConfiguredFeatures.COFFEE_PATCH),
 				RarityFilter.onAverageOnceEvery(8),
+				NoiseThresholdCountPlacement.of(-0.8, 5, 10),
+				InSquarePlacement.spread(),
+				PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
+				BiomeFilter.biome()
+		);
+
+		PlacementUtils.register(
+				context,
+				RICE_PATCH,
+				holdergetter.getOrThrow(ActuallyConfiguredFeatures.RICE_PATCH),
+				RarityFilter.onAverageOnceEvery(4),
 				NoiseThresholdCountPlacement.of(-0.8, 5, 10),
 				InSquarePlacement.spread(),
 				PlacementUtils.HEIGHTMAP_WORLD_SURFACE,

@@ -75,6 +75,7 @@ public class CommonConfig {
         public static ModConfigSpec.BooleanValue GENERATE_CANOLA;
         public static ModConfigSpec.BooleanValue GENERATE_FLAX;
         public static ModConfigSpec.BooleanValue GENERATE_COFFEE;
+        public static ModConfigSpec.BooleanValue GENERATE_RICE;
 
         public static void build() {
             BUILDER.comment("Worldgen Settings").push("worldgenSettings");
@@ -83,6 +84,7 @@ public class CommonConfig {
             GENERATE_CANOLA = BUILDER.comment("Should Canola generate in the World?").define("generateCanola", true);
             GENERATE_FLAX = BUILDER.comment("Should Flax generate in the world?").define("generateFlax", true);
             GENERATE_COFFEE = BUILDER.comment("Should Coffee generate in the world?").define("generateCoffee", true);
+            GENERATE_RICE = BUILDER.comment("Should Rice generate in the world?").define("generateRice", true);
 
             BUILDER.pop();
         }
