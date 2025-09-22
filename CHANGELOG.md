@@ -1,3 +1,7 @@
+# 1.3.20+mc1.21.1
+* Fixed Rice not generating in the world.
+* Fixed the Mini-torch having collision.
+
 # 1.3.19+mc1.21.1
 * Add missing Ender Star recipe
 * Add missing null checks to the worm to prevent crashes

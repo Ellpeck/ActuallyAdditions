@@ -37,7 +37,7 @@ public class BlockTinyTorch extends BlockBase {
     public static final DirectionProperty FACING = DirectionProperty.create("facing", direction -> direction != Direction.DOWN);
 
     public BlockTinyTorch() {
-        super(Properties.of().pushReaction(PushReaction.DESTROY).sound(SoundType.WOOD).strength(0.0F, 0.8F));
+        super(Properties.of().pushReaction(PushReaction.DESTROY).sound(SoundType.WOOD).strength(0.0F, 0.8F).noCollission());
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.UP));
     }
 
