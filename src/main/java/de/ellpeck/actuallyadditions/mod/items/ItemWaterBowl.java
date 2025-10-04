@@ -14,24 +14,26 @@ import de.ellpeck.actuallyadditions.mod.components.ActuallyComponents;
 import de.ellpeck.actuallyadditions.mod.components.LastXY;
 import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
-import de.ellpeck.actuallyadditions.mod.util.StackUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.BucketPickup;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -50,35 +52,37 @@ public class ItemWaterBowl extends ItemBase {
 
     @SubscribeEvent
     public void onPlayerInteractEvent(PlayerInteractEvent.RightClickItem event) {
-        if (event.getLevel() != null && CommonConfig.Other.WATER_BOWL.get()) {
-            if (!event.getItemStack().isEmpty() && event.getItemStack().is(Items.BOWL)) {
-                BlockHitResult trace = getPlayerPOVHitResult(
-                        event.getLevel(), event.getEntity(), ClipContext.Fluid.SOURCE_ONLY //Using pick will also return flowing water
-                );
-                if (trace.getType() != HitResult.Type.BLOCK) {
-                    return;
-                }
+        if (CommonConfig.Other.WATER_BOWL.get() && event.getItemStack().is(Items.BOWL)) {
+            Player player = event.getEntity();
+            Level level = event.getLevel();
+            BlockHitResult trace = getPlayerPOVHitResult(
+                    level, player, ClipContext.Fluid.SOURCE_ONLY //Using pick will also return flowing water
+            );
+            if (trace.getType() != HitResult.Type.BLOCK) {
+                return;
+            }
 
-                if (event.getEntity().mayUseItemAt(trace.getBlockPos().relative(trace.getDirection()), trace.getDirection(), event.getItemStack())) {
-                    BlockState state = event.getLevel().getBlockState(trace.getBlockPos());
+            ItemStack bowl = event.getItemStack();
+            BlockPos pos = trace.getBlockPos();
 
-                    if (state.getFluidState().is(Fluids.WATER) && state.getValue(BlockStateProperties.LEVEL) == 0) {
-                        event.getEntity().playSound(SoundEvents.BUCKET_FILL, 1.0F, 1.0F);
+            if (level.mayInteract(player, pos) && player.mayUseItemAt(pos.relative(trace.getDirection()), trace.getDirection(), bowl)) {
+                BlockState blockState = level.getBlockState(pos);
+                FluidState fluidState = blockState.getFluidState();
 
-                        if (!event.getLevel().isClientSide) {
-                            event.getLevel().setBlock(trace.getBlockPos(), Blocks.AIR.defaultBlockState(), 11);
-                            ItemStack reduced = StackUtil.shrink(event.getItemStack(), 1);
-
-                            ItemStack bowl = new ItemStack(ActuallyItems.WATER_BOWL.get());
-                            if (reduced.isEmpty()) {
-                                event.getEntity().setItemInHand(event.getHand(), bowl);
-                            } else if (!event.getEntity().getInventory().add(bowl.copy())) {
-                                ItemEntity entityItem = new ItemEntity(event.getLevel(), event.getEntity().getX(), event.getEntity().getY(), event.getEntity().getZ(), bowl.copy());
-                                entityItem.setPickUpDelay(0);
-                                event.getLevel().addFreshEntity(entityItem);
-                            }
+                if (fluidState.isSourceOfType(Fluids.WATER)) {
+                    if (blockState.getBlock() instanceof BucketPickup pickup) {
+                        ItemStack fillResult = pickup.pickupBlock(player, level, pos, blockState);
+                        if (!fillResult.isEmpty()) {
+                            player.awardStat(Stats.ITEM_USED.get(bowl.getItem()));
+                            level.gameEvent(player, GameEvent.FLUID_PICKUP, pos);
                         }
+
+                        pickup.getPickupSound(blockState).ifPresent(soundEvent -> player.playSound(soundEvent, 1.0F, 1.0F));
                     }
+
+                    ItemStack waterBowl = new ItemStack(ActuallyItems.WATER_BOWL.get());
+                    ItemStack inHand = ItemUtils.createFilledResult(bowl, player, waterBowl);
+                    player.setItemInHand(event.getHand(), inHand);
                 }
             }
         }
@@ -89,7 +93,7 @@ public class ItemWaterBowl extends ItemBase {
     public InteractionResultHolder<ItemStack> use(@Nonnull Level world, Player player, @Nonnull InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
 
-        HitResult trace = player.pick(8.0D, 1.0F, false);
+        HitResult trace = player.pick(player.blockInteractionRange(), 1.0F, false);
 
         if (trace.getType() == HitResult.Type.MISS) {
             return InteractionResultHolder.pass(stack);
