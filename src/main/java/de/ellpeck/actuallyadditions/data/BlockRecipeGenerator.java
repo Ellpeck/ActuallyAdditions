@@ -104,6 +104,9 @@ public class BlockRecipeGenerator extends RecipeProvider {
         Recipe.stonecutterResultFromBase(recipeOutput, RecipeCategory.DECORATIONS, ActuallyBlocks.BLACK_QUARTZ_BRICK.getItem(), ActuallyBlocks.BLACK_QUARTZ.get());
         Recipe.stonecutterResultFromBase(recipeOutput, RecipeCategory.DECORATIONS, ActuallyBlocks.CHISELED_BLACK_QUARTZ.getItem(), ActuallyBlocks.BLACK_QUARTZ.get());
 
+        // Smooth Black Quartz Smelting
+        Recipe.smeltingResultFromBase(recipeOutput, RecipeCategory.DECORATIONS, ActuallyBlocks.SMOOTH_BLACK_QUARTZ.get(), ActuallyBlocks.BLACK_QUARTZ.get());
+
         //Black Quartz Wall
         Recipe.wall(ActuallyBlocks.BLACK_QUARTZ_WALL.getItem(), ActuallyBlocks.BLACK_QUARTZ.get(), recipeOutput);
         Recipe.stonecutterResultFromBase(recipeOutput, RecipeCategory.DECORATIONS, ActuallyBlocks.BLACK_QUARTZ_WALL.getItem(), ActuallyBlocks.BLACK_QUARTZ.get());
@@ -616,6 +619,12 @@ public class BlockRecipeGenerator extends RecipeProvider {
             SingleItemRecipeBuilder.stonecutting(Ingredient.of(material), category, result, resultCount)
                     .unlockedBy(getHasName(material), has(material))
                     .save(recipeOutput, ActuallyAdditions.modLoc(getConversionRecipeName(result, material) + "_stonecutting"));
+        }
+
+        protected static void smeltingResultFromBase(RecipeOutput recipeOutput, RecipeCategory category, ItemLike result, ItemLike material) {
+            SimpleCookingRecipeBuilder.smelting(Ingredient.of(material), category, result, 0.1F, 200)
+                    .unlockedBy(getHasName(material), has(material))
+                    .save(recipeOutput, ActuallyAdditions.modLoc(getSmeltingRecipeName(result)));
         }
 
         private static class Shapeless extends ShapelessRecipeBuilder {

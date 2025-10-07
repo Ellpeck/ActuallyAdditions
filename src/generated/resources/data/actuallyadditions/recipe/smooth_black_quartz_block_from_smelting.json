@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:smelting",
+  "category": "blocks",
+  "cookingtime": 200,
+  "experience": 0.1,
+  "ingredient": {
+    "item": "actuallyadditions:black_quartz_block"
+  },
+  "result": {
+    "count": 1,
+    "id": "actuallyadditions:smooth_black_quartz_block"
+  }
+}

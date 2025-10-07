@@ -1,0 +1,11 @@
+{
+  "type": "mekanism:crushing",
+  "input": {
+    "count": 1,
+    "item": "actuallyadditions:black_quartz_block"
+  },
+  "output": {
+    "count": 1,
+    "id": "actuallyadditions:smooth_black_quartz_block"
+  }
+}
