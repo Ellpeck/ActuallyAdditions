@@ -1,11 +1,17 @@
 package de.ellpeck.actuallyadditions.mod.blocks;
 
+import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.function.BiFunction;
 import java.util.stream.Stream;
 
 public class VoxelShapes {
@@ -32,14 +38,6 @@ public class VoxelShapes {
             Block.box(0.5, -0.01, 0.5, 3.5, 1.99, 3.5),
             Block.box(0.5, -0.01, 12.5, 3.5, 1.99, 15.5),
             Block.box(12.5, -0.01, 12.5, 15.5, 1.99, 15.5)
-    ).reduce((v1, v2) -> Shapes.join(v1, v2, BooleanOp.OR)).get();
-    static final VoxelShape CRYSTAL_CLUSTER_SHAPE = Stream.of(
-            Block.box(4, 6, 4, 8, 10, 8),
-            Block.box(6, 2, 6, 10, 14, 10),
-            Block.box(4, 0, 4, 14, 2, 14),
-            Block.box(2, 0, 2, 8, 6, 8),
-            Block.box(8, 2, 8, 12, 8, 12),
-            Block.box(8, 0, 2, 12, 4, 6)
     ).reduce((v1, v2) -> Shapes.join(v1, v2, BooleanOp.OR)).get();
     static final VoxelShape PHANTOM_FACE = Stream.of(
             Block.box(0, 15, 0, 1, 16, 16),
@@ -1932,6 +1930,56 @@ public class VoxelShapes {
         static final VoxelShape TORCH_SOUTH_AABB = Block.box(7, 4, 0, 9, 9, 3);
         static final VoxelShape TORCH_WEST_AABB = Block.box(13, 4, 7, 16, 9, 9);
         static final VoxelShape TORCH_EAST_AABB = Block.box(0, 4, 7, 3, 9, 9);
+    }
+
+    static final class CrystalClusterShapes {
+        static final VoxelShape SHAPE_U = Stream.of(
+                Block.box(4, 6, 4, 8, 10, 8),
+                Block.box(6, 2, 6, 10, 14, 10),
+                Block.box(4, 0, 4, 14, 2, 14),
+                Block.box(2, 0, 2, 8, 6, 8),
+                Block.box(8, 2, 8, 12, 8, 12),
+                Block.box(8, 0, 2, 12, 4, 6)
+        ).reduce((v1, v2) -> Shapes.join(v1, v2, BooleanOp.OR)).get();
+
+        static final VoxelShape SHAPE_D = VoxelShapeUtils.rotate(SHAPE_U, Direction.UP);
+        static final VoxelShape SHAPE_N = VoxelShapeUtils.rotate(SHAPE_D, Direction.NORTH);
+        static final VoxelShape SHAPE_E = VoxelShapeUtils.rotate(SHAPE_D, Direction.EAST);
+        static final VoxelShape SHAPE_S = VoxelShapeUtils.rotate(SHAPE_D, Direction.SOUTH);
+        static final VoxelShape SHAPE_W = VoxelShapeUtils.rotate(SHAPE_D, Direction.WEST);
+    }
+
+    static final class VoxelShapeUtils {
+        private static final Vec3 fromOrigin = new Vec3(-0.5, -0.5, -0.5);
+
+        static AABB rotate(AABB box, Direction side) {
+            return switch (side) {
+                case DOWN -> box;
+                case UP -> new AABB(box.minX, -box.minY, -box.minZ, box.maxX, -box.maxY, -box.maxZ);
+                case NORTH -> new AABB(box.minX, -box.minZ, box.minY, box.maxX, -box.maxZ, box.maxY);
+                case SOUTH -> new AABB(-box.minX, -box.minZ, -box.minY, -box.maxX, -box.maxZ, -box.maxY);
+                case WEST -> new AABB(box.minY, -box.minZ, -box.minX, box.maxY, -box.maxZ, -box.maxX);
+                case EAST -> new AABB(-box.minY, -box.minZ, box.minX, -box.maxY, -box.maxZ, box.maxX);
+            };
+        }
+
+        public static VoxelShape rotate(VoxelShape shape, Direction side) {
+            return rotate(shape, side, VoxelShapeUtils::rotate);
+        }
+
+        public static <D> VoxelShape rotate(VoxelShape shape, D data, BiFunction<AABB, D, AABB> rotateFunction) {
+            List<VoxelShape> rotatedPieces = new ArrayList<>();
+            //Explode the voxel shape into bounding boxes
+            List<AABB> sourceBoundingBoxes = shape.toAabbs();
+            //Rotate them and convert them each back into a voxel shape
+            for (AABB sourceBoundingBox : sourceBoundingBoxes) {
+                //Make the bounding box be centered around the middle, and then move it back after rotating
+                rotatedPieces.add(Shapes.create(rotateFunction.apply(sourceBoundingBox.move(fromOrigin.x, fromOrigin.y, fromOrigin.z), data)
+                        .move(-fromOrigin.x, -fromOrigin.z, -fromOrigin.z)));
+            }
+            //return the recombined rotated voxel shape
+            return rotatedPieces.stream().reduce((v1, v2) -> Shapes.join(v1, v2, BooleanOp.OR)).get();
+        }
     }
 
     public static class ShapeBuilder {

@@ -14,6 +14,7 @@ import de.ellpeck.actuallyadditions.mod.blocks.base.FullyDirectionalBlock;
 import de.ellpeck.actuallyadditions.mod.items.metalists.Crystals;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
@@ -51,12 +52,30 @@ public class CrystalClusterBlock extends FullyDirectionalBlock {
     }
 
     @Override
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        return this.defaultBlockState().setValue(FACING, context.getClickedFace());
+    }
+
+    @Override
     public BlockState getBaseConstructorState() {
         return this.defaultBlockState().setValue(FACING, Direction.UP);
     }
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-        return VoxelShapes.CRYSTAL_CLUSTER_SHAPE;
+        switch (state.getValue(FACING)) {
+            case UP:
+                return VoxelShapes.CrystalClusterShapes.SHAPE_U;
+            case DOWN:
+                return VoxelShapes.CrystalClusterShapes.SHAPE_D;
+            case EAST:
+                return VoxelShapes.CrystalClusterShapes.SHAPE_E;
+            case SOUTH:
+                return VoxelShapes.CrystalClusterShapes.SHAPE_S;
+            case WEST:
+                return VoxelShapes.CrystalClusterShapes.SHAPE_W;
+            default:
+                return VoxelShapes.CrystalClusterShapes.SHAPE_N;
+        }
     }
 }
