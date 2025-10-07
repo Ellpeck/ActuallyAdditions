@@ -2,6 +2,7 @@ package de.ellpeck.actuallyadditions.mod.blocks;
 
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.BooleanOp;
@@ -348,96 +349,9 @@ public class VoxelShapes {
                 Block.box(8, 2, 2, 9, 7, 7),
                 Block.box(9, 2, 2, 12, 7, 3)
         ).reduce((v1, v2) -> Shapes.join(v1, v2, BooleanOp.OR)).get();
-        static final VoxelShape EAST = Stream.of(
-                Block.box(11, 2, 13, 12, 3, 14),
-                Block.box(1, 0, 1, 15, 1, 15),
-                Block.box(2, 1, 7, 8, 9, 14),
-                Block.box(1, 9, 6, 13, 11, 15),
-                Block.box(3, 11, 8, 8, 13, 13),
-                Block.box(11, 8, 10, 12, 9, 11),
-                Block.box(9, 2, 12, 14, 7, 13),
-                Block.box(2, 11, 13, 9, 14, 14),
-                Block.box(8, 11, 8, 9, 14, 13),
-                Block.box(8, 1, 14, 9, 9, 15),
-                Block.box(5, 3, 3, 6, 5, 4),
-                Block.box(5, 2, 3, 6, 3, 7),
-                Block.box(3, 3, 3, 4, 5, 4),
-                Block.box(2, 5, 2, 7, 11, 5),
-                Block.box(3, 11, 2, 5, 12, 4),
-                Block.box(3, 1, 1, 5, 12, 2),
-                Block.box(9, 2, 9, 10, 7, 12),
-                Block.box(9, 1, 8, 14, 2, 13),
-                Block.box(11, 5, 13, 12, 6, 14),
-                Block.box(11, 2, 14, 12, 6, 15),
-                Block.box(2, 11, 7, 9, 14, 8),
-                Block.box(2, 11, 8, 3, 14, 13),
-                Block.box(1, 1, 14, 2, 9, 15),
-                Block.box(1, 1, 6, 2, 9, 7),
-                Block.box(8, 1, 6, 9, 9, 7),
-                Block.box(3, 2, 3, 4, 3, 7),
-                Block.box(9, 2, 8, 14, 7, 9),
-                Block.box(13, 2, 9, 14, 7, 12)
-        ).reduce((v1, v2) -> Shapes.join(v1, v2, BooleanOp.OR)).get();
-        static final VoxelShape SOUTH = Stream.of(
-                Block.box(2, 2, 11, 3, 3, 12),
-                Block.box(1, 0, 1, 15, 1, 15),
-                Block.box(2, 1, 2, 9, 9, 8),
-                Block.box(1, 9, 1, 10, 11, 13),
-                Block.box(3, 11, 3, 8, 13, 8),
-                Block.box(5, 8, 11, 6, 9, 12),
-                Block.box(3, 2, 9, 4, 7, 14),
-                Block.box(2, 11, 2, 3, 14, 9),
-                Block.box(3, 11, 8, 8, 14, 9),
-                Block.box(1, 1, 8, 2, 9, 9),
-                Block.box(12, 3, 5, 13, 5, 6),
-                Block.box(9, 2, 5, 13, 3, 6),
-                Block.box(12, 3, 3, 13, 5, 4),
-                Block.box(11, 5, 2, 14, 11, 7),
-                Block.box(12, 11, 3, 14, 12, 5),
-                Block.box(14, 1, 3, 15, 12, 5),
-                Block.box(4, 2, 9, 7, 7, 10),
-                Block.box(3, 1, 9, 8, 2, 14),
-                Block.box(2, 5, 11, 3, 6, 12),
-                Block.box(1, 2, 11, 2, 6, 12),
-                Block.box(8, 11, 2, 9, 14, 9),
-                Block.box(3, 11, 2, 8, 14, 3),
-                Block.box(1, 1, 1, 2, 9, 2),
-                Block.box(9, 1, 1, 10, 9, 2),
-                Block.box(9, 1, 8, 10, 9, 9),
-                Block.box(9, 2, 3, 13, 3, 4),
-                Block.box(7, 2, 9, 8, 7, 14),
-                Block.box(4, 2, 13, 7, 7, 14)
-        ).reduce((v1, v2) -> Shapes.join(v1, v2, BooleanOp.OR)).get();
-        static final VoxelShape WEST = Stream.of(
-                Block.box(4, 2, 2, 5, 3, 3),
-                Block.box(1, 0, 1, 15, 1, 15),
-                Block.box(8, 1, 2, 14, 9, 9),
-                Block.box(3, 9, 1, 15, 11, 10),
-                Block.box(8, 11, 3, 13, 13, 8),
-                Block.box(4, 8, 5, 5, 9, 6),
-                Block.box(2, 2, 3, 7, 7, 4),
-                Block.box(7, 11, 2, 14, 14, 3),
-                Block.box(7, 11, 3, 8, 14, 8),
-                Block.box(7, 1, 1, 8, 9, 2),
-                Block.box(10, 3, 12, 11, 5, 13),
-                Block.box(10, 2, 9, 11, 3, 13),
-                Block.box(12, 3, 12, 13, 5, 13),
-                Block.box(9, 5, 11, 14, 11, 14),
-                Block.box(11, 11, 12, 13, 12, 14),
-                Block.box(11, 1, 14, 13, 12, 15),
-                Block.box(6, 2, 4, 7, 7, 7),
-                Block.box(2, 1, 3, 7, 2, 8),
-                Block.box(4, 5, 2, 5, 6, 3),
-                Block.box(4, 2, 1, 5, 6, 2),
-                Block.box(7, 11, 8, 14, 14, 9),
-                Block.box(13, 11, 3, 14, 14, 8),
-                Block.box(14, 1, 1, 15, 9, 2),
-                Block.box(14, 1, 9, 15, 9, 10),
-                Block.box(7, 1, 9, 8, 9, 10),
-                Block.box(12, 2, 9, 13, 3, 13),
-                Block.box(2, 2, 7, 7, 7, 8),
-                Block.box(2, 2, 4, 3, 7, 7)
-                ).reduce((v1, v2) -> Shapes.join(v1, v2, BooleanOp.OR)).get();
+        static final VoxelShape EAST = VoxelShapeUtils.rotate(NORTH, Rotation.CLOCKWISE_90);
+        static final VoxelShape SOUTH = VoxelShapeUtils.rotate(NORTH, Rotation.CLOCKWISE_180);
+        static final VoxelShape WEST = VoxelShapeUtils.rotate(NORTH, Rotation.COUNTERCLOCKWISE_90);
     }
 
     static class BlockBreakerShapes {
@@ -1847,8 +1761,21 @@ public class VoxelShapes {
             };
         }
 
+        public static AABB rotate(AABB box, Rotation rotation) {
+            return switch (rotation) {
+                case NONE -> box;
+                case CLOCKWISE_90 -> new AABB(-box.minZ, box.minY, box.minX, -box.maxZ, box.maxY, box.maxX);
+                case CLOCKWISE_180 -> new AABB(-box.minX, box.minY, -box.minZ, -box.maxX, box.maxY, -box.maxZ);
+                case COUNTERCLOCKWISE_90 -> new AABB(box.minZ, box.minY, -box.minX, box.maxZ, box.maxY, -box.maxX);
+            };
+        }
+
         public static VoxelShape rotate(VoxelShape shape, Direction side) {
             return rotate(shape, side, VoxelShapeUtils::rotate);
+        }
+
+        public static VoxelShape rotate(VoxelShape shape, Rotation rotation) {
+            return rotate(shape, rotation, VoxelShapeUtils::rotate);
         }
 
         public static <D> VoxelShape rotate(VoxelShape shape, D data, BiFunction<AABB, D, AABB> rotateFunction) {
