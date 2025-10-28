@@ -97,7 +97,7 @@ public class CrushingRecipeGenerator extends RecipeProvider {
         new CrushingBuilder(Ingredient.of(Items.COBBLESTONE), new CrushingRecipe.CrushingResult(new ItemStack(Items.SAND, 1), 1.0f))
                 .save(recipeOutput, "cobblestone");
         new CrushingBuilder(Ingredient.of(Items.GRAVEL), new CrushingRecipe.CrushingResult(new ItemStack(Items.FLINT, 1), 1.0f))
-                .addResult2(new CrushingRecipe.CrushingResult(new ItemStack(Items.FLINT, 1), 0.5f))
+                .addResult(new CrushingRecipe.CrushingResult(new ItemStack(Items.FLINT, 1), 0.5f))
                 .save(recipeOutput, "gravel");
         new CrushingBuilder(Ingredient.of(ActuallyItems.RICE), new CrushingRecipe.CrushingResult(new ItemStack(Items.SUGAR, 2), 1.0f))
                 .save(recipeOutput, "rice");
@@ -116,18 +116,18 @@ public class CrushingRecipeGenerator extends RecipeProvider {
         new CrushingBuilder(Ingredient.of(ActuallyBlocks.BLACK_QUARTZ_ORE.get()), new CrushingRecipe.CrushingResult(new ItemStack(ActuallyItems.BLACK_QUARTZ.get(), 2), 1.0f))
                 .save(recipeOutput, "black_quartz_ore");
         new CrushingBuilder(Ingredient.of(Items.COPPER_ORE), new CrushingRecipe.CrushingResult(new ItemStack(Items.RAW_COPPER, 2), 1.0f))
-                .addResult2(new CrushingRecipe.CrushingResult(new ItemStack(Items.RAW_GOLD, 1), 0.05f))
+                .addResult(new CrushingRecipe.CrushingResult(new ItemStack(Items.RAW_GOLD, 1), 0.05f))
                 .save(recipeOutput, "copper_ore");
         new CrushingBuilder(Ingredient.of(Items.DEEPSLATE_COPPER_ORE), new CrushingRecipe.CrushingResult(new ItemStack(Items.RAW_COPPER, 2), 1.0f))
-                .addResult2(new CrushingRecipe.CrushingResult(new ItemStack(Items.RAW_GOLD, 1), 0.05f))
+                .addResult(new CrushingRecipe.CrushingResult(new ItemStack(Items.RAW_GOLD, 1), 0.05f))
                 .save(recipeOutput, "deepslate_copper_ore");
 
         //TODO: Think about the recipes that returned crushed ores before and what to replace them with
         new CrushingBuilder(Ingredient.of(Items.IRON_ORE), new CrushingRecipe.CrushingResult(new ItemStack(Items.RAW_IRON, 2), 1.0f))
-                .addResult2(new CrushingRecipe.CrushingResult(new ItemStack(Items.RAW_GOLD, 1), 0.2f))
+                .addResult(new CrushingRecipe.CrushingResult(new ItemStack(Items.RAW_GOLD, 1), 0.2f))
                 .save(recipeOutput, "iron_ore");
         new CrushingBuilder(Ingredient.of(Items.DEEPSLATE_IRON_ORE), new CrushingRecipe.CrushingResult(new ItemStack(Items.RAW_IRON, 2), 1.0f))
-                .addResult2(new CrushingRecipe.CrushingResult(new ItemStack(Items.RAW_GOLD, 1), 0.2f))
+                .addResult(new CrushingRecipe.CrushingResult(new ItemStack(Items.RAW_GOLD, 1), 0.2f))
                 .save(recipeOutput, "deepslate_iron_ore");
         new CrushingBuilder(Ingredient.of(Items.IRON_HORSE_ARMOR), new CrushingRecipe.CrushingResult(new ItemStack(Items.RAW_IRON, 6), 1.0f))
                 .save(recipeOutput, "iron_horse_armor");
@@ -144,20 +144,20 @@ public class CrushingRecipeGenerator extends RecipeProvider {
 
     public static class CrushingBuilder {
         private final Ingredient ingredient;
-        private final NonNullList<CrushingRecipe.CrushingResult> results = NonNullList.withSize(2, CrushingRecipe.CrushingResult.EMPTY);
+        private final NonNullList<CrushingRecipe.CrushingResult> results = NonNullList.create();
 
         public CrushingBuilder(Ingredient ingredient, CrushingRecipe.CrushingResult result) {
             this.ingredient = ingredient;
-            this.results.set(0, result);
+            this.results.add(result);
         }
 
-        public CrushingBuilder addResult2(CrushingRecipe.CrushingResult result) {
-            this.results.set(1, result);
+        public CrushingBuilder addResult(CrushingRecipe.CrushingResult result) {
+            this.results.add(result);
             return this;
         }
 
         public void save(RecipeOutput consumer, ResourceLocation name) {
-            if (results.size() != 2)
+            if (results.size() > 2)
                 throw new IllegalStateException("invalid result count: " + results.size() + ", recipe: " + name.toString());
 
             CrushingRecipe recipe = new CrushingRecipe(ingredient, results);
@@ -166,8 +166,8 @@ public class CrushingRecipeGenerator extends RecipeProvider {
 
         public void save(RecipeOutput consumer, String name) {
             ResourceLocation res = ActuallyAdditions.modLoc("crushing/" + name);
-            if (results.size() != 2)
-                throw new IllegalStateException("invalid result count: " + results.size() + ", recipe: " + name.toString());
+            if (results.size() > 2)
+                throw new IllegalStateException("invalid result count: " + results.size() + ", recipe: " + name);
 
             CrushingRecipe recipe = new CrushingRecipe(ingredient, results);
             consumer.accept(res, recipe, null);
