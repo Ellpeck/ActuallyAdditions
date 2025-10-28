@@ -9,10 +9,6 @@
         "count": 10,
         "id": "minecraft:redstone"
       }
-    },
-    {
-      "chance": 0.0,
-      "result": {}
     }
   ]
 }

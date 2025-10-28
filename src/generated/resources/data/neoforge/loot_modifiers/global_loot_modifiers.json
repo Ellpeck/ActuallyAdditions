@@ -1,7 +1,7 @@
 {
   "entries": [
-    "actuallyadditions:dungeon_loot",
-    "actuallyadditions:bat_loot"
+    "actuallyadditions:bat_loot",
+    "actuallyadditions:dungeon_loot"
   ],
   "replace": false
 }
