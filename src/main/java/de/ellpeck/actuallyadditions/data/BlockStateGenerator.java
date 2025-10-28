@@ -46,12 +46,12 @@ public class BlockStateGenerator extends BlockStateProvider {
         horizontallyDirectionalBlock(ActuallyBlocks.LAVA_FACTORY_CONTROLLER);
 
         // Standard Block
-        standardBlock(ActuallyBlocks.RESTONIA_CRYSTAL_CLUSTER);
-        standardBlock(ActuallyBlocks.PALIS_CRYSTAL_CLUSTER);
-        standardBlock(ActuallyBlocks.DIAMATINE_CRYSTAL_CLUSTER);
-        standardBlock(ActuallyBlocks.VOID_CRYSTAL_CLUSTER);
-        standardBlock(ActuallyBlocks.EMERADIC_CRYSTAL_CLUSTER);
-        standardBlock(ActuallyBlocks.ENORI_CRYSTAL_CLUSTER);
+        fullyDirectionalBlock(ActuallyBlocks.RESTONIA_CRYSTAL_CLUSTER);
+        fullyDirectionalBlock(ActuallyBlocks.PALIS_CRYSTAL_CLUSTER);
+        fullyDirectionalBlock(ActuallyBlocks.DIAMATINE_CRYSTAL_CLUSTER);
+        fullyDirectionalBlock(ActuallyBlocks.VOID_CRYSTAL_CLUSTER);
+        fullyDirectionalBlock(ActuallyBlocks.EMERADIC_CRYSTAL_CLUSTER);
+        fullyDirectionalBlock(ActuallyBlocks.ENORI_CRYSTAL_CLUSTER);
         standardBlock(ActuallyBlocks.BATTERY_BOX);
         standardBlock(ActuallyBlocks.ITEM_INTERFACE_HOPPING);
         standardBlock(ActuallyBlocks.EMPOWERER);
