@@ -1,7 +1,8 @@
 # 1.3.21+mc1.21.1
 * Fix invalid Crushing recipes
 * PR #1500 - Fix bowl pickup issues
-* PR #1501 = Add recipe for Smooth Black Quartz Block
+* PR #1502 - Makes the Crystal Clusters directional
+* PR #1501 - Add recipe for Smooth Black Quartz Block
 * PR #1506 - Make advancement titles Title Case
 
 # 1.3.20+mc1.21.1
