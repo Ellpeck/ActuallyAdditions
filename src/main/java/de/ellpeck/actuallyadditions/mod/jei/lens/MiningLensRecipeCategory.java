@@ -74,10 +74,10 @@ public class MiningLensRecipeCategory implements IRecipeCategory<MiningLensRecip
         HolderLookup.Provider registries = level.registryAccess();
 
         builder.addSlot(RecipeIngredientRole.INPUT, 5, 19).addIngredients(recipe.getInput());
-        builder.addSlot(RecipeIngredientRole.RENDER_ONLY, 27, 20).addItemStack(RECONSTRUCTOR);
-        builder.addSlot(RecipeIngredientRole.CATALYST, 43, 20).addItemStack(new ItemStack(ActuallyItems.LENS_OF_THE_MINER.get()));
+        builder.addSlot(RecipeIngredientRole.RENDER_ONLY, 26, 19).addItemStack(RECONSTRUCTOR);
+        builder.addSlot(RecipeIngredientRole.CATALYST, 42, 19).addItemStack(new ItemStack(ActuallyItems.LENS_OF_THE_MINER.get()));
 
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 66, 19).addItemStack(recipe.getResultItem(registries));
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 67, 19).addItemStack(recipe.getResultItem(registries));
     }
 
     @Override
