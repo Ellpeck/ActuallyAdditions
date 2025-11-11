@@ -92,21 +92,21 @@ public class Sack extends ItemBase {
     public InteractionResultHolder<ItemStack> use(Level world, Player player, @Nonnull InteractionHand hand) {
         ItemStack sackStack = player.getItemInHand(hand);
         if (!world.isClientSide && hand == InteractionHand.MAIN_HAND && sackStack.getItem() instanceof Sack && player instanceof ServerPlayer) {
+            SackData data = getData(sackStack);
+            if (data == null)
+                return InteractionResultHolder.fail(sackStack);
 
+            UUID uuid = data.getUuid();
+
+            data.updateAccessRecords(player.getName().getString(), System.currentTimeMillis());
+
+            boolean autoInsert = sackStack.getOrDefault(ActuallyComponents.AUTO_INSERT, false);
             if (!isVoid) {
-                SackData data = getData(sackStack);
-                if (data == null)
-                    return InteractionResultHolder.fail(sackStack);
-
-                UUID uuid = data.getUuid();
-
-                data.updateAccessRecords(player.getName().getString(), System.currentTimeMillis());
-
-                boolean autoInsert = sackStack.getOrDefault(ActuallyComponents.AUTO_INSERT, false);
                 player.openMenu(new SimpleMenuProvider((id, inv, entity) ->
                         new SackContainer(id, inv, data.getSpecialHandler(), autoInsert, data.getFilter()), sackStack.getHoverName()), (buffer -> buffer.writeUUID(uuid).writeBoolean(autoInsert).writeInt(data.getFilter().getPackedSettings())));
-            } else
-                player.openMenu(new SimpleMenuProvider((id, inv, entity) -> new VoidSackContainer(id, inv), sackStack.getHoverName()));
+            } else {
+                player.openMenu(new SimpleMenuProvider((id, inv, entity) -> new VoidSackContainer(id, inv, autoInsert, data.getFilter()), sackStack.getHoverName()), (buffer -> buffer.writeUUID(uuid).writeBoolean(autoInsert).writeInt(data.getFilter().getPackedSettings())));
+            }
         }
         return InteractionResultHolder.pass(player.getItemInHand(hand));
     }

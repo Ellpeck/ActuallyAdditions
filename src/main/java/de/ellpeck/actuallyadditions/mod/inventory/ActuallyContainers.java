@@ -13,7 +13,7 @@ public class ActuallyContainers {
     private static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(BuiltInRegistries.MENU, ActuallyAdditions.MODID);
 
     public static final Supplier<MenuType<SackContainer>> SACK_CONTAINER = CONTAINERS.register("sack_container", () -> IMenuTypeExtension.create(SackContainer::fromNetwork));
-    public static final Supplier<MenuType<VoidSackContainer>> VOID_SACK_CONTAINER = CONTAINERS.register("void_sack_container", () -> IMenuTypeExtension.create(VoidSackContainer::new));
+    public static final Supplier<MenuType<VoidSackContainer>> VOID_SACK_CONTAINER = CONTAINERS.register("void_sack_container", () -> IMenuTypeExtension.create(VoidSackContainer::fromNetwork));
     public static final Supplier<MenuType<ContainerBioReactor>> BIO_REACTOR_CONTAINER = CONTAINERS.register("bioreactor_container", () -> IMenuTypeExtension.create(ContainerBioReactor::fromNetwork));
     public static final Supplier<MenuType<ContainerBreaker>> BREAKER_CONTAINER = CONTAINERS.register("breaker_container", () -> IMenuTypeExtension.create(ContainerBreaker::fromNetwork));
     public static final Supplier<MenuType<ContainerCanolaPress>> CANOLA_PRESS_CONTAINER = CONTAINERS.register("canola_press_container", () -> IMenuTypeExtension.create(ContainerCanolaPress::fromNetwork));
