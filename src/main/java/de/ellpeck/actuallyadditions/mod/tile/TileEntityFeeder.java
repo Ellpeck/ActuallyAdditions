@@ -129,7 +129,13 @@ public class TileEntityFeeder extends TileEntityInventoryBase implements MenuPro
         return animal.getAge() == 0 && !animal.isInLove() && animal.isFood(stack);
     }
 
-    @Override
+	@Override
+	public int getComparatorStrength() {
+		float amount = currentAnimalAmount / (float)THRESHOLD;
+		return Mth.lerpDiscrete(amount, 0, 15);
+	}
+
+	@Override
     public Component getDisplayName() {
         return Component.translatable("container.actuallyadditions.feeder");
     }
