@@ -40,7 +40,7 @@ public class VoidSackContainer extends AbstractContainerMenu implements IButtonR
         this.autoInsert = autoInsert;
 
         for (int c = 0; c < 4; c++) {
-            this.addSlot(new SlotFilter(this.filter, c, 98 + c * 17, 17));
+            this.addSlot(new SlotFilter(this.filter, c, 98 + c * 18, 17));
         }
 
         this.addSlot(new SlotDeletion(this.bagInventory, 0, 13, 18) {

@@ -10,9 +10,7 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
-import blusunrize.immersiveengineering.common.gui.ItemContainer;
 import de.ellpeck.actuallyadditions.mod.components.ActuallyComponents;
-import de.ellpeck.actuallyadditions.mod.components.FilterOptionsComponent;
 import de.ellpeck.actuallyadditions.mod.components.FilterSettingsComponent;
 import de.ellpeck.actuallyadditions.mod.inventory.SackContainer;
 import de.ellpeck.actuallyadditions.mod.inventory.VoidSackContainer;
@@ -30,7 +28,6 @@ import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
-import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 
