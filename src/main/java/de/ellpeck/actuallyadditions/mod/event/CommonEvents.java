@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.event;
 import de.ellpeck.actuallyadditions.mod.ActuallyAdditions;
 import de.ellpeck.actuallyadditions.mod.blocks.BlockLaserRelay;
 import de.ellpeck.actuallyadditions.mod.components.ActuallyComponents;
+import de.ellpeck.actuallyadditions.mod.components.FilterOptionsComponent;
 import de.ellpeck.actuallyadditions.mod.config.CommonConfig;
 import de.ellpeck.actuallyadditions.mod.config.values.ConfigBoolValues;
 import de.ellpeck.actuallyadditions.mod.data.PlayerData;
@@ -22,6 +23,7 @@ import de.ellpeck.actuallyadditions.mod.items.DrillItem;
 import de.ellpeck.actuallyadditions.mod.items.ItemTag;
 import de.ellpeck.actuallyadditions.mod.items.Sack;
 import de.ellpeck.actuallyadditions.mod.network.PacketHelperServer;
+import de.ellpeck.actuallyadditions.mod.sack.SackData;
 import de.ellpeck.actuallyadditions.mod.sack.SackManager;
 import de.ellpeck.actuallyadditions.mod.tile.FilterSettings;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
@@ -41,6 +43,7 @@ import net.minecraft.world.entity.monster.Spider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -53,6 +56,7 @@ import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 
 import java.util.Locale;
+import java.util.Optional;
 
 public class CommonEvents {
     @SubscribeEvent
@@ -97,15 +101,18 @@ public class CommonEvents {
                             boolean isVoid = ((Sack) invStack.getItem()).isVoid;
 
                             FilterSettings filter = new FilterSettings(4, false, false, false, false);
-                            filter.readFromNBT(player.registryAccess(), new CompoundTag(), "Filter"); //TODO: IMPORTANT, FIX FILTER READ!
 
                             if (isVoid) {
+                                filter = FilterSettings.fromContents(4, invStack.getOrDefault(ActuallyComponents.FILTER_OPTIONS, FilterOptionsComponent.EMPTY).getPackedSettings(), invStack.getOrDefault(ActuallyComponents.CONTENTS, ItemContainerContents.EMPTY));
                                 if (filter.check(stack)) {
                                     stack.setCount(0);
                                     changed = true;
                                 }
                             }
                             else {
+                                var optData = SackManager.get().getData(invStack);
+                                filter = optData.map(SackData::getFilter).orElse(filter);
+
                                 var optHandler = SackManager.get().getHandler(invStack);
 
                                 if (optHandler.isEmpty())

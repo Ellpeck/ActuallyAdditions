@@ -51,23 +51,11 @@ public class ActuallyComponents {
 					.networkSynchronized(ByteBufCodecs.BOOL)
 					.build());
 
-	public static final Supplier<DataComponentType<Boolean>> WHITELIST = DATA_COMPONENT_TYPES.register("whitelist", () ->
-			DataComponentType.<Boolean>builder()
-					.persistent(Codec.BOOL)
-					.networkSynchronized(ByteBufCodecs.BOOL)
-					.build());
-
-	public static final Supplier<DataComponentType<Boolean>> MOD = DATA_COMPONENT_TYPES.register("mod", () ->
-			DataComponentType.<Boolean>builder()
-					.persistent(Codec.BOOL)
-					.networkSynchronized(ByteBufCodecs.BOOL)
-					.build());
-
-	public static final Supplier<DataComponentType<Boolean>> DAMAGE = DATA_COMPONENT_TYPES.register("damage", () ->
-			DataComponentType.<Boolean>builder()
-					.persistent(Codec.BOOL)
-					.networkSynchronized(ByteBufCodecs.BOOL)
-					.build());
+    public static final Supplier<DataComponentType<FilterOptionsComponent>> FILTER_OPTIONS = DATA_COMPONENT_TYPES.register("filter_options", () ->
+            DataComponentType.<FilterOptionsComponent>builder()
+                    .persistent(FilterOptionsComponent.CODEC)
+                    .networkSynchronized(FilterOptionsComponent.STREAM_CODEC)
+                    .build());
 
 	public static final Supplier<DataComponentType<Boolean>> COMPONENTS = DATA_COMPONENT_TYPES.register("components", () ->
 			DataComponentType.<Boolean>builder()

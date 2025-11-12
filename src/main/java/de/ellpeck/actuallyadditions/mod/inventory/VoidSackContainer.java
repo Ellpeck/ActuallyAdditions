@@ -1,5 +1,7 @@
 package de.ellpeck.actuallyadditions.mod.inventory;
 
+import de.ellpeck.actuallyadditions.mod.components.ActuallyComponents;
+import de.ellpeck.actuallyadditions.mod.components.FilterOptionsComponent;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotDeletion;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotFilter;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotImmovable;
@@ -8,32 +10,37 @@ import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.tile.FilterSettings;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.ItemContainerContents;
 
 import javax.annotation.Nonnull;
 
 public class VoidSackContainer extends AbstractContainerMenu implements IButtonReactor {
-    public final FilterSettings filter = new FilterSettings(4, false,false, false, false);
+    public FilterSettings filter;
 
     private final ItemStackHandlerAA bagInventory;
     private final Inventory inventory;
     public boolean autoInsert;
-    private boolean oldAutoInsert;
 
-    protected VoidSackContainer(int windowId, Inventory inv, FriendlyByteBuf data) {
-        this(windowId, inv);
+    public static VoidSackContainer fromNetwork(int windowId, Inventory inv, RegistryFriendlyByteBuf data) {
+        boolean insert = data.readBoolean();
+        int filterOptions = data.readInt();
+        return new VoidSackContainer(windowId, inv, insert, new FilterSettings(4, filterOptions));
     }
 
-    public VoidSackContainer(int pContainerId, Inventory  pPlayerInventory) {
+    public VoidSackContainer(int pContainerId, Inventory  pPlayerInventory, boolean autoInsert, FilterSettings filterIn) {
         super(ActuallyContainers.VOID_SACK_CONTAINER.get(), pContainerId);
 
+        this.filter = filterIn;
         this.inventory = pPlayerInventory;
         this.bagInventory = new ItemStackHandlerAA(1);
+        this.autoInsert = autoInsert;
 
         for (int c = 0; c < 4; c++) {
             this.addSlot(new SlotFilter(this.filter, c, 98 + c * 17, 17));
@@ -61,15 +68,6 @@ public class VoidSackContainer extends AbstractContainerMenu implements IButtonR
                 this.addSlot(new Slot(inventory, i, 8 + i * 18, 105));
             }
         }
-
-        ItemStack stack = inventory.getSelected();
-        if (!stack.isEmpty() && stack.getItem() instanceof Sack) {
-//            if (stack.hasTag()) { TODO: IMPORTANT! RE_ENABLE FILTER READ
-//                CompoundTag compound = stack.getOrCreateTag();
-//                this.filter.readFromNBT(compound, "Filter");
-//                this.autoInsert = compound.getBoolean("AutoInsert");
-//            }
-        }
     }
 
     @Override
@@ -86,11 +84,9 @@ public class VoidSackContainer extends AbstractContainerMenu implements IButtonR
     @Override
     public void removed(@Nonnull Player player) {
         ItemStack stack = this.inventory.getSelected();
-//        if (!stack.isEmpty() && stack.getItem() instanceof Sack) {
-//            CompoundTag compound = stack.getOrCreateTag();
-//            this.filter.writeToNBT(compound, "Filter"); TODO: IMPORTANT! RE_ENABLE FILTER READ
-//            compound.putBoolean("AutoInsert", this.autoInsert);
-//        }
+        stack.set(ActuallyComponents.AUTO_INSERT, this.autoInsert);
+        stack.set(ActuallyComponents.FILTER_OPTIONS, new FilterOptionsComponent(this.filter.getPackedSettings()));
+        stack.set(ActuallyComponents.CONTENTS, ItemContainerContents.fromItems(filter.getStacks()));
         super.removed(player);
     }
 

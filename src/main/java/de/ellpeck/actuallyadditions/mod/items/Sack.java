@@ -10,12 +10,15 @@
 
 package de.ellpeck.actuallyadditions.mod.items;
 
+import blusunrize.immersiveengineering.common.gui.ItemContainer;
 import de.ellpeck.actuallyadditions.mod.components.ActuallyComponents;
+import de.ellpeck.actuallyadditions.mod.components.FilterOptionsComponent;
 import de.ellpeck.actuallyadditions.mod.inventory.SackContainer;
 import de.ellpeck.actuallyadditions.mod.inventory.VoidSackContainer;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
 import de.ellpeck.actuallyadditions.mod.sack.SackData;
 import de.ellpeck.actuallyadditions.mod.sack.SackManager;
+import de.ellpeck.actuallyadditions.mod.tile.FilterSettings;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
@@ -26,6 +29,7 @@ import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
+import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 
@@ -92,21 +96,23 @@ public class Sack extends ItemBase {
     public InteractionResultHolder<ItemStack> use(Level world, Player player, @Nonnull InteractionHand hand) {
         ItemStack sackStack = player.getItemInHand(hand);
         if (!world.isClientSide && hand == InteractionHand.MAIN_HAND && sackStack.getItem() instanceof Sack && player instanceof ServerPlayer) {
-
+            boolean autoInsert = sackStack.getOrDefault(ActuallyComponents.AUTO_INSERT, false);
             if (!isVoid) {
                 SackData data = getData(sackStack);
                 if (data == null)
                     return InteractionResultHolder.fail(sackStack);
-
                 UUID uuid = data.getUuid();
-
                 data.updateAccessRecords(player.getName().getString(), System.currentTimeMillis());
-
-                boolean autoInsert = sackStack.getOrDefault(ActuallyComponents.AUTO_INSERT, false);
                 player.openMenu(new SimpleMenuProvider((id, inv, entity) ->
                         new SackContainer(id, inv, data.getSpecialHandler(), autoInsert, data.getFilter()), sackStack.getHoverName()), (buffer -> buffer.writeUUID(uuid).writeBoolean(autoInsert).writeInt(data.getFilter().getPackedSettings())));
-            } else
-                player.openMenu(new SimpleMenuProvider((id, inv, entity) -> new VoidSackContainer(id, inv), sackStack.getHoverName()));
+            } else {
+                int packedSettings = sackStack.getOrDefault(ActuallyComponents.FILTER_OPTIONS, FilterOptionsComponent.EMPTY).getPackedSettings();
+                ItemContainerContents filterContents = sackStack.getOrDefault(ActuallyComponents.CONTENTS, ItemContainerContents.EMPTY);
+                FilterSettings filterSettings = FilterSettings.fromContents(4, packedSettings, filterContents);
+                player.openMenu(new SimpleMenuProvider((id, inv, entity) -> new VoidSackContainer(id, inv, autoInsert, filterSettings), sackStack.getHoverName()), (buffer -> {
+                    buffer.writeBoolean(autoInsert).writeInt(packedSettings);
+                }));
+            }
         }
         return InteractionResultHolder.pass(player.getItemInHand(hand));
     }

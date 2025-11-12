@@ -83,6 +83,16 @@ public class SackManager extends SavedData {
         return Optional.empty();
     }
 
+    public Optional<SackData> getData(ItemStack stack) {
+        if (stack.has(ActuallyComponents.UUID)) {
+            UUID uuid = stack.get(ActuallyComponents.UUID);
+            if (data.containsKey(uuid))
+                return Optional.of(data.get(uuid));
+        }
+
+        return Optional.empty();
+    }
+
     public static SackManager load(CompoundTag nbt, HolderLookup.Provider provider) {
         if (nbt.contains("Sacks")) {
             ListTag list = nbt.getList("Sacks", CompoundTag.TAG_COMPOUND);

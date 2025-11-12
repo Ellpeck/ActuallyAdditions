@@ -154,9 +154,7 @@ public class SackContainer extends AbstractContainerMenu implements IButtonReact
     public void removed(@Nonnull Player player) {
         ItemStack stack = this.inventory.getSelected();
         if (!stack.isEmpty() && stack.getItem() instanceof Sack) {
-//            CompoundTag compound = stack.getOrCreateTag();TODO: IMPORTANT! RE_ENABLE FILTER WRITE
-//            this.filter.writeToNBT(compound, "Filter");
-//            compound.putBoolean("AutoInsert", this.autoInsert);
+            stack.set(ActuallyComponents.AUTO_INSERT, this.autoInsert);
         }
         super.removed(player);
     }

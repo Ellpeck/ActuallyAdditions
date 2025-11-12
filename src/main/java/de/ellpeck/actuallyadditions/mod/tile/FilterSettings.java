@@ -22,6 +22,9 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.ItemContainerContents;
+
+import java.util.List;
 
 public class FilterSettings {
 
@@ -59,6 +62,18 @@ public class FilterSettings {
 
     public FilterSettings(int slots, int packedSettings) {
         this(slots, (packedSettings & 1) != 0, (packedSettings & 2) != 0, (packedSettings & 4) != 0, (packedSettings & 8) != 0);
+    }
+
+    public static FilterSettings fromContents(int slots, int packedSettings, ItemContainerContents contents) {
+        FilterSettings settings = new FilterSettings(slots, packedSettings);
+        for (int i = 0; i < slots; i++) {
+            settings.filterInventory.setStackInSlot(i, i < contents.getSlots()? contents.getStackInSlot(i): ItemStack.EMPTY);
+        }
+        return settings;
+    }
+
+    public List<ItemStack> getStacks() {
+        return this.filterInventory.getItems();
     }
 
     public int getPackedSettings() {
