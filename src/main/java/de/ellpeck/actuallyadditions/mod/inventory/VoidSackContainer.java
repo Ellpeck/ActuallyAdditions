@@ -1,15 +1,13 @@
 package de.ellpeck.actuallyadditions.mod.inventory;
 
 import de.ellpeck.actuallyadditions.mod.components.ActuallyComponents;
-import de.ellpeck.actuallyadditions.mod.components.FilterOptionsComponent;
+import de.ellpeck.actuallyadditions.mod.components.FilterSettingsComponent;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotDeletion;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotFilter;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotImmovable;
-import de.ellpeck.actuallyadditions.mod.items.Sack;
 import de.ellpeck.actuallyadditions.mod.network.gui.IButtonReactor;
 import de.ellpeck.actuallyadditions.mod.tile.FilterSettings;
 import de.ellpeck.actuallyadditions.mod.util.ItemStackHandlerAA;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -17,7 +15,6 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.component.ItemContainerContents;
 
 import javax.annotation.Nonnull;
 
@@ -85,8 +82,7 @@ public class VoidSackContainer extends AbstractContainerMenu implements IButtonR
     public void removed(@Nonnull Player player) {
         ItemStack stack = this.inventory.getSelected();
         stack.set(ActuallyComponents.AUTO_INSERT, this.autoInsert);
-        stack.set(ActuallyComponents.FILTER_OPTIONS, new FilterOptionsComponent(this.filter.getPackedSettings()));
-        stack.set(ActuallyComponents.CONTENTS, ItemContainerContents.fromItems(filter.getStacks()));
+        stack.set(ActuallyComponents.FILTER_SETTINGS, new FilterSettingsComponent(filter));
         super.removed(player);
     }
 

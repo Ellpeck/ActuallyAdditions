@@ -10,7 +10,10 @@
 
 package de.ellpeck.actuallyadditions.mod.tile;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import de.ellpeck.actuallyadditions.mod.components.ActuallyComponents;
+import de.ellpeck.actuallyadditions.mod.components.FilterSettingsComponent;
 import de.ellpeck.actuallyadditions.mod.inventory.ContainerFilter;
 import de.ellpeck.actuallyadditions.mod.inventory.slot.SlotFilter;
 import de.ellpeck.actuallyadditions.mod.items.DrillItem;
@@ -20,11 +23,15 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemContainerContents;
 
 import java.util.List;
+import java.util.Objects;
 
 public class FilterSettings {
 
@@ -37,6 +44,18 @@ public class FilterSettings {
     private boolean lastRespectMod;
     private boolean lastMatchDamage;
     private boolean lastMatchNBT;
+
+    public static final Codec<FilterSettings> CODEC = RecordCodecBuilder.create($ -> $.group(
+            Codec.INT.fieldOf("slots").forGetter(fs -> fs.filterInventory.getSlots()),
+            Codec.INT.fieldOf("settings").forGetter(FilterSettings::getPackedSettings),
+            ItemStackHandlerAA.CODEC.fieldOf("contents").forGetter(fs -> fs.filterInventory)
+    ).apply($, FilterSettings::of));
+
+    public static final StreamCodec<RegistryFriendlyByteBuf, FilterSettings> STREAM_CODEC = StreamCodec.composite(
+            ByteBufCodecs.INT, $ -> $.filterInventory.getSlots(),
+            ByteBufCodecs.INT, FilterSettings::getPackedSettings,
+            ItemStackHandlerAA.STREAM_CODEC, $ -> $.filterInventory,
+            FilterSettings::of);
 
     public enum Buttons {
         WHITELIST,
@@ -64,7 +83,7 @@ public class FilterSettings {
         this(slots, (packedSettings & 1) != 0, (packedSettings & 2) != 0, (packedSettings & 4) != 0, (packedSettings & 8) != 0);
     }
 
-    public static FilterSettings fromContents(int slots, int packedSettings, ItemContainerContents contents) {
+    public static FilterSettings of(int slots, int packedSettings, ItemStackHandlerAA contents) {
         FilterSettings settings = new FilterSettings(slots, packedSettings);
         for (int i = 0; i < slots; i++) {
             settings.filterInventory.setStackInSlot(i, i < contents.getSlots()? contents.getStackInSlot(i): ItemStack.EMPTY);
@@ -188,5 +207,32 @@ public class FilterSettings {
             }
         }
         return this.isWhitelist;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        } else {
+            if (o instanceof FilterSettings filter) {
+                if (isWhitelist != filter.isWhitelist || respectMod != filter.respectMod || matchDamage != filter.matchDamage || matchNBT != filter.matchNBT) {
+                    return false;
+                }
+                return ItemStack.listMatches(this.filterInventory.getItems(), filter.filterInventory.getItems());
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = getPackedSettings();
+
+        for (ItemStack stack : this.filterInventory.getItems()) {
+            hash = 31 * hash + stack.hashCode();
+        }
+
+        return hash;
     }
 }

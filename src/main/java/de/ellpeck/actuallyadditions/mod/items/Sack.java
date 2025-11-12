@@ -13,6 +13,7 @@ package de.ellpeck.actuallyadditions.mod.items;
 import blusunrize.immersiveengineering.common.gui.ItemContainer;
 import de.ellpeck.actuallyadditions.mod.components.ActuallyComponents;
 import de.ellpeck.actuallyadditions.mod.components.FilterOptionsComponent;
+import de.ellpeck.actuallyadditions.mod.components.FilterSettingsComponent;
 import de.ellpeck.actuallyadditions.mod.inventory.SackContainer;
 import de.ellpeck.actuallyadditions.mod.inventory.VoidSackContainer;
 import de.ellpeck.actuallyadditions.mod.items.base.ItemBase;
@@ -106,11 +107,9 @@ public class Sack extends ItemBase {
                 player.openMenu(new SimpleMenuProvider((id, inv, entity) ->
                         new SackContainer(id, inv, data.getSpecialHandler(), autoInsert, data.getFilter()), sackStack.getHoverName()), (buffer -> buffer.writeUUID(uuid).writeBoolean(autoInsert).writeInt(data.getFilter().getPackedSettings())));
             } else {
-                int packedSettings = sackStack.getOrDefault(ActuallyComponents.FILTER_OPTIONS, FilterOptionsComponent.EMPTY).getPackedSettings();
-                ItemContainerContents filterContents = sackStack.getOrDefault(ActuallyComponents.CONTENTS, ItemContainerContents.EMPTY);
-                FilterSettings filterSettings = FilterSettings.fromContents(4, packedSettings, filterContents);
+                FilterSettings filterSettings = sackStack.getOrDefault(ActuallyComponents.FILTER_SETTINGS, new FilterSettingsComponent(4, false, false, false, false)).inner();
                 player.openMenu(new SimpleMenuProvider((id, inv, entity) -> new VoidSackContainer(id, inv, autoInsert, filterSettings), sackStack.getHoverName()), (buffer -> {
-                    buffer.writeBoolean(autoInsert).writeInt(packedSettings);
+                    buffer.writeBoolean(autoInsert).writeInt(filterSettings.getPackedSettings());
                 }));
             }
         }

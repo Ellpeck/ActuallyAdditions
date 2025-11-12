@@ -24,7 +24,7 @@ import java.util.UUID;
 import java.util.function.Supplier;
 
 public class ActuallyComponents {
-	private static final DeferredRegister<DataComponentType<?>> DATA_COMPONENT_TYPES = DeferredRegister.create(BuiltInRegistries.DATA_COMPONENT_TYPE, ActuallyAdditions.MODID);
+    private static final DeferredRegister<DataComponentType<?>> DATA_COMPONENT_TYPES = DeferredRegister.create(BuiltInRegistries.DATA_COMPONENT_TYPE, ActuallyAdditions.MODID);
 
 	public static final Supplier<DataComponentType<Integer>> ENERGY_STORAGE = DATA_COMPONENT_TYPES.register("energy", () ->
 			DataComponentType.<Integer>builder()
@@ -51,10 +51,10 @@ public class ActuallyComponents {
 					.networkSynchronized(ByteBufCodecs.BOOL)
 					.build());
 
-    public static final Supplier<DataComponentType<FilterOptionsComponent>> FILTER_OPTIONS = DATA_COMPONENT_TYPES.register("filter_options", () ->
-            DataComponentType.<FilterOptionsComponent>builder()
-                    .persistent(FilterOptionsComponent.CODEC)
-                    .networkSynchronized(FilterOptionsComponent.STREAM_CODEC)
+    public static final Supplier<DataComponentType<FilterSettingsComponent>> FILTER_SETTINGS = DATA_COMPONENT_TYPES.register("filter_settings", () ->
+            DataComponentType.<FilterSettingsComponent>builder()
+                    .persistent(FilterSettingsComponent.CODEC)
+                    .networkSynchronized(FilterSettingsComponent.STREAM_CODEC)
                     .build());
 
 	public static final Supplier<DataComponentType<Boolean>> COMPONENTS = DATA_COMPONENT_TYPES.register("components", () ->
@@ -174,8 +174,8 @@ public class ActuallyComponents {
 
 		@Override
 		public boolean equals(Object obj) {
-				if (obj instanceof FluidStack other) {
-					return FluidStack.matches(inner, other);
+				if (obj instanceof FluidContents other) {
+					return FluidStack.matches(inner, other.inner);
 				}
 				return false;
 			}

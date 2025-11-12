@@ -10,15 +10,24 @@
 
 package de.ellpeck.actuallyadditions.mod.util;
 
+import com.mojang.serialization.Codec;
 import net.minecraft.core.NonNullList;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.items.ItemStackHandler;
+
+import java.util.List;
 
 /**
  * The Actually Additions variant of ItemStackHandler.  Provides methods to disallow add/removal based on automation context.  Defaults to thinking operations are performed by automation.
  * @author Shadows
  */
 public class ItemStackHandlerAA extends ItemStackHandler {
+    public static final Codec<ItemStackHandlerAA> CODEC = ItemStack.OPTIONAL_CODEC.listOf().xmap(ItemStackHandlerAA::new, ItemStackHandlerAA::getItems);
+    public static final StreamCodec<RegistryFriendlyByteBuf, ItemStackHandlerAA> STREAM_CODEC = ItemStack.OPTIONAL_STREAM_CODEC.apply(ByteBufCodecs.list())
+            .map(ItemStackHandlerAA::new, ItemStackHandlerAA::getItems);
 
     public static final IAcceptor ACCEPT_TRUE = (a, b, c) -> true;
     public static final IRemover REMOVE_TRUE = (a, b) -> true;
@@ -46,6 +55,10 @@ public class ItemStackHandlerAA extends ItemStackHandler {
 
     public ItemStackHandlerAA(int slots) {
         this(slots, ACCEPT_TRUE, REMOVE_TRUE);
+    }
+
+    public ItemStackHandlerAA(List<ItemStack> itemStacks) {
+        this(NonNullList.of(ItemStack.EMPTY, itemStacks.toArray(new ItemStack[0])));
     }
 
     public NonNullList<ItemStack> getItems() {
