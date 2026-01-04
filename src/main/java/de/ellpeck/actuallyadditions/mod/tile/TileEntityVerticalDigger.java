@@ -232,6 +232,13 @@ public class TileEntityVerticalDigger extends TileEntityInventoryBase implements
     }
 
     @Override
+    public void onLoad() {
+        super.onLoad();
+        if (this.level != null)
+            this.checkY = level.getMinBuildHeight() - 1;
+    }
+
+    @Override
     public CustomEnergyStorage getEnergyStorage() {
         return this.storage;
     }
