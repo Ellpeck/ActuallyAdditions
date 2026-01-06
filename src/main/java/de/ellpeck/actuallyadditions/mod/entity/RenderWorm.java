@@ -43,7 +43,8 @@ public class RenderWorm extends EntityRenderer<EntityWorm> {
 
     @Override
     public void render(EntityWorm entity, float partialTicks, float p_225623_3_, PoseStack matrix, MultiBufferSource buffer, int light) {
-        boolean isSnail = entity.getCustomName().getString().equalsIgnoreCase("snail mail");
+        Component customName = entity.getCustomName();
+        boolean isSnail = customName != null && customName.getString().equalsIgnoreCase("snail mail");
         matrix.pushPose();
         matrix.translate(0, 0.75F, 0);
         double boop = Util.getMillis() / 70D;
