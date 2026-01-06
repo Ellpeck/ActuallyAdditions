@@ -42,23 +42,23 @@ public class RenderWorm extends EntityRenderer<EntityWorm> {
     }
 
     @Override
-    public void render(EntityWorm entity, float partialTicks, float p_225623_3_, PoseStack matrix, MultiBufferSource buffer, int light) {
-        Component customName = entity.getCustomName();
+    public void render(EntityWorm worm, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
+        Component customName = worm.getCustomName();
         boolean isSnail = customName != null && customName.getString().equalsIgnoreCase("snail mail");
-        matrix.pushPose();
-        matrix.translate(0, 0.75F, 0);
+        poseStack.pushPose();
+        poseStack.translate(0, 0.75F, 0);
         double boop = Util.getMillis() / 70D;
-        matrix.mulPose(Axis.YP.rotationDegrees(-(float) (boop % 360)));
-        matrix.translate(0,0,0.4);
+        poseStack.mulPose(Axis.YP.rotationDegrees(-(float) (boop % 360)));
+        poseStack.translate(0,0,0.4);
         Minecraft.getInstance().getItemRenderer().renderStatic(
-                isSnail? snailStack:stack, ItemDisplayContext.FIXED, light, OverlayTexture.NO_OVERLAY, matrix, buffer, null, 0
+                isSnail? snailStack:stack, ItemDisplayContext.FIXED, packedLight, OverlayTexture.NO_OVERLAY, poseStack, bufferSource, null, 0
         );
 
-        matrix.popPose();
+        poseStack.popPose();
     }
 
     @Override
-    public ResourceLocation getTextureLocation(EntityWorm pEntity) {
+    public ResourceLocation getTextureLocation(EntityWorm worm) {
         return InventoryMenu.BLOCK_ATLAS;
     }
 }
