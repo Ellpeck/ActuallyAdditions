@@ -16,7 +16,7 @@ import java.util.Map;
 /**
  * Complete copy paste from {@link net.minecraft.world.item.ArmorMaterial}
  * <p>
- * //TODO validate all values refect correctly
+ * //TODO validate all values reflect correctly
  */
 public class ArmorMaterials {
     public static final DeferredRegister<ArmorMaterial> MATERIALS = DeferredRegister.create(Registries.ARMOR_MATERIAL, ActuallyAdditions.MODID);
