@@ -232,7 +232,7 @@ idea {
  * Seek out the changelog for the current version and return it as a string.
  */
 def createChangelog = () -> {
-    def changelogText = new File("CHANGELOG.md").text
+    def changelogText = new File(project.rootDir, "CHANGELOG.md").text
     def changelog = ""
 
     def lines = changelogText.split("\n")
