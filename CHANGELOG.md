@@ -1,3 +1,8 @@
+# 1.3.25+mc1.21.1
+* Fix crash upon manual summon of the snail
+* Add missing lang key for the snail
+* Set Vertical Digger `checkY` to the min build height on first load
+
 # 1.3.24+mc1.21.1
 * Mark coffee item as non-repairable
 * Rework drill screen

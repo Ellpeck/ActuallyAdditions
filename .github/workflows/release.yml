@@ -18,12 +18,12 @@ jobs:
           java-version: 21
       - name: Fix borked permissions
         run: chmod +x ./gradlew
-      - name: Run gradle tasks
-        uses: gradle/gradle-build-action@v2
+      - name: Setup gradle
+        uses: gradle/actions/setup-gradle@v5
+      - name: Use gradle tasks
         env:
           MR_TOKEN: ${{ secrets.MR_TOKEN }}
           CF_TOKEN: ${{ secrets.CF_TOKEN }}
           MAVEN_TOKEN: ${{ secrets.MAVEN_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          arguments: clean build publish publishMods
+        run: ./gradlew clean build publish publishMods
