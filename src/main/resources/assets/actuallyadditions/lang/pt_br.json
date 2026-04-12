@@ -27,6 +27,7 @@
   "entity.Villager.actuallyadditions.jammer": "Cara da Geleia",
   "entity.Villager.actuallyadditions.crystallizer": "Cristalizador",
   "entity.minecraft.villager.actuallyadditions.engineer": "Engenheiro",
+  "entity.actuallyadditions.worm": "Minhoca",
   "_comment": "Banners",
   "block.minecraft.banner.actuallyadditions.book.black": "Padrão de Manual Preto Actually Additions", 
   "block.minecraft.banner.actuallyadditions.book.red": "Padrão de Manual Vermelho Actually Additions",
@@ -446,6 +447,9 @@
   "tooltip.actuallyadditions.coal_generator_stats": "Gera %d CF (%d CF/t por %d ticks)",
   "tooltip.actuallyadditions.placer_augment": "Posicionando blocos do slot %d da hotbar",
   "tooltip.actuallyadditions.drill.augments": "Melhorias Instaladas: %s",
+  "tooltip.actuallyadditions.drill.missing_tier": "Você precisa do nível anterior para instalar este aprimoramento!",
+  "tooltip.actuallyadditions.drill.remove_highest": "Você precisa remover os aprimoramentos de nível mais alto primeiro!",
+  "tooltip.actuallyadditions.drill.already_installed": "Este aprimoramento já está instalado!",
   "_comment": "Gui Information",
   "info.actuallyadditions.gui.animals": "Animais",
   "info.actuallyadditions.gui.enoughToBreed": "Suficiente para procriar!",
@@ -1042,5 +1046,6 @@
   "actuallyadditions.configuration.machineSettings": "Configurações de Máquinas",
   "actuallyadditions.configuration.tinyCoal": "Carvão Minúsculo",
   "actuallyadditions.configuration.noColoredItemNames": "Sem Nomes de Itens Coloridos",
-  "actuallyadditions.configuration.verticalDiggerExtraWhitelist": "Lista Branca Extra do Escavador Vertical"
+  "actuallyadditions.configuration.verticalDiggerExtraWhitelist": "Lista Branca Extra do Escavador Vertical",
+  "actuallyadditions.configuration.generateRice": "Gerar Arroz"
 }
