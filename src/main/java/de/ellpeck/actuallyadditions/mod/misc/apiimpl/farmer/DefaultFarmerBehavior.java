@@ -19,18 +19,21 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.SpecialPlantable;
 import net.neoforged.neoforge.common.Tags;
@@ -201,14 +204,9 @@ public class DefaultFarmerBehavior implements IFarmerBehavior {
 
             if (world.isEmptyBlock(pos.above())) {
                 BlockState state = world.getBlockState(pos);
-                if (state.is(Blocks.GRASS_BLOCK) || state.is(Blocks.DIRT_PATH)) {
-                    world.setBlockAndUpdate(pos, Blocks.FARMLAND.defaultBlockState());
-                    return InteractionResult.SUCCESS;
-                }
-
-                if (state.is(BlockTags.DIRT)) {
-                    world.setBlockAndUpdate(pos, Blocks.FARMLAND.defaultBlockState());
-                    return InteractionResult.SUCCESS;
+                UseOnContext context = new UseOnContext(world, player, InteractionHand.MAIN_HAND, itemstack, new BlockHitResult(new Vec3(0.5, 0.5, 0.5), Direction.UP, pos, false));
+                if (state.is(Blocks.GRASS_BLOCK) || state.is(Blocks.DIRT_PATH) || state.is(BlockTags.DIRT)) {
+                    return itemstack.useOn(context);
                 }
             }
             return InteractionResult.PASS;

@@ -29,6 +29,7 @@ import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.phys.AABB;
 import net.neoforged.neoforge.common.ItemAbilities;
+import net.neoforged.neoforge.common.util.FakePlayer;
 import net.neoforged.neoforge.event.level.BlockEvent;
 
 import java.util.List;
@@ -65,6 +66,8 @@ public class Worm extends ItemBase {
 
     public static void onHoe(BlockEvent.BlockToolModificationEvent event) {
         if (event.getItemAbility() == ItemAbilities.HOE_TILL && event.getLevel() instanceof Level level) {
+            if (event.getPlayer() instanceof FakePlayer)
+                return;
             if (level.isClientSide || !CommonConfig.Other.WORMS.get())
                 return;
 
