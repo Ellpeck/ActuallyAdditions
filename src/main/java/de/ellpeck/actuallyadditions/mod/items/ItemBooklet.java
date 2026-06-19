@@ -33,6 +33,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.fml.ModList;
 
 import java.util.List;
 
@@ -74,7 +75,11 @@ public class ItemBooklet extends ItemBase {
                 advancements.award(advancement, "right_click");
             }
         } else {
-            vazkii.patchouli.api.PatchouliAPI.get().openBookGUI(ActuallyAdditions.modLoc("booklet"));
+            if (ModList.get().isLoaded("patchouli")) {
+                vazkii.patchouli.api.PatchouliAPI.get().openBookGUI(ActuallyAdditions.modLoc("booklet"));
+            } else {
+                player.sendSystemMessage(Component.literal("Patchouli is not installed! Please install Patchouli to view the booklet.").withStyle(ChatFormatting.RED));
+            }
         }
 //        player.openGui(ActuallyAdditions.INSTANCE, GuiHandler.GuiTypes.BOOK.ordinal(), world, (int) player.posX, (int) player.posY, (int) player.posZ);
 //
