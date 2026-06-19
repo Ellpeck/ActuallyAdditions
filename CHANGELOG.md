@@ -1,3 +1,8 @@
+# 1.3.26+mc1.21.1
+* Add warning when attempting to open the booklet without Patchouli installed
+* Fix Infrared Engineer Goggles not making mobs glow
+* Fix farmer overriding custom soil with regular farmland
+
 # 1.3.25+mc1.21.1
 * Fix crash upon manual summon of the snail
 * Add missing lang key for the snail
