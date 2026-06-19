@@ -52,6 +52,7 @@ import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 
 public class ClientEvents {
@@ -75,7 +76,7 @@ public class ClientEvents {
         }
     }
 
-    private final Set<Entity> cachedGlowingEntities = new ConcurrentSet<>();
+    private static final Set<Entity> cachedGlowingEntities = new ConcurrentSet<>();
 
     /**
      * Renders a special visual effect for entities around the player if the player is wearing goggles that allow them to see spectral mobs.
@@ -89,15 +90,15 @@ public class ClientEvents {
             AABB aabb = new AABB(player.getX() - range, player.getY() - range, player.getZ() - range, player.getX() + range, player.getY() + range, player.getZ() + range);
             List<Entity> entities = player.level().getEntitiesOfClass(Entity.class, aabb);
             if (entities != null && !entities.isEmpty()) {
-                this.cachedGlowingEntities.addAll(entities);
+                cachedGlowingEntities.addAll(entities);
             }
 
-            if (!this.cachedGlowingEntities.isEmpty()) {
-                for (Entity entity : this.cachedGlowingEntities) {
+            if (!cachedGlowingEntities.isEmpty()) {
+                for (Entity entity : cachedGlowingEntities) {
                     if (!entity.isAlive() || entity.distanceToSqr(player.getX(), player.getY(), player.getZ()) > range * range) {
                         entity.setGlowingTag(false);
 
-                        this.cachedGlowingEntities.remove(entity);
+                        cachedGlowingEntities.remove(entity);
                     } else {
                         entity.setGlowingTag(true);
                     }
@@ -107,14 +108,18 @@ public class ClientEvents {
             return;
         }
 
-        if (!this.cachedGlowingEntities.isEmpty()) {
-            for (Entity entity : this.cachedGlowingEntities) {
+        if (!cachedGlowingEntities.isEmpty()) {
+            for (Entity entity : cachedGlowingEntities) {
                 if (entity.isAlive()) {
                     entity.setGlowingTag(false);
                 }
             }
-            this.cachedGlowingEntities.clear();
+            cachedGlowingEntities.clear();
         }
+    }
+
+    public static boolean shouldGlow(Entity entity) {
+        return !cachedGlowingEntities.isEmpty() && entity.hasGlowingTag();
     }
 
     @SubscribeEvent

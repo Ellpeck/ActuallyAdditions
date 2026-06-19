@@ -8,6 +8,9 @@
     "AnvilMixin",
     "ItemCombinerMenuAccessor"
   ],
+  "client": [
+    "client.MinecraftMixin"
+  ],
   "injectors": {
     "defaultRequire": 1
   }
