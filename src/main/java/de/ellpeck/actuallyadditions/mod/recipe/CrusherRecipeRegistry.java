@@ -69,7 +69,7 @@ public final class CrusherRecipeRegistry {
     //
     //        ActuallyAdditionsAPI.CRUSHER_RECIPES.clear();
     //        ActuallyAdditionsAPI.CRUSHER_RECIPES.addAll(usable);
-    //        ActuallyAdditions.LOGGER.debug(String.format("Removed %s crusher recipes that had dupliate inputs, %s remain.", removed.size(), usable.size()));
+    //        ActuallyAdditions.LOGGER.debug(String.format("Removed %s crusher recipes that had duplicate inputs, %s remain.", removed.size(), usable.size()));
     //    }
     //
     //    public static boolean hasBlacklistedOutput(ItemStack stack, String[] config) {

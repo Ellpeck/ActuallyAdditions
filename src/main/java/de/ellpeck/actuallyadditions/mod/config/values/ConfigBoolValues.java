@@ -24,9 +24,9 @@ public enum ConfigBoolValues {
             "Engineer Villager: Existence",
             ConfigCategories.WORLD_GEN,
             true,
-            "Should the Engineer Villager and his House generate in the worl?"),
+            "Should the Engineer Villager and his House generate in the world?"),
 
-    GENERATE_QUARTZ("Black Quartz", ConfigCategories.WORLD_GEN, true, "Shold Black Quartz generate in the world?"),
+    GENERATE_QUARTZ("Black Quartz", ConfigCategories.WORLD_GEN, true, "Should Black Quartz generate in the world?"),
 
 
     DO_RICE_GEN("Rice Gen", ConfigCategories.WORLD_GEN, true, "Should Rice generate in the World?"),

@@ -37,7 +37,7 @@ public final class PlayerData {
             }
         }
 
-        //Add Data if none is existant
+        //Add Data if none is existent
         PlayerSave save = new PlayerSave(id);
         data.put(id, save);
         worldData.setDirty();
